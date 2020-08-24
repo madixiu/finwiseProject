@@ -2,16 +2,16 @@
   <div>
     <!--begin::Content header-->
     <div
-      class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
+      class="position-absolute top-0 left-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
     >
       <span class="font-weight-bold font-size-3 text-dark-60">
-        Already have an account?
+        قبلا ثبت نام کرده اید؟
       </span>
       <router-link
         class="font-weight-bold font-size-3 ml-2"
         :to="{ name: 'login' }"
       >
-        Sign In!
+        ورود از اینجا
       </router-link>
     </div>
     <!--end::Content header-->
@@ -19,9 +19,9 @@
     <!--begin::Signup-->
     <div class="login-form login-signin">
       <div class="text-center mb-10 mb-lg-20">
-        <h3 class="font-size-h1">Sign Up</h3>
+        <h3 class="font-size-h1">ثبت نام</h3>
         <p class="text-muted font-weight-semi-bold">
-          Enter your details to create your account
+          مشخصات خود را وارد کنید
         </p>
       </div>
 
@@ -39,11 +39,11 @@
             v-model="$v.form.username.$model"
             :state="validateState('username')"
             aria-describedby="input-0-live-feedback"
-            placeholder="Username"
+            placeholder="نام کاربری"
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-0-live-feedback">
-            Username is required.
+            نام کاربری نیاز است
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -59,11 +59,11 @@
             v-model="$v.form.email.$model"
             :state="validateState('email')"
             aria-describedby="input-1-live-feedback"
-            placeholder="Email address"
+            placeholder="آدرس ایمیل"
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-1-live-feedback">
-            Email is required and a valid email address.
+            ایمیل باید وارد شود
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -80,11 +80,11 @@
             v-model="$v.form.password.$model"
             :state="validateState('password')"
             aria-describedby="input-2-live-feedback"
-            placeholder="Password"
+            placeholder="رمز عبور"
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-2-live-feedback">
-            Password is required.
+            رمز عبور خود را وارد کنید
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -95,13 +95,13 @@
             ref="kt_login_signup_submit"
             class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3 mx-4"
           >
-            Submit
+            تکمیل ثبت نام
           </button>
           <button
             v-on:click="$router.push('login')"
             class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 font-size-3 mx-4"
           >
-            Cancel
+            انصراف
           </button>
         </div>
         <!--end::Action-->
@@ -132,10 +132,10 @@ export default {
   data() {
     return {
       // Remove this dummy login info
-      form: {
-        email: "admin@demo.com",
-        password: "demo"
-      }
+      // form: {
+      //   email: "admin@demo.com",
+      //   password: "demo"
+      // }
     };
   },
   validations: {

@@ -1,6 +1,7 @@
 import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 class CustomUser(AbstractUser):
 
@@ -11,9 +12,9 @@ class CustomUser(AbstractUser):
     balance = models.FloatField(default = 0)
     expiration_date = models.DateTimeField(default = None, auto_now=False, auto_now_add=False, null = True)
     gender = models.CharField(max_length = 6, blank = True, null = True)
-    birth = models.DateField(default = None, auto_now=False, auto_now_add=False, null = True)
+    # birth = models.DateField(default = None, auto_now=False, auto_now_add=False, null = True)
     degree = models.CharField(max_length =20, blank = True, null = True)
-
+    birth = models.CharField(blank = True, null = True ,max_length=10, validators=[MinLengthValidator(10)])
     USERNAME_FIELD = "username"   # e.g: "username", "email"
     EMAIL_FIELD = "email"         # e.g: "email", "primary_email"   
     # BIRTH_FIELD = "birth_date"

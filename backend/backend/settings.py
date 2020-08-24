@@ -103,7 +103,7 @@ GRAPHQL_JWT = {
 
 # graphql options
 GRAPHQL_AUTH = {
-    "LOGIN_ALLOWED_FIELDS": ['email', 'username'],
+    "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
     "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
     "REGISTER_MUTATION_FIELDS_OPTIONAL": ["gender","degree","birth"],
     "ALLOW_LOGIN_NOT_VERIFIED": False,
