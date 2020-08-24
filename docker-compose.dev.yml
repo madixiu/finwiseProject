@@ -1,0 +1,134 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    environment: 
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks: 
+      - main
+    ports:
+      - "5432:5432"
+  
+  redis:
+    image: redis:alpine
+    volumes: 
+      - redis-data:/data
+    container_name: redis
+    networks:
+      - main
+  
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "8085:8085"
+    depends_on:
+      - "redis"
+    networks:
+      - main
+      
+  flower:
+    image: mher/flower
+    container_name: flower_dev_vet
+    command: --url_prefix=flower --inspect_timeout=20000
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=5555
+    ports:
+      - 5555:5555
+    networks:
+      - main
+    depends_on:
+      - celery
+      - redis
+
+  backend: &backend
+    container_name: backendTest
+    build: ./backend
+    command: /start_dev.sh
+    volumes:
+      - ./backend:/backend
+      - django-static:/backend/static
+    networks: 
+      - main
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+
+  celery:
+    <<: *backend
+    container_name: celery
+    command: bash -c 'python3 manage.py watch_celery'
+    volumes:
+      - ./backend:/backend
+    ports: []
+    depends_on:
+      - db
+      - redis
+    networks:
+      - main
+
+  asgiserver:
+    <<: *backend
+    container_name: asgiserver
+    entrypoint: /start_asgi.sh
+    # build:
+    #   context: ./backend
+    #   dockerfile: scripts/dev/Dockerfile
+    # command: bash -c 'python3 manage.py watch_daphne'
+    volumes:
+      - ./backend:/backend
+    ports: []
+
+  frontend:
+    container_name: frontendTest
+    build: 
+      context: ./frontend
+    volumes: 
+      - ./frontend:/frontend
+    #  - '/app/node_modules'
+    ports: 
+      - "8080:8080"
+    networks: 
+      - main
+    depends_on: 
+      - backend
+      - db
+    environment: 
+      - NODE_ENV=development
+  
+  nginx:
+    container_name: nginxTest
+    build: 
+      context: .
+      dockerfile: nginx/dev/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+      - flower
+      - asgiserver
+    volumes:
+      - ./nginx/dev/dev.conf:/etc/nginx/nginx.conf:ro
+      - django-static:/usr/src/app/static
+    networks:
+      - main
+volumes: 
+  django-static:
+  redis-data:
+
+networks: 
+  main:
+    driver: bridge
