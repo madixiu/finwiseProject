@@ -6,6 +6,40 @@ import ApiService from "@/core/services/api.service";
 import MockService from "@/core/mock/mock.service";
 import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+// apollo imports for graphql
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import VueApollo from 'vue-apollo'
+// -------------------------
+// HTTP connection to the API graphql/apollo
+const httpLink = new HttpLink({
+  // You should use an absolute URL here
+  uri: 'http://localhost:8000/graphql',
+})
+
+// Cache implementation graphql/apollo
+const cache = new InMemoryCache()
+
+// Create the apollo client graphql/apollo
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+})
+// using apollo/graphql
+Vue.use(VueApollo)
+//-------------------------------
+
+// The provider holds the Apollo client instances that can then be used by all the child components
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+
+  // loadingKey to ‘loading’ so that we can easily display a loading indicator in the UI
+  // defaultOptions: {
+  //   $loadingKey: 'loading'
+  // }
+})
+
 
 Vue.config.productionTip = false;
 
@@ -53,5 +87,7 @@ new Vue({
   store,
   i18n,
   vuetify,
+  // injecting apolloProvider here 
+  apolloProvider,
   render: h => h(App)
 }).$mount("#app");
