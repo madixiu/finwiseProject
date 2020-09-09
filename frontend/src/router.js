@@ -20,6 +20,15 @@ export default new Router({
           name: "builder",
           component: () => import("@/view/pages/Builder.vue")
         },
+        //added route for ticker!
+        {
+          path: "/ticker",
+          name: "ticker",
+          component: () => import("@/view/pages/Ticker/Ticker.vue")
+        },
+
+
+
         {
           path: "/vue-bootstrap",
           name: "vue-bootstrap",
