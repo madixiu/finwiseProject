@@ -20,8 +20,8 @@
             </v-card>
         </div> -->
 
-
-        <div class="row">
+        <!-- first row -->
+        <div class="row h-100 ">
           <div class="col-sm-3">
             <v-card outlined class="col-sm-3">
                    
@@ -100,129 +100,50 @@
                       
                   </v-card>
             </div>
-          <div >
+          <div class="col-md-4">
              <v-card outlined class="col-sm-3">
                 <apexchart width="300" type="bar" :options="options" :series="series"></apexchart>
              </v-card>
           </div>
-          <div >
-            <v-card class="col-sm-4">
+          <div class="col-sm-4" >
+            <v-card  outlined>
                    <img src="@/assets/PrototypeImages/linechart.png" />
                   </v-card>
           </div>
     
         </div>
           
-            <b-container class="bv-example-row">
-              
-              <b-row>
-                <b-col>
-                  <v-card outlined>
-                   
-                  <div class="card card-custom card-stretch gutter-b">
-                    <div class="card-header border-0">
-                        <h1 class="card-title font-weight-bolder text-dark fs-x-large fc-primary fw-bolder">{{tickerName}}
-                          <h2 class="card-title font-weight-bolder fs-medium text-dark">{{price}}</h2>
-                          <span class="fs-regular">
-                          
-                            <span class="color-red">
-                              
-                              <span class="mdi mdi-chevron-down tick-color-minus"></span>
-                              <span class="tick-color-minus">{{tick}}</span>
-                            </span>
-
-                          </span>
-                        </h1>
-             
-                            <!-- <div class="card-toolbar">
-                              <Dropdown4 :btnClass="'btn-light-primary'"></Dropdown4>
-                            </div> -->
-                        </div>
-
-                        <b-container class="bv-example-row stock-summary-table fc-regular">
-                          <b-row>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>Volume: </p>
-                                <p>123</p>
-                              </b-row>
-                            </b-col>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>Avg Vol (1m): </p>
-                                <p>162,120,963</p>
-                              </b-row>
-                            </b-col>
-                          </b-row>
-
-                          <b-row>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>Market Cap: </p>
-                                <p>533.63 Bil</p>
-                              </b-row>
-                            </b-col>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>Enterprise Value $: </p>
-                                <p>553.33 Bil</p>
-                              </b-row>
-                            </b-col>
-                           
-                          </b-row>
-
-                          <b-row>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>P/E (TTM): </p>
-                                <p>37.96</p>
-                              </b-row>
-                            </b-col>
-                            <b-col sm="6">
-                              <b-row>
-                                <p>P/B: </p>
-                                <p>7.40</p>
-                              </b-row>
-                            </b-col>
-                          </b-row>
-
-                        </b-container>
-                     
+        <!-- 2nd row -->
+        <div class="row">
+          <div class="col-sm-6 ">
+            <v-card outlined class="mx-auto" max-width="500">
+               <img src="@/assets/PrototypeImages/ProfitabilityRank.png" />
+            </v-card>
            
-                   </div>
-                      
-                      
-                  </v-card>
-                </b-col>
-                <b-col>
-                  <!-- BAR CHART GOES HERE -->
-                 
-                  <v-card class="app">
-                  
-                      <apexchart width="300" type="bar" :options="options" :series="series"></apexchart>
+          </div>
+          <div class="col-sm-6">
+            <v-card outlined class="mx-auto" max-width="500">
+              <img src="@/assets/PrototypeImages/financialStrength.png" />
+            </v-card>
+            
+          </div>
 
-                    
-                      
-                      
-                      <!-- <GChart
-                        
-                        type="BarChart"
-                        :data="chartData"
-                        :options="chartOptions"
-                        
-                        @ready="onChartReady"
-                        /> -->
-                    
-                    
-                  </v-card>
-                </b-col>
-                <b-col><v-card>
-                   <img src="@/assets/PrototypeImages/linechart.png" />
-                  </v-card></b-col>
-              </b-row>
-              
-            </b-container>
-          
+        </div>
+
+        <!-- 3rd row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <v-card outlined >
+              <img src="@/assets/PrototypeImages/financials.png" />
+            </v-card>
+          </div>
+          <div class="col-sm-2">
+            <v-card outlined >
+              <img src="@/assets/PrototypeImages/valuationRank.png" />
+            </v-card>
+          </div>
+        </div>
+            
          
         <div class="col-xxl-4 order-1 order-xxl-2">
         <ListWidget3></ListWidget3>
