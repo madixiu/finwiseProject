@@ -27,8 +27,6 @@ export default new Router({
           component: () => import("@/view/pages/Ticker/Ticker.vue")
         },
 
-
-
         {
           path: "/vue-bootstrap",
           name: "vue-bootstrap",

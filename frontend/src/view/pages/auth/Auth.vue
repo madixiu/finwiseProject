@@ -76,7 +76,7 @@ export default {
     ...mapState({
       errors: state => state.auth.errors
     }),
-      backgroundImage() {
+    backgroundImage() {
       return process.env.BASE_URL + "media/bg/bg-1.jpg";
     }
   }
