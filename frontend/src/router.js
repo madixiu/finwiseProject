@@ -26,7 +26,12 @@ export default new Router({
           name: "ticker",
           component: () => import("@/view/pages/Ticker/Ticker.vue")
         },
-
+        // added route for robot!
+        {
+          path: "/robot",
+          name: "robot",
+          component: () => import("@/view/pages/Robot/Robot.vue")
+        },
         {
           path: "/vue-bootstrap",
           name: "vue-bootstrap",

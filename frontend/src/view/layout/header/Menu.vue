@@ -14,7 +14,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text"> Dashboard </span>
+          <span class="menu-text">سهام</span>
         </a>
       </li>
     </router-link>
@@ -33,7 +33,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text"> Builder </span>
+          <span class="menu-text">نقشه بازار</span>
         </a>
       </li>
     </router-link>
@@ -45,7 +45,7 @@
       v-bind:class="{ 'menu-item-active': hasActiveChildren('/vue-bootstrap') }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <span class="menu-text"> Vue Bootstrap </span>
+        <span class="menu-text">اوراق با درامد ثابت</span>
       </a>
       <div class="menu-submenu menu-submenu-fixed">
         <div class="menu-subnav megamenu" style="max-width: 1000px;">
@@ -794,7 +794,7 @@
       v-bind:class="{ 'menu-item-active': hasActiveChildren('vuetify') }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <span class="menu-text"> Vuetify </span>
+        <span class="menu-text">کالا</span>
       </a>
       <div class="menu-submenu menu-submenu-fixed">
         <div class="menu-subnav megamenu" style="max-width: 800px;">
@@ -1241,7 +1241,7 @@
       v-bind:class="{ 'menu-item-active': hasActiveChildren('/error/error') }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <span class="menu-text"> Custom </span>
+        <span class="menu-text">شاخص های کلان</span>
       </a>
       <div class="menu-submenu menu-submenu-classic">
         <ul class="menu-subnav">
@@ -1532,6 +1532,24 @@
       >
         <a :href="href" class="menu-link" @click="navigate">
           <span class="menu-text">سهم</span>
+        </a>
+      </li>
+    </router-link>
+    <router-link
+      to="/robot"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <span class="menu-text">ربات</span>
         </a>
       </li>
     </router-link>
