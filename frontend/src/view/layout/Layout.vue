@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       selectedRoute: true
-    }
+    };
   },
   beforeMount() {
     // show page loading
@@ -106,20 +106,19 @@ export default {
       this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
     }, 2000);
   },
-   watch: {
-    '$route': 'fetchRoute'
+  watch: {
+    $route: "fetchRoute"
   },
   methods: {
     fetchRoute() {
-      if (this.$route.path == '/robot'){
-        this.selectedRoute = false
+      if (this.$route.path == "/robot") {
+        this.selectedRoute = false;
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-enabled");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-fixed");
         // this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-static");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-minimize");
-      }
-      else {
-        this.selectedRoute = true
+      } else {
+        this.selectedRoute = true;
         this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-enabled");
         this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-fixed");
         // this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-static");
