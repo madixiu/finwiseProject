@@ -1,14 +1,8 @@
 <template>
-  <div>
-    <div>
-      <ErrorMine class="error"></ErrorMine>
-    </div>
-  </div>
+  <ErrorMine></ErrorMine>
 </template>
 <script>
-import ErrorMine from "@/view/content/Error-mine.vue";
-// import ListWidget3 from "@/view/content/widgets/list/Widget3.vue";
-// import Error from "../error/Error-mine"
+import ErrorMine from "@/view/pages/error/Error-6.vue";
 export default {
   name: "robot",
   components: {

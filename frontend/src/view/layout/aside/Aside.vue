@@ -29,7 +29,8 @@
           class="aside-menu scroll"
           style="max-height: 90vh; position: relative;"
         >
-          <KTMenu></KTMenu>
+          <KTMenu v-if="menuItemsList =='/dashboard'"></KTMenu>
+          <KTMenu2 v-if="menuItemsList =='/builder'"></KTMenu2>
         </perfect-scrollbar>
       </div>
     </div>
@@ -44,20 +45,32 @@ import KTBrand from "@/view/layout/brand/Brand.vue";
 import KTLayoutAside from "@/assets/js/layout/base/aside.js";
 import KTLayoutAsideMenu from "@/assets/js/layout/base/aside-menu.js";
 import KTMenu from "@/view/layout/aside/Menu.vue";
+import KTMenu2 from "@/view/layout/aside/Menu2.vue";
 
 export default {
   name: "KTAside",
   data() {
     return {
       insideTm: 0,
-      outsideTm: 0
+      outsideTm: 0,
+      menuItemsList: '/dashboard'
     };
   },
+  // props: {
+  //   selectedTopBar: {
+  //     type: String
+  //   }
+  // },
   components: {
     KTBrand,
-    KTMenu
+    KTMenu,
+    KTMenu2
+  },
+  watch: {
+    '$route': 'fetchRoute'
   },
   mounted() {
+    this.fetchRoute()
     this.$nextTick(() => {
       // Init Aside
       KTLayoutAside.init(this.$refs["kt_aside"]);
@@ -67,6 +80,10 @@ export default {
     });
   },
   methods: {
+    fetchRoute() {
+      console.log(this.$route.path);
+      this.menuItemsList = this.$route.path
+    },
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.
      */

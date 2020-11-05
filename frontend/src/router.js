@@ -399,6 +399,18 @@ export default new Router({
         }
       ]
     },
+    // {
+    //   path: "/robot",
+    //   name: "robot",
+    //   component: () => import("@/view/layout/LayoutWOnav.vue"),
+    //   children : [
+    //     {
+    //       path: "/robot",
+    //       name: "robot",
+    //       component: () => import("@/view/pages/Robot/Robot.vue"),
+    //     }
+    //   ]
+    // },
     {
       path: "/error",
       name: "error",
