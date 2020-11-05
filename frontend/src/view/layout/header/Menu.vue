@@ -1,7 +1,7 @@
 <template>
   <ul class="menu-nav">
     <router-link
-      to="/dashboard"
+      to="/market"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li

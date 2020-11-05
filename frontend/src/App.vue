@@ -38,3 +38,8 @@ export default {
   // }
 };
 </script>
+<style>
+* {
+  font-family: Vazir;
+}
+</style>

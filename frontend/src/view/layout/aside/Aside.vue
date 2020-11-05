@@ -29,8 +29,10 @@
           class="aside-menu scroll"
           style="max-height: 90vh; position: relative;"
         >
-          <KTMenu v-if="menuItemsList =='/dashboard'"></KTMenu>
-          <KTMenu2 v-if="menuItemsList =='/builder'"></KTMenu2>
+          <!-- <KTMenu v-if="menuItemsList == '/market/dashboard'"></KTMenu> -->
+          <KTMenu v-if="AsideState1"></KTMenu>
+          <!-- <KTMenu2 v-if="menuItemsList == '/builder'"></KTMenu2> -->
+          <KTMenu2 v-if="AsideState2"></KTMenu2>
         </perfect-scrollbar>
       </div>
     </div>
@@ -53,7 +55,26 @@ export default {
     return {
       insideTm: 0,
       outsideTm: 0,
-      menuItemsList: '/dashboard'
+      menuItemsList: "/market/dashboard",
+      saham: [
+        "dashboard",
+        "marketwatch",
+        "industry",
+        "qarbal",
+        "bonyad",
+        "goldprice",
+        "tools",
+        "data",
+        "calendar",
+        "afzayesh",
+        "taqadom",
+        "option",
+        "sandoq"
+      ],
+      kala: ["bourse", "world"],
+      AsideState1: true,
+      AsideState2: false,
+      AsideState3: false
     };
   },
   // props: {
@@ -67,10 +88,10 @@ export default {
     KTMenu2
   },
   watch: {
-    '$route': 'fetchRoute'
+    $route: "fetchRoute"
   },
   mounted() {
-    this.fetchRoute()
+    this.fetchRoute();
     this.$nextTick(() => {
       // Init Aside
       KTLayoutAside.init(this.$refs["kt_aside"]);
@@ -81,8 +102,16 @@ export default {
   },
   methods: {
     fetchRoute() {
-      console.log(this.$route.path);
-      this.menuItemsList = this.$route.path
+      // console.log(this.$route.path);
+      // console.log(this.$route.name);
+      let path = this.$route.name;
+      this.AsideState1 = this.saham.includes(path);
+      this.AsideState2 = this.kala.includes(path);
+      if (!this.AsideState1 && !this.AsideState2) {
+        this.AsideState3 = true;
+      } else {
+        this.AsideState3 = false;
+      }
     },
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.

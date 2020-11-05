@@ -7,13 +7,26 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/dashboard",
+      redirect: "/market",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
-          path: "/dashboard",
-          name: "dashboard",
-          component: () => import("@/view/pages/Dashboard.vue")
+          path: "/market",
+          name: "market",
+          redirect: "/market/dashboard",
+          component: () => import("@/view/pages/Market.vue"),
+          children: [
+            {
+              name: "dashboard",
+              path: "dashboard",
+              component: () => import("@/view/pages/Dashboard.vue")
+            },
+            {
+              path: "marketwatch",
+              name: "marketwatch",
+              component: () => import("@/view/pages/MarketWatch.vue")
+            }
+          ]
         },
         {
           path: "/builder",
