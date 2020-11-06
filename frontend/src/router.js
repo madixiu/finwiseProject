@@ -7,24 +7,80 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/market",
+      redirect: "/saham",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
-          path: "/market",
-          name: "market",
-          redirect: "/market/dashboard",
-          component: () => import("@/view/pages/Market.vue"),
+          path: "/saham",
+          name: "saham",
+          redirect: "/saham/market/dashboard",
+          component: () => import("@/view/pages/Saham.vue"),
           children: [
             {
+              path: "market/dashboard",
               name: "dashboard",
-              path: "dashboard",
               component: () => import("@/view/pages/Dashboard.vue")
             },
             {
-              path: "marketwatch",
+              path: "market/marketwatch",
               name: "marketwatch",
               component: () => import("@/view/pages/MarketWatch.vue")
+            },
+            {
+              path: "industries",
+              name: "industries",
+              component: () => import("@/view/pages/Saham/Industries.vue")
+            },
+            {
+              path: "qarbal",
+              name: "qarbal",
+              component: () => import("@/view/pages/Saham/Qarbal.vue")
+            },
+            {
+              path: "bonyad",
+              name: "bonyad",
+              component: () => import("@/view/pages/Saham/Bonyad.vue")
+            },
+            {
+              path: "technical/goldprice",
+              name: "goldprice",
+              component: () =>
+                import("@/view/pages/Saham/Technical/GoldPrice.vue")
+            },
+            {
+              path: "technical/tools",
+              name: "tools",
+              component: () => import("@/view/pages/Saham/Technical/Tools.vue")
+            },
+            {
+              path: "technical/data",
+              name: "data",
+              component: () => import("@/view/pages/Saham/Technical/Data.vue")
+            },
+            {
+              path: "majame/calendar",
+              name: "calendar",
+              component: () => import("@/view/pages/Saham/Majame/Calendar.vue")
+            },
+            {
+              path: "majame/afzayesh",
+              name: "afzayesh",
+              component: () => import("@/view/pages/Saham/Majame/Afzayesh.vue")
+            },
+            {
+              path: "taqadom",
+              name: "taqadom",
+              component: () => import("@/view/pages/Saham/Taqadom.vue")
+            },
+            {
+              path: "option",
+              name: "option",
+              component: () => import("@/view/pages/Saham/Option.vue")
+            },
+            {
+              path: "sandoq",
+              name: "sandoq",
+              component: () => import("@/view/pages/Saham/Sandoq.vue")
             }
           ]
         },

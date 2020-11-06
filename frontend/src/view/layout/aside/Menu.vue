@@ -15,8 +15,8 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-           <router-link
-            to="/market/dashboard"
+          <router-link
+            to="/saham/market/dashboard"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -35,7 +35,7 @@
             </li>
           </router-link>
           <router-link
-            to="/market/marketwatch"
+            to="/saham/market/marketwatch"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -57,7 +57,7 @@
       </div>
     </li>
     <router-link
-      to="/builder"
+      to="/saham/industries"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -75,11 +75,240 @@
         </a>
       </li>
     </router-link>
+    <router-link
+      to="/saham/qarbal"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-map"></i>
+          <span class="menu-text">غربالگر</span>
+        </a>
+      </li>
+    </router-link>
+    <router-link
+      to="/saham/bonyad"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-line-graph"></i>
+          <span class="menu-text">بنیادی</span>
+        </a>
+      </li>
+    </router-link>
+
     <li class="menu-section">
       <h4 class="menu-text">Components</h4>
       <i class="menu-icon flaticon-more-v2"></i>
     </li>
 
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-active': hasActiveChildren('/technical')
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon-diagram"></i>
+        <span class="menu-text">تکنیکال</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+        <ul class="menu-subnav">
+          <router-link
+            to="/saham/technical/goldprice"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">قیمت طلا</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            to="/saham/technical/tools"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">ابزار</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            to="/saham/technical/data"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">دیتا</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-active': hasActiveChildren('/majame')
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon-clock-2"></i>
+        <span class="menu-text">مجامع</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+        <ul class="menu-subnav">
+          <router-link
+            to="/saham/majame/calendar"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">تقویم</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            to="/saham/majame/afzayesh"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">افزایش سرمایه ها</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+    <router-link
+      to="/saham/taqadom"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-notes"></i>
+          <span class="menu-text">حق تقدم</span>
+        </a>
+      </li>
+    </router-link>
+    <router-link
+      to="/saham/option"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-clipboard"></i>
+          <span class="menu-text">آپشن</span>
+        </a>
+      </li>
+    </router-link>
+    <router-link
+      to="/saham/sandoq"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon2-box-1"></i>
+          <span class="menu-text">صندوق</span>
+        </a>
+      </li>
+    </router-link>
+    <!-- 
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -1913,7 +2142,7 @@
           </router-link>
         </ul>
       </div>
-    </li>
+    </li> -->
   </ul>
 </template>
 

@@ -59,7 +59,7 @@ export default {
       saham: [
         "dashboard",
         "marketwatch",
-        "industry",
+        "industries",
         "qarbal",
         "bonyad",
         "goldprice",
