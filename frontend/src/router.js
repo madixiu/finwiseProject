@@ -85,9 +85,42 @@ export default new Router({
           ]
         },
         {
+          path: "/kala",
+          name: "kala",
+          redirect: "/kala/bourse",
+          component: () => import("@/view/pages/Kala/Kala.vue"),
+          children: [
+            {
+              path: "bourse",
+              name: "bourse",
+              component: () => import("@/view/pages/Kala/Bourse.vue")
+            },
+            {
+              path: "global",
+              name: "global",
+              component: () => import("@/view/pages/Kala/Global.vue")
+            }
+          ]
+        },
+        {
           path: "/builder",
           name: "builder",
           component: () => import("@/view/pages/Builder.vue")
+        },
+        {
+          path: "/marketmap",
+          name: "marketmap",
+          component: () => import("@/view/pages/MarketMap/MarketMap.vue")
+        },
+        {
+          path: "/oraq",
+          name: "oraq",
+          component: () => import("@/view/pages/Oraq/Oraq.vue")
+        },
+        {
+          path: "/shakhes",
+          name: "shakhes",
+          component: () => import("@/view/pages/Shakhes/Shakhes.vue")
         },
         //added route for ticker!
         {

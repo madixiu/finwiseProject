@@ -84,7 +84,8 @@ export default {
   },
   data() {
     return {
-      selectedRoute: true
+      selectedRoute: true,
+      NonAsideRoutes: ["marketmap", "oraq", "shakhes", "robot"]
     };
   },
   beforeMount() {
@@ -111,7 +112,8 @@ export default {
   },
   methods: {
     fetchRoute() {
-      if (this.$route.path == "/robot") {
+      let route = this.$route.name;
+      if (this.NonAsideRoutes.includes(route)) {
         this.selectedRoute = false;
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-enabled");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-fixed");

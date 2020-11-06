@@ -71,7 +71,7 @@ export default {
         "option",
         "sandoq"
       ],
-      kala: ["bourse", "world"],
+      kala: ["bourse", "global"],
       AsideState1: true,
       AsideState2: false,
       AsideState3: false
