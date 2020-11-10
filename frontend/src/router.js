@@ -126,7 +126,91 @@ export default new Router({
         {
           path: "/ticker",
           name: "ticker",
-          component: () => import("@/view/pages/Ticker/Ticker.vue")
+          redirect: "/ticker/kholaseSahm/nazer",
+          component: () => import("@/view/pages/Ticker/Ticker.vue"),
+          children: [
+            {
+              path: "kholaseSahm/nazer",
+              name: "nazer",
+              component: () => import("@/view/pages/Ticker/Nazer.vue")
+            },
+            {
+              path: "kholaseSahm/information",
+              name: "information",
+              component: () => import("@/view/pages/Ticker/Information.vue")
+            },
+            {
+              path: "kholaseSahm/vaziat",
+              name: "vaziat",
+              component: () => import("@/view/pages/Ticker/Vaziat.vue")
+            },
+            {
+              path: "kholaseSahm/haghighi&hoghughi",
+              name: "haghighi&hoghughi",
+              component: () => 
+              import("@/view/pages/Ticker/Haghighi&Hoghughi.vue")
+            },
+            {
+              path: "kholaseSahm/managers",
+              name: "managers",
+              component: () => import("@/view/pages/Ticker/Managers.vue")
+            },
+            {
+              path: "kholaseSahm/shareholders",
+              name: "shareholders",
+              component: () => import("@/view/pages/Ticker/ShareHolders.vue")
+            },
+            {
+              path: "tadili",
+              name: "tadili",
+              component: () => import("@/view/pages/Ticker/Tadili.vue")
+            },
+            {
+              path: "bonyadi",
+              name: "bonyadi",
+              component: () => import("@/view/pages/Ticker/Bonyadi.vue")
+            },
+            {
+              path: "sahmTechnical",
+              name: "sahmTechnical",
+              component: () => import("@/view/pages/Ticker/SahmTechnical.vue")
+            },
+            {
+              path: "surats",
+              name: "surats",
+              component: () => import("@/view/pages/Ticker/Surats.vue")
+            },
+            {
+              path: "monthly",
+              name: "monthly",
+              component: () => import("@/view/pages/Ticker/Monthly.vue")
+            },
+            {
+              path: "sahmRobot",
+              name: "sahmRobot",
+              component: () => import("@/view/pages/Ticker/SahmRobot.vue")
+            },
+            {
+              path: "relations",
+              name: "relations",
+              component: () => import("@/view/pages/Ticker/Relations.vue")
+            },
+            {
+              path: "industry",
+              name: "industry",
+              component: () => import("@/view/pages/Ticker/Industry.vue")
+            },
+            {
+              path: "sahmMajame",
+              name: "sahmMajame",
+              component: () => import("@/view/pages/Ticker/SahmMajame.vue")
+            },
+            {
+              path: "sarmaye",
+              name: "sarmaye",
+              component: () => import("@/view/pages/Ticker/Sarmaye.vue")
+            }
+          ]
         },
         // added route for robot!
         {
@@ -501,18 +585,6 @@ export default new Router({
         }
       ]
     },
-    // {
-    //   path: "/robot",
-    //   name: "robot",
-    //   component: () => import("@/view/layout/LayoutWOnav.vue"),
-    //   children : [
-    //     {
-    //       path: "/robot",
-    //       name: "robot",
-    //       component: () => import("@/view/pages/Robot/Robot.vue"),
-    //     }
-    //   ]
-    // },
     {
       path: "/error",
       name: "error",

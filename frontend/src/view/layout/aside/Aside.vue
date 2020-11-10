@@ -33,6 +33,7 @@
           <KTMenu v-if="AsideState1"></KTMenu>
           <!-- <KTMenu2 v-if="menuItemsList == '/builder'"></KTMenu2> -->
           <KTMenu2 v-if="AsideState2"></KTMenu2>
+          <KTMenu3 v-if="AsideState3"></KTMenu3>
         </perfect-scrollbar>
       </div>
     </div>
@@ -48,14 +49,13 @@ import KTLayoutAside from "@/assets/js/layout/base/aside.js";
 import KTLayoutAsideMenu from "@/assets/js/layout/base/aside-menu.js";
 import KTMenu from "@/view/layout/aside/Menu.vue";
 import KTMenu2 from "@/view/layout/aside/Menu2.vue";
-
+import KTMenu3 from "@/view/layout/aside/Menu3.vue";
 export default {
   name: "KTAside",
   data() {
     return {
       insideTm: 0,
       outsideTm: 0,
-      menuItemsList: "/market/dashboard",
       saham: [
         "dashboard",
         "marketwatch",
@@ -72,6 +72,24 @@ export default {
         "sandoq"
       ],
       kala: ["bourse", "global"],
+      ticker: [
+        "nazer",
+        "information",
+        "vaziat",
+        "haghighi&hoghughi",
+        "managers",
+        "shareholders",
+        "tadili",
+        "bonyadi",
+        "sahmTechnical",
+        "surats",
+        "monthly",
+        "sahmRobot",
+        "relations",
+        "industry",
+        "sahmMajame",
+        "sarmaye"
+      ],
       AsideState1: true,
       AsideState2: false,
       AsideState3: false
@@ -85,7 +103,8 @@ export default {
   components: {
     KTBrand,
     KTMenu,
-    KTMenu2
+    KTMenu2,
+    KTMenu3
   },
   watch: {
     $route: "fetchRoute"
@@ -107,11 +126,12 @@ export default {
       let path = this.$route.name;
       this.AsideState1 = this.saham.includes(path);
       this.AsideState2 = this.kala.includes(path);
-      if (!this.AsideState1 && !this.AsideState2) {
-        this.AsideState3 = true;
-      } else {
-        this.AsideState3 = false;
-      }
+      this.AsideState3 = this.ticker.includes(path)
+      // if (!this.AsideState1 && !this.AsideState2) {
+      //   this.AsideState3 = true;
+      // } else {
+      //   this.AsideState3 = false;
+      // }
     },
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.
