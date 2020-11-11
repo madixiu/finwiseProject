@@ -301,6 +301,21 @@ export default {
     getRoicPercent: function() {
       let all = this.WACC + this.ROIC;
       return (100 * this.ROIC) / all;
+    },
+    getColor: function(value) {
+      if (value > 80) {
+        return "#0DCD0A";
+      } else if (value < 80 && value >= 60) {
+        return "#72FF59";
+      }
+      if (value < 60 && value >= 40) {
+        return "#FFCE00";
+      } else if (value < 40 && value >= 20) {
+        return "#FD6700";
+      } else if (value < 20) {
+        return "#FF0000";
+      }
+      return "";
     }
   }
 };

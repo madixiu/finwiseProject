@@ -78,10 +78,10 @@
 
     <!-- 3rd row -->
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-5">
         <FinancialStrength />
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-5">
         <!-- <img src="@/assets/PrototypeImages/valuationRank.png" /> -->
         <ValuationRank />
       </div>
@@ -96,6 +96,15 @@
       </div>
       <div class="col-sm-4">
         <Dividend />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <AnalystEstimate />
+      </div>
+      <div class="col-sm-6">
+        <MoreStatistics />
       </div>
     </div>
 
@@ -119,6 +128,8 @@ import ValuationRank from "@/view/pages/Ticker/Rankers/ValuationRank";
 import ValuationReturn from "@/view/pages/Ticker/Rankers/Valuation&Return";
 import ProfitabilityRank from "@/view/pages/Ticker/Rankers/profitabilityRank";
 import Dividend from "@/view/pages/Ticker/Rankers/Dividend";
+import AnalystEstimate from "@/view/pages/Ticker/tables/AnalystEstimate";
+import MoreStatistics from "@/view/pages/Ticker/tables/MoreStatistics";
 import ListWidget3 from "@/view/content/widgets/list/Widget3.vue";
 export default {
   name: "ticker",
@@ -132,7 +143,9 @@ export default {
     ValuationRank,
     ValuationReturn,
     ProfitabilityRank,
-    Dividend
+    Dividend,
+    AnalystEstimate,
+    MoreStatistics
     // GChart
   },
   data() {

@@ -1,10 +1,8 @@
 <template>
   <v-card outlined class="ml-3 mr-3">
+    <v-card-title>Monthly</v-card-title>
     <v-container>
       <v-row>
-        <v-col class="col-3">
-          Monthly
-        </v-col>
         <v-col
           class="col-3 d-flex justify-content-center align-items-center selector"
         >
