@@ -11,10 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# import main settings
-from django.conf import settings as django_settings
-# import timedelta to register time in registeration
-from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,9 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-# user model for registeration
-AUTH_USER_MODEL = 'users.CustomUser'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,14 +40,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'channels',
     'rest_framework',
-    'websocket',
-    'users',
-    'graphene_django',
-    # refresh tokens are optional
-    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
-    'django_filters',
-    'graphql_auth'
-    
+    'api',
+    'websocket'
+    # 'subscriptions',
 ]
 
 MIDDLEWARE = [
@@ -68,76 +56,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# GRAPHENE / GRAPHQL SETTINGS
-GRAPHENE = {
-    'SCHEMA': 'backend.schema.schema', # this file doesn't exist yet
-    'MIDDLEWARE': [
-        'graphql_jwt.middleware.JSONWebTokenMiddleware',
-    ],
-}
-
-AUTHENTICATION_BACKENDS = [
-    # 'graphql_jwt.backends.JSONWebTokenBackend',
-    'django.contrib.auth.backends.ModelBackend',
-    'graphql_auth.backends.GraphQLAuthBackend',
-
-]
-
-GRAPHQL_JWT = {
-    "JWT_VERIFY_EXPIRATION": True,
-    "JWT_ALLOW_ANY_CLASSES": [
-        "graphql_auth.mutations.Register",
-        "graphql_auth.mutations.VerifyAccount",
-        "graphql_auth.mutations.ResendActivationEmail",
-        "graphql_auth.mutations.SendPasswordResetEmail",
-        "graphql_auth.mutations.PasswordReset",
-        "graphql_auth.mutations.ObtainJSONWebToken",
-        "graphql_auth.mutations.VerifyToken",
-        "graphql_auth.mutations.RefreshToken",
-        "graphql_auth.mutations.RevokeToken",
-        "graphql_auth.mutations.VerifySecondaryEmail",
-    ],
-    # optional
-    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
-}
-
-# graphql options
-GRAPHQL_AUTH = {
-    "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
-    "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
-    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["gender","degree","birth"],
-    "ALLOW_LOGIN_NOT_VERIFIED": False,
-    "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
-    "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),
-    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
-    # email stuff
-    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL", "mr.robotc7@gmail.com"),
-    "SEND_ACTIVATION_EMAIL": True,
-    "EMAIL_SUBJECT_ACTIVATION": "email/activation_subject.txt",
-    "EMAIL_SUBJECT_ACTIVATION_RESEND": "email/activation_subject.txt",
-    "EMAIL_SUBJECT_SECONDARY_EMAIL_ACTIVATION": "email/activation_subject.txt",
-    "EMAIL_SUBJECT_PASSWORD_RESET": "email/password_reset_subject.txt",
-    # email templates
-    "EMAIL_TEMPLATE_ACTIVATION": "email/activation_email.html",
-    "EMAIL_TEMPLATE_ACTIVATION_RESEND": "email/activation_email.html",
-    "EMAIL_TEMPLATE_SECONDARY_EMAIL_ACTIVATION": "email/activation_email.html",
-    "EMAIL_TEMPLATE_PASSWORD_RESET": "email/password_reset_email.html",
-    # ...
-}
-
-# --- EMAIL
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mr.robotc7@gmail.com'
-#Must generate specific password for your app in [gmail settings][1]
-EMAIL_HOST_PASSWORD = 'yamahdi001'
-EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-
-
 ROOT_URLCONF = 'backend.urls'
 ASGI_APPLICATION = "backend.routing.application"
 
@@ -147,7 +65,7 @@ ASGI_THREADS = 1000
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,20 +78,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+# WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# temporary database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'mydatabase.db',
     }
 }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -188,8 +104,6 @@ DATABASES = {
 
 # }
 
-
-# this may have to be removed in future
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -269,6 +183,12 @@ CHANNEL_LAYERS = {
 #         },
 #     },
 # }
+
+
+# CSRF TOKEN SETTING
+# CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
 # django redis cache TEST...............................................
 CACHES = {
     "default": {

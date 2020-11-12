@@ -1,4 +1,4 @@
-from websocket.consumers import optionData
+from websocket.consumers import optionData,random,MarketWatch
 from django.urls import re_path
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
@@ -14,7 +14,8 @@ application = ProtocolTypeRouter({
                     # re_path(r"^messages/(?P<username>[\w.@+-]+)/$", firm_live), # noqa
                     re_path(r"^ws/test$", optionData),
                     # re_path(r"^index_live/$", index_live),
-                    # re_path(r"^random/$", random)
+                    re_path(r"^random$", random),
+                    re_path(r"^marketwatch",MarketWatch)
 
 
                 ]
