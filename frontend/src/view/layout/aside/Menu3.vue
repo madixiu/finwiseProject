@@ -1,7 +1,6 @@
 <template>
-    <ul class="menu-nav">
-
-      <li
+  <ul class="menu-nav">
+    <li
       aria-haspopup="true"
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
@@ -54,7 +53,7 @@
               </a>
             </li>
           </router-link>
-           <router-link
+          <router-link
             to="/ticker/kholaseSahm/vaziat"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -73,7 +72,7 @@
               </a>
             </li>
           </router-link>
-           <router-link
+          <router-link
             to="/ticker/kholaseSahm/haghighi&hoghughi"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -92,7 +91,7 @@
               </a>
             </li>
           </router-link>
-           <router-link
+          <router-link
             to="/ticker/kholaseSahm/managers"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -111,7 +110,7 @@
               </a>
             </li>
           </router-link>
-            <router-link
+          <router-link
             to="/ticker/kholaseSahm/shareholders"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -228,8 +227,8 @@
           <i class="menu-icon flaticon2-medical-records"></i>
           <span class="menu-text">ماهیانه</span>
         </a>
-      </li>
-    </router-link>‍
+      </li> </router-link
+    >‍
     <router-link
       to="/ticker/sahmRobot"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -247,8 +246,8 @@
           <i class="menu-icon flaticon2-user-1"></i>
           <span class="menu-text">ربات</span>
         </a>
-      </li>
-    </router-link>‍
+      </li> </router-link
+    >‍
     <router-link
       to="/ticker/relations"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -266,8 +265,8 @@
           <i class="menu-icon flaticon2-console"></i>
           <span class="menu-text">نسبت ها</span>
         </a>
-      </li>
-    </router-link>‍
+      </li> </router-link
+    >‍
     <router-link
       to="/ticker/industry"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -285,8 +284,8 @@
           <i class="menu-icon flaticon2-gear"></i>
           <span class="menu-text">در صنعت</span>
         </a>
-      </li>
-    </router-link>‍
+      </li> </router-link
+    >‍
     <router-link
       to="/ticker/sahmMajame"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -304,8 +303,8 @@
           <i class="menu-icon flaticon2-group"></i>
           <span class="menu-text">مجامع</span>
         </a>
-      </li>
-    </router-link>‍
+      </li> </router-link
+    >‍
     <router-link
       to="/ticker/sarmaye"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -323,13 +322,9 @@
           <i class="menu-icon flaticon2-chart"></i>
           <span class="menu-text">سرمایه پذیر</span>
         </a>
-      </li>
-    </router-link>‍
-  
-
+      </li> </router-link
+    >‍
   </ul>
-
-  
 </template>
 
 <script>

@@ -147,8 +147,8 @@ export default new Router({
             {
               path: "kholaseSahm/haghighi&hoghughi",
               name: "haghighi&hoghughi",
-              component: () => 
-              import("@/view/pages/Ticker/Haghighi&Hoghughi.vue")
+              component: () =>
+                import("@/view/pages/Ticker/Haghighi&Hoghughi.vue")
             },
             {
               path: "kholaseSahm/managers",

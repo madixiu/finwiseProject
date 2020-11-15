@@ -112,7 +112,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-         <!-- lastname -->
+        <!-- lastname -->
         <b-form-group
           id="example-input-group-4"
           label=""
@@ -246,7 +246,6 @@ export default {
 
       // dummy delay
       setTimeout(() => {
-
         // send register request
         this.$store
           .dispatch(REGISTER, {

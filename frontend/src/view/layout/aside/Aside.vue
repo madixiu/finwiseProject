@@ -126,7 +126,7 @@ export default {
       let path = this.$route.name;
       this.AsideState1 = this.saham.includes(path);
       this.AsideState2 = this.kala.includes(path);
-      this.AsideState3 = this.ticker.includes(path)
+      this.AsideState3 = this.ticker.includes(path);
       // if (!this.AsideState1 && !this.AsideState2) {
       //   this.AsideState3 = true;
       // } else {

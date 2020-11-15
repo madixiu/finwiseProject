@@ -20,17 +20,15 @@
     <div class="login-form login-signin">
       <div class="text-center mb-10 mb-lg-20">
         <h3 class="font-size-h1">ورود</h3>
-        <p class="text-muted font-weight-semi-bold">
-        
-        </p>
+        <p class="text-muted font-weight-semi-bold"></p>
       </div>
 
       <!--begin::Form-->
       <b-form class="form" @submit.stop.prevent="onSubmit">
         <div role="alert" class="alert alert-info">
           <div class="alert-text">
-            <strong>نام کاربری</strong> و
-            <strong>رمز عبور</strong>خود را وارد کنید
+            <strong>نام کاربری</strong> و <strong>رمز عبور</strong>خود را وارد
+            کنید
           </div>
         </div>
 
@@ -87,7 +85,6 @@
         <div
           class="form-group d-flex flex-wrap justify-content-between align-items-center"
         >
-
           <button
             ref="kt_login_signin_submit"
             class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
@@ -101,7 +98,6 @@
           >
             رمز عبور را فراموش کرده اید؟
           </a>
-          
         </div>
         <!--end::Action-->
       </b-form>
