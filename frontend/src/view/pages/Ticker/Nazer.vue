@@ -3,8 +3,8 @@
   <div>
     <!-- first row -->
     <div class="row h-100 ">
-      <div class="col-sm-3">
-        <v-card height="250" max-width="500" outlined class="col-sm-4">
+      <div class="col-sm-12">
+        <v-card outlined class="col-sm-4">
           <!-- <v-card-title>شتران</v-card-title> -->
           <div class="row mr-7 mt-1">
             <div class="col-12">
@@ -46,36 +46,7 @@
           </div>
         </v-card>
       </div>
-      <div class="col-md-4">
-        <v-card max-width="500" height="250" outlined class="col-sm-3">
-          <HorizontalBarChart></HorizontalBarChart>
-        </v-card>
-      </div>
-      <div class="col-sm-5">
-        <v-card width="400" height="240" outlined>
-          <StockChart></StockChart>
-          <!-- <img src="@/assets/PrototypeImages/linechart.png" /> -->
-        </v-card>
-      </div>
     </div>
-    <!-- 2nd row -->
-    <div class="row mt-5">
-      <div class="col-sm-6 ">
-        <!-- <v-card outlined class="mx-auto" max-width="500">
-            <img src="@/assets/PrototypeImages/ProfitabilityRank.png" />
-        </v-card>
-        -->
-        <FinancialCharts />
-      </div>
-      <div class="col-sm-6">
-        <!-- <v-card outlined class="mx-auto" max-width="500">
-          <img src="@/assets/PrototypeImages/financialStrength.png" />
-        </v-card>
-          -->
-        <MonthlyCharts />
-      </div>
-    </div>
-
     <!-- 3rd row -->
     <div class="row">
       <div class="col-sm-5">
@@ -119,10 +90,10 @@
 // import linechart from "@/assets/PrototypeImages/linechart.png"
 // import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
 // import { GChart } from 'vue-google-charts'
-import HorizontalBarChart from "@/view/pages/Ticker/charts/HorizontalBarChart";
-import StockChart from "@/view/pages/Ticker/charts/StockChart";
-import FinancialCharts from "@/view/pages/Ticker/charts/FinancialCharts/FinancialsChartsView";
-import MonthlyCharts from "@/view/pages/Ticker/charts/FinancialCharts/MonthlyChartsView";
+// import HorizontalBarChart from "@/view/pages/Ticker/charts/HorizontalBarChart";
+// import StockChart from "@/view/pages/Ticker/charts/StockChart";
+// import FinancialCharts from "@/view/pages/Ticker/charts/FinancialCharts/FinancialsChartsView";
+// import MonthlyCharts from "@/view/pages/Ticker/charts/FinancialCharts/MonthlyChartsView";
 import FinancialStrength from "@/view/pages/Ticker/Rankers/FinancialStrength";
 import ValuationRank from "@/view/pages/Ticker/Rankers/ValuationRank";
 import ValuationReturn from "@/view/pages/Ticker/Rankers/Valuation&Return";
@@ -135,10 +106,10 @@ export default {
   name: "ticker",
   components: {
     ListWidget3,
-    HorizontalBarChart,
-    StockChart,
-    FinancialCharts,
-    MonthlyCharts,
+    // HorizontalBarChart,
+    // StockChart,
+    // FinancialCharts,
+    // MonthlyCharts,
     FinancialStrength,
     ValuationRank,
     ValuationReturn,
