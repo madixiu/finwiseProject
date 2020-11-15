@@ -3,7 +3,7 @@
   <div>
     <!-- first row -->
     <div class="row h-100 ">
-      <div class="col-sm-12">
+      <div class="col-sm-8">
         <v-card outlined class="col-sm-4">
           <!-- <v-card-title>شتران</v-card-title> -->
           <div class="row mr-7 mt-1">
