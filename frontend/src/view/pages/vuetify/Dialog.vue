@@ -391,7 +391,7 @@
                       >
                         Open Dialog 2
                       </v-btn>
-                      <v-tooltip right>
+                      <v-tooltip left>
                         <template v-slot:activator="{ on }">
                           <v-btn class="ma-2" v-on="on"
                             >Tool Tip Activator</v-btn
@@ -1415,7 +1415,7 @@ export default {
           >
             Open Dialog 2
           </v-btn>
-          <v-tooltip right>
+          <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-btn
                 class="ma-2"

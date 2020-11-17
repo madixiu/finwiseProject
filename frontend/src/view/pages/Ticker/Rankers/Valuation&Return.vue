@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="mr-2 ValueationReturn">
+  <v-card outlined class="ValueationReturn">
     <div class="row">
       <div class="col-sm-12">
         <span class="strong mr-2">Valuation & Return</span>

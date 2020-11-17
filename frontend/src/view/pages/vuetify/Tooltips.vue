@@ -60,7 +60,7 @@
                 <span>Bottom tooltip</span>
               </v-tooltip>
 
-              <v-tooltip right>
+              <v-tooltip left>
                 <template v-slot:activator="{ on }">
                   <v-btn class="mr-4" color="primary" dark v-on="on"
                     >Right</v-btn
@@ -144,7 +144,7 @@ export default {
     <span>Bottom tooltip</span>
   </v-tooltip>
 
-  <v-tooltip right>
+  <v-tooltip left>
     <template v-slot:activator="{ on }">
       <v-btn color="primary" dark v-on="on">Right</v-btn>
     </template>

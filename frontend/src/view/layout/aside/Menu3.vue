@@ -5,7 +5,7 @@
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
       v-bind:class="{
-        'menu-item-active': hasActiveChildren('/kholaseSahm')
+        'menu-item-active': hasActiveChildren('/Overview')
       }"
     >
       <a href="#" class="menu-link menu-toggle">
@@ -16,7 +16,7 @@
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
           <router-link
-            to="/ticker/kholaseSahm/nazer"
+            to="/ticker/Overview/nazer"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -35,7 +35,7 @@
             </li>
           </router-link>
           <router-link
-            to="/ticker/kholaseSahm/information"
+            to="/ticker/Overview/Notifications"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -54,7 +54,7 @@
             </li>
           </router-link>
           <router-link
-            to="/ticker/kholaseSahm/vaziat"
+            to="/ticker/Overview/StatusChange"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -73,7 +73,7 @@
             </li>
           </router-link>
           <router-link
-            to="/ticker/kholaseSahm/haghighi&hoghughi"
+            to="/ticker/Overview/HH"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -92,7 +92,7 @@
             </li>
           </router-link>
           <router-link
-            to="/ticker/kholaseSahm/managers"
+            to="/ticker/Overview/managers"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -111,7 +111,7 @@
             </li>
           </router-link>
           <router-link
-            to="/ticker/kholaseSahm/shareholders"
+            to="/ticker/Overview/shareholders"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li

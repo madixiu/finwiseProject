@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="mr-2 FinancialStrength">
+  <v-card outlined class="FinancialStrength">
     <div class="row">
       <div class="col-sm-4">
         <span class="mr-3 strong">Financial Strength</span>

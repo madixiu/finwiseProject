@@ -4,6 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
+  mode:"history",
   routes: [
     {
       path: "/",
@@ -126,37 +127,37 @@ export default new Router({
         {
           path: "/ticker",
           name: "ticker",
-          redirect: "/ticker/kholaseSahm/nazer",
+          redirect: "/ticker/Overview/nazer",
           component: () => import("@/view/pages/Ticker/Ticker.vue"),
           children: [
             {
-              path: "kholaseSahm/nazer",
+              path: "Overview/nazer/:id",
               name: "nazer",
-              component: () => import("@/view/pages/Ticker/Nazer.vue")
+              component: () => import("@/view/pages/Ticker/Overview.vue")
             },
             {
-              path: "kholaseSahm/information",
-              name: "information",
-              component: () => import("@/view/pages/Ticker/Information.vue")
-            },
-            {
-              path: "kholaseSahm/vaziat",
-              name: "vaziat",
-              component: () => import("@/view/pages/Ticker/Vaziat.vue")
-            },
-            {
-              path: "kholaseSahm/haghighi&hoghughi",
-              name: "haghighi&hoghughi",
+              path: "Overview/Notifications",
+              name: "Notifications",
               component: () =>
-                import("@/view/pages/Ticker/Haghighi&Hoghughi.vue")
+                import("@/view/pages/Ticker/CodalNotifications.vue")
             },
             {
-              path: "kholaseSahm/managers",
+              path: "Overview/StatusChange",
+              name: "StatusChange",
+              component: () => import("@/view/pages/Ticker/StatusChange.vue")
+            },
+            {
+              path: "Overview/HH",
+              name: "HH",
+              component: () => import("@/view/pages/Ticker/HH.vue")
+            },
+            {
+              path: "Overview/managers",
               name: "managers",
               component: () => import("@/view/pages/Ticker/Managers.vue")
             },
             {
-              path: "kholaseSahm/shareholders",
+              path: "Overview/shareholders",
               name: "shareholders",
               component: () => import("@/view/pages/Ticker/ShareHolders.vue")
             },

@@ -74,9 +74,9 @@ export default {
       kala: ["bourse", "global"],
       ticker: [
         "nazer",
-        "information",
-        "vaziat",
-        "haghighi&hoghughi",
+        "Notifications",
+        "StatusChange",
+        "HH",
         "managers",
         "shareholders",
         "tadili",
