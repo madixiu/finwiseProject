@@ -11,11 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# import main settings
 from django.conf import settings as django_settings
-# import timedelta to register time in registeration
 from datetime import timedelta
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -32,9 +29,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-# user model for registeration
-AUTH_USER_MODEL = 'users.CustomUser'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,14 +41,16 @@ INSTALLED_APPS = [
     'corsheaders',
     'channels',
     'rest_framework',
+    'api',
     'websocket',
-    'users',
-    'graphene_django',
-    # refresh tokens are optional
-    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
-    'django_filters',
-    'graphql_auth'
+    "graphene_django",
+    "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
+    "graphql_auth",
+    "django_filters",
+    "users"
+
     
+    # 'subscriptions',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +64,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# GRAPHENE / GRAPHQL SETTINGS
+# graphQL
+AUTH_USER_MODEL = 'users.CustomUser'
+
 GRAPHENE = {
     'SCHEMA': 'backend.schema.schema', # this file doesn't exist yet
     'MIDDLEWARE': [
@@ -97,15 +95,18 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.RevokeToken",
         "graphql_auth.mutations.VerifySecondaryEmail",
     ],
-    # optional
+    # optional for long running refresh token
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=11),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=1),
 }
 
 # graphql options
 GRAPHQL_AUTH = {
     "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
     "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
-    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["gender","degree","birth"],
+    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["age","gender","degree"],
+    "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree"],
     "ALLOW_LOGIN_NOT_VERIFIED": False,
     "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
     "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),
@@ -124,10 +125,13 @@ GRAPHQL_AUTH = {
     "EMAIL_TEMPLATE_PASSWORD_RESET": "email/password_reset_email.html",
     # ...
 }
-
 # --- EMAIL
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#console email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# gmail smtp
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mr.robotc7@gmail.com'
@@ -135,7 +139,7 @@ EMAIL_HOST_USER = 'mr.robotc7@gmail.com'
 EMAIL_HOST_PASSWORD = 'yamahdi001'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
+# graphQL end
 
 
 ROOT_URLCONF = 'backend.urls'
@@ -166,14 +170,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# temporary database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'mydatabase.db',
     }
 }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -188,8 +190,6 @@ DATABASES = {
 
 # }
 
-
-# this may have to be removed in future
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -242,6 +242,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
+# Authentication 
+
+
+
+
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Celery Configuration
@@ -269,6 +275,12 @@ CHANNEL_LAYERS = {
 #         },
 #     },
 # }
+
+
+# CSRF TOKEN SETTING
+# CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
 # django redis cache TEST...............................................
 CACHES = {
     "default": {

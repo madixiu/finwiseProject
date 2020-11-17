@@ -2,29 +2,13 @@ import requests
 import time
 import pandas
 import json
-# import asyncio
-# import json
-# from time import sleep
-
-
 import pandas as pd
 from khayyam import JalaliDate
-
 import re
 from datetime import date, datetime
 
 
 listofDicts = []
-
-
-# def getApi():
-#     URL = 'http://www.tsetmc.com/tsev2/data/instinfofast.aspx?i=46348559193224090&c=27+'
-#     RawData = requests.get(URL).text
-#     return RawData
-
-# while True:
-#     print(getApi())
-#     sleep(1)
 
 # ----------------------------------------------------- first function with one input -------------------------------------------------------- noqa
 
@@ -50,9 +34,6 @@ def publicApi(i):
         df.columns = ['lastUpdate','L','Moamele','Closing','First','yesterday','Max','Min','Count','Volume','Value','L2','Date','lastUpdatedAt']    # noqa
         return df.to_dict('records')[0]
 
-
-# i=46348559193224090
-# print(dictReturn(i))
 
 # ---------------------------------------------------- realtime api function with no input-------------------------------------------------
 

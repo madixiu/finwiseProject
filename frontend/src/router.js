@@ -4,21 +4,220 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: "/",
-      redirect: "/dashboard",
+      redirect: "/saham",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
-          path: "/dashboard",
-          name: "dashboard",
-          component: () => import("@/view/pages/Dashboard.vue")
+          path: "/saham",
+          name: "saham",
+          redirect: "/saham/market/dashboard",
+          component: () => import("@/view/pages/Saham.vue"),
+          children: [
+            {
+              path: "market/dashboard",
+              name: "dashboard",
+              component: () => import("@/view/pages/Dashboard.vue")
+            },
+            {
+              path: "market/marketwatch",
+              name: "marketwatch",
+              component: () => import("@/view/pages/MarketWatch.vue")
+            },
+            {
+              path: "industries",
+              name: "industries",
+              component: () => import("@/view/pages/Saham/Industries.vue")
+            },
+            {
+              path: "qarbal",
+              name: "qarbal",
+              component: () => import("@/view/pages/Saham/Qarbal.vue")
+            },
+            {
+              path: "bonyad",
+              name: "bonyad",
+              component: () => import("@/view/pages/Saham/Bonyad.vue")
+            },
+            {
+              path: "technical/goldprice",
+              name: "goldprice",
+              component: () =>
+                import("@/view/pages/Saham/Technical/GoldPrice.vue")
+            },
+            {
+              path: "technical/tools",
+              name: "tools",
+              component: () => import("@/view/pages/Saham/Technical/Tools.vue")
+            },
+            {
+              path: "technical/data",
+              name: "data",
+              component: () => import("@/view/pages/Saham/Technical/Data.vue")
+            },
+            {
+              path: "majame/calendar",
+              name: "calendar",
+              component: () => import("@/view/pages/Saham/Majame/Calendar.vue")
+            },
+            {
+              path: "majame/afzayesh",
+              name: "afzayesh",
+              component: () => import("@/view/pages/Saham/Majame/Afzayesh.vue")
+            },
+            {
+              path: "taqadom",
+              name: "taqadom",
+              component: () => import("@/view/pages/Saham/Taqadom.vue")
+            },
+            {
+              path: "option",
+              name: "option",
+              component: () => import("@/view/pages/Saham/Option.vue")
+            },
+            {
+              path: "sandoq",
+              name: "sandoq",
+              component: () => import("@/view/pages/Saham/Sandoq.vue")
+            }
+          ]
+        },
+        {
+          path: "/kala",
+          name: "kala",
+          redirect: "/kala/bourse",
+          component: () => import("@/view/pages/Kala/Kala.vue"),
+          children: [
+            {
+              path: "bourse",
+              name: "bourse",
+              component: () => import("@/view/pages/Kala/Bourse.vue")
+            },
+            {
+              path: "global",
+              name: "global",
+              component: () => import("@/view/pages/Kala/Global.vue")
+            }
+          ]
         },
         {
           path: "/builder",
           name: "builder",
           component: () => import("@/view/pages/Builder.vue")
+        },
+        {
+          path: "/marketmap",
+          name: "marketmap",
+          component: () => import("@/view/pages/MarketMap/MarketMap.vue")
+        },
+        {
+          path: "/oraq",
+          name: "oraq",
+          component: () => import("@/view/pages/Oraq/Oraq.vue")
+        },
+        {
+          path: "/shakhes",
+          name: "shakhes",
+          component: () => import("@/view/pages/Shakhes/Shakhes.vue")
+        },
+        //added route for ticker!
+        {
+          path: "/ticker",
+          name: "ticker",
+          redirect: "/ticker/kholaseSahm/nazer",
+          component: () => import("@/view/pages/Ticker/Ticker.vue"),
+          children: [
+            {
+              path: "kholaseSahm/nazer",
+              name: "nazer",
+              component: () => import("@/view/pages/Ticker/Nazer.vue")
+            },
+            {
+              path: "kholaseSahm/information",
+              name: "information",
+              component: () => import("@/view/pages/Ticker/Information.vue")
+            },
+            {
+              path: "kholaseSahm/vaziat",
+              name: "vaziat",
+              component: () => import("@/view/pages/Ticker/Vaziat.vue")
+            },
+            {
+              path: "kholaseSahm/haghighi&hoghughi",
+              name: "haghighi&hoghughi",
+              component: () =>
+                import("@/view/pages/Ticker/Haghighi&Hoghughi.vue")
+            },
+            {
+              path: "kholaseSahm/managers",
+              name: "managers",
+              component: () => import("@/view/pages/Ticker/Managers.vue")
+            },
+            {
+              path: "kholaseSahm/shareholders",
+              name: "shareholders",
+              component: () => import("@/view/pages/Ticker/ShareHolders.vue")
+            },
+            {
+              path: "tadili",
+              name: "tadili",
+              component: () => import("@/view/pages/Ticker/Tadili.vue")
+            },
+            {
+              path: "bonyadi",
+              name: "bonyadi",
+              component: () => import("@/view/pages/Ticker/Bonyadi.vue")
+            },
+            {
+              path: "sahmTechnical",
+              name: "sahmTechnical",
+              component: () => import("@/view/pages/Ticker/SahmTechnical.vue")
+            },
+            {
+              path: "surats",
+              name: "surats",
+              component: () => import("@/view/pages/Ticker/Surats.vue")
+            },
+            {
+              path: "monthly",
+              name: "monthly",
+              component: () => import("@/view/pages/Ticker/Monthly.vue")
+            },
+            {
+              path: "sahmRobot",
+              name: "sahmRobot",
+              component: () => import("@/view/pages/Ticker/SahmRobot.vue")
+            },
+            {
+              path: "relations",
+              name: "relations",
+              component: () => import("@/view/pages/Ticker/Relations.vue")
+            },
+            {
+              path: "industry",
+              name: "industry",
+              component: () => import("@/view/pages/Ticker/Industry.vue")
+            },
+            {
+              path: "sahmMajame",
+              name: "sahmMajame",
+              component: () => import("@/view/pages/Ticker/SahmMajame.vue")
+            },
+            {
+              path: "sarmaye",
+              name: "sarmaye",
+              component: () => import("@/view/pages/Ticker/Sarmaye.vue")
+            }
+          ]
+        },
+        // added route for robot!
+        {
+          path: "/robot",
+          name: "robot",
+          component: () => import("@/view/pages/Robot/Robot.vue")
         },
         {
           path: "/vue-bootstrap",

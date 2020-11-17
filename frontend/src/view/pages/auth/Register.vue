@@ -26,6 +26,7 @@
       </div>
 
       <!--begin::Form-->
+      <!-- username -->
       <b-form class="form" @submit.stop.prevent="onSubmit">
         <b-form-group
           id="example-input-group-0"
@@ -47,6 +48,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- email -->
         <b-form-group
           id="example-input-group-1"
           label=""
@@ -67,6 +69,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- password -->
         <b-form-group
           id="example-input-group-2"
           label=""
@@ -85,6 +88,48 @@
 
           <b-form-invalid-feedback id="input-2-live-feedback">
             رمز عبور خود را وارد کنید
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- firstname -->
+        <b-form-group
+          id="example-input-group-3"
+          label=""
+          label-for="example-input-3"
+        >
+          <b-form-input
+            class="form-control form-control-solid h-auto py-5 px-6"
+            id="example-input-3"
+            name="example-input-3"
+            v-model="$v.form.firstname.$model"
+            :state="validateState('firstname')"
+            aria-describedby="input-3-live-feedback"
+            placeholder="نام"
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="input-3-live-feedback">
+            نام خود را وارد کنید
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- lastname -->
+        <b-form-group
+          id="example-input-group-4"
+          label=""
+          label-for="example-input-4"
+        >
+          <b-form-input
+            class="form-control form-control-solid h-auto py-5 px-6"
+            id="example-input-4"
+            name="example-input-4"
+            v-model="$v.form.lastname.$model"
+            :state="validateState('lastname')"
+            aria-describedby="input-4-live-feedback"
+            placeholder="نام خانوادگی"
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="input-4-live-feedback">
+            نام خانوادگی خود را وارد کنید
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -151,6 +196,14 @@ export default {
       password: {
         required,
         minLength: minLength(3)
+      },
+      firstname: {
+        required,
+        minLength: minLength(3)
+      },
+      lastname: {
+        required,
+        minLength: minLength(3)
       }
     }
   },
@@ -163,7 +216,9 @@ export default {
       this.form = {
         username: null,
         email: null,
-        password: null
+        password: null,
+        firstname: null,
+        lastname: null
       };
 
       this.$nextTick(() => {
@@ -179,6 +234,8 @@ export default {
       const username = this.$v.form.username.$model;
       const email = this.$v.form.email.$model;
       const password = this.$v.form.password.$model;
+      const firstname = this.$v.form.firstname.$model;
+      const lastname = this.$v.form.lastname.$model;
 
       // clear existing errors
       this.$store.dispatch(LOGOUT);
@@ -194,7 +251,9 @@ export default {
           .dispatch(REGISTER, {
             email: email,
             password: password,
-            username: username
+            username: username,
+            firstname: firstname,
+            lastname: lastname
           })
           .then(() => this.$router.push({ name: "dashboard" }));
 

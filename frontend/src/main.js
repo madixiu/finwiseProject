@@ -2,10 +2,54 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
-import ApiService from "@/core/services/api.service";
-import MockService from "@/core/mock/mock.service";
-import { VERIFY_AUTH } from "@/core/services/store/auth.module";
-import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+// import ApiService from "@/core/services/api.service";
+// import MockService from "@/core/mock/mock.service";
+// import { VERIFY_AUTH } from "@/core/services/store/auth.module";
+import { VERIFY_AUTH } from "@/core/services/store/auth2.module";
+// import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+// apollo imports for graphql
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import VueApollo from "vue-apollo";
+// vxe-table imports
+import "./core/plugins/utils";
+import "./core/plugins/table";
+// import VXETable from "vxe-table";
+// import "vxe-table/lib/style.css";
+// import XEUtils from "xe-utils";
+// -------------------------
+
+//vxe-table usage
+// Vue.use(VXETable);
+// Vue.use(XEUtils);
+
+// HTTP connection to the API graphql/apollo
+const httpLink = new HttpLink({
+  // You should use an absolute URL here
+  uri: "http://localhost:8000/graphql"
+});
+
+// Cache implementation graphql/apollo
+const cache = new InMemoryCache();
+
+// Create the apollo client graphql/apollo
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache
+});
+// using apollo/graphql
+Vue.use(VueApollo);
+//-------------------------------
+
+// The provider holds the Apollo client instances that can then be used by all the child components
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient
+  // loadingKey to ‘loading’ so that we can easily display a loading indicator in the UI
+  // defaultOptions: {
+  //   $loadingKey: "loading"
+  // }
+});
 
 Vue.config.productionTip = false;
 
@@ -30,17 +74,18 @@ import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
 
 // API service init
-ApiService.init();
+// ApiService.init();
 
 // Remove this to disable mock API
-MockService.init();
+// MockService.init();
 
 router.beforeEach((to, from, next) => {
   // Ensure we checked auth before each page load.
-  Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
-
+  // Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
+  store.dispatch(VERIFY_AUTH);
+  next();
   // reset config to initial state
-  store.dispatch(RESET_LAYOUT_CONFIG);
+  // store.dispatch(RESET_LAYOUT_CONFIG);
 
   // Scroll page to top on every route change
   setTimeout(() => {
@@ -53,5 +98,7 @@ new Vue({
   store,
   i18n,
   vuetify,
+  // injecting apolloProvider here // eslint-disable-next-line
+  apolloProvider,
   render: h => h(App)
 }).$mount("#app");

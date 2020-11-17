@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex flex-column flex-root" v-if="isAuthenticated">
+  <!-- <div class="d-flex flex-column flex-root" v-if="isAuthenticated"> -->
+  <div class="d-flex flex-column flex-root">
     <!-- begin:: Header Mobile -->
     <KTHeaderMobile></KTHeaderMobile>
     <!-- end:: Header Mobile -->
@@ -9,7 +10,7 @@
     <!-- begin::Body -->
     <div class="d-flex flex-row flex-column-fluid page">
       <!-- begin:: Aside Left -->
-      <KTAside v-if="asideEnabled"></KTAside>
+      <KTAside v-if="selectedRoute"></KTAside>
       <!-- end:: Aside Left -->
 
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
@@ -82,6 +83,12 @@ export default {
     KTScrollTop,
     Loader
   },
+  data() {
+    return {
+      selectedRoute: true,
+      NonAsideRoutes: ["marketmap", "oraq", "shakhes", "robot"]
+    };
+  },
   beforeMount() {
     // show page loading
     this.$store.dispatch(ADD_BODY_CLASSNAME, "page-loading");
@@ -101,7 +108,27 @@ export default {
       this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
     }, 2000);
   },
-  methods: {},
+  watch: {
+    $route: "fetchRoute"
+  },
+  methods: {
+    fetchRoute() {
+      let route = this.$route.name;
+      if (this.NonAsideRoutes.includes(route)) {
+        this.selectedRoute = false;
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-enabled");
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-fixed");
+        // this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-static");
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-minimize");
+      } else {
+        this.selectedRoute = true;
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-enabled");
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-fixed");
+        // this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-static");
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-minimize");
+      }
+    }
+  },
   computed: {
     ...mapGetters([
       "isAuthenticated",

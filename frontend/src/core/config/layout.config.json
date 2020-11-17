@@ -74,7 +74,7 @@
     "self": {
       "display": true,
       "width": "fluid",
-      "theme": "light",
+      "theme": "dark",
       "fixed": {
         "desktop": true,
         "mobile": true
@@ -90,7 +90,7 @@
         "arrow": true,
         "toggle": "click",
         "submenu": {
-          "theme": "light",
+          "theme": "dark",
           "arrow": true
         }
       },
@@ -113,7 +113,7 @@
     "style": "solid"
   },
   "content": {
-    "width": "fixed"
+    "width": "fluid"
   },
   "brand": {
     "self": {
@@ -126,8 +126,8 @@
       "display": true,
       "fixed": true,
       "minimize": {
-        "toggle": true,
-        "default": false,
+        "toggle": false,
+        "default": true,
         "hoverable": true
       }
     },
