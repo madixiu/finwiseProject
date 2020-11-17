@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from django.conf import settings as django_settings
+from datetime import timedelta
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,7 +42,14 @@ INSTALLED_APPS = [
     'channels',
     'rest_framework',
     'api',
-    'websocket'
+    'websocket',
+    "graphene_django",
+    "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
+    "graphql_auth",
+    "django_filters",
+    "users"
+
+    
     # 'subscriptions',
 ]
 
@@ -56,6 +64,84 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# graphQL
+AUTH_USER_MODEL = 'users.CustomUser'
+
+GRAPHENE = {
+    'SCHEMA': 'backend.schema.schema', # this file doesn't exist yet
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
+AUTHENTICATION_BACKENDS = [
+    # 'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    'graphql_auth.backends.GraphQLAuthBackend',
+
+]
+
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_ALLOW_ANY_CLASSES": [
+        "graphql_auth.mutations.Register",
+        "graphql_auth.mutations.VerifyAccount",
+        "graphql_auth.mutations.ResendActivationEmail",
+        "graphql_auth.mutations.SendPasswordResetEmail",
+        "graphql_auth.mutations.PasswordReset",
+        "graphql_auth.mutations.ObtainJSONWebToken",
+        "graphql_auth.mutations.VerifyToken",
+        "graphql_auth.mutations.RefreshToken",
+        "graphql_auth.mutations.RevokeToken",
+        "graphql_auth.mutations.VerifySecondaryEmail",
+    ],
+    # optional for long running refresh token
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=11),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=1),
+}
+
+# graphql options
+GRAPHQL_AUTH = {
+    "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
+    "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
+    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["age","gender","degree"],
+    "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree"],
+    "ALLOW_LOGIN_NOT_VERIFIED": False,
+    "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
+    "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),
+    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
+    # email stuff
+    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL", "mr.robotc7@gmail.com"),
+    "SEND_ACTIVATION_EMAIL": True,
+    "EMAIL_SUBJECT_ACTIVATION": "email/activation_subject.txt",
+    "EMAIL_SUBJECT_ACTIVATION_RESEND": "email/activation_subject.txt",
+    "EMAIL_SUBJECT_SECONDARY_EMAIL_ACTIVATION": "email/activation_subject.txt",
+    "EMAIL_SUBJECT_PASSWORD_RESET": "email/password_reset_subject.txt",
+    # email templates
+    "EMAIL_TEMPLATE_ACTIVATION": "email/activation_email.html",
+    "EMAIL_TEMPLATE_ACTIVATION_RESEND": "email/activation_email.html",
+    "EMAIL_TEMPLATE_SECONDARY_EMAIL_ACTIVATION": "email/activation_email.html",
+    "EMAIL_TEMPLATE_PASSWORD_RESET": "email/password_reset_email.html",
+    # ...
+}
+# --- EMAIL
+#console email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# gmail smtp
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mr.robotc7@gmail.com'
+#Must generate specific password for your app in [gmail settings][1]
+EMAIL_HOST_PASSWORD = 'yamahdi001'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# graphQL end
+
+
 ROOT_URLCONF = 'backend.urls'
 ASGI_APPLICATION = "backend.routing.application"
 
@@ -65,7 +151,7 @@ ASGI_THREADS = 1000
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,7 +164,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
@@ -155,6 +241,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+# Authentication 
+
+
+
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
