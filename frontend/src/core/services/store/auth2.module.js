@@ -1,7 +1,7 @@
 // import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
-import { LOGIN_USER, REGISTER_USER, VERIFY_USER } from "@/graphql/mutations";
-// import { LOGIN_USER, REGISTER_USER } from "@/graphql/mutations";
+// import { LOGIN_USER, REGISTER_USER, VERIFY_USER } from "@/graphql/mutations";
+import { LOGIN_USER, REGISTER_USER } from "@/graphql/mutations";
 // action types
 export const VERIFY_AUTH = "verifyAuth";
 export const LOGIN = "login";
@@ -101,7 +101,7 @@ const actions = {
       //   });
     });
   },
-  [VERIFY_AUTH](context) {
+  [VERIFY_AUTH]() {
     // if (JwtService.getToken()) {
     let s = true;
     if (s) {
