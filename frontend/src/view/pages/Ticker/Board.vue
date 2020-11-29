@@ -6,7 +6,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <NotificationsWidget :notices="notice"></NotificationsWidget>
+        <BoardCeoWidget :notices="notice" :deposits="deposit"></BoardCeoWidget>
       </div>
     </div>
   </div>
@@ -16,47 +16,35 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
+import BoardCeoWidget from "@/view/pages/Ticker/TickerWidgets/BoardCeoWidget.vue";
 import axios from "axios";
 export default {
-  name: "Notifications",
+  name: "BoardView",
   components: {
     SubHeaderWidget,
-    NotificationsWidget
+    BoardCeoWidget
   },
   data() {
     return {
-      allowed: [],
       subheaders: [],
-      notice: []
+      notice: [],
+      deposit: []
     };
   },
   mounted() {
-    // this.loadData2();
+    // this.loadData3();
     this.loadData3();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعیه های کدال" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات هیيت مدیره" }]);
   },
   watch: {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
       // console.log(this.notices);
-    },
-    allowed() {
-      var flag = false;
-      for (var i = 0; i < this.allowed.length; i++) {
-        var obj = this.allowed[i];
-        if (obj.ID == this.$route.params.id) {
-          flag = true;
-        }
-      }
-      if (!flag) {
-        this.$router.push({ name: "wizard" });
-      }
     }
   },
   methods: {
     loadData3() {
-      this.getAllowed().then(response => {
+      this.getOne().then(response => {
         console.log(response);
         //add this to package.json in developement
         //         "eslintConfig": {
@@ -65,21 +53,27 @@ export default {
         //       "no-unused-vars": "off"
         //     }
         // },
-        this.getOne().then(response2 => {
-          console.log(response2);
-          this.getTwo().then(function() {});
-          // console.log("ChainDone");
+        this.getTwo().then(response => {
+          console.log(response);
+          this.getThree().then(function() {
+            console.log("ChainDone");
+          });
         });
       });
     },
-    async getAllowed() {
+    async getTwo() {
       await axios
-        .get("http://localhost:8000/api/tickerallnames")
-        .then(response3 => {
+        .get(
+          "http://localhost:8000/api/CurrentBoard/" +
+            this.$route.params.id +
+            "/"
+        )
+        .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
           // console.log("SecondDone");
-          this.allowed = response3.data;
+          this.notice = response2.data;
+          // console.log(response2.data);
           // console.log("GetTwoStart:");
           // console.log(response.data);
           // console.log(this.notice);
@@ -90,19 +84,17 @@ export default {
           console.log(error);
         });
     },
-    async getTwo() {
+    async getThree() {
       await axios
         .get(
-          "http://localhost:8000/api/CodalNotices/" +
-            this.$route.params.id +
-            "/"
+          "http://localhost:8000/api/CurrentCeo/" + this.$route.params.id + "/"
         )
-        .then(response2 => {
+        .then(response3 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
           // console.log("SecondDone");
-          this.notice = response2.data;
-          // console.log(response2.data);
+          this.deposit = response3.data;
+          // console.log(response3.data);
           // console.log("GetTwoStart:");
           // console.log(response.data);
           // console.log(this.notice);

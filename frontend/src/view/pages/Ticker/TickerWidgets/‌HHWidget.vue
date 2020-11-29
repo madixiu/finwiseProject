@@ -13,7 +13,8 @@
       <template>
         <div>
           <apexchart
-            type="bar"
+            width="100%"
+            height="500"
             :options="options"
             :series="series"
           ></apexchart>
@@ -26,46 +27,109 @@
 
 <script>
 import { mapGetters } from "vuex";
-
 export default {
   name: "NotificationWidget",
+  props: ["datalabels"],
   data: () => ({
     options: {
       chart: {
-        id: "HH"
+        type: "line",
+        stacked: false
+      },
+      stroke: {
+        width: [0, 1, 3],
+        curve: "smooth"
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "10%"
+        }
+      },
+
+      fill: {
+        opacity: [0.85, 0.25, 1],
+        gradient: {
+          inverseColors: false,
+          shade: "light",
+          type: "vertical",
+          opacityFrom: 0.85,
+          opacityTo: 0.55,
+          stops: [0, 10, 20, 50]
+        }
+      },
+      labels: [
+        "01/01/2003",
+        "02/01/2003",
+        "03/01/2003",
+        "04/01/2003",
+        "05/01/2003",
+        "06/01/2003",
+        "07/01/2003",
+        "08/01/2003",
+        "09/01/2003",
+        "10/01/2003",
+        "11/01/2003"
+      ],
+      markers: {
+        size: 5
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ]
+        type: "datetime"
+      },
+      yaxis: {
+        title: {
+          text: "مقدار"
+        },
+        min: 10
+      },
+      tooltip: {
+        shared: true,
+        intersect: false,
+        y: {
+          formatter: function(y) {
+            if (typeof y !== "undefined") {
+              return y.toFixed(0) + " points";
+            }
+            return y;
+          }
+        }
       }
     },
     series: [
       {
-        name: "series-1",
-        data: [55, 62, 89, 66, 98, 72, 101, 75, 94, 120, 117, 139]
+        name: "TEAM A",
+        type: "column",
+        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
+      },
+      {
+        name: "TEAM B",
+        type: "area",
+        data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
+      },
+      {
+        name: "TEAM C",
+        type: "line",
+        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
       }
     ]
   }),
   computed: {
     ...mapGetters(["layoutConfig"])
   },
-  methods: {},
-  mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
-  }
+  methods: {
+    populateLabels() {
+      this.options.labels = this.datalabels;
+      console.log("Watcher");
+      console.log(this.options.labels);
+    }
+  },
+  watch: {
+    datalabels() {
+      this.populateLabels();
+      this.renderChart(this.series, this.options);
+    }
+  },
+  mounted() {}
 };
 </script>
 <style scoped>

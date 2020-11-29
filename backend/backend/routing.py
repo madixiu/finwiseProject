@@ -1,5 +1,5 @@
-from websocket.consumers import optionData,random,MarketWatch
-from django.urls import re_path
+from websocket.consumers import *
+from django.urls import re_path,path
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
@@ -15,8 +15,13 @@ application = ProtocolTypeRouter({
                     re_path(r"^ws/test$", optionData),
                     # re_path(r"^index_live/$", index_live),
                     re_path(r"^random$", random),
-                    re_path(r"^marketwatch",MarketWatch)
-
+                    re_path(r"^marketwatch",MarketWatch),
+                    re_path(r"^Top5Views",Top5Viewed .as_asgi()),
+                    re_path(r"^ImpactOnIndex",getImpactOnIndex .as_asgi()),
+                    re_path(r"^HighestVolume",getHighestVolumes .as_asgi()),
+                    re_path(r"^HighestValues",getHighestValues .as_asgi()),
+                    re_path(r"^HighestSupplies",getHighestSupplies .as_asgi()),
+                    re_path(r"^HighestDemands",getHighestDemand .as_asgi()),
 
                 ]
             )

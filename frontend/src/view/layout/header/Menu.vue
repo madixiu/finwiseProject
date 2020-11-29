@@ -1,7 +1,7 @@
 <template>
   <ul class="menu-nav">
     <router-link
-      to="/saham"
+      to="/StockMarket"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -96,7 +96,7 @@
     </router-link>
 
     <router-link
-      to="/ticker"
+      :to="`/ticker/Overview/Overall/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li

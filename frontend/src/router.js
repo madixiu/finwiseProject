@@ -8,79 +8,80 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/saham",
+      redirect: "/StockMarket",
       component: () => import("@/view/layout/Layout"),
       children: [
         {
-          path: "/saham",
-          name: "saham",
-          redirect: "/saham/market/dashboard",
-          component: () => import("@/view/pages/Saham.vue"),
+          path: "/StockMarket",
+          name: "StockMarket",
+          redirect: "/StockMarket/Market/Dashboard/",
+          component: () =>
+            import("@/view/pages/StockMarket/StockMarketParent.vue"),
           children: [
             {
-              path: "market/dashboard",
-              name: "dashboard",
-              component: () => import("@/view/pages/Dashboard.vue")
+              path: "Market/Dashboard",
+              name: "Dashboard",
+              component: () => import("@/view/pages/StockMarket/Dashboard.vue")
             },
             {
-              path: "market/marketwatch",
+              path: "Market/MarketWatch",
               name: "marketwatch",
               component: () => import("@/view/pages/MarketWatch.vue")
             },
             {
-              path: "industries",
-              name: "industries",
+              path: "Industries",
+              name: "Industries",
               component: () => import("@/view/pages/Saham/Industries.vue")
             },
             {
-              path: "qarbal",
-              name: "qarbal",
+              path: "Screener",
+              name: "Screener",
               component: () => import("@/view/pages/Saham/Qarbal.vue")
             },
             {
-              path: "bonyad",
-              name: "bonyad",
+              path: "Fundamental",
+              name: "Fundamental",
               component: () => import("@/view/pages/Saham/Bonyad.vue")
             },
             {
-              path: "technical/goldprice",
-              name: "goldprice",
+              path: "Technical/Dashboard",
+              name: "TechnicalDashboard",
               component: () =>
                 import("@/view/pages/Saham/Technical/GoldPrice.vue")
             },
             {
-              path: "technical/tools",
-              name: "tools",
+              path: "Techincal/Tools",
+              name: "TechnicalTools",
               component: () => import("@/view/pages/Saham/Technical/Tools.vue")
             },
             {
-              path: "technical/data",
-              name: "data",
+              path: "Technical/Data",
+              name: "TechnicalData",
               component: () => import("@/view/pages/Saham/Technical/Data.vue")
             },
             {
-              path: "majame/calendar",
-              name: "calendar",
+              path: "Assembly/Calendar",
+              name: "AssemblyCalendar",
               component: () => import("@/view/pages/Saham/Majame/Calendar.vue")
             },
             {
-              path: "majame/afzayesh",
-              name: "afzayesh",
+              path: "Assembly/IncreaseCapitals",
+              name: "AssemblyIC",
               component: () => import("@/view/pages/Saham/Majame/Afzayesh.vue")
             },
             {
-              path: "taqadom",
-              name: "taqadom",
+              path: "Taghadom",
+              name: "Taghadom",
               component: () => import("@/view/pages/Saham/Taqadom.vue")
             },
             {
-              path: "option",
-              name: "option",
+              path: "Option",
+              name: "Option",
               component: () => import("@/view/pages/Saham/Option.vue")
             },
             {
-              path: "sandoq",
-              name: "sandoq",
+              path: "Funds",
+              name: "Funds",
               component: () => import("@/view/pages/Saham/Sandoq.vue")
             }
           ]
@@ -127,87 +128,113 @@ export default new Router({
         {
           path: "/ticker",
           name: "ticker",
-          redirect: "/ticker/Overview/nazer",
+          redirect: "/ticker/Overview/",
           component: () => import("@/view/pages/Ticker/Ticker.vue"),
           children: [
             {
-              path: "Overview/nazer/:id",
-              name: "nazer",
+              path: "Overview/Overall/:id",
+              name: "TickerOverall",
               component: () => import("@/view/pages/Ticker/Overview.vue")
             },
             {
-              path: "Overview/Notifications",
+              path: "Overview/Administration/:id",
+              name: "Administration",
+              component: () => import("@/view/pages/Ticker/Administration.vue")
+            },
+            {
+              path: "Overview/Notifications/:id",
               name: "Notifications",
               component: () =>
                 import("@/view/pages/Ticker/CodalNotifications.vue")
             },
             {
-              path: "Overview/StatusChange",
+              path: "Overview/StatusChange/:id",
               name: "StatusChange",
               component: () => import("@/view/pages/Ticker/StatusChange.vue")
             },
             {
-              path: "Overview/HH",
+              path: "Overview/HH/:id",
               name: "HH",
               component: () => import("@/view/pages/Ticker/HH.vue")
             },
             {
-              path: "Overview/managers",
-              name: "managers",
-              component: () => import("@/view/pages/Ticker/Managers.vue")
+              path: "Overview/Board/:id",
+              name: "Board",
+              component: () => import("@/view/pages/Ticker/Board.vue")
             },
             {
-              path: "Overview/shareholders",
+              path: "Overview/shareholders/:id",
               name: "shareholders",
               component: () => import("@/view/pages/Ticker/ShareHolders.vue")
             },
             {
-              path: "tadili",
-              name: "tadili",
-              component: () => import("@/view/pages/Ticker/Tadili.vue")
+              path: "AdjustedPrices/:id",
+              name: "AdjustedPrices",
+              component: () => import("@/view/pages/Ticker/AdjustedPrices.vue")
             },
             {
-              path: "bonyadi",
-              name: "bonyadi",
+              path: "TickerFundamental/:id",
+              name: "TickerFundamental",
               component: () => import("@/view/pages/Ticker/Bonyadi.vue")
             },
             {
-              path: "sahmTechnical",
-              name: "sahmTechnical",
+              path: "TickerTechnical/:id",
+              name: "TickerTechnical",
               component: () => import("@/view/pages/Ticker/SahmTechnical.vue")
             },
             {
-              path: "surats",
-              name: "surats",
+              path: "Sheets/:id",
+              name: "Sheets",
               component: () => import("@/view/pages/Ticker/Surats.vue")
             },
             {
-              path: "monthly",
-              name: "monthly",
+              path: "Monthly/:id",
+              name: "Monthly",
               component: () => import("@/view/pages/Ticker/Monthly.vue")
             },
             {
-              path: "sahmRobot",
+              path: "sahmRobot/:id",
               name: "sahmRobot",
               component: () => import("@/view/pages/Ticker/SahmRobot.vue")
             },
             {
-              path: "relations",
-              name: "relations",
+              path: "TickerRatio/:id",
+              name: "TickerRatio",
               component: () => import("@/view/pages/Ticker/Relations.vue")
             },
             {
-              path: "industry",
-              name: "industry",
+              path: "TickerIndustry/:id",
+              name: "TickerIndustry",
               component: () => import("@/view/pages/Ticker/Industry.vue")
             },
             {
-              path: "sahmMajame",
-              name: "sahmMajame",
+              path: "TickerAssembly/:id",
+              name: "TickerAssembly",
+              redirect: "/ticker/TickerAssembly/TickerAssemblyCalendar",
               component: () => import("@/view/pages/Ticker/SahmMajame.vue")
             },
             {
-              path: "sarmaye",
+              path: "TickerAssembly/Calendar/:id",
+              name: "TickerAssemblyCalendar",
+              component: () => import("@/view/pages/Ticker/SahmMajame.vue")
+            },
+            {
+              path: "TickerAssembly/Report/:id",
+              name: "TickerAssemblyReport",
+              component: () => import("@/view/pages/Ticker/AssemblyAll.vue")
+            },
+            {
+              path: "TickerAssembly/DPS/:id",
+              name: "TickerAssemblyDPS",
+              component: () => import("@/view/pages/Ticker/AssemblyDPS.vue")
+            },
+            {
+              path: "TickerAssembly/IC/:id",
+              name: "TickerAssemblyIC",
+              component: () => import("@/view/pages/Ticker/AssemblyIncreaseCapital.vue")
+            },
+            {
+              path: "sarmaye/:id",
               name: "sarmaye",
               component: () => import("@/view/pages/Ticker/Sarmaye.vue")
             }

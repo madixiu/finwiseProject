@@ -6,10 +6,49 @@ from django.views.decorators.csrf import csrf_exempt
 from requestcall.getOptions import optionFlag, optionRequest
 from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerNameRequest,tableNameRequest
 from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
+from requestcall.getCodalNotices import *
+from requestcall.getTseData import *
 
 # selectedType='all'
 # selectedMarket = 'all'
 # selectedIndustry = 'all'
+def getCodalNoticesAll(self,identifier):
+    return JsonResponse(CodalNoticesRequest(identifier),safe=False)
+def getSubHeader(self,identifier):
+    return JsonResponse(SubHeader(identifier),safe=False)   
+def getHHhistory(self,identifier):
+    return JsonResponse(HHhistory(identifier),safe=False)
+def getAdjustedPriceHistory(self,identifier):
+    return JsonResponse(AdjustedPrices(identifier),safe=False)
+def getCurrentBoard(self,identifier):
+    return JsonResponse(getBoard(identifier),safe=False)
+def getCurrentCeo(self,identifier):
+    return JsonResponse(getceo(identifier),safe=False)
+def getStatusChanges(self,identifier):
+    return JsonResponse(StatusChanges(identifier),safe=False)    
+def getAdminNotice(self,firm):
+    return JsonResponse(getAdminsNotices(firm),safe=False)    
+def getStatsTicker(self,identifier):
+    return JsonResponse(getStatisticsTicker(identifier),safe=False)
+def getAllDPS(self,identifier):
+    return JsonResponse(getAllDps(identifier),safe=False)    
+######TSE
+def getTop5MostViewed(self):
+    return JsonResponse(Top5MostViewed(),safe=False)    
+
+###MonthlyBeginsHere
+def getTypeOfMonthly(self,identifier):
+    return JsonResponse(getTypeOffirm(identifier),safe=False)
+def getMonthlyBank_Deposits(self,identifier):
+    return JsonResponse(monthlyBankDeposits(identifier),safe=False)
+def getMonthlyBank_Facility(self,identifier):
+    return JsonResponse(monthlyBankFacility(identifier),safe=False)
+def getMonthlyInsurance(self,identifier):
+    return JsonResponse(monthlyInsurance(identifier),safe=False)
+def getMonthlyConstSold(self,identifier):
+    return JsonResponse(monthlyConstSold(identifier),safe=False)    
+def getMonthlyConstOngoing(self,identifier):
+    return JsonResponse(monthlyConstOngoing(identifier),safe=False)    
 
 def getOptions(self):
     if(optionFlag()):

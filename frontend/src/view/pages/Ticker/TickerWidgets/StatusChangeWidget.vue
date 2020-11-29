@@ -5,14 +5,28 @@
         تغییر وضعیت
       </h3>
     </div>
+    <div class="row">
+      <div class="col-xxl-12">
+        <template>
+          <v-timeline>
+            <v-timeline-item 
+              v-for="(value, key) in DataItems2"
+              :key="key"
+              v-bind:class="[key % 2 != 0 ? 'text-right' : '']"
+            >
+              <v-alert dense type="info"
+                >{{ value.persianDate.slice(0, 4) }}/{{ value.persianDate.slice(4, 6) }}/{{
+                  value.persianDate.slice(6, 8)
+                }}<br />
+                {{ value.Hour }} <br />
+                {{ value.Status }}
+              </v-alert>
+            </v-timeline-item>
+          </v-timeline>
+        </template>
+      </div>
+    </div>
     <!--end::Header-->
-    <template>
-      <v-timeline>
-        <v-timeline-item>timeline item</v-timeline-item>
-        <v-timeline-item>timeline item</v-timeline-item>
-        <v-timeline-item>timeline item</v-timeline-item>
-      </v-timeline>
-    </template>
   </div>
   <!--end::Mixed Widget 14-->
 </template>
@@ -21,19 +35,31 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "SC",
+  name: "StatusChanges",
+  props: ["notices"],
   data() {
     return {
-      search: ""
+      search: "",
+      DataItems2: []
     };
   },
   computed: {
     ...mapGetters(["layoutConfig"])
   },
-  methods: {},
+  methods: {
+    populateData() {
+      this.DataItems2 = this.notices;
+    }
+  },
   mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
+    this.populateData();
+  },
+  watch: {
+    notices() {
+      // console.log("Watcher");
+      this.populateData();
+      // console.log(this.notices);
+    }
   }
 };
 </script>
@@ -68,5 +94,12 @@ export default {
   padding: 1px;
   font-size: 0.9em;
   text-align: right;
+}
+.v-timeline {
+  direction: ltr !important;
+  text-align: left;
+}
+.v-timeline:before {
+  margin-left: 50%;
 }
 </style>

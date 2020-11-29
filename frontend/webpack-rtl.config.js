@@ -85,3 +85,4 @@ const mainConfig = function() {
 module.exports = function() {
   return [mainConfig()];
 };
+

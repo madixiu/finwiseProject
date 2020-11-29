@@ -3,7 +3,10 @@
     <!--begin::Dashboard-->
     <div class="row">
       <div class="col-xxl-12">
-        <liveWidget></liveWidget>
+        <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
+      </div>
+      <div class="col-xxl-12">
+        <liveWidget :statistics="stats"></liveWidget>
       </div>
       <div class="col-xxl-4">
         <FSWidget></FSWidget>
@@ -42,6 +45,8 @@ import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue"
 import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
 import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
 import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import axios from "axios";
 
 export default {
   name: "dashboard",
@@ -53,23 +58,100 @@ export default {
     ReturnWidget,
     DivWidget,
     AnalystWidget,
-    MoreStatisticsWidget
+    MoreStatisticsWidget,
+    SubHeaderWidget
   },
   data() {
     return {
       search: "",
-      Nemad: "شستا",
-      tickerfull: "تامین اجتماعی"
+      subheaders: [],
+      allowed: [],
+      stats: []
       // prop
     };
   },
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات سهم" }]);
-    this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.Nemad }]);
-    let User = this.$route.params.id;
-    console.log(User);
+    this.loadData3();
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+  },
+  watch: {
+    subheaders() {
+      this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+      // console.log(this.notices);
+    }
   },
   methods: {
+    loadData3() {
+      this.getAllowed().then(response => {
+        console.log(response);
+        //add this to package.json in developement
+        //         "eslintConfig": {
+        //     "rules": {
+        //       "no-console": "off",
+        //       "no-unused-vars": "off"
+        //     }
+        // },
+        this.getOne().then(response2 => {
+          console.log(response2);
+          this.getTwo().then(function() {});
+          // console.log("ChainDone");
+        });
+      });
+    },
+    async getAllowed() {
+      await axios
+        .get("http://localhost:8000/api/tickerallnames")
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.allowed = response3.data;
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getTwo() {
+      await axios
+        .get(
+          "http://localhost:8000/api/StatsTicker/" + this.$route.params.id + "/"
+        )
+        .then(response2 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.stats = response2.data;
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getOne() {
+      await axios
+        .get(
+          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
+        )
+        .then(response1 => {
+          // console.log("firstDone");
+          this.subheaders = response1.data[0];
+          // console.log(response1.data);
+        })
+        .catch(error => {
+          // console.log("GetOneCatch");
+          console.log(error);
+        });
+    },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },

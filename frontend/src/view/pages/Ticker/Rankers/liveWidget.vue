@@ -7,32 +7,6 @@
         {{ this.Nemad }}<span class="small mr-5">{{ this.tickerfull }}</span>
       </h3>
     </div> -->
-    <div class="row border-0 pb-4 pt-2">
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
-          بازار
-        </v-chip>
-        {{ this.market }}
-      </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
-          صنعت
-        </v-chip>
-        {{ this.industry }}
-      </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
-          تابلو
-        </v-chip>
-        {{ this.tablo }}
-      </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
-          گروه
-        </v-chip>
-        {{ this.subindustry }}
-      </div>
-    </div>
 
     <v-card>
       <v-tabs vertical>
@@ -182,10 +156,26 @@
                   <h5 class="titleHeaders">اطلاعات ارزش معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    میانگین ارزش معاملات ۳ ماهه : {{ this.avgval3month }}
+                    میانگین ارزش معاملات ۳ ماهه :
+                    <span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.avgval3month / 1000000000, 2)
+                        )
+                      }}<br />
+                      میلیارد ریال</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    میانگین ارزش معاملات ۱۲ ماهه : {{ this.avgval12month }}
+                    میانگین ارزش معاملات ۱۲ ماهه :
+                    <span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.avgval12month / 1000000000, 2)
+                        )
+                      }}<br />
+                      میلیارد ریال</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     رتبه میانگین ارزش معاملات ۳ ماهه :{{ this.rankval3month }}
@@ -198,10 +188,25 @@
                   <h5 class="titleHeaders">اطلاعات حجم معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    میانگین حجم معاملات ۳ ماهه : {{ this.avgvol3month }}
+                    میانگین حجم معاملات ۳ ماهه :
+                    <span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.avgval3month / 1000000, 2)
+                        )
+                      }}<br />
+                      میلیون</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    میانگین حجم معاملات ۱۲ ماهه : {{ this.avgvol12month }}
+                    میانگین حجم معاملات ۱۲ ماهه :<span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.avgvol12month / 1000000, 2)
+                        )
+                      }}<br />
+                      میلیون</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     رتبه میانگین حجم معاملات ۳ ماهه :{{ this.rankvol3month }}
@@ -214,10 +219,16 @@
                   <h5 class="titleHeaders">اطلاعات تعداد معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    میانگین تعداد معاملات ۳ ماهه : {{ this.avgcount3month }}
+                    میانگین تعداد معاملات ۳ ماهه :
+                    <span
+                      >{{ numberWithCommas(this.avgcount3month) }}<br />
+                    </span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    میانگین تعداد معاملات ۱۲ ماهه : {{ this.avgcount12month }}
+                    میانگین تعداد معاملات ۱۲ ماهه :
+                    <span
+                      >{{ numberWithCommas(this.avgcount12month) }}<br />
+                    </span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     رتبه میانگین تعداد معاملات ۳ ماهه :{{
@@ -234,20 +245,44 @@
                   <h5 class="titleHeaders">اطلاعات معاملاتی آخرین روز</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    ارزش معاملات آخرین روز : {{ this.yesterdaytvalue }}
+                    ارزش معاملات آخرین روز :<span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.yesterdaytvalue / 1000000000, 2)
+                        )
+                      }}<br />
+                      میلیارد ریال</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم معاملات آخرین روز : {{ this.yesterdaytvolume }}
+                    حجم معاملات آخرین روز :
+                    <span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.yesterdaytvolume / 1000000, 2)
+                        )
+                      }}<br />
+                      میلیون</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    تعداد معاملات آخرین روز :{{ this.yesterdaytcount }}
+                    تعداد معاملات آخرین روز :<span
+                      >{{ numberWithCommas(this.yesterdaytcount) }}<br />
+                    </span>
                   </h5>
                 </div>
                 <div class="col-xxl-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات ارزش بازار</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    ارزش بازار دیروز : {{ this.marketcapyesterday }}
+                    ارزش بازار دیروز :<span
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.marketcapyesterday / 1000000000, 2)
+                        )
+                      }}<br />
+                      میلیارد ریال</span
+                    >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     رتبه ارزش بازار دیروز : {{ this.marketcapyesterdayrank }}
@@ -280,6 +315,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "PWidget",
+  props: ["statistics"],
   data() {
     return {
       search: "",
@@ -301,33 +337,33 @@ export default {
       marketcap: "12321312321312",
       min: "131",
       max: "141",
-      avgval3month: 123,
-      avgval12month: 113,
-      rankval3month: 2,
-      rankval12month: 8,
-      avgvol3month: 12312312312,
-      avgvol12month: 22231112,
-      rankvol3month: 5,
-      rankvol12month: 15,
-      avgcount3month: 12311111,
-      avgcount12month: 5153,
-      rankcount3month: 15,
-      rankcount12month: 18,
-      marketcapyesterday: 454848484848,
-      marketcapyesterdayrank: 12,
-      yesterdaytvalue: 848484,
-      yesterdaytvolume: 848484,
-      yesterdaytcount: 848484,
-      opendayscount3month: 48,
-      opendayscount12month: 210,
-      countbuyerHaghighi: 154,
-      countbuyerHoghughi: 2,
-      volumebuyerHaghighi: 1544444,
-      volumebuyerHoghughi: 188791157,
-      countsellerHaghighi: 250,
-      countsellerHoghughi: 15,
-      volumesellerHaghighi: 14844,
-      volumesellerHoghughi: 1848484
+      avgval3month: "-",
+      avgval12month: "-",
+      rankval3month: "-",
+      rankval12month: "-",
+      avgvol3month: "-",
+      avgvol12month: "-",
+      rankvol3month: "-",
+      rankvol12month: "-",
+      avgcount3month: "-",
+      avgcount12month: "-",
+      rankcount3month: "-",
+      rankcount12month: "-",
+      marketcapyesterday: "-",
+      marketcapyesterdayrank: "-",
+      yesterdaytvalue: "-",
+      yesterdaytvolume: "-",
+      yesterdaytcount: "-",
+      opendayscount3month: "-",
+      opendayscount12month: "-",
+      countbuyerHaghighi: "-",
+      countbuyerHoghughi: "-",
+      volumebuyerHaghighi: "-",
+      volumebuyerHoghughi: "-",
+      countsellerHaghighi: "-",
+      countsellerHoghughi: "-",
+      volumesellerHaghighi: "-",
+      volumesellerHoghughi: "-"
     };
   },
   computed: {
@@ -340,6 +376,101 @@ export default {
     }
   },
   methods: {
+    numberWithCommas(x) {
+      if (x == "-") {
+        return x;
+      }
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      if (n == "-") {
+        return n;
+      }
+
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
+    populateData() {
+      this.DataItems2 = this.statistics;
+      Object.keys(this.DataItems2).forEach(key => {
+        let val = this.DataItems2[key]; // value of the current key
+        if (val.Item == "Avg Value 3 month") {
+          this.avgval3month = val.value;
+        }
+        if (val.Item == "Avg Value 12 month") {
+          this.avgval12month = val.value;
+        }
+        if (val.Item == "Rank _ value 3 month") {
+          this.rankval3month = val.value;
+        }
+        if (val.Item == "Rank_value 12 month") {
+          this.rankval12month = val.value;
+        }
+        if (val.Item == "Avg Volume 3 month") {
+          this.avgvol3month = val.value;
+        }
+        if (val.Item == "Avg Volume 12 month") {
+          this.avgvol12month = val.value;
+        }
+        if (val.Item == "Rank Volume 3 month") {
+          this.rankvol3month = val.value;
+        }
+        if (val.Item == "Rank Volume 12 month") {
+          this.rankvol12month = val.value;
+        }
+        if (val.Item == "Avg Count 3 month") {
+          this.avgcount3month = val.value;
+        }
+        if (val.Item == "Avg Count 12 month") {
+          this.avgcount12month = val.value;
+        }
+        if (val.Item == "Rank Count 3 month") {
+          this.rankcount3month = val.value;
+        }
+        if (val.Item == "Rank Count 12 month") {
+          this.rankcount12month = val.value;
+        }
+        if (val.Item == "Value Last Day") {
+          this.yesterdaytvalue = val.value;
+        }
+        if (val.Item == "Volume last Day") {
+          this.yesterdaytvolume = val.value;
+        }
+        if (val.Item == "Count Last Day") {
+          this.yesterdaytcount = val.value;
+        }
+        if (val.Item == "Market Cap Last Day") {
+          this.marketcapyesterday = val.value;
+        }
+        if (val.Item == "Market Cap Rank Last Day") {
+          this.marketcapyesterdayrank = val.value;
+        }
+        if (val.Item == "Open Days Count in 3 months") {
+          this.opendayscount3month = val.value;
+        }
+        if (val.Item == "Open Days Count in 12 month") {
+          this.opendayscount12month = val.value;
+        }
+      });
+    },
     // set FinancialStrength percent
     setFinancialStrengthPercent: function() {
       this.FinancialStrengthPercent = this.FinancialStrength * 10;
@@ -372,7 +503,14 @@ export default {
   },
   mounted() {
     // this.setFinancialStrengthPercent();
+    this.populateData();
     // reference; kt_stats_widget_7_chart
+  },
+  watch: {
+    statistics() {
+      // console.log("Watcher");
+      this.populateData();
+    }
   }
 };
 </script>

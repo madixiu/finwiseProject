@@ -15,7 +15,6 @@
           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-chip color="danger" label text-color="white" v-on="on">
-                
                 امتیاز کلی
                 <v-icon left>mdi-label</v-icon>
               </v-chip>

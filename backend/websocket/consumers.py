@@ -11,6 +11,7 @@ from channels.exceptions import StopConsumer
 from .randomGen import get_number
 from requestcall.getOptions import optionRequest, optionFlag
 from requestcall.getMarketWatch import getMarketWatchRequest,getFilteredData
+from requestcall.getTseData import *
 
 class optionData(AsyncWebsocketConsumer):
     channel_layer = get_channel_layer()
@@ -138,8 +139,8 @@ class MarketWatch(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         data = json.loads(text_data)
         if data[0].get("request") == "get":
-            print('req')
-            print(data)
+            # print('req')
+            # print(data)
             # dic = {}
             # dic['data'] = getMarketWatchHeaderReq()
             text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
@@ -155,3 +156,106 @@ class MarketWatch(AsyncWebsocketConsumer):
         print("MarketWatchWS", code)
         self.close()
         raise StopConsumer()
+
+class Top5Viewed(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(Top5MostViewed());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()    
+class getImpactOnIndex(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(ImpactOnIndex());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()        
+class getHighestVolumes(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(highestTvolumes());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()        
+class getHighestValues(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(highestTvalues());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()        
+class getHighestDemand(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(highestDemands());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()        
+class getHighestSupplies(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            # print('req')
+            text_data = json.dumps(highestSupplies());
+            # text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()                        

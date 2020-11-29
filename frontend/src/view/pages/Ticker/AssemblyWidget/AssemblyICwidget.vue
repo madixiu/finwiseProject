@@ -4,7 +4,7 @@
     <!--begin::Header-->
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-        اطلاعیه های کدال
+        افزایش سرمایه
       </h3>
     </div>
     <!--end::Header-->

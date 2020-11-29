@@ -6,7 +6,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <NotificationsWidget :notices="notice"></NotificationsWidget>
+        <DPSWidget :notices="notice"></DPSWidget>
       </div>
     </div>
   </div>
@@ -16,13 +16,13 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
+import DPSWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyDPSWidget.vue";
 import axios from "axios";
 export default {
   name: "Notifications",
   components: {
     SubHeaderWidget,
-    NotificationsWidget
+    DPSWidget
   },
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
   mounted() {
     // this.loadData2();
     this.loadData3();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعیه های کدال" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "سود نقدی " }]);
   },
   watch: {
     subheaders() {
@@ -92,17 +92,13 @@ export default {
     },
     async getTwo() {
       await axios
-        .get(
-          "http://localhost:8000/api/CodalNotices/" +
-            this.$route.params.id +
-            "/"
-        )
+        .get("http://localhost:8000/api/Alldps/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
           // console.log("SecondDone");
           this.notice = response2.data;
-          // console.log(response2.data);
+          console.log(response2.data);
           // console.log("GetTwoStart:");
           // console.log(response.data);
           // console.log(this.notice);

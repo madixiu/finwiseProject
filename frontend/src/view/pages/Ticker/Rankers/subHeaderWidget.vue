@@ -8,29 +8,42 @@
       </h3>
     </div> -->
     <div class="row border-0 pb-4 pt-2">
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
+          نماد
+        </v-chip>
+        {{ DataItems.ticker }}
+      </div>
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
+          نام شرکت
+        </v-chip>
+        {{ DataItems.name }}
+      </div>
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           بازار
         </v-chip>
-        {{ this.market }}
+        {{ DataItems.market }}
       </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           صنعت
         </v-chip>
-        {{ this.industry }}
+
+        {{ DataItems.subIndustry }}
       </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           تابلو
         </v-chip>
-        {{ this.tablo }}
+        {{ DataItems.board }}
       </div>
-      <div class="col-xxl-3 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1E88E5" text-color="#FAFAFA">
+      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           گروه
         </v-chip>
-        {{ this.subindustry }}
+        {{ DataItems.parentIndustry }}
       </div>
     </div>
   </div>
@@ -39,67 +52,32 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+// import axios from "axios";
 export default {
-  name: "PWidget",
+  name: "SubHeaderWidget",
+  props: ["tickerdata"],
   data() {
     return {
       search: "",
-      Nemad: "شستا",
-      tickerfull: "تامین اجتماعی",
-      industry: "سرمایه گذاری",
-      subindustry: "شرکتی",
-      market: "بورس",
-      tablo: "اول بورس",
-      close: "1500",
-      open: "1400",
-      first: "2200",
-      last: "1250",
-      high: "1200",
-      low: "1320",
-      tradeVolume: "50000",
-      tradevalue: "11111111",
-      tradecount: "123213",
-      marketcap: "12321312321312",
-      min: "131",
-      max: "141",
-      avgval3month: 123,
-      avgval12month: 113,
-      rankval3month: 2,
-      rankval12month: 8,
-      avgvol3month: 12312312312,
-      avgvol12month: 22231112,
-      rankvol3month: 5,
-      rankvol12month: 15,
-      avgcount3month: 12311111,
-      avgcount12month: 5153,
-      rankcount3month: 15,
-      rankcount12month: 18,
-      marketcapyesterday: 454848484848,
-      marketcapyesterdayrank: 12,
-      yesterdaytvalue: 848484,
-      yesterdaytvolume: 848484,
-      yesterdaytcount: 848484,
-      opendayscount3month: 48,
-      opendayscount12month: 210,
-      countbuyerHaghighi: 154,
-      countbuyerHoghughi: 2,
-      volumebuyerHaghighi: 1544444,
-      volumebuyerHoghughi: 188791157,
-      countsellerHaghighi: 250,
-      countsellerHoghughi: 15,
-      volumesellerHaghighi: 14844,
-      volumesellerHoghughi: 1848484
+      DataItems: []
     };
   },
   computed: {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
+    populateData() {
+      this.DataItems = this.tickerdata;
+    }
   },
   mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
+    this.populateData();
+  },
+  watch: {
+    tickerdata() {
+      this.populateData();
+      // console.log("WatcherSubHeader");
+    }
   }
 };
 </script>

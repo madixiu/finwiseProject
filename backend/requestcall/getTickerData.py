@@ -1,6 +1,6 @@
 import requests
 import json
-
+import time
 
 # id = 0
 
@@ -44,19 +44,19 @@ def getTickerID(tickerName):
 
 
 def tickerNameRequest(): 
-    # head = {'Accept-Profile':'public'}
-    # resp = requests.get('http://185.97.117.60:3000/FirmsAll',headers = head)
-    # if resp.status_code == 200:
-    #     parsed_json = (json.loads(resp.text))
-    if not dataAvailablity:
-        getParsedData()
-    if dataAvailablity:
-        for ticker in parsed_json:
-            names.append(ticker['ticker'])
-        return (names)
-    # maybe this is redundant
-    else:
-        return ("noData")
+    ct=0
+    while ct<3:
+        resp = requests.get('http://185.97.117.60:3000/View_tickerOnly')
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
 
 def tableNameRequest():
     Tables=[]
