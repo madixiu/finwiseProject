@@ -1,24 +1,13 @@
 import gql from "graphql-tag";
+
 export const VERIFY_USER = gql`
-  mutation verifyToken($token: String!) {
-    verifyToken(token: $token) {
+  mutation verifyAccount($token: String!) {
+    verifyAccount(token: $token) {
       success
       errors
-      payload
     }
   }
 `;
-// export const VERIFY_USER = gql`
-//   {
-//     verifyToken(token: String!) {
-
-//         success
-//         errors
-//         payload
-
-//     }
-//   }
-// `;
 
 export const REGISTER_USER = gql`
   mutation register(
@@ -45,9 +34,26 @@ export const REGISTER_USER = gql`
   }
 `;
 
+// export const LOGIN_USER = gql`
+//   mutation tokenAuth($phoneNumber: String!, $password: String!) {
+//     tokenAuth(phoneNumber: $phoneNumber, password: $password) {
+//       success
+//       errors
+//       unarchiving
+//       token
+//       refreshToken
+
+//       user {
+//         id
+//         username
+//       }
+//     }
+//   }
+// `;
+
 export const LOGIN_USER = gql`
-  mutation tokenAuth($phoneNumber: String!, $password: String!) {
-    tokenAuth(phoneNumber: $phoneNumber, password: $password) {
+  mutation tokenAuth($email: String!, $password: String!) {
+    tokenAuth(email: $email, password: $password) {
       success
       errors
       unarchiving
@@ -57,7 +63,44 @@ export const LOGIN_USER = gql`
       user {
         id
         username
+        email
+        lastName
+        firstName
+        phoneNumber
+        expirationDate
+        role
+        isStaff
+        isActive
+        verified
       }
+    }
+  }
+`;
+export const VERIFY_ACCESS_TOKEN = gql`
+  mutation verifyToken($token: String!) {
+    verifyToken(token: $token) {
+      success
+      errors
+      payload
+    }
+  }
+`;
+
+export const REFRESH_ACCESS_TOKEN = gql`
+  mutation refreshToken($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      success
+      errors
+      token
+      payload
+    }
+  }
+`;
+
+export const REVOKE_TOKEN = gql`
+  mutation revokeToken($refreshToken: String!) {
+    revokeToken(refreshToken: $refreshToken) {
+      revoked
     }
   }
 `;

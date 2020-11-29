@@ -12,11 +12,7 @@
     <div class="card-body d-flex flex-column">
       <template>
         <div>
-          <apexchart
-            type="bar"
-            :options="options"
-            :series="series"
-          ></apexchart>
+          <apexchart type="bar" :options="options" :series="series"></apexchart>
         </div>
       </template>
     </div>

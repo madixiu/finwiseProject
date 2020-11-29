@@ -4,7 +4,7 @@
     <!--begin::Header-->
     <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-      سایر اطلاعات
+        سایر اطلاعات
       </h3>
     </div>
     <!--end::Header-->
@@ -53,12 +53,12 @@ export default {
         {
           name: "Revenue(TTM)",
           persianname: "درآمد",
-          value:"123456"
+          value: "123456"
         },
         {
-         name: "EPS(TTM)",
+          name: "EPS(TTM)",
           persianname: " درآمد هر سهم",
-          value:"12"
+          value: "12"
         }
       ]
     };

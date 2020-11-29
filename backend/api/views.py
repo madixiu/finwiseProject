@@ -7,9 +7,6 @@ from requestcall.getOptions import optionFlag, optionRequest
 from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerNameRequest,tableNameRequest
 from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
 
-# selectedType='all'
-# selectedMarket = 'all'
-# selectedIndustry = 'all'
 
 def getOptions(self):
     if(optionFlag()):

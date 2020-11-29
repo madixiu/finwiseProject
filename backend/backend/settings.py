@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',    # This must be first on the list
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware', # This must be last
 ]
 
 # graphQL
@@ -111,9 +113,10 @@ GRAPHQL_AUTH = {
     "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
     "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),
     "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
+    
     # email stuff
     "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL", "mr.robotc7@gmail.com"),
-    "SEND_ACTIVATION_EMAIL": True,
+    "SEND_ACTIVATION_EMAIL": False,
     "EMAIL_SUBJECT_ACTIVATION": "email/activation_subject.txt",
     "EMAIL_SUBJECT_ACTIVATION_RESEND": "email/activation_subject.txt",
     "EMAIL_SUBJECT_SECONDARY_EMAIL_ACTIVATION": "email/activation_subject.txt",
@@ -127,10 +130,10 @@ GRAPHQL_AUTH = {
 }
 # --- EMAIL
 #console email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # gmail smtp
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -279,7 +282,7 @@ CHANNEL_LAYERS = {
 
 # CSRF TOKEN SETTING
 # CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_NAME = "XSRF-TOKEN"
+CSRF_COOKIE_NAME = "CSRF-TOKEN"
 
 # django redis cache TEST...............................................
 CACHES = {

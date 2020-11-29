@@ -636,6 +636,11 @@ export default new Router({
           name: "register",
           path: "/register",
           component: () => import("@/view/pages/auth/Register")
+        },
+        {
+          name: "verify",
+          path: "/verify",
+          component: () => import("@/view/pages/auth/Verify")
         }
       ]
     },

@@ -15,7 +15,6 @@
           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-chip color="danger" label text-color="white" v-on="on">
-                
                 امتیاز کلی
                 <v-icon left>mdi-label</v-icon>
               </v-chip>
@@ -118,12 +117,12 @@ export default {
           now: "70%",
           industry: 0.6,
           FinancialStrength: 0.8
-        },
+        }
       ]
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
+    ...mapGetters(["layoutConfig"])
   },
   methods: {
     // set FinancialStrength percent

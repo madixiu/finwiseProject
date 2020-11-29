@@ -10,6 +10,5 @@ urlpatterns = [
    path("tableallnames",getTableNames),
    path("findTickerid",findTickerID),
    path("marketwatch",getMarketWatch),
-   path("marketwatchfilterlists",getMarketWatchFilters)
-
+   path("marketwatchfilterlists",getMarketWatchFilters),
 ]

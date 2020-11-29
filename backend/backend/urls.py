@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
+# from graphql_jwt.decorators import jwt_cookie
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
@@ -23,9 +24,7 @@ urlpatterns = [
     # path('api/posts/', include('posts.urls')),
     path('api/', include('api.urls')),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    # path('secureapi/',include('secureApi.urls')),
-    # path('ws/', include('websocket.urls')),
-    # path('api/', include('subscriptions.urls')),
+    path("user/",include('users.urls')),
     path('admin/', admin.site.urls),
 
 ]

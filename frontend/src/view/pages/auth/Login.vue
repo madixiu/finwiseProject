@@ -22,7 +22,6 @@
         <h3 class="font-size-h1">ورود</h3>
         <p class="text-muted font-weight-semi-bold"></p>
       </div>
-
       <!--begin::Form-->
       <b-form class="form" @submit.stop.prevent="onSubmit">
         <div role="alert" class="alert alert-info">
@@ -31,8 +30,8 @@
             کنید
           </div>
         </div>
-
         <div
+          v-if="errors"
           role="alert"
           v-bind:class="{ show: errors.length }"
           class="alert fade alert-danger"
@@ -41,14 +40,13 @@
             {{ error }}
           </div>
         </div>
-
         <b-form-group
           id="example-input-group-1"
           label=""
           label-for="example-input-1"
         >
           <b-form-input
-            class="form-control form-control-solid h-auto py-5 px-6"
+            class="form-control form-control-solid h-auto py-3 px-3"
             id="example-input-1"
             name="example-input-1"
             v-model="$v.form.email.$model"
@@ -57,7 +55,7 @@
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-1-live-feedback">
-            Email is required and a valid email address.
+            ایمیل باید وارد شود
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -67,7 +65,7 @@
           label-for="example-input-2"
         >
           <b-form-input
-            class="form-control form-control-solid h-auto py-5 px-6"
+            class="form-control form-control-solid h-auto py-3 px-3"
             type="password"
             id="example-input-2"
             name="example-input-2"
@@ -77,11 +75,17 @@
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-2-live-feedback">
-            Password is required.
+            رمز عبور خود را صحیح وارد کنید
           </b-form-invalid-feedback>
         </b-form-group>
-
         <!--begin::Action-->
+        <div
+          class="form-group d-flex flex-wrap justify-content-between align-items-center"
+        >
+          <p class="WrongCredMsg" v-if="ErrorMsgflag">
+            نام کاربری و رمز عبور صحیح نمی باشد
+          </p>
+        </div>
         <div
           class="form-group d-flex flex-wrap justify-content-between align-items-center"
         >
@@ -100,8 +104,8 @@
           </a>
         </div>
         <!--end::Action-->
+        <!--end::Form-->
       </b-form>
-      <!--end::Form-->
     </div>
     <!--end::Signin-->
   </div>
@@ -114,21 +118,33 @@
 </style>
 
 <script>
-import { mapState } from "vuex";
-import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
-
+// import { mapState } from "vuex";
+import { mapGetters } from "vuex";
+// import gql from "graphql-tag";
+// import { LOGIN, LOGOUT } from "@/core/services/store/auth2.module";
+// import { LOGIN } from "@/core/services/store/auth";
 import { validationMixin } from "vuelidate";
 import { email, minLength, required } from "vuelidate/lib/validators";
+import { LOGIN_USER } from "@/graphql/mutations";
+import JwtService from "@/core/services/jwt.service";
 
 export default {
   mixins: [validationMixin],
   name: "login",
   data() {
     return {
+      verified: true,
+      ErrorMsgflag: false,
+      ErrorMsgText: "",
+      ErrorMsg: [
+        "خطایی رخ داده است",
+        "مشخصات وارد شده صحیح نمی باشد",
+        "اکانت شما تایید نشده است"
+      ],
       // Remove this dummy login info
       form: {
-        email: "admin@demo.com",
-        password: "demo"
+        email: "mahdi.moradi@gmail.com",
+        password: "1234567890finwise"
       }
     };
   },
@@ -140,11 +156,26 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(3)
+        minLength: minLength(8)
       }
     }
   },
   methods: {
+    checkError() {
+      let errors = this.$store.getters.errors;
+      console.log(errors);
+      if (errors.code == "invalid_credentials") {
+        this.ErrorMsgflag = true;
+        this.ErrorMsgText = this.ErrorMsg[1];
+      } else if (errors.code == "not_verified") {
+        this.ErrorMsgflag = true;
+        this.ErrorMsgText = this.ErrorMsg[2];
+        this.verified = false;
+      } else {
+        this.ErrorMsgflag = true;
+        this.ErrorMsgText = this.ErrorMsg[0];
+      }
+    },
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
@@ -159,6 +190,16 @@ export default {
         this.$v.$reset();
       });
     },
+    encryption(input, key) {
+      let encrypted = this.CryptoJS.AES.encrypt(input, key).toString();
+      return encrypted;
+    },
+    decryption(input, key) {
+      let decrypted = this.CryptoJS.AES.decrypt(input, key).toString(
+        this.CryptoJS.enc.Utf8
+      );
+      return decrypted;
+    },
     onSubmit() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
@@ -168,8 +209,73 @@ export default {
       const email = this.$v.form.email.$model;
       const password = this.$v.form.password.$model;
 
+      // add apollo
+      this.$apollo
+        .mutate({
+          mutation: LOGIN_USER,
+          variables: {
+            email: email,
+            password: password
+          }
+        })
+        .then(data => {
+          let LoginData = data.data.tokenAuth;
+          if (LoginData.success == true) {
+            this.ErrorMsgflag = false;
+            console.log(LoginData.token);
+            console.log(LoginData.refreshToken);
+            let encryptedRefreshToken = this.encryption(
+              LoginData.refreshToken,
+              "key"
+            );
+            let decryptedRefreshToken = this.decryption(
+              encryptedRefreshToken,
+              "key"
+            );
+            console.log(encryptedRefreshToken);
+            console.log(decryptedRefreshToken);
+            JwtService.destroyToken();
+            JwtService.saveToken(encryptedRefreshToken);
+            console.log(JwtService.getToken());
+            let user = LoginData.user;
+            // user.token = this.encryption(
+            //   LoginData.token,
+            //   LoginData.refreshToken
+            // );
+            user.token = LoginData.token;
+            console.log(user);
+            this.$store.dispatch("LOGIN", user);
+            // if (user.verified == true) {
+            //   console.log("verified");
+            //   this.$store.dispatch("LOGIN", user);
+            // }
+          } else if (LoginData.success == false) {
+            this.$store.dispatch(
+              "SET_ERROR",
+              LoginData.errors.nonFieldErrors[0]
+            );
+            let user = { email: this.form.email };
+            this.$store.dispatch("SET_USER", user);
+            // console.log(LoginData.errors.nonFieldErrors[0]);
+            this.checkError();
+          }
+
+          // console.log(LoginData);
+
+          // JwtService.destroyToken();
+          // JwtService.saveToken(LoginData.token)
+          // this.$store.dispatch(SET_AUTH, data);
+        })
+
+        .catch(error => {
+          console.log(error);
+          // console.log(LOGIN_USER);
+          // console.log(email + " " + password);
+          // this.$store.dispatch(SET_ERROR, error.data.errors);
+        });
+
       // clear existing errors
-      this.$store.dispatch(LOGOUT);
+      // this.$store.dispatch(LOGOUT);
 
       // set spinner to submit button
       const submitButton = this.$refs["kt_login_signin_submit"];
@@ -178,10 +284,13 @@ export default {
       // dummy delay
       setTimeout(() => {
         // send login request
-        this.$store
-          .dispatch(LOGIN, { email, password })
-          // go to which page after successfully login
-          .then(() => this.$router.push({ name: "dashboard" }));
+        // this.$store
+        //   .dispatch(LOGIN, { email, password })
+        // go to which page after successfully login
+        // .then(() => this.$router.push({ name: "dashboard" }));
+        if (this.$store.getters.isAuthenticated)
+          this.$router.push({ name: "dashboard" });
+        if (this.verified == false) this.$router.push({ name: "verify" });
 
         submitButton.classList.remove(
           "spinner",
@@ -192,9 +301,15 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      errors: state => state.auth.errors
-    })
+    // ...mapState({
+    //   errors: state => state.auth.errors
+    // })
+    ...mapGetters(["errors"])
   }
 };
 </script>
+<style scoped>
+.WrongCredMsg {
+  color: red;
+}
+</style>
