@@ -231,7 +231,8 @@ export default new Router({
             {
               path: "TickerAssembly/IC/:id",
               name: "TickerAssemblyIC",
-              component: () => import("@/view/pages/Ticker/AssemblyIncreaseCapital.vue")
+              component: () =>
+                import("@/view/pages/Ticker/AssemblyIncreaseCapital.vue")
             },
             {
               path: "sarmaye/:id",

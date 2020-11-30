@@ -50,7 +50,7 @@ export default {
         // var LoginData;
         this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
       } else if (this.$store.isAuthenticated) {
-        this.$router.push({ name: "dashboard" });
+        this.$router.push({ name: "Dashboard" });
       } else if (JwtService.getToken()) {
         console.log("else if");
         let refreshToken = this.CryptoJS.AES.decrypt(
@@ -98,7 +98,7 @@ export default {
           console.log("query");
           console.log(data.data.me);
           this.$store.dispatch("LOGIN", data.data.me);
-          this.$router.push({ name: "dashboard" });
+          this.$router.push({ name: "Dashboard" });
         });
     },
     verifyAccessToken(AccessToken) {
@@ -114,7 +114,7 @@ export default {
           let LoginData = data.data.verifyToken;
           console.log(LoginData.success);
           if (LoginData.success) {
-            this.$router.push({ name: "dashboard" });
+            this.$router.push({ name: "Dashboard" });
           } else if (LoginData == false) {
             let Rtoken = this.CryptoJS.AES.decrypt(
               JwtService.getToken(),
@@ -148,7 +148,7 @@ export default {
 
               this.$store.dispatch("RenewAccessToken", LoginData.token);
               this.getQueryUser();
-              this.$router.push({ name: "dashboard" });
+              this.$router.push({ name: "Dashboard" });
             } else {
               console.log(LoginData.errors.nonFieldErrors[0].message);
               this.$store.dispatch("LOGOUT");
