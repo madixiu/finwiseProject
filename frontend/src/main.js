@@ -2,12 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
+import WsService from "@/core/services/websocket.service.js";
 // import JwtService from "@/core/services/jwt.service";
 // import ApiService from "@/core/services/api.service";
 // import MockService from "@/core/mock/mock.service";
 // import { VERIFY_AUTH } from "@/core/services/store/auth.module";
-// import { PURGE_AUTH, RENEW_TOKEN } from "@/core/services/store/auth";
-// import { VERIFY_ACCESS_TOKEN, REFRESH_ACCESS_TOKEN } from "@/graphql/mutations";
 // import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 // apollo imports for graphql
 import { ApolloClient } from "apollo-client";
@@ -22,7 +21,6 @@ import "./core/plugins/table";
 // import "vxe-table/lib/style.css";
 // import XEUtils from "xe-utils";
 
-// import { VERIFY } from "@/core/services/store/auth";
 // -------------------------
 // import ApolloService from "@/core/services/apollo.service";
 //vxe-table usage
@@ -35,16 +33,15 @@ const httpLink = new HttpLink({
   uri: "http://localhost:8000/graphql"
 });
 const authLink = setContext((_, { headers }) => {
-  if (store.getters.currentUserAccessToken){
+  if (store.getters.currentUserAccessToken) {
     var token = store.getters.currentUserAccessToken;
     console.log(store.getters.currentUserAccessToken);
   }
- 
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      // authorization: token ? `Bearer ${token}` : ""
       Authorization: token ? `JWT ${token}` : ""
     }
   };
@@ -95,7 +92,6 @@ import "@mdi/font/css/materialdesignicons.css";
 
 // API service init
 // ApiService.init();
-import WsService from "@/core/services/websocket.service.js";
 WsService.init();
 
 // Remove this to disable mock API
@@ -107,153 +103,6 @@ import VueCryptojs from "vue-cryptojs";
 Vue.use(VueCryptojs);
 
 // router.beforeEach((to, from, next) => {
-
-// if (
-//   to.name !== "login" &&
-//   !store.getters.isAuthenticated &&
-//   !JwtService.getToken()
-// ) {
-//   next({ name: "login" });
-//   console.log("nothing");
-// } else if (JwtService.getToken() && !store.getters.isAuthenticated) {
-//   console.log("here1");
-//   console.log(!!store.getters.currentUser.length);
-//   let hasUser = !!store.getters.currentUser.length
-//   if (hasUser) {
-//     console.log("here1");
-//     // var LoginData;
-//     apolloClient
-//       .mutate({
-//         mutation: VERIFY_ACCESS_TOKEN,
-//         variables: {
-//           token: store.getters.currentUser.token
-//         }
-//       })
-//       .then(data => {
-//         console.log(data);
-//         let LoginData = data.data.verifyToken;
-//         console.log(LoginData.success);
-//         if (LoginData.success) {
-//           next();
-//         } else if (LoginData == false) {
-//           let Rtoken = Vue.CryptoJS.AES.decrypt(
-//             JwtService.getToken(),
-//             "key"
-//           ).toString(Vue.CryptoJS.enc.Utf8);
-//           apolloClient
-//             .mutate({
-//               mutation: REFRESH_ACCESS_TOKEN,
-//               variables: {
-//                 token: Rtoken
-//               }
-//             })
-//             .then(data => {
-//               console.log(data);
-//               if ( !data.data.errors) {
-//                 let LoginData = data.data.verifyToken;
-//                 console.log(LoginData.success);
-//                 if (LoginData.success) {
-//                   // store new acc token to vuex
-//                   store.dispatch("RenewAccessToken");
-//                   next();
-//                 } else {
-//                   store.dispatch("LOGOUT");
-//                   next({ name: "login" });
-//                 }
-//               }else {
-//                 console.log(LoginData.errors.nonFieldErrors[0].message);
-//               }
-
-//             })
-//             .catch(error => {
-//               console.log(error);
-//             });
-//         }
-//       })
-//       .catch(error => {
-//         console.log(error);
-//       });
-//   } else {
-//     console.log("else");
-//     next({ name: "login" });
-//     return;
-
-//   }
-// }
-
-// console.log(to.name);
-// console.log(!store.getters.isAuthenticated);
-// console.log(!JwtService.getToken());
-// if (JwtService.getToken()) {
-//   let Rtoken = Vue.CryptoJS.AES.decrypt(
-//     JwtService.getToken(),
-//     "key"
-//   ).toString(Vue.CryptoJS.enc.Utf8);
-//   // let Atoken = Vue.CryptoJS.AES.encrypt(store.getters.currentUserAccessToken, JwtService.getToken() ).toString();
-//   console.log(Rtoken);
-//   console.log("ficj");
-//   if (store.getters.isAuthenticated) {
-//     let LoginData;
-//     apolloClient
-//       .mutate({
-//         mutation: VERIFY_ACCESS_TOKEN,
-//         variables: {
-//           token: store.getters.currentUser.token
-//         }
-//       })
-//       .then(data => {
-//         LoginData = data.data.verifyToken;
-//         console.log(LoginData.success);
-//       });
-//     if (LoginData.success) {
-//       next();
-//     } else if (LoginData == false) {
-//       apolloClient
-//         .mutate({
-//           mutation: REFRESH_ACCESS_TOKEN,
-//           variables: {
-//             token: Rtoken
-//           }
-//         })
-//         .then(data => {
-//           let LoginData = data.data.verifyToken;
-//           console.log(LoginData.success);
-//           if (LoginData.success) {
-//             // store new acc token to vuex
-//             store.dispatch("RenewAccessToken");
-//             next();
-//           } else {
-//             store.dispatch("LOGOUT");
-//             next();
-//           }
-//         });
-//     }
-//     // let enc = this.Cryptojs.AES.encrypt(LoginData.success, "key").toString();
-//     // console.log(enc);
-//   }
-// } else {
-//   store.dispatch("LOGOUT");
-//   next();
-
-// }
-// Promise.all(
-//   apolloClient
-//     .mutate({
-//       mutation: VERIFY_ACCESS_TOKEN,
-//       variables: {
-//         token:
-//           "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjA5Mzg2ODg2NjE2IiwiZXhwIjoxNjA1OTQ5MDAwLCJvcmlnSWF0IjoxNjA1OTQ4MzQwfQ.eeW-t3wNG0eSuaoTiZEVqNdrdfY46yK_CT7vx7vQrwM"
-//       }
-//     })
-//     .then(data => {
-//       let LoginData = data.data.verifyToken;
-//       console.log(LoginData.success);
-//       // let enc = this.Cryptojs.AES.encrypt(LoginData.success, "key").toString();
-//       // console.log(enc);
-//     }),
-//   [store.dispatch(VERIFY)]
-// ).then(next);
-
 // reset config to initial state
 // store.dispatch(RESET_LAYOUT_CONFIG);
 //   next();
