@@ -95,6 +95,8 @@ import "@mdi/font/css/materialdesignicons.css";
 
 // API service init
 // ApiService.init();
+import WsService from "@/core/services/websocket.service.js";
+WsService.init();
 
 // Remove this to disable mock API
 // MockService.init();

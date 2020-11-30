@@ -4,25 +4,20 @@
     <!--begin::Header-->
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-        اطلاعیه های کدال
+        سابقه قیمت
       </h3>
     </div>
     <!--end::Header-->
     <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="loading">
-      <v-skeleton-loader
-        v-bind="attrs"
-        type=" table-heading, table-thead, table-tbody"
-      ></v-skeleton-loader>
-    </div>
     <div class="card-body d-flex flex-column">
       <v-data-table
-        v-if="loading == false"
         :headers="headers"
         :items="DataItems2"
         class="elevation-1 FinancialStrength"
+        :header-props="{ sortIcon: null }"
+        :disable-sort="true"
       >
-        <template v-slot:[`item.HtmlUrl`]="{ item }">
+        <!-- <template v-slot:[`item.HtmlUrl`]="{ item }">
           <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
             <a v-bind:href="`http://codal.ir${item.HtmlUrl}%`">گزارش </a>
           </v-chip>
@@ -45,7 +40,7 @@
           <v-chip label small :disabled="item.PdfUrl == '' ? true : false">
             <a v-bind:href="`http://codal.ir/${item.PdfUrl}%`">پی دی اف </a>
           </v-chip>
-        </template>
+        </template> -->
       </v-data-table>
     </div>
     <!--end::Body-->
@@ -56,44 +51,51 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "NotificationWidget",
-  props: ["notices"],
+  name: "adjustedWidget",
+  props: ["adjusted"],
   data() {
     return {
       search: "",
-      loading: true,
       headers: [
         {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
+          text: "تاریخ میلادی",
+          value: "engdate"
         },
         {
-          text: "متن اطلاعیه",
-          value: "title"
+          text: "تاریخ شمسی",
+          value: "persiandate"
         },
         {
-          text: "زمان ارسال",
-          value: "SentTime"
+          text: "بالاترین قیمت",
+          value: "high"
         },
         {
-          text: "زمان انتشار",
-          value: "PublishTime"
+          text: "پایین ترین قیمت",
+          value: "low"
         },
         {
-          text: "لینک گزارش",
-          value: "HtmlUrl"
+          text: "قیمت پایانی",
+          value: "closing"
         },
         {
-          text: "لینک فایلها",
-          value: "AttachmentUrl"
+          text: "آخرین قیمت",
+          value: "last"
         },
         {
-          text: "لینک پی دی اف",
-          value: "PdfUrl"
+          text: " اولین قیمت",
+          value: "first"
         },
         {
-          text: "لینک اکسل",
-          value: "ExcelUrl"
+          text: "ارزش معاملات",
+          value: "value"
+        },
+        {
+          text: "حجم معاملات",
+          value: "volume"
+        },
+        {
+          text: "قیمت تعدیلی",
+          value: "adjustedclosing"
         }
       ],
       DataItems2: []
@@ -104,17 +106,16 @@ export default {
   },
   methods: {
     populateData() {
-      this.DataItems2 = this.notices;
+      this.DataItems2 = this.adjusted;
     }
   },
   mounted() {
     this.populateData();
   },
   watch: {
-    notices() {
-      // console.log("Watcher");
+    adjusted() {
+      console.log("Watcher");
       this.populateData();
-      this.loading = false;
       // console.log(this.notices);
     }
   }

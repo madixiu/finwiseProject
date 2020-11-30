@@ -6,7 +6,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <NotificationsWidget :notices="notice"></NotificationsWidget>
+        <ICWidget :notices="notice"></ICWidget>
       </div>
     </div>
   </div>
@@ -16,13 +16,13 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
+import ICWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyICwidget.vue";
 import axios from "axios";
 export default {
   name: "Notifications",
   components: {
     SubHeaderWidget,
-    NotificationsWidget
+    ICWidget
   },
   data() {
     return {

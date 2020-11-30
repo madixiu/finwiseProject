@@ -14,7 +14,7 @@
           target="_blank"
           class="text-dark-75 text-hover-primary"
         >
-          Keenthemes
+          FinWise
         </a>
       </div>
       <div class="nav nav-dark">
@@ -23,21 +23,14 @@
           target="_blank"
           class="nav-link pr-3 pl-0"
         >
-          About
+          درباره ما
         </a>
         <a
           href="http://keenthemes.com/metronic"
           target="_blank"
           class="nav-link px-3"
         >
-          Team
-        </a>
-        <a
-          href="http://keenthemes.com/metronic"
-          target="_blank"
-          class="nav-link pl-3 pr-0"
-        >
-          Contact
+          تماس با ما
         </a>
       </div>
     </div>

@@ -6,7 +6,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <NotificationsWidget :notices="notice"></NotificationsWidget>
+        <AdminNotices :notices="notice"></AdminNotices>
       </div>
     </div>
   </div>
@@ -16,13 +16,13 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
+import AdminNotices from "@/view/pages/Ticker/TickerWidgets/AdministrationNoticeWidget.vue";
 import axios from "axios";
 export default {
   name: "Notifications",
   components: {
     SubHeaderWidget,
-    NotificationsWidget
+    AdminNotices
   },
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
   mounted() {
     // this.loadData2();
     this.loadData3();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعیه های کدال" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "پیام ناظر" }]);
   },
   watch: {
     subheaders() {
@@ -93,8 +93,8 @@ export default {
     async getTwo() {
       await axios
         .get(
-          "http://localhost:8000/api/CodalNotices/" +
-            this.$route.params.id +
+          "http://localhost:8000/api/AdminNotices/" +
+            this.subheaders.ticker +
             "/"
         )
         .then(response2 => {
