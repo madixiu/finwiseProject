@@ -10,11 +10,11 @@
     <!--end::Header-->
     <!--begin::Body-->
     <div class="row">
-       <div class="col-xxl-2 FinancialStrength" v-if="loading">
-       <v-skeleton-loader
-            v-bind="attrs"
-            type=" list-item, card-heading, divider, date-picker-options, date-picker-days, actions"
-          ></v-skeleton-loader>
+      <div class="col-xxl-2 FinancialStrength" v-if="loading">
+        <v-skeleton-loader
+          v-bind="attrs"
+          type=" list-item, card-heading, divider, date-picker-options, date-picker-days, actions"
+        ></v-skeleton-loader>
       </div>
       <div class="col-xxl-2 FinancialStrength" v-if="loading == false">
         <p>فیلتر بر اساس تاریخ</p>
@@ -41,7 +41,7 @@
         </div>
         <div class="card-body d-flex flex-column">
           <v-data-table
-          v-if="loading == false"
+            v-if="loading == false"
             :headers="headers"
             :items="DataItems2"
             class="elevation-1 FinancialStrength"
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       filtered: false,
-      loading:true,
+      loading: true,
       search: "",
       headers: [
         {

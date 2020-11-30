@@ -9,15 +9,15 @@
       <div class="col-xxl-12">
         <template>
           <v-timeline>
-            <v-timeline-item 
+            <v-timeline-item
               v-for="(value, key) in DataItems2"
               :key="key"
               v-bind:class="[key % 2 != 0 ? 'text-right' : '']"
             >
               <v-alert dense type="info"
-                >{{ value.persianDate.slice(0, 4) }}/{{ value.persianDate.slice(4, 6) }}/{{
-                  value.persianDate.slice(6, 8)
-                }}<br />
+                >{{ value.persianDate.slice(0, 4) }}/{{
+                  value.persianDate.slice(4, 6)
+                }}/{{ value.persianDate.slice(6, 8) }}<br />
                 {{ value.Hour }} <br />
                 {{ value.Status }}
               </v-alert>

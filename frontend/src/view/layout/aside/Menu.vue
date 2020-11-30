@@ -290,7 +290,7 @@
       </li>
     </router-link>
     <router-link
-    to="/StockMarket/Funds"
+      to="/StockMarket/Funds"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -308,7 +308,7 @@
         </a>
       </li>
     </router-link>
-      </ul>
+  </ul>
 </template>
 
 <script>

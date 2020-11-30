@@ -16,7 +16,7 @@
     </div>
     <div
       class="card-body d-flex flex-column"
-      v-if="(this.DataItems2.length != 0) && (loading==false)"
+      v-if="this.DataItems2.length != 0 && loading == false"
     >
       <div v-for="year in years" :key="year.key">
         <v-subheader>
