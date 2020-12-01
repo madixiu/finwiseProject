@@ -289,7 +289,7 @@ export default {
         // go to which page after successfully login
         // .then(() => this.$router.push({ name: "dashboard" }));
         if (this.$store.getters.isAuthenticated)
-          this.$router.push({ name: "dashboard" });
+          this.$router.push({ name: "Dashboard" });
         if (this.verified == false) this.$router.push({ name: "verify" });
 
         submitButton.classList.remove(
