@@ -8,38 +8,38 @@
       </h3>
     </div> -->
     <div class="row border-0 pb-4 pt-2">
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           نماد
         </v-chip>
         {{ DataItems.ticker }}
       </div>
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           نام شرکت
         </v-chip>
         {{ DataItems.name }}
       </div>
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           بازار
         </v-chip>
         {{ DataItems.market }}
       </div>
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           صنعت
         </v-chip>
 
         {{ DataItems.subIndustry }}
       </div>
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           تابلو
         </v-chip>
         {{ DataItems.board }}
       </div>
-      <div class="col-xxl-2 FinancialStrength pr-5 pb-2 pt-2">
+      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
         <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
           گروه
         </v-chip>
@@ -85,6 +85,7 @@ export default {
 .FinancialStrength {
   direction: rtl;
   text-align: right;
+  font-size: 0.8em;
 }
 .rtl_centerd {
   direction: rtl;

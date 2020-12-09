@@ -17,7 +17,7 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import StatusChangesWidget from "@/view/pages/Ticker/TickerWidgets/StatusChangeWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     // this.loadData2();
-    this.loadData3();
+    this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "تغییر وضعیت سهم" }]);
   },
   watch: {
@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    loadData3() {
+    loadData() {
       this.getAllowed().then(response => {
         console.log(response);
         //add this to package.json in developement
@@ -73,8 +73,8 @@ export default {
       });
     },
     async getAllowed() {
-      await axios
-        .get("http://localhost:8000/api/tickerallnames")
+      await this.axios
+        .get("/api/tickerallnames")
         .then(response3 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -91,12 +91,8 @@ export default {
         });
     },
     async getTwo() {
-      await axios
-        .get(
-          "http://localhost:8000/api/StatusChanges/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/StatusChanges/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -114,10 +110,8 @@ export default {
         });
     },
     async getOne() {
-      await axios
-        .get(
-          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
-        )
+      await this.axios
+        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

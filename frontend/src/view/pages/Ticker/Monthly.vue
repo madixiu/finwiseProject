@@ -21,7 +21,7 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import MonthlyWidget from "@/view/pages/Ticker/TickerWidgets/MonthlyWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -37,8 +37,7 @@ export default {
     };
   },
   mounted() {
-    // this.loadData3();
-    this.loadData4();
+    this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "گزارش های خام ماهیانه" }]);
   },
   watch: {
@@ -48,25 +47,7 @@ export default {
     }
   },
   methods: {
-    loadData3() {
-      this.getOne().then(response => {
-        console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
-        this.getTwo().then(response => {
-          console.log(response);
-          this.getThree().then(function() {
-            console.log("ChainDone");
-          });
-        });
-      });
-    },
-    loadData4() {
+    loadData() {
       this.getOne().then(response => {
         console.log(response);
         //add this to package.json in developement
@@ -104,12 +85,8 @@ export default {
       });
     },
     async getConstructionSold() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Construction/Sold/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Construction/Sold/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -128,12 +105,8 @@ export default {
         });
     },
     async getConstructionOngoing() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Construction/Ongoing/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Construction/Ongoing/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -152,12 +125,8 @@ export default {
         });
     },
     async getInsurance() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Insurance/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Insurance/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -175,12 +144,8 @@ export default {
         });
     },
     async getType() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Type/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Type/" + this.$route.params.id + "/")
         .then(response2 => {
           //typeofReport
           var items = response2.data;
@@ -196,12 +161,8 @@ export default {
         });
     },
     async getTwo() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Bank/Deposits/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Bank/Deposits/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -219,12 +180,8 @@ export default {
         });
     },
     async getThree() {
-      await axios
-        .get(
-          "http://localhost:8000/api/Monthly/Bank/Facilities/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/Monthly/Bank/Facilities/" + this.$route.params.id + "/")
         .then(response3 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -242,10 +199,8 @@ export default {
         });
     },
     async getOne() {
-      await axios
-        .get(
-          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
-        )
+      await this.axios
+        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

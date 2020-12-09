@@ -42,7 +42,6 @@
                 small
                 label
                 :to="{ name: 'TickerOverall', params: { id: item.ID } }"
-                target="_blank"
                 >{{ item.ticker }}</v-chip
               >
             </template>
@@ -172,7 +171,8 @@ export default {
     this.$socketMarketHighestSupplies.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      this.loading = false;
+      if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
+        this.loading = false;
     };
     // watch: {
     //   mostviewed() {

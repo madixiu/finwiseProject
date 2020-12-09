@@ -2,7 +2,7 @@
   <div class="topbar-item" v-b-tooltip.hover.bottom="'Quick panel'">
     <div class="btn btn-icon btn-clean btn-lg mr-1" id="kt_quick_panel_toggle">
       <span class="svg-icon svg-icon-xl svg-icon-primary">
-        <inline-svg src="media/svg/icons/Layout/Layout-4-blocks.svg" />
+        <inline-svg :src="picture" />
       </span>
     </div>
 
@@ -498,6 +498,13 @@ export default {
 
       // set current active tab
       event.target.classList.add("active");
+    }
+  },
+  computed: {
+    picture() {
+      return (
+        process.env.BASE_URL + "media/svg/icons/Layout/Layout-4-blocks.svg"
+      );
     }
   }
 };

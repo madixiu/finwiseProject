@@ -2,14 +2,16 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-2">
+      <div class="col-xxl-2 col-lg-6">
         <MostViewedWidget></MostViewedWidget>
       </div>
-      <div class="col-xxl-2">
+      <div class="col-xxl-2 col-lg-6">
         <Impacts></Impacts>
       </div>
-      <div class="col-xxl-4"><HighestTradeValue></HighestTradeValue></div>
-      <div class="col-xxl-4">
+      <div class="col-xxl-4 col-lg-6">
+        <HighestTradeValue></HighestTradeValue>
+      </div>
+      <div class="col-xxl-4 col-lg-6">
         <v-tabs>
           <v-tab>عرضه</v-tab>
           <v-tab>تقاضا</v-tab>
@@ -17,7 +19,7 @@
           <v-tab-item><HighestSupply></HighestSupply></v-tab-item>
         </v-tabs>
       </div>
-      <div class="col-xxl-4"></div>
+      <!-- <div class="col-xxl-4"></div> -->
     </div>
     <!--end::Dashboard-->
   </div>
@@ -30,7 +32,7 @@ import HighestTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/Highe
 import HighestDemand from "@/view/pages/StockMarket/StockMarketWidgets/HighestDemand.vue";
 import HighestSupply from "@/view/pages/StockMarket/StockMarketWidgets/HighestSupply.vue";
 import Impacts from "@/view/pages/StockMarket/StockMarketWidgets/ImpactOnIndex.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "dashboard",
   components: {
@@ -46,44 +48,27 @@ export default {
     };
   },
   mounted() {
-    this.loadData3();
+    // this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
   },
   methods: {
-    loadData3() {
-      this.getMostViewed().then(response => {
-        console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
-        // this.getOne().then(response2 => {
-        //   console.log(response2);
-        //   this.getTwo().then(function() {});
-        //   // console.log("ChainDone");
-        // });
-      });
-    },
-    async getMostViewed() {
-      await axios
-        .get("http://localhost:8000/api/tse/top5MostViewed/")
-        .then(response3 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
-          this.mostViewed = response3.data;
-          // console.log("GetTwoStart:");
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
-        })
-        .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
-        });
-    },
+    // loadData() {
+    //   this.getMostViewed().then(response => {
+    //     console.log(response);
+    //   });
+    // },
+    // async getMostViewed() {
+    //   await axios
+    //     .get("http://localhost:8000/api/tse/top5MostViewed/")
+    //     .then(response3 => {
+
+    //       this.mostViewed = response3.data;
+
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },

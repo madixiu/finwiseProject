@@ -50,8 +50,19 @@ export default {
         // var LoginData;
         this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
       } else if (this.$store.isAuthenticated) {
-        this.$router.push({ name: "Dashboard" });
-      } else if (JwtService.getToken()) {
+        this.$router.push({ path: "/" });
+        // return;
+        // this.$router.beforeEach((to, from, next) => {
+        //   // reset config to initial state
+        //   // store.dispatch(RESET_LAYOUT_CONFIG);
+        //   next();
+        //   // router.push({ name: "dashboard" });
+        //   // Scroll page to top on every route change
+        //   setTimeout(() => {
+        //     window.scrollTo(0, 0);
+        //   }, 100);
+        // });
+      } else if (!hasUser) {
         console.log("else if");
         let refreshToken = this.CryptoJS.AES.decrypt(
           JwtService.getToken(),
@@ -65,14 +76,12 @@ export default {
         // this.getQueryUser();
 
         console.log(this.$store.getters.currentUserAccessToken);
-
-        // this.$router.push({ name: "login" });
-        // return;
-      } else {
-        console.log("else");
-        this.$router.push({ name: "login" });
-        return;
       }
+      // else {
+      //   console.log("else");
+      //   this.$router.push({ name: "login" });
+      //   return;
+      // }
     }
 
     /**
@@ -98,7 +107,7 @@ export default {
           console.log("query");
           console.log(data.data.me);
           this.$store.dispatch("LOGIN", data.data.me);
-          this.$router.push({ name: "Dashboard" });
+          this.$router.push({ path: "/" });
         });
     },
     verifyAccessToken(AccessToken) {

@@ -15,7 +15,6 @@
         <a
           href="https://keenthemes.com/metronic/?page=docs"
           class="btn btn-sm btn-icon btn-bg-light btn-text-warning btn-hover-warning"
-          target="_blank"
         >
           <i class="flaticon2-telegram-logo"></i>
         </a>

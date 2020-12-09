@@ -42,7 +42,6 @@
                 small
                 label
                 :to="{ name: 'TickerOverall', params: { id: item.ID } }"
-                target="_blank"
                 >{{ item.ticker }}</v-chip
               >
             </template>
@@ -88,7 +87,6 @@ export default {
   computed: {
     ...mapGetters(["layoutConfig"]),
     filteredItems() {
-      //   console.log(this.selectedMarket);
       return this.DataItems.filter(item => {
         return item.marketID == this.selectedMarket;
       });
@@ -133,7 +131,11 @@ export default {
     this.$socketMostViewed.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      this.loading = false;
+      console.log(JSON.parse(data.data));
+      if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
+        this.loading = false;
+
+      console.log(this.loading);
     };
     // watch: {
     //   mostviewed() {

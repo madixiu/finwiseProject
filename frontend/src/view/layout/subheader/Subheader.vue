@@ -57,7 +57,7 @@
             <a href="#" class="btn btn-icon" data-toggle="dropdown">
               <span class="svg-icon svg-icon-success svg-icon-2x">
                 <!--begin::Svg Icon-->
-                <inline-svg src="media/svg/icons/Files/File-plus.svg" />
+                <inline-svg :src="quickActionIcon" />
                 <!--end::Svg Icon-->
               </span>
             </a>
@@ -178,6 +178,9 @@ export default {
   },
   computed: {
     ...mapGetters(["layoutConfig"]),
+    quickActionIcon() {
+      return process.env.BASE_URL + "media/svg/icons/Files/File-plus.svg";
+    },
 
     /**
      * Check if subheader width is fluid

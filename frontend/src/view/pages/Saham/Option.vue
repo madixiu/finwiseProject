@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import axioso from "axios";
+// import axioso from "axios";
 import { mapGetters } from "vuex";
 import XEUtils from "xe-utils";
 
@@ -212,8 +212,8 @@ export default {
     Req() {
       let vm = this;
       //  axios.get('http://45.82.136.21/api/options')
-      axioso
-        .get("http://localhost:8000/api/options")
+      this.axios
+        .get("/api/options")
         .then(response => {
           let data = response.data;
           // var cars = new Array();

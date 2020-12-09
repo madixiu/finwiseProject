@@ -18,7 +18,7 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import HHW from "@/view/pages/Ticker/TickerWidgets/‌HHWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     getData() {
-      axios
+      this.axios
         .get(
           // "http://localhost:8000/api/CodalNotices/" + this.$route.params.id + "/"
-          "http://localhost:8000/api/HHhistoryGraph/2788/"
+          "/api/HHhistoryGraph/2788/"
         )
         .then(response => {
           // console.log(response.data[0][0]);

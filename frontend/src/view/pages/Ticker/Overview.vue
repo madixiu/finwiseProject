@@ -2,31 +2,31 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-lg-12 col-md-12">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-lg-12 col-md-12">
         <liveWidget :statistics="stats"></liveWidget>
       </div>
-      <div class="col-xxl-4">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
       </div>
-      <div class="col-xxl-4">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <VWidget></VWidget>
       </div>
-      <div class="col-xxl-4 ">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <PWidget></PWidget>
       </div>
-      <div class="col-xxl-4">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <ReturnWidget></ReturnWidget>
       </div>
-      <div class="col-xxl-4 ">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <DivWidget></DivWidget>
       </div>
-      <div class="col-xxl-4 ">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
       </div>
-      <div class="col-xxl-12 ">
+      <div class="col-xxl-12 col-lg-12 col-md-12">
         <AnalystWidget></AnalystWidget>
       </div>
     </div>
@@ -46,7 +46,7 @@ import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
 import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
 import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "dashboard",
@@ -71,7 +71,7 @@ export default {
     };
   },
   mounted() {
-    this.loadData3();
+    this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
   },
   watch: {
@@ -81,7 +81,7 @@ export default {
     }
   },
   methods: {
-    loadData3() {
+    loadData() {
       this.getAllowed().then(response => {
         console.log(response);
         //add this to package.json in developement
@@ -99,8 +99,8 @@ export default {
       });
     },
     async getAllowed() {
-      await axios
-        .get("http://localhost:8000/api/tickerallnames")
+      await this.axios
+        .get("/api/tickerallnames")
         .then(response3 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -117,10 +117,8 @@ export default {
         });
     },
     async getTwo() {
-      await axios
-        .get(
-          "http://localhost:8000/api/StatsTicker/" + this.$route.params.id + "/"
-        )
+      await this.axios
+        .get("/api/StatsTicker/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -138,10 +136,8 @@ export default {
         });
     },
     async getOne() {
-      await axios
-        .get(
-          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
-        )
+      await this.axios
+        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

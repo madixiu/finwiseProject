@@ -31,7 +31,16 @@ export default new Router({
             {
               path: "Industries",
               name: "Industries",
-              component: () => import("@/view/pages/Saham/Industries.vue")
+              component: () =>
+                import("@/view/pages/StockMarket/Industries/Industries.vue")
+            },
+            {
+              path: "Industries/:id",
+              name: "IndustriesDetail",
+              component: () =>
+                import(
+                  "@/view/pages/StockMarket/Industries/IndustriesDetail.vue"
+                )
             },
             {
               path: "Screener",
@@ -124,6 +133,7 @@ export default new Router({
           name: "shakhes",
           component: () => import("@/view/pages/Shakhes/Shakhes.vue")
         },
+
         //added route for ticker!
         {
           path: "/ticker",

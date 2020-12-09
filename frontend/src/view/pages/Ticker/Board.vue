@@ -17,7 +17,7 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import BoardCeoWidget from "@/view/pages/Ticker/TickerWidgets/BoardCeoWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "BoardView",
   components: {
@@ -32,8 +32,7 @@ export default {
     };
   },
   mounted() {
-    // this.loadData3();
-    this.loadData3();
+    this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات هیيت مدیره" }]);
   },
   watch: {
@@ -43,7 +42,7 @@ export default {
     }
   },
   methods: {
-    loadData3() {
+    loadData() {
       this.getOne().then(response => {
         console.log(response);
         //add this to package.json in developement
@@ -62,9 +61,9 @@ export default {
       });
     },
     async getTwo() {
-      await axios
+      await this.axios
         .get(
-          "http://localhost:8000/api/CurrentBoard/" +
+          "/api/CurrentBoard/" +
             this.$route.params.id +
             "/"
         )
@@ -85,9 +84,9 @@ export default {
         });
     },
     async getThree() {
-      await axios
+      await this.axios
         .get(
-          "http://localhost:8000/api/CurrentCeo/" + this.$route.params.id + "/"
+          "/api/CurrentCeo/" + this.$route.params.id + "/"
         )
         .then(response3 => {
           // console.log(response.data[0][0]);
@@ -106,9 +105,9 @@ export default {
         });
     },
     async getOne() {
-      await axios
+      await this.axios
         .get(
-          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
+          "/api/SubHeaderW/" + this.$route.params.id + "/"
         )
         .then(response1 => {
           // console.log("firstDone");

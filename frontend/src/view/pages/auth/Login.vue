@@ -143,8 +143,8 @@ export default {
       ],
       // Remove this dummy login info
       form: {
-        email: "mahdi.moradi@gmail.com",
-        password: "1234567890finwise"
+        email: "",
+        password: ""
       }
     };
   },

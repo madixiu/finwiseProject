@@ -61,6 +61,7 @@ export default {
         "Dashboard",
         "marketwatch",
         "Industries",
+        "IndustriesDetail",
         "Screener",
         "Fundamental",
         "TechnicalDashboard",

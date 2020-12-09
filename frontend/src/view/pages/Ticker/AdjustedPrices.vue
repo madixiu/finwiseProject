@@ -17,7 +17,7 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import AdjustedPricesWidget from "@/view/pages/Ticker/TickerWidgets/AdjustedPricesWidget.vue";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "adjustedPrices",
   components: {
@@ -31,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    this.loadData3();
+    this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "سابقه قیمت" }]);
   },
   watch: {
@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    loadData3() {
+    loadData() {
       this.getOne().then(response => {
         console.log(response);
         //add this to package.json in developement
@@ -57,12 +57,8 @@ export default {
       });
     },
     async getTwo() {
-      await axios
-        .get(
-          "http://localhost:8000/api/AdjustedPrices/" +
-            this.$route.params.id +
-            "/"
-        )
+      await this.axios
+        .get("/api/AdjustedPrices/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -80,10 +76,8 @@ export default {
         });
     },
     async getOne() {
-      await axios
-        .get(
-          "http://localhost:8000/api/SubHeaderW/" + this.$route.params.id + "/"
-        )
+      await this.axios
+        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

@@ -14,7 +14,7 @@
       <template v-slot:button-content>
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <span class="svg-icon svg-icon-xl svg-icon-primary">
-            <inline-svg src="media/svg/icons/General/Search.svg" />
+            <inline-svg :src="SearchIcon" />
           </span>
         </div>
       </template>
@@ -38,7 +38,7 @@
           class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary"
         >
           <span class="svg-icon svg-icon-xl svg-icon-primary">
-            <inline-svg src="media/svg/icons/Code/Compiling.svg" />
+            <inline-svg :src="NotificationIcon" />
           </span>
           <span class="pulse-ring"></span>
         </div>
@@ -63,7 +63,7 @@
       <template v-slot:button-content>
         <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
           <span class="svg-icon svg-icon-xl svg-icon-primary">
-            <inline-svg src="media/svg/icons/Media/Equalizer.svg" />
+            <inline-svg :src="QuickActionIcon" />
           </span>
         </div>
       </template>
@@ -85,7 +85,7 @@
       <template v-slot:button-content>
         <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
           <span class="svg-icon svg-icon-xl svg-icon-primary">
-            <inline-svg src="media/svg/icons/Shopping/Cart3.svg" />
+            <inline-svg :src="MyCartIcon" />
           </span>
         </div>
       </template>
@@ -193,6 +193,18 @@ export default {
     }
   },
   computed: {
+    SearchIcon() {
+      return process.env.BASE_URL + "media/svg/icons/General/Search.svg";
+    },
+    NotificationIcon() {
+      return process.env.BASE_URL + "media/svg/icons/Code/Compiling.svg";
+    },
+    QuickActionIcon() {
+      return process.env.BASE_URL + "media/svg/icons/Media/Equalizer.svg";
+    },
+    MyCartIcon() {
+      return process.env.BASE_URL + "media/svg/icons/Shopping/Cart3.svg";
+    },
     getLanguageFlag() {
       return this.onLanguageChanged();
     }

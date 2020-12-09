@@ -32,5 +32,7 @@ urlpatterns = [
    path("CurrentCeo/<identifier>/",getCurrentCeo),
    path("AdminNotices/<firm>/",getAdminNotice),
    path("StatusChanges/<identifier>/",getStatusChanges),
+   ####
+   path("IndexMarketCap",getIndexMarketCap)
    
 ]

@@ -8,6 +8,7 @@ from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerN
 from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
+from requestcall.getIndexMarketCap import IndexMarketCapRequest
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -45,7 +46,10 @@ def getMonthlyInsurance(self,identifier):
 def getMonthlyConstSold(self,identifier):
     return JsonResponse(monthlyConstSold(identifier),safe=False)    
 def getMonthlyConstOngoing(self,identifier):
-    return JsonResponse(monthlyConstOngoing(identifier),safe=False)    
+    return JsonResponse(monthlyConstOngoing(identifier),safe=False)  
+
+def getIndexMarketCap(self):
+    return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
 def getOptions(self):
     if(optionFlag()):

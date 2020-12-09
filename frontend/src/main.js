@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
 import WsService from "@/core/services/websocket.service.js";
+import MarqueeText from "vue-marquee-text-component";
+
 // import JwtService from "@/core/services/jwt.service";
 // import ApiService from "@/core/services/api.service";
 // import MockService from "@/core/mock/mock.service";
@@ -89,7 +91,9 @@ import "@/core/plugins/inline-svg";
 import "@/core/plugins/apexcharts";
 import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
+import axiosPlugin from "@/core/plugins/axiosPlugin.js";
 
+Vue.use(axiosPlugin);
 // API service init
 // ApiService.init();
 WsService.init();
@@ -102,6 +106,8 @@ import VueCryptojs from "vue-cryptojs";
 
 Vue.use(VueCryptojs);
 
+// ticker tape component
+Vue.component("marquee-text", MarqueeText);
 // router.beforeEach((to, from, next) => {
 // reset config to initial state
 // store.dispatch(RESET_LAYOUT_CONFIG);
