@@ -19,6 +19,14 @@ import VueApollo from "vue-apollo";
 // vxe-table imports
 import "./core/plugins/utils";
 import "./core/plugins/table";
+import moment from "vue-jalali-moment";
+import PersianCalendar from "vue-persian-calendar";
+import VuePersianDatetimePicker from "vue-persian-datetime-picker";
+Vue.component("date-picker", VuePersianDatetimePicker);
+
+// imported persian calendar
+Vue.use(moment);
+Vue.use(PersianCalendar);
 // import VXETable from "vxe-table";
 // import "vxe-table/lib/style.css";
 // import XEUtils from "xe-utils";

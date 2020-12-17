@@ -1,8 +1,12 @@
 <template>
-  <div id="charset"></div>
+  <div>
+    <div class="col-xxl-12 mx-auto">
+      <div id="charset" style="display: contents;"></div>
+    </div>
+  </div>
 </template>
 <script>
-import data from "./data/map.json";
+import data from "@/view/content/d3/data/map.json";
 // import data from "../d3/data/map.json";
 import * as d3 from "d3";
 export default {
@@ -22,8 +26,12 @@ export default {
     let vm = this;
 
     let chartDiv = document.getElementById("charset");
-    this.width = chartDiv.clientWidth;
-    this.height = chartDiv.clientHeight;
+    // this.width = chartDiv.clientWidth;
+    // this.height = chartDiv.clientHeight;
+    // console.log(this.width);
+    // console.log(this.height);
+    this.width = 1340;
+    this.height = 500;
 
     var svg = d3
       .select(chartDiv)

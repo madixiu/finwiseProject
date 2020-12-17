@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-nav">
-    <li
+    <!-- <li
       aria-haspopup="true"
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
@@ -55,7 +55,26 @@
           </router-link>
         </ul>
       </div>
-    </li>
+    </li> -->
+    <router-link
+      to="/StockMarket/Dashboard"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-coins"></i>
+          <span class="menu-text">بازار</span>
+        </a>
+      </li>
+    </router-link>
     <router-link
       to="/StockMarket/Industries"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -226,6 +245,25 @@
               <a :href="href" class="menu-link" @click="navigate">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                 <span class="menu-text">تقویم</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            to="/StockMarket/Assembly/Decisions"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">تصمیمات مجامع</span>
               </a>
             </li>
           </router-link>

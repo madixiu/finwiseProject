@@ -80,8 +80,8 @@ export default {
       ],
       WebsocketRequest: true,
       mvheaders: [
-        { text: "نماد", value: "ticker", sortabale: false },
-        { text: "رتبه", value: "Impact", sortabale: false }
+        { text: "رتبه", value: "Impact", sortabale: false },
+        { text: "نماد", value: "ticker", sortabale: false }
       ]
     };
   },
@@ -133,7 +133,8 @@ export default {
     this.$socketImpactOnIndex.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
+      console.log(!!this.DataItems.length);
+      if (JSON.parse(data.data) != "No Data" || !!this.DataItems.length)
         this.loading = false;
     };
     // watch: {
@@ -152,9 +153,13 @@ export default {
 </script>
 <style scoped>
 .FinancialStrength {
-  direction: rtl;
+  direction: ltr;
   text-align: right;
 }
+.FinancialStrength * {
+  direction: ltr;
+}
+
 .rtl_centerd {
   direction: rtl;
   text-align: center;
@@ -168,6 +173,7 @@ export default {
 }
 .redItem {
   color: #ef5350 !important;
+  direction: ltr !important;
 }
 .greenItem {
   color: #088a2f93 !important;

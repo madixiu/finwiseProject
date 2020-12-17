@@ -58,13 +58,6 @@ export default {
     loadData() {
       this.getAllowed().then(response => {
         console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
         this.getOne().then(response2 => {
           console.log(response2);
           this.getTwo().then(function() {});

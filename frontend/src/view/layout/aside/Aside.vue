@@ -59,7 +59,7 @@ export default {
       saham: [
         "StockMarket",
         "Dashboard",
-        "marketwatch",
+        // "marketwatch",
         "Industries",
         "IndustriesDetail",
         "Screener",
@@ -68,6 +68,7 @@ export default {
         "TechnicalTools",
         "TechnicalData",
         "AssemblyCalendar",
+        "AssemblyDecisions",
         "AssemblyIC",
         "Taghadom",
         "Option",

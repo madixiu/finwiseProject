@@ -1,64 +1,222 @@
 <template>
   <div>
-    <v-card class="mr-1 ml-1" outlined>
-      <vxe-toolbar class="table-toolbar">
-        <template v-slot:buttons>
-          <vxe-input
-            v-model="filterName"
-            type="search"
-            placeholder="جستجو"
-          ></vxe-input>
-        </template>
-      </vxe-toolbar>
-      <vxe-table
-        border
-        :height="height"
-        :scroll-x="{ gt: 40 }"
-        class="optionTable-style"
-        align="center"
-        :data="list"
-        round
-        ref="xTable1"
-        :export-config="{}"
-        size="mini"
-        show-header-overflow
-        show-overflow
-        highlight-hover-row
-      >
-        <!-- <vxe-table-column type="seq" width="60"></vxe-table-column> -->
-        <!-- <vxe-table-column field="get" title="Name"></vxe-table-column>
-          <vxe-table-column field="sex" title="Sex"></vxe-table-column>
-          <vxe-table-column field="age" title="Age"></vxe-table-column> -->
-        <vxe-table-column
-          v-for="item in this.headers"
-          :key="item.label"
-          :field="item.field"
-          :title="item.label"
-          :width="item.width"
-          sortable
-          type="html"
-        >
-        </vxe-table-column>
-      </vxe-table>
-      <!-- <v-data-table
-      :height="height"
-      :headers="headers"
-      :items="getSahm"
-      :search="search"
-      fixed-header
-      disable-pagination
-      hide-default-footer
-      dark
-      class="elevation-1 test"
-      
-    >
-  
-    <template v-slot:[`item.DifferenceToAverage`]="{ item }">
-      <v-chip :color="getColor(item.DifferenceToAverage)" dark>{{ item.DifferenceToAverage }}</v-chip>
-    </template>
-   
-    </v-data-table> -->
-    </v-card>
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <!-- custom card1 -->
+          <div
+            class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-2 col-md-2 col-lg-2 col-12"
+          >
+            <!-- <div class="filterBox"> -->
+            <v-card round elevation="15">
+              <v-toolbar dense flat>
+                <v-toolbar-title v-if="card1Key">نرخ بهره</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn v-if="card1Key" icon @click="card1Key = !card1Key">
+                  <v-icon>mdi-information-outline</v-icon>
+                </v-btn>
+                <v-btn v-if="!card1Key" icon @click="card1Key = !card1Key">
+                  <v-icon>mdi-arrow-left</v-icon>
+                </v-btn>
+              </v-toolbar>
+              <div class="filterBox">
+                <transition name="fade">
+                  <div v-if="card1Key" key="1">
+                    <v-data-table
+                      fixed-header
+                      height="196"
+                      :headers="card1Header"
+                      :items="card1Items"
+                      item-key="name"
+                      class="elevation-1 cardTable"
+                      :hide-default-footer="true"
+                    ></v-data-table>
+                  </div>
+
+                  <div
+                    v-if="!card1Key"
+                    class="cardExplanation ml-4 mr-4"
+                    key="2"
+                  >
+                    <p>
+                      در این جدول مفروضات مدل قیمت گذاری آپشن و محاسبه ی لحظه ای
+                      آن قرار داده شده است. مدل قیمت گذاری با ۴ مقدار کمینه،
+                      بیشینه، محاسبه شده از اوراق و سود بانکی برای نرخ بهره بدون
+                      ریسک (Risk-Free Rate) قرار داده شده است. قیمت گذاری برای
+                      ۲۰ حالت مختلف ( ۵ حالت از تلاطم دارايی پایه [۳ ماهه، ۶
+                      ماهه، یک ساله، دو ساله و پنج ساله] و ۴ حالت نرخ بهره بدون
+                      ریسک) انجام شده و اطلاعات جدول زیر محاسبه گردیده است.
+                    </p>
+                  </div>
+                </transition>
+              </div>
+              <v-card-actions>
+                <span class="cardFooter">{{ card1Items.length }}</span>
+                <span v-if="card1Items.length" class="cardFooter mr-2"
+                  >نتیجه</span
+                >
+              </v-card-actions>
+            </v-card>
+          </div>
+
+          <!-- custom card2 -->
+
+          <div
+            class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-2 col-md-2 col-lg-2 col-12"
+          >
+            <!-- <div class="filterBox"> -->
+            <v-card round elevation="15">
+              <v-toolbar dense flat>
+                <v-toolbar-title v-if="card2Key">تلاطم</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn v-if="card2Key" icon @click="card2Key = !card2Key">
+                  <v-icon>mdi-information-outline</v-icon>
+                </v-btn>
+                <v-btn v-if="!card2Key" icon @click="card2Key = !card2Key">
+                  <v-icon>mdi-arrow-left</v-icon>
+                </v-btn>
+              </v-toolbar>
+              <div class="filterBox">
+                <transition name="fade">
+                  <div v-if="card2Key" key="1">
+                    <v-data-table
+                      fixed-header
+                      height="196"
+                      :headers="card1Header"
+                      :items="OptionAsset"
+                      item-key="name"
+                      class="elevation-1 cardTable"
+                      :hide-default-footer="true"
+                    ></v-data-table>
+                  </div>
+
+                  <div
+                    v-if="!card2Key"
+                    class="cardExplanation ml-4 mr-4"
+                    key="2"
+                  >
+                    <p>
+                      در این جدول مقدار تلاطم (Volatility) یک ساله برای دارایی
+                      های پایه قابل مشاهده است. محاسبه این مقادیر به کمک قیمت
+                      تعدیل شده انجام گرفته است.
+                    </p>
+                  </div>
+                </transition>
+              </div>
+              <v-card-actions>
+                <span class="cardFooter">{{ OptionAsset.length }}</span>
+                <span v-if="OptionAsset.length" class="cardFooter mr-2"
+                  >نتیجه</span
+                >
+              </v-card-actions>
+            </v-card>
+          </div>
+          <div class="col-8">
+            <v-card height="280">
+              Lorem ipsum, or lipsum as it is sometimes known, is dummy text
+              used in laying out print, graphic or web designs. The passage is
+              attributed to an unknown typesetter in the 15th century who is
+              thought to have scrambled parts of Cicero's De Finibus Bonorum et
+              Malorum for use in a type specimen book.
+            </v-card>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <v-card>
+          <b-col lg="4" class="my-1">
+            <b-input-group size="sm">
+              <b-form-input
+                v-model="filter"
+                type="search"
+                id="filterInput"
+                placeholder="جستجو"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''"
+                  >پاک کردن</b-button
+                >
+              </b-input-group-append>
+            </b-input-group>
+          </b-col>
+          <b-table
+            thClass="bb-table-head"
+            class="bb-table"
+            tbody-tr-class="bb-table-row"
+            striped
+            sticky-header
+            dense
+            :filter="filter"
+            bordered
+            outlined
+            small
+            hover
+            responsive
+            foot-clone
+            :items="getSahm"
+            :fields="headersBoot"
+            @filtered="onFiltered"
+          >
+            <template #cell(Nemad)="data">
+              <b class="bb-table-cell-bold">{{ data.value }}</b>
+            </template>
+            <template #cell(UnderLying)="data">
+              <b class="bb-table-cell-bold">{{ data.value }}</b>
+            </template>
+            <template #cell(StrikePrice)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+
+            <template #cell(AssetPrice)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(DifferenceToAverage)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value
+              }}</b>
+            </template>
+            <template #cell(PPP)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value.toLocaleString()
+              }}</b>
+            </template>
+            <template #cell(ArzandegiLast)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value == 0" class="bb-table-cell">{{
+                data.value.toLocaleString()
+              }}</b>
+            </template>
+          </b-table>
+        </v-card>
+      </div>
+      <div class="col-3">
+        <v-card>
+          <div class="Mychips pt-5 pb-5 pr-3 pl-3">
+            <v-chip class="mx-auto" label large>
+              نرخ بهره
+              <v-chip color="#ad0018" small dark label class="mr-3">
+                17%
+              </v-chip>
+            </v-chip>
+          </div>
+        </v-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,9 +229,36 @@ export default {
   name: "Option",
 
   data: () => ({
+    OptionAsset: [],
+    card1Key: true,
+    card2Key: true,
+    myKey: true,
+    card1Header: [
+      { text: "اسم سهم", align: "center", value: "ticker", sortable: false },
+      {
+        text: "مقدار تلاطم",
+        align: "center",
+        value: "round",
+        sortable: false
+      }
+    ],
+    card1Items: [
+      {
+        round: "۱۷%",
+        ticker: "فولاد"
+      }
+    ],
+    fields: ["first_name", "last_name", "age"],
+    items: [
+      { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
+      { age: 21, first_name: "Larsen", last_name: "Shaw" },
+      { age: 89, first_name: "Geneva", last_name: "Wilson" }
+    ],
+    tab: "tab-1",
     filterName: "",
     temp: [],
     flag: 0,
+    filter: null,
     height: 400,
     search: "",
     headers: [
@@ -107,6 +292,74 @@ export default {
       {
         label: "فاصله آخرین معامله تا قیمت عادلانه",
         field: "DifferenceToLast",
+        width: "200"
+      }
+    ],
+    headersVuetify: [
+      { text: "نماد", value: "Nemad", width: "100" },
+      { text: "دارایی پایه", value: "UnderLying", width: "100" },
+      { text: "پرداخت نهایی", value: "FinalPayment", width: "100" },
+      { text: "مبلغ کل اردر اول", value: "TotalValue", width: "120" },
+      { text: "StrikePrice", value: "StrikePrice", width: "100" },
+      { text: "قیمت دارایی پایه", value: "AssetPrice", width: "120" },
+      {
+        text: "فاصله تا قیمت عادلانه",
+        value: "DifferenceToAverage",
+        width: "200"
+      },
+      {
+        text: "میانگین قیمت عادلانه",
+        value: "averageFairprice",
+        width: "130"
+      },
+      { text: "قیمت اردر فروش", value: "priceseller", width: "130" },
+      { text: "حجم اردر فروش", value: "volumeseller", width: "130" },
+      { text: "فاصله تا سر رسید", value: "TTM", width: "130" },
+      {
+        text: "قیمت فروش+قیمت قرارداد / قیمت دارایی پایه",
+        value: "PPP",
+        width: "200"
+      },
+      { text: "حجم قرارداد", value: "TradeVolume", width: "100" },
+      { text: "قیمت آخرین معامله", value: "LastTrade", width: "130" },
+      { text: "ارزندگی آخرین معامله", value: "ArzandegiLast", width: "130" },
+      {
+        text: "فاصله آخرین معامله تا قیمت عادلانه",
+        value: "DifferenceToLast",
+        width: "200"
+      }
+    ],
+    headersBoot: [
+      { label: "نماد", key: "Nemad", thClass: "bb-table-head" },
+      { label: "دارایی پایه", key: "UnderLying", width: "100" },
+      { label: "پرداخت نهایی", key: "FinalPayment", width: "100" },
+      { label: "مبلغ کل اردر اول", key: "Totalkey", width: "120" },
+      { label: "قیمت اعمال", key: "StrikePrice", width: "100" },
+      { label: "قیمت دارایی پایه", key: "AssetPrice", width: "120" },
+      {
+        label: "فاصله تا قیمت عادلانه",
+        key: "DifferenceToAverage",
+        width: "200"
+      },
+      {
+        label: "میانگین قیمت عادلانه",
+        key: "averageFairprice",
+        width: "130"
+      },
+      { label: "قیمت اردر فروش", key: "priceseller", width: "130" },
+      { label: "حجم اردر فروش", key: "volumeseller", width: "130" },
+      { label: "فاصله تا سر رسید", key: "TTM", width: "130" },
+      {
+        label: "قیمت فروش+قیمت قرارداد / قیمت دارایی پایه",
+        key: "PPP",
+        width: "200"
+      },
+      { label: "حجم قرارداد", key: "TradeVolume", width: "100" },
+      { label: "قیمت آخرین معامله", key: "LastTrade", width: "130" },
+      { label: "ارزندگی آخرین معامله", key: "ArzandegiLast", width: "130" },
+      {
+        label: "فاصله آخرین معامله تا قیمت عادلانه",
+        key: "DifferenceToLast",
         width: "200"
       }
     ]
@@ -162,6 +415,8 @@ export default {
     ...mapGetters(["getSahm"])
   },
   mounted() {
+    var num = -44434534554.34535;
+    console.log(num.toLocaleString());
     // websocket//////////////////////////
     // this.$socket.onopen = (data) => console.log('fucker' + data);
     // this.$socket.onmessage = (data) => {
@@ -169,11 +424,11 @@ export default {
     // let obj = new Array()
     // obj = JSON.parse(data.data)
     // this.$store.dispatch('setSocketMessage',obj)
-    this.Req();
+    this.loadData();
 
     // setInterval(() => {
 
-    //       this.Req()
+    //       this.OptionTableReq()
 
     // }, 5000)
 
@@ -184,6 +439,23 @@ export default {
     // sleep(2000).then(() => { console.log("World!"); });
   },
   methods: {
+    loadData() {
+      // eslint-disable-next-line no-unused-vars
+      this.OptionAssetReq().then(response => {
+        this.OptionTableReq();
+      });
+      // this.OptionAssetReq().then(this.OptionTableReq());
+    },
+    changeTab() {
+      if (this.tab == "tab-2") this.tab = "tab-1";
+      else this.tab = "tab-2";
+    },
+
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
     makeToast(item) {
       // console.log(this.$store.getters.getSahm[0].DifferenceToLast);
       // console.log(this.$store.getters.getSahm.length);
@@ -209,10 +481,24 @@ export default {
         }
       });
     },
-    Req() {
+    async OptionAssetReq() {
+      await this.axios
+        .get("/api/ViewOptionAssetVolatility")
+        .then(response => {
+          let data = response.data;
+          console.log(data);
+          if (data != "noData") {
+            this.OptionAsset = data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async OptionTableReq() {
       let vm = this;
       //  axios.get('http://45.82.136.21/api/options')
-      this.axios
+      await this.axios
         .get("/api/options")
         .then(response => {
           let data = response.data;
@@ -224,7 +510,7 @@ export default {
             this.$store.dispatch("setSahm", data);
             let items = data;
 
-            for (const item of items) {
+            for (let item of items) {
               if (item.TradeVolume != 0 && item.DifferenceToLast > 0.2) {
                 if (this.flag == 0) {
                   vm.makeToast(item);
@@ -266,6 +552,116 @@ export default {
 };
 </script>
 <style>
+.cardFooter {
+  color: #7c6f68;
+  font-size: 0.9rem;
+}
+.v-toolbar__content,
+.v-toolbar__extension {
+  padding: 0px 4px !important;
+}
+.filterBox {
+  height: 196px;
+  overflow: hidden;
+  position: relative;
+}
+.cardExplanation {
+  height: 196px;
+  font-size: 0.8rem;
+  text-align: right;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+/* always present */
+.expand-transition {
+  transition: all 0.6s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
+}
+/* .expand-enter defines the starting state for entering */
+/* .expand-leave defines the ending state for leaving */
+.expand-enter,
+.expand-leave {
+  height: 0;
+  padding: 0 10px;
+  opacity: 0;
+}
+.list-enter,
+.list-leave-to {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  border-bottom-width: 0px !important;
+}
+.cardTable {
+  direction: rtl;
+  text-align: right;
+}
+.Mychips {
+  text-align: center;
+}
+.bb-table-head {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.bb-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.bb-table-row:hover {
+  background-color: #999999 !important;
+}
+.bb-table-cell {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 400;
+}
+.bb-table-cell-green {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: green;
+  font-weight: 400;
+}
+.bb-table-cell-red {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: red;
+  font-weight: 400;
+}
+.bb-table-cell-bold {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 600;
+}
+.bb-table-row {
+  direction: ltr;
+}
 .optionTable-style {
   direction: rtl;
 }

@@ -174,7 +174,7 @@ export default {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
       console.log(!!this.DataItems.length);
-      if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
+      if (JSON.parse(data.data) != "No Data" || !!this.DataItems.length)
         this.loading = false;
       console.log(this.loading);
     };

@@ -9,6 +9,8 @@ from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilt
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
+from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
+from requestcall.getTickerTapeData import TickerTapeData
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -110,6 +112,13 @@ def getMarketWatchFilters(self):
     return JsonResponse(getMarketWatchFilterLists(),safe=False)
 
 
+def getOptionAssets(self):
+
+    return JsonResponse(OptionAssetVolatility(),safe=False)
+
+
+def getTape(self):
+    return JsonResponse(TickerTapeData(),safe=False)
 # def get_csrf_token(request):
 #     token = django.middleware.csrf.get_token(request)
 #     return JsonResponse({'token': token})

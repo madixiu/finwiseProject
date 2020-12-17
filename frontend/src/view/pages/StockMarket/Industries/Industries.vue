@@ -1,6 +1,39 @@
 <template>
   <div>
     <div class="row">
+      <marquee-text class="tickerTape" reverse :repeat="5" duration="30">
+        <div class="row" style="background-color: #27273b;">
+          <div
+            v-for="item in this.TickerTape"
+            :key="item.ticker"
+            class=" mr-4 "
+          >
+            <div
+              class="mr-2 pt-2 pb-2"
+              style="height: 100% overflow: hidden; 
+    text-align: center; direction:rtl"
+            >
+              <span class="tickerTapeTicker mr-1 ml-1">
+                {{ item.ticker }}
+              </span>
+              <span class="tickerTapeClose">
+                {{ item.close }}
+              </span>
+              <!-- <v-chip label :style="`background-color:${item.Change} > ${0} ? 'green' : 'red'`">{{ item.Change }}</v-chip> -->
+              <v-chip
+                label
+                v-bind:class="[item.Change > 0 ? 'greenItem' : 'redItem']"
+                >{{ item.Change }}%</v-chip
+              >
+            </div>
+
+            <!-- <v-chip label small class="mr-2">
+
+            </v-chip> -->
+          </div>
+        </div>
+        <!-- <p class="mr-2" v-for="item in this.TickerTape" :key="item.ticker"> <span label class="tickerTapeText">{{ item.ticker }}</span></p> -->
+      </marquee-text>
       <div class="col-xxl-4 col-md-6 mb-4">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
@@ -68,9 +101,29 @@
           <v-card-title
             >بار چارت افقی با تایم فریم برای بازدهی صنایع</v-card-title
           >
-          <div class="TimeFrameButtons mr-5">
-            <span>باز زمانی:</span>
-            <v-btn
+          <div class="mr-5">
+            <span>بازه زمانی:</span>
+            <b-button-group>
+              <b-button class="mr-1" pill variant="outline-primary"
+                >ماه</b-button
+              >
+              <b-button class="mr-1" pill variant="outline-primary"
+                >۳ ماه</b-button
+              >
+              <b-button class="mr-1" pill variant="outline-primary"
+                >۶ ماه</b-button
+              >
+              <b-button class="mr-1" pill variant="outline-primary"
+                >سال</b-button
+              >
+              <b-button class="mr-1" pill variant="outline-primary"
+                >۳ سال</b-button
+              >
+              <b-button class="mr-1" pill variant="outline-primary"
+                >کل</b-button
+              >
+            </b-button-group>
+            <!-- <v-btn
               id="fi"
               class="ml-1"
               outlined
@@ -119,7 +172,7 @@
               color="#136bf7"
               @click="changeTimeFrame"
               >کل</v-btn
-            >
+            > -->
           </div>
 
           <ApexChart
@@ -147,7 +200,7 @@
 </template>
 <script>
 // import ErrorMine from "@/view/pages/error/Error-6.vue";
-// import MarqueeText from "vue-marquee-text-component";
+import MarqueeText from "vue-marquee-text-component";
 
 import ApexChart from "@/view/content/charts/ApexChart";
 import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
@@ -158,14 +211,15 @@ export default {
   components: {
     ApexChart,
     IndustryTechnicalBest,
-    IndustryTechnicalWorse
-    // MarqueeText
+    IndustryTechnicalWorse,
+    MarqueeText
     // Error,
     // ErrorMine
   },
   data() {
     return {
       isPaused: false,
+      TickerTape: [],
       ReturnSeries: [
         {
           // name: "Marine Sprite",
@@ -697,7 +751,20 @@ export default {
         chart: {
           width: 400,
           height: 350,
-          type: "pie"
+          type: "pie",
+          events: {
+            legendClick: function(chartContext, seriesIndex, config) {
+              console.log(chartContext);
+              console.log(seriesIndex);
+              console.log(config);
+            },
+            dataPointSelection: (event, chartContext, config) => {
+              console.log(chartContext);
+              console.log(event);
+              console.log(config);
+              this.testing(config.dataPointIndex);
+            }
+          }
         },
         // legend: {
         //   // show: false,
@@ -723,6 +790,19 @@ export default {
     this.loadData();
   },
   methods: {
+    testing(seriesIndex) {
+      console.log("yo");
+      console.log(this.PiechartOptions.labels[seriesIndex]);
+      console.log(this.Pieseries[seriesIndex]);
+      // this.PiechartOptions.labels = persianNames;
+      // console.log(this.chartOptions.labels);
+
+      // this.Pieseries = marketCaps;
+      this.$router.push({
+        name: "IndustriesDetail",
+        params: { id: seriesIndex }
+      });
+    },
     changeTimeFrame() {
       this.ReturnSeries = [
         { data: [123, 121, 110, 100, 98, 90, 76, 68, 61, 57, 43] }
@@ -733,7 +813,10 @@ export default {
       this.$router.push({ name: "IndustriesDetail", params: { id: 2 } });
     },
     loadData() {
-      this.getPieChartData();
+      // eslint-disable-next-line no-unused-vars
+      this.getTickerTapeData().then(response => {
+        this.getPieChartData();
+      });
     },
     async getPieChartData() {
       await this.axios.get("/api/IndexMarketCap").then(responsive => {
@@ -766,6 +849,18 @@ export default {
         this.BarchartOptions.xaxis.categories = names;
       });
     },
+    async getTickerTapeData() {
+      await this.axios
+        .get("/api/TickerTape")
+        .then(response => {
+          let data = response.data;
+          this.TickerTape = data;
+          // this.TickerTape.pop();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     compareValues(key, order = "asc") {
       return function innerSort(a, b) {
         if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -792,5 +887,31 @@ export default {
 @import "~bootstrap/dist/css/bootstrap.css";
 #fi {
   color: red !important;
+}
+.tickerTape {
+  direction: ltr;
+  background-color: tickerTape;
+}
+.tickerTapeTicker {
+  color: aliceblue;
+}
+.tickerTapeClose {
+  color: aliceblue;
+  font-size: 0.8rem;
+}
+.v-chip.v-size--default {
+  font-size: 0.7rem;
+  height: 1.8em;
+  direction: ltr;
+  padding-right: 0.8em;
+  padding-left: 0.8em;
+}
+.redItem {
+  color: aliceblue;
+  background-color: red !important;
+}
+.greenItem {
+  color: aliceblue;
+  background-color: green !important;
 }
 </style>

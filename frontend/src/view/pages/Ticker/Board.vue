@@ -62,11 +62,7 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get(
-          "/api/CurrentBoard/" +
-            this.$route.params.id +
-            "/"
-        )
+        .get("/api/CurrentBoard/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -85,9 +81,7 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get(
-          "/api/CurrentCeo/" + this.$route.params.id + "/"
-        )
+        .get("/api/CurrentCeo/" + this.$route.params.id + "/")
         .then(response3 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
@@ -106,9 +100,7 @@ export default {
     },
     async getOne() {
       await this.axios
-        .get(
-          "/api/SubHeaderW/" + this.$route.params.id + "/"
-        )
+        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

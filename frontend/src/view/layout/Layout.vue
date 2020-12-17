@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       selectedRoute: true,
-      NonAsideRoutes: ["marketmap", "oraq", "shakhes", "robot"]
+      NonAsideRoutes: ["marketmap", "marketwatch", "oraq", "shakhes", "robot"]
     };
   },
   beforeMount() {

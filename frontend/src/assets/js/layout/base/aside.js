@@ -1,120 +1,70 @@
 "use strict";
 
-var KTLayoutAside = function() {
-    // Private properties
-    var _body;
-    var _element;
-    var _offcanvasObject;
+var KTLayoutAside = (function() {
+  // Private properties
+  var _body;
+  var _element;
+  var _offcanvasObject;
 
-    // Private functions
-	// Initialize
-	var _init = function() {
-		var offcanvasClass = KTUtil.hasClass(_element, 'aside-offcanvas-default') ? 'aside-offcanvas-default' : 'aside';
+  // Private functions
+  // Initialize
+  var _init = function() {
+    var offcanvasClass = KTUtil.hasClass(_element, "aside-offcanvas-default")
+      ? "aside-offcanvas-default"
+      : "aside";
 
-        // Initialize mobile aside offcanvas
-		_offcanvasObject = new KTOffcanvas(_element, {
-			baseClass: offcanvasClass,
-			overlay: true,
-			closeBy: 'kt_aside_close_btn',
-			toggleBy: {
-				target: 'kt_aside_mobile_toggle',
-				state: 'mobile-toggle-active'
-			}
-		});
+    // Initialize mobile aside offcanvas
+    _offcanvasObject = new KTOffcanvas(_element, {
+      baseClass: offcanvasClass,
+      overlay: true,
+      closeBy: "kt_aside_close_btn",
+      toggleBy: {
+        target: "kt_aside_mobile_toggle",
+        state: "mobile-toggle-active"
+      }
+    });
+  };
 
-		// Handle Minimized Aside Hover
-		if (KTUtil.hasClass(_body, 'aside-fixed') && KTUtil.hasClass(_body, 'aside-minimize-hoverable')) {
-			var insideTm;
-			var outsideTm;
+  // Public methods
+  return {
+    init: function(id) {
+      _element = KTUtil.getById(id);
+      _body = KTUtil.getBody();
 
-            // Handle Aside Hover Mode
-			KTUtil.addEvent(_element, 'mouseenter', function(e) {
-				e.preventDefault();
+      if (!_element) {
+        return;
+      }
 
-				if (KTUtil.isBreakpointUp('lg') === false) {
-					return;
-				}
+      // Initialize
+      _init();
+    },
 
-				if (outsideTm) {
-					clearTimeout(outsideTm);
-					outsideTm = null;
-				}
+    getElement: function() {
+      return _element;
+    },
 
-				insideTm = setTimeout(function() {
-					if (KTUtil.hasClass(_body, 'aside-minimize') && KTUtil.isBreakpointUp('lg')) {
-						KTUtil.removeClass(_body, 'aside-minimize');
+    getOffcanvas: function() {
+      return _offcanvasObject;
+    },
 
-						// Hover class
-						KTUtil.addClass(_body, 'aside-minimize-hover');
+    isFixed: function() {
+      return KTUtil.hasClass(_body, "aside-fixed");
+    },
 
-						KTLayoutAsideMenu.getMenu().scrollUpdate();
-						KTLayoutAsideMenu.getMenu().scrollTop();
-					}
-				}, 50);
-			});
+    isMinimized: function() {
+      return (
+        KTUtil.hasClass(_body, "aside-fixed") &&
+        KTUtil.hasClass(_body, "aside-minimize")
+      );
+    },
 
-			KTUtil.addEvent(_element, 'mouseleave', function(e) {
-				e.preventDefault();
-
-				if (KTUtil.isBreakpointUp('lg') === false) {
-					return;
-				}
-
-				if (insideTm) {
-					clearTimeout(insideTm);
-					insideTm = null;
-				}
-
-				outsideTm = setTimeout(function() {
-				    if (KTUtil.hasClass(_body, 'aside-minimize-hover') && KTUtil.isBreakpointUp('lg')) {
-					    KTUtil.removeClass(_body, 'aside-minimize-hover');
-					    KTUtil.addClass(_body, 'aside-minimize');
-
-						// Hover class
-                        KTLayoutAsideMenu.getMenu().scrollUpdate();
-						KTLayoutAsideMenu.getMenu().scrollTop();
-					}
-				}, 100);
-			});
-		}
-	}
-
-    // Public methods
-	return {
-		init: function(id) {
-            _element = KTUtil.getById(id);
-            _body = KTUtil.getBody();
-
-            if (!_element) {
-                return;
-            }
-
-            // Initialize
-            _init();
-        },
-
-        getElement: function() {
-            return _element;
-        },
-
-        getOffcanvas: function() {
-            return _offcanvasObject;
-        },
-
-        isFixed: function() {
-            return KTUtil.hasClass(_body, 'aside-fixed');
-        },
-
-        isMinimized: function() {
-            return (KTUtil.hasClass(_body, 'aside-fixed') && KTUtil.hasClass(_body, 'aside-minimize'));
-        },
-
-        isHoverable: function() {
-            return (KTUtil.hasClass(_body, 'aside-fixed') && KTUtil.hasClass(_body, 'aside-minimize-hoverable'));
-        }
-	};
-}();
-
-
+    isHoverable: function() {
+      return (
+        KTUtil.hasClass(_body, "aside-fixed") &&
+        KTUtil.hasClass(_body, "aside-minimize-hoverable")
+      );
+    }
+  };
+})();
 
 export default KTLayoutAside;

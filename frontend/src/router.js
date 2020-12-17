@@ -14,20 +14,20 @@ export default new Router({
         {
           path: "/StockMarket",
           name: "StockMarket",
-          redirect: "/StockMarket/Market/Dashboard/",
+          redirect: "/StockMarket/Dashboard/",
           component: () =>
             import("@/view/pages/StockMarket/StockMarketParent.vue"),
           children: [
             {
-              path: "Market/Dashboard",
+              path: "Dashboard",
               name: "Dashboard",
               component: () => import("@/view/pages/StockMarket/Dashboard.vue")
             },
-            {
-              path: "Market/MarketWatch",
-              name: "marketwatch",
-              component: () => import("@/view/pages/MarketWatch.vue")
-            },
+            // {
+            //   path: "Market/MarketWatch",
+            //   name: "marketwatch",
+            //   component: () => import("@/view/pages/MarketWatch.vue")
+            // },
             {
               path: "Industries",
               name: "Industries",
@@ -74,9 +74,14 @@ export default new Router({
               component: () => import("@/view/pages/Saham/Majame/Calendar.vue")
             },
             {
+              path: "Assembly/Decisions",
+              name: "AssemblyDecisions",
+              component: () => import("@/view/pages/Saham/Majame/Decisions.vue")
+            },
+            {
               path: "Assembly/IncreaseCapitals",
               name: "AssemblyIC",
-              component: () => import("@/view/pages/Saham/Majame/Afzayesh.vue")
+              component: () => import("@/view/pages/Saham/Majame/Increase.vue")
             },
             {
               path: "Taghadom",
@@ -122,6 +127,11 @@ export default new Router({
           path: "/marketmap",
           name: "marketmap",
           component: () => import("@/view/pages/MarketMap/MarketMap.vue")
+        },
+        {
+          path: "/MarketWatch",
+          name: "marketwatch",
+          component: () => import("@/view/pages/MarketWatch.vue")
         },
         {
           path: "/oraq",
