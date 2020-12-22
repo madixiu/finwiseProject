@@ -6,6 +6,7 @@ import htmlClass from "./htmlclass.module";
 import config from "./config.module";
 import breadcrumbs from "./breadcrumbs.module";
 import option from "./option.module";
+import marketwatch from "./marketwatch.module";
 import auth from "./auth";
 
 Vue.use(Vuex);
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     htmlClass,
     config,
     breadcrumbs,
-    option
+    option,
+    marketwatch
   }
 });
