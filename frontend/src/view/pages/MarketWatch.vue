@@ -3,57 +3,47 @@
     <div class="row mr-2 mb-2">
       <v-card width="100%">
         <div class="row">
-          <div class="col-xxl-2 col-lg-2 mr-2 mt-2">
-            <b-form-select
+          <div class="col-xxl-2 col-lg-2 mr-3 mt-3">
+            <v-select
+              height="8"
+              label="بازار"
               v-model="filters.tableMarketSelected"
-              :options="filters.tableMarketFilters"
-              value-field="item"
-              text-field="name"
-              @change="MarketWatchFilterPost()"
+              :items="filters.tableMarketFilters"
+              dense
+              outlined
+              color="#3dbff0"
+              @input="test"
             >
-              <!-- <template #first>
-                <b-form-select-option :value="همه">همه</b-form-select-option>
-              </template> -->
-            </b-form-select>
+            </v-select>
           </div>
-          <!-- <div class="col-xxl-2 col-lg-2 mr-2 mt-2"> -->
-          <!-- <b-form-checkbox
-              id="checkbox-1"
+          <!-- <div class="col-2">
+            <v-checkbox
               v-model="yesterdayEnableTrigger"
-              name="checkbox-1"
-              value="true"
-              unchecked-value="false"
-              size="lg"
-            >
-              <span style="font-size: 1rem"> قیمت دیروز </span>
-            </b-form-checkbox> -->
-          <!-- </div> -->
-          <!-- <div class="col-xxl-2 col-lg-2 mr-2 mt-2"> -->
-          <!-- <b-form-checkbox
-              id="checkbox-2"
-              v-model="EPSEnableTrigger"
-              name="checkbox-2"
-              value="true"
-              unchecked-value="false"
-              size="lg"
-            >
-              <span style="font-size: 1rem">EPS</span>
-            </b-form-checkbox> -->
-          <!-- </div> -->
-          <!-- <div class="col-xxl-2 col-lg-2 mr-2 mt-2">
-            <b-form-checkbox
-              id="checkbox-3"
-              v-model="moreInfoTrigger"
-              name="checkbox-3"
-              value="true"
-              unchecked-value="false"
-              size="lg"
-              @change="test"
-            >
-              <span style="font-size: 1rem"> اطلاعات حقیقی/حقوقی</span>
-            </b-form-checkbox>
+              label="yes"
+              color="red"
+              hide-details
+              @click="TriggerFilteredHeader"
+            ></v-checkbox>
+          </div>
+          <div class="col-2">
+            <v-checkbox
+              v-model="filters.EPSEnableTrigger"
+              label="EPS"
+              color="green"
+              hide-details
+              @click="TriggerFilteredHeader"
+            ></v-checkbox>
+          </div>
+          <div class="col-2">
+            <v-checkbox
+              v-model="filters.moreInfoTrigger"
+              label="اطلاعات حقیقی/حقوقی"
+              color="green"
+              hide-details
+              @click="TriggerFilteredHeader"
+            ></v-checkbox>
           </div> -->
-          <div>
+          <div class="mt-4">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -65,159 +55,46 @@
         </div>
         <div class="row">
           <!-- type selctor -->
-          <div class="col-xxl-5 col-lg-5 mr-2 dropdown-rtl">
-            <b-form-group label="نوع" label-for="tags-with-dropdown">
-              <b-form-tags
-                id="tags-with-dropdown"
-                tag-class="form-tag-class"
-                v-model="filters.tableMarketTypeSelected"
-                no-outer-focus
-                class="mb-2"
-                @change="MarketWatchFilterPost()"
-              >
-                <template v-slot="{ tags, disabled, addTag, removeTag }">
-                  <ul
-                    v-if="tags.length > 0"
-                    class="list-inline d-inline-block mb-2"
-                  >
-                    <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                      <b-form-tag
-                        @remove="removeTag(tag)"
-                        :title="tag"
-                        :disabled="disabled"
-                        variant="info"
-                        >{{ tag }}</b-form-tag
-                      >
-                    </li>
-                  </ul>
-
-                  <b-dropdown
-                    size="sm"
-                    variant="outline-secondary"
-                    block
-                    boundary="viewport"
-                    menu-class="w-100 dropdown-rtl"
-                  >
-                    <template #button-content>
-                      <b-icon icon="tag-fill"></b-icon>نوع
-                    </template>
-                    <b-dropdown-form @submit.stop.prevent="() => {}">
-                      <b-form-group
-                        label="Search tags"
-                        label-for="tag-search-input"
-                        label-cols-md="auto"
-                        class="mb-0"
-                        label-size="sm"
-                        :disabled="disabled"
-                      >
-                        <b-form-input
-                          v-model="TypeSearch"
-                          id="tag-search-input"
-                          input-class="form-input-class"
-                          type="search"
-                          size="sm"
-                          autocomplete="off"
-                        ></b-form-input>
-                      </b-form-group>
-                    </b-dropdown-form>
-                    <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item-button
-                      v-for="option in TypeAvailableOptions"
-                      :key="option"
-                      @click="
-                        onOptionClick({ option, addTag });
-                      "
-                    >
-                      {{ option }}
-                    </b-dropdown-item-button>
-                    <b-dropdown-text v-if="TypeAvailableOptions.length === 0">
-                      There are no tags available to select
-                    </b-dropdown-text>
-                  </b-dropdown>
-                </template>
-              </b-form-tags>
-            </b-form-group>
+          <div class="col-xxl-5 col-lg-5 mr-2">
+            <v-select
+              class="motherfucker"
+              label="نوع"
+              v-model="filters.tableMarketTypeSelected"
+              height="10"
+              :items="filters.tableMarketTypeFilters"
+              :menu-props="{ maxHeight: '200' }"
+              deletable-chips
+              color="#3dbff0"
+              dense
+              outlined
+              multiple
+              small-chips
+              @input="test"
+            >
+            </v-select>
           </div>
           <!-- industry selector -->
           <div class="col-xxl-5 col-lg-5 mr-2 dropdown-rtl">
-            <b-form-group label="صنعت" label-for="tags-with-dropdown">
-              <b-form-tags
-                id="tags-with-dropdown"
-                tag-class="form-tag-class"
-                v-model="filters.tableMarketIndustrySelected"
-                no-outer-focus
-                class="mb-2"
-              >
-                <template v-slot="{ tags, disabled, addTag, removeTag }">
-                  <ul
-                    v-if="tags.length > 0"
-                    class="list-inline d-inline-block mb-2"
-                  >
-                    <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                      <b-form-tag
-                        @remove="removeTag(tag)"
-                        :title="tag"
-                        :disabled="disabled"
-                        variant="info"
-                        >{{ tag }}</b-form-tag
-                      >
-                    </li>
-                  </ul>
-                  <b-dropdown
-                    size="sm"
-                    variant="outline-secondary"
-                    block
-                    menu-class="w-100 dropdown-rtl"
-                  >
-                    <template #button-content>
-                      <b-icon icon="tag-fill"></b-icon>صنعت
-                    </template>
-                    <b-dropdown-form @submit.stop.prevent="() => {}">
-                      <b-form-group
-                        label="Search tags"
-                        label-for="tag-search-input"
-                        label-cols-md="auto"
-                        class="mb-0"
-                        label-size="sm"
-                        :disabled="disabled"
-                      >
-                        <b-form-input
-                          v-model="IndustrySearch"
-                          id="tag-search-input"
-                          input-class="form-input-class"
-                          type="search"
-                          size="sm"
-                          autocomplete="off"
-                        ></b-form-input>
-                      </b-form-group>
-                    </b-dropdown-form>
-                    <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item-button
-                      v-for="option in IndustryAvailableOptions"
-                      :key="option"
-                      @click="
-                        onOptionClick({ option, addTag });
-                        MarketWatchFilterPost();
-                      "
-                    >
-                      {{ option }}
-                    </b-dropdown-item-button>
-                    <b-dropdown-text
-                      v-if="IndustryAvailableOptions.length === 0"
-                    >
-                      There are no tags available to select
-                    </b-dropdown-text>
-                  </b-dropdown>
-                </template>
-              </b-form-tags>
-            </b-form-group>
+            <v-select
+              class="motherfucker"
+              label="صنعت"
+              v-model="filters.tableMarketIndustrySelected"
+              height="10"
+              :items="filters.tableMarketIndustryFilters"
+              deletable-chips
+              outlined
+              dense
+              color="#3dbff0"
+              small-chips
+              multiple
+              @input="test"
+            >
+            </v-select>
           </div>
         </div>
       </v-card>
     </div>
-    <!-- <div class="row mt-2">
-   
-    </div> -->
+
     <!-- table -->
     <div class="row mr-1 mt-1 ml-1">
       <v-card width="100%">
@@ -254,46 +131,117 @@
           :fields="HD"
           @filtered="onFiltered"
         >
-          <!-- <template #cell(Nemad)="data">
-            <b class="marketwatch-table-cell-bold">{{ data.value }}</b>
-          </template>
-          <template #cell(UnderLying)="data">
-            <b class="marketwatch-table-cell-bold">{{ data.value }}</b>
-          </template>
-          <template #cell(StrikePrice)="data">
-            <b class="marketwatch-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-
-          <template #cell(AssetPrice)="data">
-            <b class="marketwatch-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(DifferenceToAverage)="data">
-            <b v-if="data.value > 0" class="marketwatch-table-cell-green">{{
-              data.value
-            }}</b>
-            <b v-if="data.value < 0" class="marketwatch-table-cell-red">{{
-              data.value
-            }}</b>
-          </template>
-          <template #cell(PPP)="data">
-            <b v-if="data.value > 0" class="marketwatch-table-cell-green">{{
-              data.value.toLocaleString()
-            }}</b>
-            <b v-if="data.value < 0" class="marketwatch-table-cell-red">{{
+          <template #cell(TradeCount)="data">
+            <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
             }}</b>
           </template>
-          <template #cell(ArzandegiLast)="data">
-            <b v-if="data.value > 0" class="marketwatch-table-cell-green">{{
+          <template #cell(TradeVolume)="data">
+            <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
             }}</b>
-            <b v-if="data.value < 0" class="marketwatch-table-cell-red">{{
+          </template>
+          <template #cell(TradeValue)="data">
+            <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
             }}</b>
-            <b v-if="data.value == 0" class="marketwatch-table-cell">{{
+          </template>
+          <template #cell(yesterday)="data">
+            <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
             }}</b>
-          </template> -->
+          </template>
+          <template #cell(last)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(close)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(first)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(low)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(high)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(MinRange)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(MaxRange)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(CountBuy_Haghighi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(CountBuy_Hoguhgi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(VolumeBuy_Haghighi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(VolumeBuy_Hoghughi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(CountSell_Haghighi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(CountSell_Hoghughi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(VolumeSell_Haghighi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(VolumeSell_Hoghughi)="data">
+            <b class="marketwatch-table-cell">{{
+              data.value.toLocaleString()
+            }}</b>
+          </template>
+          <template #cell(closePercent)="data">
+            <b v-if="data.value > 0" class="marketwatch-table-cell-green"
+              >{{ data.value }}%</b
+            >
+            <b v-if="data.value < 0" class="marketwatch-table-cell-red"
+              >{{ data.value }}%</b
+            >
+          </template>
+          <template #cell(lastPercent)="data">
+            <b v-if="data.value > 0" class="marketwatch-table-cell-green"
+              >{{ data.value }}%</b
+            >
+            <b v-if="data.value < 0" class="marketwatch-table-cell-red"
+              >{{ data.value }}%</b
+            >
+          </template>
         </b-table>
       </v-card>
     </div>
@@ -307,23 +255,26 @@ export default {
   data() {
     return {
       filters: {
-        tableMarketSelected: 0,
-        // tableMarketFilters: ["همه", "بورس", "فرابورس"],
-        tableMarketFilters: [
-          { item: 0, name: "همه" },
-          { item: 1, name: "بورس" },
-          { item: 2, name: "فرابورس" }
-        ],
+        tableMarketSelected: "همه",
+        tableMarketFilters: ["همه", "بورس", "فرابورس"],
+        // tableMarketFilters: [
+        //   { item: 0, name: "همه" },
+        //   { item: 1, name: "بورس" },
+        //   { item: 2, name: "فرابورس" }
+        // ],
         tableMarketTypeSelected: [],
         tableMarketTypeFilters: [],
         tableMarketIndustrySelected: [],
-        tableMarketIndustryFilters: []
+        tableMarketIndustryFilters: [],
+        yesterdayEnableTrigger: false,
+        EPSEnableTrigger: false,
+        moreInfoTrigger: false
       },
-      yesterdayEnableTrigger: "false",
-      EPSEnableTrigger: "false",
-      moreInfoTrigger: "false",
+      yesterdayEnableTrigger: false,
+      EPSEnableTrigger: false,
+      moreInfoTrigger: false,
+      WebsocketRequest: false,
       selectedHeaderOptions: [],
-      HeaderOptionsPattern: [],
       HeaderOptions: [
         { text: "قیمت دیروز", value: "yesterday" },
         { text: "EPS", value: "EPS" },
@@ -336,32 +287,113 @@ export default {
       value: [],
       MarketTableHeader: [
         { label: "نماد", key: "ticker", thClass: "marketwatch-table-head" },
-        { label: "نام", key: "name" },
-        { label: "صنعت", key: "industry" },
-        { label: "بازار", key: "marketName" },
-        { label: "آخرین بروز رسانی", key: "updatedAt" },
-        { label: "کف مجاز قیمت", key: "MinRange" },
-        { label: "سقف مجاز قیمت", key: "MaxRange" },
-        { label: "EPS", key: "EPS" },
-        { label: "حجم معاملات", key: "TradeVolume" },
-        { label: "ارزش معاملات", key: "TradeValue" },
-        { label: "تعداد معاملات", key: "TradeCount" },
-        { label: "قیمت دیروز", key: "yesterday" },
-        { label: "بالاترین قیمت", key: "high" },
-        { label: "کمترین قیمت", key: "low" },
-        { label: "آخرین قیمت", key: "last" },
-        { label: "قیمت پایانی", key: "close" },
-        { label: "اولین قیمت", key: "first" },
-        { label: "تعداد خرید حقیقی", key: "CountBuy_Haghighi" },
-        { label: "تعداد خرید حقوقی", key: "CountBuy_Hoguhgi" },
-        { label: "حجم خرید حقیقی", key: "VolumeBuy_Haghighi" },
-        { label: "حجم خرید حقوقی", key: "VolumeBuy_Hoghughi" },
-        { label: "تعداد فروش حقیقی", key: "CountSell_Haghighi" },
-        { label: "تعداد فروش حقوقی", key: "CountSell_Hoghughi" },
-        { label: "حجم فروش حقیقی", key: "VolumeSell_Haghighi" },
-        { label: "حجم فروش حقوقی", key: "VolumeSell_Hoghughi" }
-      ],
-      filteredHeader: []
+        {
+          label: "بازار",
+          key: "marketName",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "تعداد معاملات",
+          key: "TradeCount",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "حجم معاملات",
+          key: "TradeVolume",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "ارزش معاملات",
+          key: "TradeValue",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "قیمت دیروز",
+          key: "yesterday",
+          thClass: "marketwatch-table-head"
+        },
+        { label: "آخرین قیمت", key: "last", thClass: "marketwatch-table-head" },
+        {
+          label: "درصد تغییر آخرین قیمت",
+          key: "lastPercent",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "قیمت پایانی",
+          key: "close",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "درصد تغییر قیمت پایانی",
+          key: "closePercent",
+          thClass: "marketwatch-table-head"
+        },
+        // { label: "نام", key: "name" },
+        // { label: "صنعت", key: "industry" },
+        // { label: "آخرین بروز رسانی", key: "updatedAt" },
+        {
+          label: "کف مجاز قیمت",
+          key: "MinRange",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "سقف مجاز قیمت",
+          key: "MaxRange",
+          thClass: "marketwatch-table-head"
+        },
+        { label: "EPS", key: "EPS", thClass: "marketwatch-table-head" },
+        {
+          label: "بالاترین قیمت",
+          key: "high",
+          thClass: "marketwatch-table-head"
+        },
+        { label: "کمترین قیمت", key: "low", thClass: "marketwatch-table-head" },
+        {
+          label: "اولین قیمت",
+          key: "first",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "تعداد خرید حقیقی",
+          key: "CountBuy_Haghighi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "تعداد خرید حقوقی",
+          key: "CountBuy_Hoguhgi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "حجم خرید حقیقی",
+          key: "VolumeBuy_Haghighi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "حجم خرید حقوقی",
+          key: "VolumeBuy_Hoghughi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "تعداد فروش حقیقی",
+          key: "CountSell_Haghighi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "تعداد فروش حقوقی",
+          key: "CountSell_Hoghughi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "حجم فروش حقیقی",
+          key: "VolumeSell_Haghighi",
+          thClass: "marketwatch-table-head"
+        },
+        {
+          label: "حجم فروش حقوقی",
+          key: "VolumeSell_Hoghughi",
+          thClass: "marketwatch-table-head"
+        }
+      ]
     };
   },
   watch: {
@@ -383,46 +415,46 @@ export default {
       tableData: state => state.marketwatch.marketWatchItems
     }),
 
-    TableFiltered() {
-      if (
-        this.filters.tableMarketTypeSelected.length == 0 &&
-        this.filters.tableMarketIndustrySelected.length == 0
-      ) {
-        return this.tableData;
-      } else if (this.filters.tableMarketIndustrySelected.length == 0) {
-        let Tdata = this.tableData;
-        let temp = [];
-        for (let obj of Tdata) {
-          if (this.filters.tableMarketTypeSelected.includes(obj["Type"])) {
-            temp.push(obj);
-          }
-        }
-        return temp;
-      } else if (this.filters.tableMarketTypeSelected.length == 0) {
-        let Tdata = this.tableData;
-        let temp = [];
-        for (let obj of Tdata) {
-          if (
-            this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
-          ) {
-            temp.push(obj);
-          }
-        }
-        return temp;
-      } else {
-        let Tdata = this.tableData;
-        let temp = [];
-        for (let obj of Tdata) {
-          if (
-            this.filters.tableMarketTypeSelected.includes(obj["Type"]) &&
-            this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
-          ) {
-            temp.push(obj);
-          }
-        }
-        return temp;
-      }
-    },
+    // TableFiltered() {
+    //   if (
+    //     this.filters.tableMarketTypeSelected.length == 0 &&
+    //     this.filters.tableMarketIndustrySelected.length == 0
+    //   ) {
+    //     return this.tableData;
+    //   } else if (this.filters.tableMarketIndustrySelected.length == 0) {
+    //     let Tdata = this.tableData;
+    //     let temp = [];
+    //     for (let obj of Tdata) {
+    //       if (this.filters.tableMarketTypeSelected.includes(obj["Type"])) {
+    //         temp.push(obj);
+    //       }
+    //     }
+    //     return temp;
+    //   } else if (this.filters.tableMarketTypeSelected.length == 0) {
+    //     let Tdata = this.tableData;
+    //     let temp = [];
+    //     for (let obj of Tdata) {
+    //       if (
+    //         this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
+    //       ) {
+    //         temp.push(obj);
+    //       }
+    //     }
+    //     return temp;
+    //   } else {
+    //     let Tdata = this.tableData;
+    //     let temp = [];
+    //     for (let obj of Tdata) {
+    //       if (
+    //         this.filters.tableMarketTypeSelected.includes(obj["Type"]) &&
+    //         this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
+    //       ) {
+    //         temp.push(obj);
+    //       }
+    //     }
+    //     return temp;
+    //   }
+    // },
     TypeAvailableOptions() {
       let criteria = this.TypeSearch;
       // Filter out already selected options
@@ -463,21 +495,89 @@ export default {
     console.log(this.TableFilteredY());
   },
   methods: {
+    setFilterSelected() {
+      // this.selectedFilters = [
+      //   this.filters.tableMarketSelected,
+      //   this.filters.tableMarketTypeSelected,
+      //   this.filters.tableMarketIndustrySelected
+      // ];
+      if (this.WebsocketRequest == true) {
+        // this.WebsocketRequest = false
+        // this.Stop();
+        this.MarketWatchFilterPost();
+        // this.liveChecker();
+      } else {
+        this.MarketWatchFilterPost();
+        // this.liveChecker();
+      }
+    },
     test() {
       console.log("yeah fuck");
-      console.log(this.filters);
+      console.log(this.filters.tableMarketSelected);
+      this.MarketWatchFilterPost();
       // console.log(this.selectedHeaderOptions);
       // console.log(this.moreInfoTrigger);
     },
     TriggerFilteredHeader() {
-      console.log(this.MarketTableHeader);
-      // console.log(this.filteredHeader);
+      // console.log(this.MarketTableHeader);
       let header = JSON.parse(JSON.stringify(this.MarketTableHeader));
+      // let options = [this.filters.yesterdayEnableTrigger,this.filters.EPSEnableTrigger,this.filters.moreInfoTrigger]
+      // let options = {
+      //   yesterday: this.filters.yesterdayEnableTrigger,
+      //   EPS: this.filters.EPSEnableTrigger,
+      //   moreInfo: this.filters.moreInfoTrigger
+      // };
       let options = this.selectedHeaderOptions;
-      console.log(options.length);
 
-      // let header = this.MarketTableHeader;
       let SwCase = 0;
+      // if (
+      //   this.yesterdayEnableTrigger != true &&
+      //   this.filters.EPSEnableTrigger != true &&
+      //   this.filters.moreInfoTrigger != true
+      // )
+      //   SwCase = 0;
+      // else if (
+      //   this.yesterdayEnableTrigger == true &&
+      //   this.filters.EPSEnableTrigger != true &&
+      //   this.filters.moreInfoTrigger != true
+      // )
+      //   SwCase = 1;
+      // else if (
+      //   this.yesterdayEnableTrigger != true &&
+      //   this.filters.EPSEnableTrigger == true &&
+      //   this.filters.moreInfoTrigger != true
+      // )
+      //   SwCase = 2;
+      // else if (
+      //   this.yesterdayEnableTrigger != true &&
+      //   this.filters.EPSEnableTrigger != true &&
+      //   this.filters.moreInfoTrigger == true
+      // )
+      //   SwCase = 3;
+      // else if (
+      //   this.yesterdayEnableTrigger == true &&
+      //   this.filters.EPSEnableTrigger == true &&
+      //   this.filters.moreInfoTrigger != true
+      // )
+      //   SwCase = 4;
+      // else if (
+      //   this.yesterdayEnableTrigger != true &&
+      //   this.filters.EPSEnableTrigger == true &&
+      //   this.filters.moreInfoTrigger == true
+      // )
+      //   SwCase = 5;
+      // else if (
+      //   this.yesterdayEnableTrigger == true &&
+      //   this.filters.EPSEnableTrigger != true &&
+      //   this.filters.moreInfoTrigger == true
+      // )
+      //   SwCase = 6;
+      // else if (
+      //   this.yesterdayEnableTrigger == true &&
+      //   this.filters.EPSEnableTrigger == true &&
+      //   this.filters.moreInfoTrigger == true
+      // )
+      //   SwCase = 7;
       if (options.length == 0) SwCase = 0;
       else if (options.length == 1) {
         console.log(options);
@@ -492,53 +592,42 @@ export default {
 
       switch (SwCase) {
         case 0:
-          header.splice(7, 1);
-          header.splice(10, 1);
+          header.splice(5, 1);
+          header.splice(11, 1);
           for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
           break;
         case 1:
-          header.splice(7, 1);
+          header.splice(12, 1);
           for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
           break;
 
         case 2:
-          header.splice(11, 1);
+          header.splice(5, 1);
           for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
           break;
         case 3:
-          header.splice(7, 1);
-          header.splice(10, 1);
-          //this.filteredHeader = header;
+          header.splice(5, 1);
+          header.splice(11, 1);
           break;
 
         case 4:
           for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
           break;
 
         case 5:
-          header.splice(11, 1);
-          // for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
+          header.splice(5, 1);
           break;
 
         case 6:
-          header.splice(7, 1);
-
-          //this.filteredHeader = header;
+          header.splice(12, 1);
           break;
 
         case 7:
-          //this.filteredHeader = header;
           break;
         default:
-          header.splice(7, 1);
-          header.splice(10, 1);
+          header.splice(5, 1);
+          header.splice(11, 1);
           for (let i = 0; i < 8; i++) header.pop();
-          //this.filteredHeader = header;
           break;
       }
       return header;
@@ -620,8 +709,8 @@ export default {
         // }
       });
     },
-    async MarketWatchFilterPost() {
-      await this.axios({
+    MarketWatchFilterPost() {
+      this.axios({
         method: "post",
         url: "/api/marketwatch",
         data: {
@@ -632,7 +721,8 @@ export default {
         xsrfHeaderName: "X-CSRFToken"
       })
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
+          this.$store.dispatch("setMarketWatchItems", response.data);
         })
         .catch(error => {
           console.log(error);
@@ -658,9 +748,10 @@ export default {
   direction: rtl;
 }
 .marketwatch-table-head {
+  background-color: #f2f2f2;
   vertical-align: middle !important;
-  font-size: 0.8rem !important;
-  font-weight: 500 !important ;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important ;
 }
 .marketwatch-table {
   vertical-align: middle !important;
@@ -700,5 +791,20 @@ export default {
 .marketwatch-table-row {
   direction: ltr;
   vertical-align: middle !important;
+}
+
+.motherfucker .v-text-field--box .v-input__slot,
+.v-text-field--outlined .v-input__slot {
+  min-height: 25px !important;
+  max-height: 50px;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 0.8rem !important;
+}
+.motherfucker .v-chip.v-size--small {
+  border-radius: 19px !important;
+  font-size: 0.8rem !important;
+  height: 19px !important;
+  background-color:"#3dbff0";
 }
 </style>

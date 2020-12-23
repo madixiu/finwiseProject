@@ -90,7 +90,7 @@ def getMarketWatch(request):
         # print(data.get('marketName'))
         # respond = []
         # respond.append(getMarketWatchHeaderReq())
-        if data.get('marketName') != ["همه"] or data.get('marketType') != [] or data.get('marketIndustry') != []:
+        if data.get('marketName') != "همه" or data.get('marketType') != [] or data.get('marketIndustry') != []:
             # respond.append(getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry')))
             respond = getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry'))
         else: 

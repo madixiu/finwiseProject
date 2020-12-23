@@ -1,6 +1,7 @@
 import requests
 import json
 from .util.dataAlterTest import listCreator
+from .util.Convereter_trunc import truncater
 
 # this is Market table headers
 # MarketTableHeader = [
@@ -50,9 +51,10 @@ def getParsedData():
             if resp.text:
                 global parsed_data
                 global dataAvailablity
+                parsed_data = []
                 parsed_data = json.loads(resp.text)
                 dataAvailablity = True
-        
+                additionalDataMarketWatch()
     except:
         print("connection could not be established to data center!")
 
@@ -60,7 +62,7 @@ def getFilteredData(marketName,marketType,marketIndustry):
     # dataTemp = []
     getParsedData()
     if marketType==[]:
-        if marketName=='':
+        if marketName=='همه':
             if marketIndustry==[]:
                 dataTemp = parsed_data
             else:
@@ -81,7 +83,7 @@ def getFilteredData(marketName,marketType,marketIndustry):
                     dataTemp=[x for x in parsed_data if (x["marketParent"]==2 or x['marketParent'] == 20) and x['industry'] in marketIndustry]
 
     else:
-        if marketName=='':
+        if marketName=='همه':
             if marketIndustry==[]:
                 dataTemp=[x for x in parsed_data if x["Type"] in marketType ]
             else:
@@ -144,7 +146,8 @@ def getFilteredData(marketName,marketType,marketIndustry):
 def getMarketWatchRequest():
     getParsedData()
     if dataAvailablity:
-        DataAlterTesting()
+        # DataAlterTesting()
+        # additionalDataMarketWatch()
         return (parsed_data)
     else:
         return ("noData")
@@ -197,4 +200,16 @@ def DataAlterTesting():
     for item in parsed_data:
         item['fuck'] = lst[i]
         i+=1
+
+def additionalDataMarketWatch():
+    for item in parsed_data:
+        if item['yesterday'] !=None and item['close'] !=None:
+            item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
+        else:
+            item['closePercent'] = None
+        if item['last'] !=None and item['yesterday'] !=None:
+            item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
+        else:
+            item['lastPercent'] = None
+    print(parsed_data[0])
     
