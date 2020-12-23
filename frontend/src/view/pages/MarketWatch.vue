@@ -805,6 +805,6 @@ export default {
   border-radius: 19px !important;
   font-size: 0.8rem !important;
   height: 19px !important;
-  background-color:"#3dbff0";
+  background-color: "#3dbff0";
 }
 </style>
