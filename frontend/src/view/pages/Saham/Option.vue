@@ -497,7 +497,6 @@ export default {
     },
     async OptionTableReq() {
       let vm = this;
-      //  axios.get('http://45.82.136.21/api/options')
       await this.axios
         .get("/api/options")
         .then(response => {
