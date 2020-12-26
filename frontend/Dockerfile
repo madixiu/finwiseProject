@@ -28,5 +28,5 @@ COPY . /frontend/
 #EXPOSE 8080
 
 # start app
-#CMD ["npm", "run", "serve"]
-CMD ["sh", "start_dev.sh"]
+CMD ["npm", "run", "serve"]
+# CMD ["sh", "start_dev.sh"]
