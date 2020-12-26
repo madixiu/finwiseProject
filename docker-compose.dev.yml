@@ -14,10 +14,11 @@ services:
       - "5432:5432"
   
   redis:
-    image: redis:alpine
+    image: redis:latest
     volumes: 
-      - redis-data:/data
+      - ./redis/redis.conf:/redis.conf
     container_name: redis
+    command: [ "redis-server", "/redis.conf" ]
     networks:
       - main
   
