@@ -41,6 +41,7 @@ Vue.use(PersianCalendar);
 const httpLink = new HttpLink({
   // You should use an absolute URL here
   uri: "http://45.82.136.21/graphql"
+  // uri: "http://localhost/graphql"
 });
 const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {
