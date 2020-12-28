@@ -1,8 +1,5 @@
 <template>
   <div id="mapparent" class="container-fluid">
-    <div class="row">
-      fuck
-    </div>
     <div class="row"><treemap /></div>
     <!-- <treemap></treemap> -->
   </div>

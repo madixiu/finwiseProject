@@ -221,10 +221,7 @@
 </template>
 
 <script>
-// import axioso from "axios";
 import { mapGetters } from "vuex";
-import XEUtils from "xe-utils";
-
 export default {
   name: "Option",
 
@@ -232,7 +229,6 @@ export default {
     OptionAsset: [],
     card1Key: true,
     card2Key: true,
-    myKey: true,
     card1Header: [
       { text: "اسم سهم", align: "center", value: "ticker", sortable: false },
       {
@@ -248,12 +244,6 @@ export default {
         ticker: "فولاد"
       }
     ],
-    fields: ["first_name", "last_name", "age"],
-    items: [
-      { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
-      { age: 21, first_name: "Larsen", last_name: "Shaw" },
-      { age: 89, first_name: "Geneva", last_name: "Wilson" }
-    ],
     tab: "tab-1",
     filterName: "",
     temp: [],
@@ -261,74 +251,6 @@ export default {
     filter: null,
     height: 400,
     search: "",
-    headers: [
-      { label: "نماد", field: "Nemad", width: "100" },
-      { label: "دارایی پایه", field: "UnderLying", width: "100" },
-      { label: "پرداخت نهایی", field: "FinalPayment", width: "100" },
-      { label: "مبلغ کل اردر اول", field: "TotalValue", width: "120" },
-      { label: "StrikePrice", field: "StrikePrice", width: "100" },
-      { label: "قیمت دارایی پایه", field: "AssetPrice", width: "120" },
-      {
-        label: "فاصله تا قیمت عادلانه",
-        field: "DifferenceToAverage",
-        width: "200"
-      },
-      {
-        label: "میانگین قیمت عادلانه",
-        field: "averageFairprice",
-        width: "130"
-      },
-      { label: "قیمت اردر فروش", field: "priceseller", width: "130" },
-      { label: "حجم اردر فروش", field: "volumeseller", width: "130" },
-      { label: "فاصله تا سر رسید", field: "TTM", width: "130" },
-      {
-        label: "قیمت فروش+قیمت قرارداد / قیمت دارایی پایه",
-        field: "PPP",
-        width: "200"
-      },
-      { label: "حجم قرارداد", field: "TradeVolume", width: "100" },
-      { label: "قیمت آخرین معامله", field: "LastTrade", width: "130" },
-      { label: "ارزندگی آخرین معامله", field: "ArzandegiLast", width: "130" },
-      {
-        label: "فاصله آخرین معامله تا قیمت عادلانه",
-        field: "DifferenceToLast",
-        width: "200"
-      }
-    ],
-    headersVuetify: [
-      { text: "نماد", value: "Nemad", width: "100" },
-      { text: "دارایی پایه", value: "UnderLying", width: "100" },
-      { text: "پرداخت نهایی", value: "FinalPayment", width: "100" },
-      { text: "مبلغ کل اردر اول", value: "TotalValue", width: "120" },
-      { text: "StrikePrice", value: "StrikePrice", width: "100" },
-      { text: "قیمت دارایی پایه", value: "AssetPrice", width: "120" },
-      {
-        text: "فاصله تا قیمت عادلانه",
-        value: "DifferenceToAverage",
-        width: "200"
-      },
-      {
-        text: "میانگین قیمت عادلانه",
-        value: "averageFairprice",
-        width: "130"
-      },
-      { text: "قیمت اردر فروش", value: "priceseller", width: "130" },
-      { text: "حجم اردر فروش", value: "volumeseller", width: "130" },
-      { text: "فاصله تا سر رسید", value: "TTM", width: "130" },
-      {
-        text: "قیمت فروش+قیمت قرارداد / قیمت دارایی پایه",
-        value: "PPP",
-        width: "200"
-      },
-      { text: "حجم قرارداد", value: "TradeVolume", width: "100" },
-      { text: "قیمت آخرین معامله", value: "LastTrade", width: "130" },
-      { text: "ارزندگی آخرین معامله", value: "ArzandegiLast", width: "130" },
-      {
-        text: "فاصله آخرین معامله تا قیمت عادلانه",
-        value: "DifferenceToLast",
-        width: "200"
-      }
-    ],
     headersBoot: [
       { label: "نماد", key: "Nemad", thClass: "bb-table-head" },
       { label: "دارایی پایه", key: "UnderLying", width: "100" },
@@ -366,59 +288,11 @@ export default {
   }),
 
   computed: {
-    list() {
-      let data = this.$store.getters.getSahm;
-      let filterName = XEUtils.toString(this.filterName).trim();
-      console.log("filterName: " + filterName);
-      if (filterName) {
-        let filterRE = new RegExp(filterName, "gi");
-        console.log("filteRE: " + filterRE);
-
-        let searchProps = [
-          "Nemad",
-          "UnderLying",
-          "FinalPayment",
-          "TotalValue",
-          "StrikePrice",
-          "AssetPrice",
-          "DifferenceToAverage",
-          "averageFairprice",
-          "priceseller",
-          "volumeseller",
-          "TTM",
-          "PPP",
-          "TradeVolume",
-          "LastTrade",
-          "ArzandegiLast",
-          "DifferenceToLast"
-        ];
-        let rest = data.filter(item =>
-          searchProps.some(
-            key => XEUtils.toString(item[key]).indexOf(filterName) > -1
-          )
-        );
-        // console.log('rest: '+ rest);
-        return rest.map(row => {
-          let item = Object.assign({}, row);
-          searchProps.forEach(key => {
-            item[key] = XEUtils.toString(item[key]).replace(
-              filterRE,
-              match => `<span class="keyword-lighten">${match}</span>`
-            );
-          });
-          return item;
-        });
-      }
-      return data;
-    },
-
     ...mapGetters(["getSahm"])
   },
   mounted() {
-    var num = -44434534554.34535;
-    console.log(num.toLocaleString());
     // websocket//////////////////////////
-    // this.$socket.onopen = (data) => console.log('fucker' + data);
+    // this.$socket.onopen = (data) => console.log('data' + data);
     // this.$socket.onmessage = (data) => {
     // // console.log("data firm live is: " +data.data)
     // let obj = new Array()
@@ -536,12 +410,6 @@ export default {
         });
     },
 
-    getColor(DefferenceToAverage) {
-      if (DefferenceToAverage < 0) return "red";
-      else if (DefferenceToAverage < 0.1 && DefferenceToAverage > 0)
-        return "orange";
-      else return "green";
-    },
 
     getHeight() {
       //  return (window.innerHeight * 75)/100
@@ -661,35 +529,8 @@ export default {
 .bb-table-row {
   direction: ltr;
 }
-.optionTable-style {
-  direction: rtl;
-}
-/* .optionTable-style .vxe-table.size--mini {
-    font-size: 9px;
-} */
 
-.optionTable-style .vxe-body--row {
-  /* background-color: #000; */
-  color: #000;
-  direction: ltr;
-  /* direction: rtl; */
-}
-
-.optionTable-style .vxe-header--column {
-  background-color: #003941;
-  color: #fff;
-
-  font-size: smaller;
-}
-
-/*  */
-
-.keyword-lighten {
-  color: #000;
-  background-color: #ffff00;
-}
-
-.vxe-toolbar .vxe-button--wrapper {
+/* .vxe-toolbar .vxe-button--wrapper {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
@@ -704,5 +545,5 @@ export default {
   width: 300px !important;
   height: 30px !important;
   margin-right: 10px;
-}
+} */
 </style>

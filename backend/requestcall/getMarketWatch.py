@@ -198,7 +198,7 @@ def DataAlterTesting():
     lst = listCreator(len(parsed_data))
     i = 0
     for item in parsed_data:
-        item['fuck'] = lst[i]
+        item['test'] = lst[i]
         i+=1
 
 def additionalDataMarketWatch():

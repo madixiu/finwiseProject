@@ -57,7 +57,7 @@
           <!-- type selctor -->
           <div class="col-xxl-5 col-lg-5 mr-2">
             <v-select
-              class="motherfucker"
+              class="selector"
               label="نوع"
               v-model="filters.tableMarketTypeSelected"
               height="10"
@@ -76,7 +76,7 @@
           <!-- industry selector -->
           <div class="col-xxl-5 col-lg-5 mr-2 dropdown-rtl">
             <v-select
-              class="motherfucker"
+              class="selector"
               label="صنعت"
               v-model="filters.tableMarketIndustrySelected"
               height="10"
@@ -402,12 +402,12 @@ export default {
       ]
     };
   },
-  watch: {
-    selectedHeaderOptions() {
-      console.log(this.selectedHeaderOptions);
-      // this.TriggerFilteredHeader();
-    }
-  },
+  // watch: {
+  //   selectedHeaderOptions() {
+  //     // console.log(this.selectedHeaderOptions);
+  //     // this.TriggerFilteredHeader();
+  //   }
+  // },
   computed: {
     HD() {
       return this.TriggerFilteredHeader();
@@ -518,7 +518,6 @@ export default {
       }
     },
     test() {
-      console.log("yeah fuck");
       console.log(this.filters.tableMarketSelected);
       this.MarketWatchFilterPost();
       // console.log(this.selectedHeaderOptions);
@@ -799,7 +798,7 @@ export default {
   vertical-align: middle !important;
 }
 
-.motherfucker .v-text-field--box .v-input__slot,
+.selector .v-text-field--box .v-input__slot,
 .v-text-field--outlined .v-input__slot {
   min-height: 25px !important;
   max-height: 50px;
@@ -807,7 +806,7 @@ export default {
   align-items: center !important;
   font-size: 0.8rem !important;
 }
-.motherfucker .v-chip.v-size--small {
+.selector .v-chip.v-size--small {
   border-radius: 19px !important;
   font-size: 0.8rem !important;
   height: 19px !important;
