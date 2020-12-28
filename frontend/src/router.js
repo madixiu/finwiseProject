@@ -1,6 +1,71 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+const Layout = () => import("@/view/layout/Layout");
+const StockMarketParent = () =>
+  import("@/view/pages/StockMarket/StockMarketParent.vue");
+const Dashboard = () => import("@/view/pages/StockMarket/Dashboard.vue");
+const Industries = () =>
+  import("@/view/pages/StockMarket/Industries/Industries.vue");
+const IndustriesDetail = () =>
+  import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
+const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
+const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
+const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
+const Tools = () => import("@/view/pages/Saham/Technical/Tools.vue");
+const Data = () => import("@/view/pages/Saham/Technical/Data.vue");
+const Calendar = () => import("@/view/pages/Saham/Majame/Calendar.vue");
+const Decisions = () => import("@/view/pages/Saham/Majame/Decisions.vue");
+const Increase = () => import("@/view/pages/Saham/Majame/Increase.vue");
+const Taqadom = () => import("@/view/pages/Saham/Taqadom.vue");
+const Option = () => import("@/view/pages/Saham/Option.vue");
+const Sandoq = () => import("@/view/pages/Saham/Sandoq.vue");
+const Kala = () => import("@/view/pages/Kala/Kala.vue");
+const Bourse = () => import("@/view/pages/Kala/Bourse.vue");
+const Global = () => import("@/view/pages/Kala/Global.vue");
+const MarketMap = () => import("@/view/pages/MarketMap/MarketMap.vue");
+const MarketWatch = () => import("@/view/pages/MarketWatch.vue");
+const Oraq = () => import("@/view/pages/Oraq/Oraq.vue");
+const Shakhes = () => import("@/view/pages/Shakhes/Shakhes.vue");
+const Ticker = () => import("@/view/pages/Ticker/Ticker.vue");
+const Overview = () => import("@/view/pages/Ticker/Overview.vue");
+const AdministrationNoticeWidget = () =>
+  import("@/view/pages/Ticker/TickerWidgets/AdministrationNoticeWidget.vue");
+const CodalNotifications = () =>
+  import("@/view/pages/Ticker/CodalNotifications.vue");
+const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
+const HH = () => import("@/view/pages/Ticker/HH.vue");
+const Board = () => import("@/view/pages/Ticker/Board.vue");
+const ShareHolders = () => import("@/view/pages/Ticker/ShareHolders.vue");
+const AdjustedPrices = () => import("@/view/pages/Ticker/AdjustedPrices.vue");
+const Bonyadi = () => import("@/view/pages/Ticker/Bonyadi.vue");
+const TickerTechnical = () => import("@/view/pages/Ticker/SahmTechnical.vue");
+const BalanceSheet = () =>
+  import("@/view/pages/Ticker/Sheets/BalanceSheet.vue");
+const IncomeStatement = () =>
+  import("@/view/pages/Ticker/Sheets/IncomeStatement.vue");
+const CashFlow = () => import("@/view/pages/Ticker/Sheets/CashFlow.vue");
+
+const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
+const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
+const Relations = () => import("@/view/pages/Ticker/Relations.vue");
+const Industry = () => import("@/view/pages/Ticker/Industry.vue");
+const AssemblyCalendar = () =>
+  import("@/view/pages/Ticker/AssemblyWidget/AssemblyCalendar.vue");
+const AssemblyAll = () =>
+  import("@/view/pages/Ticker/AssemblyWidget/AssemblyAll.vue");
+const AssemblyDPS = () =>
+  import("@/view/pages/Ticker/AssemblyWidget/AssemblyDPS.vue");
+const AssemblyIncreaseCapital = () =>
+  import("@/view/pages/Ticker/AssemblyWidget/AssemblyIncreaseCapital.vue");
+const Subset = () => import("@/view/pages/Ticker/Subset.vue");
+const Robot = () => import("@/view/pages/Robot/Robot.vue");
+const Login = () => import("@/view/pages/auth/Login");
+const Register = () => import("@/view/pages/auth/Register");
+const Verify = () => import("@/view/pages/auth/Verify");
+const ERROR = () => import("@/view/pages/error/Error-1.vue");
+
+
 Vue.use(Router);
 
 export default new Router({
@@ -9,19 +74,18 @@ export default new Router({
     {
       path: "/",
       redirect: "/StockMarket",
-      component: () => import("@/view/layout/Layout"),
+      component: Layout,
       children: [
         {
           path: "/StockMarket",
           name: "StockMarket",
           redirect: "/StockMarket/Dashboard/",
-          component: () =>
-            import("@/view/pages/StockMarket/StockMarketParent.vue"),
+          component: StockMarketParent,
           children: [
             {
               path: "Dashboard",
               name: "Dashboard",
-              component: () => import("@/view/pages/StockMarket/Dashboard.vue")
+              component: Dashboard
             },
             // {
             //   path: "Market/MarketWatch",
@@ -31,72 +95,67 @@ export default new Router({
             {
               path: "Industries",
               name: "Industries",
-              component: () =>
-                import("@/view/pages/StockMarket/Industries/Industries.vue")
+              component: Industries
             },
             {
               path: "Industries/:id",
               name: "IndustriesDetail",
-              component: () =>
-                import(
-                  "@/view/pages/StockMarket/Industries/IndustriesDetail.vue"
-                )
+              component: IndustriesDetail
             },
             {
               path: "Screener",
               name: "Screener",
-              component: () => import("@/view/pages/Saham/Qarbal.vue")
+              component: Qarbal
             },
             {
               path: "Fundamental",
               name: "Fundamental",
-              component: () => import("@/view/pages/Saham/Bonyad.vue")
+              component: Bonyad
             },
             {
               path: "Technical/Dashboard",
               name: "TechnicalDashboard",
-              component: () =>
-                import("@/view/pages/Saham/Technical/GoldPrice.vue")
+              component: GoldPrice
             },
             {
               path: "Techincal/Tools",
               name: "TechnicalTools",
-              component: () => import("@/view/pages/Saham/Technical/Tools.vue")
+              component: Tools
             },
             {
               path: "Technical/Data",
               name: "TechnicalData",
-              component: () => import("@/view/pages/Saham/Technical/Data.vue")
+              component: Data
             },
             {
               path: "Assembly/Calendar",
               name: "AssemblyCalendar",
-              component: () => import("@/view/pages/Saham/Majame/Calendar.vue")
+              component: Calendar
             },
             {
               path: "Assembly/Decisions",
               name: "AssemblyDecisions",
-              component: () => import("@/view/pages/Saham/Majame/Decisions.vue")
+              component: Decisions
             },
             {
               path: "Assembly/IncreaseCapitals",
               name: "AssemblyIC",
-              component: () => import("@/view/pages/Saham/Majame/Increase.vue")
+              component: Increase
             },
             {
               path: "Taghadom",
               name: "Taghadom",
-              component: () => import("@/view/pages/Saham/Taqadom.vue")
+              component: Taqadom
             },
             {
               path: "Option",
               name: "Option",
-              component: () => import("@/view/pages/Saham/Option.vue")
+              component: Option
             },
             {
               path: "Funds",
               name: "Funds",
-              component: () => import("@/view/pages/Saham/Sandoq.vue")
+              component: Sandoq
             }
           ]
         },
@@ -104,44 +163,44 @@ export default new Router({
           path: "/kala",
           name: "kala",
           redirect: "/kala/bourse",
-          component: () => import("@/view/pages/Kala/Kala.vue"),
+          component: Kala,
           children: [
             {
               path: "bourse",
               name: "bourse",
-              component: () => import("@/view/pages/Kala/Bourse.vue")
+              component: Bourse
             },
             {
               path: "global",
               name: "global",
-              component: () => import("@/view/pages/Kala/Global.vue")
+              component: Global
             }
           ]
         },
-        {
-          path: "/builder",
-          name: "builder",
-          component: () => import("@/view/pages/Builder.vue")
-        },
+        // {
+        //   path: "/builder",
+        //   name: "builder",
+        //   component: () => import("@/view/pages/Builder.vue")
+        // },
         {
           path: "/marketmap",
           name: "marketmap",
-          component: () => import("@/view/pages/MarketMap/MarketMap.vue")
+          component: MarketMap
         },
         {
           path: "/MarketWatch",
           name: "marketwatch",
-          component: () => import("@/view/pages/MarketWatch.vue")
+          component: MarketWatch
         },
         {
           path: "/oraq",
           name: "oraq",
-          component: () => import("@/view/pages/Oraq/Oraq.vue")
+          component: Oraq
         },
         {
           path: "/shakhes",
           name: "shakhes",
-          component: () => import("@/view/pages/Shakhes/Shakhes.vue")
+          component: Shakhes
         },
 
         //added route for ticker!
@@ -149,115 +208,126 @@ export default new Router({
           path: "/ticker",
           name: "ticker",
           redirect: "/ticker/Overview/",
-          component: () => import("@/view/pages/Ticker/Ticker.vue"),
+          component: Ticker,
           children: [
             {
               path: "Overview/Overall/:id",
               name: "TickerOverall",
-              component: () => import("@/view/pages/Ticker/Overview.vue")
+              component: Overview
             },
             {
               path: "Overview/Administration/:id",
               name: "Administration",
-              component: () => import("@/view/pages/Ticker/Administration.vue")
+              component: AdministrationNoticeWidget
             },
             {
               path: "Overview/Notifications/:id",
               name: "Notifications",
-              component: () =>
-                import("@/view/pages/Ticker/CodalNotifications.vue")
+              component: CodalNotifications
             },
             {
               path: "Overview/StatusChange/:id",
               name: "StatusChange",
-              component: () => import("@/view/pages/Ticker/StatusChange.vue")
+              component: StatusChange
             },
             {
               path: "Overview/HH/:id",
               name: "HH",
-              component: () => import("@/view/pages/Ticker/HH.vue")
+              component: HH
             },
             {
               path: "Overview/Board/:id",
               name: "Board",
-              component: () => import("@/view/pages/Ticker/Board.vue")
+              component: Board
             },
             {
               path: "Overview/shareholders/:id",
               name: "shareholders",
-              component: () => import("@/view/pages/Ticker/ShareHolders.vue")
+              component: ShareHolders
             },
             {
               path: "AdjustedPrices/:id",
               name: "AdjustedPrices",
-              component: () => import("@/view/pages/Ticker/AdjustedPrices.vue")
+              component: AdjustedPrices
             },
             {
               path: "TickerFundamental/:id",
               name: "TickerFundamental",
-              component: () => import("@/view/pages/Ticker/Bonyadi.vue")
+              component: Bonyadi
             },
             {
               path: "TickerTechnical/:id",
               name: "TickerTechnical",
-              component: () => import("@/view/pages/Ticker/SahmTechnical.vue")
+              component: TickerTechnical
             },
             {
-              path: "Sheets/:id",
-              name: "Sheets",
-              component: () => import("@/view/pages/Ticker/Surats.vue")
+              path: "Sheets/BalanceSheet/:id",
+              // name: "Sheets",
+              name: "BalanceSheet",
+              component: BalanceSheet
+            },
+            {
+              path: "Sheets/IncomeStatement/:id",
+              // name: "Sheets",
+              name: "IncomeStatement",
+              component: IncomeStatement
+            },
+            {
+              path: "Sheets/CashFlow/:id",
+              // name: "Sheets",
+              name: "CashFlow",
+              component: CashFlow
             },
             {
               path: "Monthly/:id",
               name: "Monthly",
-              component: () => import("@/view/pages/Ticker/Monthly.vue")
+              component: Monthly
             },
             {
               path: "sahmRobot/:id",
               name: "sahmRobot",
-              component: () => import("@/view/pages/Ticker/SahmRobot.vue")
+              component: SahmRobot
             },
             {
               path: "TickerRatio/:id",
               name: "TickerRatio",
-              component: () => import("@/view/pages/Ticker/Relations.vue")
+              component: Relations
             },
             {
               path: "TickerIndustry/:id",
               name: "TickerIndustry",
-              component: () => import("@/view/pages/Ticker/Industry.vue")
+              component: Industry
             },
-            {
-              path: "TickerAssembly/:id",
-              name: "TickerAssembly",
-              redirect: "/ticker/TickerAssembly/TickerAssemblyCalendar",
-              component: () => import("@/view/pages/Ticker/SahmMajame.vue")
-            },
+            // {
+            //   path: "TickerAssembly/TickerAssemblyCalendar:id",
+            //   name: "TickerAssembly",
+            //   // redirect: "/ticker/TickerAssembly/TickerAssemblyCalendar",
+            //   component: SahmMajame () => import("@/view/pages/Ticker/SahmMajame.vue")
+            // },
             {
               path: "TickerAssembly/Calendar/:id",
               name: "TickerAssemblyCalendar",
-              component: () => import("@/view/pages/Ticker/SahmMajame.vue")
+              component: AssemblyCalendar
             },
             {
               path: "TickerAssembly/Report/:id",
               name: "TickerAssemblyReport",
-              component: () => import("@/view/pages/Ticker/AssemblyAll.vue")
+              component: AssemblyAll
             },
             {
               path: "TickerAssembly/DPS/:id",
               name: "TickerAssemblyDPS",
-              component: () => import("@/view/pages/Ticker/AssemblyDPS.vue")
+              component: AssemblyDPS
             },
             {
               path: "TickerAssembly/IC/:id",
               name: "TickerAssemblyIC",
-              component: () =>
-                import("@/view/pages/Ticker/AssemblyIncreaseCapital.vue")
+              component: AssemblyIncreaseCapital
             },
             {
-              path: "sarmaye/:id",
-              name: "sarmaye",
-              component: () => import("@/view/pages/Ticker/Sarmaye.vue")
+              path: "subset/:id",
+              name: "subset",
+              component: Subset
             }
           ]
         },
@@ -265,412 +335,47 @@ export default new Router({
         {
           path: "/robot",
           name: "robot",
-          component: () => import("@/view/pages/Robot/Robot.vue")
-        },
-        {
-          path: "/vue-bootstrap",
-          name: "vue-bootstrap",
-          component: () =>
-            import("@/view/pages/vue-bootstrap/VueBootstrap.vue"),
-          children: [
-            {
-              path: "alert",
-              name: "vue-bootstrap-alert",
-              component: () => import("@/view/pages/vue-bootstrap/Alert.vue")
-            },
-            {
-              path: "badge",
-              name: "vue-bootstrap-badge",
-              component: () => import("@/view/pages/vue-bootstrap/Badge.vue")
-            },
-            {
-              path: "button",
-              name: "vue-bootstrap-button",
-              component: () => import("@/view/pages/vue-bootstrap/Button.vue")
-            },
-            {
-              path: "button-group",
-              name: "vue-bootstrap-button-group",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/ButtonGroup.vue")
-            },
-            {
-              path: "button-toolbar",
-              name: "vue-bootstrap-button-toolbar",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/ButtonToolbar.vue")
-            },
-            {
-              path: "card",
-              name: "vue-bootstrap-card",
-              component: () => import("@/view/pages/vue-bootstrap/Card.vue")
-            },
-            {
-              path: "carousel",
-              name: "vue-bootstrap-carousel",
-              component: () => import("@/view/pages/vue-bootstrap/Carousel.vue")
-            },
-            {
-              path: "collapse",
-              name: "vue-bootstrap-collapse",
-              component: () => import("@/view/pages/vue-bootstrap/Collapse.vue")
-            },
-            {
-              path: "dropdown",
-              name: "vue-bootstrap-dropdown",
-              component: () => import("@/view/pages/vue-bootstrap/Dropdown.vue")
-            },
-            {
-              path: "embed",
-              name: "vue-bootstrap-embed",
-              component: () => import("@/view/pages/vue-bootstrap/Embed.vue")
-            },
-            {
-              path: "form",
-              name: "vue-bootstrap-form",
-              component: () => import("@/view/pages/vue-bootstrap/Form.vue")
-            },
-            {
-              path: "form-checkbox",
-              name: "vue-bootstrap-form-checkbox",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormCheckbox.vue")
-            },
-            {
-              path: "form-file",
-              name: "vue-bootstrap-form-file",
-              component: () => import("@/view/pages/vue-bootstrap/FormFile.vue")
-            },
-            {
-              path: "form-group",
-              name: "vue-bootstrap-form-group",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormGroup.vue")
-            },
-            {
-              path: "form-input",
-              name: "vue-bootstrap-form-input",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormInput.vue")
-            },
-            {
-              path: "form-radio",
-              name: "vue-bootstrap-form-radio",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormRadio.vue")
-            },
-            {
-              path: "form-select",
-              name: "vue-bootstrap-form-select",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormSelect.vue")
-            },
-            {
-              path: "form-textarea",
-              name: "vue-bootstrap-form-textarea",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/FormTextarea.vue")
-            },
-            {
-              path: "image",
-              name: "vue-bootstrap-image",
-              component: () => import("@/view/pages/vue-bootstrap/Image.vue")
-            },
-            {
-              path: "input-group",
-              name: "vue-bootstrap-input-group",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/InputGroup.vue")
-            },
-            {
-              path: "jumbotron",
-              name: "vue-bootstrap-jumbotron",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/Jumbotron.vue")
-            },
-            {
-              path: "layout-grid-system",
-              name: "vue-bootstrap-layout-grid-system",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/LayoutGridSystem.vue")
-            },
-            {
-              path: "link",
-              name: "vue-bootstrap-link",
-              component: () => import("@/view/pages/vue-bootstrap/Link.vue")
-            },
-            {
-              path: "list-group",
-              name: "vue-bootstrap-list-group",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/ListGroup.vue")
-            },
-            {
-              path: "media",
-              name: "vue-bootstrap-media",
-              component: () => import("@/view/pages/vue-bootstrap/Media.vue")
-            },
-            {
-              path: "modal",
-              name: "vue-bootstrap-modal",
-              component: () => import("@/view/pages/vue-bootstrap/Modal.vue")
-            },
-            {
-              path: "nav",
-              name: "vue-bootstrap-nav",
-              component: () => import("@/view/pages/vue-bootstrap/Nav.vue")
-            },
-            {
-              path: "navbar",
-              name: "vue-bootstrap-navbar",
-              component: () => import("@/view/pages/vue-bootstrap/Navbar.vue")
-            },
-            {
-              path: "pagination",
-              name: "vue-bootstrap-pagination",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/Pagination.vue")
-            },
-            {
-              path: "pagination-nav",
-              name: "vue-bootstrap-pagination-nav",
-              component: () =>
-                import("@/view/pages/vue-bootstrap/PaginationNav.vue")
-            },
-            {
-              path: "popover",
-              name: "vue-bootstrap-popover",
-              component: () => import("@/view/pages/vue-bootstrap/Popover.vue")
-            },
-            {
-              path: "progress",
-              name: "vue-bootstrap-progress",
-              component: () => import("@/view/pages/vue-bootstrap/Progress.vue")
-            },
-            {
-              path: "spinner",
-              name: "vue-bootstrap-spinner",
-              component: () => import("@/view/pages/vue-bootstrap/Spinner.vue")
-            },
-            {
-              path: "table",
-              name: "vue-bootstrap-table",
-              component: () => import("@/view/pages/vue-bootstrap/Table.vue")
-            },
-            {
-              path: "tabs",
-              name: "vue-bootstrap-tabs",
-              component: () => import("@/view/pages/vue-bootstrap/Tabs.vue")
-            },
-            {
-              path: "toasts",
-              name: "vue-bootstrap-toasts",
-              component: () => import("@/view/pages/vue-bootstrap/Toasts.vue")
-            },
-            {
-              path: "tooltip",
-              name: "vue-bootstrap-tooltip",
-              component: () => import("@/view/pages/vue-bootstrap/Tooltip.vue")
-            }
-          ]
-        },
-        {
-          path: "/vuetify",
-          name: "vuetify",
-          component: () => import("@/view/pages/vuetify/Vuetify.vue"),
-          children: [
-            {
-              path: "alerts",
-              name: "vuetify-alerts",
-              component: () => import("@/view/pages/vuetify/Alerts.vue")
-            },
-            {
-              path: "avatars",
-              name: "vuetify-avatars",
-              component: () => import("@/view/pages/vuetify/Avatars.vue")
-            },
-            {
-              path: "badges",
-              name: "vuetify-badges",
-              component: () => import("@/view/pages/vuetify/Badges.vue")
-            },
-            {
-              path: "buttons",
-              name: "vuetify-buttons",
-              component: () => import("@/view/pages/vuetify/Buttons.vue")
-            },
-            {
-              path: "calendars",
-              name: "vuetify-calendars",
-              component: () => import("@/view/pages/vuetify/Calendars.vue")
-            },
-            {
-              path: "cards",
-              name: "vuetify-cards",
-              component: () => import("@/view/pages/vuetify/Cards.vue")
-            },
-            {
-              path: "chips",
-              name: "vuetify-chips",
-              component: () => import("@/view/pages/vuetify/Chips.vue")
-            },
-            {
-              path: "dialog",
-              name: "vuetify-dialog",
-              component: () => import("@/view/pages/vuetify/Dialog.vue")
-            },
-            {
-              path: "autocompletes",
-              name: "vuetify-autocompletes",
-              component: () =>
-                import("@/view/pages/vuetify/forms/Autocompletes.vue")
-            },
-            {
-              path: "file-inputs",
-              name: "vuetify-file-inputs",
-              component: () =>
-                import("@/view/pages/vuetify/forms/FileInputs.vue")
-            },
-            {
-              path: "forms",
-              name: "vuetify-forms",
-              component: () => import("@/view/pages/vuetify/forms/Forms.vue")
-            },
-            {
-              path: "selection-controls",
-              name: "vuetify-selection-controls",
-              component: () =>
-                import("@/view/pages/vuetify/forms/SelectionControls.vue")
-            },
-            {
-              path: "selects",
-              name: "vuetify-selects",
-              component: () => import("@/view/pages/vuetify/forms/Selects.vue")
-            },
-            {
-              path: "textareas",
-              name: "vuetify-textareas",
-              component: () =>
-                import("@/view/pages/vuetify/forms/Textareas.vue")
-            },
-            {
-              path: "text-fields",
-              name: "vuetify-text-fields",
-              component: () =>
-                import("@/view/pages/vuetify/forms/TextFields.vue")
-            },
-            {
-              path: "simple-tables",
-              name: "vuetify-simple-tables",
-              component: () =>
-                import("@/view/pages/vuetify/tables/SimpleTables.vue")
-            },
-            {
-              path: "data-tables",
-              name: "vuetify-data-tables",
-              component: () =>
-                import("@/view/pages/vuetify/tables/DataTables.vue")
-            },
-            {
-              path: "tabs",
-              name: "vuetify-tabs",
-              component: () => import("@/view/pages/vuetify/Tabs.vue")
-            },
-            {
-              path: "timelines",
-              name: "vuetify-timelines",
-              component: () => import("@/view/pages/vuetify/Timelines.vue")
-            },
-            {
-              path: "tooltips",
-              name: "vuetify-tooltips",
-              component: () => import("@/view/pages/vuetify/Tooltips.vue")
-            },
-            {
-              path: "treeview",
-              name: "vuetify-treeview",
-              component: () => import("@/view/pages/vuetify/Treeview.vue")
-            }
-          ]
-        },
-        {
-          path: "/wizard",
-          name: "wizard",
-          component: () => import("@/view/pages/wizard/Wizard.vue"),
-          children: [
-            {
-              path: "wizard-1",
-              name: "wizard-1",
-              component: () => import("@/view/pages/wizard/Wizard-1.vue")
-            },
-            {
-              path: "wizard-2",
-              name: "wizard-2",
-              component: () => import("@/view/pages/wizard/Wizard-2.vue")
-            },
-            {
-              path: "wizard-3",
-              name: "wizard-3",
-              component: () => import("@/view/pages/wizard/Wizard-3.vue")
-            },
-            {
-              path: "wizard-4",
-              name: "wizard-4",
-              component: () => import("@/view/pages/wizard/Wizard-4.vue")
-            }
-          ]
-        },
-        {
-          path: "/plugins",
-          name: "plugins",
-          component: () => import("@/view/pages/plugins/Plugins.vue"),
-          children: [
-            {
-              path: "cropper",
-              name: "cropper",
-              component: () => import("@/view/pages/plugins/Cropper.vue")
-            }
-          ]
+          component: Robot
         }
       ]
     },
-    {
-      path: "/error",
-      name: "error",
-      component: () => import("@/view/pages/error/Error.vue"),
-      children: [
-        {
-          path: "error-1",
-          name: "error-1",
-          component: () => import("@/view/pages/error/Error-1.vue")
-        },
-        {
-          path: "error-2",
-          name: "error-2",
-          component: () => import("@/view/pages/error/Error-2.vue")
-        },
-        {
-          path: "error-3",
-          name: "error-3",
-          component: () => import("@/view/pages/error/Error-3.vue")
-        },
-        {
-          path: "error-4",
-          name: "error-4",
-          component: () => import("@/view/pages/error/Error-4.vue")
-        },
-        {
-          path: "error-5",
-          name: "error-5",
-          component: () => import("@/view/pages/error/Error-5.vue")
-        },
-        {
-          path: "error-6",
-          name: "error-6",
-          component: () => import("@/view/pages/error/Error-6.vue")
-        }
-      ]
-    },
+    // {
+    //   path: "/error",
+    //   name: "error",
+    //   component: () => import("@/view/pages/error/Error.vue"),
+    //   children: [
+    //     {
+    //       path: "error-1",
+    //       name: "error-1",
+    //       component: () => import("@/view/pages/error/Error-1.vue")
+    //     },
+    //     {
+    //       path: "error-2",
+    //       name: "error-2",
+    //       component: () => import("@/view/pages/error/Error-2.vue")
+    //     },
+    //     {
+    //       path: "error-3",
+    //       name: "error-3",
+    //       component: () => import("@/view/pages/error/Error-3.vue")
+    //     },
+    //     {
+    //       path: "error-4",
+    //       name: "error-4",
+    //       component: () => import("@/view/pages/error/Error-4.vue")
+    //     },
+    //     {
+    //       path: "error-5",
+    //       name: "error-5",
+    //       component: () => import("@/view/pages/error/Error-5.vue")
+    //     },
+    //     {
+    //       path: "error-6",
+    //       name: "error-6",
+    //       component: () => import("@/view/pages/error/Error-6.vue")
+    //     }
+    //   ]
+    // },
     {
       path: "/",
       component: () => import("@/view/pages/auth/Auth"),
@@ -678,17 +383,17 @@ export default new Router({
         {
           name: "login",
           path: "/login",
-          component: () => import("@/view/pages/auth/Login")
+          component: Login
         },
         {
           name: "register",
           path: "/register",
-          component: () => import("@/view/pages/auth/Register")
+          component: Register
         },
         {
           name: "verify",
           path: "/verify",
-          component: () => import("@/view/pages/auth/Verify")
+          component: Verify
         }
       ]
     },
@@ -700,7 +405,7 @@ export default new Router({
       // the 404 route, when none of the above matches
       path: "/404",
       name: "404",
-      component: () => import("@/view/pages/error/Error-1.vue")
+      component: ERROR
     }
   ]
 });

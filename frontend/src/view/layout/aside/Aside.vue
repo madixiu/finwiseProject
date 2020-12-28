@@ -86,7 +86,9 @@ export default {
         "AdjustedPrices",
         "TickerFundamental",
         "TickerTechnical",
-        "Sheets",
+        "BalanceSheet",
+        "IncomeStatement",
+        "CashFlow",
         "Monthly",
         "sahmRobot",
         "TickerRatio",
@@ -96,7 +98,7 @@ export default {
         "TickerAssemblyReport",
         "TickerAssemblyDPS",
         "TickerAssemblyIC",
-        "sarmaye"
+        "subset"
       ],
       AsideState1: true,
       AsideState2: false,
