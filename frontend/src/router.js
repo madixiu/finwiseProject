@@ -65,7 +65,6 @@ const Register = () => import("@/view/pages/auth/Register");
 const Verify = () => import("@/view/pages/auth/Verify");
 const ERROR = () => import("@/view/pages/error/Error-1.vue");
 
-
 Vue.use(Router);
 
 export default new Router({
