@@ -233,12 +233,18 @@
             <b v-if="data.value < 0" class="marketwatch-table-cell-red"
               >{{ data.value }}%</b
             >
+            <b v-if="data.value == 0" class="marketwatch-table-cell"
+              >{{ data.value }}%</b
+            >
           </template>
           <template #cell(lastPercent)="data">
             <b v-if="data.value > 0" class="marketwatch-table-cell-green"
               >{{ data.value }}%</b
             >
             <b v-if="data.value < 0" class="marketwatch-table-cell-red"
+              >{{ data.value }}%</b
+            >
+            <b v-if="data.value == 0" class="marketwatch-table-cell"
               >{{ data.value }}%</b
             >
           </template>

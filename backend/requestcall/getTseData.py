@@ -2,7 +2,7 @@
 import requests
 import json
 # from .util.Convereter_trunc import truncater, converter
-import time
+# import time
 def Top5MostViewed():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://37.152.180.99:3000/ViewTop5MostViewed',headers=head)

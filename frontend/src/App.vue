@@ -14,6 +14,7 @@
 @import "assets/plugins/flaticon/flaticon.css";
 @import "assets/plugins/flaticon2/flaticon.css";
 @import "assets/plugins/keenthemes-icons/font/ki.css";
+@import "assets/font/MainFont.css";
 
 // Main demo style scss
 // @import "assets/sass/style.vue";
@@ -22,6 +23,15 @@
 // Update HTML with RTL attribute at public/index.html
 @import "assets/css/style.vue.rtl";
 // @import "assets/css/Unminified.style.vue.rtl";
+
+
+// @font-face {
+//   font-family: "Vazir";
+//   src: local("Vazir.ttf "), url("assets/font/Vazir.ttf") format("truetype");
+// }
+/* * {
+  font-family: "Vazir";
+} */
 </style>
 
 <script>
@@ -190,8 +200,3 @@ export default {
   // }
 };
 </script>
-<style>
-* {
-  font-family: Vazir;
-}
-</style>

@@ -11,7 +11,6 @@ def SendVerificationNumber(email):
     # return send_mail(
     # subject="testDjango",
     # from_email=django_settings.GRAPHQL_AUTH['EMAIL_FROM'],
-    # message="hey fucker",
     # # html_message=html_message,
     # recipient_list=(
     #     ["mahdi.moradi72@gmail.com"]
