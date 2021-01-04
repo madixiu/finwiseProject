@@ -1,51 +1,94 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <div>
+    <v-card width="100%">
+      <!-- <div class="row border-0 pb-4 pt-2"> -->
+      <div class="row pb-2 pt-4">
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+          نماد
+        </v-chip> -->
+          <div class="text-center">
+            <b-button class="testB" variant="primary">
+              نماد
+              <br /><b-badge variant="light">{{ DataItems.ticker }}</b-badge>
+            </b-button>
+          </div>
+          <!-- {{ DataItems.ticker }} -->
+        </div>
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+            نام شرکت
+          </v-chip>
+          {{ DataItems.name }} -->
+          <div class="text-center">
+            <b-button variant="primary">
+              نام شرکت <br /><b-badge variant="light">{{
+                DataItems.name
+              }}</b-badge>
+            </b-button>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+            بازار
+          </v-chip>
+          {{ DataItems.market }} -->
+          <div class="text-center">
+            <b-button variant="primary">
+              بازار <br /><b-badge variant="light">{{
+                DataItems.market
+              }}</b-badge>
+            </b-button>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+            صنعت
+          </v-chip>
+          {{ DataItems.subIndustry }} -->
+          <div class="text-center">
+            <b-button variant="primary">
+              صنعت <br /><b-badge variant="light">{{
+                DataItems.subIndustry
+              }}</b-badge>
+            </b-button>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+            تابلو
+          </v-chip>
+          {{ DataItems.board }} -->
+          <div class="text-center">
+            <b-button variant="primary">
+              تابلو <br /><b-badge variant="light">{{
+                DataItems.board
+              }}</b-badge>
+            </b-button>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+          <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
+            گروه
+          </v-chip>
+          {{ DataItems.parentIndustry }} -->
+          <div class="text-center">
+            <b-button variant="primary">
+              گروه <br /><b-badge variant="light">{{
+                DataItems.parentIndustry
+              }}</b-badge>
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </v-card>
     <!--begin::Header-->
     <!-- <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         {{ this.Nemad }}<span class="small mr-5">{{ this.tickerfull }}</span>
       </h3>
     </div> -->
-    <div class="row border-0 pb-4 pt-2">
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          نماد
-        </v-chip>
-        {{ DataItems.ticker }}
-      </div>
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          نام شرکت
-        </v-chip>
-        {{ DataItems.name }}
-      </div>
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          بازار
-        </v-chip>
-        {{ DataItems.market }}
-      </div>
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          صنعت
-        </v-chip>
-
-        {{ DataItems.subIndustry }}
-      </div>
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          تابلو
-        </v-chip>
-        {{ DataItems.board }}
-      </div>
-      <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
-        <v-chip class="ma-2 mr-2" color="#1A237E" text-color="#FAFAFA">
-          گروه
-        </v-chip>
-        {{ DataItems.parentIndustry }}
-      </div>
-    </div>
   </div>
   <!--end::Mixed Widget 14-->
 </template>

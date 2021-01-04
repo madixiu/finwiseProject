@@ -1,11 +1,12 @@
 <template>
-  <div id="app" data-app>
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
 
 <style lang="scss">
 // 3rd party plugins css
+@import "assets/sass/custom.scss";
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import "~socicon/css/socicon.css";

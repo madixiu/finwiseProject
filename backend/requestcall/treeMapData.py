@@ -1,5 +1,6 @@
 import requests
 import json
+from util.Convereter_trunc import truncater
 res = requests.get("http://37.152.180.99:3000/View_TreeMapInitial")
 
 
@@ -35,6 +36,19 @@ for item in js:
 
 # print(final)
 mapDataObj = {"children":[{"name": "بورس ایران", "children":final}]}
-print(mapDataObj)
+# print(mapDataObj)
+
+prices={}
+k={}
+for item in js:
+    j={}
+    j['p']=item['p']
+    j['cp']=truncater(item['cp'])
+    k[item['ticker']]=j
+prices['errCode']=0
+prices['msg']=''
+prices['data']=k
+
+print(prices)
 # print(len(mapDataObj["children"][0]["children"]))
 # print(len(industryList))

@@ -20,7 +20,7 @@
         </div>
       </template>
     </persian-calendar>
-    <h2>Current Display Period {{ period }}</h2>
+    <!-- <h2>Current Display Period {{ period }}</h2> -->
   </div>
 </template>
 <script>
@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      period: "week",
+      period: "month",
       events: [
         {
           id: 1,

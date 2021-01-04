@@ -35,6 +35,7 @@ urlpatterns = [
    ####
    path("IndexMarketCap",getIndexMarketCap),
    path("ViewOptionAssetVolatility",getOptionAssets),
-   path("TickerTape",getTape)
+   path("TickerTape",getTape),
+   path("tickerAssemblyStepOne",getAssembly)
    
 ]

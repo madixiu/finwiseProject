@@ -11,6 +11,7 @@ from requestcall.getTseData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData
+from requestcall.getAssemblyData import firstStepAssembly
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -88,7 +89,6 @@ def getMarketWatch(request):
         data = JSONParser().parse(request)
     #    print('this is the fucking data' + data.get('marketName') + 'and '+ data.get('marketType') + 'and '+data.get('marketIndustry'))
         # print(data.get('marketName'))
-        # respond = []
         # respond.append(getMarketWatchHeaderReq())
         if data.get('marketName') != "همه" or data.get('marketType') != [] or data.get('marketIndustry') != []:
             # respond.append(getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry')))
@@ -124,3 +124,9 @@ def getTape(self):
 # def get_csrf_token(request):
 #     token = django.middleware.csrf.get_token(request)
 #     return JsonResponse({'token': token})
+@csrf_exempt
+def getAssembly(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        # print(data)
+        return JsonResponse(firstStepAssembly(data), safe=False)

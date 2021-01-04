@@ -1,0 +1,7 @@
+
+// Define variable defaults
+$primary: #010101;
+
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';

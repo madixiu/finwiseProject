@@ -2,11 +2,12 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 mb-2">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
+
       <div class="col-xxl-12">
-        <SummaryWidget :notices="notice"></SummaryWidget>
+        <Wizard />
       </div>
     </div>
   </div>
@@ -16,13 +17,15 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import SummaryWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblySummaryWidget.vue";
+import Wizard from "@/view/pages/Ticker/AssemblyWidget/content/Wizard.vue";
+
 // import axios from "axios";
 export default {
-  name: "Notifications",
+  // name: "Notifications",
+  name: "TickerAssemblyReport",
   components: {
     SubHeaderWidget,
-    SummaryWidget
+    Wizard
   },
   data() {
     return {
@@ -42,16 +45,16 @@ export default {
       // console.log(this.notices);
     },
     allowed() {
-      var flag = false;
+      // var flag = false;
       for (var i = 0; i < this.allowed.length; i++) {
         var obj = this.allowed[i];
         if (obj.ID == this.$route.params.id) {
-          flag = true;
+          // flag = true;
         }
       }
-      if (!flag) {
-        this.$router.push({ name: "wizard" });
-      }
+      // if (!flag) {
+      //   this.$router.push({ name: "wizard" });
+      // }
     }
   },
   methods: {

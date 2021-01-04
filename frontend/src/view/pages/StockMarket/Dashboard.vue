@@ -13,8 +13,8 @@
       </div>
       <div class="col-xxl-4 col-lg-6">
         <v-tabs>
-          <v-tab>عرضه</v-tab>
           <v-tab>تقاضا</v-tab>
+          <v-tab>عرضه</v-tab>
           <v-tab-item><HighestDemand></HighestDemand></v-tab-item>
           <v-tab-item><HighestSupply></HighestSupply></v-tab-item>
         </v-tabs>
