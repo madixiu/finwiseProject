@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-app>
     <router-view></router-view>
   </div>
 </template>
@@ -24,7 +24,6 @@
 // Update HTML with RTL attribute at public/index.html
 @import "assets/css/style.vue.rtl";
 // @import "assets/css/Unminified.style.vue.rtl";
-
 
 // @font-face {
 //   font-family: "Vazir";

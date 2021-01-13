@@ -163,89 +163,186 @@
                   step3
                 </h4> -->
                 <div class="row">
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+                  <!-- IC table  -->
+
+                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="ICitems.length">
+                    <v-card>
+                      <v-card-title>IC table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        thClass="bb-table-head"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="ICitems"
+                        :fields="stepThreeItemsTableHeaders.ICheaders"
+                      ></b-table>
+                    </v-card>
                   </div>
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+
+                  <!-- Statement Table -->
+
+                  <div
+                    class="col-xxl-12 col-lg-12 mb-2"
+                    v-if="StatementItems.length"
+                  >
+                    <v-card>
+                      <v-card-title>Statement Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        thClass="bb-table-head"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="StatementItems"
+                        :fields="stepThreeItemsTableHeaders.StatementHeaders"
+                      ></b-table>
+                    </v-card>
                   </div>
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+
+                  <!-- Chief Table -->
+
+                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="ChiefItems.length">
+                    <v-card>
+                      <v-card-title>Chief Table </v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="ChiefItems"
+                        :fields="stepThreeItemsTableHeaders.ChiefHeaders"
+                      ></b-table>
+                    </v-card>
                   </div>
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+
+                  <!-- Shareholders Table -->
+
+                  <div
+                    class="col-xxl-6 col-lg-6 mb-2"
+                    v-if="ShareholdersItems.length"
+                  >
+                    <v-card>
+                      <v-card-title>Shareholders Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="ShareholdersItems"
+                        :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
+                      ></b-table>
+                    </v-card>
                   </div>
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+
+                  <!-- CEO Table -->
+
+                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="CEOItems.length">
+                    <v-card>
+                      <v-card-title>CEO Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="CEOItems"
+                        :fields="stepThreeItemsTableHeaders.CEOheaders"
+                      ></b-table>
+                    </v-card>
                   </div>
-                  <div class="col-xxl-6 col-lg-6">
-                    <b-table
-                      class="bb-table"
-                      striped
-                      bordered
-                      outlined
-                      small
-                      hover
-                      fixed
-                      foot-clone
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
+
+                  <!-- Board Table -->
+
+                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="BoardItems.length">
+                    <v-card>
+                      <v-card-title>Board Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="BoardItems"
+                        :fields="stepThreeItemsTableHeaders.BoardHeaders"
+                      ></b-table>
+                    </v-card>
+                  </div>
+
+                  <!-- NewBoard Table -->
+
+                  <div
+                    class="col-xxl-6 col-lg-6 mb-2"
+                    v-if="NewBoardItems.length"
+                  >
+                    <v-card>
+                      <v-card-title>NewBoard Table </v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="NewBoardItems"
+                        :fields="stepThreeItemsTableHeaders.NewBoardHeaders"
+                      ></b-table>
+                    </v-card>
+                  </div>
+
+                  <!-- Wage Table -->
+
+                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="WageItems.length">
+                    <v-card>
+                      <v-card-title>Wage Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="WageItems"
+                        :fields="stepThreeItemsTableHeaders.WageHeaders"
+                      ></b-table>
+                    </v-card>
+                  </div>
+
+                  <!-- Summary Table -->
+
+                  <div class="col-xxl-12 col-lg-12" v-if="SummaryItems.length">
+                    <v-card>
+                      <v-card-title>Summary Table</v-card-title>
+                      <b-table
+                        class="bb-table"
+                        striped
+                        bordered
+                        outlined
+                        small
+                        hover
+                        fixed
+                        :items="SummaryItems"
+                        :fields="stepThreeItemsTableHeaders.SummaryHeaders"
+                      ></b-table>
+                    </v-card>
                   </div>
                 </div>
               </div>
@@ -279,6 +376,7 @@
                   </button>
                 </div>
               </div>
+
               <!--end: Wizard Actions -->
             </form>
             <!--end: Wizard Form-->
@@ -416,13 +514,7 @@ export default {
           iron: "6%"
         }
       ],
-      // items: [
-      //   { تاریخ: "Dickerson" },
-      //   { تاریخ: "Larsen" },
-      //   { تاریخ: "Geneva" },
-      //   { تاریخ: "Jami" }
-      // ],
-      stepTwoSelected: [],
+      stepTwoSelected: null,
       stepTwoHeaders: [
         { text: "مجمع", align: "end", sortable: false, value: "title" },
         {
@@ -432,40 +524,162 @@ export default {
           value: "PublishTime"
         }
       ],
-      stepTwoItems: [
-        // {
-        //   name: "Frozen Yogurt",
-        //   calories: 159,
-        //   fat: 6.0,
-        //   carbs: 24,
-        //   protein: 4.0,
-        //   iron: "1%"
-        // },
-        // {
-        //   name: "Ice cream sandwich",
-        //   calories: 237,
-        //   fat: 9.0,
-        //   carbs: 37,
-        //   protein: 4.3,
-        //   iron: "1%"
-        // },
-        // {
-        //   name: "Eclair",
-        //   calories: 262,
-        //   fat: 16.0,
-        //   carbs: 23,
-        //   protein: 6.0,
-        //   iron: "7%"
-        // }
-      ],
+      stepThreeItemsTableHeaders: {
+        // ShareholdersHeaders: ["درصد مالکیت","تعداد سهام","سهامدار"],
+
+        ICheaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "LastShareCount", key: "LastShareCount" },
+          { label: "LastShareNominalValue", key: "LastShareNominalValue" },
+          { label: "LastCapital", key: "LastCapital" },
+          { label: "CashIncoming_Final", key: "CashIncoming_Final" },
+          { label: "CashIncoming_Ceo", key: "CashIncoming_Ceo" },
+          { label: "CashIncoming_Total", key: "CashIncoming_Total" },
+          { label: "RetainedEarning_Final", key: "RetainedEarning_Final" },
+          { label: "RetainedEarning_Ceo", key: "RetainedEarning_Ceo" },
+          { label: "RetainedEarning_Sum", key: "RetainedEarning_Sum" },
+          { label: "Reserves_Final", key: "Reserves_Final" },
+          { label: "Reserves_Ceo", key: "Reserves_Ceo" },
+          { label: "Reserves_Sum", key: "Reserves_Sum" },
+          { label: "Reevaluation_Final", key: "Reevaluation_Final" },
+          { label: "Reevaluation_Ceo", key: "Reevaluation_Ceo" },
+          { label: "Reevaluation_Sum", key: "Reevaluation_Sum" },
+          { label: "SarfSaham_Final", key: "SarfSaham_Final" },
+          { label: "SarfSaham_Ceo", key: "SarfSaham_Ceo" },
+          { label: "SarfSaham_Sum", key: "SarfSaham_Sum" },
+          { label: "IncreaseValue_Final", key: "IncreaseValue_Final" },
+          { label: "IncreaseValue_Ceo", key: "IncreaseValue_Ceo" },
+          { label: "IncreaseValue_Sum", key: "IncreaseValue_Sum" },
+          { label: "IncreasePercent_Final", key: "IncreasePercent_Final" },
+          { label: "IncreasePercent_Ceo", key: "IncreasePercent_Ceo" },
+          { label: "IncreasePercent_Sum", key: "IncreasePercent_Sum" }
+        ],
+        StatementHeaders: [
+          { label: "ID", key: "ID", thClass: "bb-table-head" },
+          {
+            label: "SummaryID",
+            key: "SummaryID"
+          },
+          {
+            label: "Title",
+            key: "Title"
+          },
+          {
+            label: "Value",
+            key: "Value"
+          }
+        ],
+        ChiefHeaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "Name", key: "Name" },
+          { label: "Position", key: "Position" }
+        ],
+        ShareholdersHeaders: [
+          { label: "سهامدار", key: "Shareholders" },
+          {
+            label: "تعداد سهام",
+            key: "ShareCount"
+          },
+          {
+            label: "درصد مالکیت",
+            key: "OwnerPercentage"
+          }
+        ],
+        CEOheaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "FullName", key: "FullName" },
+          { label: "SSID", key: "SSID" },
+          { label: "Degree", key: "Degree" }
+        ],
+        BoardHeaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "FullName", key: "FullName" },
+          { label: "SSID", key: "SSID" },
+          { label: "typeOfCompany", key: "typeOfCompany" },
+          { label: "Membership", key: "Membership" },
+          { label: "AgentName", key: "AgentName" },
+          { label: "AgentSSID", key: "AgentSSID" },
+          { label: "Position", key: "Position" },
+          { label: "Duty", key: "Duty" },
+          { label: "Degree", key: "Degree" }
+        ],
+        NewBoardHeaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "Name", key: "Name" },
+          { label: "Type", key: "Type" },
+          { label: "SSID", key: "SSID" },
+          { label: "Duty", key: "Duty" }
+        ],
+        WageHeaders: [
+          { label: "ID", key: "ID" },
+          { label: "SummaryID", key: "SummaryID" },
+          { label: "Title", key: "Title" },
+          { label: "LastYear", key: "LastYear" },
+          { label: "CurrentYear", key: "CurrentYear" },
+          { label: "MoreDetails", key: "MoreDetails" }
+        ],
+        SummaryHeaders: [
+          { label: "ID", key: "ID" },
+          { label: "firm", key: "firm" },
+          { label: "report_id", key: "report_id" },
+          { label: "ToDate", key: "ToDate" },
+          { label: "Correction", key: "Correction" },
+          { label: "CorrectionDetails", key: "CorrectionDetails" },
+          { label: "NewsPaper", key: "NewsPaper" },
+
+          { label: "Inspector", key: "Inspector" },
+
+          { label: "OtherDesc", key: "OtherDesc" },
+
+          {
+            label: "IsListenedBoardMemberReport",
+            key: "IsListenedBoardMemberReport"
+          },
+          { label: "IsSelectInspector", key: "IsSelectInspector" },
+          { label: "IsSelectNewspaper", key: "IsSelectNewspaper" },
+          { label: "IsBoardMemberGift", key: "IsBoardMemberGift" },
+          { label: "IsOther", key: "IsOther" },
+          { label: "IsBoardMemberWage", key: "IsBoardMemberWage" },
+          { label: "IsSelectBoardMember", key: "IsSelectBoardMember" },
+          { label: "IsPublishSecurity", key: "IsPublishSecurity" },
+          { label: "IsLocationChange", key: "IsLocationChange" },
+          { label: "IsNameChange", key: "IsNameChange" },
+          { label: "IsActivitySubjectChange", key: "IsActivitySubjectChange" },
+          {
+            label: "IsConvertSecurityToShare",
+            key: "IsConvertSecurityToShare"
+          },
+          { label: "IsFinancialYearChange", key: "IsFinancialYearChange" },
+          { label: "IsCapitalIncrease", key: "IsCapitalIncrease" }
+        ]
+      },
+      ShareholdersItems: [],
+      ChiefItems: [],
+      SummaryItems: [],
+      ICitems: [],
+      StatementItems: [],
+      CEOItems: [],
+      BoardItems: [],
+      NewBoardItems: [],
+      WageItems: [],
+
+      stepTwoItems: [],
       stepOneData: {
-        startDate: "",
-        endDate: "",
+        startDate: "1360/01/01",
+        endDate: "1399/10/10",
         TypeSelected: null,
         TypeOptions: [
-          { value: "a", text: "مجمع عادی" },
-          { value: "b", text: "مجمع فوق العاده" },
-          { value: "c", text: "مجمع عادی به طور فوق العاده" },
+          { value: "AssemblyGeneral", text: "مجمع عادی" },
+          { value: "AssemblyExtra", text: "مجمع فوق العاده" },
+          {
+            value: "AssemblyGeneralExtra",
+            text: "مجمع عادی به طور فوق العاده"
+          },
           { value: "d", text: "آگهی دعوت به مجمع" }
         ]
       }
@@ -536,6 +750,67 @@ export default {
           console.log(error);
         });
     },
+    stepTwoDataPostReq() {
+      this.axios({
+        method: "post",
+        url: "/api/tickerAssemblyStepTwo",
+        data: {
+          SummaryID: this.stepTwoSelected[0].id,
+          Type: this.stepOneData.TypeSelected
+        },
+        xsrfHeaderName: "X-CSRFToken"
+      })
+        .then(response => {
+          let data = response.data;
+          console.log(data);
+          if (this.stepOneData.TypeSelected == "AssemblyGeneral") {
+            this.StatementItems = data[0];
+            this.ChiefItems = data[1];
+            this.ShareholdersItems = data[2];
+            this.CEOItems = data[3];
+            this.BoardItems = data[4];
+            this.NewBoardItems = data[5];
+            this.WageItems = data[6];
+            this.SummaryItems = data[7];
+          } else if (this.stepOneData.TypeSelected == "AssemblyExtra") {
+            this.ICitems = data[0];
+            this.ChiefItems = data[1];
+            this.ShareholdersItems = data[2];
+            this.SummaryItems = data[3];
+          } else if (this.stepOneData.TypeSelected == "AssemblyGeneralExtra") {
+            this.StatementItems = data[0];
+            this.ChiefItems = data[1];
+            this.ShareholdersItems = data[2];
+            this.CEOItems = data[3];
+            this.BoardItems = data[4];
+            this.NewBoardItems = data[5];
+            this.WageItems = data[6];
+            this.SummaryItems = data[7];
+          }
+
+          // console.log((data.ShareHolders));
+          // console.log((data.Chief));
+          // console.log((data.Summary));
+          // console.log((data.IC));
+          // console.log(JSON.parse(data.ShareHolders));
+          // console.log(JSON.parse(data.Chief));
+          // console.log(JSON.parse(data.Summary));
+          // console.log(JSON.parse(data.IC));
+          // this.ShareholdersItems = JSON.parse(data.ShareHolders);
+          // this.ChiefItems = JSON.parse(data.Chief);
+          // this.SummaryItems = JSON.parse(data.Summary);
+          // this.ICitems = JSON.parse(data.IC);
+          // this.stepThreeItems.Shareholders = JSON.parse(data.ShareHolders);
+          // this.stepThreeItems.Chief = JSON.parse(data.Chief)
+          // this.stepThreeItems.Summary = JSON.parse(data.Summary)
+          // this.stepThreeItems.IC = JSON.parse(data.IC)
+
+          // console.log(this.stepThreeItems);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     submit: function(e) {
       e.preventDefault();
       if (this.wizard.isFirstStep()) {
@@ -546,6 +821,7 @@ export default {
       ) {
         if (this.stepTwoSelected.length) {
           console.log("ok");
+          this.stepTwoDataPostReq();
         } else {
           this.wizard.stop();
           Swal.fire({
@@ -578,8 +854,17 @@ export default {
 };
 </script>
 <style scoped>
-.bb-table {
+/* .bb-table {
   text-align: right;
+} */
+.bb-table-head {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.bb-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
 }
 .selectionTable {
   direction: rtl;

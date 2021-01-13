@@ -707,7 +707,8 @@ export default {
           height: 350,
           toolbar: {
             show: false
-          }
+          },
+          fontFamily: "Vazir"
         },
         legend: {
           show: false
@@ -752,6 +753,7 @@ export default {
           width: 400,
           height: 350,
           type: "pie",
+          fontFamily: "Vazir",
           events: {
             legendClick: function(chartContext, seriesIndex, config) {
               console.log(chartContext);
@@ -766,12 +768,12 @@ export default {
             }
           }
         },
-        // legend: {
-        //   // show: false,
-        //   fontSize: 10,
-        //   fontFamily: "Vazir",
-        //   position: "bottom"
-        // },
+        legend: {
+          // show: false,
+          fontSize: 10,
+          fontFamily: "Vazir"
+          // position: "bottom"
+        },
         labels: [],
         responsive: [
           {
@@ -913,5 +915,8 @@ export default {
 .greenItem {
   color: aliceblue;
   background-color: green !important;
+}
+.apexcharts-text tspan {
+  font-family: "Vazir";
 }
 </style>

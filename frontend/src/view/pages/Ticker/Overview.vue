@@ -46,7 +46,6 @@ import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
 import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
 import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-// import axios from "axios";
 
 export default {
   name: "dashboard",
@@ -67,7 +66,6 @@ export default {
       subheaders: [],
       allowed: [],
       stats: []
-      // prop
     };
   },
   mounted() {
@@ -78,23 +76,31 @@ export default {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
       // console.log(this.notices);
+    },
+    "$route.params": {
+      handler(newValue, oldValue) {
+        console.log(newValue);
+        console.log(oldValue);
+
+        if (newValue != oldValue) {
+          this.loadData();
+          this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+        }
+
+        // const { userName } = newValue
+
+        // this.fetchData(userName)
+      },
+      immediate: true
     }
   },
   methods: {
     loadData() {
+      // eslint-disable-next-line no-unused-vars
       this.getAllowed().then(response => {
-        console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
+        // eslint-disable-next-line no-unused-vars
         this.getOne().then(response2 => {
-          console.log(response2);
           this.getTwo().then(function() {});
-          // console.log("ChainDone");
         });
       });
     },

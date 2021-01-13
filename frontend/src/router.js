@@ -212,6 +212,7 @@ export default new Router({
             {
               path: "Overview/Overall/:id",
               name: "TickerOverall",
+              props: true,
               component: Overview
             },
             {

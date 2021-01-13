@@ -1,5 +1,6 @@
 from django.http import HttpResponse,JsonResponse
 import json
+import requests
 from rest_framework.parsers import JSONParser 
 # from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
@@ -11,7 +12,8 @@ from requestcall.getTseData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData
-from requestcall.getAssemblyData import firstStepAssembly
+from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
+from requestcall.getSearchData import SearchData
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -115,18 +117,31 @@ def getMarketWatchFilters(self):
 
 
 def getOptionAssets(self):
-
     return JsonResponse(OptionAssetVolatility(),safe=False)
 
 
 def getTape(self):
     return JsonResponse(TickerTapeData(),safe=False)
+
 # def get_csrf_token(request):
 #     token = django.middleware.csrf.get_token(request)
 #     return JsonResponse({'token': token})
+
 @csrf_exempt
 def getAssembly(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         # print(data)
         return JsonResponse(firstStepAssembly(data), safe=False)
+
+@csrf_exempt
+def getAssemblyDetails(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        return JsonResponse(secondStepAssembly(data.get('SummaryID'),data.get('Type')), safe=False)
+    # if request.method == 'GET':
+    #     # data = JSONParser().parse(request)
+    #     return JsonResponse(secondStepAssembly(), safe=False)
+
+def getSearchBarData(self):
+    return JsonResponse(SearchData(),safe=False)

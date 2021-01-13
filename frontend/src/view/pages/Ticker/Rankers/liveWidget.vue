@@ -24,87 +24,92 @@
         </v-tab>
         <v-tab-item>
           <v-card flat>
-            <v-card-text>
-              <div class="row">
-                <div class="col-xxl-3 FinancialStrength">
-                  <h5 class="titleHeaders">
-                    قیمت پایانی : {{ this.close }} (
-                    <span
-                      v-bind:class="[
-                        this.close > this.open ? 'greenItem' : 'redItem'
-                      ]"
-                    >
-                      % {{ setclosingperc }}
-                    </span>
-                    )
-                    <v-icon
-                      left
-                      small
-                      v-bind:class="[
-                        this.close >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      >mdi-arrow-{{
-                        this.close >= this.open ? "up" : "down"
-                      }}-circle-outline</v-icon
-                    >
-                  </h5>
-                  <h5 class="titleHeaders">
-                    قیمت آخرین معامله : {{ this.last }} (
-                    <span
-                      v-bind:class="[
-                        last > open ? 'greenItem' : 'redItem ltr_aligned'
-                      ]"
-                      >% {{ setlastperc }}</span
-                    >)
-                    <v-icon
-                      left
-                      v-bind:class="[
-                        this.last >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      small
-                      >mdi-arrow-{{
-                        this.last >= this.open ? "up" : "down"
-                      }}-circle-outline</v-icon
-                    >
-                  </h5>
-                  <h5 class="titleHeaders">اولین قیمت : {{ this.open }}</h5>
-                  <h5 class="titleHeaders">
-                    ارزش بازار : {{ this.marketcap }}
-                  </h5>
-                </div>
-
-                <div class="col-xxl-3 FinancialStrength">
-                  <h5 class="titleHeaders">کف قیمت : {{ this.min }}</h5>
-                  <h5 class="titleHeaders">سقف قیمت: {{ this.max }}</h5>
-                  <h5 class="titleHeaders">کمترین قیمت: {{ this.low }}</h5>
-                  <h5 class="titleHeaders">بیشترین قیمت : {{ this.high }}</h5>
-                </div>
-                <div class="col-xxl-3 FinancialStrength">
-                  <h5 class="titleHeaders">
-                    تعداد معاملات : {{ this.tradecount }}
-                  </h5>
-                  <h5 class="titleHeaders">
-                    حجم معاملات : {{ this.tradeVolume }}
-                  </h5>
-                  <h5 class="titleHeaders">
-                    ارزش معاملات : {{ this.tradevalue }}
-                  </h5>
-                  <h5 class="titleHeaders">
-                    میانگین حجم ۱ ماهه : {{ this.close }}
-                  </h5>
-                </div>
-                <div class="col-xxl-3 FinancialStrength">
-                  <h5 class="titleHeaders">چارت</h5>
-                </div>
+            <!-- <v-card-text> -->
+            <div class="row">
+              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
+                <h5 class="titleHeaders">
+                  قیمت پایانی : {{ this.close }} (
+                  <span
+                    v-bind:class="[
+                      this.close > this.open ? 'greenItem' : 'redItem'
+                    ]"
+                  >
+                    % {{ setclosingperc }}
+                  </span>
+                  )
+                  <v-icon
+                    left
+                    small
+                    v-bind:class="[
+                      this.close >= this.open ? 'greenItem' : 'redItem'
+                    ]"
+                    >mdi-arrow-{{
+                      this.close >= this.open ? "up" : "down"
+                    }}-circle-outline</v-icon
+                  >
+                </h5>
+                <h5 class="titleHeaders">
+                  قیمت آخرین معامله : {{ this.last }} (
+                  <span
+                    v-bind:class="[
+                      last > open ? 'greenItem' : 'redItem ltr_aligned'
+                    ]"
+                    >% {{ setlastperc }}</span
+                  >)
+                  <v-icon
+                    left
+                    v-bind:class="[
+                      this.last >= this.open ? 'greenItem' : 'redItem'
+                    ]"
+                    small
+                    >mdi-arrow-{{
+                      this.last >= this.open ? "up" : "down"
+                    }}-circle-outline</v-icon
+                  >
+                </h5>
+                <h5 class="titleHeaders">اولین قیمت : {{ this.open }}</h5>
+                <h5 class="titleHeaders">ارزش بازار : {{ this.marketcap }}</h5>
               </div>
-            </v-card-text>
+
+              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
+                <h5 class="titleHeaders">کف قیمت : {{ this.min }}</h5>
+                <h5 class="titleHeaders">سقف قیمت: {{ this.max }}</h5>
+                <h5 class="titleHeaders">کمترین قیمت: {{ this.low }}</h5>
+                <h5 class="titleHeaders">بیشترین قیمت : {{ this.high }}</h5>
+              </div>
+              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
+                <h5 class="titleHeaders">
+                  تعداد معاملات : {{ this.tradecount }}
+                </h5>
+                <h5 class="titleHeaders">
+                  حجم معاملات : {{ this.tradeVolume }}
+                </h5>
+                <h5 class="titleHeaders">
+                  ارزش معاملات : {{ this.tradevalue }}
+                </h5>
+                <h5 class="titleHeaders">
+                  میانگین حجم ۱ ماهه : {{ this.close }}
+                </h5>
+              </div>
+              <div class="col-xxl-3 col-lg-3 col-3">
+                <!-- <h5 class="titleHeaders">چارت</h5> -->
+                <ApexChart
+                  type="area"
+                  height="100%"
+                  width="100%"
+                  :series="priceOverViewSeries"
+                  :chartOptions="priceOverViewchartOptions"
+                >
+                </ApexChart>
+              </div>
+            </div>
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <div class="row">
-                <div class="col-xxl-3">
+                <div class="col-xxl-3 col-lg-3 col-3">
                   <h5 class="titleHeaders">خریداران حقیقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -114,7 +119,7 @@
                     حجم خرید : {{ this.volumebuyerHaghighi }}
                   </h5>
                 </div>
-                <div class="col-xxl-3">
+                <div class="col-xxl-3 col-lg-3 col-3">
                   <h5 class="titleHeaders">خریداران حقوقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -124,7 +129,7 @@
                     حجم خرید : {{ this.volumebuyerHoghughi }}
                   </h5>
                 </div>
-                <div class="col-xxl-3">
+                <div class="col-xxl-3 col-lg-3 col-3">
                   <h5 class="titleHeaders">فروشندگان حقیقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -134,7 +139,7 @@
                     حجم فروش : {{ this.volumesellerHaghighi }}
                   </h5>
                 </div>
-                <div class="col-xxl-3">
+                <div class="col-xxl-3 col-lg-3 col-3">
                   <h5 class="titleHeaders">فروشندگان حقوقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -152,7 +157,7 @@
           <v-card flat>
             <v-card-text>
               <div class="row">
-                <div class="col-xxl-2 FinancialStrength">
+                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات ارزش معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -184,7 +189,7 @@
                     رتبه میانگین ارزش معاملات ۱۲ ماهه :{{ this.rankval12month }}
                   </h5>
                 </div>
-                <div class="col-xxl-2 FinancialStrength">
+                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات حجم معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -215,7 +220,7 @@
                     رتبه میانگین حجم معاملات ۱۲ ماهه :{{ this.rankvol12month }}
                   </h5>
                 </div>
-                <div class="col-xxl-2 FinancialStrength">
+                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات تعداد معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -241,7 +246,7 @@
                     }}
                   </h5>
                 </div>
-                <div class="col-xxl-2 FinancialStrength">
+                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات معاملاتی آخرین روز</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -271,7 +276,7 @@
                     </span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 FinancialStrength">
+                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
                   <h5 class="titleHeaders">اطلاعات ارزش بازار</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
@@ -312,12 +317,55 @@
 
 <script>
 import { mapGetters } from "vuex";
+import ApexChart from "@/view/content/charts/ApexChart";
 
 export default {
   name: "PWidget",
+  components: {
+    ApexChart
+  },
   props: ["statistics"],
   data() {
     return {
+      priceOverViewSeries: [
+        {
+          name: "series1",
+          data: [31, 40, 28, 51, 42, 109, 100]
+        }
+      ],
+      priceOverViewchartOptions: {
+        chart: {
+          height: 350,
+          type: "area",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 2,
+          curve: "smooth"
+        },
+        xaxis: {
+          type: "datetime",
+          categories: [
+            "2018-09-19T00:00:00.000Z",
+            "2018-09-19T01:30:00.000Z",
+            "2018-09-19T02:30:00.000Z",
+            "2018-09-19T03:30:00.000Z",
+            "2018-09-19T04:30:00.000Z",
+            "2018-09-19T05:30:00.000Z",
+            "2018-09-19T06:30:00.000Z"
+          ]
+        },
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm"
+          }
+        }
+      },
       search: "",
       Nemad: "شستا",
       tickerfull: "تامین اجتماعی",
@@ -538,7 +586,7 @@ export default {
 }
 .titleHeaders {
   padding: 5px;
-  font-size: 1em;
+  font-size: 0.8em;
   text-align: right;
 }
 .titleHeaders-smaller {

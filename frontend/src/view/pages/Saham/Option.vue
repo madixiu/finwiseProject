@@ -409,8 +409,6 @@ export default {
           console.log(error);
         });
     },
-
-
     getHeight() {
       //  return (window.innerHeight * 75)/100
       return window.innerHeight - 77;

@@ -1,76 +1,82 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0 pt-2">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
+  <!-- <div class="card card-custom card-stretch gutter-b"> -->
+  <div>
+    <v-card>
+      <!--begin::Header-->
+      <!-- <div class="card-header border-0 pt-2"> -->
+      <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
         بیشترین ارزش معاملات
-      </h3>
+      </h3> -->
+      <v-card-title>
+        بیشترین ارزش معاملات
+      </v-card-title>
       <v-subheader class="ltr_aligned" v-if="loading == false">
         آخرین به روز رسانی {{ DataItems[0]["persianDate"].slice(10, 16) }}
       </v-subheader>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column">
-      <v-tabs vertical>
-        <v-tab
-          v-for="item in markets"
-          :key="item.key"
-          @click="GetFiltered(item.key)"
-        >
-          {{ item.shorthanded }}
-        </v-tab>
-
-        <v-tab-item v-for="itemR in markets" :key="itemR.key">
-          <div class="FinancialStrength" v-if="loading">
-            <b-spinner small></b-spinner>
-            در حال بارگزاری
-          </div>
-
-          <v-data-table
-            v-if="loading == false"
-            :headers="mvheaders"
-            :items="filteredItems"
-            :hide-default-footer="true"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="sortDesc"
-            class="elevation-1 FinancialStrength"
-            :items-per-page="10"
+      <!-- </div> -->
+      <!--end::Header-->
+      <!--begin::Body-->
+      <div class="card-body d-flex flex-column">
+        <v-tabs vertical>
+          <v-tab
+            v-for="item in markets"
+            :key="item.key"
+            @click="GetFiltered(item.key)"
           >
-            <template v-slot:[`item.ticker`]="{ item }">
-              <v-chip
-                small
-                label
-                :to="{ name: 'TickerOverall', params: { id: item.ID } }"
-                >{{ item.ticker }}</v-chip
-              >
-            </template>
-            <template v-slot:[`item.MarketCap`]="{ item }">
-              <span
-                >{{ numberWithCommas(roundTo(item.MarketCap / 1000000000, 2))
-                }}<br />
-                میلیارد ریال</span
-              >
-            </template>
-            <template v-slot:[`item.Vol`]="{ item }">
-              <span
-                >{{ numberWithCommas(roundTo(item.Vol / 1000000, 2)) }}<br />
-                میلیون</span
-              >
-            </template>
-            <template v-slot:[`item.Value`]="{ item }">
-              <span
-                >{{ numberWithCommas(roundTo(item.Value / 1000000000, 2))
-                }}<br />
-                میلیارد ریال</span
-              >
-            </template>
-          </v-data-table>
-        </v-tab-item>
-      </v-tabs>
-    </div>
-    <!--end::Body-->
+            {{ item.shorthanded }}
+          </v-tab>
+
+          <v-tab-item v-for="itemR in markets" :key="itemR.key">
+            <div class="FinancialStrength" v-if="loading">
+              <b-spinner small></b-spinner>
+              در حال بارگزاری
+            </div>
+
+            <v-data-table
+              v-if="loading == false"
+              :headers="mvheaders"
+              :items="filteredItems"
+              :hide-default-footer="true"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+              class="elevation-1 FinancialStrength"
+              :items-per-page="10"
+            >
+              <template v-slot:[`item.ticker`]="{ item }">
+                <v-chip
+                  small
+                  label
+                  :to="{ name: 'TickerOverall', params: { id: item.ID } }"
+                  >{{ item.ticker }}</v-chip
+                >
+              </template>
+              <template v-slot:[`item.MarketCap`]="{ item }">
+                <span
+                  >{{ numberWithCommas(roundTo(item.MarketCap / 1000000000, 2))
+                  }}<br />
+                  میلیارد ریال</span
+                >
+              </template>
+              <template v-slot:[`item.Vol`]="{ item }">
+                <span
+                  >{{ numberWithCommas(roundTo(item.Vol / 1000000, 2)) }}<br />
+                  میلیون</span
+                >
+              </template>
+              <template v-slot:[`item.Value`]="{ item }">
+                <span
+                  >{{ numberWithCommas(roundTo(item.Value / 1000000000, 2))
+                  }}<br />
+                  میلیارد ریال</span
+                >
+              </template>
+            </v-data-table>
+          </v-tab-item>
+        </v-tabs>
+      </div>
+      <!--end::Body-->
+    </v-card>
   </div>
   <!--end::Mixed Widget 14-->
 </template>
