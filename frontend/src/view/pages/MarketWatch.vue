@@ -126,7 +126,6 @@
           small
           hover
           responsive
-          foot-clone
           :items="tableData"
           :fields="HD"
           @filtered="onFiltered"

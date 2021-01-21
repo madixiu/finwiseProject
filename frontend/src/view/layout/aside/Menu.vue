@@ -153,7 +153,7 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <router-link
+          <!-- <router-link
             to="/StockMarket/Technical/Dashboard"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -171,7 +171,7 @@
                 <span class="menu-text">قیمت طلا</span>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
           <router-link
             to="/StockMarket/Technical/Tools"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -324,25 +324,6 @@
         <a :href="href" class="menu-link" @click="navigate">
           <i class="menu-icon flaticon-clipboard"></i>
           <span class="menu-text">آپشن</span>
-        </a>
-      </li>
-    </router-link>
-    <router-link
-      to="/StockMarket/Funds"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-box-1"></i>
-          <span class="menu-text">صندوق</span>
         </a>
       </li>
     </router-link>

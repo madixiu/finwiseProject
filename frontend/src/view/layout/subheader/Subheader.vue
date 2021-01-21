@@ -9,7 +9,7 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="d-flex align-items-center flex-wrap mr-1">
-        <h5 class="text-dark font-weight-bold my-2 mr-5">
+        <h5 class="text-dark my-2 mr-2">
           {{ title }}
         </h5>
         <ul

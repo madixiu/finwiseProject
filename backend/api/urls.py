@@ -38,5 +38,9 @@ urlpatterns = [
    path("TickerTape",getTape),
    path("tickerAssemblyStepOne",getAssembly),
    path("tickerAssemblyStepTwo",getAssemblyDetails),
-   path("MainSearchBar",getSearchBarData)
+   path("MainSearchBar",getSearchBarData),
+   ###
+   path("Map",getMarketMap),
+   # path("TVList",get)
+
 ]

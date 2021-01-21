@@ -40,19 +40,19 @@ export default {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
       // console.log(this.notices);
-    },
-    allowed() {
-      var flag = false;
-      for (var i = 0; i < this.allowed.length; i++) {
-        var obj = this.allowed[i];
-        if (obj.ID == this.$route.params.id) {
-          flag = true;
-        }
-      }
-      if (!flag) {
-        this.$router.push({ name: "wizard" });
-      }
     }
+    // allowed() {
+    //   var flag = false;
+    //   for (var i = 0; i < this.allowed.length; i++) {
+    //     var obj = this.allowed[i];
+    //     if (obj.ID == this.$route.params.id) {
+    //       flag = true;
+    //     }
+    //   }
+    //   if (!flag) {
+    //     this.$router.push({ name: "wizard" });
+    //   }
+    // }
   },
   methods: {
     loadData() {

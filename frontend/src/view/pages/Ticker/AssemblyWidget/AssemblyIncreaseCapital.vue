@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 <template>
   <div>
     <!--begin::Dashboard-->
@@ -40,26 +42,28 @@ export default {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
       // console.log(this.notices);
-    },
-    allowed() {
-      var flag = false;
-      for (var i = 0; i < this.allowed.length; i++) {
-        var obj = this.allowed[i];
-        if (obj.ID == this.$route.params.id) {
-          flag = true;
-        }
-      }
-      if (!flag) {
-        this.$router.push({ name: "wizard" });
-      }
     }
+    // allowed() {
+    //   var flag = false;
+    //   for (var i = 0; i < this.allowed.length; i++) {
+    //     var obj = this.allowed[i];
+    //     if (obj.ID == this.$route.params.id) {
+    //       flag = true;
+    //     }
+    //   }
+    //   if (!flag) {
+    //     this.$router.push({ name: "wizard" });
+    //   }
+    // }
   },
   methods: {
     loadData() {
+      // eslint-disable-next-line no-unused-vars
       this.getAllowed().then(response => {
-        console.log(response);
+        // console.log(response);
+        // eslint-disable-next-line no-unused-vars
         this.getOne().then(response2 => {
-          console.log(response2);
+          // console.log(response2);
           this.getTwo().then(function() {});
           // console.log("ChainDone");
         });

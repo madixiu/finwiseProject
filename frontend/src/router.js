@@ -19,7 +19,7 @@ const Decisions = () => import("@/view/pages/Saham/Majame/Decisions.vue");
 const Increase = () => import("@/view/pages/Saham/Majame/Increase.vue");
 const Taqadom = () => import("@/view/pages/Saham/Taqadom.vue");
 const Option = () => import("@/view/pages/Saham/Option.vue");
-const Sandoq = () => import("@/view/pages/Saham/Sandoq.vue");
+const Sandoq = () => import("@/view/pages/Fund/Sandoq.vue");
 const Kala = () => import("@/view/pages/Kala/Kala.vue");
 const Bourse = () => import("@/view/pages/Kala/Bourse.vue");
 const Global = () => import("@/view/pages/Kala/Global.vue");
@@ -150,11 +150,6 @@ export default new Router({
               path: "Option",
               name: "Option",
               component: Option
-            },
-            {
-              path: "Funds",
-              name: "Funds",
-              component: Sandoq
             }
           ]
         },
@@ -175,6 +170,11 @@ export default new Router({
               component: Global
             }
           ]
+        },
+        {
+          path: "Funds",
+          name: "Funds",
+          component: Sandoq
         },
         // {
         //   path: "/builder",

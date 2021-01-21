@@ -14,6 +14,8 @@ from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData
 from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
+from requestcall.treeMapData import getMapData
+# from requestcall.getTVData import 
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -145,3 +147,8 @@ def getAssemblyDetails(request):
 
 def getSearchBarData(self):
     return JsonResponse(SearchData(),safe=False)
+
+def getMarketMap(self):
+    return JsonResponse(getMapData(),safe=False)
+
+# def 

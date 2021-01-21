@@ -71,8 +71,8 @@ export default {
         "AssemblyDecisions",
         "AssemblyIC",
         "Taghadom",
-        "Option",
-        "Funds"
+        "Option"
+        // "Funds"
       ],
       kala: ["bourse", "global"],
       ticker: [

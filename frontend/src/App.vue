@@ -22,7 +22,9 @@
 
 // Check documentation for RTL css
 // Update HTML with RTL attribute at public/index.html
-@import "assets/css/style.vue.rtl";
+// @import "assets/css/style.vue.rtl";
+@import "assets/css/unminifyCss";
+
 // @import "assets/css/Unminified.style.vue.rtl";
 
 // @font-face {
