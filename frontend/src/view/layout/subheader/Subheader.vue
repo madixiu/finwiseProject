@@ -9,7 +9,7 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="d-flex align-items-center flex-wrap mr-1">
-        <h5 class="text-dark my-2 mr-2">
+        <h5 class="text-light my-2 mr-2">
           {{ title }}
         </h5>
         <ul
@@ -17,7 +17,7 @@
         >
           <li class="breadcrumb-item">
             <router-link :to="'/'" class="subheader-breadcrumbs-home">
-              <i class="flaticon2-shelter text-muted icon-1x"></i>
+              <i class="flaticon2-shelter text-light icon-1x"></i>
             </router-link>
           </li>
 
@@ -27,115 +27,16 @@
                 v-if="breadcrumb.route"
                 :key="i"
                 :to="breadcrumb.route"
-                class="text-muted"
+                class="text-light"
               >
                 {{ breadcrumb.title }}
               </router-link>
-              <span class="text-muted" :key="i" v-if="!breadcrumb.route">
+              <span class="text-light" :key="i" v-if="!breadcrumb.route">
                 {{ breadcrumb.title }}
               </span>
             </li>
           </template>
         </ul>
-      </div>
-      <div class="d-flex align-items-center">
-        <a href="#" class="btn btn-light font-weight-bold btn-sm">
-          Actions
-        </a>
-
-        <b-dropdown
-          size="sm"
-          variant="link"
-          toggle-class="custom-v-dropdown"
-          no-caret
-          right
-          no-flip
-          text="Actions"
-          v-b-tooltip.hover="'Quick actions'"
-        >
-          <template v-slot:button-content>
-            <a href="#" class="btn btn-icon" data-toggle="dropdown">
-              <span class="svg-icon svg-icon-success svg-icon-2x">
-                <!--begin::Svg Icon-->
-                <inline-svg :src="quickActionIcon" />
-                <!--end::Svg Icon-->
-              </span>
-            </a>
-          </template>
-          <!--begin::Navigation-->
-          <div class="navi navi-hover min-w-md-250px">
-            <b-dropdown-text tag="div" class="navi-header font-weight-bold">
-              Jump to:
-              <i
-                class="flaticon2-information"
-                data-toggle="tooltip"
-                data-placement="left"
-                v-b-tooltip.hover
-                title="Click to learn more..."
-              />
-            </b-dropdown-text>
-            <b-dropdown-text
-              tag="div"
-              class="navi-separator mb-3"
-            ></b-dropdown-text>
-            <b-dropdown-text tag="div" class="navi-item">
-              <a href="#" class="navi-link">
-                <span class="navi-icon">
-                  <i class="flaticon2-drop"></i>
-                </span>
-                <span class="navi-text">Recent Orders</span>
-              </a>
-            </b-dropdown-text>
-            <b-dropdown-text tag="div" class="navi-item">
-              <a href="#" class="navi-link">
-                <span class="navi-icon">
-                  <i class="flaticon2-calendar-8"></i>
-                </span>
-                <span class="navi-text">Support Cases</span>
-              </a>
-            </b-dropdown-text>
-            <b-dropdown-text tag="div" class="navi-item">
-              <a href="#" class="navi-link">
-                <span class="navi-icon">
-                  <i class="flaticon2-telegram-logo"></i>
-                </span>
-                <span class="navi-text">Projects</span>
-              </a>
-            </b-dropdown-text>
-            <b-dropdown-text tag="div" class="navi-item">
-              <a href="#" class="navi-link">
-                <span class="navi-icon">
-                  <i class="flaticon2-new-email"></i>
-                </span>
-                <span class="navi-text">Messages</span>
-                <span class="navi-label">
-                  <span class="label label-success label-rounded">5</span>
-                </span>
-              </a>
-            </b-dropdown-text>
-            <b-dropdown-text
-              tag="div"
-              class="navi-separator mt-3"
-            ></b-dropdown-text>
-            <b-dropdown-text tag="div" class="navi-footer">
-              <a
-                class="btn btn-light-primary font-weight-bolder btn-sm"
-                href="#"
-                >Upgrade plan</a
-              >
-              <a
-                class="btn btn-clean font-weight-bold btn-sm"
-                href="#"
-                data-toggle="tooltip"
-                data-placement="left"
-                v-b-tooltip.hover
-                title="Click to learn more..."
-                >Learn more</a
-              >
-            </b-dropdown-text>
-          </div>
-          <!--end::Navigation-->
-        </b-dropdown>
       </div>
     </div>
   </div>

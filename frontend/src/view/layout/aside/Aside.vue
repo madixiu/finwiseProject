@@ -19,7 +19,7 @@
       <div
         ref="kt_aside_menu"
         id="kt_aside_menu"
-        class="aside-menu my-4"
+        class="aside-menu"
         data-menu-vertical="1"
         data-menu-dropdown-timeout="500"
         v-bind:class="asideMenuClass"

@@ -1,24 +1,23 @@
 <template>
-  <div>
-    <div>
-      <autocomplete
-        :search="searchA"
-        placeholder="جستجو"
-        :get-result-value="getResultValue"
-        @submit="handleSubmit"
-      >
-        <template #result="{ result, props }">
-          <li v-bind="props">
-            <div class="search-title">
-              {{ result.ticker }}
-            </div>
-            <div class="search-snippet">{{ result.Type }}</div>
-          </li>
-        </template>
-      </autocomplete>
-    </div>
+  <autocomplete
+    :search="searchA"
+    placeholder="جستجو"
+    :get-result-value="getResultValue"
+    @submit="handleSubmit"
+  >
+    <template #result="{ result, props }">
+      <li v-bind="props">
+        <div class="search-title">
+          {{ result.ticker }}
+          <span class="mr-1 search-title_sub">{{ result.name }}</span>
+          <span class="search-snippet">({{ result.Type }})</span>
+        </div>
+        <!-- <div class="search-snippet">{{ result.Type }}</div> -->
+      </li>
+    </template>
+  </autocomplete>
 
-    <!-- <div class="topbar-item">
+  <!-- <div class="topbar-item">
       <div class="w-auto btn-clean d-flex align-items-center btn-lg">
         <v-autocomplete
           v-model="select"
@@ -43,14 +42,13 @@
               <v-list-item-title v-text="item.ticker"></v-list-item-title>
               <v-list-item-subtitle v-text="item.Type"></v-list-item-subtitle>
             </v-list-item-content> -->
-    <!-- <v-list-item-action>
+  <!-- <v-list-item-action>
             <v-icon>mdi-bitcoin</v-icon>
           </v-list-item-action> -->
-    <!-- </template>
+  <!-- </template>
         </v-autocomplete>
       </div>
     </div> -->
-  </div>
 </template>
 <script>
 import Autocomplete from "@trevoreyre/autocomplete-vue";
@@ -237,32 +235,44 @@ export default {
 //       }, 500);
 //     }
 //   }
-// };
+// };0
 </script>
 <style>
 .search-title {
   font-size: 0.9rem;
+  font-weight: 600;
+  direction: rtl;
+}
+.search-title_sub {
+  font-size: 0.8rem;
+  font-weight: 500;
   direction: rtl;
 }
 .search-snippet {
-  color: #929292;
-  font-size: 0.8;
+  text-align: left;
+  color: #555353;
+  font-weight: 500;
+  font-size: 0.8rem;
 }
 .autocomplete-input {
+  direction: rtl;
   border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: 7px;
   width: 100%;
-  padding: 12px 25px 12px 48px;
+  margin: 10px 10px 10px 10px;
+  padding: 4px 30px 4px 30px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   background-color: #eee;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+);
   background-repeat: no-repeat;
-  background-position: 12px;
-  direction: rtl;
+  background-position: right;
 }
 .autocomplete-input:focus,
 .autocomplete-input[aria-expanded="true"] {
@@ -274,13 +284,11 @@ export default {
 [data-position="below"] .autocomplete-input[aria-expanded="true"] {
   border-bottom-color: transparent;
   border-radius: 8px 8px 0 0;
-  direction: rtl;
 }
 [data-position="above"] .autocomplete-input[aria-expanded="true"] {
   border-top-color: transparent;
   border-radius: 0 0 8px 8px;
   z-index: 2;
-  direction: rtl;
 }
 .autocomplete[data-loading="true"]:after {
   content: "";
@@ -294,7 +302,6 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   animation: rotate 1s linear infinite;
-  direction: rtl;
 }
 .autocomplete-result-list {
   margin: 0;
@@ -306,14 +313,14 @@ export default {
   background: #fff;
   list-style: none;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
-  direction: rtl !important;
 }
 [data-position="below"] .autocomplete-result-list {
-  margin-top: -1px;
-  border-top-color: transparent;
-  border-radius: 0 0 8px 8px;
-  padding-bottom: 8px;
-  direction: rtl;
+  margin-top: -10px;
+    margin-right: 10px;
+    border-top-color: #0000002e;
+    border-radius: 0 0 8px 8px;
+    padding-bottom: 3px;
+    text-align: right;
 }
 [data-position="above"] .autocomplete-result-list {
   margin-bottom: -1px;
@@ -323,15 +330,19 @@ export default {
 }
 .autocomplete-result {
   cursor: default;
-  padding: 12px 12px 12px 48px;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
+  padding: 10px 10px 12px 0px;
+  /* background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
   background-repeat: no-repeat;
-  background-position: 12px;
-  direction: inherit !important;
+  background-position: 12px; */
+  /* vertical-align: text-bottom	; */
+   border-top-color: #0000002e;
+    border-radius: 8px 0;
 }
 .autocomplete-result:hover,
 .autocomplete-result[aria-selected="true"] {
-  background-color: rgba(0, 0, 0, 0.06);
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius:0px;
+  
 }
 @keyframes rotate {
   0% {
@@ -341,32 +352,4 @@ export default {
     transform: translateY(-50%) rotate(359deg);
   }
 }
-
-/* ------------------------------------------------------- */
-/* .autocomplete-input {
-  padding: 12px 25px 12px 48px;
-  background-color: #626280;
-  font-size: 1rem;
-}
-.autocomplete-input:focus {
-  background-color: #8f8fad;
-  color: white;
-}
-.autocomplete-input::placeholder {
-  color: white;
-} */
-
-/* ----------------------------------------------------------------------------- */
-/* .v-list v-select-list v-sheet theme--light v-list--dense theme--light {
-  direction: "rtl";
-}
-.v-menu__content .theme--light .v-menu__content--fixed .menuable__content__active .v-autocomplete__content {
-    max-height: 34px;
-    min-width: 251px;
-    top: 12px;
-    left: 267px;
-    transform-origin: right top;
-    z-index: 99;
-    margin-top: 1rem;
-} */
 </style>
