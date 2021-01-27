@@ -1,6 +1,88 @@
 <template>
   <div>
     <div class="row">
+      <!-- OPTION TABLE *************************************************** -->
+      <div class="col-12">
+        <v-card>
+          <b-col lg="4" class="my-1">
+            <b-input-group size="sm">
+              <b-form-input
+                v-model="filter"
+                type="search"
+                id="filterInput"
+                placeholder="فیلتر"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''"
+                  >پاک کردن</b-button
+                >
+              </b-input-group-append>
+            </b-input-group>
+          </b-col>
+          <b-table
+            thClass="bb-table-head"
+            class="bb-table"
+            tbody-tr-class="bb-table-row"
+            striped
+            sticky-header="450px"
+            dense
+            :filter="filter"
+            :filter-debounce="1200"
+            bordered
+            no-border-collapse
+            outlined
+            small
+            hover
+            responsive
+            :items="getSahm"
+            :fields="headersBoot"
+            @filtered="onFiltered"
+          >
+            <template #cell(Nemad)="data">
+              <b class="bb-table-cell-bold">{{ data.value }}</b>
+            </template>
+            <template #cell(UnderLying)="data">
+              <b class="bb-table-cell-bold">{{ data.value }}</b>
+            </template>
+            <template #cell(StrikePrice)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+
+            <template #cell(AssetPrice)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(DifferenceToAverage)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value
+              }}</b>
+            </template>
+            <template #cell(PPP)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value.toLocaleString()
+              }}</b>
+            </template>
+            <template #cell(ArzandegiLast)="data">
+              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value == 0" class="bb-table-cell">{{
+                data.value.toLocaleString()
+              }}</b>
+            </template>
+          </b-table>
+        </v-card>
+      </div>
+
+      <!-- EXTRA STUFF ************************************************************************* -->
       <div class="col-12">
         <div class="row">
           <!-- custom card1 -->
@@ -24,6 +106,12 @@
               <div class="filterBox">
                 <transition name="fade">
                   <div v-if="card1Key" key="1">
+                    <v-chip class="mx-auto" label small>
+                      فولاد
+                      <v-chip color="#ad0018" small dark label class="mr-1">
+                        17%
+                      </v-chip>
+                    </v-chip>
                     <v-data-table
                       fixed-header
                       height="196"
@@ -125,96 +213,6 @@
             </v-card>
           </div>
         </div>
-      </div>
-      <div class="col-12">
-        <v-card>
-          <b-col lg="4" class="my-1">
-            <b-input-group size="sm">
-              <b-form-input
-                v-model="filter"
-                type="search"
-                id="filterInput"
-                placeholder="جستجو"
-              ></b-form-input>
-              <b-input-group-append>
-                <b-button :disabled="!filter" @click="filter = ''"
-                  >پاک کردن</b-button
-                >
-              </b-input-group-append>
-            </b-input-group>
-          </b-col>
-          <b-table
-            thClass="bb-table-head"
-            class="bb-table"
-            tbody-tr-class="bb-table-row"
-            striped
-            sticky-header
-            dense
-            :filter="filter"
-            bordered
-            outlined
-            small
-            hover
-            responsive
-            foot-clone
-            :items="getSahm"
-            :fields="headersBoot"
-            @filtered="onFiltered"
-          >
-            <template #cell(Nemad)="data">
-              <b class="bb-table-cell-bold">{{ data.value }}</b>
-            </template>
-            <template #cell(UnderLying)="data">
-              <b class="bb-table-cell-bold">{{ data.value }}</b>
-            </template>
-            <template #cell(StrikePrice)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
-            </template>
-
-            <template #cell(AssetPrice)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
-            </template>
-            <template #cell(DifferenceToAverage)="data">
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
-                data.value
-              }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
-                data.value
-              }}</b>
-            </template>
-            <template #cell(PPP)="data">
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
-                data.value.toLocaleString()
-              }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
-                data.value.toLocaleString()
-              }}</b>
-            </template>
-            <template #cell(ArzandegiLast)="data">
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
-                data.value.toLocaleString()
-              }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
-                data.value.toLocaleString()
-              }}</b>
-              <b v-if="data.value == 0" class="bb-table-cell">{{
-                data.value.toLocaleString()
-              }}</b>
-            </template>
-          </b-table>
-        </v-card>
-      </div>
-      <div class="col-3">
-        <v-card>
-          <div class="Mychips pt-5 pb-5 pr-3 pl-3">
-            <v-chip class="mx-auto" label large>
-              نرخ بهره
-              <v-chip color="#ad0018" small dark label class="mr-3">
-                17%
-              </v-chip>
-            </v-chip>
-          </div>
-        </v-card>
       </div>
     </div>
   </div>

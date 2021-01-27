@@ -1,6 +1,6 @@
 import requests
 import json
-import pandas as pd
+# import pandas as pd
 
 
 def firstStepAssembly(identifier):

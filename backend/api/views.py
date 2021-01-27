@@ -4,7 +4,7 @@ import requests
 from rest_framework.parsers import JSONParser 
 # from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
-from requestcall.getOptions import optionFlag, optionRequest
+from requestcall.getOptions import optionRequest
 from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerNameRequest,tableNameRequest
 from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
 from requestcall.getCodalNotices import *
@@ -15,6 +15,7 @@ from requestcall.getTickerTapeData import TickerTapeData
 from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
+from requestcall.getMainAssemblyData import AssemblyListData
 # from requestcall.getTVData import 
 
 def getCodalNoticesAll(self,identifier):
@@ -59,10 +60,10 @@ def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
 def getOptions(self):
-    if(optionFlag()):
-        return HttpResponse(optionRequest())
-    else:
-        return HttpResponse("noData")
+    # if(optionFlag()):
+        return JsonResponse(optionRequest(),safe=False)
+    # else:
+    #     return HttpResponse("noData")
 
 def getTickersNames(self):
     return JsonResponse(tickerNameRequest(),safe=False)
@@ -151,4 +152,5 @@ def getSearchBarData(self):
 def getMarketMap(self):
     return JsonResponse(getMapData(),safe=False)
 
-# def 
+def getMainAssembly(self):
+    return JsonResponse(AssemblyListData(),safe=False)

@@ -9,61 +9,32 @@ from channels.exceptions import StopConsumer
 # from .models import Thread, ChatMessage
 # from .ApiGet import publicApi, realTimePublicApi
 from .randomGen import get_number
-from requestcall.getOptions import optionRequest, optionFlag
+from requestcall.getOptions import optionRequest
 from requestcall.getMarketWatch import getMarketWatchRequest,getFilteredData
 from requestcall.getTseData import *
 
-class optionData(AsyncWebsocketConsumer):
-    channel_layer = get_channel_layer()
-    # groups = ["options"] 
+## option section
+# class optionData(AsyncWebsocketConsumer):
+#     channel_layer = get_channel_layer()
 
 
-    async def connect(self):
-        channel_layer = get_channel_layer()
-        print(str(channel_layer))
-        # print(str(self.scope["session"]["seed"]))
-        print('WEBSOCKET BACKEND CONNECTED!')
-        await self.accept()
-        while(True):
-            if(optionFlag()):
-                await self.send(text_data = optionRequest())
+#     async def connect(self):
+#         channel_layer = get_channel_layer()
+#         print(str(channel_layer))
+#         print('WEBSOCKET BACKEND CONNECTED!')
+#         await self.accept()
+#         while(True):
+#             # if(optionFlag()):
+#             await self.send(text_data = optionRequest())
             
-            await asyncio.sleep(10)
-#             await self.send({
-#                 "type": "websocket.send",
-#                 "text": str(get_number())
+#             await asyncio.sleep(10)
 
-#             })
-#             await asyncio.sleep(1)
-
-        
-
-            # await self.send({
-            #     "type": "websocket.send",
-            #     "text": json.dumps(optionRequest())
-            # })
-            # await asyncio.sleep(15)
-        #######################################
-
-        # await self.send({
-        #     "type": "websocket.send",
-        #     "text": "hello world"
-        # })
-    # async def websocket_receive(self, event):
-    #     # when a message is received from the websocket
-    #     print("receive", event)
-    #     front_text = event.get('text', None)
-    #     if front_text is not None:
-    #         loaded_dict_data = json.loads(front_text)
-    #         msg = loaded_dict_data.get('message')
-    #         print(msg)
-
-    async def websocket_disconnect(self, event):
-        print("optionData", event)
-        await self.channel_layer.group_discard(
-        self.room_name,
-        self.channel_name)
-        raise StopConsumer()
+#     async def websocket_disconnect(self, event):
+#         print("optionData", event)
+#         await self.channel_layer.group_discard(
+#         self.room_name,
+#         self.channel_name)
+#         raise StopConsumer()
 
     # @database_sync_to_async
     # def get_thread(self,user,other_username):

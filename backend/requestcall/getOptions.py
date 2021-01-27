@@ -15,23 +15,23 @@ def optionRequest():
     if resp.status_code == 200:
  
         # return(resp.text)
-        return (json.dumps(cleanOutput(json.loads(resp.text))))
+        return cleanOutput(json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
         
         return ("noData")
 
 
-def optionFlag():
-    head = {'Accept-Profile':'options'}
-    resp = requests.get('http://37.152.180.99:3000/Freeze',headers = head)
-    flag = False
-    if resp.status_code == 200:
-        jsonDATA = json.loads(resp.text)
-        flag = jsonDATA[0]['Flag']
+# def optionFlag():
+#     head = {'Accept-Profile':'options'}
+#     resp = requests.get('http://37.152.180.99:3000/Freeze',headers = head)
+#     flag = False
+#     if resp.status_code == 200:
+#         jsonDATA = json.loads(resp.text)
+#         flag = jsonDATA[0]['Flag']
         
 
-    return flag
+#     return flag
 
 def cleanOutput(option):
     keys = option[0].keys()

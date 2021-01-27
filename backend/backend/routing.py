@@ -12,7 +12,7 @@ application = ProtocolTypeRouter({
             URLRouter(
                 [
                     # re_path(r"^messages/(?P<username>[\w.@+-]+)/$", firm_live), # noqa
-                    re_path(r"^ws/test$", optionData),
+                    # re_path(r"^ws/test$", optionData),
                     # re_path(r"^index_live/$", index_live),
                     re_path(r"^ws/random$", random),
                     re_path(r"^ws/marketwatch",MarketWatch),

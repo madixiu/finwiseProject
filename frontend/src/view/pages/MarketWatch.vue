@@ -3,7 +3,7 @@
     <div class="row mr-2 mb-2">
       <v-card width="100%">
         <div class="row">
-          <div class="col-xxl-2 col-lg-2 mr-3 mt-3">
+          <div class="col-xxl-1 col-lg-1 mr-3 mt-3">
             <v-select
               height="8"
               label="بازار"
@@ -15,6 +15,45 @@
               @input="test"
             >
             </v-select>
+          </div>
+          <div class="row">
+            <!-- type selctor -->
+            <div class="col-xxl-5 col-lg-5 mt-3 mr-2">
+              <v-select
+                class="selector"
+                label="نوع"
+                v-model="filters.tableMarketTypeSelected"
+                height="10"
+                :items="filters.tableMarketTypeFilters"
+                :menu-props="{ maxHeight: '200' }"
+                deletable-chips
+                color="#3dbff0"
+                dense
+                outlined
+                multiple
+                small-chips
+                @input="test"
+              >
+              </v-select>
+            </div>
+            <!-- industry selector -->
+            <div class="col-xxl-5 col-lg-5 mt-3 dropdown-rtl">
+              <v-select
+                class="selector"
+                label="صنعت"
+                v-model="filters.tableMarketIndustrySelected"
+                height="10"
+                :items="filters.tableMarketIndustryFilters"
+                deletable-chips
+                outlined
+                dense
+                color="#3dbff0"
+                small-chips
+                multiple
+                @input="test"
+              >
+              </v-select>
+            </div>
           </div>
           <!-- <div class="col-2">
             <v-checkbox
@@ -43,7 +82,7 @@
               @click="TriggerFilteredHeader"
             ></v-checkbox>
           </div> -->
-          <div class="mt-4">
+          <div class="mt-7">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -51,45 +90,6 @@
                 @change="TriggerFilteredHeader"
               ></b-form-checkbox-group>
             </b-form-group>
-          </div>
-        </div>
-        <div class="row">
-          <!-- type selctor -->
-          <div class="col-xxl-5 col-lg-5 mr-2">
-            <v-select
-              class="selector"
-              label="نوع"
-              v-model="filters.tableMarketTypeSelected"
-              height="10"
-              :items="filters.tableMarketTypeFilters"
-              :menu-props="{ maxHeight: '200' }"
-              deletable-chips
-              color="#3dbff0"
-              dense
-              outlined
-              multiple
-              small-chips
-              @input="test"
-            >
-            </v-select>
-          </div>
-          <!-- industry selector -->
-          <div class="col-xxl-5 col-lg-5 mr-2 dropdown-rtl">
-            <v-select
-              class="selector"
-              label="صنعت"
-              v-model="filters.tableMarketIndustrySelected"
-              height="10"
-              :items="filters.tableMarketIndustryFilters"
-              deletable-chips
-              outlined
-              dense
-              color="#3dbff0"
-              small-chips
-              multiple
-              @input="test"
-            >
-            </v-select>
           </div>
         </div>
       </v-card>
@@ -104,7 +104,7 @@
               v-model="Tablefilter"
               type="search"
               id="filterInput"
-              placeholder="جستجو"
+              placeholder="فیلتر"
             ></b-form-input>
             <b-input-group-append>
               <b-button :disabled="!Tablefilter" @click="Tablefilter = ''"
@@ -118,10 +118,12 @@
           class="marketwatch-table"
           tbody-tr-class="marketwatch-table-row"
           striped
-          sticky-header
+          sticky-header="370px"
           dense
           :filter="Tablefilter"
+          :filter-debounce="2000"
           bordered
+          no-border-collapse
           outlined
           small
           hover
