@@ -18,3 +18,13 @@ def converter(input_text):
     output = input_text.translate(translation_table)
 
     return output
+
+def converterFAtoEN(input_text):
+    if not isinstance(input_text, str):
+        input_text = str(input_text)
+    intab='۱۲۳۴۵۶۷۸۹۰-'
+    outtab='1234567890-'
+    translation_table = str.maketrans(intab, outtab)
+    output = input_text.translate(translation_table)
+
+    return output

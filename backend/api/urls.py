@@ -41,6 +41,7 @@ urlpatterns = [
    path("tickerAssemblyStepTwo",getAssemblyDetails),
    ## Main Assembly
    path("MainAssemblyDataList",getMainAssembly),
+   path("MainCalendar",getMainCalendar),
    ##
    path("MainSearchBar",getSearchBarData),
    ###

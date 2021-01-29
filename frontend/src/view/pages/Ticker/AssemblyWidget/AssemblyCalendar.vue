@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height:300px">
     <persian-calendar
       :events-list="events"
       :show-date="$moment('1399/05/26', 'jYYYY/jMM/jDD')"
@@ -11,7 +11,7 @@
           :class="i.value.classes"
           :style="`top:${i.top};background-color:${i.value.color};`"
           class="vpc_event"
-          style="border:2px dashed #eee"
+          style="border:2px #eee"
         >
           <!--  Anything You Wish -->
           <span class="vpc_event-title" style="text-decoration: underline">{{
@@ -53,7 +53,7 @@ export default {
           ),
           endDateTime: this.$moment("1399/05/13 15:00", "jYYYY/jMM/jDD HH:mm"),
           title: "رویداد شماره ۲",
-          color: "#a71749",
+          color: "#071749",
           classes: []
         },
         {

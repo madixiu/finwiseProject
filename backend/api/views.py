@@ -15,7 +15,7 @@ from requestcall.getTickerTapeData import TickerTapeData
 from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
-from requestcall.getMainAssemblyData import AssemblyListData
+from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
 # from requestcall.getTVData import 
 
 def getCodalNoticesAll(self,identifier):
@@ -154,3 +154,5 @@ def getMarketMap(self):
 
 def getMainAssembly(self):
     return JsonResponse(AssemblyListData(),safe=False)
+def getMainCalendar(self):
+    return JsonResponse(getCalendarData(),safe=False)
