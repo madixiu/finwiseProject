@@ -21,7 +21,6 @@
                 dark
                 v-bind="attrs"
                 v-on="on"
-                
                 label
                 :color="i.value.color"
                 @click="test(i)"

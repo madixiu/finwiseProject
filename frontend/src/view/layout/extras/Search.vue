@@ -316,11 +316,11 @@ export default {
 }
 [data-position="below"] .autocomplete-result-list {
   margin-top: -10px;
-    margin-right: 10px;
-    border-top-color: #0000002e;
-    border-radius: 0 0 8px 8px;
-    padding-bottom: 3px;
-    text-align: right;
+  margin-right: 10px;
+  border-top-color: #0000002e;
+  border-radius: 0 0 8px 8px;
+  padding-bottom: 3px;
+  text-align: right;
 }
 [data-position="above"] .autocomplete-result-list {
   margin-bottom: -1px;
@@ -335,14 +335,13 @@ export default {
   background-repeat: no-repeat;
   background-position: 12px; */
   /* vertical-align: text-bottom	; */
-   border-top-color: #0000002e;
-    border-radius: 8px 0;
+  border-top-color: #0000002e;
+  border-radius: 8px 0;
 }
 .autocomplete-result:hover,
 .autocomplete-result[aria-selected="true"] {
   background-color: rgba(0, 0, 0, 0.15);
-  border-radius:0px;
-  
+  border-radius: 0px;
 }
 @keyframes rotate {
   0% {

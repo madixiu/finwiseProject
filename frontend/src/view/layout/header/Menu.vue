@@ -75,7 +75,7 @@
         </a>
       </li>
     </router-link>
-     <router-link
+    <router-link
       to="/Funds"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >

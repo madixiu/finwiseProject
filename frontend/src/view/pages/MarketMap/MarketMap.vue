@@ -13,7 +13,7 @@ export default {
   components: {
     // Error,
     treemap
-    
+
     // ErrorMine
   },
   mounted() {

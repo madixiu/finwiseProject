@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */ /* eslint-disable no-unused-vars */
 <template>
   <div>
     <!--begin::Dashboard-->

@@ -14,12 +14,12 @@
       >
         Sean
       </span>
-      <span class="symbol symbol-35 symbol-light-success">
-        <img v-if="false" alt="Pic" :src="picture" />
-        <span v-if="true" class="symbol-label font-size-h5 font-weight-bold">
+      <!-- <span class="symbol symbol-35 symbol-light-success"> -->
+      <!-- <img v-if="false" alt="Pic" :src="picture" /> -->
+      <!-- <span v-if="true" class="symbol-label font-size-h5 font-weight-bold">
           S
         </span>
-      </span>
+      </span> -->
     </div>
 
     <div
