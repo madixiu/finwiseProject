@@ -4,6 +4,12 @@ import router from "./router";
 import store from "@/core/services/store";
 import WsService from "@/core/services/websocket.service.js";
 import MarqueeText from "vue-marquee-text-component";
+import "core-js/stable";
+
+// import CoreuiVue from "@coreui/vue";
+// import { iconsSet as icons } from "@/core/plugins/CoreuiIcons.js";
+// Vue.use(CoreuiVue);
+
 // import '@mdi/font/css/materialdesignicons.css'
 
 // import JwtService from "@/core/services/jwt.service";

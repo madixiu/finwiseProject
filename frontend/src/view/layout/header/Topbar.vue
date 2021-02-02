@@ -162,9 +162,10 @@
 </style>
 
 <script>
-import SearchDefault from "@/view/layout/extras/Search";
-// import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
+import SearchDefault from "@/view/layout/extras/Search.vue";
 import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
+// import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
+
 // import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
 // import KTDropdownMyCart from "@/view/layout/extras/dropdown/DropdownMyCart.vue";
 // import KTDropdownLanguage from "@/view/layout/extras/dropdown/DropdownLanguage.vue";
