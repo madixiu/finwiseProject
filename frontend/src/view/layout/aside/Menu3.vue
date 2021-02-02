@@ -152,7 +152,7 @@
       </div>
     </li>
 
-    <router-link
+    <!-- <router-link
       :to="`/ticker/AdjustedPrices/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -170,9 +170,9 @@
           <span class="menu-text">سابقه-قیمت تعدیلی</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
 
-    <router-link
+    <!-- <router-link
       :to="`/ticker/TickerFundamental/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -190,7 +190,7 @@
           <span class="menu-text">بنیادی</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
     <router-link
       :to="`/ticker/TickerTechnical/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -304,7 +304,7 @@
         </a>
       </li> </router-link
     >‍
-    <router-link
+    <!-- <router-link
       :to="`/ticker/sahmrobot/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -321,9 +321,10 @@
           <i class="menu-icon flaticon2-user-1"></i>
           <span class="menu-text">ربات</span>
         </a>
-      </li> </router-link
+      </li> 
+    </router-link -->
     >‍
-    <router-link
+    <!-- <router-link
       :to="`/ticker/TickerRatio/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -341,8 +342,8 @@
           <span class="menu-text">نسبت ها</span>
         </a>
       </li> </router-link
-    >‍
-    <router-link
+    >‍ -->
+    <!-- <router-link
       :to="`/ticker/TickerIndustry/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -359,8 +360,8 @@
           <i class="menu-icon flaticon2-gear"></i>
           <span class="menu-text">در صنعت</span>
         </a>
-      </li> </router-link
-    >‍
+      </li> 
+    </router-link>‍ -->
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -455,7 +456,7 @@
         </ul>
       </div>
     </li>
-    <router-link
+    <!-- <router-link
       :to="`/ticker/subset/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -472,7 +473,8 @@
           <i class="menu-icon flaticon2-chart"></i>
           <span class="menu-text">سرمایه پذیر</span>
         </a>
-      </li> </router-link
+      </li> 
+    </router-link -->
     >‍
   </ul>
 </template>

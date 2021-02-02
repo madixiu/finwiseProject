@@ -1,5 +1,5 @@
 <template>
-  <div id="app" data-app>
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -44,58 +44,58 @@ import JwtService from "@/core/services/jwt.service";
 export default {
   name: "Finwise",
   mounted() {
-    if (
-      this.$route.name !== "login" &&
-      !this.$store.getters.isAuthenticated &&
-      !JwtService.getToken()
-    ) {
-      // next({ name: "login" });
-      this.$router.push({ name: "login" });
-      // this.$router.push({ name: "verify" });
+    // if (
+    //   this.$route.name !== "login" &&
+    //   !this.$store.getters.isAuthenticated &&
+    //   !JwtService.getToken()
+    // ) {
+    //   // next({ name: "login" });
+    //   this.$router.push({ name: "login" });
+    //   // this.$router.push({ name: "verify" });
 
-      console.log("nothing");
-    } else if (JwtService.getToken() && !this.$store.getters.isAuthenticated) {
-      console.log("here1");
-      console.log(!!this.$store.getters.currentUser.length);
-      let hasUser = !!this.$store.getters.currentUser.length;
-      if (hasUser) {
-        console.log("has");
-        // var LoginData;
-        this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
-      } else if (this.$store.isAuthenticated) {
-        this.$router.push({ path: "/" });
-        // return;
-        // this.$router.beforeEach((to, from, next) => {
-        //   // reset config to initial state
-        //   // store.dispatch(RESET_LAYOUT_CONFIG);
-        //   next();
-        //   // router.push({ name: "dashboard" });
-        //   // Scroll page to top on every route change
-        //   setTimeout(() => {
-        //     window.scrollTo(0, 0);
-        //   }, 100);
-        // });
-      } else if (!hasUser) {
-        console.log("else if");
-        let refreshToken = this.CryptoJS.AES.decrypt(
-          JwtService.getToken(),
-          "key"
-        ).toString(this.CryptoJS.enc.Utf8);
-        console.log(refreshToken);
+    //   console.log("nothing");
+    // } else if (JwtService.getToken() && !this.$store.getters.isAuthenticated) {
+    //   console.log("here1");
+    //   console.log(!!this.$store.getters.currentUser.length);
+    //   let hasUser = !!this.$store.getters.currentUser.length;
+    //   if (hasUser) {
+    //     console.log("has");
+    //     // var LoginData;
+    //     this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
+    //   } else if (this.$store.isAuthenticated) {
+    //     this.$router.push({ path: "/" });
+    //     // return;
+    //     // this.$router.beforeEach((to, from, next) => {
+    //     //   // reset config to initial state
+    //     //   // store.dispatch(RESET_LAYOUT_CONFIG);
+    //     //   next();
+    //     //   // router.push({ name: "dashboard" });
+    //     //   // Scroll page to top on every route change
+    //     //   setTimeout(() => {
+    //     //     window.scrollTo(0, 0);
+    //     //   }, 100);
+    //     // });
+    //   } else if (!hasUser) {
+    //     console.log("else if");
+    //     let refreshToken = this.CryptoJS.AES.decrypt(
+    //       JwtService.getToken(),
+    //       "key"
+    //     ).toString(this.CryptoJS.enc.Utf8);
+    //     console.log(refreshToken);
 
-        this.getAccessTokenAndUser(refreshToken);
-        // let token = this.$store.getters.currentUserAccessToken;
+    //     this.getAccessTokenAndUser(refreshToken);
+    //     // let token = this.$store.getters.currentUserAccessToken;
 
-        // this.getQueryUser();
+    //     // this.getQueryUser();
 
-        console.log(this.$store.getters.currentUserAccessToken);
-      }
-      // else {
-      //   console.log("else");
-      //   this.$router.push({ name: "login" });
-      //   return;
-      // }
-    }
+    //     console.log(this.$store.getters.currentUserAccessToken);
+    //   }
+    //   // else {
+    //   //   console.log("else");
+    //   //   this.$router.push({ name: "login" });
+    //   //   return;
+    //   // }
+    // }
 
     /**
      * this is to override the layout config using saved data from localStorage

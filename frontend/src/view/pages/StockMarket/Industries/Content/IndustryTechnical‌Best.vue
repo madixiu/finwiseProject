@@ -51,6 +51,7 @@
 export default {
   data() {
     return {
+      filteredItems:[],
       loading: false,
       mvheaders: [
         { text: "رتبه", value: "Rank", sortabale: false },

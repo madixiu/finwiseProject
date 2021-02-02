@@ -462,7 +462,7 @@ export default {
         x += 3000000;
         i++;
       }
-      console.log(series);
+      // console.log(series);
       return series;
     }
   }

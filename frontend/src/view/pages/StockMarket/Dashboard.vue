@@ -34,7 +34,7 @@ import HighestSupply from "@/view/pages/StockMarket/StockMarketWidgets/HighestSu
 import Impacts from "@/view/pages/StockMarket/StockMarketWidgets/ImpactOnIndex.vue";
 // import axios from "axios";
 export default {
-  name: "dashboard",
+  name: "Dashboard",
   components: {
     MostViewedWidget,
     Impacts,

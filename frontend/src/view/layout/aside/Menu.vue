@@ -1,61 +1,5 @@
 <template>
   <ul class="menu-nav">
-    <!-- <li
-      aria-haspopup="true"
-      data-menu-toggle="hover"
-      class="menu-item menu-item-submenu"
-      v-bind:class="{
-        'menu-item-active': hasActiveChildren('/Market')
-      }"
-    >
-      <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon-coins"></i>
-        <span class="menu-text">بازار</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu menu-submenu-classic menu-submenu-right">
-        <ul class="menu-subnav">
-          <router-link
-            to="/StockMarket/Market/Dashboard"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">صفحه اول</span>
-              </a>
-            </li>
-          </router-link>
-          <router-link
-            to="/StockMarket/Market/MarketWatch"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">دیدبان</span>
-              </a>
-            </li>
-          </router-link>
-        </ul>
-      </div>
-    </li> -->
     <router-link
       to="/StockMarket/Dashboard"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -94,7 +38,7 @@
         </a>
       </li>
     </router-link>
-    <router-link
+    <!-- <router-link
       to="/StockMarket/Screener"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -112,8 +56,8 @@
           <span class="menu-text">غربالگر</span>
         </a>
       </li>
-    </router-link>
-    <router-link
+    </router-link> -->
+    <!-- <router-link
       to="/StockMarket/Fundamental"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -131,14 +75,35 @@
           <span class="menu-text">بنیادی</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
 
     <li class="menu-section">
       <h4 class="menu-text">سایر</h4>
       <i class="menu-icon flaticon-more-v2"></i>
     </li>
+<!-- **************************** TECHNICAL ONE BUTTON **************************** -->
+   <router-link
+      to="/StockMarket/Technical/Data"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-diagram"></i>
+          <span class="menu-text">تکنیکال</span>
+        </a>
+      </li>
+    </router-link>
 
-    <li
+<!-- ************************* TECHNICAL FULL DETAIL ************************* -->
+    <!-- <li
       aria-haspopup="true"
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
@@ -153,7 +118,7 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <!-- <router-link
+          <router-link
             to="/StockMarket/Technical/Dashboard"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -171,7 +136,7 @@
                 <span class="menu-text">قیمت طلا</span>
               </a>
             </li>
-          </router-link> -->
+          </router-link>
           <router-link
             to="/StockMarket/Technical/Tools"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -212,7 +177,9 @@
           </router-link>
         </ul>
       </div>
-    </li>
+    </li> -->
+<!-- ************************* TECHNICAL FULL DETAIL ************************* -->
+
 
     <li
       aria-haspopup="true"

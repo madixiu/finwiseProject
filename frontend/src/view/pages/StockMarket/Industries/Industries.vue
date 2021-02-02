@@ -1,8 +1,19 @@
 <template>
   <div>
     <div class="row">
-      <marquee-text class="tickerTape" reverse :repeat="5" duration="30">
-        <div class="row" style="background-color: #27273b;">
+      <marquee-text
+        class="tickerTape"
+        reverse
+        :repeat="5"
+        :duration="30"
+        :paused="paused"
+      >
+        <div
+          class="row"
+          style="background-color: #27273b;"
+          @mouseenter="paused = !paused"
+          @mouseleave="paused = false"
+        >
           <div
             v-for="item in this.TickerTape"
             :key="item.ticker"
@@ -192,9 +203,6 @@
           <v-tab-item><IndustryTechnicalWorse /></v-tab-item>
         </v-tabs>
       </div>
-      <div>
-        <v-btn @click="index">here</v-btn>
-      </div>
     </div>
   </div>
 </template>
@@ -218,7 +226,7 @@ export default {
   },
   data() {
     return {
-      isPaused: false,
+      paused: false,
       TickerTape: [],
       ReturnSeries: [
         {
@@ -754,16 +762,19 @@ export default {
           height: 350,
           type: "pie",
           fontFamily: "Vazir",
+          animations: {
+            enabled: false
+          },
           events: {
-            legendClick: function(chartContext, seriesIndex, config) {
-              console.log(chartContext);
-              console.log(seriesIndex);
-              console.log(config);
-            },
+            // legendClick: function(chartContext, seriesIndex, config) {
+            //   // console.log(chartContext);
+            //   // console.log(seriesIndex);
+            //   // console.log(config);
+            // },
             dataPointSelection: (event, chartContext, config) => {
-              console.log(chartContext);
-              console.log(event);
-              console.log(config);
+              // console.log(chartContext);
+              // console.log(event);
+              // console.log(config);
               this.testing(config.dataPointIndex);
             }
           }
@@ -793,9 +804,8 @@ export default {
   },
   methods: {
     testing(seriesIndex) {
-      console.log("yo");
-      console.log(this.PiechartOptions.labels[seriesIndex]);
-      console.log(this.Pieseries[seriesIndex]);
+      // console.log(this.PiechartOptions.labels[seriesIndex]);
+      // console.log(this.Pieseries[seriesIndex]);
       // this.PiechartOptions.labels = persianNames;
       // console.log(this.chartOptions.labels);
 
@@ -839,7 +849,7 @@ export default {
         this.Pieseries = marketCaps;
         itemValue.sort(this.compareValues("value", "desc"));
         itemValue = itemValue.slice(0, 6);
-        console.log(itemValue);
+        // console.log(itemValue);
         let names = [];
         let values = [];
         for (let item of itemValue) {

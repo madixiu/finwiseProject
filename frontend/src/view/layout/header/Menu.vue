@@ -94,7 +94,7 @@
       </li>
     </router-link>
 
-    <router-link
+    <!-- <router-link
       to="/kala"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -111,9 +111,9 @@
           <span class="menu-text">کالا</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
 
-    <router-link
+    <!-- <router-link
       to="/shakhes"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -130,28 +130,10 @@
           <span class="menu-text">شاخص های کلان</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
 
-    <router-link
-      :to="`/ticker/Overview/Overall/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">سهم</span>
-        </a>
-      </li>
-    </router-link>
 
-    <router-link
+    <!-- <router-link
       to="/robot"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -168,7 +150,7 @@
           <span class="menu-text">ربات</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
   </ul>
 </template>
 

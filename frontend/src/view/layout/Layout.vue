@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column flex-root" v-if="isAuthenticated">
-    <!-- <div class="d-flex flex-column flex-root"> -->
+  <!-- <div class="d-flex flex-column flex-root" v-if="isAuthenticated"> -->
+  <div class="d-flex flex-column flex-root">
     <!-- begin:: Header Mobile -->
     <KTHeaderMobile></KTHeaderMobile>
     <!-- end:: Header Mobile -->
