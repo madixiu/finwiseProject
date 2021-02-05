@@ -1,394 +1,756 @@
 <template>
-  <div>
-    <div class="col-xxl-12 mx-auto">
-      <div id="charset" style="display: contents;"></div>
-    </div>
+  <div class="treemap">
+    <!-- <div
+      id="tooltip"
+      v-if="tooltip && selectedNode.depth == 0"
+      class="tooltip"
+      :style="{ left: pageX + 'px', top: pageY + 'px' }"
+    >
+      <span style="font-size:0.8rem">
+        {{ tooltipHeaderName }}
+      </span>
+      <hr />
+      <div style="direction:rtl">
+        <p style="font-size:0.7rem;direction:rtl">
+          <span> {{ tooltipListOfChilds[0].name }}</span>
+          <span style="font-size:0.7rem">{{
+            tooltipListOfChilds[0].change
+          }}</span>
+        </p>
+      </div>
+    </div> -->
+    <!-- The SVG structure is explicitly defined in the template with attributes derived from component data -->
+    <svg
+      :height="height"
+      style="margin-left: 0px;"
+      :width="width"
+    >
+      <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
+        <!-- The top most element, representing the previous node -->
+        <g class="grandparent">
+          <rect
+            :height="20"
+            :width="width - 2"
+            :y="margin.top * -1 + 15"
+            v-on:click="selectNode"
+            :id="parentId"
+          ></rect>
+          <!-- <g class="parentTitleBox"
+          v-for="(child in rootNode)"
+          ></g> -->
+
+          <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
+          <text class="grandparentText" dy=".65em" x="6" y="0">
+            {{ selectedNode.data.name }}
+          </text>
+        </g>
+        <!-- We can use Vue transitions too! -->
+        <transition-group name="list" tag="g" class="depth" v-if="selectedNode">
+          <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
+          <g
+            class="children"
+            v-for="children in selectedNode._children"
+            :key="'c_' + children.id"
+            @mousemove="mouse_move(children, $event)"
+            @mouseleave="tooltip = false"
+          >
+            <!-- 
+              The visible square rect element.
+              You can attribute directly an event, that fires a method that changes the current node,
+              restructuring the data tree, that reactivly gets reflected in the template.
+            -->
+            <g v-if="selectedNode.depth == 1">
+              <rect
+                class="parent"
+                :id="children.id"
+                :key="children.data.id"
+                :x="x(children.x0)"
+                :y="y(children.y0) + 15"
+                :width="x(children.x1 - children.x0 + children.parent.x0)"
+                :height="y(children.y1 - children.y0 + children.parent.y0)"
+                :style="getColor(children.data.change)"
+              ></rect>
+              <text
+                dy="1em"
+                :key="'name_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0) + 15"
+                style="fill: white;font-size:0.6rem;text-anchor: end;"
+                :style="InnerTickerTextFontSizeAdjust(children)"
+              >
+                {{ children.data.name }}
+              </text>
+
+              <text
+                dy="2.3em"
+                :key="'change_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0) + 15"
+                style="fill-opacity:1;fill:white;  text-anchor: end;"
+                :style="InnerTickerTextFontSizeAdjust(children)"
+              >
+                {{ children.data.change }}%
+              </text>
+            </g>
+
+            <!-- Generate the children squares (only visible on hover of a square) -->
+            <g
+              v-for="child in children._children"
+              :key="'c_' + child.id"
+              class="childG"
+            >
+              <rect
+                v-on:click="selectNode"
+                class="child"
+                :id="child.id"
+                :key="child.data.id"
+                :height="y(child.y1) - y(child.y0)"
+                :width="x(child.x1) - x(child.x0)"
+                :x="x(child.x0)"
+                :y="y(child.y0)"
+                :style="getColor(child.data.change)"
+              ></rect>
+              <!-- ticker TEXT ********************************* -->
+              <text
+                class="childTickerName"
+                :key="'name_t_' + child.id"
+                :x="XText(child.x0, child.x1)"
+                :y="YText2(child.y0, child.y1)"
+                :style="
+                  tickerTextFontSizeAdjust(
+                    child.x0,
+                    child.x1,
+                    child.y0,
+                    child.y1
+                  )
+                "
+              >
+                {{ child.data.name }}
+              </text>
+              <text
+                class="childTickerValue"
+                dy="0.3em"
+                :key="'percent_t_' + child.id"
+                :x="XText(child.x0, child.x1)"
+                :y="YText(child.y0, child.y1)"
+                :style="
+                  tickerTextFontSizeAdjust(
+                    child.x0,
+                    child.x1,
+                    child.y0,
+                    child.y1
+                  )
+                "
+              >
+                {{ child.data.change + "%" }}
+              </text>
+              <!-- ticker TEXT ********************************* -->
+            </g>
+
+            <!-- HEADER SQUARES WITH NAMES ***************************** -->
+            <g v-if="selectedNode.depth == 0">
+              <rect
+                class="parentSquare"
+                :x="x(children.x0)"
+                :y="y(children.y0)"
+                :width="x(children.x1 - children.x0 + children.parent.x0)"
+                height="15"
+              ></rect>
+              <rect
+                class="littleSquare"
+                :x="x(children.x0) + 5"
+                :y="y(children.y0) + 8"
+                width="10"
+                height="10"
+                style="fill:#262931;transform-box:fill-box;"
+                transform="rotate(45)"
+                transform-origin="50% 50%"
+              ></rect>
+              <text
+                class="parentSquareText"
+                v-if="selectedNode.depth == 0"
+                dy="0.8em"
+                :key="'name_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0)"
+              >
+                {{ children.data.name }}
+              </text>
+            </g>
+            <!-- HEADER SQUARES WITH NAMES ***************************** -->
+
+            <!-- The visible square text element with the title and value of the child node -->
+          </g>
+        </transition-group>
+      </g>
+
+    </svg>
+      <!-- ************* SVG TOOLTIP PLACEMENT ************************* -->
+
+    <!-- <svg v-if="tooltip && selectedNode.depth == 0"
+    :height="height"
+          :width="width"
+    >
+
+      <g id="tooltip"  
+          class="tooltip">
+          <rect
+          :x="pageX"
+          :y="pageY"
+          height="200"
+          width="100"
+          style="fill:black">
+          </rect>
+              <text style="font-size:0.8rem;fill:black" :x="pageX"
+          :y="pageY">
+              {{tooltipHeaderName}}
+          </text>
+          </g>
+    </svg> -->
   </div>
 </template>
+
 <script>
-import data from "@/view/content/d3/data/map.json";
-// import data from "../d3/data/map.json";
-import * as d3 from "d3";
+import { scaleLinear, scaleOrdinal } from "d3-scale";
+// import {json} from 'd3-request'
+import { hierarchy, treemap } from "d3-hierarchy";
+// To be explicit about which methods are from D3 let's wrap them around an object
+// Is there a better way to do this?
+let d3 = {
+  scaleLinear: scaleLinear,
+  scaleOrdinal: scaleOrdinal,
+  // schemeCategory20: schemeCategory20,
+  // json: json,
+  hierarchy: hierarchy,
+  treemap: treemap
+};
+// import data from "@/components/data/map2.json";
+// import mapData from "./data/map2.json";
 export default {
+  // name: "treemap",
+  props: { inputData: Object, inputWidth: Number, inputHeight: Number },
+  // the component's data
   data() {
     return {
-      dataList: null,
-      width: 960,
-      height: 1060,
-      colors: ["#AA2121", "#C84040", "#ED7171", "#33BA33", "#518651", "#215E2C"]
-    }; // end of return
-  }, // end of dynamic data
-
-  beforeMount() {
-    this.dataList = data;
+      jsonData: {
+    "name": "نقشه بازار",
+    "children": [
+      {
+        "name": "استخراج زغال سنگ",
+        "children": [
+          {
+            "name": "کشرق",
+            "close": 108622,
+            "change": 1.8,
+            "value": 9124248000000,
+            "tickerFull": "صنعتی و معدنی شمال شرق شاهرود"
+          },
+          {
+            "name": "کپرور",
+            "close": 45906,
+            "change": -3.27,
+            "value": 24789240000000,
+            "tickerFull": "فرآوری زغال سنگ پروده طبس"
+          },
+          {
+            "name": "کطبس",
+            "close": 67050,
+            "change": 3.2,
+            "value": 12404250000000,
+            "tickerFull": "ذغال‌سنگ‌ نگین‌ ط‌بس‌"
+          }
+        ]
+      }]},
+      pageX: null,
+      MainScaleNode: null,
+      pageY: null,
+      tooltip:  false,
+      rootNode: {},
+      tooltipHeaderName: null,
+      tooltipListOfChilds: [],
+      finalR: [],
+      dict: {},
+      margin: {
+        top: 20,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
+      width: 1250,
+      height: 550,
+      selected: null,
+      colors: [
+        "fill:#e41414",
+        "fill:#c91010",
+        "fill:#ab0e0e",
+        "fill:#870c0c",
+        "fill:#690808",
+        "fill:#3f4c53",
+        "fill:#006920",
+        "fill:#008729",
+        "fill:#009e30",
+        "fill:#00bd39",
+        "fill:#00d641"
+      ]
+    };
   },
+  // You can do whatever when the selected node changes
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+
+    selectedNode(newData, oldData) {
+      console.log("The selected node changed...");
+      console.log(newData.data);
+      if (newData.depth == 1) {
+        // this.initialize()
+        this.accumulate(this.rootNode, this);
+        this.InnerScaleTreemap(this.rootNode);
+      } else if (newData.depth == 0 && oldData.depth == 1) {
+        this.initialize();
+        this.accumulate(this.rootNode, this);
+        this.treemap(this.rootNode);
+      }
+
+      // console.log(newData.y0,newData.x0,newData.y1,newData.x1);
+    }
+  },
+  created() {
+    // this.loadData();
+    this.width = this.inputWidth;
+    this.height = this.inputHeight;
+    this.jsonData = this.inputData;
+
+    // this.jsonData = null;
+  },
+  // In the beginning...
   mounted() {
-    let vm = this;
+    var that = this;
 
-    let chartDiv = document.getElementById("charset");
-    // this.width = chartDiv.clientWidth;
-    // this.height = chartDiv.clientHeight;
-    // console.log(this.width);
-    // console.log(this.height);
-    this.width = 1340;
-    this.height = 500;
-
-    var svg = d3
-      .select(chartDiv)
-      .append("svg")
-
-      .attr("width", this.width)
-      .attr("height", this.height);
-
-    var format = d3.format(",d");
-    // var color = d3.scaleSequential([8,0],d3.interpolateMagma)
-    // var stratify = d3.stratify().parentId(d => d.id.substring(0, d.id.lastIndexOf(".")));
-    var treemap = d3
-      .treemap()
-      .size([this.width, this.height])
-      .paddingOuter(3)
-      .paddingTop(25)
-      .paddingInner(2)
-      .round(true);
-
-    var root = d3
-      .hierarchy(this.dataList)
-      .sum(d => d.value)
-      .sort((a, b) => b.height - a.height || b.value - a.value);
-
-    console.log(root.descendants());
-    // console.log(root.leaves());
-    // console.log(root.sum(d => d.value));
-    console.log(root.descendants().filter(d => !d.children));
-    treemap(root);
-
-    var cell = svg
-      .selectAll("node")
-      // .selectAll("g")
-      .data(root.descendants())
-      .enter()
-      .append("g")
-      .attr("transform", d => `translate(${d.x0},${d.y0})`)
-      // .attr("transform", d => "translate(" + d.x0 + "," + d.y0 +")")
-      .attr("class", "node");
-    // .each(d => d.node = this)
-    // .on("mouseover",hovered(true))
-    // .on("mouseout",hovered(false))
-    //   .on("mouseover",hovered(true))
-    //   .on("mouseout", function(d) {
-    //       d3.selectAll(d.ancestors().map(function(d) { return d.node; }))
-    //           .classed("node--hover", false)
-    //         .select("rect")
-    //           .attr("width", function(d) { return d.x1 - d.x0 - false; })
-    //           .attr("height", function(d) { return d.y1 - d.y0 - false; });
-    // })
-
-    cell
-      .append("rect")
-      // .attr("id",d => "rect-" + d.id)
-      // .attr("id",d => `rect-${d.id}`)
-      .attr("id", d => (d.leafUid = "#leaf").id)
-      .attr("width", d => d.x1 - d.x0)
-      .attr("height", d => d.y1 - d.y0)
-      // .style("fill", d => color(d.depth))
-      .style("fill", function(d) {
-        if (d.depth == 0) {
-          return "#000";
-        }
-        if (d.depth == 1) {
-          return "#3F3F3F";
-        }
-        if (d.depth == 2) {
-          return "#BFBFBF";
-        } else {
-          // return "#095B00"
-
-          return vm.getColor(Math.floor(d.data.change));
-        }
-      });
-
-    cell
-      .append("clipPath")
-      // .attr("id", d => "clip-" + d.id)
-      // .attr("id",d => `clip-${d.id}`)
-      .attr("id", d => (d.clipUid = "#clip").id)
-      .append("use")
-      // .attr("xlink:href", d => "#rect-" + d.id)
-      // .attr("xlink:href",d => `#rect-${d.id}`)
-      .attr("xlink:href", d => d.leafUid.href);
-
-    this.leaves = root.leaves();
-    var tickerName = cell
-      .append("text")
-      // .attr("clip-path", d => "url(#clip-" + d.id + ")")
-
-      .attr("clip-path", leaves => `url(#clip-${leaves.id})`)
-      .attr("y", function() {
-        let parentData = d3.select(this.parentNode).datum();
-        return (parentData.y1 - parentData.y0) / 2;
-      })
-      .attr("text-anchor", "middle");
-
-    var tickerValue = cell
-      .append("text")
-      .attr("clip-path", d => `url(#clip-${d.id})`)
-      .attr("y", function() {
-        let parentData = d3.select(this.parentNode).datum();
-        return (parentData.y1 - parentData.y0) / 2;
-      })
-      .attr("text-anchor", "middle");
-
-    // var industryTitle = cell.append("text")
-    //   .attr("clip-path", d => `url(#clip-${d.id})`)
-    //   .attr("y",function(){
-    //         let parentData = d3.select(this.parentNode).datum();
-    //         return (parentData.y1 - parentData.y0) /2 ;
-    //       })
-    //   .attr("text-anchor", "middle")
-    svg
-      .selectAll("indTitle")
-      .data(root.descendants().filter(d => d.depth == 1))
-      .enter()
-      .append("text")
-      .attr("x", d => d.x1 - 10)
-      .attr("y", d => d.y0 + 16)
-      .text(d => d.data.name)
-      // .attr("font-size", "15px")
-      .attr("font-size", function(d) {
-        let c = Math.floor((d.x1 - d.x0) / 25);
-        console.log(c);
-        if (c > 23) c = 22;
-        if (c < 5) c = 0;
-        return c.toString() + "px";
-      })
-      .attr("fill", "#FE3737");
-
-    svg
-      .selectAll("groupTitle")
-      .data(root.descendants().filter(d => d.depth == 2))
-      .enter()
-      .append("text")
-      .attr("x", d => d.x1 - 10)
-      .attr("y", d => d.y0 + 16)
-      .text(d => d.data.name)
-      // .attr("font-size", "15px")
-      .attr("font-size", function(d) {
-        let c = Math.floor((d.x1 - d.x0) / 25);
-        console.log(c);
-        if (c > 23) c = 22;
-        if (c < 5) c = 0;
-        return c.toString() + "px";
-      })
-      .attr("fill", "#0A2853");
-
-    // TICKER NAME
-    tickerName
-      .filter(d => !d.children)
-      .append("tspan")
-      .text(d => d.data.name)
-
-      // .attr("dy", "-1.5em")
-      .attr("x", function() {
-        let parentData = d3.select(this.parentNode).datum();
-        return (parentData.x1 - parentData.x0) / 2;
-      })
-
-      .attr("dy", "-1.4em")
-      // .attr("text-anchor", "middle")
-      .attr("fill", "#EAF2CE")
-
-      .style("font-size", function(d) {
-        // let d = d3.select(this.parentNode).datum()
-        let c = Math.floor(Math.min(d.x1 - d.x0, d.y1 - d.y0) / 6);
-        console.log(c);
-        if (c > 30) c = 35;
-        return c.toString() + "px";
-      });
-
-    // TICKER VALUE
-    tickerValue
-      .filter(d => !d.children)
-
-      .attr("dy", "0.8em")
-      .append("tspan")
-      .text(d => `\n${format(d.data.value)}`)
-      .attr("x", function() {
-        let parentData = d3.select(this.parentNode).datum();
-        return (parentData.x1 - parentData.x0) / 2;
-      })
-      .attr("fill", "#F1F8A0")
-      .style("font-size", function(d) {
-        // let d = d3.select(this.parentNode).datum()
-        let c = Math.floor(Math.min(d.x1 - d.x0, d.y1 - d.y0) / 6);
-        console.log(c);
-        if (c > 30) c = 25;
-        if (c < 4) c = 0;
-        return c.toString() + "px";
-      });
-    // let here
-    // // console.log(filter(d => d.children));
-    // industryTitle.filter(d => d.depth ==1)
-
-    //   .text( d => d.data.name)
-
-    //   .append("tspan")
-    //   .attr("x", 4 *10)
-    //    .attr("y", (d, i) => 13 + i * 10)
-    // .attr("x", function() {
-    //   let parentData = d3.select(this.parentNode).datum();
-    //   return (parentData.x1 - parentData.x0) /2
-    // })
-    // .attr("y",function(){
-    //   let parentData = d3.select(this.parentNode).datum();
-    //   return (parentData.y1 - parentData.y0) /2
-    // // })
-    // .style("fill","#FF1515")
-    // .text(d => d)
-    //  console.log(here)
-
-    // label
-    //   .filter(d => d.children)
-    //   .selectAll("tspan")
-    //     // .data( d => d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat("\xa0" + format(d.value)))
-
-    //     .data( d => d.data.name.split(/(?=[A-Z][^A-Z])/g).concat("\xa0" + format(d.value)))
-    //   .enter().append("tspan")
-    //     .attr("x", function() {
-    //       let parentData = d3.select(this.parentNode).datum();
-    //       return (parentData.x1 - parentData.x0) /2
-    //     })
-    //     .attr("y",function(){
-    //       let parentData = d3.select(this.parentNode).datum();
-    //       return (parentData.y1 - parentData.y0) /2
-    //     })
-    //     .attr("text-anchor", "middle")
-    //     .text(d => d);
-
-    // // leaf label
-    //   label
-    //     .filter(d => !d.children)
-    //     .selectAll("tspan")
-    //       // .data(d => d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat(format(d.value)))
-    //        .data(d => d.data.name.split(/(?=[A-Z][^A-Z])/g).concat("\x0a"+format(d.value)))
-    //     .enter().append("tspan")
-    //       // .attr("x", 4 *10)
-    //       .attr("text-anchor", "middle")
-    //       .attr("x",function() {
-    //         let parentData = d3.select(this.parentNode).datum();
-    //         return (parentData.x1 - parentData.x0) /2
-    //       })
-    //       // .attr("y", (d, i) => 13 + i * 10)
-    //       .attr("y", function(){
-    //         let parentData = d3.select(this.parentNode).datum();
-    //         return (parentData.y1 - parentData.y0) /3
-    //       })
-    //       // .style("font-size",d => Math.min(d.x1 - d.x0, d.y1 - d.y0) / 6)
-    //       .style("font-size",function(){
-    //         let d = d3.select(this.parentNode).datum()
-    //         let c = Math.floor(Math.min(d.x1 - d.x0, d.y1 - d.y0) / 6)
-    //         console.log(c);
-    //         if (c > 30)
-    //         c = 35
-    //         return c.toString()+'px'
-    //       })
-    //       .text(d => d)
-
-    //       .style("fill", "white")
-
-    cell.append("title").text(d => d.data.name + "\n" + format(d.value));
-
-    // function hovered(hover) {
-    //     return function(d) {
-    //       d3.selectAll(d.ancestors().map(function(d) { return d.node; }))
-    //           .classed("node--hover", hover)
-    //         .select("rect")
-    //           .attr("width", function(d) { return d.x1 - d.x0 - hover; })
-    //           .attr("height", function(d) { return d.y1 - d.y0 - hover; });
-    // };
+    // An array with colors (can probably be replaced by a vuejs method)
+    // that.color = d3.scaleOrdinal(d3.schemeCategory20)
+    // that.color = d3.scaleOrdinal().range(['#5EAFC6', '#FE9922', '#93c464', '#75739F'])
+    // loads the data and calls the initialization methods
+    // d3.json('@components/data/map2.json',
+    // function (error, data) {
+    //   if (error) console.log(error)
+    // that.jsonData = this.data;
+    console.log(this.jsonData);
+    that.initialize();
+    that.accumulate(that.rootNode, that);
+    that.treemap(that.rootNode);
+    // console.log(that.InnerScaleTreemap(that.rootNode));
+    // that.MainScaleNode = that.InnerScaleTreemap(that.rootNode)
     // }
+    // )
   },
+  // The reactive computed variables that fire rerenders
+  computed: {
+    // The grandparent id
+    parentId() {
+      if (
+        this.selectedNode.parent === undefined ||
+        this.selectedNode.parent === null
+      ) {
+        return this.selectedNode.id;
+      } else {
+        return this.selectedNode.parent.id;
+      }
+    },
+    // Returns the x position within the current domain
+    // Maybe it can be replaced by a vuejs method
+    x() {
+      return d3
+        .scaleLinear()
+        .domain([0, this.width])
+        .range([0, this.width]);
+    },
+    // Returns the y position within the current domain
+    // Maybe it can be replaced by a vuejs method
+    y() {
+      return d3
+        .scaleLinear()
+        .domain([0, this.height - this.margin.top - this.margin.bottom])
+        .range([0, this.height - this.margin.top - this.margin.bottom]);
+    },
 
+    yParent2() {
+      return d3
+        .scaleLinear()
+        .domain([0, this.height])
+        .range([0, this.height]);
+    },
+    yParent() {
+      return d3
+        .scaleLinear()
+        .domain([0, this.height - this.margin.top - this.margin.bottom])
+        .range([0, this.height - this.margin.top - this.margin.bottom]);
+    },
+    // The D3 function that recursively subdivides an area into rectangles
+    treemap() {
+      return (
+        d3
+          .treemap()
+          // .tile(d3.treemapResquarify)
+          .size([this.width, this.height])
+          .round(false)
+          .paddingTop(15)
+          // .paddingOuter(1)
+          .paddingRight(1)
+          .paddingLeft(1)
+          .paddingBottom(1)
+      );
+    },
+
+    // The current selected node
+    selectedNode() {
+      let node = null;
+
+      if (this.selected) {
+        let nd = this.getNodeById(this.rootNode, this.selected, this);
+
+        if (nd._children) {
+          node = nd;
+        } else {
+          node = nd.parent;
+        }
+      } else {
+        node = this.rootNode;
+      }
+
+      // Recalculates the y and x domains
+      this.x.domain([node.x0, node.x0 + (node.x1 - node.x0)]);
+      this.y.domain([node.y0, node.y0 + (node.y1 - node.y0)]);
+
+      /*
+      **** IMPORTANT *****
+      SUPRISINGLY it works the way we want by this LOG line!!!
+      have to figure out a way to get rid  of this!!!!!
+      */
+      console.log(this.MainScaleNode);
+      return node;
+    }
+  },
   methods: {
+    // Called once, to create the hierarchical data representation
+    initialize() {
+      let that = this;
+
+      if (that.jsonData) {
+        that.rootNode = d3
+          .hierarchy(that.jsonData)
+          .eachBefore(function(d) {
+            d.id = (d.parent ? d.parent.id + "." : "") + d.data.name;
+          })
+          .sum(d => d.value)
+          .sort(function(a, b) {
+            return b.height - a.height || b.value - a.value;
+          });
+        that.rootNode.x = that.rootNode.y = 0;
+        that.rootNode.x1 = that.width;
+        that.rootNode.y1 = that.height;
+        that.rootNode.depth = 0;
+      }
+    },
+    // Calculates the accumulated value (sum of children values) of a node - its weight,
+    // represented afterwards in the area of its square
+    accumulate(d, context) {
+      d._children = d.children;
+
+      if (d._children) {
+        d.value = d._children.reduce(function(p, v) {
+          return p + context.accumulate(v, context);
+        }, 0);
+        return d.value;
+      } else {
+        return d.value;
+      }
+    },
+    // Helper method - gets a node by its id attribute
+    getNodeById(node, id, context) {
+      if (node.id === id) {
+        return node;
+      } else if (node._children) {
+        for (var i = 0; i < node._children.length; i++) {
+          var nd = context.getNodeById(node._children[i], id, context);
+          if (nd) {
+            return nd;
+          }
+        }
+      }
+    },
+    // When a user clicks a square, changes the selected data attribute
+    // which fires the computed selectedNode, which in turn finds the Node by the id of the square clicked
+    // and the template reflects the changes
+    selectNode(event) {
+      // console.log(event.target.id);
+      this.selected = event.target.id;
+
+      // this.accumulate(this.selected,this)
+    },
+    XText(x0, x1) {
+      return (x1 - x0) / 2 + x0;
+    },
+    YText(y0, y1) {
+      return (y1 - y0) / 2 + y0 - 7;
+    },
+    YText2(y0, y1) {
+      return (y1 - y0) / 4 + y0 - 7;
+    },
+    test(input) {
+      return d3
+        .scaleLinear()
+        .domain([0, input])
+        .range([0, this.width]);
+    },
+    test2(input) {
+      return d3
+        .scaleLinear()
+        .domain([0, input])
+        .range([0, this.height]);
+    },
+    mouse_move(key, eve) {
+      // let tool = document.getElementById("tooltip")
+      this.tooltip = true;
+      this.tooltipHeaderName = key.data.name;
+      this.tooltipListOfChilds = key.data.children;
+      this.pageX = eve.pageX;
+      this.pageY = eve.pageY;
+      console.log(key.data.name);
+      // let t = eve.target.id.split(".");
+      // console.log("MM ", t[t.length - 1]);
+      // console.log(this.tooltipHeaderName,this.tooltipListOfChilds);
+      // console.log(eve);
+    },
+    InnerScaleTreemap(input) {
+      let t = d3
+        .treemap()
+        .size([this.width, this.height])
+        .round(false)
+        .paddingBottom(15);
+
+      // return treemap(input)
+      this.MainScaleNode = t(input);
+      // return this.MainScaleNode;
+      // this.MainScaleNode = null;
+    },
+    InnerTickerTextFontSizeAdjust(children) {
+      let width = children.parent.x1 - children.parent.x0;
+
+      let height = children.parent.y1 - children.parent.y0;
+
+      let c =
+        ((children.x1 - children.x0) * (children.y1 - children.y0) * 100) /
+        (height * width);
+      if (c >= 4) return "font-size:1.4rem";
+      if (c < 4 && c >= 3) return "font-size:1.3rem";
+      if (c < 3 && c >= 2) return "font-size:1.2rem";
+      if (c < 2 && c >= 1) return "font-size:1rem";
+      if (c < 1 && c >= 0.8) return "font-size:0.95rem";
+      if (c < 0.8 && c >= 0.6) return "font-size:0.75rem";
+      if (c < 0.6 && c >= 0.5) return "font-size:0.65rem";
+
+      if (c < 0.5 && c >= 0.1) return "font-size:0.5rem";
+      if (c < 0.1 && c >= 0.07) return "font-size:0.4rem";
+      if (c < 0.07 && c >= 0.04) return "font-size:0.3rem";
+    },
+    tickerTextFontSizeAdjust(x0, x1, y0, y1) {
+      let c = ((x1 - x0) * (y1 - y0) * 100) / (this.height * this.width);
+      // console.log(c);
+      // console.log(name);
+
+      if (c >= 4) return "font-size:1.7rem";
+      if (c < 4 && c >= 3) return "font-size:1.4rem";
+      if (c < 3 && c >= 2) return "font-size:1.2rem";
+      if (c < 2 && c >= 1) return "font-size:1rem";
+      if (c < 1 && c >= 0.8) return "font-size:0.95rem";
+      if (c < 0.8 && c >= 0.6) return "font-size:0.75rem";
+      if (c < 0.6 && c >= 0.5) return "font-size:0.65rem";
+
+      if (c < 0.5 && c >= 0.1) return "font-size:0.5rem";
+      if (c < 0.1) return "font-size:0rem";
+    },
     getColor(val) {
-      let color = "red";
+      let color = this.colors[5];
+      // console.log(val);
+      val = Math.round(val);
       switch (parseInt(val)) {
         case -5:
-        case -4:
           color = this.colors[0];
+          break;
+        case -4:
+          color = this.colors[1];
           break;
 
         case -3:
-          color = this.colors[1];
-          break;
-        case -2:
-        case -1:
           color = this.colors[2];
           break;
-        case 0:
-        case 1:
+        case -2:
           color = this.colors[3];
           break;
-        case 2:
-        case 3:
+        case -1:
           color = this.colors[4];
+          break;
+        case 0:
+          color = this.colors[5];
+          break;
+        case 1:
+          color = this.colors[6];
+          break;
+        case 2:
+          color = this.colors[7];
+          break;
+        case 3:
+          color = this.colors[8];
           break;
 
         case 4:
+          color = this.colors[9];
+          break;
         case 5:
-          color = this.colors[5];
+          color = this.colors[10];
           break;
         default:
           color = this.colors[5];
       }
       return color;
-    },
-
-    hovered(hover) {
-      return function(d) {
-        d3.selectAll(
-          d.ancestors().map(function(d) {
-            return d.node;
-          })
-        )
-          .classed("node--hover", hover)
-          .select("rect")
-          .attr("width", function(d) {
-            return d.x1 - d.x0 - hover;
-          })
-          .attr("height", function(d) {
-            return d.y1 - d.y0 - hover;
-          });
-      };
     }
   }
-}; // end of export default
+};
 </script>
 
 <style scoped>
-#charset {
-  background: #212121;
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  font-family: "Vazir", sans-serif;
-}
-/* 
-#text {
-  font: 8px sans-serif;
+text {
+  pointer-events: none;
 }
 
-#tspan:last-child {
-  font-size: 3px;
-  fill-opacity: 0.8;
+.grandparent text {
+  /* font-weight: bold; */
+  fill: black;
+}
+
+rect {
+  fill: none;
+  stroke: #262931;
+}
+
+/* rect.parent,
+.grandparent rect {
+  stroke-width: 1px;
 } */
 
-.node rect {
-  shape-rendering: crispEdges;
+.grandparent rect {
+  fill: rgb(224, 224, 252);
+  /* color: aliceblue; */
+}
+.parentSquare {
+  stroke: #bbb;
+}
+.parentText {
+  fill: blanchedalmond;
+}
+/* .grandparent:hover rect {
+  fill: #ee9700;
+} */
+/* g .children {
+  margin-top: 20px;
+} */
+.child {
+  cursor: pointer;
+  stroke: rgb(36, 30, 30);
+  /* margin-bottom: 20px !important; */
+}
+.child:hover {
+  opacity: 40%;
+}
+.childG:hover * {
+  text-shadow: 1px 1px #000000;
+}
+.childTickerName {
+  fill: white;
+  text-anchor: middle;
+}
+.childTickerValue {
+  fill: white;
+  text-align: center;
+  text-anchor: middle;
+}
+/* .parent:hover {
+  cursor: pointer;
+  stroke:yellow
+} */
+
+.children rect.parent,
+.grandparent rect {
+  cursor: pointer;
+}
+.parentSquareText {
+  fill: white;
+  font-size: 0.6rem;
+  text-anchor: end;
 }
 
-.node--hover rect {
-  stroke: #000;
+.children rect.parent {
+  fill: #bbb;
+  fill-opacity: 0.9;
+}
+
+.children:hover rect.child {
+  fill: #bbb;
+}
+
+.children text {
+  font-size: 0.8em;
+}
+
+.grandparent text {
+  font-size: 0.8em;
+  /* color: rgb(255, 255, 255); */
+}
+.grandparentText {
+  color: #bbb !important;
+  text-anchor: end;
+}
+.parentSquare {
+  fill: #262931;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active for <2.1.8 */ {
+  opacity: 0;
+}
+.children:hover rect.child {
+  stroke: yellow;
+  stroke-width: 2px;
+}
+.children:hover rect.parentSquare {
+  stroke: yellow;
+  fill: yellow !important;
+  stroke-width: 2px;
+}
+.children:hover rect.littleSquare {
+  stroke: yellow;
+  fill: yellow !important;
+  stroke-width: 2px;
+}
+.children:hover text.parentSquareText {
+  fill: black !important;
+}
+#tooltip {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  height: auto;
+  padding: 5px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
 }
 </style>

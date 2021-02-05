@@ -33,7 +33,7 @@ def getMapData():
                 child=[]
                 child.append({"id":item["ID"],"name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
 
-        mapDataObj = {"name":"MAP", "children":final}
+        mapDataObj = {"name":"نقشه بازار", "children":final}
         # print(mapDataObj)
         return mapDataObj
     # print("hi")
