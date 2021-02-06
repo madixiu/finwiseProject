@@ -10,7 +10,7 @@
     <!-- begin::Body -->
     <div class="d-flex flex-row flex-column-fluid page">
       <!-- begin:: Aside Left -->
-      <KTAside v-if="selectedRoute"></KTAside>
+      <KTAside v-if="selectedRouteAside"></KTAside>
       <!-- end:: Aside Left -->
 
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <KTFooter></KTFooter>
+        <!-- <KTFooter></KTFooter> -->
       </div>
     </div>
     <!-- <KTStickyToolbar v-if="toolbarDisplay"></KTStickyToolbar> -->
@@ -60,7 +60,7 @@ import { mapGetters } from "vuex";
 import KTAside from "@/view/layout/aside/Aside.vue";
 import KTHeader from "@/view/layout/header/Header.vue";
 import KTHeaderMobile from "@/view/layout/header/HeaderMobile.vue";
-import KTFooter from "@/view/layout/footer/Footer.vue";
+// import KTFooter from "@/view/layout/footer/Footer.vue";
 import HtmlClass from "@/core/services/htmlclass.service";
 import KTSubheader from "@/view/layout/subheader/Subheader.vue";
 // import KTStickyToolbar from "@/view/layout/extras/StickyToolbar.vue";
@@ -77,7 +77,7 @@ export default {
     KTAside,
     KTHeader,
     KTHeaderMobile,
-    KTFooter,
+    // KTFooter,
     KTSubheader,
     // KTStickyToolbar,
     KTScrollTop,
@@ -85,7 +85,9 @@ export default {
   },
   data() {
     return {
-      selectedRoute: true,
+      selectedRouteAside: true,
+      subheaderDisplay: false,
+      BreadCrumbRoutes: ["TickerOverall", "IndustriesDetail"],
       NonAsideRoutes: [
         "marketmap",
         "marketwatch",
@@ -116,19 +118,39 @@ export default {
     }, 2000);
   },
   watch: {
-    $route: "fetchRoute"
+    // $route: "fetchRoute"
+    $route() {
+      this.AsideRouteCheck();
+      this.BreadCrumbRouteCheck();
+      // react to route changes...
+    }
   },
   methods: {
-    fetchRoute() {
+    BreadCrumbRouteCheck() {
+      // console.log("R changed");
+      let route = this.$route.name;
+      if (this.BreadCrumbRoutes.includes(route)) {
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-fixed");
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-enabled");
+        this.subheaderDisplay = true;
+      } else {
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-fixed");
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-enabled");
+        this.subheaderDisplay = false;
+
+      }
+      console.log(route);
+    },
+    AsideRouteCheck() {
       let route = this.$route.name;
       if (this.NonAsideRoutes.includes(route)) {
-        this.selectedRoute = false;
+        this.selectedRouteAside = false;
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-enabled");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-fixed");
         // this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-static");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "aside-minimize");
       } else {
-        this.selectedRoute = true;
+        this.selectedRouteAside = true;
         this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-enabled");
         this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-fixed");
         // this.$store.dispatch(ADD_BODY_CLASSNAME, "aside-static");
@@ -189,9 +211,9 @@ export default {
      * Set the subheader display
      * @returns {boolean}
      */
-    subheaderDisplay() {
-      return !!this.layoutConfig("subheader.display");
-    }
+    // subheaderDisplay() {
+    //   return !!this.layoutConfig("subheader.display");
+    // }
   }
 };
 </script>

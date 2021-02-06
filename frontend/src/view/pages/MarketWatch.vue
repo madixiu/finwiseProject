@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="row mr-2 mb-2 mt-2">
+    <div class="row mr-2 mb-2">
       <v-card width="100%">
         <div class="row">
-          <div class="col-xxl-2 col-lg-2 mr-1 mt-3 dropdown-rtl">
+          <div class="col-xxl-1 col-lg-1 mr-1 mt-3 dropdown-rtl">
             <!-- <v-select
             label="بازار"
             v-model="tableMarketSelected"
@@ -22,7 +22,7 @@
           <!-- <div class="row"> -->
           <!-- type selctor -->
           <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-          <div class="col-xxl-4 col-lg-4 mt-1 dropdown-rtl">
+          <div class="col-xxl-3 col-lg-3  dropdown-rtl">
             <div>
               <b-form-group label="نوع" label-for="tags-with-dropdown">
                 <b-form-tags
@@ -99,7 +99,7 @@
           </div>
           <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
           <!-- industry selector -->
-          <div class="col-xxl-5 col-lg-5 mt-1 dropdown-rtl">
+          <div class="col-xxl-3 col-lg-3  dropdown-rtl">
             <div>
               <b-form-group label="صنعت" label-for="tags-with-dropdown">
                 <b-form-tags
@@ -174,10 +174,8 @@
               </b-form-group>
             </div>
           </div>
-          <!-- </div> -->
-        </div>
-        <div class="row">
-          <div class="mt-1 mr-3">
+          <!-- END OF SANNNAT  -->
+           <div class="mt-5 col-xxl-4 col-lg-4">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -187,13 +185,16 @@
             </b-form-group>
           </div>
         </div>
+        <div class="row">
+         
+        </div>
 
         <!-- </div> -->
       </v-card>
     </div>
 
     <!-- table -->
-    <div class="row mr-1 mt-1 ml-1">
+    <div class="row mr-1  ml-1">
       <v-card width="100%">
         <b-col lg="4" class="my-1">
           <b-input-group size="sm">
