@@ -1,10 +1,14 @@
 <template>
   <!-- <div id="mapparent" class="container-fluid"> -->
-    <div width="100%" height="100%">
-    <treemap  :inputData="map" :inputWidth="width" :inputHeight="height" v-if="dataFetched"></treemap>
-
-    </div>
-    <!-- <treemap></treemap> -->
+  <div width="100%" height="100%">
+    <treemap
+      :inputData="map"
+      :inputWidth="width"
+      :inputHeight="height"
+      v-if="dataFetched"
+    ></treemap>
+  </div>
+  <!-- <treemap></treemap> -->
   <!-- </div> -->
 </template>
 <script>
@@ -21,21 +25,19 @@ export default {
   },
   data() {
     return {
-      dataFetched:false,
+      dataFetched: false,
       map: null,
-      width:null,
-      height:null
+      width: null,
+      height: null
     };
   },
 
-  created() {
-
-  },
+  created() {},
   mounted() {
     let chartDiv = document.getElementsByClassName("container-fluid");
     // this.width = window.screen.width;
-    this.height = (window.screen.height * 72)/100;
-    this.width = (chartDiv[0].clientWidth * 98)/100;
+    this.height = (window.screen.height * 72) / 100;
+    this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
     console.log(this.width);
@@ -44,8 +46,8 @@ export default {
     console.log(this.map);
   },
   methods: {
-     loadData() {
-       this.axios
+    loadData() {
+      this.axios
         .get("/api/Map")
         .then(response => {
           let data = response.data;
@@ -53,7 +55,7 @@ export default {
           console.log(data);
           if (data != "noData") this.map = data;
           this.dataFetched = true;
-  
+
           // for (let item of data) {
           //   tickerNames.append(item.ticker);
           // }

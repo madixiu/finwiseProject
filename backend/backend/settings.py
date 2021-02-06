@@ -285,18 +285,18 @@ CHANNEL_LAYERS = {
 CSRF_COOKIE_NAME = "CSRF-TOKEN"
 
 # django redis cache TEST...............................................
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        #"LOCATION": os.environ['REDIS_URL'],  # Here we have Redis DSN (for ex. redis://localhost:6379/1) # noqa
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        # "LOCATION": "redis://redis:6379/0",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "MAX_ENTRIES": 1000  # Increase max cache entries to 1k (from 300)
-        },
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         #"LOCATION": os.environ['REDIS_URL'],  # Here we have Redis DSN (for ex. redis://localhost:6379/1) # noqa
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         # "LOCATION": "redis://redis:6379/0",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "MAX_ENTRIES": 1000  # Increase max cache entries to 1k (from 300)
+#         },
+#     }
+# }
 
 
 UNICODE_JSON = True

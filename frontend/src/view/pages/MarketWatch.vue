@@ -1,88 +1,183 @@
 <template>
   <div>
-    <div class="row mr-2 mb-2">
+    <div class="row mr-2 mb-2 mt-2">
       <v-card width="100%">
         <div class="row">
-          <div class="col-xxl-1 col-lg-1 mr-3 mt-3">
-            <v-select
-              height="8"
+          <div class="col-xxl-2 col-lg-2 mr-1 mt-3 dropdown-rtl">
+            <!-- <v-select
+            label="بازار"
+            v-model="tableMarketSelected"
+            :items="tableMarketFilters"
+            @input="test"
+          >
+          </v-select> -->
+            <span>بازار</span>
+            <b-form-select
               label="بازار"
-              v-model="filters.tableMarketSelected"
-              :items="filters.tableMarketFilters"
-              dense
-              outlined
-              color="#3dbff0"
+              v-model="tableMarketSelected"
+              :options="tableMarketFilters"
               @input="test"
-            >
-            </v-select>
+            ></b-form-select>
           </div>
-          <div class="row">
-            <!-- type selctor -->
-            <div class="col-xxl-5 col-lg-5 mt-3 mr-2">
-              <v-select
-                class="selector"
-                label="نوع"
-                v-model="filters.tableMarketTypeSelected"
-                height="10"
-                :items="filters.tableMarketTypeFilters"
-                :menu-props="{ maxHeight: '200' }"
-                deletable-chips
-                color="#3dbff0"
-                dense
-                outlined
-                multiple
-                small-chips
-                @input="test"
-              >
-              </v-select>
+          <!-- <div class="row"> -->
+          <!-- type selctor -->
+          <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+          <div class="col-xxl-4 col-lg-4 mt-1 dropdown-rtl">
+            <div>
+              <b-form-group label="نوع" label-for="tags-with-dropdown">
+                <b-form-tags
+                  id="tags-with-dropdown"
+                  v-model="tableMarketTypeSelected"
+                  no-outer-focus
+                  class="mb-2"
+                  @input="test"
+                >
+                  <template v-slot="{ tags, disabled, addTag, removeTag }">
+                    <ul
+                      v-if="tags.length > 0"
+                      class="list-inline d-inline-block mb-2"
+                    >
+                      <li
+                        v-for="tag in tags"
+                        :key="tag"
+                        class="list-inline-item"
+                      >
+                        <b-form-tag
+                          @remove="removeTag(tag)"
+                          :title="tag"
+                          :disabled="disabled"
+                          variant="info"
+                          >{{ tag }}</b-form-tag
+                        >
+                      </li>
+                    </ul>
+
+                    <b-dropdown
+                      size="sm"
+                      variant="outline-secondary"
+                      block
+                      menu-class="w-100"
+                    >
+                      <template #button-content>
+                        <b-icon icon="tag-fill"></b-icon> انتخاب
+                      </template>
+                      <b-dropdown-form @submit.stop.prevent="() => {}">
+                        <b-form-group
+                          label="جستجو"
+                          label-for="tag-search-input"
+                          label-cols-md="auto"
+                          class="mb-0"
+                          label-size="sm"
+                          :description="searchDescType"
+                          :disabled="disabled"
+                        >
+                          <b-form-input
+                            v-model="TypeSearch"
+                            id="tag-search-input"
+                            type="search"
+                            size="sm"
+                            autocomplete="off"
+                          ></b-form-input>
+                        </b-form-group>
+                      </b-dropdown-form>
+                      <b-dropdown-divider></b-dropdown-divider>
+                      <b-dropdown-item-button
+                        v-for="option in TypeAvailableOptions"
+                        :key="option"
+                        @click="TypeonOptionClick({ option, addTag })"
+                      >
+                        {{ option }}
+                      </b-dropdown-item-button>
+                      <b-dropdown-text v-if="TypeAvailableOptions.length === 0">
+                        موردی یافت نشد
+                      </b-dropdown-text>
+                    </b-dropdown>
+                  </template>
+                </b-form-tags>
+              </b-form-group>
             </div>
-            <!-- industry selector -->
-            <div class="col-xxl-5 col-lg-5 mt-3 dropdown-rtl">
-              <v-select
-                class="selector"
-                label="صنعت"
-                v-model="filters.tableMarketIndustrySelected"
-                height="10"
-                :items="filters.tableMarketIndustryFilters"
-                deletable-chips
-                outlined
-                dense
-                color="#3dbff0"
-                small-chips
-                multiple
-                @input="test"
-              >
-              </v-select>
+          </div>
+          <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+          <!-- industry selector -->
+          <div class="col-xxl-5 col-lg-5 mt-1 dropdown-rtl">
+            <div>
+              <b-form-group label="صنعت" label-for="tags-with-dropdown">
+                <b-form-tags
+                  id="tags-with-dropdown"
+                  v-model="tableMarketIndustrySelected"
+                  no-outer-focus
+                  class="mb-2"
+                  @input="test"
+                >
+                  <template v-slot="{ tags, disabled, addTag, removeTag }">
+                    <ul
+                      v-if="tags.length > 0"
+                      class="list-inline d-inline-block mb-2"
+                    >
+                      <li
+                        v-for="tag in tags"
+                        :key="tag"
+                        class="list-inline-item"
+                      >
+                        <b-form-tag
+                          @remove="removeTag(tag)"
+                          :title="tag"
+                          :disabled="disabled"
+                          variant="info"
+                          >{{ tag }}</b-form-tag
+                        >
+                      </li>
+                    </ul>
+
+                    <b-dropdown
+                      size="sm"
+                      variant="outline-secondary"
+                      block
+                      menu-class="w-100"
+                    >
+                      <template #button-content>
+                        <b-icon icon="tag-fill"></b-icon> انتخاب
+                      </template>
+                      <b-dropdown-form @submit.stop.prevent="() => {}">
+                        <b-form-group
+                          label="Search tags"
+                          label-for="tag-search-input"
+                          label-cols-md="auto"
+                          class="mb-0"
+                          label-size="sm"
+                          :description="searchDescIndustry"
+                          :disabled="disabled"
+                        >
+                          <b-form-input
+                            v-model="IndustrySearch"
+                            id="tag-search-input"
+                            type="search"
+                            size="sm"
+                            autocomplete="off"
+                          ></b-form-input>
+                        </b-form-group>
+                      </b-dropdown-form>
+                      <b-dropdown-divider></b-dropdown-divider>
+                      <b-dropdown-item-button
+                        v-for="option in IndustryAvailableOptions"
+                        :key="option"
+                        @click="IndustryonOptionClick({ option, addTag })"
+                      >
+                        {{ option }}
+                      </b-dropdown-item-button>
+                      <b-dropdown-text v-if="TypeAvailableOptions.length === 0">
+                        موردی یافت نشد
+                      </b-dropdown-text>
+                    </b-dropdown>
+                  </template>
+                </b-form-tags>
+              </b-form-group>
             </div>
           </div>
-          <!-- <div class="col-2">
-            <v-checkbox
-              v-model="yesterdayEnableTrigger"
-              label="yes"
-              color="red"
-              hide-details
-              @click="TriggerFilteredHeader"
-            ></v-checkbox>
-          </div>
-          <div class="col-2">
-            <v-checkbox
-              v-model="filters.EPSEnableTrigger"
-              label="EPS"
-              color="green"
-              hide-details
-              @click="TriggerFilteredHeader"
-            ></v-checkbox>
-          </div>
-          <div class="col-2">
-            <v-checkbox
-              v-model="filters.moreInfoTrigger"
-              label="اطلاعات حقیقی/حقوقی"
-              color="green"
-              hide-details
-              @click="TriggerFilteredHeader"
-            ></v-checkbox>
-          </div> -->
-          <div class="mt-7">
+          <!-- </div> -->
+        </div>
+        <div class="row">
+          <div class="mt-1 mr-3">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -92,6 +187,8 @@
             </b-form-group>
           </div>
         </div>
+
+        <!-- </div> -->
       </v-card>
     </div>
 
@@ -261,22 +358,16 @@ export default {
   components: {},
   data() {
     return {
-      filters: {
-        tableMarketSelected: "همه",
-        tableMarketFilters: ["همه", "بورس", "فرابورس"],
-        // tableMarketFilters: [
-        //   { item: 0, name: "همه" },
-        //   { item: 1, name: "بورس" },
-        //   { item: 2, name: "فرابورس" }
-        // ],
-        tableMarketTypeSelected: [],
-        tableMarketTypeFilters: [],
-        tableMarketIndustrySelected: [],
-        tableMarketIndustryFilters: [],
-        yesterdayEnableTrigger: false,
-        EPSEnableTrigger: false,
-        moreInfoTrigger: false
-      },
+      // %%%%%%%%%%%% type data %%%%%%%%%%%%
+
+      // %%%%%%%%%%%% type data %%%%%%%%%%%%
+
+      tableMarketSelected: "همه",
+      tableMarketFilters: ["همه", "بورس", "فرابورس"],
+      tableMarketTypeSelected: [],
+      tableMarketTypeFilters: [],
+      tableMarketIndustrySelected: [],
+      tableMarketIndustryFilters: [],
       yesterdayEnableTrigger: false,
       EPSEnableTrigger: false,
       moreInfoTrigger: false,
@@ -410,17 +501,62 @@ export default {
   //   }
   // },
   computed: {
+    // %%%%%%%%%%%% type data %%%%%%%%%%%%
+    Typecriteria() {
+      // Compute the search criteria
+      return this.TypeSearch.trim().toLowerCase();
+    },
+    Industrycriteria() {
+      // Compute the search criteria
+      return this.TypeSearch.trim().toLowerCase();
+    },
+    TypeAvailableOptions() {
+      let criteria = this.TypeSearch;
+      // Filter out already selected options
+      let options = this.tableMarketTypeFilters.filter(
+        opt => this.tableMarketTypeSelected.indexOf(opt) === -1
+      );
+      if (criteria) {
+        // Show only options that match criteria
+        return options.filter(opt => opt.indexOf(criteria) > -1);
+      }
+      // Show all options available
+      return options;
+    },
+    searchDescType() {
+      if (this.Typecriteria && this.TypeAvailableOptions.length === 0) {
+        return "There are no tags matching your search criteria";
+      }
+      return "";
+    },
+    IndustryAvailableOptions() {
+      let criteria = this.IndustrySearch;
+      // Filter out already selected options
+      let options = this.tableMarketIndustryFilters.filter(
+        opt => this.value.indexOf(opt) === -1
+      );
+      if (criteria) {
+        // Show only options that match criteria
+        return options.filter(opt => opt.indexOf(criteria) > -1);
+      }
+      // Show all options available
+      return options;
+    },
+    searchDescIndustry() {
+      if (this.Industrycriteria && this.IndustryAvailableOptions.length === 0) {
+        return "There are no tags matching your search criteria";
+      }
+      return "";
+    },
+    // %%%%%%%%%%%% type data %%%%%%%%%%%%
+
     HD() {
       return this.TriggerFilteredHeader();
     },
-    //search for selectors
-    // criteria() {
-    //   // Compute the search criteria
-    //   return this.search.trim().toLowerCase();
-    // },
+
     ...mapState({
       tableData: state => state.marketwatch.marketWatchItems
-    }),
+    })
 
     // TableFiltered() {
     //   if (
@@ -461,39 +597,6 @@ export default {
     //     }
     //     return temp;
     //   }
-    // },
-    TypeAvailableOptions() {
-      let criteria = this.TypeSearch;
-      // Filter out already selected options
-      let options = this.filters.tableMarketTypeFilters.filter(
-        opt => this.value.indexOf(opt) === -1
-      );
-      if (criteria) {
-        // Show only options that match criteria
-        return options.filter(opt => opt.indexOf(criteria) > -1);
-      }
-      // Show all options available
-      return options;
-    },
-    IndustryAvailableOptions() {
-      let criteria = this.IndustrySearch;
-      // Filter out already selected options
-      let options = this.filters.tableMarketIndustryFilters.filter(
-        opt => this.value.indexOf(opt) === -1
-      );
-      if (criteria) {
-        // Show only options that match criteria
-        return options.filter(opt => opt.indexOf(criteria) > -1);
-      }
-      // Show all options available
-      return options;
-    }
-
-    // searchDesc() {
-    //   if (this.criteria && this.availableOptions.length === 0) {
-    //     return "There are no tags matching your search criteria";
-    //   }
-    //   return "";
     // }
   },
   mounted() {
@@ -519,7 +622,7 @@ export default {
       }
     },
     test() {
-      console.log(this.filters.tableMarketSelected);
+      console.log(this.tableMarketSelected);
       this.MarketWatchFilterPost();
       // console.log(this.selectedHeaderOptions);
       // console.log(this.moreInfoTrigger);
@@ -645,26 +748,24 @@ export default {
     },
     TableFilteredY() {
       if (
-        this.filters.tableMarketTypeSelected.length == 0 &&
-        this.filters.tableMarketIndustrySelected.length == 0
+        this.tableMarketTypeSelected.length == 0 &&
+        this.tableMarketIndustrySelected.length == 0
       ) {
         return this.tableData;
-      } else if (this.filters.tableMarketIndustrySelected.length == 0) {
+      } else if (this.tableMarketIndustrySelected.length == 0) {
         let Tdata = this.tableData;
         let temp = [];
         for (let obj of Tdata) {
-          if (this.filters.tableMarketTypeSelected.includes(obj["Type"])) {
+          if (this.tableMarketTypeSelected.includes(obj["Type"])) {
             temp.push(obj);
           }
         }
         return temp;
-      } else if (this.filters.tableMarketTypeSelected.length == 0) {
+      } else if (this.tableMarketTypeSelected.length == 0) {
         let Tdata = this.tableData;
         let temp = [];
         for (let obj of Tdata) {
-          if (
-            this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
-          ) {
+          if (this.tableMarketIndustrySelected.includes(obj["Industry"])) {
             temp.push(obj);
           }
         }
@@ -674,8 +775,8 @@ export default {
         let temp = [];
         for (let obj of Tdata) {
           if (
-            this.filters.tableMarketTypeSelected.includes(obj["Type"]) &&
-            this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
+            this.tableMarketTypeSelected.includes(obj["Type"]) &&
+            this.tableMarketIndustrySelected.includes(obj["Industry"])
           ) {
             temp.push(obj);
           }
@@ -705,8 +806,8 @@ export default {
     },
     async MarketWatchFilterListReq() {
       await this.axios.get("/api/marketwatchfilterlists").then(response => {
-        this.filters.tableMarketTypeFilters = response.data[0];
-        this.filters.tableMarketIndustryFilters = response.data[1];
+        this.tableMarketTypeFilters = response.data[0];
+        this.tableMarketIndustryFilters = response.data[1];
         // console.log(response.data);
         // let data = response.data[0];
         // let test = this.tableData[0].includes(data[0]);
@@ -720,9 +821,9 @@ export default {
         method: "post",
         url: "/api/marketwatch",
         data: {
-          marketName: this.filters.tableMarketSelected,
-          marketType: this.filters.tableMarketTypeSelected,
-          marketIndustry: this.filters.tableMarketIndustrySelected
+          marketName: this.tableMarketSelected,
+          marketType: this.tableMarketTypeSelected,
+          marketIndustry: this.tableMarketIndustrySelected
         },
         xsrfHeaderName: "X-CSRFToken"
       })
@@ -735,9 +836,17 @@ export default {
         });
     },
 
-    onOptionClick({ option, addTag }) {
+    TypeonOptionClick({ option, addTag }) {
       addTag(option);
-      this.search = "";
+      this.TypeSearch = "";
+      this.MarketWatchFilterPost();
+      console.log(option);
+    },
+    IndustryonOptionClick({ option, addTag }) {
+      addTag(option);
+      this.IndustrySearch = "";
+      this.MarketWatchFilterPost();
+      console.log(option);
     }
   }
 };
@@ -799,7 +908,7 @@ export default {
   vertical-align: middle !important;
 }
 
-.selector .v-text-field--box .v-input__slot,
+/* .selector .v-text-field--box .v-input__slot,
 .v-text-field--outlined .v-input__slot {
   min-height: 25px !important;
   max-height: 50px;
@@ -812,5 +921,5 @@ export default {
   font-size: 0.8rem !important;
   height: 19px !important;
   background-color: "#3dbff0";
-}
+} */
 </style>

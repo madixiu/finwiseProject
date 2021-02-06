@@ -59,7 +59,7 @@ def getParsedData():
         print("connection could not be established to data center!")
 
 def getFilteredData(marketName,marketType,marketIndustry):
-    # dataTemp = []
+    dataTemp = []
     getParsedData()
     if marketType==[]:
         if marketName=='همه':
@@ -94,13 +94,16 @@ def getFilteredData(marketName,marketType,marketIndustry):
                     dataTemp=[x for x in parsed_data if x["Type"] in marketType and x["marketParent"]== 1]
                 else:
                     dataTemp=[x for x in parsed_data if x["Type"] in marketType and x["marketParent"]== 2 or x["marketParent"] == 20]
+                    
             else:
                 if marketName == "بورس":
                     dataTemp=[x for x in parsed_data if (x["Type"] in marketType and x["marketParent"]==1) and x['industry'] in marketIndustry]
                 else:
                     dataTemp=[x for x in parsed_data if x["Type"] in marketType and (x["marketParent"]==2 or x["marketParent"]==20) and x['industry'] in marketIndustry]
 
-    
+    print(marketName)
+    print(marketType)
+    print(dataTemp)
     return dataTemp
     # dataTemp = []
     # temp =[]
