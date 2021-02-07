@@ -3,80 +3,111 @@
   <div>
     <v-card width="100%">
       <!-- <div class="row border-0 pb-4 pt-2"> -->
-      <div class="row pb-2 pt-4">
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pb-2 pt-2">
+      <div class="row  pt-4 mb-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
           نماد
         </v-chip> -->
           <div class="text-center">
-            <b-button class="testB" variant="primary">
+            <b-button class="testB" color="#212529">
               نماد
               <br /><b-badge variant="light">{{ DataItems.ticker }}</b-badge>
             </b-button>
           </div>
           <!-- {{ DataItems.ticker }} -->
         </div>
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             نام شرکت
           </v-chip>
           {{ DataItems.name }} -->
           <div class="text-center">
-            <b-button variant="primary">
+            <b-button color="#6c757d">
               نام شرکت <br /><b-badge variant="light">{{
                 DataItems.name
               }}</b-badge>
             </b-button>
           </div>
         </div>
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             بازار
           </v-chip>
           {{ DataItems.market }} -->
           <div class="text-center">
-            <b-button variant="primary">
+            <b-button color="#6c757d">
               بازار <br /><b-badge variant="light">{{
                 DataItems.market
               }}</b-badge>
             </b-button>
           </div>
         </div>
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             صنعت
           </v-chip>
           {{ DataItems.subIndustry }} -->
           <div class="text-center">
-            <b-button variant="primary">
-              صنعت <br /><b-badge variant="light">{{
-                DataItems.subIndustry
-              }}</b-badge>
+            <b-button color="#6c757d">
+              ارزش معاملات <br /><b-badge variant="light"
+                >{{
+                  numberWithCommas(
+                    roundTo(DataItems.TradeValue / 1000000000, 2)
+                  )
+                }}
+                میلیارد</b-badge
+              >
             </b-button>
           </div>
         </div>
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             تابلو
           </v-chip>
           {{ DataItems.board }} -->
           <div class="text-center">
-            <b-button variant="primary">
-              تابلو <br /><b-badge variant="light">{{
-                DataItems.board
-              }}</b-badge>
+            <b-button color="#6c757d">
+              قیمت پایانی <br />
+              <b-badge variant="light"
+                >{{ numberWithCommas(DataItems.close) }}ریال |
+                <span
+                  class="spandata"
+                  v-bind:class="[
+                    DataItems.close > DataItems.yesterday
+                      ? 'greenItem ltr_aligned'
+                      : 'redItem ltr_aligned'
+                  ]"
+                  >{{
+                    Math.round(
+                      (DataItems.close / DataItems.yesterday - 1) * 100 * 100
+                    ) / 100
+                  }}</span
+                >
+              </b-badge>
             </b-button>
           </div>
         </div>
-        <div class="col-xxl-2 col-lg-2 FinancialStrength pr-5 pb-2 pt-2">
+        <div
+          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+        >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             گروه
           </v-chip>
           {{ DataItems.parentIndustry }} -->
           <div class="text-center">
-            <b-button variant="primary">
-              گروه <br /><b-badge variant="light">{{
-                DataItems.parentIndustry
+            <b-button color="#6c757d">
+              وضعیت <br /><b-badge variant="light">{{
+                DataItems.Status
               }}</b-badge>
             </b-button>
           </div>
@@ -111,6 +142,45 @@ export default {
   methods: {
     populateData() {
       this.DataItems = this.tickerdata;
+      console.log(this.DataItems.length);
+    },
+    numberWithCommas(x) {
+      if (isNaN(x)) {
+        return "";
+      }
+      if (x == "-") {
+        return x;
+      }
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    setlastperc: function() {
+      return;
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      if (n == "-") {
+        return n;
+      }
+
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
     }
   },
   mounted() {
@@ -119,6 +189,7 @@ export default {
   watch: {
     tickerdata() {
       this.populateData();
+      // console.log(this.tickerdata);
       // console.log("WatcherSubHeader");
     }
   }
@@ -129,6 +200,10 @@ export default {
   direction: rtl;
   text-align: right;
   font-size: 0.8em;
+}
+.text-center * {
+  font-family: "Dirooz FD";
+  font-size: 1.1em;
 }
 .rtl_centerd {
   direction: rtl;

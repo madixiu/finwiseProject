@@ -36,8 +36,14 @@ def getAdminNotice(self,firm):
     return JsonResponse(getAdminsNotices(firm),safe=False)    
 def getStatsTicker(self,identifier):
     return JsonResponse(getStatisticsTicker(identifier),safe=False)
+def getLiveTicker(self,identifier):
+    return JsonResponse(getLive_ticker(identifier),safe=False)
+def getLiveHHTicker(self,identifier):
+    return JsonResponse(getLiveHHtickerData(identifier),safe=False)
 def getAllDPS(self,identifier):
     return JsonResponse(getAllDps(identifier),safe=False)    
+def getAdminNotices(self,identifier):
+    return JsonResponse(get_AdminsNotice(identifier),safe=False)    
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
@@ -55,7 +61,8 @@ def getMonthlyConstSold(self,identifier):
     return JsonResponse(monthlyConstSold(identifier),safe=False)    
 def getMonthlyConstOngoing(self,identifier):
     return JsonResponse(monthlyConstOngoing(identifier),safe=False)  
-
+def getMonthlyProduction(self,identifier):
+    return JsonResponse(monthlyProduction(identifier),safe=False)
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 

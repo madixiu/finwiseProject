@@ -11,7 +11,6 @@
     <!--begin::Body-->
     <div class="card-body d-flex flex-column" v-if="loading">
       <v-skeleton-loader
-        v-bind="attrs"
         type=" table-heading, table-thead, table-tbody"
       ></v-skeleton-loader>
     </div>

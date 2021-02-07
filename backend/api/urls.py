@@ -20,7 +20,10 @@ urlpatterns = [
    path("HHhistoryGraph/<identifier>/",getHHhistory),
    path("AdjustedPrices/<identifier>/",getAdjustedPriceHistory),
    path("StatsTicker/<identifier>/",getStatsTicker),
+   path("LiveHHTicker/<identifier>/",getLiveHHTicker),
+   path("LiveTicker/<identifier>/",getLiveTicker),
    path("Alldps/<identifier>/",getAllDPS),
+   path("AdminNotice/<identifier>/",getAdminNotices),
    ####Monthly
    path("Monthly/Type/<identifier>/",getTypeOfMonthly),
    path("Monthly/Bank/Deposits/<identifier>/",getMonthlyBank_Deposits),
@@ -28,6 +31,7 @@ urlpatterns = [
    path("Monthly/Insurance/<identifier>/",getMonthlyInsurance),
    path("Monthly/Construction/Ongoing/<identifier>/",getMonthlyConstOngoing),
    path("Monthly/Construction/Sold/<identifier>/",getMonthlyConstSold),
+   path("Monthly/Production/<identifier>/",getMonthlyProduction),
    path("CurrentBoard/<identifier>/",getCurrentBoard),
    path("CurrentCeo/<identifier>/",getCurrentCeo),
    path("AdminNotices/<firm>/",getAdminNotice),

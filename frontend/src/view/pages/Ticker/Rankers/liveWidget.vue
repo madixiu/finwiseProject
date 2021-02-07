@@ -1,152 +1,291 @@
 <template>
   <!--begin::Mixed Widget 14-->
   <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <!-- <div class="card-header border-0 pt-2">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        {{ this.Nemad }}<span class="small mr-5">{{ this.tickerfull }}</span>
-      </h3>
-    </div> -->
-
+    <v-skeleton-loader
+      type=" table-heading, table-thead, table-tbody"
+      v-if="loading"
+    ></v-skeleton-loader>
     <v-card>
-      <v-tabs vertical>
+      <v-tabs vertical v-if="loading == false">
         <v-tab class="FinancialStrength">
           اطلاعات معاملات
           <v-icon left>mdi-access-point</v-icon>
         </v-tab>
         <v-tab class="FinancialStrength">
           حقیقی -حقوقی
-          <v-icon left>mdi-information</v-icon>
+          <v-icon left>mdi-account-circle</v-icon>
         </v-tab>
         <v-tab class="FinancialStrength">
           آمار سهم
           <v-icon left>mdi-thermostat</v-icon>
         </v-tab>
+        <v-tab class="FinancialStrength">
+          اطلاعات سهم
+          <v-icon left>mdi-information-variant</v-icon>
+        </v-tab>
         <v-tab-item>
           <v-card flat>
-            <!-- <v-card-text> -->
-            <div class="row">
-              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
-                <h5 class="titleHeaders">
-                  قیمت پایانی : {{ this.close }} (
-                  <span
-                    v-bind:class="[
-                      this.close > this.open ? 'greenItem' : 'redItem'
-                    ]"
-                  >
-                    % {{ setclosingperc }}
-                  </span>
-                  )
-                  <v-icon
-                    left
-                    small
-                    v-bind:class="[
-                      this.close >= this.open ? 'greenItem' : 'redItem'
-                    ]"
-                    >mdi-arrow-{{
-                      this.close >= this.open ? "up" : "down"
-                    }}-circle-outline</v-icon
-                  >
-                </h5>
-                <h5 class="titleHeaders">
-                  قیمت آخرین معامله : {{ this.last }} (
-                  <span
-                    v-bind:class="[
-                      last > open ? 'greenItem' : 'redItem ltr_aligned'
-                    ]"
-                    >% {{ setlastperc }}</span
-                  >)
-                  <v-icon
-                    left
-                    v-bind:class="[
-                      this.last >= this.open ? 'greenItem' : 'redItem'
-                    ]"
-                    small
-                    >mdi-arrow-{{
-                      this.last >= this.open ? "up" : "down"
-                    }}-circle-outline</v-icon
-                  >
-                </h5>
-                <h5 class="titleHeaders">اولین قیمت : {{ this.open }}</h5>
-                <h5 class="titleHeaders">ارزش بازار : {{ this.marketcap }}</h5>
-              </div>
-
-              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
-                <h5 class="titleHeaders">کف قیمت : {{ this.min }}</h5>
-                <h5 class="titleHeaders">سقف قیمت: {{ this.max }}</h5>
-                <h5 class="titleHeaders">کمترین قیمت: {{ this.low }}</h5>
-                <h5 class="titleHeaders">بیشترین قیمت : {{ this.high }}</h5>
-              </div>
-              <div class="col-xxl-3 col-lg-3 col-3 FinancialStrength">
-                <h5 class="titleHeaders">
-                  تعداد معاملات : {{ this.tradecount }}
-                </h5>
-                <h5 class="titleHeaders">
-                  حجم معاملات : {{ this.tradeVolume }}
-                </h5>
-                <h5 class="titleHeaders">
-                  ارزش معاملات : {{ this.tradevalue }}
-                </h5>
-                <h5 class="titleHeaders">
-                  میانگین حجم ۱ ماهه : {{ this.close }}
-                </h5>
-              </div>
-              <div class="col-xxl-3 col-lg-3 col-3">
-                <!-- <h5 class="titleHeaders">چارت</h5> -->
-                <ApexChart
-                  type="area"
-                  height="100%"
-                  width="100%"
-                  :series="priceOverViewSeries"
-                  :chartOptions="priceOverViewchartOptions"
+            <v-card-text>
+              <div class="row">
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
                 >
-                </ApexChart>
+                  <h5 class="subheaderTitles">اطلاعات قیمت</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    قیمت پایانی :
+                    <span class="spandata">{{ this.close }}</span> (
+                    <span
+                      class="spandata"
+                      v-bind:class="[
+                        this.close > this.open ? 'greenItem' : 'redItem'
+                      ]"
+                    >
+                      % {{ setclosingperc }}
+                    </span>
+                    )
+                    <v-icon
+                      left
+                      small
+                      v-bind:class="[
+                        this.close >= this.open ? 'greenItem' : 'redItem'
+                      ]"
+                      >mdi-arrow-{{
+                        this.close >= this.open ? "up" : "down"
+                      }}-circle-outline</v-icon
+                    >
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    قیمت آخرین معامله :
+                    <span class="spandata">{{ this.last }}</span> (
+                    <span
+                      class="spandata"
+                      v-bind:class="[
+                        last > open ? 'greenItem' : 'redItem ltr_aligned'
+                      ]"
+                      >% {{ setlastperc }}</span
+                    >)
+                    <v-icon
+                      left
+                      v-bind:class="[
+                        this.last >= this.open ? 'greenItem' : 'redItem'
+                      ]"
+                      small
+                      >mdi-arrow-{{
+                        this.last >= this.open ? "up" : "down"
+                      }}-circle-outline</v-icon
+                    >
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    اولین قیمت : <span class="spandata">{{ this.first }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    ارزش بازار :
+                    <span class="spandata" v-if="!isNaN(this.marketcap)"
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.marketcap / 1000000000, 2)
+                        )
+                      }}
+                      میلیارد ریال</span
+                    >
+                  </h5>
+                </div>
+
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">مشخصات</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    وضعیت:
+                    <span class="spandata">{{ this.status }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    EPS (منبع TSE): <span class="spandata">{{ this.eps }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    تعداد سهام:
+                    <span class="spandata">
+                      {{
+                        numberWithCommas(
+                          roundTo(this.sharecount / 1000000000, 2)
+                        )
+                      }}
+                      میلیارد
+                    </span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    درصد شناوری :
+                    <span class="spandata">{{ this.shenavar }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    حجم مبنا :
+                    <span class="spandata">
+                      {{ numberWithCommas(roundTo(this.mabna / 1000, 2)) }}
+                      هزار سهم</span
+                    >
+                  </h5>
+                </div>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">معاملات</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    تعداد معاملات :
+                    <span class="spandata">
+                      {{ numberWithCommas(this.tradecount) }}
+                    </span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    حجم معاملات :
+                    <span class="spandata" v-if="!isNaN(this.tradeVolume)"
+                      >{{
+                        numberWithCommas(roundTo(this.tradeVolume / 1000000, 2))
+                      }}
+                      میلیون</span
+                    >
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    ارزش معاملات :
+                    <span class="spandata" v-if="!isNaN(this.tradevalue)"
+                      >{{
+                        numberWithCommas(
+                          roundTo(this.tradevalue / 1000000000, 2)
+                        )
+                      }}
+                      میلیارد ریال</span
+                    >
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    میانگین حجم ۱ ماهه : {{ this.close }}
+                  </h5>
+                </div>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <!-- <h5 class="titleHeaders-smaller ">چارت</h5> -->
+                  <ApexChart
+                    type="area"
+                    height="100%"
+                    width="100%"
+                    :series="priceOverViewSeries"
+                    :chartOptions="priceOverViewchartOptions"
+                  >
+                  </ApexChart>
+                </div>
               </div>
-            </div>
+            </v-card-text>
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <div class="row">
-                <div class="col-xxl-3 col-lg-3 col-3">
-                  <h5 class="titleHeaders">خریداران حقیقی</h5>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">خریداران حقیقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد خریداران : {{ this.countbuyerHaghighi }}
+                    تعداد خریداران :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.countbuyerHaghighi)"
+                    >
+                      {{ numberWithCommas(this.countbuyerHaghighi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم خرید : {{ this.volumebuyerHaghighi }}
+                    حجم خرید :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.volumebuyerHaghighi)"
+                    >
+                      {{ numberWithCommas(this.volumebuyerHaghighi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-3 col-lg-3 col-3">
-                  <h5 class="titleHeaders">خریداران حقوقی</h5>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">خریداران حقوقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد خریداران : {{ this.countbuyerHoghughi }}
+                    تعداد خریداران :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.countbuyerHoghughi)"
+                    >
+                      {{ numberWithCommas(this.countbuyerHoghughi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم خرید : {{ this.volumebuyerHoghughi }}
+                    حجم خرید :
+
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.volumebuyerHoghughi)"
+                    >
+                      {{ numberWithCommas(this.volumebuyerHoghughi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-3 col-lg-3 col-3">
-                  <h5 class="titleHeaders">فروشندگان حقیقی</h5>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">فروشندگان حقیقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد فروشندگان : {{ this.countsellerHaghighi }}
+                    تعداد فروشندگان :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.countsellerHaghighi)"
+                    >
+                      {{ numberWithCommas(this.countsellerHaghighi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم فروش : {{ this.volumesellerHaghighi }}
+                    حجم فروش :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.volumesellerHaghighi)"
+                    >
+                      {{ numberWithCommas(this.volumesellerHaghighi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-3 col-lg-3 col-3">
-                  <h5 class="titleHeaders">فروشندگان حقوقی</h5>
+                <div
+                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">فروشندگان حقوقی</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد فروشندگان : {{ this.countsellerHoghughi }}
+                    تعداد فروشندگان :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.countsellerHoghughi)"
+                    >
+                      {{ numberWithCommas(this.countsellerHoghughi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم فروش : {{ this.volumesellerHoghughi }}
+                    حجم فروش :
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.volumesellerHoghughi)"
+                    >
+                      {{ numberWithCommas(this.volumesellerHoghughi) }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
               </div>
@@ -157,152 +296,244 @@
           <v-card flat>
             <v-card-text>
               <div class="row">
-                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
-                  <h5 class="titleHeaders">اطلاعات ارزش معاملات</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات ارزش معاملات</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest">
                     میانگین ارزش معاملات ۳ ماهه :
-                    <span
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.avgval3month)"
                       >{{
                         numberWithCommas(
                           roundTo(this.avgval3month / 1000000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیارد ریال</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     میانگین ارزش معاملات ۱۲ ماهه :
-                    <span
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.avgval12month)"
                       >{{
                         numberWithCommas(
                           roundTo(this.avgval12month / 1000000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیارد ریال</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین ارزش معاملات ۳ ماهه :{{ this.rankval3month }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین ارزش معاملات ۳ ماهه :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.rankval3month)">
+                      {{ this.rankval3month }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین ارزش معاملات ۱۲ ماهه :{{ this.rankval12month }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین ارزش معاملات ۱۲ ماهه :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.rankval12month)">
+                      {{ this.rankval12month }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
-                  <h5 class="titleHeaders">اطلاعات حجم معاملات</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات حجم معاملات</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     میانگین حجم معاملات ۳ ماهه :
-                    <span
-                      >{{
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.avgval3month)">
+                      {{
                         numberWithCommas(
                           roundTo(this.avgval3month / 1000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیون</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    میانگین حجم معاملات ۱۲ ماهه :<span
+                  <h5 class="titleHeaders-smallest ">
+                    میانگین حجم معاملات ۱۲ ماهه :
+                    <br /><br />
+                    <span v-if="!isNaN(this.avgval12month)" class="spandata"
                       >{{
                         numberWithCommas(
                           roundTo(this.avgvol12month / 1000000, 2)
                         )
                       }}<br />
-                      میلیون</span
-                    >
+                      میلیون
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین حجم معاملات ۳ ماهه :{{ this.rankvol3month }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین حجم معاملات ۳ ماهه :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.rankvol3month)">
+                      {{ this.rankvol3month }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین حجم معاملات ۱۲ ماهه :{{ this.rankvol12month }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین حجم معاملات ۱۲ ماهه :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.rankvol12month)">
+                      {{ this.rankvol12month }}
+                    </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
-                  <h5 class="titleHeaders">اطلاعات تعداد معاملات</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات تعداد معاملات</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     میانگین تعداد معاملات ۳ ماهه :
-                    <span
-                      >{{ numberWithCommas(this.avgcount3month) }}<br />
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.avgcount3month)">
+                      {{ numberWithCommas(this.avgcount3month) }}<br />
                     </span>
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     میانگین تعداد معاملات ۱۲ ماهه :
-                    <span
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.avgcount12month)">
                       >{{ numberWithCommas(this.avgcount12month) }}<br />
                     </span>
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین تعداد معاملات ۳ ماهه :{{
-                      this.rankcount3month
-                    }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین تعداد معاملات ۳ ماهه :
+                    <br /><br />
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.rankcount3month)"
+                      >{{ this.rankcount3month }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه میانگین تعداد معاملات ۱۲ ماهه :{{
-                      this.rankcount12month
-                    }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه میانگین تعداد معاملات ۱۲ ماهه :
+                    <br /><br />
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.rankcount12month)"
+                      >{{ this.rankcount12month }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
-                  <h5 class="titleHeaders">اطلاعات معاملاتی آخرین روز</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات معاملاتی آخرین روز</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
-                    ارزش معاملات آخرین روز :<span
+                  <h5 class="titleHeaders-smallest ">
+                    ارزش معاملات آخرین روز :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.yesterdaytvalue)"
                       >{{
                         numberWithCommas(
                           roundTo(this.yesterdaytvalue / 1000000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیارد ریال</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     حجم معاملات آخرین روز :
-                    <span
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.yesterdaytvolume)"
                       >{{
                         numberWithCommas(
                           roundTo(this.yesterdaytvolume / 1000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیون</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    تعداد معاملات آخرین روز :<span
+                  <h5 class="titleHeaders-smallest ">
+                    تعداد معاملات آخرین روز :
+                    <br /><br />
+                    <span class="spandata" v-if="!isNaN(this.yesterdaytcount)"
                       >{{ numberWithCommas(this.yesterdaytcount) }}<br />
                     </span>
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 col-lg-2 col-2 FinancialStrength">
-                  <h5 class="titleHeaders">اطلاعات ارزش بازار</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات ارزش بازار</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
-                    ارزش بازار دیروز :<span
+                  <h5 class="titleHeaders-smallest ">
+                    ارزش بازار دیروز :
+                    <br /><br />
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.marketcapyesterday)"
                       >{{
                         numberWithCommas(
                           roundTo(this.marketcapyesterday / 1000000000, 2)
                         )
-                      }}<br />
+                      }}
                       میلیارد ریال</span
                     >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    رتبه ارزش بازار دیروز : {{ this.marketcapyesterdayrank }}
+                  <h5 class="titleHeaders-smallest ">
+                    رتبه ارزش بازار دیروز :
+                    <br /><br />
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.marketcapyesterdayrank)"
+                    >
+                      {{ this.marketcapyesterdayrank }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
-                <div class="col-xxl-2 FinancialStrength">
-                  <h5 class="titleHeaders">حضور در بازار</h5>
+                <div
+                  class="col-xl-2 col-lg-2 col-md-4 col-sm-6 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">حضور در بازار</h5>
                   <hr />
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     تعداد روزهای باز در ۳ ماه گذشته :
-                    {{ this.opendayscount3month }}
+                    <br /><br />
+
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.opendayscount3month)"
+                    >
+                      {{ this.opendayscount3month }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
+                  <h5 class="titleHeaders-smallest ">
                     تعداد روزهای باز در ۱۲ ماه گذشته :
-                    {{ this.opendayscount12month }}
+                    <br /><br />
+
+                    <span
+                      class="spandata"
+                      v-if="!isNaN(this.opendayscount12month)"
+                    >
+                      {{ this.opendayscount12month }}</span
+                    >
+                    <span v-else>بدون داده</span>
                   </h5>
                 </div>
               </div>
@@ -324,9 +555,10 @@ export default {
   components: {
     ApexChart
   },
-  props: ["statistics"],
+  props: ["statistics", "hh", "liveData"],
   data() {
     return {
+      loading: true,
       priceOverViewSeries: [
         {
           name: "series1",
@@ -367,24 +599,24 @@ export default {
         }
       },
       search: "",
-      Nemad: "شستا",
-      tickerfull: "تامین اجتماعی",
+      Nemad: "",
+      tickerfull: "",
       industry: "سرمایه گذاری",
-      subindustry: "شرکتی",
-      market: "بورس",
-      tablo: "اول بورس",
-      close: "1500",
-      open: "1400",
-      first: "2200",
-      last: "1250",
-      high: "1200",
-      low: "1320",
-      tradeVolume: "50000",
-      tradevalue: "11111111",
-      tradecount: "123213",
-      marketcap: "12321312321312",
-      min: "131",
-      max: "141",
+      subindustry: "",
+      market: "",
+      tablo: "",
+      close: "",
+      open: "",
+      first: "",
+      last: "",
+      high: "",
+      low: "",
+      tradeVolume: "",
+      tradevalue: "",
+      tradecount: "",
+      marketcap: "",
+      min: "",
+      max: "",
       avgval3month: "-",
       avgval12month: "-",
       rankval3month: "-",
@@ -411,7 +643,12 @@ export default {
       countsellerHaghighi: "-",
       countsellerHoghughi: "-",
       volumesellerHaghighi: "-",
-      volumesellerHoghughi: "-"
+      volumesellerHoghughi: "-",
+      eps: "",
+      sharecount: "",
+      mabna: "",
+      shenavar: "",
+      status: ""
     };
   },
   computed: {
@@ -519,11 +756,50 @@ export default {
         }
       });
     },
+    populateData2() {
+      // console.log(this.hh)
+      this.DataItems3 = this.hh;
+      if (this.DataItems3.length != 0) {
+        this.countbuyerHaghighi = this.DataItems3[0]["CountBuy_Haghighi"];
+        this.countbuyerHoghughi = this.DataItems3[0]["CountBuy_Hoguhgi"];
+        this.volumebuyerHaghighi = this.DataItems3[0]["VolumeBuy_Haghighi"];
+        this.volumebuyerHoghughi = this.DataItems3[0]["VolumeBuy_Hoghughi"];
+        this.countsellerHaghighi = this.DataItems3[0]["CountSell_Haghighi"];
+        this.countsellerHoghughi = this.DataItems3[0]["CountSell_Hoghughi"];
+        this.volumesellerHaghighi = this.DataItems3[0]["VolumeSell_Haghighi"];
+        this.volumesellerHoghughi = this.DataItems3[0]["VolumeSell_Hoghughi"];
+      }
+    },
+    populateData3() {
+      console.log(this.liveData);
+      this.DataItems3 = this.liveData;
+      if (this.DataItems3.length != 0) {
+        this.tickerfull = this.DataItems3[0]["name"];
+        this.tradeVolume = this.DataItems3[0]["TradeVolume"];
+        this.tradevalue = this.DataItems3[0]["TradeValue"];
+        this.tradecount = this.DataItems3[0]["TradeCount"];
+        this.marketcap =
+          this.DataItems3[0]["close"] * this.DataItems3[0]["ShareCount"];
+
+        this.low = this.DataItems3[0]["low"];
+        this.first = this.DataItems3[0]["first"];
+        this.last = this.DataItems3[0]["last"];
+        this.close = this.DataItems3[0]["close"];
+        this.market = this.DataItems3[0]["market"];
+        this.high = this.DataItems3[0]["high"];
+        this.open = this.DataItems3[0]["yesterday"];
+        this.Nemad = this.DataItems3[0]["ticker"];
+        this.eps = this.DataItems3[0]["EPS"];
+        this.sharecount = this.DataItems3[0]["ShareCount"];
+        this.shenavar = this.DataItems3[0]["Shenavari"];
+        this.mabna = this.DataItems3[0]["Mabna"];
+        this.status = this.DataItems3[0]["Status"];
+      }
+    },
     // set FinancialStrength percent
     setFinancialStrengthPercent: function() {
       this.FinancialStrengthPercent = this.FinancialStrength * 10;
     },
-
     getWaccPercent: function(item) {
       let all = item.WACC + item.ROIC;
       return (100 * item.WACC) / all;
@@ -550,23 +826,36 @@ export default {
     }
   },
   mounted() {
-    // this.setFinancialStrengthPercent();
     this.populateData();
-    // reference; kt_stats_widget_7_chart
+    this.populateData2();
+    this.populateData3();
   },
   watch: {
     statistics() {
-      // console.log("Watcher");
       this.populateData();
+    },
+    hh() {
+      this.populateData2();
+    },
+    liveData() {
+      this.loading = false;
+      this.populateData3();
     }
   }
 };
 </script>
 <style scoped>
+.subheaderTitles {
+  font-size: 1.1em;
+  font-weight: 900;
+  text-align: center;
+}
+
 .FinancialStrength {
   direction: rtl;
   text-align: right;
 }
+
 .rtl_centerd {
   direction: rtl;
   text-align: center;
@@ -586,12 +875,28 @@ export default {
 }
 .titleHeaders {
   padding: 5px;
-  font-size: 0.8em;
+  font-size: 1em;
   text-align: right;
 }
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
+.titleHeaders-smallest {
+  padding: 5px;
+  font-size: 1em;
+  font-weight: 700;
   text-align: right;
+  font-family: "Dirooz FD";
+}
+.titleHeaders-smaller {
+  padding: 5px;
+  font-size: 1.2em;
+  font-weight: 700;
+  text-align: right;
+  font-family: "Dirooz FD";
+}
+.spandata {
+  color: rgb(4, 17, 53);
+  font-size: 1.1em;
+  font-weight: 800;
+  margin-top: 5px;
+  font-family: "Dirooz FD";
 }
 </style>

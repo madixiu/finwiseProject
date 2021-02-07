@@ -7,7 +7,7 @@ import pandas as pd
 def CodalNoticesRequest(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_CodalNotices?ID=eq.'+str(identifier))
+        resp = requests.get('http://185.97.117.60:3000/View_CodalNotices?StockID=eq.'+str(identifier))
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -80,7 +80,8 @@ def StatusChanges(identifier):
 def monthlyBankDeposits(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Deposit?firm=eq.'+str(identifier))
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Deposit?StockID=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -94,7 +95,8 @@ def monthlyBankDeposits(identifier):
 def monthlyInsurance(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Insurance?firm=eq.'+str(identifier))
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Insurance?StockID=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -108,7 +110,8 @@ def monthlyInsurance(identifier):
 def monthlyConstOngoing(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Ongoing?firm=eq.'+str(identifier))
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Ongoing?StockID=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -122,7 +125,8 @@ def monthlyConstOngoing(identifier):
 def monthlyConstSold(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Sold?firm=eq.'+str(identifier))
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Sold?StockID=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -136,7 +140,8 @@ def monthlyConstSold(identifier):
 def monthlyBankFacility(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Facility?firm=eq.'+str(identifier))
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Facility?StockID=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -147,6 +152,21 @@ def monthlyBankFacility(identifier):
             ct=ct+1
         
     return ("noData") 
+def monthlyProduction(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Production?StockID=eq.'+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
 #################    
 def getBoard(identifier): 
     ct=0

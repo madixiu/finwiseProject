@@ -29,8 +29,8 @@ const Oraq = () => import("@/view/pages/Oraq/Oraq.vue");
 const Shakhes = () => import("@/view/pages/Shakhes/Shakhes.vue");
 const Ticker = () => import("@/view/pages/Ticker/Ticker.vue");
 const Overview = () => import("@/view/pages/Ticker/Overview.vue");
-const AdministrationNoticeWidget = () =>
-  import("@/view/pages/Ticker/TickerWidgets/AdministrationNoticeWidget.vue");
+const AdminNotice = () =>
+  import("@/view/pages/Ticker/Administration.vue");
 const CodalNotifications = () =>
   import("@/view/pages/Ticker/CodalNotifications.vue");
 const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
@@ -218,7 +218,7 @@ export default new Router({
             {
               path: "Overview/Administration/:id",
               name: "Administration",
-              component: AdministrationNoticeWidget
+              component: AdminNotice
             },
             {
               path: "Overview/Notifications/:id",
