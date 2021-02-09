@@ -23,7 +23,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "NotificationWidget",
+  name: "HHWidget",
   props: ["datalabels"],
   data: () => ({
     options: {

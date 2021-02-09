@@ -6,9 +6,9 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12">
-        <liveWidget :statistics="stats"></liveWidget>
+        <liveWidget :statistics="stats" :hh="hhdata" :liveData="livedata"></liveWidget>
       </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
@@ -27,8 +27,8 @@
         <MoreStatisticsWidget></MoreStatisticsWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12">
-        <AnalystWidget></AnalystWidget>
-      </div>
+        <AnalystWidget></AnalystWidget> -->
+      <!-- </div> -->
     </div>
     <!--end::Dashboard-->
   </div>
@@ -38,26 +38,26 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
-import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
-import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
-import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
-import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
-import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
-import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
-import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
+// import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
+// import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
+// import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
+// import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
+// import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
+// import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
+// import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 
 export default {
   name: "dashboard",
   components: {
     liveWidget,
-    FSWidget,
-    VWidget,
-    PWidget,
-    ReturnWidget,
-    DivWidget,
-    AnalystWidget,
-    MoreStatisticsWidget,
+    // FSWidget,
+    // VWidget,
+    // PWidget,
+    // ReturnWidget,
+    // DivWidget,
+    // AnalystWidget,
+    // MoreStatisticsWidget,
     SubHeaderWidget
   },
   data() {
@@ -65,8 +65,11 @@ export default {
       search: "",
       subheaders: [],
       allowed: [],
-      stats: []
+      stats: [],
+      hhdata: [],
+      livedata:[]
     };
+     
   },
   mounted() {
     this.loadData();
@@ -100,7 +103,14 @@ export default {
       this.getAllowed().then(response => {
         // eslint-disable-next-line no-unused-vars
         this.getOne().then(response2 => {
-          this.getTwo().then(function() {});
+          // eslint-disable-next-line no-unused-vars
+          this.getTwo().then(response3 => {
+            // eslint-disable-next-line no-unused-vars
+            this.getHH().then(response4 =>{
+              // eslint-disable-next-line no-unused-vars
+              this.getLiveData().then()
+            });
+          });
         });
       });
     },
@@ -108,17 +118,32 @@ export default {
       await this.axios
         .get("/api/tickerallnames")
         .then(response3 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
           this.allowed = response3.data;
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
         })
         .catch(error => {
           // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getHH() {
+      await this.axios
+        .get("/api/LiveHHTicker/" + this.$route.params.id + "/")
+        .then(response3 => {
+          this.hhdata = response3.data;
+          // console.log(response3.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async getLiveData() {
+      await this.axios
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .then(response3 => {
+          this.livedata = response3.data;
+          // console.log(response3.data);
+        })
+        .catch(error => {
           console.log(error);
         });
     },
@@ -126,15 +151,7 @@ export default {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
         .then(response2 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
           this.stats = response2.data;
-          // console.log(response2.data);
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
         })
         .catch(error => {
           // console.log("GetTwoeCatch");
@@ -143,7 +160,7 @@ export default {
     },
     async getOne() {
       await this.axios
-        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

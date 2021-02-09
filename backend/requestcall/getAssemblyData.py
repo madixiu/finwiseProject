@@ -14,10 +14,10 @@ def firstStepAssembly(identifier):
     elif identifier.get("Type") == "d":
         url = "http://185.97.117.60:3000/rpc/assemblyinvitationgenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
     
-    print(identifier.get("Type"))
-    print(identifier.get("tickerID"))
-    print(identifier.get("endDate"))
-    print(identifier.get("startDate"))
+    # print(identifier.get("Type"))
+    # print(identifier.get("tickerID"))
+    # print(identifier.get("endDate"))
+    # print(identifier.get("startDate"))
 
 
     print(url)

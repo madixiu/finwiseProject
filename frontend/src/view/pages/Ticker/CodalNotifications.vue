@@ -39,25 +39,12 @@ export default {
   watch: {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
-      // console.log(this.notices);
-    },
-    allowed() {
-      var flag = false;
-      for (var i = 0; i < this.allowed.length; i++) {
-        var obj = this.allowed[i];
-        if (obj.ID == this.$route.params.id) {
-          flag = true;
-        }
-      }
-      if (!flag) {
-        this.$router.push({ name: "wizard" });
-      }
     }
   },
   methods: {
     loadData() {
+      // eslint-disable-next-line no-unused-vars
       this.getAllowed().then(response => {
-        console.log(response);
         //add this to package.json in developement
         //         "eslintConfig": {
         //     "rules": {
@@ -65,10 +52,9 @@ export default {
         //       "no-unused-vars": "off"
         //     }
         // },
+        // eslint-disable-next-line no-unused-vars
         this.getOne().then(response2 => {
-          console.log(response2);
           this.getTwo().then(function() {});
-          // console.log("ChainDone");
         });
       });
     },
@@ -76,17 +62,9 @@ export default {
       await this.axios
         .get("/api/tickerallnames")
         .then(response3 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
           this.allowed = response3.data;
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
           console.log(error);
         });
     },
@@ -94,31 +72,19 @@ export default {
       await this.axios
         .get("/api/CodalNotices/" + this.$route.params.id + "/")
         .then(response2 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
           this.notice = response2.data;
-          // console.log(response2.data);
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
           console.log(error);
         });
     },
     async getOne() {
       await this.axios
-        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
-          // console.log("firstDone");
           this.subheaders = response1.data[0];
-          // console.log(response1.data);
         })
         .catch(error => {
-          // console.log("GetOneCatch");
           console.log(error);
         });
     }

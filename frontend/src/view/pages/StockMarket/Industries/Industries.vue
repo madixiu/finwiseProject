@@ -17,7 +17,7 @@
           <div
             v-for="item in this.TickerTape"
             :key="item.ticker"
-            class=" mr-4 "
+            class=" mr-4"
           >
             <div
               class="mr-2 pt-2 pb-2"
@@ -197,10 +197,10 @@
       </div>
       <div class="col-xxl-4 col-md-4">
         <v-tabs>
-          <v-tab>بهترین</v-tab>
+          <!-- <v-tab>بهترین</v-tab>
           <v-tab>بدترین</v-tab>
           <v-tab-item><IndustryTechnicalBest /></v-tab-item>
-          <v-tab-item><IndustryTechnicalWorse /></v-tab-item>
+          <v-tab-item><IndustryTechnicalWorse /></v-tab-item> -->
         </v-tabs>
       </div>
     </div>
@@ -211,15 +211,15 @@
 import MarqueeText from "vue-marquee-text-component";
 
 import ApexChart from "@/view/content/charts/ApexChart";
-import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
-import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
+// import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
+// import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 // import axios from "axios";
 export default {
   name: "Industries",
   components: {
     ApexChart,
-    IndustryTechnicalBest,
-    IndustryTechnicalWorse,
+    // IndustryTechnicalBest,
+    // IndustryTechnicalWorse,
     MarqueeText
     // Error,
     // ErrorMine

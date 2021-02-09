@@ -23,6 +23,17 @@ def ImpactOnIndex():
         # return(json.loads(resp.text))
     else:
         return("No Data") 
+def getLiveHHtickerData(identifier):
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_Live_Stock_HH?ID=eq.'+str(identifier),headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")       
+
 def getStatisticsTicker(identifier):
     head = {'Accept-Profile':'public'}
     resp = requests.get('http://37.152.180.99:3000/rpc/statisticsticker?a='+str(identifier),headers=head)
@@ -32,7 +43,17 @@ def getStatisticsTicker(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")               
+        return("No Data")           
+def getLive_ticker(identifier):
+    head = {'Accept-Profile':'public'}
+    resp = requests.get('http://37.152.180.99:3000/rpc/liveticker?a='+str(identifier),headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")           
 def highestTvolumes():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://37.152.180.99:3000/ViewHighestTradeVolumes',headers=head)
@@ -72,4 +93,14 @@ def highestSupplies():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")                                        
+        return("No Data")                                
+def get_AdminsNotice(identifier):
+    head = {'Accept-Profile':'public'}
+    resp = requests.get('http://37.152.180.99:3000/rpc/adminsnotice?a='+str(identifier),headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")                    

@@ -9,48 +9,21 @@
     </div>
     <!--end::Header-->
     <!--begin::Body-->
-    <div class="row">
-      <div class="col-xxl-2 FinancialStrength" v-if="loading">
-        <v-skeleton-loader
-          v-bind="attrs"
-          type=" list-item, card-heading, divider, date-picker-options, date-picker-days, actions"
-        ></v-skeleton-loader>
-      </div>
-      <div class="col-xxl-2 FinancialStrength" v-if="loading == false">
-        <p>فیلتر بر اساس تاریخ</p>
-        <p class="FinancialStrength">تاریخ شروع :</p>
-        <date-picker v-model="date"></date-picker>
-        <hr />
-        <p class="FinancialStrength">تاریخ پایان :</p>
-        <date-picker v-model="date"></date-picker>
-        <hr />
-        <v-btn small color="primary" dark>
-          اعمال فیلتر
-        </v-btn>
-
-        <v-btn small color="primary" dark>
-          حذف فیلتر x
-        </v-btn>
-      </div>
-      <div class="col-xxl-10 FinancialStrength">
-        <div class="card-body d-flex flex-column" v-if="loading">
-          <v-skeleton-loader
-            v-bind="attrs"
-            type=" table-heading, table-thead, table-tbody"
-          ></v-skeleton-loader>
-        </div>
-        <div class="card-body d-flex flex-column">
-          <v-data-table
-            v-if="loading == false"
-            :headers="headers"
-            :items="DataItems2"
-            class="elevation-1 FinancialStrength"
-          >
-          </v-data-table>
-        </div>
-      </div>
+    <div class="card-body d-flex flex-column" v-if="loading">
+      <v-skeleton-loader
+        type=" table-heading, table-thead, table-tbody"
+      ></v-skeleton-loader>
     </div>
+    <div class="card-body d-flex flex-column">
+      <v-data-table
+        v-if="loading == false"
+        :headers="headers"
+        :items="DataItems2"
+        class="elevation-1 FinancialStrength"
+      >
 
+      </v-data-table>
+    </div>
     <!--end::Body-->
   </div>
   <!--end::Mixed Widget 14-->
@@ -58,30 +31,31 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Vue from "vue";
-import VuePersianDatetimePicker from "vue-persian-datetime-picker";
-Vue.component("date-picker", VuePersianDatetimePicker);
 export default {
-  name: "AdministrationWidget",
+  name: "AdminNoticeWidget",
   props: ["notices"],
   data() {
     return {
-      filtered: false,
-      loading: true,
       search: "",
+      loading: true,
       headers: [
         {
           text: "تاریخ ارسال",
           value: "Submited"
         },
         {
+          text: "تاریخ انتشار",
+          value: "persianDate"
+        },
+
+        {
           text: "عنوان",
           value: "Title"
-        },
+        } ,
         {
-          text: "متن پیام ناظر",
+          text: "توضیحات",
           value: "Text"
-        }
+        },
       ],
       DataItems2: []
     };
@@ -89,10 +63,6 @@ export default {
   computed: {
     ...mapGetters(["layoutConfig"])
   },
-  components: {
-    datePicker: VuePersianDatetimePicker
-  },
-
   methods: {
     populateData() {
       this.DataItems2 = this.notices;
@@ -113,8 +83,8 @@ export default {
 </script>
 <style scoped>
 .FinancialStrength {
-  direction: rtl !important;
-  text-align: right !important;
+  direction: rtl;
+  text-align: right;
 }
 .rtl_centerd {
   direction: rtl;
@@ -125,7 +95,7 @@ export default {
   text-align: left;
 }
 .valign * {
-  vertical-align: baseline !important;
+  vertical-align: middle;
 }
 .redItem {
   color: #ef5350 !important;
@@ -142,8 +112,5 @@ export default {
   padding: 1px;
   font-size: 0.9em;
   text-align: right;
-}
-input {
-  display: inline-block !important;
 }
 </style>

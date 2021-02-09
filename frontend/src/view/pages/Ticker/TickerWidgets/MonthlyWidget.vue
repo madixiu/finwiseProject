@@ -150,7 +150,62 @@
       class="card-body d-flex flex-column"
       v-if="type == 'production' && loading == false"
     >
-      <span class="rtl_centerd">production</span>
+      <v-tabs
+        background-color="#1e1e2d"
+        color="#FFF"
+        dark
+        prev-icon="mdi-arrow-right-bold-box-outline"
+        next-icon="mdi-arrow-left-bold-box-outline"
+        show-arrows
+      >
+        <v-tab
+          v-for="item in this.todatesyears"
+          :key="item.key"
+          class="itemFilters"
+          @click="GetFilteredYearly(item.value)"
+        >
+          {{ item.value }}
+        </v-tab>
+        <v-tab-item v-for="item in this.todatesyears" :key="item.key">
+          <v-tabs
+            vertical
+            background-color="#212529"
+            color="#FFF"
+            dark
+            next-icon="mdi-arrow-right-bold-box-outline"
+            prev-icon="mdi-arrow-left-bold-box-outline"
+            show-arrows
+          >
+            <v-tab
+              v-for="item in todates"
+              :key="item.key"
+              class="itemFilters"
+              @click="GetFiltered(item.value)"
+            >
+              {{ item.value }}
+            </v-tab>
+            <v-tab-item v-for="itemR in todates" :key="itemR.key">
+              <div class="card-body d-flex flex-column">
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    گزارش تولید و فروش
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headersProduction"
+                  :items="filteredItems"
+                  class="elevation-1 FinancialStrength itemFilters"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                >
+                </v-data-table>
+              </div>
+            </v-tab-item>
+          </v-tabs>
+        </v-tab-item>
+      </v-tabs>
     </div>
 
     <div
@@ -165,12 +220,13 @@
     >
       <span class="rtl_centerd">service</span>
     </div>
+
     <div
       class="card-body d-flex flex-column"
       v-if="type == 'construction' && loading == false"
     >
       <v-tabs
-        background-color="#3F51B5"
+        background-color="#212529"
         color="#FFF"
         dark
         prev-icon="mdi-arrow-right-bold-box-outline"
@@ -611,6 +667,83 @@ export default {
           value: "thisMonth_EsitmatedTotalCost"
         }
       ],
+      headersProduction: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
+        {
+          text: "عنوان",
+          value: "product"
+        },
+        {
+          text: "واحد",
+          value: "unit"
+        },
+        {
+          text: "وضعیت",
+          value: "status"
+        },
+        {
+          text: "دسته بندی",
+          value: "category"
+        },
+        {
+          text: "مجموع تولیدات دوره",
+          value: "totalProductionPeriod"
+        },
+        {
+          text: "مجموع فروش دوره",
+          value: "totalSalePeriod"
+        },
+        {
+          text: "مبلغ فروش دوره",
+          value: "saleAmountPeriod"
+        },
+        { text: "تولید کل دوره", value: "totalProductionYear" },
+        { text: "فروش کل دوره", value: "totalSaleYear" },
+        { text: "نرخ فروش کل دوره", value: "saleRateYear" },
+        { text: "مبلغ فروش کل دوره", value: "saleAmountYear" },
+        {
+          text: "مجموع تولید تا ابتدای دوره",
+          value: "prevTotalProductionYear"
+        },
+        { text: "مجموع فروش تا ابتدای دوره", value: "prevTotalSalesYear" },
+        { text: "نرخ فروش تا ابتدای دوره", value: "prevTotalSalesRateYear" },
+        {
+          text: "مجموع مبلغ فروش تا ابتدای دوره",
+          value: "prevTotalSalesAmountYear"
+        },
+        { text: "اصلاحات تولید", value: "modification_Production" },
+        { text: "اصلاحات فروش", value: "modification_Sales" },
+        { text: "اصلاحات مبلغ", value: "modification_SalesAmount" },
+        {
+          text: "مجموع تولید تا ابتدای دوره-اصلاح شده",
+          value: "prev_modified_TotalProduction"
+        },
+        {
+          text: "مجموع فروش تا ابتدای دوره- اصلاح شده",
+          value: "prev_modified_TotalSales"
+        },
+        {
+          text: "نرخ فروش تا ابتدای دوره- اصلاح شده",
+          value: "prev_modified_TotalSalesRate"
+        },
+        {
+          text: "مبلغ فروش تا ابتدای دوره- اصلاح شده",
+          value: "prev_modified_TotalSalesAmount"
+        },
+
+        { text: "تولید سال مالی فبل", value: "lastyear_Production" },
+        { text: "تعداد فروش سال مالی قبل", value: "lastyear_saleCount" },
+
+        { text: "نرخ فروش سال مالی قبل", value: "lastyear_saleRate" },
+        { text: "مبلغ فروش سال مالی قبل", value: "lastyear_saleAmount" }
+      ],
       DataItems2: [],
       DataItems3: []
     };
@@ -713,6 +846,7 @@ export default {
     setType() {
       this.type = this.typeOf;
       console.log(this.type);
+      console.log(this.deposits);
     }
   },
   mounted() {
@@ -721,20 +855,20 @@ export default {
   },
   watch: {
     notices() {
-      //   console.log("Watcher");
+      console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
-      // console.log(this.notices);
+      console.log(this.notices);
     },
     deposits() {
-      //   console.log("Watcher");
+      console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
 
-      // console.log(this.notices);
+      console.log(this.notices);
     },
     selectedYear: function() {
       this.getOnesfromthisyear();
@@ -777,5 +911,13 @@ export default {
   padding: 1px;
   font-size: 0.9em;
   text-align: right;
+}
+.itemFilters {
+  font-family: "Dirooz FD";
+  font-weight: 700;
+  font-size: 1em;
+}
+table.v-table tbody td {
+  font-family: "Dirooz FD" !important;
 }
 </style>

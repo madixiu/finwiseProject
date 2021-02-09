@@ -9,17 +9,22 @@
       <div class="col-xxl-12">
         <template>
           <v-timeline>
-            <v-timeline-item
+            <v-timeline-item dense
+            color="#212529"
+            small
               v-for="(value, key) in DataItems2"
               :key="key"
               v-bind:class="[key % 2 != 0 ? 'text-right' : '']"
             >
-              <v-alert dense type="info"
-                >{{ value.persianDate.slice(0, 4) }}/{{
+              <v-alert dense  type="info" 
+               :color="getColor(value.Status)"
+                >
+                <span class="customAlert">{{ value.persianDate.slice(0, 4) }}/{{
                   value.persianDate.slice(4, 6)
-                }}/{{ value.persianDate.slice(6, 8) }}<br />
+                }}/{{ value.persianDate.slice(6, 8) }}<span> - </span>
                 {{ value.Hour }} <br />
                 {{ value.Status }}
+                </span>
               </v-alert>
             </v-timeline-item>
           </v-timeline>
@@ -49,6 +54,16 @@ export default {
   methods: {
     populateData() {
       this.DataItems2 = this.notices;
+    },
+    getColor(x){
+      if (x=='مجاز'){return "#1B5E20"};
+      if (x=='مجاز-محفوظ'){return "#4CAF50"};
+      if (x=='ممنوع'){return "#b71c1c"};
+      if (x=='مجاز-مسدود'){return "#4CAF50"};
+      if (x=='ممنوع-محفوظ'){return "#c62828"};
+      if (x=='ممنوع-متوقف'){return "#c62828"};
+      if (x=='مجاز-متوقف'){return "#4CAF50"};
+
     }
   },
   mounted() {
@@ -58,16 +73,12 @@ export default {
     notices() {
       // console.log("Watcher");
       this.populateData();
-      // console.log(this.notices);
+      console.log(this.notices);
     }
   }
 };
 </script>
 <style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
 .rtl_centerd {
   direction: rtl;
   text-align: center;
@@ -97,9 +108,13 @@ export default {
 }
 .v-timeline {
   direction: ltr !important;
+  
   text-align: left;
 }
 .v-timeline:before {
   margin-left: 50%;
+}
+.customAlert{
+font-family:"Dirooz FD" !important; 
 }
 </style>
