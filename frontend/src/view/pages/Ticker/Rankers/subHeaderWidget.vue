@@ -79,7 +79,10 @@
             <b-button color="#6c757d">
               قیمت پایانی <br />
               <b-badge variant="light"
-                >{{ numberWithCommas(DataItems.close) }}ریال |
+                ><span>
+                   {{ numberWithCommas(DataItems.close) }} ریال
+                </span>
+                |
                 <span
                   class="spandata"
                   v-bind:class="[
