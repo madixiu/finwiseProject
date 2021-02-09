@@ -4,7 +4,7 @@
       <!-- OPTION TABLE *************************************************** -->
       <div class="col-12">
         <v-card>
-          <b-col lg="4" class="my-1">
+          <b-col lg="4">
             <b-input-group size="sm">
               <b-form-input
                 v-model="filter"
@@ -23,11 +23,15 @@
             thClass="bb-table-head"
             class="bb-table"
             tbody-tr-class="bb-table-row"
-            striped
             sticky-header="450px"
             dense
+            :busy.sync="isBusy"
             :filter="filter"
             :filter-debounce="1200"
+            :sort-desc.sync="sortDesc"
+            :sort-by.sync="sortBy"
+            sort-direction="desc"
+            sort-icon-left
             bordered
             no-border-collapse
             outlined
@@ -55,8 +59,20 @@
               <b v-if="data.value > 0" class="bb-table-cell-green">{{
                 data.value
               }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
-                data.value
+              <b
+                v-if="
+                  data.value < 0 &&
+                    data.value != -100001 &&
+                    data.value != -100000
+                "
+                class="bb-table-cell-red"
+                >{{ data.value }}</b
+              >
+              <b v-if="data.value == -100001" class="bb-table-cell">{{
+                "سفارش فروش ندارد"
+              }}</b>
+              <b v-if="data.value == -100000" class="bb-table-cell-red">{{
+                "ارزنده نیست"
               }}</b>
             </template>
             <template #cell(PPP)="data">
@@ -86,73 +102,11 @@
       <div class="col-12">
         <div class="row">
           <!-- custom card1 -->
-          <div
-            class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-2 col-md-2 col-lg-2 col-12"
-          >
-            <!-- <div class="filterBox"> -->
-            <v-card round elevation="15">
-              <v-toolbar dense flat>
-                <v-toolbar-title v-if="card1Key">نرخ بهره</v-toolbar-title>
-
-                <v-spacer></v-spacer>
-
-                <v-btn v-if="card1Key" icon @click="card1Key = !card1Key">
-                  <v-icon>mdi-information-outline</v-icon>
-                </v-btn>
-                <v-btn v-if="!card1Key" icon @click="card1Key = !card1Key">
-                  <v-icon>mdi-arrow-left</v-icon>
-                </v-btn>
-              </v-toolbar>
-              <div class="filterBox">
-                <transition name="fade">
-                  <div v-if="card1Key" key="1">
-                    <v-chip class="mx-auto" label small>
-                      فولاد
-                      <v-chip color="#ad0018" small dark label class="mr-1">
-                        17%
-                      </v-chip>
-                    </v-chip>
-                    <v-data-table
-                      fixed-header
-                      height="196"
-                      :headers="card1Header"
-                      :items="card1Items"
-                      item-key="name"
-                      class="elevation-1 cardTable"
-                      :hide-default-footer="true"
-                    ></v-data-table>
-                  </div>
-
-                  <div
-                    v-if="!card1Key"
-                    class="cardExplanation ml-4 mr-4"
-                    key="2"
-                  >
-                    <p>
-                      در این جدول مفروضات مدل قیمت گذاری آپشن و محاسبه ی لحظه ای
-                      آن قرار داده شده است. مدل قیمت گذاری با ۴ مقدار کمینه،
-                      بیشینه، محاسبه شده از اوراق و سود بانکی برای نرخ بهره بدون
-                      ریسک (Risk-Free Rate) قرار داده شده است. قیمت گذاری برای
-                      ۲۰ حالت مختلف ( ۵ حالت از تلاطم دارايی پایه [۳ ماهه، ۶
-                      ماهه، یک ساله، دو ساله و پنج ساله] و ۴ حالت نرخ بهره بدون
-                      ریسک) انجام شده و اطلاعات جدول زیر محاسبه گردیده است.
-                    </p>
-                  </div>
-                </transition>
-              </div>
-              <v-card-actions>
-                <span class="cardFooter">{{ card1Items.length }}</span>
-                <span v-if="card1Items.length" class="cardFooter mr-2"
-                  >نتیجه</span
-                >
-              </v-card-actions>
-            </v-card>
-          </div>
 
           <!-- custom card2 -->
 
           <div
-            class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-2 col-md-2 col-lg-2 col-12"
+            class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-4 col-md-4 col-lg-4 col-12"
           >
             <!-- <div class="filterBox"> -->
             <v-card round elevation="15">
@@ -172,6 +126,7 @@
                 <transition name="fade">
                   <div v-if="card2Key" key="1">
                     <v-data-table
+                      thClass="bb-table-head"
                       fixed-header
                       height="196"
                       :headers="card1Header"
@@ -205,11 +160,22 @@
           </div>
           <div class="col-8">
             <v-card height="280">
-              Lorem ipsum, or lipsum as it is sometimes known, is dummy text
-              used in laying out print, graphic or web designs. The passage is
-              attributed to an unknown typesetter in the 15th century who is
-              thought to have scrambled parts of Cicero's De Finibus Bonorum et
-              Malorum for use in a type specimen book.
+              <v-card-title>
+                <i class="flaticon2-pen text-danger"></i>
+
+                <span>نحوه محاسبه</span>
+              </v-card-title>
+              <div style="direction:rtl;text-align:right" class="mr-5 ml-5">
+                <span
+                  >در این قسمت محاسباتی برای معامله بهتر اختیارات خرید به
+                  کاربران ارائه شده است. قیمت های عادلانه با استفاده از مدل بلک
+                  شولز محاسبه شده اند. نرخ بهره با ۴ سناریوی مختلف و تلاطم در ۵
+                  بازه زمانی کوتاه مدت تا بلند مدت محاسبه و نهایتا ۲۰ سناریو
+                  متفاوت برای قیمت اختیار در نظر گرفته می شود. میانگین وزنی این
+                  ۲۰ سناریو به عنوان خروجی نهایی قیمت عادلانه معرفی شده است.
+                  برای اطلاعات بیشتر نشانگر را روی نام هر ستون قرار دهید.</span
+                >
+              </div>
             </v-card>
           </div>
         </div>
@@ -224,6 +190,9 @@ export default {
   name: "Option",
 
   data: () => ({
+    isBusy: true,
+    sortDesc: true,
+    sortBy: "DifferenceToAverage",
     OptionAsset: [],
     card1Key: true,
     card2Key: true,
@@ -250,37 +219,124 @@ export default {
     height: 400,
     search: "",
     headersBoot: [
-      { label: "نماد", key: "Nemad", thClass: "bb-table-head" },
-      { label: "دارایی پایه", key: "UnderLying", width: "100" },
-      { label: "پرداخت نهایی", key: "FinalPayment", width: "100" },
-      { label: "مبلغ کل اردر اول", key: "Totalkey", width: "120" },
-      { label: "قیمت اعمال", key: "StrikePrice", width: "100" },
-      { label: "قیمت دارایی پایه", key: "AssetPrice", width: "120" },
       {
-        label: "فاصله تا قیمت عادلانه",
-        key: "DifferenceToAverage",
-        width: "200"
+        label: "نماد",
+        key: "Nemad",
+        thClass: "bb-table-head",
+        sortable: true,
+        headerTitle: "fuck",
+        headerAbbr: "hey"
       },
       {
-        label: "میانگین قیمت عادلانه",
+        label: "دارایی پایه",
+        key: "UnderLying",
+        width: "100",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+
+      {
+        label: "قیمت اعمال",
+        key: "StrikePrice",
+        width: "100",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "فاصله تا سر رسید",
+        key: "TTM",
+        width: "130",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "قیمت دارایی پایه",
+        key: "AssetPrice",
+        width: "120",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "  قیمت عادلانه",
         key: "averageFairprice",
-        width: "130"
+        width: "230",
+        thClass: "bb-table-head",
+        sortable: true
       },
-      { label: "قیمت اردر فروش", key: "priceseller", width: "130" },
-      { label: "حجم اردر فروش", key: "volumeseller", width: "130" },
-      { label: "فاصله تا سر رسید", key: "TTM", width: "130" },
       {
-        label: "قیمت فروش+قیمت قرارداد / قیمت دارایی پایه",
+        label: "قیمت بهترین سفارش فروش",
+        key: "priceseller",
+        width: "130",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "حجم بهترین سفارش  فروش",
+        key: "volumeseller",
+        width: "130",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+
+      {
+        label: "ارزندگی بهترین سفارش فروش",
+        key: "DifferenceToAverage",
+        width: "200",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+
+      {
+        label: "پوشش قیمت سهام با بهترین سفارش فروش",
         key: "PPP",
-        width: "200"
+        width: "200",
+        thClass: "bb-table-head",
+        sortable: true
       },
-      { label: "حجم قرارداد", key: "TradeVolume", width: "100" },
-      { label: "قیمت آخرین معامله", key: "LastTrade", width: "130" },
-      { label: "ارزندگی آخرین معامله", key: "ArzandegiLast", width: "130" },
+
       {
-        label: "فاصله آخرین معامله تا قیمت عادلانه",
+        label: "پرداخت کنونی بهترین سفارش(میلیون ریال)",
+        key: "TotalValue",
+        width: "120",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "پرداخت نهایی بهترین سفارش(میلیون ریال)",
+        key: "FinalPayment",
+        width: "100",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "قیمت آخرین معامله",
+        key: "LastTrade",
+        width: "130",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+
+      {
+        label: "ارزندگی آخرین معامله",
         key: "DifferenceToLast",
-        width: "200"
+        width: "200",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+      {
+        label: "پوشش قیمت سهام با آخرین معامله",
+        key: "ArzandegiLast",
+        width: "130",
+        thClass: "bb-table-head",
+        sortable: true
+      },
+
+      {
+        label: "حجم",
+        key: "TradeVolume",
+        width: "100",
+        thClass: "bb-table-head",
+        sortable: true
       }
     ]
   }),
@@ -328,31 +384,6 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    makeToast(item) {
-      // console.log(this.$store.getters.getSahm[0].DifferenceToLast);
-      // console.log(this.$store.getters.getSahm.length);
-      this.$bvToast.toast(item.DifferenceToLast, {
-        title: item.Nemad,
-        variant: "success",
-        solid: false,
-        noAutoHide: true,
-        toaster: "b-toaster-bottom-left",
-        enableSounds: true,
-        sounds: {
-          info:
-            "https://res.cloudinary.com/dxfq3iotg/video/upload/v1557233294/info.mp3",
-          // path to sound for successfull message:
-          success:
-            "https://res.cloudinary.com/dxfq3iotg/video/upload/v1557233524/success.mp3",
-          // path to sound for warn message:
-          warning:
-            "https://res.cloudinary.com/dxfq3iotg/video/upload/v1557233563/warning.mp3",
-          // path to sound for error message:
-          error:
-            "https://res.cloudinary.com/dxfq3iotg/video/upload/v1557233574/error.mp3"
-        }
-      });
-    },
     async OptionAssetReq() {
       await this.axios
         .get("/api/ViewOptionAssetVolatility")
@@ -368,42 +399,19 @@ export default {
         });
     },
     async OptionTableReq() {
-      let vm = this;
+      this.isBusy = true;
       await this.axios
         .get("/api/options")
         .then(response => {
           let data = response.data;
-          // var cars = new Array();
-          // cars = response.data
-          // var json = JSON.parse(update);
+          this.isBusy = false;
           console.log(data);
           if (data != "noData") {
             this.$store.dispatch("setSahm", data);
-            let items = data;
-
-            for (let item of items) {
-              if (item.TradeVolume != 0 && item.DifferenceToLast > 0.2) {
-                if (this.flag == 0) {
-                  vm.makeToast(item);
-                  this.temp.push(item);
-                  this.flag++;
-                } else {
-                  for (let tempItem of this.temp) {
-                    if (
-                      tempItem.Nemad == item.Nemad &&
-                      tempItem.DifferenceToLast != item.DifferenceToLast
-                    ) {
-                      vm.makeToast(item);
-                      this.temp.pop();
-                      this.temp.push(item);
-                    }
-                  }
-                }
-              }
-            }
           }
         })
         .catch(error => {
+          this.isBusy = false;
           console.log(error);
         });
     },
@@ -485,7 +493,7 @@ export default {
   text-align: center;
 }
 .bb-table-head {
-  font-size: 0.8rem;
+  font-size: 0.8rem !important;
   font-weight: 500;
 }
 .bb-table {

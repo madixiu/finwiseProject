@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row mr-2 mb-2">
+    <div class="row mr-2 mb-1">
       <v-card width="100%">
         <div class="row">
           <div class="col-xxl-1 col-lg-1 mr-1 mt-3 dropdown-rtl">
@@ -175,7 +175,40 @@
             </div>
           </div>
           <!-- END OF SANNNAT  -->
-           <div class="mt-5 col-xxl-4 col-lg-4">
+          <!-- <div class="mt-5 col-xxl-4 col-lg-4">
+            <b-form-group>
+              <b-form-checkbox-group
+                v-model="selectedHeaderOptions"
+                :options="HeaderOptions"
+                @change="TriggerFilteredHeader"
+              ></b-form-checkbox-group>
+            </b-form-group>
+          </div> -->
+        </div>
+        <!-- </div> -->
+      </v-card>
+    </div>
+
+    <!-- table -->
+    <div class="row mr-1  ml-1">
+      <v-card width="100%">
+        <div class="row">
+          <div class="col-4 mr-3 my-1">
+            <b-input-group size="sm">
+              <b-form-input
+                v-model="Tablefilter"
+                type="search"
+                id="filterInput"
+                placeholder="فیلتر"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!Tablefilter" @click="Tablefilter = ''"
+                  >پاک کردن</b-button
+                >
+              </b-input-group-append>
+            </b-input-group>
+          </div>
+          <div class="col-xxl-4 col-lg-4 mt-1">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -185,41 +218,21 @@
             </b-form-group>
           </div>
         </div>
-        <div class="row">
-         
-        </div>
 
-        <!-- </div> -->
-      </v-card>
-    </div>
-
-    <!-- table -->
-    <div class="row mr-1  ml-1">
-      <v-card width="100%">
-        <b-col lg="4" class="my-1">
-          <b-input-group size="sm">
-            <b-form-input
-              v-model="Tablefilter"
-              type="search"
-              id="filterInput"
-              placeholder="فیلتر"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!Tablefilter" @click="Tablefilter = ''"
-                >پاک کردن</b-button
-              >
-            </b-input-group-append>
-          </b-input-group>
-        </b-col>
         <b-table
           thClass="marketwatch-table-head"
           class="marketwatch-table"
           tbody-tr-class="marketwatch-table-row"
           striped
+          :busy.sync="isBusy"
           sticky-header="370px"
           dense
           :filter="Tablefilter"
-          :filter-debounce="2000"
+          :filter-debounce="3000"
+          :sort-desc.sync="sortDesc"
+          :sort-by.sync="sortBy"
+          sort-direction="desc"
+          sort-icon-left
           bordered
           no-border-collapse
           outlined
@@ -362,7 +375,9 @@ export default {
       // %%%%%%%%%%%% type data %%%%%%%%%%%%
 
       // %%%%%%%%%%%% type data %%%%%%%%%%%%
-
+      isBusy: true,
+      sortDesc: false,
+      sortBy: "ticker",
       tableMarketSelected: "همه",
       tableMarketFilters: ["همه", "بورس", "فرابورس"],
       tableMarketTypeSelected: [],
@@ -385,47 +400,65 @@ export default {
       IndustrySearch: "",
       value: [],
       MarketTableHeader: [
-        { label: "نماد", key: "ticker", thClass: "marketwatch-table-head" },
+        {
+          label: "نماد",
+          key: "ticker",
+          thClass: "marketwatch-table-head",
+          sortable: true
+        },
         {
           label: "بازار",
           key: "marketName",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "تعداد معاملات",
           key: "TradeCount",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "حجم معاملات",
           key: "TradeVolume",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "ارزش معاملات",
           key: "TradeValue",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "قیمت دیروز",
           key: "yesterday",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
-        { label: "آخرین قیمت", key: "last", thClass: "marketwatch-table-head" },
+        {
+          label: "آخرین قیمت",
+          key: "last",
+          thClass: "marketwatch-table-head",
+          sortable: true
+        },
         {
           label: "درصد تغییر آخرین قیمت",
           key: "lastPercent",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "قیمت پایانی",
           key: "close",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "درصد تغییر قیمت پایانی",
           key: "closePercent",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         // { label: "نام", key: "name" },
         // { label: "صنعت", key: "industry" },
@@ -433,7 +466,8 @@ export default {
         {
           label: "کف مجاز قیمت",
           key: "MinRange",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "سقف مجاز قیمت",
@@ -444,53 +478,68 @@ export default {
         {
           label: "بالاترین قیمت",
           key: "high",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
-        { label: "کمترین قیمت", key: "low", thClass: "marketwatch-table-head" },
+        {
+          label: "کمترین قیمت",
+          key: "low",
+          thClass: "marketwatch-table-head",
+          sortable: true
+        },
         {
           label: "اولین قیمت",
           key: "first",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "تعداد خرید حقیقی",
           key: "CountBuy_Haghighi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "تعداد خرید حقوقی",
           key: "CountBuy_Hoguhgi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "حجم خرید حقیقی",
           key: "VolumeBuy_Haghighi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "حجم خرید حقوقی",
           key: "VolumeBuy_Hoghughi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "تعداد فروش حقیقی",
           key: "CountSell_Haghighi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "تعداد فروش حقوقی",
           key: "CountSell_Hoghughi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "حجم فروش حقیقی",
           key: "VolumeSell_Haghighi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         },
         {
           label: "حجم فروش حقوقی",
           key: "VolumeSell_Hoghughi",
-          thClass: "marketwatch-table-head"
+          thClass: "marketwatch-table-head",
+          sortable: true
         }
       ]
     };
@@ -534,7 +583,7 @@ export default {
       let criteria = this.IndustrySearch;
       // Filter out already selected options
       let options = this.tableMarketIndustryFilters.filter(
-        opt => this.value.indexOf(opt) === -1
+        opt => this.tableMarketIndustrySelected.indexOf(opt) === -1
       );
       if (criteria) {
         // Show only options that match criteria
@@ -625,69 +674,12 @@ export default {
     test() {
       console.log(this.tableMarketSelected);
       this.MarketWatchFilterPost();
-      // console.log(this.selectedHeaderOptions);
-      // console.log(this.moreInfoTrigger);
     },
     TriggerFilteredHeader() {
-      // console.log(this.MarketTableHeader);
       let header = JSON.parse(JSON.stringify(this.MarketTableHeader));
-      // let options = [this.filters.yesterdayEnableTrigger,this.filters.EPSEnableTrigger,this.filters.moreInfoTrigger]
-      // let options = {
-      //   yesterday: this.filters.yesterdayEnableTrigger,
-      //   EPS: this.filters.EPSEnableTrigger,
-      //   moreInfo: this.filters.moreInfoTrigger
-      // };
       let options = this.selectedHeaderOptions;
 
       let SwCase = 0;
-      // if (
-      //   this.yesterdayEnableTrigger != true &&
-      //   this.filters.EPSEnableTrigger != true &&
-      //   this.filters.moreInfoTrigger != true
-      // )
-      //   SwCase = 0;
-      // else if (
-      //   this.yesterdayEnableTrigger == true &&
-      //   this.filters.EPSEnableTrigger != true &&
-      //   this.filters.moreInfoTrigger != true
-      // )
-      //   SwCase = 1;
-      // else if (
-      //   this.yesterdayEnableTrigger != true &&
-      //   this.filters.EPSEnableTrigger == true &&
-      //   this.filters.moreInfoTrigger != true
-      // )
-      //   SwCase = 2;
-      // else if (
-      //   this.yesterdayEnableTrigger != true &&
-      //   this.filters.EPSEnableTrigger != true &&
-      //   this.filters.moreInfoTrigger == true
-      // )
-      //   SwCase = 3;
-      // else if (
-      //   this.yesterdayEnableTrigger == true &&
-      //   this.filters.EPSEnableTrigger == true &&
-      //   this.filters.moreInfoTrigger != true
-      // )
-      //   SwCase = 4;
-      // else if (
-      //   this.yesterdayEnableTrigger != true &&
-      //   this.filters.EPSEnableTrigger == true &&
-      //   this.filters.moreInfoTrigger == true
-      // )
-      //   SwCase = 5;
-      // else if (
-      //   this.yesterdayEnableTrigger == true &&
-      //   this.filters.EPSEnableTrigger != true &&
-      //   this.filters.moreInfoTrigger == true
-      // )
-      //   SwCase = 6;
-      // else if (
-      //   this.yesterdayEnableTrigger == true &&
-      //   this.filters.EPSEnableTrigger == true &&
-      //   this.filters.moreInfoTrigger == true
-      // )
-      //   SwCase = 7;
       if (options.length == 0) SwCase = 0;
       else if (options.length == 1) {
         console.log(options);
@@ -792,18 +784,23 @@ export default {
       });
     },
     async MarketWatchTableReq() {
+      this.isBusy = true;
+
       await this.axios
         .get("/api/marketwatch")
         .then(response => {
+          this.isBusy = false;
+
           // let data = response.data;
           // this.tableData = data;
           this.$store.dispatch("setMarketWatchItems", response.data);
           console.log(this.tableData);
         })
         .catch(error => {
+          this.isBusy = false;
+
           console.log(error);
         });
-      // var cars = new Array();
     },
     async MarketWatchFilterListReq() {
       await this.axios.get("/api/marketwatchfilterlists").then(response => {

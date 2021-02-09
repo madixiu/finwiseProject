@@ -20,18 +20,14 @@
       </div>
     </div> -->
     <!-- The SVG structure is explicitly defined in the template with attributes derived from component data -->
-    <svg
-      :height="height"
-      style="margin-left: 0px;"
-      :width="width"
-    >
+    <svg :height="height" style="margin-left: 0px;" :width="width">
       <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
         <!-- The top most element, representing the previous node -->
         <g class="grandparent">
           <rect
             :height="20"
             :width="width - 2"
-            :y="margin.top * -1 + 15"
+            :y="margin.top * -1 + 14"
             v-on:click="selectNode"
             :id="parentId"
           ></rect>
@@ -40,12 +36,18 @@
           ></g> -->
 
           <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
-          <text class="grandparentText" dy=".65em" x="6" y="0">
+          <text class="grandparentText" dy=".65em" :x="width/2" y="0">
             {{ selectedNode.data.name }}
           </text>
         </g>
         <!-- We can use Vue transitions too! -->
-        <transition-group name="list" tag="g" class="depth" v-if="selectedNode">
+        <transition-group
+          name="fade"
+          mode="out-in"
+          tag="g"
+          class="depth"
+          v-if="selectedNode"
+        >
           <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
           <g
             class="children"
@@ -59,7 +61,7 @@
               You can attribute directly an event, that fires a method that changes the current node,
               restructuring the data tree, that reactivly gets reflected in the template.
             -->
-            <g v-if="selectedNode.depth == 1">
+            <g v-if="selectedNode.depth == 1" direction="ltr">
               <rect
                 class="parent"
                 :id="children.id"
@@ -75,7 +77,7 @@
                 :key="'name_' + children.data.id"
                 :x="x(children.x0) + 6"
                 :y="y(children.y0) + 15"
-                style="fill: white;font-size:0.6rem;text-anchor: end;"
+                style="fill: white;font-size:0.6rem;text-anchor: start;"
                 :style="InnerTickerTextFontSizeAdjust(children)"
               >
                 {{ children.data.name }}
@@ -86,7 +88,7 @@
                 :key="'change_' + children.data.id"
                 :x="x(children.x0) + 6"
                 :y="y(children.y0) + 15"
-                style="fill-opacity:1;fill:white;  text-anchor: end;"
+                style="fill-opacity:1;fill:white;  text-anchor: start;"
                 :style="InnerTickerTextFontSizeAdjust(children)"
               >
                 {{ children.data.change }}%
@@ -98,6 +100,7 @@
               v-for="child in children._children"
               :key="'c_' + child.id"
               class="childG"
+              direction="ltr"
             >
               <rect
                 v-on:click="selectNode"
@@ -150,6 +153,7 @@
             <!-- HEADER SQUARES WITH NAMES ***************************** -->
             <g v-if="selectedNode.depth == 0">
               <rect
+                v-on:click="selectNode"
                 class="parentSquare"
                 :x="x(children.x0)"
                 :y="y(children.y0)"
@@ -183,9 +187,8 @@
           </g>
         </transition-group>
       </g>
-
     </svg>
-      <!-- ************* SVG TOOLTIP PLACEMENT ************************* -->
+    <!-- ************* SVG TOOLTIP PLACEMENT ************************* -->
 
     <!-- <svg v-if="tooltip && selectedNode.depth == 0"
     :height="height"
@@ -233,38 +236,40 @@ export default {
   data() {
     return {
       jsonData: {
-    "name": "نقشه بازار",
-    "children": [
-      {
-        "name": "استخراج زغال سنگ",
-        "children": [
+        name: "نقشه بازار",
+        children: [
           {
-            "name": "کشرق",
-            "close": 108622,
-            "change": 1.8,
-            "value": 9124248000000,
-            "tickerFull": "صنعتی و معدنی شمال شرق شاهرود"
-          },
-          {
-            "name": "کپرور",
-            "close": 45906,
-            "change": -3.27,
-            "value": 24789240000000,
-            "tickerFull": "فرآوری زغال سنگ پروده طبس"
-          },
-          {
-            "name": "کطبس",
-            "close": 67050,
-            "change": 3.2,
-            "value": 12404250000000,
-            "tickerFull": "ذغال‌سنگ‌ نگین‌ ط‌بس‌"
+            name: "استخراج زغال سنگ",
+            children: [
+              {
+                name: "کشرق",
+                close: 108622,
+                change: 1.8,
+                value: 9124248000000,
+                tickerFull: "صنعتی و معدنی شمال شرق شاهرود"
+              },
+              {
+                name: "کپرور",
+                close: 45906,
+                change: -3.27,
+                value: 24789240000000,
+                tickerFull: "فرآوری زغال سنگ پروده طبس"
+              },
+              {
+                name: "کطبس",
+                close: 67050,
+                change: 3.2,
+                value: 12404250000000,
+                tickerFull: "ذغال‌سنگ‌ نگین‌ ط‌بس‌"
+              }
+            ]
           }
         ]
-      }]},
+      },
       pageX: null,
       MainScaleNode: null,
       pageY: null,
-      tooltip:  false,
+      tooltip: false,
       rootNode: {},
       tooltipHeaderName: null,
       tooltipListOfChilds: [],
@@ -483,6 +488,7 @@ export default {
     // and the template reflects the changes
     selectNode(event) {
       // console.log(event.target.id);
+      console.log(event.target);
       this.selected = event.target.id;
 
       // this.accumulate(this.selected,this)
@@ -515,7 +521,7 @@ export default {
       this.tooltipListOfChilds = key.data.children;
       this.pageX = eve.pageX;
       this.pageY = eve.pageY;
-      console.log(key.data.name);
+      // console.log(key.data.name);
       // let t = eve.target.id.split(".");
       // console.log("MM ", t[t.length - 1]);
       // console.log(this.tooltipHeaderName,this.tooltipListOfChilds);
@@ -708,7 +714,7 @@ rect {
 }
 .grandparentText {
   color: #bbb !important;
-  text-anchor: end;
+  text-anchor: middle;
 }
 .parentSquare {
   fill: #262931;

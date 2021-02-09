@@ -48,4 +48,8 @@ urlpatterns = [
    path("Map",getMarketMap),
    # path("TVList",get)
 
+   ###
+   path("HaghTaghadom",getHaghTaghadom),
+   path("Oragh",getOragh)
+
 ]

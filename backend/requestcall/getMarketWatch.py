@@ -214,5 +214,5 @@ def additionalDataMarketWatch():
             item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
-    print(parsed_data[0])
+    # print(parsed_data[0])
     

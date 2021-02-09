@@ -137,7 +137,6 @@ export default {
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-fixed");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-enabled");
         this.subheaderDisplay = false;
-
       }
       console.log(route);
     },
@@ -205,7 +204,7 @@ export default {
     toolbarDisplay() {
       // return !!this.layoutConfig("toolbar.display");
       return true;
-    },
+    }
 
     /**
      * Set the subheader display

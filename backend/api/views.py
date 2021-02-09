@@ -16,6 +16,7 @@ from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
 from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
+from requestcall.getOraghandHaghTaghadomData import getOraghData,getHaghTaghadomData
 # from requestcall.getTVData import 
 
 def getCodalNoticesAll(self,identifier):
@@ -156,3 +157,8 @@ def getMainAssembly(self):
     return JsonResponse(AssemblyListData(),safe=False)
 def getMainCalendar(self):
     return JsonResponse(getCalendarData(),safe=False)
+
+def getHaghTaghadom(self):
+    return JsonResponse(getHaghTaghadomData(),safe=False)
+def getOragh(self):
+    return JsonResponse(getOraghData(),safe=False)
