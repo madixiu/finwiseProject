@@ -32,6 +32,7 @@ import HighestTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/Highe
 import HighestDemand from "@/view/pages/StockMarket/StockMarketWidgets/HighestDemand.vue";
 import HighestSupply from "@/view/pages/StockMarket/StockMarketWidgets/HighestSupply.vue";
 import Impacts from "@/view/pages/StockMarket/StockMarketWidgets/ImpactOnIndex.vue";
+
 // import axios from "axios";
 export default {
   name: "Dashboard",

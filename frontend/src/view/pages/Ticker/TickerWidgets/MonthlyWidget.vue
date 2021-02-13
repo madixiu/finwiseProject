@@ -220,6 +220,110 @@
     >
       <span class="rtl_centerd">service</span>
     </div>
+    <div
+      class="card-body d-flex flex-column"
+      v-if="type == 'investment' && loading == false"
+    >
+      <v-tabs
+        background-color="#212529"
+        color="#FFF"
+        dark
+        prev-icon="mdi-arrow-right-bold-box-outline"
+        next-icon="mdi-arrow-left-bold-box-outline"
+        show-arrows
+      >
+        <v-tab
+          v-for="item in this.todatesyears"
+          :key="item.key"
+          @click="GetFilteredYearly(item.value)"
+        >
+          {{ item.value }}
+        </v-tab>
+        <v-tab-item v-for="item in this.todatesyears" :key="item.key">
+          <v-tabs
+            vertical
+            background-color="#1A237E"
+            color="#FFF"
+            dark
+            next-icon="mdi-arrow-right-bold-box-outline"
+            prev-icon="mdi-arrow-left-bold-box-outline"
+            show-arrows
+          >
+            <v-tab
+              v-for="item in todates"
+              :key="item.key"
+              @click="GetFiltered(item.value)"
+            >
+              {{ item.value }}
+            </v-tab>
+            <v-tab-item v-for="itemR in todates" :key="itemR.key">
+              <div class="card-body d-flex flex-column">
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    سهام تحصیل شده
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headesInvestTransIn"
+                  :items="filteredItems"
+                  class="elevation-1 FinancialStrength"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                >
+                </v-data-table>
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    سهام واگذار شده
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headesInvestTransOut"
+                  :items="filteredItems2"
+                  class="elevation-1 FinancialStrength"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                >
+                </v-data-table>
+                 <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                   
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headesInvestTransOut"
+                  :items="filteredItems2"
+                  class="elevation-1 FinancialStrength"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                >
+                </v-data-table>
+                 <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    پورتفوی سرمایه گذاری
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headesInvestPortfo"
+                  :items="filteredItems3"
+                  class="elevation-1 FinancialStrength"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                >
+                </v-data-table>
+              </div>
+            </v-tab-item>
+          </v-tabs>
+        </v-tab-item>
+      </v-tabs>
+    </div>
 
     <div
       class="card-body d-flex flex-column"
@@ -309,7 +413,7 @@
 import { mapGetters } from "vuex";
 export default {
   name: "MonthlyWidget",
-  props: ["notices", "deposits", "typeOf"],
+  props: ["notices", "deposits", "portfos", "summaries", "typeOf"],
   data() {
     return {
       search: "",
@@ -667,6 +771,152 @@ export default {
           value: "thisMonth_EsitmatedTotalCost"
         }
       ],
+      headesInvestTransIn: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        {
+          text: "شرکت گزارش دهنده",
+          value: "reported_firm"
+        },
+        {
+          text: "خریداری شده",
+          value: "in_firm"
+        },
+        {
+          text: "تعداد سهم خریداری شده",
+          value: "in_shareCount"
+        },
+        {
+          text: "بهای تمام شده هر سهم ",
+          value: "in_shareCost"
+        },
+        {
+          text: "کل مبلغ تمام شده پذیرفته شده در بورس",
+          value: "in_TotalpublicCost"
+        },
+        {
+          text: "کل مبلغ بهای تمام شده خارج از بورس",
+          value: "in_TotalOtcCost"
+        }
+      ],
+      headesInvestTransOut: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        {
+          text: "شرکت گزارش دهنده",
+          value: "reported_firm"
+        },
+        {
+          text: "واگذار شده",
+          value: "out_firm"
+        },
+        {
+          text: "تعداد سهم واگذار شده",
+          value: "out_shareCount"
+        },
+        {
+          text: "بهای تمام شده هر سهم ",
+          value: "out_shareCost"
+        },
+        {
+          text: "کل مبلغ تمام شده",
+          value: "out_TotalCost"
+        },
+        {
+          text: " قیمت واگذاری هر سهم",
+          value: "out_shareSellValue"
+        },
+        {
+          text: "کل مبلغ واگذاری",
+          value: "out_TotalSellValue"
+        },
+        {
+          text: "سود (زیان ) واگذاری",
+          value: "Out_net"
+        }
+      ],
+      headesInvestPortfo: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        {
+          text: "شرکت گزارش دهنده",
+          value: "reported_firm"
+        },
+        {
+          text: "نوع شرکت",
+          value: "typeOfCompany"
+        },
+        {
+          text: "شرکت",
+          value: "company"
+        },
+        {
+          text: "سرمایه ",
+          value: "companyCapital"
+        },
+        {
+          text: "ارزش اسمی هر سهم",
+          value: "companyshare_NominalValue"
+        },
+        {
+          text: " تعداد سهم ابتدای دوره",
+          value: "start_companyShare"
+        },
+        {
+          text: "بهای تمام شده ابتدای دوره",
+          value: "start_cost"
+        },
+        {
+          text: "ارزش بازار ابتدای دوره",
+          value: "start_sharesMarketValue"
+        },
+        {
+          text: "تغییرات تعداد سهام طی دوره",
+          value: "changes_companyShare"
+        },
+        {
+          text: "تغییرات بهای تمام شده طی دوره",
+          value: "changes_cost"
+        },
+        {
+          text: "تغییرات ارزش بازار طی دوره",
+          value: "changes_sharesMarketValue"
+        },
+        {
+          text: "درصد مالکیت انتهای دوره",
+          value: "end_ownPercentage"
+        },
+        {
+          text: "بهای تمام شده انتهای دوره",
+          value: "end_costperShare"
+        },
+        {
+          text: "کل مبلغ واگذاری",
+          value: "end_costTotal"
+        },
+        {
+          text: "ارزش بازار انتهای دوره",
+          value: "end_MarketValue"
+        }
+        ,
+        {
+          text: "ارزش هر سهم انتهای دوره",
+          value: "end_valueperShare"
+        }
+        ,
+        {
+          text: "افزایش (کاهش) انتهای دوره",
+          value: "end_TotalChange"
+        }
+        
+      ],
+      headesInvestSummary: [],
       headersProduction: [
         {
           text: "منتهی به",
@@ -745,7 +995,9 @@ export default {
         { text: "مبلغ فروش سال مالی قبل", value: "lastyear_saleAmount" }
       ],
       DataItems2: [],
-      DataItems3: []
+      DataItems3: [],
+      DataItems4: [],
+      DataItems5: []
     };
   },
   computed: {
@@ -759,12 +1011,24 @@ export default {
       return this.DataItems3.filter(item => {
         return item.toDate == this.selectedMonth;
       });
+    },
+    filteredItems3() {
+      return this.DataItems4.filter(item => {
+        return item.toDate == this.selectedMonth;
+      });
+    },
+    filteredItems4() {
+      return this.DataItems5.filter(item => {
+        return item.toDate == this.selectedMonth;
+      });
     }
   },
   methods: {
     populateData() {
       this.DataItems2 = this.notices;
       this.DataItems3 = this.deposits;
+      this.DataItems4 = this.portfos;
+      this.DataItems5 = this.summaries;
     },
     gettabs() {
       var lookup = {};

@@ -10,6 +10,8 @@
           :notices="notice"
           :deposits="deposits"
           :typeOf="typeofReport"
+          :portfos="portfo"
+          :summaries="summary"
         ></MonthlyWidget>
       </div>
     </div>
@@ -33,6 +35,8 @@ export default {
       subheaders: [],
       notice: [],
       deposits: [],
+      portfo: [],
+      summary: [],
       typeofReport: ""
     };
   },
@@ -77,6 +81,9 @@ export default {
             this.getInsurance().then(response => {
               console.log(response);
             });
+          }
+          if (this.typeofReport == "investment") {
+            this.loadInvest();
           }
           if (this.typeofReport == "construction") {
             this.getConstructionSold().then(response => {
@@ -222,6 +229,104 @@ export default {
           // console.log("GetTwoeCatch");
           console.log(error);
         });
+    },
+    async getTransIn() {
+      await this.axios
+        .get(
+          "/api/Monthly/Investment/InTransactions/" +
+            this.$route.params.id +
+            "/"
+        )
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.notice = response3.data;
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getTransOut() {
+      await this.axios
+        .get(
+          "/api/Monthly/Investment/OutTransactions/" +
+            this.$route.params.id +
+            "/"
+        )
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.deposits = response3.data;
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getSummary() {
+      await this.axios
+        .get("/api/Monthly/Investment/Summary/" + this.$route.params.id + "/")
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.summary = response3.data;
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getPortfo() {
+      await this.axios
+        .get("/api/Monthly/Investment/Portfolio/" + this.$route.params.id + "/")
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.portfo = response3.data;
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    loadInvest() {
+      this.getTransIn().then(response => {
+        console.log(response);
+        this.getTransOut().then(response => {
+          console.log(response);
+          this.getPortfo().then(response => {
+            console.log(response);
+            this.getSummary().then(response => {
+              console.log(response);
+            });
+          });
+        });
+      });
     },
     async getOne() {
       await this.axios

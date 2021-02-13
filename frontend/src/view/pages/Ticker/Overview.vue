@@ -6,9 +6,16 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12">
-        <liveWidget :statistics="stats" :hh="hhdata" :liveData="livedata"></liveWidget>
+        <liveWidget
+          :statistics="stats"
+          :hh="hhdata"
+          :liveData="livedata"
+        ></liveWidget>
       </div>
-      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
+      <div class="col-xxl-4 col-lg-4 col-md-4">
+        <TechnicalWidget :Indicators="subheaders"></TechnicalWidget>
+      </div>
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
@@ -26,9 +33,9 @@
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
       </div>
-      <div class="col-xxl-12 col-lg-12 col-md-12">
-        <AnalystWidget></AnalystWidget> -->
-      <!-- </div> -->
+      <div class="col-xxl-8 col-lg-8 col-md-8">
+        <AnalystWidget></AnalystWidget>
+       </div>
     </div>
     <!--end::Dashboard-->
   </div>
@@ -38,26 +45,28 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
-// import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
-// import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
-// import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
-// import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
-// import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
-// import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
-// import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
+import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
+import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
+import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
+import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
+import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
+import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
+import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
+import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 
 export default {
   name: "dashboard",
   components: {
     liveWidget,
-    // FSWidget,
-    // VWidget,
-    // PWidget,
-    // ReturnWidget,
-    // DivWidget,
-    // AnalystWidget,
-    // MoreStatisticsWidget,
+    FSWidget,
+    VWidget,
+    PWidget,
+    ReturnWidget,
+    DivWidget,
+    AnalystWidget,
+    MoreStatisticsWidget,
+    TechnicalWidget,
     SubHeaderWidget
   },
   data() {
@@ -67,9 +76,8 @@ export default {
       allowed: [],
       stats: [],
       hhdata: [],
-      livedata:[]
+      livedata: []
     };
-     
   },
   mounted() {
     this.loadData();
@@ -106,9 +114,9 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getTwo().then(response3 => {
             // eslint-disable-next-line no-unused-vars
-            this.getHH().then(response4 =>{
+            this.getHH().then(response4 => {
               // eslint-disable-next-line no-unused-vars
-              this.getLiveData().then()
+              this.getLiveData().then();
             });
           });
         });
