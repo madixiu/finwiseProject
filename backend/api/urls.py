@@ -12,7 +12,7 @@ urlpatterns = [
    path("marketwatch",getMarketWatch),
    path("marketwatchfilterlists",getMarketWatchFilters),
    ######
-   path("tse/top5MostViewed/",getTop5MostViewed),
+   path("tse/getHighestValue/",getHighestValue),
    ######
    path("CodalNotices",getCodalNoticesAll),
    path("CodalNotices/<identifier>/",getCodalNoticesAll),
@@ -32,6 +32,13 @@ urlpatterns = [
    path("Monthly/Construction/Ongoing/<identifier>/",getMonthlyConstOngoing),
    path("Monthly/Construction/Sold/<identifier>/",getMonthlyConstSold),
    path("Monthly/Production/<identifier>/",getMonthlyProduction),
+
+   path("Monthly/Investment/InTransactions/<identifier>/",getMonthlyInvestment_InTrans),
+   path("Monthly/Investment/OutTransactions/<identifier>/",getMonthlyInvestment_OutTrans),
+   path("Monthly/Investment/Portfolio/<identifier>/",getMonthlyInvestment_Portfo),
+   path("Monthly/Investment/Summary/<identifier>/",getMonthlyInvestment_Summary),
+############
+
    path("CurrentBoard/<identifier>/",getCurrentBoard),
    path("CurrentCeo/<identifier>/",getCurrentCeo),
    path("AdminNotices/<firm>/",getAdminNotice),

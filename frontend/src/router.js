@@ -4,7 +4,8 @@ import Router from "vue-router";
 const Layout = () => import("@/view/layout/Layout");
 const StockMarketParent = () =>
   import("@/view/pages/StockMarket/StockMarketParent.vue");
-const Dashboard = () => import("@/view/pages/StockMarket/Dashboard.vue");
+// const Dashboard = () => import("@/view/pages/StockMarket/Dashboard.vue");
+const DashboardNew = () => import("@/view/pages/StockMarket/DashboardNew.vue");
 const Industries = () =>
   import("@/view/pages/StockMarket/Industries/Industries.vue");
 const IndustriesDetail = () =>
@@ -29,8 +30,7 @@ const Oraq = () => import("@/view/pages/Oraq/Oraq.vue");
 const Shakhes = () => import("@/view/pages/Shakhes/Shakhes.vue");
 const Ticker = () => import("@/view/pages/Ticker/Ticker.vue");
 const Overview = () => import("@/view/pages/Ticker/Overview.vue");
-const AdminNotice = () =>
-  import("@/view/pages/Ticker/Administration.vue");
+const AdminNotice = () => import("@/view/pages/Ticker/Administration.vue");
 const CodalNotifications = () =>
   import("@/view/pages/Ticker/CodalNotifications.vue");
 const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
@@ -84,7 +84,7 @@ export default new Router({
             {
               path: "Dashboard",
               name: "Dashboard",
-              component: Dashboard
+              component: DashboardNew
             },
             // {
             //   path: "Market/MarketWatch",

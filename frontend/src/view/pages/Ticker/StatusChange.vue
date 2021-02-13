@@ -2,12 +2,14 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-lg-12 col-md-12 col-xs-12">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
-      <div class="col-xxl-12">
+      <div class="col-xxl-4 col-lg-4 col-md-3 col-xs-12"></div>
+      <div class="col-xxl-4 col-lg-4 col-md-6 col-xs-12">
         <StatusChangesWidget :notices="notice"></StatusChangesWidget>
       </div>
+      <div class="col-xxl-4 col-lg-4 col-md-3 col-xs-12"></div>
     </div>
   </div>
 </template>

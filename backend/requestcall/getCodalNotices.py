@@ -167,6 +167,69 @@ def monthlyProduction(identifier):
             ct=ct+1
         
     return ("noData")
+
+
+def monthlyInvestInTransactions(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/investment_monthly_in_transactions?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+def monthlyInvestOutTransactions(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/investment_monthly_out_transactions?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+def monthlyInvestPortf(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")  
+def monthlyInvestSummary(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")      
+      
 #################    
 def getBoard(identifier): 
     ct=0

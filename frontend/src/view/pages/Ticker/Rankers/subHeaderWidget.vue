@@ -13,10 +13,10 @@
           <div class="text-center">
             <b-button class="testB" color="#212529">
               نماد
-              <br /><b-badge variant="light">{{ DataItems.ticker }}</b-badge>
+              <br /><b-badge variant="light">{{ LiveDataItems.ticker }}</b-badge>
             </b-button>
           </div>
-          <!-- {{ DataItems.ticker }} -->
+          <!-- {{ LiveDataItems.ticker }} -->
         </div>
         <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
@@ -24,11 +24,11 @@
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             نام شرکت
           </v-chip>
-          {{ DataItems.name }} -->
+          {{ LiveDataItems.name }} -->
           <div class="text-center">
             <b-button color="#6c757d">
               نام شرکت <br /><b-badge variant="light">{{
-                DataItems.name
+                LiveDataItems.name
               }}</b-badge>
             </b-button>
           </div>
@@ -39,11 +39,11 @@
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             بازار
           </v-chip>
-          {{ DataItems.market }} -->
+          {{ LiveDataItems.market }} -->
           <div class="text-center">
             <b-button color="#6c757d">
               بازار <br /><b-badge variant="light">{{
-                DataItems.market
+                LiveDataItems.market
               }}</b-badge>
             </b-button>
           </div>
@@ -54,13 +54,13 @@
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             صنعت
           </v-chip>
-          {{ DataItems.subIndustry }} -->
+          {{ LiveDataItems.subIndustry }} -->
           <div class="text-center">
             <b-button color="#6c757d">
               ارزش معاملات <br /><b-badge variant="light"
                 >{{
                   numberWithCommas(
-                    roundTo(DataItems.TradeValue / 1000000000, 2)
+                    roundTo(LiveDataItems.TradeValue / 1000000000, 2)
                   )
                 }}
                 میلیارد</b-badge
@@ -74,22 +74,22 @@
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             تابلو
           </v-chip>
-          {{ DataItems.board }} -->
+          {{ LiveDataItems.board }} -->
           <div class="text-center">
             <b-button color="#6c757d">
               قیمت پایانی <br />
               <b-badge variant="light"
-                >{{ numberWithCommas(DataItems.close) }}ریال |
+                >{{ numberWithCommas(LiveDataItems.close) }}ریال |
                 <span
                   class="spandata"
                   v-bind:class="[
-                    DataItems.close > DataItems.yesterday
+                    LiveDataItems.close > LiveDataItems.yesterday
                       ? 'greenItem ltr_aligned'
                       : 'redItem ltr_aligned'
                   ]"
                   >{{
                     Math.round(
-                      (DataItems.close / DataItems.yesterday - 1) * 100 * 100
+                      (LiveDataItems.close / LiveDataItems.yesterday - 1) * 100 * 100
                     ) / 100
                   }}</span
                 >
@@ -103,11 +103,11 @@
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             گروه
           </v-chip>
-          {{ DataItems.parentIndustry }} -->
+          {{ LiveDataItems.parentIndustry }} -->
           <div class="text-center">
             <b-button color="#6c757d">
               وضعیت <br /><b-badge variant="light">{{
-                DataItems.Status
+                LiveDataItems.Status
               }}</b-badge>
             </b-button>
           </div>
@@ -133,16 +133,17 @@ export default {
   data() {
     return {
       search: "",
-      DataItems: []
+      LiveDataItems: []
     };
   },
   computed: {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
-    populateData() {
-      this.DataItems = this.tickerdata;
-      console.log(this.DataItems.length);
+    LivepopulateData() {
+      this.LiveDataItems = this.tickerdata;
+      console.log(this.LiveDataItems.length);
+      console.log(this.LiveDataItems)
     },
     numberWithCommas(x) {
       if (isNaN(x)) {
@@ -158,8 +159,8 @@ export default {
     setlastperc: function() {
       return;
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
+    // LivepopulateData() {
+    //   this.LiveDataItems = this.mostviewed;
     // },
     roundTo(n, digits) {
       if (n == "-") {
@@ -184,11 +185,11 @@ export default {
     }
   },
   mounted() {
-    this.populateData();
+    this.LivepopulateData();
   },
   watch: {
     tickerdata() {
-      this.populateData();
+      this.LivepopulateData();
       // console.log(this.tickerdata);
       // console.log("WatcherSubHeader");
     }

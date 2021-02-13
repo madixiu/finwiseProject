@@ -63,6 +63,25 @@ def getMonthlyConstOngoing(self,identifier):
     return JsonResponse(monthlyConstOngoing(identifier),safe=False)  
 def getMonthlyProduction(self,identifier):
     return JsonResponse(monthlyProduction(identifier),safe=False)
+
+def getMonthlyInvestment_InTrans(self,identifier):
+    return JsonResponse(monthlyInvestInTransactions(identifier),safe=False)
+def getMonthlyInvestment_OutTrans(self,identifier):
+    return JsonResponse(monthlyInvestOutTransactions(identifier),safe=False)
+def getMonthlyInvestment_Portfo(self,identifier):
+    return JsonResponse(monthlyInvestPortf(identifier),safe=False)
+def getMonthlyInvestment_Summary(self,identifier):
+    return JsonResponse(monthlyInvestSummary(identifier),safe=False)
+
+
+
+
+##############Monthly Ends Here
+
+
+
+
+
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
@@ -163,3 +182,9 @@ def getMainAssembly(self):
     return JsonResponse(AssemblyListData(),safe=False)
 def getMainCalendar(self):
     return JsonResponse(getCalendarData(),safe=False)
+
+
+
+
+def getHighestValue(self):
+        return JsonResponse(highestTvalues(),safe=False)
