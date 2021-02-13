@@ -34,9 +34,30 @@
           <!-- <g class="parentTitleBox"
           v-for="(child in rootNode)"
           ></g> -->
+          <svg width="15pt" height="15pt" viewBox="0 0 15 15" version="1.1">
+            <g id="surface1">
+              <path
+                style=" stroke:none;fill-rule:nonzero;fill:rgb(15.294118%,23.137255%,47.843137%);fill-opacity:1;"
+                d="M 15 7.5 C 15 11.640625 11.640625 15 7.5 15 C 3.359375 15 0 11.640625 0 7.5 C 0 3.359375 3.359375 0 7.5 0 C 11.640625 0 15 3.359375 15 7.5 Z M 15 7.5 "
+              />
+              <path
+                style=" stroke:none;fill-rule:nonzero;fill:rgb(7.058824%,6.666667%,28.627451%);fill-opacity:1;"
+                d="M 4.597656 8.480469 L 10.496094 14.378906 C 12.769531 13.386719 14.460938 11.296875 14.890625 8.777344 L 9.269531 3.152344 Z M 4.597656 8.480469 "
+              />
+              <path
+                style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,67.843137%,61.960784%);fill-opacity:1;"
+                d="M 6.394531 7.222656 L 9.242188 4.375 C 9.585938 4.03125 9.585938 3.46875 9.242188 3.125 C 8.898438 2.78125 8.335938 2.78125 7.992188 3.125 L 4.242188 6.875 C 3.898438 7.21875 3.898438 7.78125 4.242188 8.125 L 7.992188 11.875 C 8.335938 12.21875 8.898438 12.21875 9.242188 11.875 C 9.585938 11.53125 9.585938
+                 10.96875 9.242188 10.625 L 6.394531 7.777344 C 6.242188 7.625 6.242188 7.375 6.394531 7.222656 Z M 6.394531 7.222656 "
+              />
+              <path
+                style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,38.431373%,38.431373%);fill-opacity:1;"
+                d="M 9.242188 10.625 L 6.394531 7.777344 C 6.320312 7.703125 6.285156 7.609375 6.28125 7.515625 L 3.984375 7.515625 C 3.988281 7.738281 4.074219 7.957031 4.242188 8.125 L 7.992188 11.875 C 8.335938 12.21875 8.898438 12.21875 9.242188 11.875 C 9.585938 11.53125 9.585938 10.96875 9.242188 10.625 Z M 9.242188 10.625 "
+              />
+            </g>
+          </svg>
 
           <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
-          <text class="grandparentText" dy=".65em" :x="width/2" y="0">
+          <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
             {{ selectedNode.data.name }}
           </text>
         </g>
@@ -73,22 +94,22 @@
                 :style="getColor(children.data.change)"
               ></rect>
               <text
+                class="parentChildsText"
                 dy="1em"
                 :key="'name_' + children.data.id"
                 :x="x(children.x0) + 6"
                 :y="y(children.y0) + 15"
-                style="fill: white;font-size:0.6rem;text-anchor: start;"
                 :style="InnerTickerTextFontSizeAdjust(children)"
               >
                 {{ children.data.name }}
               </text>
 
               <text
+                class="parentChildsValue"
                 dy="2.3em"
                 :key="'change_' + children.data.id"
                 :x="x(children.x0) + 6"
                 :y="y(children.y0) + 15"
-                style="fill-opacity:1;fill:white;  text-anchor: start;"
                 :style="InnerTickerTextFontSizeAdjust(children)"
               >
                 {{ children.data.change }}%
@@ -631,7 +652,8 @@ text {
 
 .grandparent text {
   /* font-weight: bold; */
-  fill: black;
+  fill: wheat;
+  font-weight: 600;
 }
 
 rect {
@@ -645,7 +667,7 @@ rect {
 } */
 
 .grandparent rect {
-  fill: rgb(224, 224, 252);
+  fill: #1e1e2d;
   /* color: aliceblue; */
 }
 .parentSquare {
@@ -674,11 +696,13 @@ rect {
 .childTickerName {
   fill: white;
   text-anchor: middle;
+  font-family: "Dirooz FD";
 }
 .childTickerValue {
   fill: white;
   text-align: center;
   text-anchor: middle;
+  font-family: "Dirooz FD";
 }
 /* .parent:hover {
   cursor: pointer;
@@ -716,8 +740,21 @@ rect {
   color: #bbb !important;
   text-anchor: middle;
 }
+.parentChildsText {
+  fill: white;
+  font-size: 0.6rem;
+  text-anchor: start;
+  font-family: "Dirooz FD";
+}
+.parentChildsValue {
+  fill-opacity: 1;
+  fill: white;
+  text-anchor: start;
+  font-family: "Dirooz FD";
+}
 .parentSquare {
-  fill: #262931;
+  /* fill: #262931; */
+  fill: #262b42;
 }
 .list-enter-active,
 .list-leave-active {

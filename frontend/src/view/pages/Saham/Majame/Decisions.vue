@@ -45,8 +45,8 @@
         >
           <template #table-busy>
             <div class="text-center text-danger my-2">
-              <b-spinner class="align-middle"></b-spinner>
-              <strong>شکیبا باشید...</strong>
+              <b-spinner class="align-middle mr-2"></b-spinner>
+              <strong>شکیبا باشید</strong>
             </div>
           </template>
           <!-- <template #cell(name)="row">

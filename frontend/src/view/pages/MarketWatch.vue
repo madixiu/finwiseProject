@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="row mr-2 mb-1">
+    <!-- <div class="row mr-2 mb-1">
       <v-card width="100%">
-        <div class="row">
-          <div class="col-xxl-1 col-lg-1 mr-1 mt-3 dropdown-rtl">
-            <!-- <v-select
-            label="بازار"
-            v-model="tableMarketSelected"
-            :items="tableMarketFilters"
-            @input="test"
-          >
-          </v-select> -->
+ 
+      </v-card>
+    </div> -->
+
+    <!-- table -->
+    <div class="row mr-1 ml-1">
+      <v-card width="100%">
+        <div id="marketwatchFilterRow1" class="row">
+          <div class="col-xxl-1 col-lg-1 mr-1 mt-2 dropdown-rtl">
             <span>بازار</span>
             <b-form-select
               label="بازار"
@@ -29,7 +29,7 @@
                   id="tags-with-dropdown"
                   v-model="tableMarketTypeSelected"
                   no-outer-focus
-                  class="mb-2"
+                  class=""
                   @input="test"
                 >
                   <template v-slot="{ tags, disabled, addTag, removeTag }">
@@ -106,7 +106,7 @@
                   id="tags-with-dropdown"
                   v-model="tableMarketIndustrySelected"
                   no-outer-focus
-                  class="mb-2"
+                  class=""
                   @input="test"
                 >
                   <template v-slot="{ tags, disabled, addTag, removeTag }">
@@ -140,7 +140,7 @@
                       </template>
                       <b-dropdown-form @submit.stop.prevent="() => {}">
                         <b-form-group
-                          label="Search tags"
+                          label="جستجو"
                           label-for="tag-search-input"
                           label-cols-md="auto"
                           class="mb-0"
@@ -185,15 +185,8 @@
             </b-form-group>
           </div> -->
         </div>
-        <!-- </div> -->
-      </v-card>
-    </div>
-
-    <!-- table -->
-    <div class="row mr-1  ml-1">
-      <v-card width="100%">
-        <div class="row">
-          <div class="col-4 mr-3 my-1">
+        <div id="marketwatchFilterRow2" class="row">
+          <div class="col-4 mr-3">
             <b-input-group size="sm">
               <b-form-input
                 v-model="Tablefilter"
@@ -243,6 +236,17 @@
           :fields="HD"
           @filtered="onFiltered"
         >
+          <template #table-busy>
+            <div class="text-center text-danger my-2">
+              <b-spinner class="align-middle mr-2"></b-spinner>
+              <strong>شکیبا باشید</strong>
+            </div>
+          </template>
+          <template #cell(ticker)="data">
+            <b class="marketwatch-table-ticker" @click="tickerClick(data)">{{
+              data.value
+            }}</b>
+          </template>
           <template #cell(TradeCount)="data">
             <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
@@ -297,6 +301,14 @@
             <b class="marketwatch-table-cell">{{
               data.value.toLocaleString()
             }}</b>
+          </template>
+          <template #cell(EPS)="data">
+            <b v-if="data.value == 'NaN'" class="marketwatch-table-cell">
+              {{ "-" }}</b
+            >
+            <b v-else class="marketwatch-table-cell">
+              {{ data.value.toLocaleString() }}</b
+            >
           </template>
           <template #cell(CountBuy_Haghighi)="data">
             <b class="marketwatch-table-cell">{{
@@ -443,7 +455,7 @@ export default {
           sortable: true
         },
         {
-          label: "درصد تغییر آخرین قیمت",
+          label: "درصد آخرین قیمت",
           key: "lastPercent",
           thClass: "marketwatch-table-head",
           sortable: true
@@ -455,7 +467,7 @@ export default {
           sortable: true
         },
         {
-          label: "درصد تغییر قیمت پایانی",
+          label: "درصد قیمت پایانی",
           key: "closePercent",
           thClass: "marketwatch-table-head",
           sortable: true
@@ -650,11 +662,26 @@ export default {
     // }
   },
   mounted() {
+    let filterRow = document.getElementById("marketwatchFilterRow1")
+      .offsetHeight;
+    let filterRow2 = document.getElementById("marketwatchFilterRow2")
+      .offsetHeight;
+
+    console.log(filterRow);
+    console.log(filterRow2);
+    let container = document.getElementById("kt_content");
+    // this.width = window.screen.width;
+    // this.height = (window.screen.height * 72) / 100;
+    let height = container.offsetHeight;
+    console.log(height);
     this.loadData();
     this.TriggerFilteredHeader();
     console.log(this.TableFilteredY());
   },
   methods: {
+    tickerClick(data) {
+      console.log(data);
+    },
     setFilterSelected() {
       // this.selectedFilters = [
       //   this.filters.tableMarketSelected,
@@ -880,6 +907,12 @@ export default {
   font-size: 0.8rem;
   line-height: 1;
   font-weight: 400;
+  vertical-align: middle;
+}
+.marketwatch-table-ticker {
+  color: #4682b4;
+  cursor: pointer;
+  vertical-align: middle;
 }
 .marketwatch-table-cell-green {
   text-align: center;
@@ -887,6 +920,7 @@ export default {
   line-height: 1;
   color: green;
   font-weight: 400;
+  vertical-align: middle;
 }
 .marketwatch-table-cell-red {
   text-align: center;
@@ -894,12 +928,14 @@ export default {
   line-height: 1;
   color: red;
   font-weight: 400;
+  vertical-align: middle;
 }
 .marketwatch-table-cell-bold {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1;
   font-weight: 600;
+  vertical-align: middle;
 }
 .marketwatch-table-row {
   direction: ltr;

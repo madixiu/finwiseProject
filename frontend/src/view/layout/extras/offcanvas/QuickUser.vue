@@ -9,11 +9,14 @@
       >
         Hi,
       </span> -->
-      <span
+      <v-icon size="30px" color="#4682B4" class="mr-1"
+        >mdi-account-circle</v-icon
+      >
+      <!-- <span
         class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"
       >
         پروفایل
-      </span>
+      </span> -->
       <!-- <span class="symbol symbol-35 symbol-light-success"> -->
       <!-- <img v-if="false" alt="Pic" :src="picture" /> -->
       <!-- <span v-if="true" class="symbol-label font-size-h5 font-weight-bold">

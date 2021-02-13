@@ -36,7 +36,7 @@ export default {
   mounted() {
     let chartDiv = document.getElementsByClassName("container-fluid");
     // this.width = window.screen.width;
-    this.height = (window.screen.height * 72) / 100;
+    this.height = (window.screen.height * 73) / 100;
     this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;

@@ -127,7 +127,9 @@
       </b-dropdown>
     </div> -->
     <!--end: Language bar -->
-
+    <!-- Clock -->
+    <Clock></Clock>
+    <!-- Clock end -->
     <!--begin: User Bar -->
     <KTQuickUser></KTQuickUser>
     <!--end: User Bar -->
@@ -163,6 +165,7 @@
 
 <script>
 import SearchDefault from "@/view/layout/extras/Search.vue";
+import Clock from "@/view/content/Clock.vue";
 import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
 // import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
 
@@ -183,6 +186,7 @@ export default {
   },
   components: {
     SearchDefault,
+    Clock,
     // KTSearchDefault,
     KTDropdownNotification,
     // KTDropdownQuickAction,

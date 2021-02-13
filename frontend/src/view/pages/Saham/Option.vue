@@ -42,6 +42,12 @@
             :fields="headersBoot"
             @filtered="onFiltered"
           >
+            <template #table-busy>
+              <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle mr-2"></b-spinner>
+                <strong>شکیبا باشید</strong>
+              </div>
+            </template>
             <template #cell(Nemad)="data">
               <b class="bb-table-cell-bold">{{ data.value }}</b>
             </template>
@@ -56,6 +62,9 @@
               <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(DifferenceToAverage)="data">
+              <b v-if="data.value == 0" class="bb-table-cell">{{
+                data.value
+              }}</b>
               <b v-if="data.value > 0" class="bb-table-cell-green">{{
                 data.value
               }}</b>
@@ -80,6 +89,9 @@
                 data.value.toLocaleString()
               }}</b>
               <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value == 0" class="bb-table-cell">{{
                 data.value.toLocaleString()
               }}</b>
             </template>
@@ -223,9 +235,7 @@ export default {
         label: "نماد",
         key: "Nemad",
         thClass: "bb-table-head",
-        sortable: true,
-        headerTitle: "fuck",
-        headerAbbr: "hey"
+        sortable: true
       },
       {
         label: "دارایی پایه",
@@ -257,11 +267,12 @@ export default {
         sortable: true
       },
       {
-        label: "  قیمت عادلانه",
+        label: "قیمت عادلانه",
         key: "averageFairprice",
         width: "230",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle: "قیمت به دست آمده از مدل بلک شولز"
       },
       {
         label: "قیمت بهترین سفارش فروش",
@@ -283,7 +294,9 @@ export default {
         key: "DifferenceToAverage",
         width: "200",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "اختلاف قیمت میان بهترین سفارش فروش و قیمت عادلانه تقسیم بر قیمت عادلانه است که هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی قرارداد ارزان تر از قیمت واقعی اش می باشد"
       },
 
       {
@@ -291,7 +304,9 @@ export default {
         key: "PPP",
         width: "200",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن و قیمت اعمال تقسیم بر قیمت کنونی سهام است که این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
       },
 
       {
@@ -306,7 +321,9 @@ export default {
         key: "FinalPayment",
         width: "100",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "مبلغی که در صورت خرید کامل بهترین سفارش فروش، در روز اعمال باید پرداخته شود"
       },
       {
         label: "قیمت آخرین معامله",
@@ -321,14 +338,18 @@ export default {
         key: "DifferenceToLast",
         width: "200",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "اختلاف قیمت میان آخرین معامله و قیمت عادلانه تقسیم بر قیمت عادلانه است که هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی قرارداد ارزان تر از قیمت واقعی اش می باشد"
       },
       {
         label: "پوشش قیمت سهام با آخرین معامله",
         key: "ArzandegiLast",
         width: "130",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن و قیمت اعمال تقسیم بر قیمت کنونی سهام است که این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
       },
 
       {
