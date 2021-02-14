@@ -221,7 +221,7 @@
           sticky-header="370px"
           dense
           :filter="Tablefilter"
-          :filter-debounce="3000"
+          :filter-debounce="6000"
           :sort-desc.sync="sortDesc"
           :sort-by.sync="sortBy"
           sort-direction="desc"
@@ -396,9 +396,9 @@ export default {
       tableMarketTypeFilters: [],
       tableMarketIndustrySelected: [],
       tableMarketIndustryFilters: [],
-      yesterdayEnableTrigger: false,
-      EPSEnableTrigger: false,
-      moreInfoTrigger: false,
+      // yesterdayEnableTrigger: false,
+      // EPSEnableTrigger: false,
+      // moreInfoTrigger: false,
       WebsocketRequest: false,
       selectedHeaderOptions: [],
       HeaderOptions: [
@@ -676,7 +676,20 @@ export default {
     console.log(height);
     this.loadData();
     this.TriggerFilteredHeader();
-    console.log(this.TableFilteredY());
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    this.$socketMarketWatch.send(JSON.stringify({ request: "get" }));
+    this.liveChecker();
+    this.$socketMarketWatch.onmessage = data => {
+      this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
+      // this.DataItems = JSON.parse(data.data);
+      // console.log(!!this.DataItems.length);
+      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+        this.loading = false;
+    };
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    // console.log(this.TableFilteredY());
   },
   methods: {
     tickerClick(data) {
@@ -872,7 +885,34 @@ export default {
       this.IndustrySearch = "";
       this.MarketWatchFilterPost();
       console.log(option);
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      let interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(interval);
+          return;
+        }
+        let barier = { request: "get" };
+        this.$socketMarketWatch.send(JSON.stringify(barier));
+        // console.log(this.WebsocketRequest);
+      }, 3000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (date.getHours() > 8 && date.getHours() < 15) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    let barier = { request: "halt" };
+    this.$socketMarketWatch.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
   }
 };
 </script>

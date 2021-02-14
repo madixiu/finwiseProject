@@ -89,7 +89,7 @@ import * as d3 from "d3";
 export default {
   // el:"#chartContainer",
   // name: "treemap",
-  props: { inputData: Object, inputWidth: Number, inputHeight: Number },
+  props: { inputData: Array, inputWidth: Number, inputHeight: Number },
   // the component's data
   data() {
     return {
@@ -180,8 +180,7 @@ export default {
       if (axis == "y") {
         d3.select(el)
           .call(d3[axisMethod](methodArg))
-          .attr("class", "yaxis")
-          
+          .attr("class", "yaxis");
       } else {
         d3.select(el)
           .call(d3[axisMethod](methodArg))
@@ -199,7 +198,7 @@ export default {
   stroke: #000;
   shape-rendering: crispEdges;
 }
-.yaxis text{
-  padding-right:10px
+.yaxis text {
+  padding-right: 10px;
 }
 </style>

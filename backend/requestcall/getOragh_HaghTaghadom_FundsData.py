@@ -7,7 +7,7 @@ def getOraghData():
     resp = requests.get('http://37.152.180.99:3000/View_Watch_Bonds',headers = head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        additionalDataMarketWatch(js)
+        additionalData(js)
         return js
     else:
         return ("noData")
@@ -16,13 +16,21 @@ def getHaghTaghadomData():
     resp = requests.get('http://37.152.180.99:3000/View_Watch_HaghTaghadoms')
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        additionalDataMarketWatch(js)
+        additionalData(js)
         return js
     else:
         return ("noData")
 
+def getFundsData():
+    resp = requests.get('http://37.152.180.99:3000/View_Watch_ETF')
+    if resp.status_code == 200:
+        js = json.loads(resp.text)
+        additionalData(js)
+        return js
+    else:
+        return ("noData")
 
-def additionalDataMarketWatch(data):
+def additionalData(data):
     for item in data:
         if item['yesterday'] !=None and item['close'] !=None:
             item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)

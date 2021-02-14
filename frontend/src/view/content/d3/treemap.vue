@@ -327,6 +327,7 @@ export default {
     selectedNode(newData, oldData) {
       console.log("The selected node changed...");
       console.log(newData.data);
+      // console.log(oldData.depth);
       if (newData.depth == 1) {
         // this.initialize()
         this.accumulate(this.rootNode, this);
@@ -453,6 +454,7 @@ export default {
       have to figure out a way to get rid  of this!!!!!
       */
       console.log(this.MainScaleNode);
+      // this.MainScaleNode
       return node;
     }
   },

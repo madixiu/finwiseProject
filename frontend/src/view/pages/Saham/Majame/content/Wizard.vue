@@ -310,7 +310,7 @@
 </style>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
@@ -480,10 +480,10 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [
-      { title: "Wizard", route: "wizard-1" },
-      { title: "Wizard-3" }
-    ]);
+    // this.$store.dispatch(SET_BREADCRUMB, [
+    //   { title: "Wizard", route: "wizard-1" },
+    //   { title: "Wizard-3" }
+    // ]);
 
     // Initialize form wizard
     const wizard = new KTWizard("kt_wizard_v3", {

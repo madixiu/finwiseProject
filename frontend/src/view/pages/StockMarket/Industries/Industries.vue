@@ -14,13 +14,9 @@
           @mouseenter="paused = !paused"
           @mouseleave="paused = false"
         >
-          <div
-            v-for="item in this.TickerTape"
-            :key="item.ticker"
-            class=" mr-4"
-          >
+          <div v-for="item in this.TickerTape" :key="item.ticker" class=" mr-4">
             <div
-              class="mr-2 pt-2 pb-2"
+              class="mr-2 py-lg-2 py-xxl-3"
               style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
             >

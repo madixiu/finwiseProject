@@ -23,7 +23,7 @@
             thClass="bb-table-head"
             class="bb-table"
             tbody-tr-class="bb-table-row"
-            sticky-header="450px"
+            :sticky-header="height"
             dense
             :busy.sync="isBusy"
             :filter="filter"
@@ -217,18 +217,8 @@ export default {
         sortable: false
       }
     ],
-    card1Items: [
-      {
-        round: "۱۷%",
-        ticker: "فولاد"
-      }
-    ],
-    tab: "tab-1",
-    filterName: "",
-    temp: [],
-    flag: 0,
     filter: null,
-    height: 400,
+    height: "450px",
     search: "",
     headersBoot: [
       {
@@ -395,11 +385,6 @@ export default {
       });
       // this.OptionAssetReq().then(this.OptionTableReq());
     },
-    changeTab() {
-      if (this.tab == "tab-2") this.tab = "tab-1";
-      else this.tab = "tab-2";
-    },
-
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -438,7 +423,7 @@ export default {
     },
     getHeight() {
       //  return (window.innerHeight * 75)/100
-      return window.innerHeight - 77;
+      return (window.innerHeight - 150).toString() + "px";
     }
   }
 };

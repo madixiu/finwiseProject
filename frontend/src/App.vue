@@ -44,6 +44,7 @@ import JwtService from "@/core/services/jwt.service";
 export default {
   name: "Finwise",
   mounted() {
+    this.loadData();
     // if (
     //   this.$route.name !== "login" &&
     //   !this.$store.getters.isAuthenticated &&
@@ -52,7 +53,6 @@ export default {
     //   // next({ name: "login" });
     //   this.$router.push({ name: "login" });
     //   // this.$router.push({ name: "verify" });
-
     //   console.log("nothing");
     // } else if (JwtService.getToken() && !this.$store.getters.isAuthenticated) {
     //   console.log("here1");
@@ -82,12 +82,9 @@ export default {
     //       "key"
     //     ).toString(this.CryptoJS.enc.Utf8);
     //     console.log(refreshToken);
-
     //     this.getAccessTokenAndUser(refreshToken);
     //     // let token = this.$store.getters.currentUserAccessToken;
-
     //     // this.getQueryUser();
-
     //     console.log(this.$store.getters.currentUserAccessToken);
     //   }
     //   // else {
@@ -96,7 +93,6 @@ export default {
     //   //   return;
     //   // }
     // }
-
     /**
      * this is to override the layout config using saved data from localStorage
      * remove this to use config only from static json (@/core/config/layout.config.json)
@@ -104,6 +100,17 @@ export default {
     // this.$store.dispatch(OVERRIDE_LAYOUT_CONFIG);
   },
   methods: {
+    async loadData() {
+      await this.axios
+        .get("/api/MainSearchBar")
+        .then(response => {
+          let data = response.data;
+          if (data != "noData") this.$store.dispatch("setSearch", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     getQueryUser() {
       // let token = this.$store.getters.currentUserAccessToken;
       this.$apollo

@@ -52,6 +52,8 @@
 </template>
 <script>
 import Autocomplete from "@trevoreyre/autocomplete-vue";
+import { mapState } from "vuex";
+
 // import "@trevoreyre/autocomplete-vue/dist/style.css";
 export default {
   components: {
@@ -60,7 +62,7 @@ export default {
   data() {
     return {
       searchClosed: true,
-      searchData: [],
+      // searchData: [],
       loading: false,
       items: [],
       search: null,
@@ -86,13 +88,18 @@ export default {
     }
   },
   computed: {
+    // ...mapGetters(["layoutConfig"]),
+    ...mapState({
+      searchData: state => state.search.SearchBarListData
+    }),
     SearchIcon() {
       return process.env.BASE_URL + "media/svg/icons/General/Search.svg";
     }
   },
   mounted() {
     console.log("search mount");
-    this.loadData();
+
+    // this.loadData();
   },
   methods: {
     //----------------------------------
@@ -117,21 +124,21 @@ export default {
       }
     },
     async loadData() {
-      // await this.axios
-      //   .get("/api/MainSearchBar")
-      //   .then(response => {
-      //     let data = response.data;
-      //     // let tickerNames = [];
-      //     if (data != "noData") this.searchData = data;
-      //     // for (let item of data) {
-      //     //   tickerNames.append(item.ticker);
-      //     // }
-      //     // console.log(tickerNames);
-      //     // this.states = tickerNames;
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
+      await this.axios
+        .get("/api/MainSearchBar")
+        .then(response => {
+          let data = response.data;
+          // let tickerNames = [];
+          if (data != "noData") this.searchData = data;
+          // for (let item of data) {
+          //   tickerNames.append(item.ticker);
+          // }
+          // console.log(tickerNames);
+          // this.states = tickerNames;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     querySelections(v) {
       this.loading = true;
@@ -151,30 +158,6 @@ export default {
     }
   }
 };
-// export default {
-//   data() {
-//     return {
-//       search: ""
-//     };
-//   },
-//   watch: {
-//     // search(val) {
-//     //   val && val !== this.select && this.querySelections(val);
-//     // }
-//   },
-//   methods: {
-//     querySelections(v) {
-//       this.loading = true;
-//       // Simulated ajax query
-//       setTimeout(() => {
-//         this.items = this.states.filter(e => {
-//           return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-//         });
-//         this.loading = false;
-//       }, 500);
-//     }
-//   }
-// };0
 </script>
 <style>
 .search-title {

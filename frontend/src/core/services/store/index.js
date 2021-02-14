@@ -8,6 +8,7 @@ import breadcrumbs from "./breadcrumbs.module";
 import option from "./option.module";
 import marketwatch from "./marketwatch.module";
 import auth from "./auth";
+import search from "./search.module";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     config,
     breadcrumbs,
     option,
-    marketwatch
+    marketwatch,
+    search
   }
 });

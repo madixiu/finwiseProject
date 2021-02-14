@@ -49,9 +49,11 @@
               <strong>شکیبا باشید</strong>
             </div>
           </template>
-          <!-- <template #cell(name)="row">
-            {{ row.value.first }} {{ row.value.last }}
-          </template> -->
+          <template #cell(title)="row">
+            <b class="AssemblyTitle" @click="titleClick(row)">{{
+              row.value
+            }}</b>
+          </template>
 
           <template #cell(HtmlUrl)="row">
             <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
@@ -88,14 +90,31 @@
         <pre>{{ infoModal.content }}</pre>
       </b-modal> -->
     </div>
+    <div class="col-12">
+      <v-card>
+        <!-- ******************** TABLE COMPONENT ********************* -->
+        <Tables
+          :ShareholdersItems="ShareholdersData"
+          :ChiefItems="ChiefData"
+          :SummaryItems="SummaryData"
+          :ICitems="ICData"
+          :StatementItems="StatementData"
+          :CEOItems="CEOData"
+          :BoardItems="BoardData"
+          :NewBoardItems="NewBoardData"
+          :WageItems="WageData"
+        />
+        <!-- ******************** TABLE COMPONENT ********************* -->
+      </v-card>
+    </div>
   </div>
 </template>
 <script>
-// import ErrorMine from "@/view/pages/error/Error-6.vue";
 // import Wizard from "@/view/pages/Saham/Majame/content/Wizard";
+import Tables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
 export default {
   name: "Decisions",
-  components: {},
+  components: { Tables },
   data() {
     return {
       totalRows: 1,
@@ -130,68 +149,20 @@ export default {
       ListData: null,
       filter: null,
       // test DATA BELOW *******************************************
-      items: [
-        {
-          isActive: true,
-          age: 40,
-          name: { first: "Dickerson", last: "Macdonald" }
-        },
-        { isActive: false, age: 21, name: { first: "Larsen", last: "Shaw" } },
-        {
-          isActive: false,
-          age: 9,
-          name: { first: "Mini", last: "Navarro" },
-          _rowVariant: "success"
-        },
-        { isActive: false, age: 89, name: { first: "Geneva", last: "Wilson" } },
-        { isActive: true, age: 38, name: { first: "Jami", last: "Carney" } },
-        { isActive: false, age: 27, name: { first: "Essie", last: "Dunlap" } },
-        { isActive: true, age: 40, name: { first: "Thor", last: "Macdonald" } },
-        {
-          isActive: true,
-          age: 87,
-          name: { first: "Larsen", last: "Shaw" },
-          _cellVariants: { age: "danger", isActive: "warning" }
-        },
-        { isActive: false, age: 26, name: { first: "Mitzi", last: "Navarro" } },
-        {
-          isActive: false,
-          age: 22,
-          name: { first: "Genevieve", last: "Wilson" }
-        },
-        { isActive: true, age: 38, name: { first: "John", last: "Carney" } },
-        { isActive: false, age: 29, name: { first: "Dick", last: "Dunlap" } }
-      ],
-      fields: [
-        {
-          key: "name",
-          label: "Person full name",
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "age",
-          label: "Person age",
-          sortable: true,
-          class: "text-center"
-        },
-        {
-          key: "isActive",
-          label: "Is Active",
-          // eslint-disable-next-line no-unused-vars
-          formatter: (value, key, item) => {
-            return value ? "Yes" : "No";
-          },
-          sortable: true,
-          sortByFormatted: true,
-          filterByFormatted: true
-        },
-        { key: "actions", label: "Actions" }
-      ],
+
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       sortBy: "",
       sortDesc: false,
-      sortDirection: "asc"
+      sortDirection: "asc",
+      ShareholdersData: [],
+      ChiefData: [],
+      SummaryData: [],
+      ICData: [],
+      StatementData: [],
+      CEOData: [],
+      BoardData: [],
+      NewBoardData: [],
+      WageData: []
       // filterOn: []
       // infoModal: {
       //   id: "info-modal",
@@ -257,6 +228,60 @@ export default {
           console.log(error);
         });
     },
+    TablesReq(ID, type) {
+      this.axios({
+        method: "post",
+        url: "/api/tickerAssemblyStepTwo",
+        data: {
+          SummaryID: ID,
+          Type: "Assembly" + type
+        },
+        xsrfHeaderName: "X-CSRFToken"
+      })
+        .then(response => {
+          let data = response.data;
+          console.log(data);
+          if (type == "AssemblyGeneral") {
+            this.ICData = [];
+            this.StatementData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.CEOData = data[3];
+            this.BoardData = data[4];
+            this.NewBoardData = data[5];
+            this.WageData = data[6];
+            this.SummaryData = data[7];
+          } else if (type == "AssemblyExtra") {
+            this.StatementData = [];
+            this.CEOData = [];
+            this.BoardData = [];
+            this.NewBoardData = [];
+            this.WageData = [];
+            this.ICData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.SummaryData = data[3];
+          } else if (type == "AssemblyGeneralExtra") {
+            this.ICData = [];
+            this.StatementData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.CEOData = data[3];
+            this.BoardData = data[4];
+            this.NewBoardData = data[5];
+            this.WageData = data[6];
+            this.SummaryData = data[7];
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    titleClick(item) {
+      console.log(item);
+      console.log(item.item.ID, item.item.Type);
+      this.TablesReq(item.item.ID, item.item.Type);
+    },
     info(item) {
       // this.infoModal.title = `Row index: ${index}`;
       // this.infoModal.content = JSON.stringify(item, null, 2);
@@ -277,6 +302,10 @@ export default {
 };
 </script>
 <style>
+.AssemblyTitle {
+  color: #4682b4;
+  cursor: pointer;
+}
 .Descision-table-head {
   font-size: 0.8rem;
   font-weight: 500;

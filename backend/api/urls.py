@@ -61,6 +61,7 @@ urlpatterns = [
 
    ###
    path("HaghTaghadom",getHaghTaghadom),
-   path("Oragh",getOragh)
+   path("Oragh",getOragh),
+   path("Funds",getFunds)
 
 ]

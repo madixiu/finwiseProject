@@ -15,7 +15,8 @@ const WsService = {
       let HighestValue = new WebSocket("ws://" + URI + "/ws/HighestValues");
       let highestSupply = new WebSocket("ws://" + URI + "/ws/HighestSupplies");
       let highestDemand = new WebSocket("ws://" + URI + "/ws/HighestDemands");
-
+      let marketWatch = new WebSocket("ws://" + URI + "/ws/marketwatch");
+      let marketMap = new WebSocket("ws://" + URI + "/ws/marketmap");
       // const option_ws2 = new WebSocket('ws://45.82.136.21/ws/test')
       Vue.prototype.$socketMostViewed = MostViewed;
       Vue.prototype.$socketImpactOnIndex = ImpactOnIndex;
@@ -23,6 +24,9 @@ const WsService = {
       Vue.prototype.$socketMarketHighestSupplies = highestSupply;
       Vue.prototype.$socketMarketHighestTVolumes = HighestValue;
       Vue.prototype.$socketMarketHighestTValues = highestVolume;
+      Vue.prototype.$socketMarketWatch = marketWatch;
+      Vue.prototype.$socketMarketMap = marketMap;
+
 
       // option_ws.onopen = (event) => console.log('ws connected' + event)
 

@@ -363,7 +363,7 @@ export default {
 </script>
 <style>
 .taghadom-table-head {
-  background-color: #e01313;
+  /* background-color: #e01313; */
   vertical-align: middle !important;
   font-size: 0.9rem !important;
   font-weight: 600 !important ;

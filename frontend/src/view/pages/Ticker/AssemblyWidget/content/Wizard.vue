@@ -8,8 +8,8 @@
         data-wizard-clickable="false"
       >
         <!--begin: Wizard Nav -->
-        <div class="wizard-nav border-bottom mb-1 mb-lg-5">
-          <div class="wizard-steps px-8 py-8 px-lg-15 py-lg-3">
+        <div class="wizard-nav border-bottom ">
+          <div class="wizard-steps px-8 px-lg-15">
             <div
               class="wizard-step"
               data-wizard-type="step"
@@ -58,7 +58,7 @@
         <!--end: Wizard Nav -->
 
         <!--begin: Wizard Body-->
-        <div class="row justify-content-center  px-8  px-lg-10">
+        <div class="row justify-content-center  px-8  px-lg-1">
           <div class="col-xl-12 col-xxl-7">
             <!--begin: Wizard Form-->
             <form class="form" id="kt_form">
@@ -114,7 +114,7 @@
                 </h4> -->
                 <!-- <div>
                   <b-table
-                    class="bb-table"
+                    class="ticker-assembly-table"
                     ref="selectableTable"
                     selectable
                     select-mode="single"
@@ -159,192 +159,19 @@
 
               <!--begin: Wizard Step 3-->
               <div class="pb-5" data-wizard-type="step-content">
-                <!-- <h4 class="mb-10 font-weight-bold text-dark">
-                  step3
-                </h4> -->
-                <div class="row">
-                  <!-- IC table  -->
-
-                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="ICitems.length">
-                    <v-card>
-                      <v-card-title>IC table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        thClass="bb-table-head"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="ICitems"
-                        :fields="stepThreeItemsTableHeaders.ICheaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Statement Table -->
-
-                  <div
-                    class="col-xxl-12 col-lg-12 mb-2"
-                    v-if="StatementItems.length"
-                  >
-                    <v-card>
-                      <v-card-title>Statement Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        thClass="bb-table-head"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="StatementItems"
-                        :fields="stepThreeItemsTableHeaders.StatementHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Chief Table -->
-
-                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="ChiefItems.length">
-                    <v-card>
-                      <v-card-title>Chief Table </v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="ChiefItems"
-                        :fields="stepThreeItemsTableHeaders.ChiefHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Shareholders Table -->
-
-                  <div
-                    class="col-xxl-6 col-lg-6 mb-2"
-                    v-if="ShareholdersItems.length"
-                  >
-                    <v-card>
-                      <v-card-title>Shareholders Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="ShareholdersItems"
-                        :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- CEO Table -->
-
-                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="CEOItems.length">
-                    <v-card>
-                      <v-card-title>CEO Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="CEOItems"
-                        :fields="stepThreeItemsTableHeaders.CEOheaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Board Table -->
-
-                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="BoardItems.length">
-                    <v-card>
-                      <v-card-title>Board Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="BoardItems"
-                        :fields="stepThreeItemsTableHeaders.BoardHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- NewBoard Table -->
-
-                  <div
-                    class="col-xxl-6 col-lg-6 mb-2"
-                    v-if="NewBoardItems.length"
-                  >
-                    <v-card>
-                      <v-card-title>NewBoard Table </v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="NewBoardItems"
-                        :fields="stepThreeItemsTableHeaders.NewBoardHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Wage Table -->
-
-                  <div class="col-xxl-6 col-lg-6 mb-2" v-if="WageItems.length">
-                    <v-card>
-                      <v-card-title>Wage Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="WageItems"
-                        :fields="stepThreeItemsTableHeaders.WageHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-
-                  <!-- Summary Table -->
-
-                  <div class="col-xxl-12 col-lg-12" v-if="SummaryItems.length">
-                    <v-card>
-                      <v-card-title>Summary Table</v-card-title>
-                      <b-table
-                        class="bb-table"
-                        striped
-                        bordered
-                        outlined
-                        small
-                        hover
-                        fixed
-                        :items="SummaryItems"
-                        :fields="stepThreeItemsTableHeaders.SummaryHeaders"
-                      ></b-table>
-                    </v-card>
-                  </div>
-                </div>
+                <!-- ******************** TABLE COMPONENT ********************* -->
+                <Tables
+                  :ShareholdersItems="ShareholdersData"
+                  :ChiefItems="ChiefData"
+                  :SummaryItems="SummaryData"
+                  :ICitems="ICData"
+                  :StatementItems="StatementData"
+                  :CEOItems="CEOData"
+                  :BoardItems="BoardData"
+                  :NewBoardItems="NewBoardData"
+                  :WageItems="WageData"
+                />
+                <!-- ******************** TABLE COMPONENT ********************* -->
               </div>
               <!--end: Wizard Step 3-->
 
@@ -398,7 +225,8 @@
 </style>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import Tables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
 import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
@@ -406,7 +234,7 @@ import datePicker from "vue-persian-datetime-picker";
 
 export default {
   name: "Wizard",
-  component: { datePicker },
+  component: { datePicker, Tables },
   data() {
     return {
       wizard: null,
@@ -419,101 +247,6 @@ export default {
       ],
       selectMode: "multi",
       selectedRow: [],
-      DecisionsHeaders: [
-        {
-          text: "Dessert (100g serving)",
-          align: "start",
-          sortable: false,
-          value: "name"
-        },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" }
-      ],
-      DecisionsDesserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
-        }
-      ],
       stepTwoSelected: null,
       stepTwoHeaders: [
         { text: "مجمع", align: "end", sortable: false, value: "title" },
@@ -528,53 +261,68 @@ export default {
         // ShareholdersHeaders: ["درصد مالکیت","تعداد سهام","سهامدار"],
 
         ICheaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "LastShareCount", key: "LastShareCount" },
-          { label: "LastShareNominalValue", key: "LastShareNominalValue" },
-          { label: "LastCapital", key: "LastCapital" },
-          { label: "CashIncoming_Final", key: "CashIncoming_Final" },
-          { label: "CashIncoming_Ceo", key: "CashIncoming_Ceo" },
-          { label: "CashIncoming_Total", key: "CashIncoming_Total" },
-          { label: "RetainedEarning_Final", key: "RetainedEarning_Final" },
-          { label: "RetainedEarning_Ceo", key: "RetainedEarning_Ceo" },
-          { label: "RetainedEarning_Sum", key: "RetainedEarning_Sum" },
-          { label: "Reserves_Final", key: "Reserves_Final" },
-          { label: "Reserves_Ceo", key: "Reserves_Ceo" },
-          { label: "Reserves_Sum", key: "Reserves_Sum" },
-          { label: "Reevaluation_Final", key: "Reevaluation_Final" },
-          { label: "Reevaluation_Ceo", key: "Reevaluation_Ceo" },
-          { label: "Reevaluation_Sum", key: "Reevaluation_Sum" },
-          { label: "SarfSaham_Final", key: "SarfSaham_Final" },
-          { label: "SarfSaham_Ceo", key: "SarfSaham_Ceo" },
-          { label: "SarfSaham_Sum", key: "SarfSaham_Sum" },
-          { label: "IncreaseValue_Final", key: "IncreaseValue_Final" },
-          { label: "IncreaseValue_Ceo", key: "IncreaseValue_Ceo" },
-          { label: "IncreaseValue_Sum", key: "IncreaseValue_Sum" },
-          { label: "IncreasePercent_Final", key: "IncreasePercent_Final" },
-          { label: "IncreasePercent_Ceo", key: "IncreasePercent_Ceo" },
-          { label: "IncreasePercent_Sum", key: "IncreasePercent_Sum" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "تعداد سهام", key: "LastShareCount" },
+          { label: "ارزش اسمی هر سهم", key: "LastShareNominalValue" },
+          { label: "آخرین سرمایه ثبتی", key: "LastCapital" },
+          { label: "مطالبات و آورده نقدی-قطعی", key: "CashIncoming_Final" },
+          {
+            label: "مطالبات و آورده نقدی-در اختیار هیئت مدیره",
+            key: "CashIncoming_Ceo"
+          },
+          { label: "مطالبات و آورده نقدی-کل", key: "CashIncoming_Total" },
+          { label: "سود انباشته-قطعی", key: "RetainedEarning_Final" },
+          {
+            label: "سود انباشته-قطعی در اختیار هیئت مدیره",
+            key: "RetainedEarning_Ceo"
+          },
+          { label: "سود انباشته-کل", key: "RetainedEarning_Sum" },
+          { label: "اندوخته-قطعی", key: "Reserves_Final" },
+          { label: "اندوخته-در اختیار هیئت مدیره", key: "Reserves_Ceo" },
+          { label: "اندوخته-کل", key: "Reserves_Sum" },
+          { label: "مازاد تجدید ارزیابی-قطعی", key: "Reevaluation_Final" },
+          {
+            label: "مازاد تجدید ارزیابی-در اختیار هیئت مدیره",
+            key: "Reevaluation_Ceo"
+          },
+          { label: "مازاد تجدید ارزیابی-کل", key: "Reevaluation_Sum" },
+          { label: "صرف سهام-قطعی", key: "SarfSaham_Final" },
+          { label: "صرف سهام در اختیار هیئت مدیره", key: "SarfSaham_Ceo" },
+          { label: "صرف سهام-کل", key: "SarfSaham_Sum" },
+          { label: "مبلغ افزایش سرمایه-قطعی", key: "IncreaseValue_Final" },
+          {
+            label: "مبلغ افزایش سرمایه-در اختیار هیئت مدیره",
+            key: "IncreaseValue_Ceo"
+          },
+          { label: "مبلغ افزایش سرمایه-کل", key: "IncreaseValue_Sum" },
+          { label: "درصد افزایش سرمایه-قطعی", key: "IncreasePercent_Final" },
+          {
+            label: "درصد افزایش سرمایه-در اختیار هیئت مدیره",
+            key: "IncreasePercent_Ceo"
+          },
+          { label: "درصد افزایش سرمایه-کل", key: "IncreasePercent_Sum" }
         ],
         StatementHeaders: [
-          { label: "ID", key: "ID", thClass: "bb-table-head" },
+          // { label: "ID", key: "ID", thClass: "ticker-assembly-table-head" },
+          // {
+          //   label: "SummaryID",
+          //   key: "SummaryID"
+          // },
           {
-            label: "SummaryID",
-            key: "SummaryID"
-          },
-          {
-            label: "Title",
+            label: "عنوان",
             key: "Title"
           },
           {
-            label: "Value",
+            label: "مقدار",
             key: "Value"
           }
         ],
         ChiefHeaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "Name", key: "Name" },
-          { label: "Position", key: "Position" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "نام", key: "Name" },
+          { label: "سمت", key: "Position" }
         ],
         ShareholdersHeaders: [
           { label: "سهامدار", key: "Shareholders" },
@@ -588,85 +336,85 @@ export default {
           }
         ],
         CEOheaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "FullName", key: "FullName" },
-          { label: "SSID", key: "SSID" },
-          { label: "Degree", key: "Degree" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "نام", key: "FullName" },
+          // { label: "SSID", key: "SSID" },
+          { label: "مدرک تحصیلی", key: "Degree" }
         ],
         BoardHeaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "FullName", key: "FullName" },
-          { label: "SSID", key: "SSID" },
-          { label: "typeOfCompany", key: "typeOfCompany" },
-          { label: "Membership", key: "Membership" },
-          { label: "AgentName", key: "AgentName" },
-          { label: "AgentSSID", key: "AgentSSID" },
-          { label: "Position", key: "Position" },
-          { label: "Duty", key: "Duty" },
-          { label: "Degree", key: "Degree" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "نام", key: "FullName" },
+          // { label: "SSID", key: "SSID" },
+          { label: "نوع شرکت", key: "typeOfCompany" },
+          { label: "عضویت", key: "Membership" },
+          { label: "نام نماینده", key: "AgentName" },
+          // { label: "AgentSSID", key: "AgentSSID" },
+          { label: "سمت", key: "Position" },
+          // { label: "Duty", key: "Duty" },
+          { label: "مدرک تحصیلی", key: "Degree" }
         ],
         NewBoardHeaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "Name", key: "Name" },
-          { label: "Type", key: "Type" },
-          { label: "SSID", key: "SSID" },
-          { label: "Duty", key: "Duty" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "نام", key: "Name" },
+          { label: "نوع", key: "Type" },
+          // { label: "SSID", key: "SSID" },
+          { label: "وظیفه", key: "Duty" }
         ],
         WageHeaders: [
-          { label: "ID", key: "ID" },
-          { label: "SummaryID", key: "SummaryID" },
-          { label: "Title", key: "Title" },
-          { label: "LastYear", key: "LastYear" },
-          { label: "CurrentYear", key: "CurrentYear" },
-          { label: "MoreDetails", key: "MoreDetails" }
+          // { label: "ID", key: "ID" },
+          // { label: "SummaryID", key: "SummaryID" },
+          { label: "عنوان", key: "Title" },
+          { label: "سال گذشته", key: "LastYear" },
+          { label: "سال جاری", key: "CurrentYear" },
+          { label: "اطلاعات بیشتر", key: "MoreDetails" }
         ],
         SummaryHeaders: [
-          { label: "ID", key: "ID" },
-          { label: "firm", key: "firm" },
-          { label: "report_id", key: "report_id" },
-          { label: "ToDate", key: "ToDate" },
-          { label: "Correction", key: "Correction" },
-          { label: "CorrectionDetails", key: "CorrectionDetails" },
-          { label: "NewsPaper", key: "NewsPaper" },
+          // { label: "ID", key: "ID" },
+          // { label: "firm", key: "firm" },
+          // { label: "report_id", key: "report_id" },
+          { label: "منتهی به", key: "ToDate" },
+          { label: "اصلاحات", key: "Correction" },
+          { label: "توضیحات اصلاحی", key: "CorrectionDetails" },
+          { label: "روزنامه", key: "NewsPaper" },
 
-          { label: "Inspector", key: "Inspector" },
+          { label: "حسابرس", key: "Inspector" },
 
-          { label: "OtherDesc", key: "OtherDesc" },
+          { label: "سایر توضیحات", key: "OtherDesc" },
 
           {
-            label: "IsListenedBoardMemberReport",
+            label: "استماع گزارش هیئت مدیره",
             key: "IsListenedBoardMemberReport"
           },
-          { label: "IsSelectInspector", key: "IsSelectInspector" },
-          { label: "IsSelectNewspaper", key: "IsSelectNewspaper" },
-          { label: "IsBoardMemberGift", key: "IsBoardMemberGift" },
-          { label: "IsOther", key: "IsOther" },
-          { label: "IsBoardMemberWage", key: "IsBoardMemberWage" },
-          { label: "IsSelectBoardMember", key: "IsSelectBoardMember" },
-          { label: "IsPublishSecurity", key: "IsPublishSecurity" },
-          { label: "IsLocationChange", key: "IsLocationChange" },
-          { label: "IsNameChange", key: "IsNameChange" },
-          { label: "IsActivitySubjectChange", key: "IsActivitySubjectChange" },
-          {
-            label: "IsConvertSecurityToShare",
-            key: "IsConvertSecurityToShare"
-          },
-          { label: "IsFinancialYearChange", key: "IsFinancialYearChange" },
-          { label: "IsCapitalIncrease", key: "IsCapitalIncrease" }
+          { label: "انتخاب حسابرس", key: "IsSelectInspector" },
+          { label: "انتخاب روزنامه", key: "IsSelectNewspaper" },
+          { label: "تصمیم گیری پاداش هیئت مدیره", key: "IsBoardMemberGift" },
+          { label: "دارای توضیحات اضافی", key: "IsOther" },
+          { label: "تصمیم گیری حقوق هیئت مدیره", key: "IsBoardMemberWage" },
+          { label: "انتخاب اعضای هیئت مدیره", key: "IsSelectBoardMember" },
+          { label: "انتشار اوراق بهادار", key: "IsPublishSecurity" },
+          { label: "تغییر محل فعالیت شرکت", key: "IsLocationChange" },
+          { label: "تغییر نام شرکت", key: "IsNameChange" },
+          { label: "تغییر فعالیت شرکت", key: "IsActivitySubjectChange" },
+          // {
+          //   label: "IsConvertSecurityToShare",
+          //   key: "IsConvertSecurityToShare"
+          // },
+          { label: "تغییر سال مالی", key: "IsFinancialYearChange" },
+          { label: "افزایش سرمایه", key: "IsCapitalIncrease" }
         ]
       },
-      ShareholdersItems: [],
-      ChiefItems: [],
-      SummaryItems: [],
-      ICitems: [],
-      StatementItems: [],
-      CEOItems: [],
-      BoardItems: [],
-      NewBoardItems: [],
-      WageItems: [],
+      ShareholdersData: [],
+      ChiefData: [],
+      SummaryData: [],
+      ICData: [],
+      StatementData: [],
+      CEOData: [],
+      BoardData: [],
+      NewBoardData: [],
+      WageData: [],
 
       stepTwoItems: [],
       stepOneData: {
@@ -679,8 +427,8 @@ export default {
           {
             value: "AssemblyGeneralExtra",
             text: "مجمع عادی به طور فوق العاده"
-          },
-          { value: "d", text: "آگهی دعوت به مجمع" }
+          }
+          // { value: "d", text: "آگهی دعوت به مجمع" }
         ]
       }
     };
@@ -704,10 +452,10 @@ export default {
     // }
   },
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [
-      { title: "Wizard", route: "wizard-1" },
-      { title: "Wizard-3" }
-    ]);
+    // this.$store.dispatch(SET_BREADCRUMB, [
+    //   { title: "Wizard", route: "wizard-1" },
+    //   { title: "Wizard-3" }
+    // ]);
 
     // Initialize form wizard
     const wizard = new KTWizard("kt_wizard_v3", {
@@ -764,48 +512,36 @@ export default {
           let data = response.data;
           console.log(data);
           if (this.stepOneData.TypeSelected == "AssemblyGeneral") {
-            this.StatementItems = data[0];
-            this.ChiefItems = data[1];
-            this.ShareholdersItems = data[2];
-            this.CEOItems = data[3];
-            this.BoardItems = data[4];
-            this.NewBoardItems = data[5];
-            this.WageItems = data[6];
-            this.SummaryItems = data[7];
+            this.ICData = [];
+            this.StatementData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.CEOData = data[3];
+            this.BoardData = data[4];
+            this.NewBoardData = data[5];
+            this.WageData = data[6];
+            this.SummaryData = data[7];
           } else if (this.stepOneData.TypeSelected == "AssemblyExtra") {
-            this.ICitems = data[0];
-            this.ChiefItems = data[1];
-            this.ShareholdersItems = data[2];
-            this.SummaryItems = data[3];
+            this.StatementData = [];
+            this.CEOData = [];
+            this.BoardData = [];
+            this.NewBoardData = [];
+            this.WageData = [];
+            this.ICData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.SummaryData = data[3];
           } else if (this.stepOneData.TypeSelected == "AssemblyGeneralExtra") {
-            this.StatementItems = data[0];
-            this.ChiefItems = data[1];
-            this.ShareholdersItems = data[2];
-            this.CEOItems = data[3];
-            this.BoardItems = data[4];
-            this.NewBoardItems = data[5];
-            this.WageItems = data[6];
-            this.SummaryItems = data[7];
+            this.ICData = [];
+            this.StatementData = data[0];
+            this.ChiefData = data[1];
+            this.ShareholdersData = data[2];
+            this.CEOData = data[3];
+            this.BoardData = data[4];
+            this.NewBoardData = data[5];
+            this.WageData = data[6];
+            this.SummaryData = data[7];
           }
-
-          // console.log((data.ShareHolders));
-          // console.log((data.Chief));
-          // console.log((data.Summary));
-          // console.log((data.IC));
-          // console.log(JSON.parse(data.ShareHolders));
-          // console.log(JSON.parse(data.Chief));
-          // console.log(JSON.parse(data.Summary));
-          // console.log(JSON.parse(data.IC));
-          // this.ShareholdersItems = JSON.parse(data.ShareHolders);
-          // this.ChiefItems = JSON.parse(data.Chief);
-          // this.SummaryItems = JSON.parse(data.Summary);
-          // this.ICitems = JSON.parse(data.IC);
-          // this.stepThreeItems.Shareholders = JSON.parse(data.ShareHolders);
-          // this.stepThreeItems.Chief = JSON.parse(data.Chief)
-          // this.stepThreeItems.Summary = JSON.parse(data.Summary)
-          // this.stepThreeItems.IC = JSON.parse(data.IC)
-
-          // console.log(this.stepThreeItems);
         })
         .catch(error => {
           console.log(error);
@@ -854,14 +590,14 @@ export default {
 };
 </script>
 <style scoped>
-/* .bb-table {
+/* .ticker-assembly-table {
   text-align: right;
 } */
-.bb-table-head {
+.ticker-assembly-table-head {
   font-size: 0.8rem;
   font-weight: 500;
 }
-.bb-table {
+.ticker-assembly-table {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1;

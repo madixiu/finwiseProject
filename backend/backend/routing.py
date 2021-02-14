@@ -15,13 +15,15 @@ application = ProtocolTypeRouter({
                     # re_path(r"^ws/test$", optionData),
                     # re_path(r"^index_live/$", index_live),
                     re_path(r"^ws/random$", random),
-                    re_path(r"^ws/marketwatch",MarketWatch),
+                    re_path(r"^ws/marketmap",getMarketMap .as_asgi()),
+                    re_path(r"^ws/marketwatch",getMarketWatch .as_asgi()),
                     re_path(r"^ws/Top5Views",Top5Viewed .as_asgi()),
                     re_path(r"^ws/ImpactOnIndex",getImpactOnIndex .as_asgi()),
                     re_path(r"^ws/HighestVolume",getHighestVolumes .as_asgi()),
                     re_path(r"^ws/HighestValues",getHighestValues .as_asgi()),
                     re_path(r"^ws/HighestSupplies",getHighestSupplies .as_asgi()),
                     re_path(r"^ws/HighestDemands",getHighestDemand .as_asgi()),
+                    
 
                 ]
             )

@@ -142,12 +142,6 @@ export default {
       if (JSON.parse(data.data) != "No Data" || !!this.DataItems.length)
         this.loading = false;
     };
-    // watch: {
-    //   mostviewed() {
-    //     this.populateData();
-    //     // console.log("WatcherSubHeader");
-    //   }
-    // }
   },
   destroyed() {
     let barier = { request: "halt" };

@@ -16,7 +16,7 @@ from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
 from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
-from requestcall.getOraghandHaghTaghadomData import getOraghData,getHaghTaghadomData
+from requestcall.getOragh_HaghTaghadom_FundsData import getOraghData,getHaghTaghadomData,getFundsData
 # from requestcall.getTVData import 
 
 def getCodalNoticesAll(self,identifier):
@@ -188,8 +188,12 @@ def getHaghTaghadom(self):
     return JsonResponse(getHaghTaghadomData(),safe=False)
 def getOragh(self):
     return JsonResponse(getOraghData(),safe=False)
+def getFunds(self):
+    return JsonResponse(getFundsData(),safe=False)
 
 
 
 def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
+
+

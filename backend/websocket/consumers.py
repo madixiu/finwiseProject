@@ -11,6 +11,7 @@ from channels.exceptions import StopConsumer
 from .randomGen import get_number
 from requestcall.getOptions import optionRequest
 from requestcall.getMarketWatch import getMarketWatchRequest,getFilteredData
+from requestcall.treeMapData import getMapData
 from requestcall.getTseData import *
 
 ## option section
@@ -229,4 +230,37 @@ class getHighestSupplies(AsyncWebsocketConsumer):
             return
     async def disconnect(self, code):
         self.close()
-        raise StopConsumer()                        
+        raise StopConsumer()
+
+class getMarketWatch(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+    
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getMarketWatchRequest());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()
+        # return super().disconnect(code)
+
+class getMarketMap(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getMapData());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
