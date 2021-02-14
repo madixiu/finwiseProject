@@ -20,7 +20,7 @@
             class=" mr-4"
           >
             <div
-              class="mr-2 pt-2 pb-2"
+              class="mr-2 py-xs-4 py-md-4 py-lg-3 py-xl-4 py-xxl-4"
               style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
             >

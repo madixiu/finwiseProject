@@ -117,21 +117,21 @@ export default {
       }
     },
     async loadData() {
-      // await this.axios
-      //   .get("/api/MainSearchBar")
-      //   .then(response => {
-      //     let data = response.data;
-      //     // let tickerNames = [];
-      //     if (data != "noData") this.searchData = data;
-      //     // for (let item of data) {
-      //     //   tickerNames.append(item.ticker);
-      //     // }
-      //     // console.log(tickerNames);
-      //     // this.states = tickerNames;
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
+      await this.axios
+        .get("/api/MainSearchBar")
+        .then(response => {
+          let data = response.data;
+          // let tickerNames = [];
+          if (data != "noData") this.searchData = data;
+          // for (let item of data) {
+          //   tickerNames.append(item.ticker);
+          // }
+          // console.log(tickerNames);
+          // this.states = tickerNames;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     querySelections(v) {
       this.loading = true;

@@ -73,7 +73,8 @@ def getMonthlyInvestment_Portfo(self,identifier):
     return JsonResponse(monthlyInvestPortf(identifier),safe=False)
 def getMonthlyInvestment_Summary(self,identifier):
     return JsonResponse(monthlyInvestSummary(identifier),safe=False)
-
+def getShareHolders(self,identifier):
+    return JsonResponse(getShareholdersList(identifier),safe=False)
 
 
 

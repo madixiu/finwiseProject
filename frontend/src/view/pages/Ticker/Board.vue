@@ -52,10 +52,11 @@ export default {
         //       "no-unused-vars": "off"
         //     }
         // },
+        // eslint-disable-next-line no-unused-vars
         this.getTwo().then(response => {
-          console.log(response);
+          // console.log(response);
           this.getThree().then(function() {
-            console.log("ChainDone");
+            // console.log("ChainDone");
           });
         });
       });

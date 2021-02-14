@@ -71,14 +71,12 @@ export default {
       DataItems3: [],
       ceoheaders: [
         { text: "نام مدیر عامل", value: "CEOName" },
-        { text: "شماره ملی", value: "CEOSSID" },
         { text: "مدرک", value: "CEODegree" }
       ],
       boardheaders: [
         { text: "نام عضو", value: "newBoardName" },
         { text: "کد/شناسه ملی", value: "NationalCode" },
         { text: "نماینده", value: "NewAgentName" },
-        { text: "کد ملی نماینده", value: "AgentSSID" },
         { text: "سمت", value: "Posistion" },
         { text: "موظف", value: "Duty" },
         { text: "مدرک تحصیلی", value: "Degree" },

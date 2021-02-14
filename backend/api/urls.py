@@ -43,6 +43,7 @@ urlpatterns = [
    path("CurrentCeo/<identifier>/",getCurrentCeo),
    path("AdminNotices/<firm>/",getAdminNotice),
    path("StatusChanges/<identifier>/",getStatusChanges),
+   path("Shareholders/<identifier>/",getShareHolders),
    ####
    path("IndexMarketCap",getIndexMarketCap),
    path("ViewOptionAssetVolatility",getOptionAssets),
