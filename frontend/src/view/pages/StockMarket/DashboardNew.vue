@@ -2,7 +2,7 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-8 col-lg-8" id="ChartOneDiv">
+      <div class="col-xxl-10 col-lg-10" id="ChartOneDiv">
         <chartOne
           :inputData="highestTvalueData"
           :inputWidth="width"

@@ -44,12 +44,9 @@
               :items-per-page="10"
             >
               <template v-slot:[`item.ticker`]="{ item }">
-                <v-chip
-                  small
-                  label
-                  :to="{ name: 'TickerOverall', params: { id: item.ID } }"
-                  >{{ item.ticker }}</v-chip
-                >
+                <v-chip small label :to="linkcreated(item)">{{
+                  item.ticker
+                }}</v-chip>
               </template>
               <template v-slot:[`item.MarketCap`]="{ item }">
                 <span
@@ -119,6 +116,11 @@ export default {
     }
   },
   methods: {
+    linkcreated(item) {
+      if (item.Type == "stock") {
+        return { name: "TickerOverall", params: { id: item.ID } };
+      }
+    },
     numberWithCommas(x) {
       let parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

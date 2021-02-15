@@ -59,40 +59,40 @@ export default {
   },
   methods: {
     loadData() {
-      this.getAllowed().then(response => {
-        console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
-        this.getOne().then(response2 => {
-          console.log(response2);
-          this.getTwo().then(function() {});
-          // console.log("ChainDone");
-        });
+      // this.getAllowed().then(response => {
+      // console.log(response);
+      //add this to package.json in developement
+      //         "eslintConfig": {
+      //     "rules": {
+      //       "no-console": "off",
+      //       "no-unused-vars": "off"
+      //     }
+      // },
+      this.getOne().then(response2 => {
+        console.log(response2);
+        this.getTwo().then(function() {});
+        // console.log("ChainDone");
       });
+      // });
     },
-    async getAllowed() {
-      await this.axios
-        .get("/api/tickerallnames")
-        .then(response3 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
-          this.allowed = response3.data;
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
-        })
-        .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
-        });
-    },
+    // async getAllowed() {
+    //   await this.axios
+    //     .get("/api/tickerallnames")
+    //     .then(response3 => {
+    //       // console.log(response.data[0][0]);
+    //       // console.log(this.$route.params.id);
+    //       // console.log("SecondDone");
+    //       this.allowed = response3.data;
+    //       // console.log("GetTwoStart:");
+    //       // console.log(response.data);
+    //       // console.log(this.notice);
+    //       // console.log("GetTwoEnd:");
+    //     })
+    //     .catch(error => {
+    //       // console.log("GetTwoeCatch");
+    //       console.log(error);
+    //     });
+    // },
     async getTwo() {
       await this.axios
         .get("/api/Alldps/" + this.$route.params.id + "/")
