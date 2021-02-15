@@ -160,7 +160,7 @@
               <!--begin: Wizard Step 3-->
               <div class="pb-5" data-wizard-type="step-content">
                 <!-- ******************** TABLE COMPONENT ********************* -->
-                <Tables
+                <AssemblyTables
                   :ShareholdersItems="ShareholdersData"
                   :ChiefItems="ChiefData"
                   :SummaryItems="SummaryData"
@@ -170,7 +170,9 @@
                   :BoardItems="BoardData"
                   :NewBoardItems="NewBoardData"
                   :WageItems="WageData"
-                />
+                >
+                </AssemblyTables>
+
                 <!-- ******************** TABLE COMPONENT ********************* -->
               </div>
               <!--end: Wizard Step 3-->
@@ -226,7 +228,7 @@
 
 <script>
 // import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import Tables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
+import AssemblyTables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
 import KTUtil from "@/assets/js/components/util";
 import KTWizard from "@/assets/js/components/wizard";
 import Swal from "sweetalert2";
@@ -234,7 +236,7 @@ import datePicker from "vue-persian-datetime-picker";
 
 export default {
   name: "Wizard",
-  component: { datePicker, Tables },
+  components: { datePicker, AssemblyTables },
   data() {
     return {
       wizard: null,

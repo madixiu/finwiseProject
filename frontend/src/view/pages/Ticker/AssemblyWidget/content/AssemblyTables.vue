@@ -5,7 +5,7 @@
         <v-card-title>افزایش سرمایه</v-card-title>
         <b-table
           class="ticker-assembly-table"
-          thClass="ticker-assembly-table-head"
+          thClass="ICheader"
           striped
           bordered
           outlined
@@ -34,7 +34,25 @@
             fixed
             :items="ChiefItems"
             :fields="stepThreeItemsTableHeaders.ChiefHeaders"
-          ></b-table>
+          >
+            <template #cell(Position)="data">
+              <b v-if="data.value == 'Cheif'" class="ticker-assembly-table-cell"
+                >رییس مجمع</b
+              >
+              <b
+                v-if="
+                  data.value == 'Supervisor1' || data.value == 'Supervisor2'
+                "
+                class="ticker-assembly-table-cell"
+                >ناظر مجمع</b
+              >
+              <b
+                v-if="data.value == 'Secretary'"
+                class="ticker-assembly-table-cell"
+                >منشی مجمع</b
+              >
+            </template>
+          </b-table>
         </v-card>
       </div>
 
@@ -111,7 +129,14 @@
             fixed
             :items="ShareholdersItems"
             :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
-          ></b-table>
+          >
+            <template #cell(ShareCount)="data">
+              <span>{{ data.value.toLocaleString() }}</span>
+            </template>
+            <template #cell(OwnerPercentage)="data">
+              <b class="ticker-assembly-table-cell">{{ data.value }}</b>
+            </template>
+          </b-table>
         </v-card>
       </div>
 
@@ -182,6 +207,7 @@
 </template>
 <script>
 export default {
+  name: "AssemblyTables",
   props: {
     ShareholdersItems: Array,
     ChiefItems: Array,
@@ -196,21 +222,40 @@ export default {
   data() {
     return {
       stepThreeItemsTableHeaders: {
-        // ShareholdersHeaders: ["درصد مالکیت","تعداد سهام","سهامدار"],
-
         ICheaders: [
           // { label: "ID", key: "ID" },
           // { label: "SummaryID", key: "SummaryID" },
-          { label: "تعداد سهام", key: "LastShareCount" },
-          { label: "ارزش اسمی هر سهم", key: "LastShareNominalValue" },
-          { label: "آخرین سرمایه ثبتی", key: "LastCapital" },
-          { label: "مطالبات و آورده نقدی-قطعی", key: "CashIncoming_Final" },
+          { label: "تعداد سهام", key: "LastShareCount", thClass: "ICheader" },
+          {
+            label: "ارزش اسمی هر سهم",
+            key: "LastShareNominalValue",
+            thClass: "ICheader"
+          },
+          {
+            label: "آخرین سرمایه ثبتی",
+            key: "LastCapital",
+            thClass: "ICheader"
+          },
+          {
+            label: "مطالبات و آورده نقدی-قطعی",
+            key: "CashIncoming_Final",
+            thClass: "ICheader"
+          },
           {
             label: "مطالبات و آورده نقدی-در اختیار هیئت مدیره",
-            key: "CashIncoming_Ceo"
+            key: "CashIncoming_Ceo",
+            thClass: "ICheader"
           },
-          { label: "مطالبات و آورده نقدی-کل", key: "CashIncoming_Total" },
-          { label: "سود انباشته-قطعی", key: "RetainedEarning_Final" },
+          {
+            label: "مطالبات و آورده نقدی-کل",
+            key: "CashIncoming_Total",
+            thClass: "ICheader"
+          },
+          {
+            label: "سود انباشته-قطعی",
+            key: "RetainedEarning_Final",
+            thClass: "ICheader"
+          },
           {
             label: "سود انباشته-قطعی در اختیار هیئت مدیره",
             key: "RetainedEarning_Ceo"
@@ -345,7 +390,8 @@ export default {
         ]
       }
     };
-  }
+  },
+  mounted() {}
 };
 </script>
 <style>
@@ -358,8 +404,24 @@ export default {
   font-size: 0.8rem;
   line-height: 1;
 }
+.ticker-assembly-table-cell {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 400;
+}
+.ticker-assembly-table-cell-number {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 400;
+  font-family: "Dirooz FD ";
+}
 .selectionTable {
   direction: rtl;
   text-align: right;
+}
+.ICheader {
+  font-size: 0.6rem !important;
 }
 </style>

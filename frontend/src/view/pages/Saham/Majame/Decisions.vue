@@ -3,120 +3,128 @@
     <div class="col-12">
       <!-- User Interface controls -->
       <v-card>
-        <b-col lg="4" class="my-1">
-          <b-input-group size="sm">
-            <b-form-input
-              id="filter-input"
-              v-model="filter"
-              type="search"
-              placeholder="جستجو"
-            ></b-form-input>
+        <v-toolbar dense flat>
+          <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
+          <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
 
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''"
-                >پاک کردن</b-button
-              >
-            </b-input-group-append>
-          </b-input-group>
-        </b-col>
+          <v-spacer></v-spacer>
 
-        <!-- Main table element -->
-        <b-table
-          thClass="Descision-table-head"
-          class="Descision-table"
-          tbody-tr-class="Descision-table-row"
-          striped
-          :items="ListData"
-          :fields="headersListData"
-          :current-page="currentPage"
-          :per-page="perPage"
-          :filter="filter"
-          :filter-debounce="1200"
-          :busy.sync="isBusy"
-          :no-provider-paging="true"
-          no-border-collapse
-          dense
-          bordered
-          outlined
-          small
-          hover
-          responsive
-          @filtered="onFiltered"
-        >
-          <template #table-busy>
-            <div class="text-center text-danger my-2">
-              <b-spinner class="align-middle mr-2"></b-spinner>
-              <strong>شکیبا باشید</strong>
-            </div>
-          </template>
-          <template #cell(title)="row">
-            <b class="AssemblyTitle" @click="titleClick(row)">{{
-              row.value
-            }}</b>
-          </template>
+          <!-- <v-btn v-if="cardKey" icon @click="cardKey = !cardKey">
+            <v-icon>mdi-information-outline</v-icon>
+          </v-btn> -->
+          <v-btn v-if="!cardKey" icon @click="cardKey = !cardKey">
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <transition name="fade">
+          <div v-if="cardKey">
+            <b-col lg="4" class="my-1">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="filter-input"
+                  v-model="filter"
+                  type="search"
+                  placeholder="جستجو"
+                ></b-form-input>
 
-          <template #cell(HtmlUrl)="row">
-            <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''"
+                    >پاک کردن</b-button
+                  >
+                </b-input-group-append>
+              </b-input-group>
+            </b-col>
+
+            <!-- Main table element -->
+            <b-table
+              thClass="Descision-table-head"
+              class="Descision-table"
+              tbody-tr-class="Descision-table-row"
+              striped
+              :items="ListData"
+              :fields="headersListData"
+              :current-page="currentPage"
+              :per-page="perPage"
+              :filter="filter"
+              :filter-debounce="1200"
+              :busy.sync="isBusy"
+              :no-provider-paging="true"
+              no-border-collapse
+              dense
+              bordered
+              outlined
+              small
+              hover
+              responsive
+              @filtered="onFiltered"
+            >
+              <template #table-busy>
+                <div class="text-center text-danger my-2">
+                  <b-spinner class="align-middle mr-2"></b-spinner>
+                  <strong>شکیبا باشید</strong>
+                </div>
+              </template>
+              <template #cell(title)="row">
+                <b class="AssemblyTitle" @click="titleClick(row)">{{
+                  row.value
+                }}</b>
+              </template>
+
+              <template #cell(HtmlUrl)="row">
+                <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
               لینک
             </b-button> -->
-            <v-icon
-              size="15px"
-              color="#4682B4"
-              @click="info(row.item)"
-              class="mr-1"
-              >mdi-link-variant</v-icon
+                <v-icon
+                  size="15px"
+                  color="#4682B4"
+                  @click="info(row.item)"
+                  class="mr-1"
+                  >mdi-link-variant</v-icon
+                >
+              </template>
+            </b-table>
+            <b-col sm="7" md="6" class="my-1">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                align="fill"
+                size="sm"
+                class="my-0 paginationClass"
+              ></b-pagination>
+            </b-col>
+          </div>
+          <div v-if="!cardKey">
+            <!-- ******************** TABLE COMPONENT ********************* -->
+            <AssemblyTables
+              :ShareholdersItems="ShareholdersData"
+              :ChiefItems="ChiefData"
+              :SummaryItems="SummaryData"
+              :ICitems="ICData"
+              :StatementItems="StatementData"
+              :CEOItems="CEOData"
+              :BoardItems="BoardData"
+              :NewBoardItems="NewBoardData"
+              :WageItems="WageData"
             >
-          </template>
-        </b-table>
-        <b-col sm="7" md="6" class="my-1">
-          <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            size="sm"
-            class="my-0"
-          ></b-pagination>
-        </b-col>
-      </v-card>
-
-      <!-- Info modal -->
-      <!-- <b-modal
-        :id="infoModal.id"
-        :title="infoModal.title"
-        ok-only
-        @hide="resetInfoModal"
-      >
-        <pre>{{ infoModal.content }}</pre>
-      </b-modal> -->
-    </div>
-    <div class="col-12">
-      <v-card>
-        <!-- ******************** TABLE COMPONENT ********************* -->
-        <Tables
-          :ShareholdersItems="ShareholdersData"
-          :ChiefItems="ChiefData"
-          :SummaryItems="SummaryData"
-          :ICitems="ICData"
-          :StatementItems="StatementData"
-          :CEOItems="CEOData"
-          :BoardItems="BoardData"
-          :NewBoardItems="NewBoardData"
-          :WageItems="WageData"
-        />
-        <!-- ******************** TABLE COMPONENT ********************* -->
+            </AssemblyTables>
+            <!-- ******************** TABLE COMPONENT ********************* -->
+          </div>
+        </transition>
       </v-card>
     </div>
   </div>
 </template>
 <script>
 // import Wizard from "@/view/pages/Saham/Majame/content/Wizard";
-import Tables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
+import AssemblyTables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
 export default {
   name: "Decisions",
-  components: { Tables },
+  components: { AssemblyTables },
   data() {
     return {
+      cardKey: true,
+      AssemblyName: "",
       totalRows: 1,
       currentPage: 1,
       perPage: 15,
@@ -241,7 +249,7 @@ export default {
         .then(response => {
           let data = response.data;
           console.log(data);
-          if (type == "AssemblyGeneral") {
+          if (type == "General") {
             this.ICData = [];
             this.StatementData = data[0];
             this.ChiefData = data[1];
@@ -251,7 +259,7 @@ export default {
             this.NewBoardData = data[5];
             this.WageData = data[6];
             this.SummaryData = data[7];
-          } else if (type == "AssemblyExtra") {
+          } else if (type == "Extra") {
             this.StatementData = [];
             this.CEOData = [];
             this.BoardData = [];
@@ -261,7 +269,7 @@ export default {
             this.ChiefData = data[1];
             this.ShareholdersData = data[2];
             this.SummaryData = data[3];
-          } else if (type == "AssemblyGeneralExtra") {
+          } else if (type == "GeneralExtra") {
             this.ICData = [];
             this.StatementData = data[0];
             this.ChiefData = data[1];
@@ -281,6 +289,8 @@ export default {
       console.log(item);
       console.log(item.item.ID, item.item.Type);
       this.TablesReq(item.item.ID, item.item.Type);
+      this.AssemblyName = item.item.Ticker;
+      this.cardKey = false;
     },
     info(item) {
       // this.infoModal.title = `Row index: ${index}`;
@@ -301,7 +311,43 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+/* always present */
+.expand-transition {
+  transition: all 0.6s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
+}
+/* .expand-enter defines the starting state for entering */
+/* .expand-leave defines the ending state for leaving */
+.expand-enter,
+.expand-leave {
+  height: 0;
+  padding: 0 10px;
+  opacity: 0;
+}
+.list-enter,
+.list-leave-to {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s;
+}
 .AssemblyTitle {
   color: #4682b4;
   cursor: pointer;
@@ -314,5 +360,8 @@ export default {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1;
+}
+.paginationClass {
+  font-family: "Dirooz FD" !important;
 }
 </style>
