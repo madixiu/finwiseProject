@@ -35,7 +35,7 @@
       </div>
       <div class="col-xxl-8 col-lg-8 col-md-8">
         <AnalystWidget></AnalystWidget>
-       </div>
+      </div>
     </div>
     <!--end::Dashboard-->
   </div>
@@ -73,7 +73,7 @@ export default {
     return {
       search: "",
       subheaders: [],
-      allowed: [],
+      // allowed: [],
       stats: [],
       hhdata: [],
       livedata: []
@@ -108,31 +108,31 @@ export default {
   methods: {
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getAllowed().then(response => {
+      // this.getAllowed().then(response => {
+      // eslint-disable-next-line no-unused-vars
+      this.getOne().then(response2 => {
         // eslint-disable-next-line no-unused-vars
-        this.getOne().then(response2 => {
+        this.getTwo().then(response3 => {
           // eslint-disable-next-line no-unused-vars
-          this.getTwo().then(response3 => {
+          this.getHH().then(response4 => {
             // eslint-disable-next-line no-unused-vars
-            this.getHH().then(response4 => {
-              // eslint-disable-next-line no-unused-vars
-              this.getLiveData().then();
-            });
+            this.getLiveData().then();
           });
         });
       });
+      // });
     },
-    async getAllowed() {
-      await this.axios
-        .get("/api/tickerallnames")
-        .then(response3 => {
-          this.allowed = response3.data;
-        })
-        .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
-        });
-    },
+    // async getAllowed() {
+    //   await this.axios
+    //     .get("/api/tickerallnames")
+    //     .then(response3 => {
+    //       this.allowed = response3.data;
+    //     })
+    //     .catch(error => {
+    //       // console.log("GetTwoeCatch");
+    //       console.log(error);
+    //     });
+    // },
     async getHH() {
       await this.axios
         .get("/api/LiveHHTicker/" + this.$route.params.id + "/")

@@ -49,7 +49,7 @@
               <v-tooltip left>
                 <template v-slot:activator="{ on }">
                   <v-chip label small v-on="on"
-                    >{{ this.roundTo(item.Ownership,2) }} درصد</v-chip
+                    >{{ this.roundTo(item.Ownership, 2) }} درصد</v-chip
                   >
                 </template>
                 <span class="small">{{ item.persianDate }}</span>
@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "ShareholdersWidget",
   props: ["notices"],
@@ -93,9 +92,7 @@ export default {
       ]
     };
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-  },
+  computed: {},
   methods: {
     populateData() {
       this.DataItems2 = this.notices;
@@ -142,8 +139,8 @@ export default {
     }
   },
   mounted() {
-      this.DataItems2=[]
-      this.DataItems3=[]
+    this.DataItems2 = [];
+    this.DataItems3 = [];
     this.populateData();
     this.populatesubData();
   },
