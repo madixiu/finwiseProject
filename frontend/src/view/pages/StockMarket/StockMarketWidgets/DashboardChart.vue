@@ -233,9 +233,9 @@ export default {
         .append("text")
         .attr("class", "Chart1title")
         .attr("x", (this.width - this.margin.right) / 6 + this.margin.left)
-        .attr("y", ((this.margin.top * 3) / 4))
+        .attr("y", (this.margin.top * 3) / 4)
         .attr("text-anchor", "middle")
-        .style('font-size','1.2em')
+        .style("font-size", "1.2em")
         .text("بیشترین ارزش معاملات");
 
       chart
@@ -245,9 +245,9 @@ export default {
           "x",
           ((this.width - this.margin.right) * 4) / 6 + this.margin.left
         )
-        .attr("y", ((this.margin.top * 3) / 4))
+        .attr("y", (this.margin.top * 3) / 4)
         .attr("text-anchor", "middle")
-        .style('font-size','1.2em')
+        .style("font-size", "1.2em")
         .text("بیشترین حجم معاملات");
 
       const tooltipBox = chart.append("g");
@@ -343,8 +343,6 @@ export default {
         var offsetText1Y = BHeight / 3;
         // var offsetText2Y = 2*BHeight / 3;
         // g
-      
-
 
         // eslint-disable-next-line no-unused-vars
         const text2 = g
@@ -354,7 +352,8 @@ export default {
           .data(value.ticker)
           .attr(
             "transform",
-            `translate(${(this.width - this.margin.left - this.margin.right)*3 /
+            `translate(${((this.width - this.margin.left - this.margin.right) *
+              3) /
               4 +
               offsetText1x},${offsetText1Y + this.margin.top})`
           )
@@ -364,19 +363,17 @@ export default {
           .style("font-size", "1.5em")
           .style("Opacity", "1 ");
         // eslint-disable-next-line no-unused-vars
-        const text3 = g.join("text")
+        const text3 = g
+          .join("text")
           .data(value.Value)
-          .attr(
-            "transform",
-            `translate(${300},${300})`
-          ).text(value.Value)
+          .attr("transform", `translate(${300},${300})`)
+          .text(value.Value)
           .style("fill", "black")
           .style("font-size", "1.5em")
           .style("Opacity", "1 ");
         // eslint-disable-next-line no-unused-vars
         // eslint-disable-next-line no-unused-vars
       };
-      
     }
   }
 };
@@ -392,7 +389,7 @@ export default {
 .yaxis text {
   padding-right: 10px;
 }
-.Chart1title *{
+.Chart1title * {
   font-size: 1.2em;
   font-family: "Dirooz FD";
 }
