@@ -52,7 +52,8 @@
             <v-tab-item v-for="itemR in todates" :key="itemR.key">
               <div class="card-header border-0">
                 <h3 class="card-title font-weight-bolder FinancialStrength">
-                  ترازنامه دوره {{itemR.period}} ماه منتهی به {{itemR.value}} - سال مالی {{itemR.fiscalYear}}
+                  ترازنامه دوره {{ itemR.period }} ماه منتهی به
+                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}
                 </h3>
               </div>
               <div class="row">
@@ -163,8 +164,7 @@ export default {
         {
           text: "دوره مشابه سال مالی گذشته(میلیون ریال) ",
           value: "lastYear"
-        },
-       
+        }
       ],
       DataItems2: []
     };

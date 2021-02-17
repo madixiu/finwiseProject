@@ -329,7 +329,6 @@ export default {
         )
         .style("font-size", "2.5em");
 
-
       chart
         .append("rect")
         .attr("x", leftOffset)
@@ -337,7 +336,7 @@ export default {
         .attr("height", BoxHeight)
         .attr(
           "width",
-          (BoxWidth) *
+          BoxWidth *
             ((this.jsonData.StockBlock + this.jsonData.Stock) /
               this.jsonData.Total)
         )
@@ -348,7 +347,7 @@ export default {
         .attr(
           "x",
           leftOffset +
-            (BoxWidth) *
+            BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total)
         )
@@ -356,7 +355,7 @@ export default {
         .attr("height", BoxHeight)
         .attr(
           "width",
-          (BoxWidth) *
+          BoxWidth *
             ((this.jsonData.ETF + this.jsonData.ETFBlock) / this.jsonData.Total)
         )
         .attr("fill", "#001170")
@@ -365,11 +364,11 @@ export default {
         .append("rect")
         .attr(
           "x",
-          leftOffset+
-            (BoxWidth) *
+          leftOffset +
+            BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total) +
-            (BoxWidth) *
+            BoxWidth *
               ((this.jsonData.ETF + this.jsonData.ETFBlock) /
                 this.jsonData.Total)
         )
@@ -377,7 +376,7 @@ export default {
         .attr("height", BoxHeight)
         .attr(
           "width",
-          (BoxWidth) *
+          BoxWidth *
             ((this.jsonData.Bond + this.jsonData.BondBlock) /
               this.jsonData.Total)
         )
@@ -389,7 +388,9 @@ export default {
         .text("نوع دارایی")
         .attr(
           "transform",
-          `translate(${leftOffset * 0.8},${4 * BoxHeight + this.margin.top + 4 * this.offsetY+
+          `translate(${leftOffset * 0.8},${4 * BoxHeight +
+            this.margin.top +
+            4 * this.offsetY +
             0.5 * BoxHeight})`
         )
         .style("font-size", "2.5em");
@@ -398,13 +399,13 @@ export default {
         .attr(
           "x",
           leftOffset +
-            (BoxWidth) *
+            BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total) +
-            (BoxWidth) *
+            BoxWidth *
               ((this.jsonData.ETF + this.jsonData.ETFBlock) /
                 this.jsonData.Total) +
-            (BoxWidth) *
+            BoxWidth *
               ((this.jsonData.Bond + this.jsonData.BondBlock) /
                 this.jsonData.Total)
         )
@@ -412,7 +413,7 @@ export default {
         .attr("height", BoxHeight)
         .attr(
           "width",
-          (BoxWidth) *
+          BoxWidth *
             (1 -
               (this.jsonData.Bond +
                 this.jsonData.BondBlock +

@@ -43,9 +43,9 @@
                     >
                       % {{ setclosingperc }}
                     </span>
-                    
+
                     )
-                    
+
                     <v-icon
                       left
                       small
@@ -79,7 +79,8 @@
                     >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    اولین قیمت : <span class="spandata">{{ this.first }} ریال</span>
+                    اولین قیمت :
+                    <span class="spandata">{{ this.first }} ریال</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     ارزش بازار :
@@ -160,7 +161,6 @@
                       میلیارد ریال</span
                     >
                   </h5>
-                  
                 </div>
                 <div
                   class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"

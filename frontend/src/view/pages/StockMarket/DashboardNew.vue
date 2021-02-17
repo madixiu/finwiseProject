@@ -85,7 +85,7 @@ export default {
           if (data != "noData") this.highestTvalueData = data;
           // eslint-disable-next-line no-unused-vars
           this.getTradesAll().then(response => {
-              this.dataFetched = true;
+            this.dataFetched = true;
           });
 
           // for (let item of data) {

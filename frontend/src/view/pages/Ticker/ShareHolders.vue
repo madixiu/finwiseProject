@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       subheaders: [],
-      notice: [],
+      notice: []
     };
   },
   mounted() {
