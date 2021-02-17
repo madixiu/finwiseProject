@@ -28,10 +28,10 @@
           </v-chip>
           {{ LiveDataItems.name }} -->
           <div class="text-center">
-             <b-button color="#6c757d">
-              آخرین قیمت  <br />
+            <b-button color="#6c757d">
+              آخرین قیمت <br />
               <b-badge variant="light"
-                >{{ numberWithCommas(LiveDataItems.last) }}  (
+                >{{ numberWithCommas(LiveDataItems.last) }} (
                 <span
                   class="spandata"
                   v-bind:class="[
@@ -41,7 +41,9 @@
                   ]"
                   >{{
                     Math.round(
-                      (LiveDataItems.last / LiveDataItems.yesterday - 1) * 100 * 100
+                      (LiveDataItems.last / LiveDataItems.yesterday - 1) *
+                        100 *
+                        100
                     ) / 100
                   }}</span
                 >)
@@ -49,7 +51,7 @@
             </b-button>
           </div>
         </div>
-                <div
+        <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
@@ -60,7 +62,7 @@
             <b-button color="#6c757d">
               قیمت پایانی <br />
               <b-badge variant="light"
-                >{{ numberWithCommas(LiveDataItems.close) }}  (
+                >{{ numberWithCommas(LiveDataItems.close) }} (
                 <span
                   class="spandata"
                   v-bind:class="[
@@ -70,7 +72,9 @@
                   ]"
                   >{{
                     Math.round(
-                      (LiveDataItems.close / LiveDataItems.yesterday - 1) * 100 * 100
+                      (LiveDataItems.close / LiveDataItems.yesterday - 1) *
+                        100 *
+                        100
                     ) / 100
                   }}</span
                 >)
@@ -93,7 +97,7 @@
                     roundTo(LiveDataItems.TradeValue / 1000000000, 2)
                   )
                 }}
-                 میلیارد ریال</b-badge
+                میلیارد ریال</b-badge
               >
             </b-button>
           </div>
@@ -118,7 +122,6 @@
             </b-button>
           </div>
         </div>
-        
 
         <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
