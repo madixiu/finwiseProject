@@ -504,7 +504,7 @@ export default {
 }
 .bb-table {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
 }
 .bb-table-row:hover {
@@ -512,27 +512,27 @@ export default {
 }
 .bb-table-cell {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 400;
 }
 .bb-table-cell-green {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
 }
 .bb-table-cell-red {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
 }
 .bb-table-cell-bold {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 600;
 }

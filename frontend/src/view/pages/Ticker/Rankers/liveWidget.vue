@@ -34,7 +34,7 @@
                   <hr />
                   <h5 class="titleHeaders-smaller ">
                     قیمت پایانی :
-                    <span class="spandata">{{ this.close }}</span> (
+                    <span class="spandata">{{ this.close }} ریال</span> (
                     <span
                       class="spandata"
                       v-bind:class="[
@@ -43,7 +43,9 @@
                     >
                       % {{ setclosingperc }}
                     </span>
+                    
                     )
+                    
                     <v-icon
                       left
                       small
@@ -57,7 +59,7 @@
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     قیمت آخرین معامله :
-                    <span class="spandata">{{ this.last }}</span> (
+                    <span class="spandata">{{ this.last }} ریال</span> (
                     <span
                       class="spandata"
                       v-bind:class="[
@@ -77,7 +79,7 @@
                     >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    اولین قیمت : <span class="spandata">{{ this.first }}</span>
+                    اولین قیمت : <span class="spandata">{{ this.first }} ریال</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     ارزش بازار :
@@ -122,8 +124,8 @@
                   <h5 class="titleHeaders-smaller ">
                     حجم مبنا :
                     <span class="spandata">
-                      {{ numberWithCommas(roundTo(this.mabna / 1000, 2)) }}
-                      هزار سهم</span
+                      {{ numberWithCommas(roundTo(this.mabna / 1000000, 2)) }}
+                      میلیون سهم</span
                     >
                   </h5>
                 </div>
@@ -158,9 +160,7 @@
                       میلیارد ریال</span
                     >
                   </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    میانگین حجم ۱ ماهه : {{ this.close }}
-                  </h5>
+                  
                 </div>
                 <div
                   class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"

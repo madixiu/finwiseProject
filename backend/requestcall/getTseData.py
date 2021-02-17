@@ -114,3 +114,45 @@ def get_AdminsNotice(identifier):
         # return(json.loads(resp.text))
     else:
         return("No Data")                    
+
+
+def TradeValueHH():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Total',headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")  
+def TradeValueHHBasedOnAsset():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Assets',headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")  
+def TradeValueAsset():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValues_Assets',headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")  
+def getLatestTwoIndex():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_LiveIndex',headers=head)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")                                  
