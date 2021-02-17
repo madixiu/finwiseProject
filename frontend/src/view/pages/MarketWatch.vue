@@ -214,14 +214,16 @@
 
         <b-table
           thClass="marketwatch-table-head"
+          head-variant="secondary"
           class="marketwatch-table"
           tbody-tr-class="marketwatch-table-row"
           striped
           :busy.sync="isBusy"
-          sticky-header="370px"
+          :sticky-header="height"
           dense
           :filter="Tablefilter"
-          :filter-debounce="6000"
+          :filter-debounce="100"
+          :filter-included-fields="filterOn"
           :sort-desc.sync="sortDesc"
           :sort-by.sync="sortBy"
           sort-direction="desc"
@@ -384,9 +386,8 @@ export default {
   components: {},
   data() {
     return {
-      // %%%%%%%%%%%% type data %%%%%%%%%%%%
-
-      // %%%%%%%%%%%% type data %%%%%%%%%%%%
+      height: "370px",
+      filterOn: ["ticker"],
       isBusy: true,
       sortDesc: false,
       sortBy: "ticker",
@@ -662,13 +663,7 @@ export default {
     // }
   },
   mounted() {
-    let filterRow = document.getElementById("marketwatchFilterRow1")
-      .offsetHeight;
-    let filterRow2 = document.getElementById("marketwatchFilterRow2")
-      .offsetHeight;
-
-    console.log(filterRow);
-    console.log(filterRow2);
+    this.height = this.getHeight();
     let container = document.getElementById("kt_content");
     // this.width = window.screen.width;
     // this.height = (window.screen.height * 72) / 100;
@@ -678,14 +673,13 @@ export default {
     this.TriggerFilteredHeader();
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    this.$socketMarketWatch.send(JSON.stringify({ request: "get" }));
+    // this.$socketMarketWatch.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
     this.$socketMarketWatch.onmessage = data => {
-      this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
       // this.DataItems = JSON.parse(data.data);
       // console.log(!!this.DataItems.length);
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        this.loading = false;
+        this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
     };
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -693,7 +687,8 @@ export default {
   },
   methods: {
     tickerClick(data) {
-      console.log(data);
+      this.$router.push({ path: `/ticker/Overview/Overall/${data.item.ID}` });
+      // console.log(data);
     },
     setFilterSelected() {
       // this.selectedFilters = [
@@ -886,6 +881,18 @@ export default {
       this.MarketWatchFilterPost();
       console.log(option);
     },
+    getHeight() {
+      let filterRow = document.getElementById("marketwatchFilterRow1")
+        .offsetHeight;
+      let filterRow2 = document.getElementById("marketwatchFilterRow2")
+        .offsetHeight;
+
+      console.log(filterRow);
+      console.log(filterRow2);
+      return (
+        (window.innerHeight - 100 - filterRow - filterRow2).toString() + "px"
+      );
+    },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
       let interval = setInterval(() => {
@@ -930,8 +937,8 @@ export default {
 .marketwatch-table-head {
   background-color: #f2f2f2;
   vertical-align: middle !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important ;
+  font-size: 1.1em !important;
+  font-weight: 700 !important ;
 }
 .marketwatch-table {
   vertical-align: middle !important;
@@ -944,38 +951,41 @@ export default {
 }
 .marketwatch-table-cell {
   text-align: center;
-  font-size: 0.8rem;
-  line-height: 1;
+  font-size: 1em;
+  /* line-height: 1; */
   font-weight: 400;
-  vertical-align: middle;
+  vertical-align: middle !important; 
+  font-family: "Vazir-Medium-FD";
 }
 .marketwatch-table-ticker {
   color: #4682b4;
   cursor: pointer;
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 .marketwatch-table-cell-green {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
-  vertical-align: middle;
+  vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
 }
 .marketwatch-table-cell-red {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
-  vertical-align: middle;
+  vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
 }
 .marketwatch-table-cell-bold {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 600;
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 .marketwatch-table-row {
   direction: ltr;

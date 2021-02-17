@@ -108,7 +108,16 @@ export default {
         return [];
       }
       return this.searchData.filter(e => {
-        return e.ticker.toLowerCase().startsWith(input.toLowerCase());
+        // console.log(e.name);
+
+        if (e.name != null)
+          return (
+            e.ticker.includes(input.toLowerCase()) ||
+            e.name.includes(input.toLowerCase())
+          );
+        else return e.ticker.includes(input.toLowerCase());
+        // else if (e.name.includes(input.toLowerCase()))
+        //   return e.name.includes(input.toLowerCase());
       });
     },
     getResultValue(result) {

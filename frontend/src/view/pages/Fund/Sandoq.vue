@@ -37,10 +37,10 @@
           tbody-tr-class="Funds-table-row"
           striped
           :busy.sync="isBusy"
-          sticky-header="470px"
+          :sticky-header="height"
           dense
           :filter="Tablefilter"
-          :filter-debounce="3000"
+          :filter-included-fields="filterOn"
           :sort-desc.sync="sortDesc"
           :sort-by.sync="sortBy"
           sort-direction="desc"
@@ -62,7 +62,7 @@
             </div>
           </template>
           <template #cell(ticker)="data">
-            <b class="Funds-table-ticker" @click="tickerClick(data)">{{
+            <b class="Funds-table-cell-bold" @click="tickerClick(data)">{{
               data.value
             }}</b>
           </template>
@@ -164,8 +164,11 @@ export default {
   name: "Funds",
   data() {
     return {
+      height: "470px",
+      WebsocketRequest: false,
       isBusy: true,
       sortDesc: false,
+      filterOn: ["ticker"],
       tableData: null,
       sortBy: "ticker",
       selectedHeaderOptions: [],
@@ -322,6 +325,15 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.height = this.getHeight();
+    this.liveChecker();
+    this.$socketSandoq.onmessage = data => {
+      // this.tableData = JSON.parse(data.data);
+      // console.log(!!this.tableData.length);
+      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+        // this.$store.dispatch("setSahm", JSON.parse(data.data));
+        this.tableData = JSON.parse(data.data);
+    };
   },
   computed: {
     HD() {
@@ -329,6 +341,9 @@ export default {
     }
   },
   methods: {
+    getHeight() {
+      return (window.innerHeight - 150).toString() + "px";
+    },
     async loadData() {
       this.isBusy = true;
 
@@ -382,7 +397,34 @@ export default {
       }
       console.log(header);
       return header;
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      let interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(interval);
+          return;
+        }
+        let barier = { request: "get" };
+        this.$socketSandoq.send(JSON.stringify(barier));
+        // console.log(this.WebsocketRequest);
+      }, 3000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (date.getHours() > 8 && date.getHours() < 15) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    let barier = { request: "halt" };
+    this.$socketSandoq.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
   }
 };
 </script>
@@ -390,47 +432,52 @@ export default {
 .Funds-table-head {
   /* background-color: #e01313; */
   vertical-align: middle !important;
-  font-size: 0.9rem !important;
+  font-size: 1.1em !important;
   font-weight: 600 !important ;
 }
 .Funds-table {
   vertical-align: middle !important;
   text-align: center !important;
-  font-size: 0.8rem !important;
+  font-size: 0.8em !important;
   line-height: 1 !important;
+  font-family: "Vazir-Medium-FD";
 }
 .Funds-table-row:hover {
   background-color: #999999 !important;
 }
 .Funds-table-cell {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 400;
   vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
 }
 .Funds-table-cell-green {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
   vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
 }
 .Funds-table-cell-red {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
   vertical-align: middle !important;
 }
 .Funds-table-cell-bold {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 600;
   vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
 }
 .Funds-table-row {
   direction: ltr;

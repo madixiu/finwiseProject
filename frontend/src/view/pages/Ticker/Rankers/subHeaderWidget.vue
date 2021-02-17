@@ -13,7 +13,9 @@
           <div class="text-center">
             <b-button class="testB" color="#212529">
               نماد
-              <br /><b-badge variant="light">{{ LiveDataItems.ticker }}</b-badge>
+              <br /><b-badge variant="light">{{
+                LiveDataItems.ticker
+              }}</b-badge>
             </b-button>
           </div>
           <!-- {{ LiveDataItems.ticker }} -->
@@ -89,7 +91,9 @@
                   ]"
                   >{{
                     Math.round(
-                      (LiveDataItems.close / LiveDataItems.yesterday - 1) * 100 * 100
+                      (LiveDataItems.close / LiveDataItems.yesterday - 1) *
+                        100 *
+                        100
                     ) / 100
                   }}</span
                 >
@@ -142,8 +146,8 @@ export default {
   methods: {
     LivepopulateData() {
       this.LiveDataItems = this.tickerdata;
-      console.log(this.LiveDataItems.length);
-      console.log(this.LiveDataItems)
+      // console.log(this.LiveDataItems.length);
+      // console.log(this.LiveDataItems);
     },
     numberWithCommas(x) {
       if (isNaN(x)) {

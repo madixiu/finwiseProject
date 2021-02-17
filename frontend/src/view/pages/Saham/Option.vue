@@ -27,7 +27,8 @@
             dense
             :busy.sync="isBusy"
             :filter="filter"
-            :filter-debounce="1200"
+            :filter-included-fields="filterOn"
+            :filter-debounce="100"
             :sort-desc.sync="sortDesc"
             :sort-by.sync="sortBy"
             sort-direction="desc"
@@ -57,7 +58,18 @@
             <template #cell(StrikePrice)="data">
               <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
-
+            <template #cell(TTM)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(averageFairprice)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(priceseller)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(volumeseller)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
             <template #cell(AssetPrice)="data">
               <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
@@ -77,10 +89,10 @@
                 class="bb-table-cell-red"
                 >{{ data.value }}</b
               >
-              <b v-if="data.value == -100001" class="bb-table-cell">{{
+              <b v-if="data.value == -100001" class="bb-table-cell-s">{{
                 "سفارش فروش ندارد"
               }}</b>
-              <b v-if="data.value == -100000" class="bb-table-cell-red">{{
+              <b v-if="data.value == -100000" class="bb-table-cell-r">{{
                 "ارزنده نیست"
               }}</b>
             </template>
@@ -95,6 +107,36 @@
                 data.value.toLocaleString()
               }}</b>
             </template>
+            <template #cell(TotalValue)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(FinalPayment)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(LastTrade)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+            </template>
+            <template #cell(DifferenceToLast)="data">
+              <b v-if="data.value == 0" class="bb-table-cell">{{
+                data.value
+              }}</b>
+              <b
+                v-if="
+                  data.value > 0 && data.value != 1001 && data.value != 1000
+                "
+                class="bb-table-cell-green"
+                >{{ data.value }}</b
+              >
+              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+                data.value
+              }}</b>
+              <b v-if="data.value == 1001" class="bb-table-cell-s">{{
+                "بدون معامله"
+              }}</b>
+              <b v-if="data.value == 1000" class="bb-table-cell-r">{{
+                "ارزنده نیست"
+              }}</b>
+            </template>
             <template #cell(ArzandegiLast)="data">
               <b v-if="data.value > 0" class="bb-table-cell-green">{{
                 data.value.toLocaleString()
@@ -105,6 +147,9 @@
               <b v-if="data.value == 0" class="bb-table-cell">{{
                 data.value.toLocaleString()
               }}</b>
+            </template>
+            <template #cell(TradeVolume)="data">
+              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
           </b-table>
         </v-card>
@@ -202,7 +247,9 @@ export default {
   name: "Option",
 
   data: () => ({
+    WebsocketRequest: false,
     isBusy: true,
+    filterOn: ["Nemad", "UnderLying"],
     sortDesc: true,
     sortBy: "DifferenceToAverage",
     OptionAsset: [],
@@ -272,7 +319,7 @@ export default {
         sortable: true
       },
       {
-        label: "حجم بهترین سفارش  فروش",
+        label: "حجم بهترین سفارش فروش",
         key: "volumeseller",
         width: "130",
         thClass: "bb-table-head",
@@ -286,7 +333,7 @@ export default {
         thClass: "bb-table-head",
         sortable: true,
         headerTitle:
-          "اختلاف قیمت میان بهترین سفارش فروش و قیمت عادلانه تقسیم بر قیمت عادلانه است که هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی قرارداد ارزان تر از قیمت واقعی اش می باشد"
+          " هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی خرید در این قیمت ارزنده تر است"
       },
 
       {
@@ -296,7 +343,7 @@ export default {
         thClass: "bb-table-head",
         sortable: true,
         headerTitle:
-          "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن و قیمت اعمال تقسیم بر قیمت کنونی سهام است که این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
+          "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن است و این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
       },
 
       {
@@ -304,7 +351,9 @@ export default {
         key: "TotalValue",
         width: "120",
         thClass: "bb-table-head",
-        sortable: true
+        sortable: true,
+        headerTitle:
+          "مبلغی که در صورت خرید کامل بهترین سفارش فروش، امروز باید پرداخت شود"
       },
       {
         label: "پرداخت نهایی بهترین سفارش(میلیون ریال)",
@@ -313,7 +362,7 @@ export default {
         thClass: "bb-table-head",
         sortable: true,
         headerTitle:
-          "مبلغی که در صورت خرید کامل بهترین سفارش فروش، در روز اعمال باید پرداخته شود"
+          "مبلغی که در صورت خرید کامل بهترین سفارش فروش، در روز اعمال باید پرداخت شود"
       },
       {
         label: "قیمت آخرین معامله",
@@ -330,7 +379,7 @@ export default {
         thClass: "bb-table-head",
         sortable: true,
         headerTitle:
-          "اختلاف قیمت میان آخرین معامله و قیمت عادلانه تقسیم بر قیمت عادلانه است که هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی قرارداد ارزان تر از قیمت واقعی اش می باشد"
+          " هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی خرید در این قیمت ارزنده تر است"
       },
       {
         label: "پوشش قیمت سهام با آخرین معامله",
@@ -339,7 +388,7 @@ export default {
         thClass: "bb-table-head",
         sortable: true,
         headerTitle:
-          "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن و قیمت اعمال تقسیم بر قیمت کنونی سهام است که این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
+          "قیمت تمام شده سهام با توجه به قیمت آخرین معامله آپشن است و این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
       },
 
       {
@@ -356,26 +405,17 @@ export default {
     ...mapGetters(["getSahm"])
   },
   mounted() {
-    // websocket//////////////////////////
-    // this.$socket.onopen = (data) => console.log('data' + data);
-    // this.$socket.onmessage = (data) => {
-    // // console.log("data firm live is: " +data.data)
-    // let obj = new Array()
-    // obj = JSON.parse(data.data)
-    // this.$store.dispatch('setSocketMessage',obj)
     this.loadData();
 
-    // setInterval(() => {
-
-    //       this.OptionTableReq()
-
-    // }, 5000)
-
     this.height = this.getHeight();
-    // console.log(window.innerHeight);
-    // defer the execution of anonymous function for
-    // 3 seconds and go to next line of code.
-    // sleep(2000).then(() => { console.log("World!"); });
+
+    this.liveChecker();
+    this.$socketOptions.onmessage = data => {
+      // this.DataItems = JSON.parse(data.data);
+      // console.log(!!this.DataItems.length);
+      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+        this.$store.dispatch("setSahm", JSON.parse(data.data));
+    };
   },
   methods: {
     loadData() {
@@ -422,9 +462,35 @@ export default {
         });
     },
     getHeight() {
-      //  return (window.innerHeight * 75)/100
       return (window.innerHeight - 150).toString() + "px";
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      let interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(interval);
+          return;
+        }
+        let barier = { request: "get" };
+        this.$socketOptions.send(JSON.stringify(barier));
+        // console.log(this.WebsocketRequest);
+      }, 30000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (date.getHours() > 8 && date.getHours() < 15) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    let barier = { request: "halt" };
+    this.$$socketOptions.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
   }
 };
 </script>
@@ -504,40 +570,101 @@ export default {
 }
 .bb-table {
   text-align: center;
-  font-size: 0.8rem;
+  /* font-size: 1em; */
   line-height: 1;
+  font-family: "Vazir-Medium-FD";
 }
 .bb-table-row:hover {
   background-color: #999999 !important;
 }
+@media screen and (max-width: 1366px) {
+  .bb-table-cell-s {
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 0.7em;
+    line-height: 1;
+    font-weight: 400;
+    font-family: "Vazir-Medium-FD";
+  }
+}
+@media screen and (min-width: 1600px) {
+  .bb-table-cell-s {
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 1em;
+    line-height: 1;
+    font-weight: 400;
+    font-family: "Vazir-Medium-FD";
+  }
+}
+@media screen and (max-width: 1366px) {
+  .bb-table-cell-r {
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 0.7em;
+    color: red;
+    line-height: 1;
+    font-weight: 400;
+    font-family: "Vazir-Medium-FD";
+  }
+}
+@media screen and (min-width: 1600px) {
+  .bb-table-cell-r {
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 1em;
+    line-height: 1;
+    color: red;
+    font-weight: 400;
+    font-family: "Vazir-Medium-FD";
+  }
+}
 .bb-table-cell {
+  vertical-align: middle !important;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
-.bb-table-cell-green {
+/* .bb-table-cell {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 400;
+  font-family: "Vazir-Medium-FD";
+} */
+.bb-table-cell-green {
+  vertical-align: middle !important;
+  text-align: center;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
 .bb-table-cell-red {
   text-align: center;
-  font-size: 0.8rem;
+  vertical-align: middle !important;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
+  /* font-family: "Vazir-Medium-FD"; */
+  font-family: "Dirooz FD";
 }
 .bb-table-cell-bold {
+  vertical-align: middle !important;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 600;
+  /* font-family: "Vazir-Medium-FD";  */
+  font-family: "Dirooz FD";
 }
 .bb-table-row {
   direction: ltr;
+  vertical-align: middle !important;
 }
 
 /* .vxe-toolbar .vxe-button--wrapper {

@@ -16,8 +16,8 @@
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
         </v-toolbar>
-        <transition name="fade">
-          <div v-if="cardKey">
+        <transition-group name="slide-fade" tag="div">
+          <div v-show="cardKey" key="1">
             <b-col lg="4" class="my-1">
               <b-input-group size="sm">
                 <b-form-input
@@ -94,7 +94,7 @@
               ></b-pagination>
             </b-col>
           </div>
-          <div v-if="!cardKey">
+          <div v-if="!cardKey" key="2">
             <!-- ******************** TABLE COMPONENT ********************* -->
             <AssemblyTables
               :ShareholdersItems="ShareholdersData"
@@ -110,7 +110,7 @@
             </AssemblyTables>
             <!-- ******************** TABLE COMPONENT ********************* -->
           </div>
-        </transition>
+        </transition-group>
       </v-card>
     </div>
   </div>
@@ -311,42 +311,19 @@ export default {
   }
 };
 </script>
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+<style>
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .3s ease;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.slide-fade-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
   opacity: 0;
-}
-/* always present */
-.expand-transition {
-  transition: all 0.6s ease;
-  height: 30px;
-  padding: 10px;
-  background-color: #eee;
-  overflow: hidden;
-}
-/* .expand-enter defines the starting state for entering */
-/* .expand-leave defines the ending state for leaving */
-.expand-enter,
-.expand-leave {
-  height: 0;
-  padding: 0 10px;
-  opacity: 0;
-}
-.list-enter,
-.list-leave-to {
-  visibility: hidden;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-}
-
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.3s;
 }
 .AssemblyTitle {
   color: #4682b4;
@@ -360,6 +337,10 @@ export default {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1;
+}
+.Descision-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
 }
 .paginationClass {
   font-family: "Dirooz FD" !important;

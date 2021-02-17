@@ -13,6 +13,8 @@ from requestcall.getOptions import optionRequest
 from requestcall.getMarketWatch import getMarketWatchRequest,getFilteredData
 from requestcall.treeMapData import getMapData
 from requestcall.getTseData import *
+from requestcall.getOragh_HaghTaghadom_FundsData import *
+
 
 ## option section
 # class optionData(AsyncWebsocketConsumer):
@@ -257,6 +259,89 @@ class getMarketMap(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         if data.get("request") == "get":
             text_data = json.dumps(getMapData());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
+
+class getOptions(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(optionRequest());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
+
+class getLiveTicker(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps([getLive_ticker(data.get("id")),getLiveHHtickerData(data.get("id"))]);
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
+
+#############################################################
+class getFunds(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getFundsData());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
+
+#############################################################
+class getOraq(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getOraghData());
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer() 
+
+#############################################################
+class getTaqadom(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getHaghTaghadomData());
             await self.send(text_data)
             return
         if data.get("request") == "halt":

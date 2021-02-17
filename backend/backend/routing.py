@@ -12,11 +12,13 @@ application = ProtocolTypeRouter({
             URLRouter(
                 [
                     # re_path(r"^messages/(?P<username>[\w.@+-]+)/$", firm_live), # noqa
-                    # re_path(r"^ws/test$", optionData),
-                    # re_path(r"^index_live/$", index_live),
-                    re_path(r"^ws/random$", random),
-                    re_path(r"^ws/marketmap",getMarketMap .as_asgi()),
-                    re_path(r"^ws/marketwatch",getMarketWatch .as_asgi()),
+                    re_path(r"^ws/taghadom",getTaqadom .as_asgi()), ## HaghTaghadom
+                    re_path(r"^ws/oraq",getOraq .as_asgi()), ##Oraq
+                    re_path(r"^ws/funds",getFunds .as_asgi()), ##Sandoq
+                    re_path(r"^ws/options",getOptions .as_asgi()), ## Option
+                    re_path(r"^ws/marketmap",getMarketMap .as_asgi()), ## MarketMap
+                    re_path(r"^ws/marketwatch",getMarketWatch .as_asgi()), ## MarketWatch
+                    re_path(r"^ws/liveTickerData",getLiveTicker .as_asgi()),
                     re_path(r"^ws/Top5Views",Top5Viewed .as_asgi()),
                     re_path(r"^ws/ImpactOnIndex",getImpactOnIndex .as_asgi()),
                     re_path(r"^ws/HighestVolume",getHighestVolumes .as_asgi()),

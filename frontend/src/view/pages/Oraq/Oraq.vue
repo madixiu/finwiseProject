@@ -36,7 +36,7 @@
         class="oraq-table"
         tbody-tr-class="oraq-table-row"
         striped
-        sticky-header="470px"
+        :sticky-header="height"
         :busy.sync="isBusy"
         :no-provider-paging="true"
         :sort-desc.sync="sortDesc"
@@ -45,7 +45,8 @@
         sort-icon-left
         dense
         :filter="Tablefilter"
-        :filter-debounce="2000"
+        :filter-included-fields="filterOn"
+        :filter-debounce="100"
         bordered
         no-border-collapse
         outlined
@@ -56,6 +57,9 @@
         :fields="HD"
         @filtered="onFiltered"
       >
+        <template #cell(ticker)="data">
+          <b class="oraq-table-cell-bold">{{ data.value }}</b>
+        </template>
         <template #cell(TradeCount)="data">
           <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
         </template>
@@ -145,7 +149,10 @@ export default {
   components: {},
   data() {
     return {
+      WebsocketRequest: false,
+      height: "470px",
       sortDesc: false,
+      filterOn: ["ticker"],
       sortBy: "ticker",
       selectedHeaderOptions: [],
       HeaderOptions: [
@@ -305,6 +312,14 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.height = this.getHeight();
+    this.$socketOraq.onmessage = data => {
+      // this.tableData = JSON.parse(data.data);
+      // console.log(!!this.tableData.length);
+      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+        // this.$store.dispatch("setSahm", JSON.parse(data.data));
+        this.tableData = JSON.parse(data.data);
+    };
   },
   methods: {
     async loadData() {
@@ -368,25 +383,55 @@ export default {
       }
       console.log(header);
       return header;
+    },
+    getHeight() {
+      return (window.innerHeight - 150).toString() + "px";
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      let interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(interval);
+          return;
+        }
+        let barier = { request: "get" };
+        this.$socketOraq.send(JSON.stringify(barier));
+        // console.log(this.WebsocketRequest);
+      }, 3000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (date.getHours() > 8 && date.getHours() < 15) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    let barier = { request: "halt" };
+    this.$socketOraq.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
   }
 };
 </script>
 <style>
 .oraq_table_head {
   vertical-align: middle !important;
-  font-size: 0.9rem !important;
+  font-size: 1.1em !important;
   font-weight: 600 !important ;
 }
 .oraq_table_head_small {
   vertical-align: middle !important;
-  font-size: 0.7rem !important;
+  font-size: 0.9em !important;
   font-weight: 600 !important ;
 }
 .oraq-table {
   vertical-align: middle !important;
   text-align: center !important;
-  font-size: 0.8rem !important;
+  font-size: 0.8em !important;
   line-height: 1 !important;
 }
 .oraq-table-row:hover {
@@ -394,29 +439,33 @@ export default {
 }
 .oraq-table-cell {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
 .oraq-table-cell-green {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
 .oraq-table-cell-red {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
 .oraq-table-cell-bold {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1em;
   line-height: 1;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: "Vazir-Medium-FD";
 }
 .oraq-table-row {
   direction: ltr;

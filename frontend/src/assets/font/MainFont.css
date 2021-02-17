@@ -3,14 +3,26 @@
     src: url("Vazir.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
-  }
-  @font-face {
-    font-family: "Dirooz FD";
-    src: url("Dirooz-FD.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
+}
+@font-face {
+  font-family: "Dirooz FD";
+  src: url("Dirooz-FD.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazir-Medium-FD";
+  src: url("Vazir-Medium-FD.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazir-Light-FD";
+  src: url("Vazir-Light-FD.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
-  * {
-      font-family: Vazir;
-  }
+* {
+    font-family: Vazir;
+}

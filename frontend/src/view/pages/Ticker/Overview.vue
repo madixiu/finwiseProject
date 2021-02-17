@@ -81,11 +81,23 @@ export default {
   },
   mounted() {
     this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+    this.liveChecker();
+    this.$socketLiveTickerData.onmessage = data => {
+      // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
+      // this.DataItems = JSON.parse(data.data);
+      // console.log(!!this.DataItems.length);
+      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) {
+        this.subheaders = JSON.parse(data.data)[0][0];
+        this.livedata = JSON.parse(data.data)[0];
+        this.hhdata = JSON.parse(data.data)[1];
+      }
+
+      // this.loading = false;
+    };
   },
   watch: {
     subheaders() {
-      this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+      // this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
       // console.log(this.notices);
     },
     "$route.params": {
@@ -116,7 +128,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getHH().then(response4 => {
             // eslint-disable-next-line no-unused-vars
-            this.getLiveData().then();
+            // this.getLiveData().then();
           });
         });
       });
@@ -144,17 +156,17 @@ export default {
           console.log(error);
         });
     },
-    async getLiveData() {
-      await this.axios
-        .get("/api/LiveTicker/" + this.$route.params.id + "/")
-        .then(response3 => {
-          this.livedata = response3.data;
-          // console.log(response3.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+    // async getLiveData() {
+    //   await this.axios
+    //     .get("/api/LiveTicker/" + this.$route.params.id + "/")
+    //     .then(response3 => {
+    //       this.livedata = response3.data;
+    //       // console.log(response3.data);
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // },
     async getTwo() {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
@@ -172,6 +184,9 @@ export default {
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];
+          this.livedata = response1.data;
+          this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+
           // console.log(response1.data);
         })
         .catch(error => {
@@ -203,7 +218,34 @@ export default {
 
       // set clicked tab index to bootstrap tab
       return parseInt(event.target.getAttribute("data-tab"));
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      let interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(interval);
+          return;
+        }
+        let barier = { request: "get", id: this.$route.params.id };
+        this.$socketLiveTickerData.send(JSON.stringify(barier));
+        // console.log(this.WebsocketRequest);
+      }, 3000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (date.getHours() > 8 && date.getHours() < 15) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    let barier = { request: "halt" };
+    this.$socketLiveTickerData.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
   }
 };
 </script>

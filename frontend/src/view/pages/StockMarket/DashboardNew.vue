@@ -13,7 +13,7 @@
       <!-- <div class="col-xxl-2 col-lg-4">
         <Impacts></Impacts>
       </div> -->
-      <div class="col-xxl-4 col-lg-4">
+      <div class="col-xxl-4 col-lg-5">
         <HighestTradeValue></HighestTradeValue>
       </div>
       <!-- <div class="col-xxl-4"></div> -->

@@ -6,6 +6,7 @@
         <b-table
           class="ticker-assembly-table"
           thClass="ICheader"
+          tbody-tr-class="ticker-assembly-table-row"
           striped
           bordered
           outlined
@@ -26,6 +27,7 @@
           <v-card-title>هیئت رییسه</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -63,6 +65,7 @@
           <v-card-title>مدیر عامل</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -82,6 +85,7 @@
           <v-card-title>هیئت مدیره جدید</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -101,6 +105,7 @@
           <v-card-title>حقوق و مزایای هیئت مدیره</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -121,6 +126,7 @@
           <v-card-title>سهامداران</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -131,10 +137,10 @@
             :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
           >
             <template #cell(ShareCount)="data">
-              <span>{{ data.value.toLocaleString() }}</span>
+              <span class="ticker-assembly-table-cell-number">{{ parseInt(data.value).toLocaleString()}}</span>
             </template>
             <template #cell(OwnerPercentage)="data">
-              <b class="ticker-assembly-table-cell">{{ data.value }}</b>
+              <b class="ticker-assembly-table-cell-number">{{ data.value }}</b>
             </template>
           </b-table>
         </v-card>
@@ -147,6 +153,7 @@
           <v-card-title>هیئت مدیره</v-card-title>
           <b-table
             class="ticker-assembly-table"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -169,6 +176,7 @@
           <b-table
             class="ticker-assembly-table"
             thClass="ticker-assembly-table-head"
+            tbody-tr-class="ticker-assembly-table-row"
             striped
             bordered
             outlined
@@ -178,9 +186,9 @@
             :items="StatementItems"
             :fields="stepThreeItemsTableHeaders.StatementHeaders"
           >
-            <!-- <template #cell(Nemad)="data">
-                        <b class="ticker-assembly-table-cell-bold">{{ data.value }}</b>
-                      </template> -->
+            <template #cell(Value)="data">
+              <b class="ticker-assembly-table-cell-number">{{parseInt(data.value).toLocaleString() }}</b>
+            </template>
           </b-table>
         </v-card>
       </div>
@@ -258,33 +266,77 @@ export default {
           },
           {
             label: "سود انباشته-قطعی در اختیار هیئت مدیره",
-            key: "RetainedEarning_Ceo"
+            key: "RetainedEarning_Ceo",
+            thClass: "ICheader"
           },
-          { label: "سود انباشته-کل", key: "RetainedEarning_Sum" },
-          { label: "اندوخته-قطعی", key: "Reserves_Final" },
-          { label: "اندوخته-در اختیار هیئت مدیره", key: "Reserves_Ceo" },
-          { label: "اندوخته-کل", key: "Reserves_Sum" },
-          { label: "مازاد تجدید ارزیابی-قطعی", key: "Reevaluation_Final" },
+          {
+            label: "سود انباشته-کل",
+            key: "RetainedEarning_Sum",
+            thClass: "ICheader"
+          },
+          { label: "اندوخته-قطعی", key: "Reserves_Final", thClass: "ICheader" },
+          {
+            label: "اندوخته-در اختیار هیئت مدیره",
+            key: "Reserves_Ceo",
+            thClass: "ICheader"
+          },
+          { label: "اندوخته-کل", key: "Reserves_Sum", thClass: "ICheader" },
+          {
+            label: "مازاد تجدید ارزیابی-قطعی",
+            key: "Reevaluation_Final",
+            thClass: "ICheader"
+          },
           {
             label: "مازاد تجدید ارزیابی-در اختیار هیئت مدیره",
-            key: "Reevaluation_Ceo"
+            key: "Reevaluation_Ceo",
+            thClass: "ICheader"
           },
-          { label: "مازاد تجدید ارزیابی-کل", key: "Reevaluation_Sum" },
-          { label: "صرف سهام-قطعی", key: "SarfSaham_Final" },
-          { label: "صرف سهام در اختیار هیئت مدیره", key: "SarfSaham_Ceo" },
-          { label: "صرف سهام-کل", key: "SarfSaham_Sum" },
-          { label: "مبلغ افزایش سرمایه-قطعی", key: "IncreaseValue_Final" },
+          {
+            label: "مازاد تجدید ارزیابی-کل",
+            key: "Reevaluation_Sum",
+            thClass: "ICheader"
+          },
+          {
+            label: "صرف سهام-قطعی",
+            key: "SarfSaham_Final",
+            thClass: "ICheader"
+          },
+          {
+            label: "صرف سهام در اختیار هیئت مدیره",
+            key: "SarfSaham_Ceo",
+            thClass: "ICheader"
+          },
+          { label: "صرف سهام-کل", key: "SarfSaham_Sum", thClass: "ICheader" },
+          {
+            label: "مبلغ افزایش سرمایه-قطعی",
+            key: "IncreaseValue_Final",
+            thClass: "ICheader"
+          },
           {
             label: "مبلغ افزایش سرمایه-در اختیار هیئت مدیره",
-            key: "IncreaseValue_Ceo"
+            key: "IncreaseValue_Ceo",
+            thClass: "ICheader"
           },
-          { label: "مبلغ افزایش سرمایه-کل", key: "IncreaseValue_Sum" },
-          { label: "درصد افزایش سرمایه-قطعی", key: "IncreasePercent_Final" },
+          {
+            label: "مبلغ افزایش سرمایه-کل",
+            key: "IncreaseValue_Sum",
+            thClass: "ICheader"
+          },
+          {
+            label: "درصد افزایش سرمایه-قطعی",
+            key: "IncreasePercent_Final",
+            thClass: "ICheader"
+          },
           {
             label: "درصد افزایش سرمایه-در اختیار هیئت مدیره",
-            key: "IncreasePercent_Ceo"
+            key: "IncreasePercent_Ceo",
+            thClass: "ICheader"
           },
-          { label: "درصد افزایش سرمایه-کل", key: "IncreasePercent_Sum" }
+          {
+            label: "درصد افزایش سرمایه-کل",
+            key: "IncreasePercent_Sum",
+            thClass: "ICheader"
+          }
         ],
         StatementHeaders: [
           // { label: "ID", key: "ID", thClass: "ticker-assembly-table-head" },
@@ -403,25 +455,33 @@ export default {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1;
+  font-family: "Vazir-Medium-FD";
+}
+.ticker-assembly-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
 }
 .ticker-assembly-table-cell {
   text-align: center;
+  direction: ltr !important;
   font-size: 0.8rem;
   line-height: 1;
   font-weight: 400;
+  font-family: "Vazir-Medium-FD";
 }
 .ticker-assembly-table-cell-number {
   text-align: center;
+  direction: ltr !important;
   font-size: 0.8rem;
   line-height: 1;
   font-weight: 400;
-  font-family: "Dirooz FD ";
+  font-family: "Vazir-Medium-FD";
 }
 .selectionTable {
   direction: rtl;
   text-align: right;
 }
 .ICheader {
-  font-size: 0.6rem !important;
+  font-size: 0.8rem !important;
 }
 </style>
