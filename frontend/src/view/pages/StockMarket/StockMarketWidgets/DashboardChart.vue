@@ -21,6 +21,7 @@
 <script>
 import * as d3 from "d3";
 export default {
+   name: "ChartVol",
   props: { inputData: Array, inputWidth: Number, inputHeight: Number },
   data() {
     return {

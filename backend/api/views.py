@@ -75,7 +75,8 @@ def getMonthlyInvestment_Summary(self,identifier):
     return JsonResponse(monthlyInvestSummary(identifier),safe=False)
 def getShareHolders(self,identifier):
     return JsonResponse(getShareholdersList(identifier),safe=False)
-
+def getBalanceSheetAll(self,identifier):
+    return JsonResponse(getBalanceSheetFirm(identifier),safe=False)
 
 
 ##############Monthly Ends Here
@@ -198,3 +199,14 @@ def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
 
 
+def getTVHHTotal(self):
+        return JsonResponse(TradeValueHH(),safe=False)
+def getTVHHAsset(self):
+        return JsonResponse(TradeValueHHBasedOnAsset(),safe=False)
+def getTVAssets(self):
+        return JsonResponse(TradeValueAsset(),safe=False)
+def getIFBTEPIX(self):
+        return JsonResponse(getLatestTwoIndex(),safe=False)                        
+
+def getAllTradesValue(self):
+    return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)

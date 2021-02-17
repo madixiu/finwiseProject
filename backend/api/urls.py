@@ -11,6 +11,11 @@ urlpatterns = [
    path("findTickerid",findTickerID),
    path("marketwatch",getMarketWatch),
    path("marketwatchfilterlists",getMarketWatchFilters),
+   path("TradeValue/HH/Total",getTVHHTotal),
+   path("TradeValue/HH/Asset",getTVHHAsset),
+   path("TradeValue/Asset",getTVAssets),
+   path("LatestTepixIFB",getIFBTEPIX),
+   path("getAllTradesValue",getAllTradesValue),
    ######
    path("tse/getHighestValue/",getHighestValue),
    ######
@@ -37,6 +42,7 @@ urlpatterns = [
    path("Monthly/Investment/OutTransactions/<identifier>/",getMonthlyInvestment_OutTrans),
    path("Monthly/Investment/Portfolio/<identifier>/",getMonthlyInvestment_Portfo),
    path("Monthly/Investment/Summary/<identifier>/",getMonthlyInvestment_Summary),
+   path("Statement/BalanceSheet/<identifier>/",getBalanceSheetAll),
 ############
 
    path("CurrentBoard/<identifier>/",getCurrentBoard),

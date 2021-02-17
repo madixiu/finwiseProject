@@ -231,6 +231,21 @@ def monthlyInvestSummary(identifier):
     return ("noData")      
       
 #################    
+def getBalanceSheetFirm(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/bsall?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData") 
 def getBoard(identifier): 
     ct=0
     while ct<3:

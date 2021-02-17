@@ -28,25 +28,53 @@
           </v-chip>
           {{ LiveDataItems.name }} -->
           <div class="text-center">
-            <b-button color="#6c757d">
-              نام شرکت <br /><b-badge variant="light">{{
-                LiveDataItems.name
-              }}</b-badge>
+             <b-button color="#6c757d">
+              آخرین قیمت  <br />
+              <b-badge variant="light"
+                >{{ numberWithCommas(LiveDataItems.last) }}  (
+                <span
+                  class="spandata"
+                  v-bind:class="[
+                    LiveDataItems.last > LiveDataItems.yesterday
+                      ? 'greenItem ltr_aligned'
+                      : 'redItem ltr_aligned'
+                  ]"
+                  >{{
+                    Math.round(
+                      (LiveDataItems.last / LiveDataItems.yesterday - 1) * 100 * 100
+                    ) / 100
+                  }}</span
+                >)
+              </b-badge>
             </b-button>
           </div>
         </div>
-        <div
+                <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            بازار
+            تابلو
           </v-chip>
-          {{ LiveDataItems.market }} -->
+          {{ LiveDataItems.board }} -->
           <div class="text-center">
             <b-button color="#6c757d">
-              بازار <br /><b-badge variant="light">{{
-                LiveDataItems.market
-              }}</b-badge>
+              قیمت پایانی <br />
+              <b-badge variant="light"
+                >{{ numberWithCommas(LiveDataItems.close) }}  (
+                <span
+                  class="spandata"
+                  v-bind:class="[
+                    LiveDataItems.close > LiveDataItems.yesterday
+                      ? 'greenItem ltr_aligned'
+                      : 'redItem ltr_aligned'
+                  ]"
+                  >{{
+                    Math.round(
+                      (LiveDataItems.close / LiveDataItems.yesterday - 1) * 100 * 100
+                    ) / 100
+                  }}</span
+                >)
+              </b-badge>
             </b-button>
           </div>
         </div>
@@ -65,7 +93,7 @@
                     roundTo(LiveDataItems.TradeValue / 1000000000, 2)
                   )
                 }}
-                میلیارد</b-badge
+                 میلیارد ریال</b-badge
               >
             </b-button>
           </div>
@@ -74,33 +102,24 @@
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            تابلو
+            بازار
           </v-chip>
-          {{ LiveDataItems.board }} -->
+          {{ LiveDataItems.market }} -->
           <div class="text-center">
             <b-button color="#6c757d">
-              قیمت پایانی <br />
-              <b-badge variant="light"
-                >{{ numberWithCommas(LiveDataItems.close) }}ریال |
-                <span
-                  class="spandata"
-                  v-bind:class="[
-                    LiveDataItems.close > LiveDataItems.yesterday
-                      ? 'greenItem ltr_aligned'
-                      : 'redItem ltr_aligned'
-                  ]"
-                  >{{
-                    Math.round(
-                      (LiveDataItems.close / LiveDataItems.yesterday - 1) *
-                        100 *
-                        100
-                    ) / 100
-                  }}</span
-                >
-              </b-badge>
+              حجم معاملات <br /><b-badge variant="light"
+                >{{
+                  numberWithCommas(
+                    roundTo(LiveDataItems.TradeVolume / 1000000, 2)
+                  )
+                }}
+                میلیون</b-badge
+              >
             </b-button>
           </div>
         </div>
+        
+
         <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
         >
