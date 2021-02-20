@@ -197,17 +197,20 @@ def getTradingViewData(self):
 
 def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
-
+def getLatestNews(self):
+        return JsonResponse(getNews(),safe=False)
 
 def getTVHHTotal(self):
         return JsonResponse(TradeValueHH(),safe=False)
 def getTVHHAsset(self):
         return JsonResponse(TradeValueHHBasedOnAsset(),safe=False)
+        
 def getTVAssets(self):
         return JsonResponse(TradeValueAsset(),safe=False)
 def getIFBTEPIX(self):
         return JsonResponse(getLatestTwoIndex(),safe=False)                        
-
+def getTodayTepix(self):
+    return JsonResponse(getLastActiveDayTepix(),safe=False)                        
 def getAllTradesValue(self):
     return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)
 

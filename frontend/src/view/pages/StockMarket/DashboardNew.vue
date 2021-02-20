@@ -2,10 +2,23 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-8 col-lg-8">
-        aaaa
+      <div class="col-xxl-9 col-lg-9">
+        
       </div>
-      <div class="col-xxl-4 col-lg-4">
+      <div class="col-xxl-3 col-lg-3">
+      </div>
+      <div class="col-xxl-3 col-lg-3">
+        <!-- <IndicesText :inputData="AssetTradeValue"></IndicesText> -->
+      </div>
+      <div class="col-xxl-3 col-lg-3">
+        <!-- <IndexChart
+          :inputData="TodayTepix"
+          :inputWidth="width"
+          :inputHeight="height"
+          v-if="dataFetched"
+        ></IndexChart> -->
+      </div>
+      <div class="col-xxl-3 col-lg-3">
         <ChartTradeValue
           :inputData="AssetTradeValue"
           :inputWidth="width"
@@ -13,7 +26,10 @@
           v-if="dataFetched"
         ></ChartTradeValue>
       </div>
-      <div class="col-xxl-10 col-lg-10" id="ChartOneDiv">
+       <div class="col-xxl-3 col-lg-3 ">
+        <NewsW :inputDataNews="News"></NewsW>
+      </div>
+      <div class="col-xxl-9 col-lg-9" id="ChartOneDiv">
         <ChartVol
           :inputData="highestTvalueData"
           :inputWidth="width"
@@ -39,6 +55,9 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import HighestTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/HighestTradeValues.vue";
 import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
 import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
+// import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
+// import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
+import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
 // import HighestDemand from "@/view/pages/StockMarket/StockMarketWidgets/HighestDemand.vue";
 // import HighestSupply from "@/view/pages/StockMarket/StockMarketWidgets/HighestSupply.vue";
 // import Impacts from "@/view/pages/StockMarket/StockMarketWidgets/ImpactOnIndex.vue";
@@ -50,7 +69,10 @@ export default {
     // Impacts,
     HighestTradeValue,
     ChartVol,
-    ChartTradeValue
+    ChartTradeValue,
+    // IndicesText,
+    // IndexChart,
+    NewsW
     // HighestDemand,
     // HighestSupply
   },
@@ -59,6 +81,8 @@ export default {
       dataFetched: false,
       highestTvalueData: null,
       AssetTradeValue: {},
+      TodayTepix: [],
+      News: [],
       width: null,
       height: null,
       mostviewed: []
@@ -70,7 +94,6 @@ export default {
 
     this.width = document.getElementById("ChartOneDiv").clientWidth;
     this.height = (window.screen.height * 50) / 100;
-    console.log(this.width);
     // console.log(this.height);
     this.loadData();
   },
@@ -81,11 +104,16 @@ export default {
         .then(response => {
           let data = response.data;
           // let tickerNames = [];
-          console.log(data);
           if (data != "noData") this.highestTvalueData = data;
           // eslint-disable-next-line no-unused-vars
           this.getTradesAll().then(response => {
-            this.dataFetched = true;
+            // eslint-disable-next-line no-unused-vars
+            this.getTepixToday().then(response2 => {
+              // eslint-disable-next-line no-unused-vars
+              this.getNews().then(response2 => {
+                this.dataFetched = true;
+              });
+            });
           });
 
           // for (let item of data) {
@@ -109,6 +137,30 @@ export default {
           console.log(error);
         });
     },
+    async getNews() {
+      await this.axios
+        .get("/api/LatestNews")
+        .then(response1 => {
+          this.News = response1.data;
+          console.log(response1.data)
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getTepixToday() {
+      await this.axios
+        .get("/api/getTodayTepix")
+        .then(response3 => {
+          this.TodayTepix = response3.data;
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },

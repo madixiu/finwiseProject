@@ -181,10 +181,10 @@ export default {
     this.$socketMarketHighestTValues.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      console.log(!!this.DataItems.length);
+      // console.log(!!this.DataItems.length);
       if (JSON.parse(data.data) != "No Data" || !!this.DataItems.length)
         this.loading = false;
-      console.log(this.loading);
+      // console.log(this.loading);
     };
     // watch: {
     //   mostviewed() {
