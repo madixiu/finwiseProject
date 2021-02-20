@@ -16,6 +16,8 @@ urlpatterns = [
    path("TradeValue/Asset",getTVAssets),
    path("LatestTepixIFB",getIFBTEPIX),
    path("getAllTradesValue",getAllTradesValue),
+   path("getTodayTepix",getTodayTepix),
+   path("LatestNews",getLatestNews),
    ######
    path("tse/getHighestValue/",getHighestValue),
    ######
