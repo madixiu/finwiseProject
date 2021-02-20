@@ -6,7 +6,8 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from requestcall.getOptions import optionRequest
 from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerNameRequest,tableNameRequest
-from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
+# from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
+from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFilterLists,getFilteredData
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
@@ -17,7 +18,7 @@ from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
 from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
 from requestcall.getOragh_HaghTaghadom_FundsData import getOraghData,getHaghTaghadomData,getFundsData
-# from requestcall.getTVData import 
+from requestcall.getTVData import ListOfStocks
 
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
@@ -117,34 +118,30 @@ def getMarketWatchFilterOptions(request):
     # if request.method == 'POST':
     #     data = JSONParser().parse(request)
         # response = 
+## OLD MARKETWATCH VIEW ************************************************************************************************
+# @csrf_exempt
+# def getMarketWatch(request):
+#     if request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         if data.get('marketName') != "همه" or data.get('marketType') != [] or data.get('marketIndustry') != []:
+#             respond = getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry'))
+#         else: 
+#             respond = getMarketWatchRequest()
+#         return HttpResponse(json.dumps(respond))
+#     if request.method == 'GET':
+#         return HttpResponse(json.dumps(getMarketWatchRequest()))
+## OLD MARKETWATCH VIEW *************************************************************************************************
+
 @csrf_exempt
 def getMarketWatch(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-    #    print('this is the fucking data' + data.get('marketName') + 'and '+ data.get('marketType') + 'and '+data.get('marketIndustry'))
-        # print(data.get('marketName'))
-        # respond.append(getMarketWatchHeaderReq())
-        if data.get('marketName') != "همه" or data.get('marketType') != [] or data.get('marketIndustry') != []:
-            # respond.append(getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry')))
-            respond = getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry'))
-        else: 
-            # respond.append(getMarketWatchRequest())
-            respond = getMarketWatchRequest()
-        # return JsonResponse(respond,safe=False)
-        return HttpResponse(json.dumps(respond))
+        print(len(getFilteredData(data.get("marketName"),data.get('marketIndustry'))))
+        return JsonResponse(getFilteredData(data.get("marketName"),data.get('marketIndustry')),safe=False)
     if request.method == 'GET':
-        # resp = []
-        # resp.append(getMarketWatchHeaderReq())
-        # resp.append(getMarketWatchRequest())
-        # return JsonResponse(resp,safe=False)
-        return HttpResponse(json.dumps(getMarketWatchRequest()))
-        # return JsonResponse(getMarketWatchRequest(),safe=False)
-
+        return JsonResponse(getMarketWatchRequest(),safe=False)
 
 def getMarketWatchFilters(self):
-    # resp = []
-    # resp.append(getMarketWatchFilterLists)
-    # print(getMarketWatchFilterLists())
     return JsonResponse(getMarketWatchFilterLists(),safe=False)
 
 
@@ -193,6 +190,9 @@ def getOragh(self):
 def getFunds(self):
     return JsonResponse(getFundsData(),safe=False)
 
+def getTradingViewData(self):
+    return JsonResponse(ListOfStocks(),safe=False)
+####################################################
 
 
 def getHighestValue(self):
@@ -210,3 +210,5 @@ def getIFBTEPIX(self):
 
 def getAllTradesValue(self):
     return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)
+
+###################################################

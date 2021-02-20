@@ -22,7 +22,7 @@
           <!-- <div class="row"> -->
           <!-- type selctor -->
           <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-          <div class="col-xxl-3 col-lg-3  dropdown-rtl">
+          <!-- <div class="col-xxl-3 col-lg-3  dropdown-rtl">
             <div>
               <b-form-group label="نوع" label-for="tags-with-dropdown">
                 <b-form-tags
@@ -96,7 +96,7 @@
                 </b-form-tags>
               </b-form-group>
             </div>
-          </div>
+          </div> -->
           <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
           <!-- industry selector -->
           <div class="col-xxl-3 col-lg-3  dropdown-rtl">
@@ -165,7 +165,9 @@
                       >
                         {{ option }}
                       </b-dropdown-item-button>
-                      <b-dropdown-text v-if="TypeAvailableOptions.length === 0">
+                      <b-dropdown-text
+                        v-if="IndustryAvailableOptions.length === 0"
+                      >
                         موردی یافت نشد
                       </b-dropdown-text>
                     </b-dropdown>
@@ -175,15 +177,6 @@
             </div>
           </div>
           <!-- END OF SANNNAT  -->
-          <!-- <div class="mt-5 col-xxl-4 col-lg-4">
-            <b-form-group>
-              <b-form-checkbox-group
-                v-model="selectedHeaderOptions"
-                :options="HeaderOptions"
-                @change="TriggerFilteredHeader"
-              ></b-form-checkbox-group>
-            </b-form-group>
-          </div> -->
         </div>
         <div id="marketwatchFilterRow2" class="row">
           <div class="col-4 mr-3">
@@ -397,9 +390,6 @@ export default {
       tableMarketTypeFilters: [],
       tableMarketIndustrySelected: [],
       tableMarketIndustryFilters: [],
-      // yesterdayEnableTrigger: false,
-      // EPSEnableTrigger: false,
-      // moreInfoTrigger: false,
       WebsocketRequest: false,
       selectedHeaderOptions: [],
       HeaderOptions: [
@@ -565,32 +555,34 @@ export default {
   // },
   computed: {
     // %%%%%%%%%%%% type data %%%%%%%%%%%%
-    Typecriteria() {
-      // Compute the search criteria
-      return this.TypeSearch.trim().toLowerCase();
-    },
+    // Typecriteria() {
+    //   // Compute the search criteria
+    //   return this.TypeSearch.trim().toLowerCase();
+    // },
+
+    // TypeAvailableOptions() {
+    //   let criteria = this.TypeSearch;
+    //   // Filter out already selected options
+    //   let options = this.tableMarketTypeFilters.filter(
+    //     opt => this.tableMarketTypeSelected.indexOf(opt) === -1
+    //   );
+    //   if (criteria) {
+    //     // Show only options that match criteria
+    //     return options.filter(opt => opt.indexOf(criteria) > -1);
+    //   }
+    //   // Show all options available
+    //   return options;
+    // },
+    // searchDescType() {
+    //   if (this.Typecriteria && this.TypeAvailableOptions.length === 0) {
+    //     return "There are no tags matching your search criteria";
+    //   }
+    //   return "";
+    // },
+    // %%%%%%%%%%%% type data %%%%%%%%%%%%
     Industrycriteria() {
       // Compute the search criteria
       return this.TypeSearch.trim().toLowerCase();
-    },
-    TypeAvailableOptions() {
-      let criteria = this.TypeSearch;
-      // Filter out already selected options
-      let options = this.tableMarketTypeFilters.filter(
-        opt => this.tableMarketTypeSelected.indexOf(opt) === -1
-      );
-      if (criteria) {
-        // Show only options that match criteria
-        return options.filter(opt => opt.indexOf(criteria) > -1);
-      }
-      // Show all options available
-      return options;
-    },
-    searchDescType() {
-      if (this.Typecriteria && this.TypeAvailableOptions.length === 0) {
-        return "There are no tags matching your search criteria";
-      }
-      return "";
     },
     IndustryAvailableOptions() {
       let criteria = this.IndustrySearch;
@@ -611,7 +603,6 @@ export default {
       }
       return "";
     },
-    // %%%%%%%%%%%% type data %%%%%%%%%%%%
 
     HD() {
       return this.TriggerFilteredHeader();
@@ -620,47 +611,6 @@ export default {
     ...mapState({
       tableData: state => state.marketwatch.marketWatchItems
     })
-
-    // TableFiltered() {
-    //   if (
-    //     this.filters.tableMarketTypeSelected.length == 0 &&
-    //     this.filters.tableMarketIndustrySelected.length == 0
-    //   ) {
-    //     return this.tableData;
-    //   } else if (this.filters.tableMarketIndustrySelected.length == 0) {
-    //     let Tdata = this.tableData;
-    //     let temp = [];
-    //     for (let obj of Tdata) {
-    //       if (this.filters.tableMarketTypeSelected.includes(obj["Type"])) {
-    //         temp.push(obj);
-    //       }
-    //     }
-    //     return temp;
-    //   } else if (this.filters.tableMarketTypeSelected.length == 0) {
-    //     let Tdata = this.tableData;
-    //     let temp = [];
-    //     for (let obj of Tdata) {
-    //       if (
-    //         this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
-    //       ) {
-    //         temp.push(obj);
-    //       }
-    //     }
-    //     return temp;
-    //   } else {
-    //     let Tdata = this.tableData;
-    //     let temp = [];
-    //     for (let obj of Tdata) {
-    //       if (
-    //         this.filters.tableMarketTypeSelected.includes(obj["Type"]) &&
-    //         this.filters.tableMarketIndustrySelected.includes(obj["Industry"])
-    //       ) {
-    //         temp.push(obj);
-    //       }
-    //     }
-    //     return temp;
-    //   }
-    // }
   },
   mounted() {
     this.height = this.getHeight();
@@ -707,7 +657,7 @@ export default {
       }
     },
     test() {
-      console.log(this.tableMarketSelected);
+      console.log(this.tableMarketIndustrySelected);
       this.MarketWatchFilterPost();
     },
     TriggerFilteredHeader() {
@@ -825,9 +775,6 @@ export default {
         .get("/api/marketwatch")
         .then(response => {
           this.isBusy = false;
-
-          // let data = response.data;
-          // this.tableData = data;
           this.$store.dispatch("setMarketWatchItems", response.data);
           console.log(this.tableData);
         })
@@ -839,14 +786,7 @@ export default {
     },
     async MarketWatchFilterListReq() {
       await this.axios.get("/api/marketwatchfilterlists").then(response => {
-        this.tableMarketTypeFilters = response.data[0];
-        this.tableMarketIndustryFilters = response.data[1];
-        // console.log(response.data);
-        // let data = response.data[0];
-        // let test = this.tableData[0].includes(data[0]);
-        // for (let obj of this.tableData) {
-        //   if (obj["Type"] == data[0]) console.log(obj);
-        // }
+        this.tableMarketIndustryFilters = response.data;
       });
     },
     MarketWatchFilterPost() {
@@ -855,14 +795,15 @@ export default {
         url: "/api/marketwatch",
         data: {
           marketName: this.tableMarketSelected,
-          marketType: this.tableMarketTypeSelected,
+          // marketType: this.tableMarketTypeSelected,
           marketIndustry: this.tableMarketIndustrySelected
         },
+        headers: { "Content-Type": "application/json" },
         xsrfHeaderName: "X-CSRFToken"
       })
-        .then(response => {
-          // console.log(response.data);
-          this.$store.dispatch("setMarketWatchItems", response.data);
+        .then(response2 => {
+          // console.log(response2.data);
+          this.$store.dispatch("setMarketWatchItems", response2.data);
         })
         .catch(error => {
           console.log(error);
@@ -900,14 +841,25 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get" };
+        let barier = {
+          request: "get",
+          data: {
+            marketName: this.tableMarketSelected,
+            marketIndustry: this.tableMarketIndustrySelected
+          }
+        };
         this.$socketMarketWatch.send(JSON.stringify(barier));
         // console.log(this.WebsocketRequest);
       }, 3000);
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
         this.liveData();
       } else {
@@ -954,7 +906,7 @@ export default {
   font-size: 1em;
   /* line-height: 1; */
   font-weight: 400;
-  vertical-align: middle !important; 
+  vertical-align: middle !important;
   font-family: "Vazir-Medium-FD";
 }
 .marketwatch-table-ticker {

@@ -235,7 +235,7 @@
 </template>
 
 <script>
-import { scaleLinear, scaleOrdinal } from "d3-scale";
+import { scaleLinear, scaleOrdinal, scaleQuantize } from "d3-scale";
 // import {json} from 'd3-request'
 import { hierarchy, treemap } from "d3-hierarchy";
 // To be explicit about which methods are from D3 let's wrap them around an object
@@ -243,6 +243,7 @@ import { hierarchy, treemap } from "d3-hierarchy";
 let d3 = {
   scaleLinear: scaleLinear,
   scaleOrdinal: scaleOrdinal,
+  scaleQuantize: scaleQuantize,
   // schemeCategory20: schemeCategory20,
   // json: json,
   hierarchy: hierarchy,
@@ -294,8 +295,6 @@ export default {
       rootNode: {},
       tooltipHeaderName: null,
       tooltipListOfChilds: [],
-      finalR: [],
-      dict: {},
       margin: {
         top: 20,
         right: 0,
@@ -306,17 +305,25 @@ export default {
       height: 550,
       selected: null,
       colors: [
-        "fill:#e41414",
-        "fill:#c91010",
-        "fill:#ab0e0e",
-        "fill:#870c0c",
-        "fill:#690808",
-        "fill:#3f4c53",
-        "fill:#006920",
-        "fill:#008729",
-        "fill:#009e30",
-        "fill:#00bd39",
-        "fill:#00d641"
+        "fill:#f63538", // 0 darkest Red
+        "fill:#eb363a", // 1
+        "fill:#e0373c", // 2
+        "fill:#c9393f", // 3
+        "fill:#b33b43", // 4
+        "fill:#9c3d46", // 5
+        "fill:#86374a", // 6
+        "fill:#6f414d", // 7
+        "fill:#584351", // 8 lightest Red
+        "fill:#414554", // 9 Black
+        "fill:#404e55", // 10 darkest Green
+        "fill:#3f5655", // 11
+        "fill:#3d6756", // 12
+        "fill:#398957", // 13
+        "fill:#379a58", // 14
+        "fill:#35ab59", // 15
+        "fill:#33bc5a", // 16
+        "fill:#32c45a", // 17
+        "fill:#30cc5a" // 18 lightes Green
       ]
     };
   },
@@ -351,7 +358,8 @@ export default {
   },
   // In the beginning...
   mounted() {
-    var that = this;
+    // var that = this;
+    // console.log(this.getColor(-1));
 
     // An array with colors (can probably be replaced by a vuejs method)
     // that.color = d3.scaleOrdinal(d3.schemeCategory20)
@@ -361,10 +369,10 @@ export default {
     // function (error, data) {
     //   if (error) console.log(error)
     // that.jsonData = this.data;
-    console.log(this.jsonData);
-    that.initialize();
-    that.accumulate(that.rootNode, that);
-    that.treemap(that.rootNode);
+    // console.log(this.jsonData);
+    this.initialize();
+    this.accumulate(this.rootNode, this);
+    this.treemap(this.rootNode);
     // console.log(that.InnerScaleTreemap(that.rootNode));
     // that.MainScaleNode = that.InnerScaleTreemap(that.rootNode)
     // }
@@ -372,6 +380,30 @@ export default {
   },
   // The reactive computed variables that fire rerenders
   computed: {
+    myColor() {
+      return d3
+        .scaleLinear()
+        .domain([1, 10])
+        .range(["#FFFFFF", "#000000"]);
+    },
+    positiveColor() {
+      return (
+        d3
+          .scaleLinear()
+          .domain([0.05, 6])
+          // .range(["#404e55", "#3f5655", "#3d6756", "#398957", "#379a58", "#35ab59", "#33bc5a", "#32c45a", "#30cc5a"]);
+          .range(["#404e55", "#30cc5a"])
+      );
+    },
+    negativeColor() {
+      return (
+        d3
+          .scaleLinear()
+          .domain([-2, -0.05])
+          // .range(["#f63538", "#eb363a","#e0373c", "#c9393f", "#b33b43", "#9c3d46", "#86374a", "#6f414d", "#584351"]);
+          .range(["#f63538", "#584351"])
+      );
+    },
     // The grandparent id
     parentId() {
       if (
@@ -599,48 +631,29 @@ export default {
       if (c < 0.1) return "font-size:0rem";
     },
     getColor(val) {
-      let color = this.colors[5];
-      // console.log(val);
-      val = Math.round(val);
-      switch (parseInt(val)) {
-        case -5:
-          color = this.colors[0];
-          break;
-        case -4:
-          color = this.colors[1];
-          break;
+      console.log(this.positiveColor(0.05));
 
-        case -3:
-          color = this.colors[2];
-          break;
-        case -2:
-          color = this.colors[3];
-          break;
-        case -1:
-          color = this.colors[4];
-          break;
-        case 0:
-          color = this.colors[5];
-          break;
-        case 1:
-          color = this.colors[6];
-          break;
-        case 2:
-          color = this.colors[7];
-          break;
-        case 3:
-          color = this.colors[8];
-          break;
+      // let color = this.colors[1];
+      let color = "fill:#414554";
+      // let min = -2.0;
+      // let max = 5.0;
+      // let positiveBase = (4.95) / 9.0;
+      // let positiveBase = 0.49444444444444446;
+      // let negativeBase = -0.22777777777777775;
+      // val = parseFloat(val);
+      if (0.05 > val && val > -0.05) {
+        console.log(val);
+        console.log("black");
+        color = "fill:#414554"; // color 0
+      } else if (0.05 <= val && val <= 6) {
+        console.log("pos");
+        color = "fill:" + this.positiveColor(val);
+      } else if (-2 <= val && val <= -0.05) {
+        console.log("neg");
+        color = "fill:" + this.negativeColor(val);
+      } else if (val > 6) color = "fill:#30cc5a";
+      else color = "fill:#584351";
 
-        case 4:
-          color = this.colors[9];
-          break;
-        case 5:
-          color = this.colors[10];
-          break;
-        default:
-          color = this.colors[5];
-      }
       return color;
     }
   }
@@ -756,7 +769,11 @@ rect {
 }
 .parentSquare {
   /* fill: #262931; */
-  fill: #262b42;
+  /* fill: #262b42; */
+  fill: #262931;
+}
+.littleSquare {
+  fill: #262931;
 }
 .list-enter-active,
 .list-leave-active {
@@ -766,17 +783,17 @@ rect {
   opacity: 0;
 }
 .children:hover rect.child {
-  stroke: yellow;
+  stroke: #ffd614;
   stroke-width: 2px;
 }
 .children:hover rect.parentSquare {
-  stroke: yellow;
-  fill: yellow !important;
+  stroke: #ffd614;
+  fill: #ffd614 !important;
   stroke-width: 2px;
 }
 .children:hover rect.littleSquare {
-  stroke: yellow;
-  fill: yellow !important;
+  stroke: #ffd614;
+  fill: #ffd614 !important;
   stroke-width: 2px;
 }
 .children:hover text.parentSquareText {

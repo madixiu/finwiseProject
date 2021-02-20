@@ -74,6 +74,9 @@ export default new Router({
       path: "/",
       redirect: "/StockMarket",
       component: Layout,
+      // meta: {
+      //   reload: true
+      // },
       children: [
         {
           path: "/StockMarket",

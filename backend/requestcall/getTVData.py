@@ -5,18 +5,33 @@ def ListOfStocks():
     resp = requests.get("http://37.152.180.99:3000/View_TV_List")
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        ListOfStockNames(js)
-        return (json.loads(resp.text))
+        dict = ListOfStockNames(js)
+        restructData(js)
+        result = [dict,js]
+        # print(js)
+        return (result)
     else:
         return ("NoData")
 
 def ListOfStockNames(js):
-    print("*******************************************")
+    dict={}
     for item in js:
-        print("\""+item["symbol"]+"\""+':'+"\""+item["ExchangeType"]+"\""+",")
-            # item["symbol"]+":"+item["ExchangeType"])
-    print(len(js))
+        dict[item["symbol"]]=item["ExchangeType"]
+    return dict
+    # print(len(js))
+    # print(dict)
+def restructData(input):
+    for item in input:
+        if item["ExchangeType"] == "سهم بورس":
+            item["exchange"] = "بورس"
+        elif item["ExchangeType"] == "سهم فرابورس":
+            item["exchange"] = "فرابورس"
+        item["type"] = "سهام"
+        item.pop("ExchangeType",None)
+        item["urlparam"] = item.pop("urlParameter")
+    # print(input)
+
         
     
-# ListOfStocks()
+ListOfStocks()
 

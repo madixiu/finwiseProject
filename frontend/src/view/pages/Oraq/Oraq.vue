@@ -401,7 +401,12 @@ export default {
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
         this.liveData();
       } else {

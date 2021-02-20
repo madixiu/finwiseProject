@@ -196,13 +196,13 @@ def getMarketWatchFilterLists():
         return "noData"
     
 
-def DataAlterTesting():
-    lst = []
-    lst = listCreator(len(parsed_data))
-    i = 0
-    for item in parsed_data:
-        item['test'] = lst[i]
-        i+=1
+# def DataAlterTesting():
+#     lst = []
+#     lst = listCreator(len(parsed_data))
+#     i = 0
+#     for item in parsed_data:
+#         item['test'] = lst[i]
+#         i+=1
 
 def additionalDataMarketWatch():
     for item in parsed_data:

@@ -64,13 +64,15 @@ export default {
       if (
         newDate.getHours() >= 9 &&
         newDate.getHours() < 12 &&
-        newDate.getDay() != 5
+        newDate.getDay() != 5 &&
+        newDate.getDay() != 4
       ) {
         this.StockOpen = true;
       } else if (
         newDate.getHours() == 12 &&
         newDate.getMinutes() <= 30 &&
-        newDate.getDay() != 5
+        newDate.getDay() != 5 &&
+        newDate.getDay() != 4
       ) {
         this.StockOpen = true;
       } else this.StockOpen = false;

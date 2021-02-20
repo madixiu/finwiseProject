@@ -309,11 +309,8 @@ export default {
   mounted() {
     this.loadData();
     this.height = this.getHeight();
-       this.$socketTaqadom.onmessage = data => {
-      // this.tableData = JSON.parse(data.data);
-      // console.log(!!this.tableData.length);
+    this.$socketTaqadom.onmessage = data => {
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        // this.$store.dispatch("setSahm", JSON.parse(data.data));
         this.tableData = JSON.parse(data.data);
     };
   },
@@ -389,7 +386,12 @@ export default {
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
         this.liveData();
       } else {

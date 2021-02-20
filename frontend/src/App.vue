@@ -103,8 +103,8 @@ export default {
     async loadData() {
       await this.axios
         .get("/api/MainSearchBar")
-        .then(response => {
-          let data = response.data;
+        .then(SearchResponse => {
+          let data = SearchResponse.data;
           if (data != "noData") this.$store.dispatch("setSearch", data);
         })
         .catch(error => {

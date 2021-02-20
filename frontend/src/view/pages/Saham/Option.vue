@@ -473,12 +473,16 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketOptions.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 30000);
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
         this.liveData();
       } else {

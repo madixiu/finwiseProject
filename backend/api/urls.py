@@ -64,7 +64,7 @@ urlpatterns = [
    path("MainSearchBar",getSearchBarData),
    ###
    path("Map",getMarketMap),
-   # path("TVList",get)
+   path("TVData",getTradingViewData),
 
    ###
    path("HaghTaghadom",getHaghTaghadom),
