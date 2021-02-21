@@ -1,52 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <marquee-text
-        class="tickerTape"
-        reverse
-        :repeat="5"
-        :duration="30"
-        :paused="paused"
-      >
-        <div
-          class="row"
-          style="background-color: #27273b;"
-          @mouseenter="paused = !paused"
-          @mouseleave="paused = false"
-        >
-          <div v-for="item in this.TickerTape" :key="item.ticker" class=" mr-4">
-            <div
-              class="mr-2 py-lg-2 py-xxl-3"
-              style="height: 100% overflow: hidden; 
-    text-align: center; direction:rtl"
-            >
-              <span
-                class="tickerTapeTicker mr-1 ml-1"
-                @click="clickMarquee(item)"
-              >
-                {{ item.ticker }}
-              </span>
-              <span class="tickerTapeClose">
-                {{ item.close }}
-              </span>
-              <!-- <v-chip label :style="`background-color:${item.Change} > ${0} ? 'green' : 'red'`">{{ item.Change }}</v-chip> -->
-              <v-chip
-                label
-                v-bind:class="[item.Change >= 0 ? 'greenItem' : 'redItem']"
-                @click="clickMarquee(item)"
-                ><span class="tickerTapeChange"
-                  >{{ item.Change }}%</span
-                ></v-chip
-              >
-            </div>
-
-            <!-- <v-chip label small class="mr-2">
-
-            </v-chip> -->
-          </div>
-        </div>
-        <!-- <p class="mr-2" v-for="item in this.TickerTape" :key="item.ticker"> <span label class="tickerTapeText">{{ item.ticker }}</span></p> -->
-      </marquee-text>
+      <TickerTape :TickerData="TickerTapeData"></TickerTape>
       <div class="col-xxl-4 col-md-6 mb-4">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
@@ -209,30 +164,25 @@
   </div>
 </template>
 <script>
-// import ErrorMine from "@/view/pages/error/Error-6.vue";
-import MarqueeText from "vue-marquee-text-component";
-
 import ApexChart from "@/view/content/charts/ApexChart";
+import TickerTape from "@/view/content/TickerTape.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
-// import axios from "axios";
 export default {
   name: "Industries",
   components: {
     ApexChart,
+    TickerTape
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
-    MarqueeText
-    // Error,
-    // ErrorMine
+    // MarqueeText
   },
   data() {
     return {
-      paused: false,
-      TickerTape: [],
+      // paused: false,
+      TickerTapeData: [],
       ReturnSeries: [
         {
-          // name: "Marine Sprite",
           data: [
             400,
             390,
@@ -312,47 +262,47 @@ export default {
         },
         xaxis: {
           categories: [
-            "29-ماشین آلات",
-            "23-فراورده نفتی",
-            "13-کانه فلزی",
-            "54-کانی غیرفلزی",
-            "42-غذایی بجز قند",
-            "73-اطلاعات و ارتباطات",
-            "10-ذغال سنگ",
-            "34-خودرو",
-            "38-قند و شکر",
-            "60-حمل و نقل",
-            "32-وسایل ارتباطی",
-            "58-سایرمالی",
-            "22-انتشار و چاپ",
-            "27-فلزات اساسی",
-            "44-شیمیایی",
-            "31-دستگاههای برقی",
-            "56-سرمایه گذاریها",
-            "01-زراعت",
-            "25-لاستیک",
-            "39-چند رشته ای ص",
-            "64-رادیویی",
-            "20-محصولات چوبی",
-            "بیمه و بازنشسته66",
-            "17-منسوجات",
-            "33-ابزار پزشکی",
-            "67-اداره بازارهای مالی",
-            "14-سایر معادن",
-            "استخراجنفتجزکشف11",
-            "47خرده فروشی به جز وسایل نقلیه",
-            "19-محصولات چرمی",
-            "53-سیمان",
-            "57-بانکها",
-            "21-محصولات کاغذ",
+            "ماشین آلات",
+            "فراورده نفتی",
+            "کانه فلزی",
+            "کانی غیرفلزی",
+            "غذایی بجز قند",
+            "اطلاعات و ارتباطات",
+            "ذغال سنگ",
+            "خودرو",
+            "قند و شکر",
+            "حمل و نقل",
+            "وسایل ارتباطی",
+            "سایرمالی",
+            "انتشار و چاپ",
+            "فلزات اساسی",
+            "شیمیایی",
+            "دستگاههای برقی",
+            "سرمایه گذاریها",
+            "زراعت",
+            "لاستیک",
+            "چند رشته ای صنعتی",
+            "رادیویی",
+            "محصولات چوبی",
+            "بیمه و بازنشسته",
+            "منسوجات",
+            "ابزار پزشکی",
+            "اداره بازارهای مالی",
+            "سایر معادن",
+            "استخراجنفتجزکشف",
+            "خرده فروشی به جز وسایل نقلیه",
+            "محصولات چرمی",
+            "سیمان",
+            "بانکها",
+            "محصولات کاغذ",
             "شاخص صنعت",
-            "74-فنی مهندسی",
-            "40-تامین آب، برق، گاز",
-            "49-کاشی و سرامیک",
-            "28-محصولات فلزی",
-            "43-مواد دارویی",
-            "70-انبوه سازی",
-            "72-رایانه"
+            "فنی مهندسی",
+            "تامین آب، برق، گاز",
+            "کاشی و سرامیک",
+            "محصولات فلزی",
+            "مواد دارویی",
+            "انبوه سازی",
+            "رایانه"
           ],
           labels: {
             formatter: function(val) {
@@ -873,7 +823,7 @@ export default {
         .get("/api/TickerTape")
         .then(response => {
           let data = response.data;
-          this.TickerTape = data;
+          this.TickerTapeData = data;
           // this.TickerTape.pop();
         })
         .catch(error => {
@@ -907,44 +857,9 @@ export default {
 #fi {
   color: red !important;
 }
-.tickerTape {
-  direction: ltr;
-  background-color: tickerTape;
-}
-.tickerTapeTicker {
-  color: aliceblue;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.tickerTapeTicker:hover {
-  cursor: pointer;
-  color: yellow;
-}
-.tickerTapeClose {
-  color: aliceblue;
-  font-size: 0.8rem;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.tickerTapeChange {
-  font-family: "Vazir-Medium-FD" !important;
-  font-size: 1.1em;
-}
-.v-chip.v-size--default {
-  font-size: 0.7rem;
-  height: 1.8em;
-  direction: ltr;
-  padding-right: 0.8em;
-  padding-left: 0.8em;
-}
-.redItem {
-  color: aliceblue;
-  background-color: red !important;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.greenItem {
-  color: aliceblue;
-  background-color: green !important;
-  font-family: "Vazir-Medium-FD" !important;
-}
+
+
+
 .apexcharts-text tspan {
   font-family: "Vazir";
 }

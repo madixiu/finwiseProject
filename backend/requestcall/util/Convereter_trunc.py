@@ -4,10 +4,15 @@ from math import trunc
 
 def truncater(input):
     # length = len(str(input))
-    value = trunc(input*100)/100
-    if value == 0:
-        value = int(value)
-    return value
+    if input != None:
+        value = trunc(input*100)/100
+        if value == 0:
+            value = int(value)
+        return value
+    else:
+        return 0
+
+
 
 def converter(input_text):
     if not isinstance(input_text, str):
