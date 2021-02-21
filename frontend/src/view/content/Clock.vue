@@ -101,22 +101,27 @@ export default {
   text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
 .time {
-  font-family: "Dirooz FD";
-  letter-spacing: 0.05em;
-  font-size: 0.8rem;
+  font-family: "Vazir-Light-FD";
+  letter-spacing: 0.03em;
+  color: rgb(255, 252, 247);
+  font-size: 0.9em;
+  font-weight: 600;
   padding: 5px 0;
 }
 .date {
-  font-family: "Dirooz FD";
-  letter-spacing: 0.1em;
-  font-size: 0.7rem;
+  font-family: "Vazir-Light-FD";
+  letter-spacing: 0.04em;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: rgb(255, 252, 247);
+  font-size: 0.8em;
 }
 .top {
   direction: ltr;
 }
 .below {
   direction: ltr;
-  align-items: left;
+  display: flex;
 }
 /* .outer {
   display: grid;

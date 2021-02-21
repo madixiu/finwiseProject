@@ -2,7 +2,7 @@
   <!-- begin:: Header Topbar -->
   <div class="topbar">
     <!-- my search -->
-    <SearchDefault></SearchDefault>
+    <SearchDefault class="ml-4"></SearchDefault>
 
     <!--begin: Search -->
     <!-- <b-dropdown
