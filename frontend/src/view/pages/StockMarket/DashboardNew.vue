@@ -1,51 +1,43 @@
 <template>
-  <div>
-    <!--begin::Dashboard-->
-    <div class="row">
-      <div class="col-xxl-9 col-lg-9">
-        
+  <div class="row">
+    <div class="col-xxl-9 col-lg-9" id="ChartOneDiv">
+      <ChartVol 
+        :inputData="highestTvalueData"
+        :inputWidth="width"
+        :inputHeight="height"
+        v-if="dataFetched"
+      ></ChartVol>
+    </div>
+    <div class="col-xxl-3 col-lg-3">
+      <div class="row">
+      <ChartTradeValue
+        :inputData="AssetTradeValue"
+        :inputWidth="width"
+        :inputHeight="height"
+        v-if="dataFetched"
+      ></ChartTradeValue>
+      <NewsW :inputDataNews="News"></NewsW>
       </div>
-      <div class="col-xxl-3 col-lg-3">
-      </div>
-      <div class="col-xxl-3 col-lg-3">
-        <!-- <IndicesText :inputData="AssetTradeValue"></IndicesText> -->
-      </div>
-      <div class="col-xxl-3 col-lg-3">
-        <!-- <IndexChart
+    </div>
+    <div class="col-xxl-3 col-lg-3">
+      <!-- <IndicesText :inputData="AssetTradeValue"></IndicesText> -->
+    </div>
+    <div class="col-xxl-3 col-lg-3">
+      <!-- <IndexChart
           :inputData="TodayTepix"
           :inputWidth="width"
           :inputHeight="height"
           v-if="dataFetched"
         ></IndexChart> -->
-      </div>
-      <div class="col-xxl-3 col-lg-3">
-        <ChartTradeValue
-          :inputData="AssetTradeValue"
-          :inputWidth="width"
-          :inputHeight="height"
-          v-if="dataFetched"
-        ></ChartTradeValue>
-      </div>
-       <div class="col-xxl-3 col-lg-3 ">
-        <NewsW :inputDataNews="News"></NewsW>
-      </div>
-      <div class="col-xxl-9 col-lg-9" id="ChartOneDiv">
-        <ChartVol
-          :inputData="highestTvalueData"
-          :inputWidth="width"
-          :inputHeight="height"
-          v-if="dataFetched"
-        ></ChartVol>
-      </div>
-      <!-- <div class="col-xxl-2 col-lg-4">
+    </div>
+
+    <!-- <div class="col-xxl-2 col-lg-4">
         <Impacts></Impacts>
       </div> -->
-      <div class="col-xxl-4 col-lg-5">
-        <HighestTradeValue></HighestTradeValue>
-      </div>
-      <!-- <div class="col-xxl-4"></div> -->
+    <div class="col-xxl-4 col-lg-5">
+      <HighestTradeValue></HighestTradeValue>
     </div>
-    <!--end::Dashboard-->
+    <!-- <div class="col-xxl-4"></div> -->
   </div>
 </template>
 
@@ -91,9 +83,12 @@ export default {
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
     // let chartDiv = document.getElementsByClassName("container-fluid");
-
-    this.width = document.getElementById("ChartOneDiv").clientWidth;
-    this.height = (window.screen.height * 50) / 100;
+    let chartDiv = document.getElementsByClassName("container-fluid");
+    // this.width = window.screen.width;
+    this.height = (window.screen.height * 73) / 100;
+    this.width = (chartDiv[0].clientWidth * 98) / 100;
+    // this.width = 200
+    // this.height = 200
     // console.log(this.height);
     this.loadData();
   },
@@ -142,7 +137,7 @@ export default {
         .get("/api/LatestNews")
         .then(response1 => {
           this.News = response1.data;
-          console.log(response1.data)
+          console.log(response1.data);
         })
         .catch(error => {
           // console.log("GetTwoeCatch");

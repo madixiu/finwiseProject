@@ -291,7 +291,7 @@ def getAllDps(identifier):
 def AdjustedPrices(identifier):
     ct=0
     while ct<3:
-        head = {'Accept-Profile':'public'}
+        head = {'Accept-Profile':'marketwatch'}
         resp = requests.get('http://37.152.180.99:3000/View_AdjustedPrices?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     

@@ -212,9 +212,9 @@ export default {
       }
     },
     renderChart() {
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("svg").remove();
-      }
+      // if (document.getElementsByTagName("svg")) {
+      //   d3.selectAll("svg").remove();
+      // }
       let leftOffset = 2 * this.margin.left;
       let BoxWidth = this.width - this.margin.right - this.margin.left;
       let BoxHeight = 3 * this.margin.top;
