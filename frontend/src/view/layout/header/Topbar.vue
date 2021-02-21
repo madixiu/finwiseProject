@@ -28,7 +28,7 @@
     <!--end: Search -->
 
     <!--begin: Notifications -->
-    <b-dropdown
+    <!-- <b-dropdown
       size="sm"
       variant="link"
       toggle-class="topbar-item text-decoration-none"
@@ -36,7 +36,7 @@
       right
       no-flip
     >
-      <template v-slot:button-content>
+      <template v-blockslot:button-content>
         <div
           class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary"
         >
@@ -51,7 +51,7 @@
           <KTDropdownNotification></KTDropdownNotification>
         </form>
       </b-dropdown-text>
-    </b-dropdown>
+    </b-dropdown> -->
     <!--end: Notifications -->
 
     <!--begin: Quick Actions -->
@@ -166,7 +166,7 @@
 <script>
 import SearchDefault from "@/view/layout/extras/Search.vue";
 import Clock from "@/view/content/Clock.vue";
-import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
+// import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
 // import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
 
 // import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
@@ -188,7 +188,7 @@ export default {
     SearchDefault,
     Clock,
     // KTSearchDefault,
-    KTDropdownNotification,
+    // KTDropdownNotification,
     // KTDropdownQuickAction,
     // KTDropdownMyCart,
     // KTDropdownLanguage,
