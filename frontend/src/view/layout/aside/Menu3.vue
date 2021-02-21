@@ -152,7 +152,7 @@
       </div>
     </li>
 
-    <!-- <router-link
+    <router-link
       :to="`/ticker/AdjustedPrices/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -170,7 +170,7 @@
           <span class="menu-text">سابقه-قیمت تعدیلی</span>
         </a>
       </li>
-    </router-link> -->
+    </router-link>
 
     <!-- <router-link
       :to="`/ticker/TickerFundamental/${$route.params.id}/`"

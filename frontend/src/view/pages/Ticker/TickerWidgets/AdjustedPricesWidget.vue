@@ -10,37 +10,58 @@
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body d-flex flex-column">
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="جستجوی تاریخ"
+        single-line
+        hide-details
+        :search="search"
+        class="mt-0 pt-0"
+      ></v-text-field>
       <v-data-table
         :headers="headers"
         :items="DataItems2"
         class="elevation-1 FinancialStrength"
-        :header-props="{ sortIcon: null }"
-        :disable-sort="true"
+        dense
+        :options.sync="options"
+        :search="search"
       >
-        <!-- <template v-slot:[`item.HtmlUrl`]="{ item }">
-          <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir${item.HtmlUrl}%`">گزارش </a>
-          </v-chip>
+      <template v-slot:[`item.persiandate`]="{ item }" >
+          <span class="FinancialStrength">{{ item.persiandate.substring(0,4)+'/'+item.persiandate.substring(4,6)+'/'+item.persiandate.substring(6,8)}} </span>
         </template>
-        <template v-slot:[`item.AttachmentUrl`]="{ item }">
-          <v-chip
-            label
-            small
-            :disabled="item.AttachmentUrl == '' ? true : false"
-          >
-            <a v-bind:href="`http://codal.ir${item.AttachmentUrl}%`">فایل </a>
-          </v-chip>
+        <template v-slot:[`item.high`]="{ item }" >
+          <span class="FinancialStrength">{{ numberWithCommas(item.high )}} </span>
         </template>
-        <template v-slot:[`item.ExcelUrl`]="{ item }">
-          <v-chip label small :disabled="item.ExcelUrl == '' ? true : false">
-            <a v-bind:href="`${item.ExcelUrl}%`">اکسل </a>
-          </v-chip>
+        <template v-slot:[`item.low`]="{ item }">
+          <span class="FinancialStrength">{{ numberWithCommas(item.low )}} </span>
         </template>
-        <template v-slot:[`item.PdfUrl`]="{ item }">
-          <v-chip label small :disabled="item.PdfUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir/${item.PdfUrl}%`">پی دی اف </a>
-          </v-chip>
-        </template> -->
+        <template v-slot:[`item.closing`]="{ item }">
+          <span class="FinancialStrength">{{ numberWithCommas(item.closing )}} </span>
+        </template>
+        <template v-slot:[`item.adjustedclosing`]="{ item }">
+          <span class="FinancialStrength">{{ numberWithCommas(item.adjustedclosing )}} </span>
+        </template>
+        <template v-slot:[`item.last`]="{ item }">
+          <span class="FinancialStrength">{{ numberWithCommas(item.last )}} </span>
+        </template>
+        <template v-slot:[`item.first`]="{ item }">
+          <span class="FinancialStrength">{{ numberWithCommas(item.first )}} </span>
+        </template>
+        <template v-slot:[`item.value`]="{ item }">
+         <span class="FinancialStrength"
+                  >{{ numberWithCommas(roundTo(item.value / 1000000000, 2))
+                  }}
+                  میلیارد ریال</span
+                >
+        </template>
+        <template v-slot:[`item.volume`]="{ item }">
+         <span class="FinancialStrength"
+                  >{{ numberWithCommas(roundTo(item.volume / 1000000, 2))
+                  }}
+                  میلیون سهم </span
+                >
+        </template>
       </v-data-table>
     </div>
     <!--end::Body-->
@@ -56,46 +77,54 @@ export default {
   data() {
     return {
       search: "",
+      options: {
+        itemsPerPage: 20
+      },
       headers: [
-        {
-          text: "تاریخ میلادی",
-          value: "engdate"
-        },
         {
           text: "تاریخ شمسی",
           value: "persiandate"
         },
         {
-          text: "بالاترین قیمت",
-          value: "high"
-        },
-        {
-          text: "پایین ترین قیمت",
-          value: "low"
-        },
-        {
           text: "قیمت پایانی",
-          value: "closing"
-        },
-        {
-          text: "آخرین قیمت",
-          value: "last"
-        },
-        {
-          text: " اولین قیمت",
-          value: "first"
-        },
-        {
-          text: "ارزش معاملات",
-          value: "value"
-        },
-        {
-          text: "حجم معاملات",
-          value: "volume"
+          value: "closing",
+          filterable: false
         },
         {
           text: "قیمت تعدیلی",
-          value: "adjustedclosing"
+          value: "adjustedclosing",
+          filterable: false
+        },
+
+        {
+          text: "آخرین قیمت",
+          value: "last",
+          filterable: false
+        },
+        {
+          text: " اولین قیمت",
+          value: "first",
+          filterable: false
+        },
+        {
+          text: "بالاترین قیمت",
+          value: "high",
+          filterable: false
+        },
+        {
+          text: "پایین ترین قیمت",
+          value: "low",
+          filterable: false
+        },
+        {
+          text: "ارزش معاملات",
+          value: "value",
+          filterable: false
+        },
+        {
+          text: "حجم معاملات",
+          value: "volume",
+          filterable: false
         }
       ],
       DataItems2: []
@@ -107,6 +136,34 @@ export default {
   methods: {
     populateData() {
       this.DataItems2 = this.adjusted;
+    },
+    numberWithCommas(x) {
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
+    filterItems(items, search, filter) {
+      items.filter(r => filter((r.persiandate = search)));
     }
   },
   mounted() {
@@ -125,6 +182,8 @@ export default {
 .FinancialStrength {
   direction: rtl;
   text-align: right;
+  font-family: "Dirooz FD" !important;
+  font-size: 1.1em;
 }
 .rtl_centerd {
   direction: rtl;

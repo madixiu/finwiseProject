@@ -42,15 +42,8 @@ export default {
   },
   methods: {
     loadData() {
+      // eslint-disable-next-line no-unused-vars
       this.getOne().then(response => {
-        console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
         this.getTwo().then(function() {
           console.log("ChainDone");
         });
@@ -59,32 +52,20 @@ export default {
     async getTwo() {
       await this.axios
         .get("/api/AdjustedPrices/" + this.$route.params.id + "/")
-        .then(response2 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
-          this.adjustedprices = response2.data;
-          console.log(response2.data);
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
+        .then(responsePrice => {
+          this.adjustedprices = responsePrice.data;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
           console.log(error);
         });
     },
     async getOne() {
       await this.axios
-        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
-        .then(response1 => {
-          // console.log("firstDone");
-          this.subheaders = response1.data[0];
-          // console.log(response1.data);
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .then(responseHeader => {
+          this.subheaders = responseHeader.data[0];
         })
         .catch(error => {
-          // console.log("GetOneCatch");
           console.log(error);
         });
     }

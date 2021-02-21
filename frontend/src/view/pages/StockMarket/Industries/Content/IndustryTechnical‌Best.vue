@@ -60,12 +60,44 @@ export default {
       ]
     };
   },
-  mounted() {}
+  mounted() {},
+  methods: {
+    numberWithCommas(x) {
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
+  }
 };
 </script>
 <style scoped>
 .ltr_aligned {
   direction: ltr !important;
   text-align: left !important;
+}
+.FinancialStrength td{
+  direction: rtl;
+  text-align: right;
+  font-family: "Dirooz FD";
 }
 </style>
