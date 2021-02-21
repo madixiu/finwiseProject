@@ -16,7 +16,7 @@ def getHaghTaghadomData():
     resp = requests.get('http://37.152.180.99:3000/View_Watch_HaghTaghadoms')
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        additionalData(js)
+        TaghadomDataFix(js)
         return js
     else:
         return ("noData")
@@ -32,6 +32,18 @@ def getFundsData():
 
 def additionalData(data):
     for item in data:
+        if item['yesterday'] !=None and item['close'] !=None:
+            item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
+        else:
+            item['closePercent'] = None
+        if item['last'] !=None and item['yesterday'] !=None:
+            item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
+        else:
+            item['lastPercent'] = None
+
+def TaghadomDataFix(data):
+    for item in data:
+        item['Coverage'] = truncater(item['Coverage'])
         if item['yesterday'] !=None and item['close'] !=None:
             item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
         else:

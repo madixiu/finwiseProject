@@ -4,6 +4,7 @@
     placeholder="جستجو"
     :get-result-value="getResultValue"
     @submit="handleSubmit"
+    :debounceTime="500"
   >
     <template #result="{ result, props }">
       <li v-bind="props">
@@ -81,7 +82,6 @@ export default {
       //   // this.items = this.states.filter(e => {
       //   //   return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
       //   // });
-      //   this.loading = false;
       // }, 1500);
       // console.log(val);
       // val && val !== this.select && this.querySelections(val);
@@ -108,16 +108,12 @@ export default {
         return [];
       }
       return this.searchData.filter(e => {
-        // console.log(e.name);
-
-        if (e.name != null)
+        if (e.name == null) return e.ticker.includes(input.toLowerCase());
+        else
           return (
             e.ticker.includes(input.toLowerCase()) ||
             e.name.includes(input.toLowerCase())
           );
-        else return e.ticker.includes(input.toLowerCase());
-        // else if (e.name.includes(input.toLowerCase()))
-        //   return e.name.includes(input.toLowerCase());
       });
     },
     getResultValue(result) {
@@ -132,23 +128,18 @@ export default {
         alert(`You selected ${result.ID} which is oraq and not created`);
       }
     },
-    async loadData() {
-      await this.axios
-        .get("/api/MainSearchBar")
-        .then(response => {
-          let data = response.data;
-          // let tickerNames = [];
-          if (data != "noData") this.searchData = data;
-          // for (let item of data) {
-          //   tickerNames.append(item.ticker);
-          // }
-          // console.log(tickerNames);
-          // this.states = tickerNames;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+    // async loadData() {
+    //   await this.axios
+    //     .get("/api/MainSearchBar")
+    //     .then(SearchResponse => {
+    //       let data = SearchResponse.data;
+    //       // let tickerNames = [];
+    //       if (data != "noData") this.searchData = data;
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // },
     querySelections(v) {
       this.loading = true;
 

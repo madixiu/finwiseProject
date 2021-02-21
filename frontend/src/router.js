@@ -14,7 +14,7 @@ const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
 const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
 const Tools = () => import("@/view/pages/Saham/Technical/Tools.vue");
-const Data = () => import("@/view/pages/Saham/Technical/Data.vue");
+const Data = () => import("@/view/pages/Saham/Technical/TradingView.vue");
 const Calendar = () => import("@/view/pages/Saham/Majame/Calendar.vue");
 const Decisions = () => import("@/view/pages/Saham/Majame/Decisions.vue");
 const Increase = () => import("@/view/pages/Saham/Majame/Increase.vue");

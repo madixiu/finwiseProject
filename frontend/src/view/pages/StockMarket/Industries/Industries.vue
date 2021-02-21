@@ -20,7 +20,10 @@
               style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
             >
-              <span class="tickerTapeTicker mr-1 ml-1">
+              <span
+                class="tickerTapeTicker mr-1 ml-1"
+                @click="clickMarquee(item)"
+              >
                 {{ item.ticker }}
               </span>
               <span class="tickerTapeClose">
@@ -29,8 +32,11 @@
               <!-- <v-chip label :style="`background-color:${item.Change} > ${0} ? 'green' : 'red'`">{{ item.Change }}</v-chip> -->
               <v-chip
                 label
-                v-bind:class="[item.Change > 0 ? 'greenItem' : 'redItem']"
-                >{{ item.Change }}%</v-chip
+                v-bind:class="[item.Change >= 0 ? 'greenItem' : 'redItem']"
+                @click="clickMarquee(item)"
+                ><span class="tickerTapeChange"
+                  >{{ item.Change }}%</span
+                ></v-chip
               >
             </div>
 
@@ -799,6 +805,9 @@ export default {
     this.loadData();
   },
   methods: {
+    clickMarquee(item) {
+      console.log("CLICKED", item);
+    },
     testing(seriesIndex) {
       // console.log(this.PiechartOptions.labels[seriesIndex]);
       // console.log(this.Pieseries[seriesIndex]);
@@ -841,7 +850,9 @@ export default {
         // console.log(persianNames);
         this.PiechartOptions.labels = persianNames;
         // console.log(this.chartOptions.labels);
-
+        marketCaps.sort(function(a, b) {
+          return b - a;
+        });
         this.Pieseries = marketCaps;
         itemValue.sort(this.compareValues("value", "desc"));
         itemValue = itemValue.slice(0, 6);
@@ -902,10 +913,20 @@ export default {
 }
 .tickerTapeTicker {
   color: aliceblue;
+  font-family: "Vazir-Medium-FD" !important;
+}
+.tickerTapeTicker:hover {
+  cursor: pointer;
+  color: yellow;
 }
 .tickerTapeClose {
   color: aliceblue;
   font-size: 0.8rem;
+  font-family: "Vazir-Medium-FD" !important;
+}
+.tickerTapeChange {
+  font-family: "Vazir-Medium-FD" !important;
+  font-size: 1.1em;
 }
 .v-chip.v-size--default {
   font-size: 0.7rem;
@@ -917,10 +938,12 @@ export default {
 .redItem {
   color: aliceblue;
   background-color: red !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 .greenItem {
   color: aliceblue;
   background-color: green !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 .apexcharts-text tspan {
   font-family: "Vazir";

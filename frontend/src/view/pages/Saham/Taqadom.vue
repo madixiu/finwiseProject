@@ -17,7 +17,7 @@
             </b-input-group-append>
           </b-input-group>
         </b-col>
-        <b-col lg="4" xxl="4" class="mt-2">
+        <!-- <b-col lg="4" xxl="4" class="mt-2">
           <b-form-group>
             <b-form-checkbox-group
               v-model="selectedHeaderOptions"
@@ -25,7 +25,7 @@
               @change="TriggerFilteredHeader"
             ></b-form-checkbox-group>
           </b-form-group>
-        </b-col>
+        </b-col> -->
       </b-row>
 
       <b-table
@@ -50,7 +50,7 @@
         hover
         responsive
         :items="tableData"
-        :fields="HD"
+        :fields="TaghadomTableHeader"
         @filtered="onFiltered"
       >
         <template #cell(ticker)="data">
@@ -135,6 +135,12 @@
             >{{ data.value }}%</b
           >
         </template>
+        <template #cell(ParentLast)="data">
+          <b class="taghadom-table-cell">{{ data.value.toLocaleString() }}</b>
+        </template>
+        <template #cell(Coverage)="data">
+          <b class="taghadom-table-cell">{{ data.value }}</b>
+        </template>
       </b-table>
     </v-card>
   </div>
@@ -189,12 +195,12 @@ export default {
           thClass: "taghadom-table-head",
           sortable: true
         },
-        {
-          label: "قیمت دیروز",
-          key: "yesterday",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
+        // {
+        //   label: "قیمت دیروز",
+        //   key: "yesterday",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
         {
           label: "آخرین قیمت",
           key: "last",
@@ -219,85 +225,97 @@ export default {
           thClass: "taghadom-table-head",
           sortable: true
         },
-        {
-          label: "کف مجاز قیمت",
-          key: "MinRange",
+             {
+          label: "قیمت دارایی پایه",
+          key: "ParentLast",
           thClass: "taghadom-table-head",
           sortable: true
         },
-        {
-          label: "سقف مجاز قیمت",
-          key: "MaxRange",
+         {
+          label: "حاشیه سود",
+          key: "Coverage",
           thClass: "taghadom-table-head",
           sortable: true
         },
+        // {
+        //   label: "کف مجاز قیمت",
+        //   key: "MinRange",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "سقف مجاز قیمت",
+        //   key: "MaxRange",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
         // { label: "EPS", key: "EPS", thClass: "taghadom-table-head" },
-        {
-          label: "بالاترین قیمت",
-          key: "high",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "کمترین قیمت",
-          key: "low",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "اولین قیمت",
-          key: "first",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد خرید حقیقی",
-          key: "CountBuy_Haghighi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد خرید حقوقی",
-          key: "CountBuy_Hoguhgi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقیقی",
-          key: "VolumeBuy_Haghighi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقوقی",
-          key: "VolumeBuy_Hoghughi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقیقی",
-          key: "CountSell_Haghighi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقوقی",
-          key: "CountSell_Hoghughi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقیقی",
-          key: "VolumeSell_Haghighi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقوقی",
-          key: "VolumeSell_Hoghughi",
-          thClass: "taghadom-table-head",
-          sortable: true
-        }
+        // {
+        //   label: "بالاترین قیمت",
+        //   key: "high",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "کمترین قیمت",
+        //   key: "low",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "اولین قیمت",
+        //   key: "first",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "تعداد خرید حقیقی",
+        //   key: "CountBuy_Haghighi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "تعداد خرید حقوقی",
+        //   key: "CountBuy_Hoguhgi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "حجم خرید حقیقی",
+        //   key: "VolumeBuy_Haghighi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "حجم خرید حقوقی",
+        //   key: "VolumeBuy_Hoghughi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "تعداد فروش حقیقی",
+        //   key: "CountSell_Haghighi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "تعداد فروش حقوقی",
+        //   key: "CountSell_Hoghughi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "حجم فروش حقیقی",
+        //   key: "VolumeSell_Haghighi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "حجم فروش حقوقی",
+        //   key: "VolumeSell_Hoghughi",
+        //   thClass: "taghadom-table-head",
+        //   sortable: true
+        // }
       ]
     };
   },

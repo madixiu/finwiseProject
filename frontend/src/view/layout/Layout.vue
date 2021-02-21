@@ -106,6 +106,8 @@ export default {
     HtmlClass.init(this.layoutConfig());
   },
   mounted() {
+    this.BreadCrumbRouteCheck();
+    this.AsideRouteCheck();
     // check if current user is authenticated
     // if (!this.isAuthenticated) {
     //   this.$router.push({ name: "login" });
@@ -127,7 +129,6 @@ export default {
   },
   methods: {
     BreadCrumbRouteCheck() {
-      // console.log("R changed");
       let route = this.$route.name;
       if (this.BreadCrumbRoutes.includes(route)) {
         this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-fixed");
