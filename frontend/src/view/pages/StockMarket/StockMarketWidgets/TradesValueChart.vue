@@ -5,10 +5,10 @@
       type=" table-heading,table-row@12"
       v-if="loading"
     ></v-skeleton-loader> -->
-    
+
     <v-card>
       <v-card-title>ارزش معاملات</v-card-title>
-      <v-divider class="mt-0"></v-divider> 
+      <v-divider class="mt-0"></v-divider>
       <div class="row">
         <div
           id="Chartcontainer2"

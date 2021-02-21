@@ -27,40 +27,58 @@
         :options.sync="options"
         :search="search"
       >
-      <template v-slot:[`item.persiandate`]="{ item }" >
-          <span class="FinancialStrength">{{ item.persiandate.substring(0,4)+'/'+item.persiandate.substring(4,6)+'/'+item.persiandate.substring(6,8)}} </span>
+        <template v-slot:[`item.persiandate`]="{ item }">
+          <span class="FinancialStrength"
+            >{{
+              item.persiandate.substring(0, 4) +
+                "/" +
+                item.persiandate.substring(4, 6) +
+                "/" +
+                item.persiandate.substring(6, 8)
+            }}
+          </span>
         </template>
-        <template v-slot:[`item.high`]="{ item }" >
-          <span class="FinancialStrength">{{ numberWithCommas(item.high )}} </span>
+        <template v-slot:[`item.high`]="{ item }">
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.high) }}
+          </span>
         </template>
         <template v-slot:[`item.low`]="{ item }">
-          <span class="FinancialStrength">{{ numberWithCommas(item.low )}} </span>
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.low) }}
+          </span>
         </template>
         <template v-slot:[`item.closing`]="{ item }">
-          <span class="FinancialStrength">{{ numberWithCommas(item.closing )}} </span>
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.closing) }}
+          </span>
         </template>
         <template v-slot:[`item.adjustedclosing`]="{ item }">
-          <span class="FinancialStrength">{{ numberWithCommas(item.adjustedclosing )}} </span>
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.adjustedclosing) }}
+          </span>
         </template>
         <template v-slot:[`item.last`]="{ item }">
-          <span class="FinancialStrength">{{ numberWithCommas(item.last )}} </span>
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.last) }}
+          </span>
         </template>
         <template v-slot:[`item.first`]="{ item }">
-          <span class="FinancialStrength">{{ numberWithCommas(item.first )}} </span>
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(item.first) }}
+          </span>
         </template>
         <template v-slot:[`item.value`]="{ item }">
-         <span class="FinancialStrength"
-                  >{{ numberWithCommas(roundTo(item.value / 1000000000, 2))
-                  }}
-                  میلیارد ریال</span
-                >
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(roundTo(item.value / 1000000000, 2)) }} میلیارد
+            ریال</span
+          >
         </template>
         <template v-slot:[`item.volume`]="{ item }">
-         <span class="FinancialStrength"
-                  >{{ numberWithCommas(roundTo(item.volume / 1000000, 2))
-                  }}
-                  میلیون سهم </span
-                >
+          <span class="FinancialStrength"
+            >{{ numberWithCommas(roundTo(item.volume / 1000000, 2)) }} میلیون
+            سهم
+          </span>
         </template>
       </v-data-table>
     </div>

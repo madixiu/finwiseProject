@@ -181,8 +181,8 @@ export default {
   border: 1px solid #eee;
   border-radius: 7px;
   width: 100%;
-  margin: 10px 10px 10px 10px;
-  padding: 4px 30px 4px 30px;
+  margin: 10px 0px 10px 0px;
+  padding: 4px 30px 4px 40px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;

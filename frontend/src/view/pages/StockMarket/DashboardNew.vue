@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-xxl-9 col-lg-9" id="ChartOneDiv">
-      <ChartVol 
+      <ChartVol
         :inputData="highestTvalueData"
         :inputWidth="width"
         :inputHeight="height"
@@ -10,13 +10,13 @@
     </div>
     <div class="col-xxl-3 col-lg-3">
       <div class="row">
-      <ChartTradeValue
-        :inputData="AssetTradeValue"
-        :inputWidth="width"
-        :inputHeight="height"
-        v-if="dataFetched"
-      ></ChartTradeValue>
-      <NewsW :inputDataNews="News"></NewsW>
+        <ChartTradeValue
+          :inputData="AssetTradeValue"
+          :inputWidth="width"
+          :inputHeight="height"
+          v-if="dataFetched"
+        ></ChartTradeValue>
+        <NewsW :inputDataNews="News"></NewsW>
       </div>
     </div>
     <div class="col-xxl-3 col-lg-3">

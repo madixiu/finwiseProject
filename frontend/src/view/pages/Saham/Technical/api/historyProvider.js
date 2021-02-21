@@ -39,16 +39,18 @@ export default {
       // 		toTs:  to ? to : '',
       // 		limit: limit ? limit : 2000,
       // 		// aggregate: 1//resolution
-      limit: 2000,
-      urlParameter: "eq." + symbolInfo.urlparam,
-      utc: to ? "lte." + to : "lte." + ""
+      limits: 2000,
+      url: symbolInfo.urlparam,
+      todate: to ? "" + to : ""
       // order:'utc.desc'
     };
 
     console.log({ qs });
     return rp({
       //   url: `${api_root}${url}`,
-      url: `http://37.152.180.99:3000/View_TV_Daily?`,
+      // url: `http://37.152.180.99:3000/View_TV_Daily?`,
+      url: `http://37.152.180.99:3000/rpc/ViewTVDaily?`,
+
       qs
     }).then(data => {
       console.log(data);
