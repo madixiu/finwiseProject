@@ -5,27 +5,26 @@ import store from "@/core/services/store";
 import WsService from "@/core/services/websocket.service.js";
 import MarqueeText from "vue-marquee-text-component";
 import "core-js/stable";
-
-// import CoreuiVue from "@coreui/vue";
-// import { iconsSet as icons } from "@/core/plugins/CoreuiIcons.js";
-// Vue.use(CoreuiVue);
-
 // import '@mdi/font/css/materialdesignicons.css'
-
 // import JwtService from "@/core/services/jwt.service";
 // import ApiService from "@/core/services/api.service";
 // import MockService from "@/core/mock/mock.service";
 // import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 // import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+
+// Adding GOOGLE ANALYTICS
+import VueGtag from "vue-gtag";
+Vue.use(VueGtag, {
+  config: { id: "G-YGH92K65WQ" }
+});
+
 // apollo imports for graphql
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import VueApollo from "vue-apollo";
-// vxe-table imports
-// import "./core/plugins/utils";
-// import "./core/plugins/table";
+
 import moment from "vue-jalali-moment";
 import PersianCalendar from "vue-persian-calendar";
 import VuePersianDatetimePicker from "vue-persian-datetime-picker";
@@ -34,15 +33,9 @@ Vue.component("date-picker", VuePersianDatetimePicker);
 // imported persian calendar
 Vue.use(moment);
 Vue.use(PersianCalendar);
-// import VXETable from "vxe-table";
-// import "vxe-table/lib/style.css";
-// import XEUtils from "xe-utils";
 
 // -------------------------
 // import ApolloService from "@/core/services/apollo.service";
-//vxe-table usage
-// Vue.use(VXETable);
-// Vue.use(XEUtils);
 
 // HTTP connection to the API graphql/apollo
 const httpLink = new HttpLink({

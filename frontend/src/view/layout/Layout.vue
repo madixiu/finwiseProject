@@ -17,14 +17,13 @@
         <!-- begin:: Header -->
         <KTHeader></KTHeader>
         <!-- end:: Header -->
-
         <!-- begin:: Content -->
         <div
           id="kt_content"
           class="content d-flex flex-column flex-column-fluid"
         >
           <!-- begin:: Content Head -->
-
+          <TickerTapeContainer v-if="TickerTapeDisplay" />
           <!-- begin:: Content Head -->
           <KTSubheader
             v-if="subheaderDisplay"
@@ -70,7 +69,7 @@ import {
   ADD_BODY_CLASSNAME,
   REMOVE_BODY_CLASSNAME
 } from "@/core/services/store/htmlclass.module.js";
-
+import TickerTapeContainer from "@/view/content/TickerTapeContainer.vue";
 export default {
   name: "Layout",
   components: {
@@ -81,12 +80,15 @@ export default {
     KTSubheader,
     // KTStickyToolbar,
     KTScrollTop,
-    Loader
+    Loader,
+    TickerTapeContainer
   },
   data() {
     return {
       selectedRouteAside: true,
       subheaderDisplay: false,
+      TickerTapeDisplay: false,
+      TickerTapeRoutes: ["Dashboard", "Industries"],
       BreadCrumbRoutes: ["TickerOverall", "IndustriesDetail"],
       NonAsideRoutes: [
         "marketmap",
@@ -108,6 +110,7 @@ export default {
   mounted() {
     this.BreadCrumbRouteCheck();
     this.AsideRouteCheck();
+    this.TickerTapeRouteCheck();
     // check if current user is authenticated
     // if (!this.isAuthenticated) {
     //   this.$router.push({ name: "login" });
@@ -124,6 +127,7 @@ export default {
     $route() {
       this.AsideRouteCheck();
       this.BreadCrumbRouteCheck();
+      this.TickerTapeRouteCheck();
       // react to route changes...
     }
   },
@@ -140,6 +144,19 @@ export default {
         this.subheaderDisplay = false;
       }
       console.log(route);
+    },
+    TickerTapeRouteCheck() {
+      let route = this.$route.name;
+
+      if (this.TickerTapeRoutes.includes(route)) {
+        this.TickerTapeDisplay = true;
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-fixed");
+        this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-enabled");
+      } else {
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-fixed");
+        this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-enabled");
+        this.TickerTapeDisplay = false;
+      }
     },
     AsideRouteCheck() {
       let route = this.$route.name;

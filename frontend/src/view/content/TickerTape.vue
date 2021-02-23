@@ -3,7 +3,7 @@
     class="tickerTape"
     reverse
     :repeat="5"
-    :duration="30"
+    :duration="duration"
     :paused="paused"
   >
     <div
@@ -21,7 +21,7 @@
           <span class="tickerTapeTicker mr-1 ml-1" @click="clickMarquee(item)">
             {{ item.ticker }}
           </span>
-          <span class="tickerTapeClose">
+          <span v-if="TickerType" class="tickerTapeClose">
             {{ item.close }}
           </span>
           <v-chip
@@ -42,7 +42,7 @@ export default {
   components: {
     MarqueeText
   },
-  props: { TickerData: Array },
+  props: { TickerData: Array, duration: Number, TickerType:Boolean },
   data() {
     return {
       paused: false
@@ -70,6 +70,7 @@ export default {
 }
 .tickerTapeChange {
   font-family: "Vazir-Medium-FD" !important;
+  color: white;
   /* font-size: 1.1em; */
 }
 .redItem {

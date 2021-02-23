@@ -34,7 +34,7 @@
           <!-- <g class="parentTitleBox"
           v-for="(child in rootNode)"
           ></g> -->
-          <svg width="15pt" height="15pt" viewBox="0 0 15 15" version="1.1">
+          <!-- <svg width="15pt" height="15pt" viewBox="0 0 15 15" version="1.1">
             <g id="surface1">
               <path
                 style=" stroke:none;fill-rule:nonzero;fill:rgb(15.294118%,23.137255%,47.843137%);fill-opacity:1;"
@@ -54,7 +54,7 @@
                 d="M 9.242188 10.625 L 6.394531 7.777344 C 6.320312 7.703125 6.285156 7.609375 6.28125 7.515625 L 3.984375 7.515625 C 3.988281 7.738281 4.074219 7.957031 4.242188 8.125 L 7.992188 11.875 C 8.335938 12.21875 8.898438 12.21875 9.242188 11.875 C 9.585938 11.53125 9.585938 10.96875 9.242188 10.625 Z M 9.242188 10.625 "
               />
             </g>
-          </svg>
+          </svg> -->
 
           <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
           <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
@@ -305,7 +305,7 @@ export default {
       height: 550,
       selected: null,
       colors: [
-        "fill:#f63538", // 0 darkest Red
+        "fill:#f63538", // 0 lightest Red
         "fill:#eb363a", // 1
         "fill:#e0373c", // 2
         "fill:#c9393f", // 3
@@ -313,7 +313,7 @@ export default {
         "fill:#9c3d46", // 5
         "fill:#86374a", // 6
         "fill:#6f414d", // 7
-        "fill:#584351", // 8 lightest Red
+        "fill:#584351", // 8 darkest Red
         "fill:#414554", // 9 Black
         "fill:#404e55", // 10 darkest Green
         "fill:#3f5655", // 11
@@ -652,7 +652,7 @@ export default {
         console.log("neg");
         color = "fill:" + this.negativeColor(val);
       } else if (val > 6) color = "fill:#30cc5a";
-      else color = "fill:#584351";
+      else if (val < -2) color = "fill:#f63538";
 
       return color;
     }

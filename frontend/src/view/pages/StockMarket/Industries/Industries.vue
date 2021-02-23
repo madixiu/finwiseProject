@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="row">
-      <TickerTape :TickerData="TickerTapeData"></TickerTape>
-      <div class="col-xxl-4 col-md-6 mb-4">
+      <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape> -->
+      <div class="col-xxl-4 col-md-6">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
             v-if="Pieseries.length"
             type="pie"
-            height="200%"
+            height="150%"
             width="100%"
             :series="Pieseries"
             :chartOptions="PiechartOptions"
@@ -16,7 +16,7 @@
         </v-card>
       </div>
 
-      <div class="col-xxl-6 col-md-6 mb-4">
+      <div class="col-xxl-6 col-md-6">
         <v-card>
           <v-card-title>برترین گروه های صنعت</v-card-title>
           <ApexChart
@@ -64,7 +64,7 @@
           />
         </v-card>
       </div>
-      <div class="col-xxl-8 col-md-8">
+      <div class="col-xxl-12 col-lg-12">
         <v-card>
           <v-card-title
             >بار چارت افقی با تایم فریم برای بازدهی صنایع</v-card-title
@@ -91,58 +91,7 @@
                 >کل</b-button
               >
             </b-button-group>
-            <!-- <v-btn
-              id="fi"
-              class="ml-1"
-              outlined
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >ماه</v-btn
-            >
-            <v-btn
-              class="ml-1"
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >۳ ماه</v-btn
-            >
-            <v-btn
-              class="ml-1"
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >۶ ماه</v-btn
-            >
-            <v-btn
-              class="ml-1"
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >سال</v-btn
-            >
-            <v-btn
-              class="ml-1"
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >۳ سال</v-btn
-            >
-            <v-btn
-              class="ml-1"
-              dark
-              small
-              color="#136bf7"
-              @click="changeTimeFrame"
-              >کل</v-btn
-            > -->
           </div>
-
           <ApexChart
             type="bar"
             width="100%"
@@ -165,14 +114,14 @@
 </template>
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
-import TickerTape from "@/view/content/TickerTape.vue";
+// import TickerTape from "@/view/content/TickerTapeContainer.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
   name: "Industries",
   components: {
-    ApexChart,
-    TickerTape
+    ApexChart
+    // TickerTape
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
     // MarqueeText
@@ -180,7 +129,7 @@ export default {
   data() {
     return {
       // paused: false,
-      TickerTapeData: [],
+      // TickerTapeData: [],
       ReturnSeries: [
         {
           data: [
@@ -713,7 +662,7 @@ export default {
           width: 400,
           height: 350,
           type: "pie",
-          fontFamily: "Vazir",
+          fontFamily: "Vazir-Medium-FD",
           animations: {
             enabled: false
           },
@@ -734,7 +683,7 @@ export default {
         legend: {
           // show: false,
           fontSize: 10,
-          fontFamily: "Vazir"
+          fontFamily: "Vazir-Medium-FD"
           // position: "bottom"
         },
         labels: [],
@@ -781,9 +730,11 @@ export default {
     },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getTickerTapeData().then(response => {
-        this.getPieChartData();
-      });
+      this.getPieChartData();
+
+      // this.getTickerTapeData().then(response => {
+      //   this.getPieChartData();
+      // });
     },
     async getPieChartData() {
       await this.axios.get("/api/IndexMarketCap").then(responsive => {
@@ -857,8 +808,6 @@ export default {
 #fi {
   color: red !important;
 }
-
-
 
 .apexcharts-text tspan {
   font-family: "Vazir";

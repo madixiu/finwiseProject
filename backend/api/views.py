@@ -12,7 +12,7 @@ from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
-from requestcall.getTickerTapeData import TickerTapeData
+from requestcall.getTickerTapeData import TickerTapeData,IndustryTapeData
 from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
@@ -150,7 +150,7 @@ def getOptionAssets(self):
 
 
 def getTape(self):
-    return JsonResponse(TickerTapeData(),safe=False)
+    return JsonResponse([TickerTapeData(),IndustryTapeData()],safe=False)
 
 # def get_csrf_token(request):
 #     token = django.middleware.csrf.get_token(request)

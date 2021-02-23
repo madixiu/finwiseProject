@@ -20,11 +20,12 @@
             </b-input-group>
           </b-col>
           <b-table
-            thClass="bb-table-head"
-            class="bb-table"
-            tbody-tr-class="bb-table-row"
+            thClass="option-table-head"
+            class="option-table"
+            tbody-tr-class="option-table-row"
             :sticky-header="height"
             dense
+            striped
             :busy.sync="isBusy"
             :filter="filter"
             :filter-included-fields="filterOn"
@@ -50,34 +51,34 @@
               </div>
             </template>
             <template #cell(Nemad)="data">
-              <b class="bb-table-cell-bold">{{ data.value }}</b>
+              <b class="option-table-cell-bold">{{ data.value }}</b>
             </template>
             <template #cell(UnderLying)="data">
-              <b class="bb-table-cell-bold">{{ data.value }}</b>
+              <b class="option-table-cell-bold">{{ data.value }}</b>
             </template>
             <template #cell(StrikePrice)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(TTM)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(averageFairprice)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(priceseller)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(volumeseller)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(AssetPrice)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(DifferenceToAverage)="data">
-              <b v-if="data.value == 0" class="bb-table-cell">{{
+              <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value
               }}</b>
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+              <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value
               }}</b>
               <b
@@ -86,70 +87,70 @@
                     data.value != -100001 &&
                     data.value != -100000
                 "
-                class="bb-table-cell-red"
+                class="option-table-cell-red"
                 >{{ data.value }}</b
               >
-              <b v-if="data.value == -100001" class="bb-table-cell-s">{{
+              <b v-if="data.value == -100001" class="option-table-cell-s">{{
                 "سفارش فروش ندارد"
               }}</b>
-              <b v-if="data.value == -100000" class="bb-table-cell-r">{{
+              <b v-if="data.value == -100000" class="option-table-cell-r">{{
                 "ارزنده نیست"
               }}</b>
             </template>
             <template #cell(PPP)="data">
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+              <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+              <b v-if="data.value < 0" class="option-table-cell-red">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value == 0" class="bb-table-cell">{{
+              <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value.toLocaleString()
               }}</b>
             </template>
             <template #cell(TotalValue)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(FinalPayment)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(LastTrade)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
             <template #cell(DifferenceToLast)="data">
-              <b v-if="data.value == 0" class="bb-table-cell">{{
+              <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value
               }}</b>
               <b
                 v-if="
                   data.value > 0 && data.value != 1001 && data.value != 1000
                 "
-                class="bb-table-cell-green"
+                class="option-table-cell-green"
                 >{{ data.value }}</b
               >
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+              <b v-if="data.value < 0" class="option-table-cell-red">{{
                 data.value
               }}</b>
-              <b v-if="data.value == 1001" class="bb-table-cell-s">{{
+              <b v-if="data.value == 1001" class="option-table-cell-s">{{
                 "بدون معامله"
               }}</b>
-              <b v-if="data.value == 1000" class="bb-table-cell-r">{{
+              <b v-if="data.value == 1000" class="option-table-cell-r">{{
                 "ارزنده نیست"
               }}</b>
             </template>
             <template #cell(ArzandegiLast)="data">
-              <b v-if="data.value > 0" class="bb-table-cell-green">{{
+              <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value < 0" class="bb-table-cell-red">{{
+              <b v-if="data.value < 0" class="option-table-cell-red">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value == 0" class="bb-table-cell">{{
+              <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value.toLocaleString()
               }}</b>
             </template>
             <template #cell(TradeVolume)="data">
-              <b class="bb-table-cell">{{ data.value.toLocaleString() }}</b>
+              <b class="option-table-cell">{{ data.value.toLocaleString() }}</b>
             </template>
           </b-table>
         </v-card>
@@ -183,7 +184,7 @@
                 <transition name="fade">
                   <div v-if="card2Key" key="1">
                     <v-data-table
-                      thClass="bb-table-head"
+                      thClass="option-table-head"
                       fixed-header
                       height="196"
                       :headers="card1Header"
@@ -271,14 +272,14 @@ export default {
       {
         label: "نماد",
         key: "Nemad",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
       {
         label: "دارایی پایه",
         key: "UnderLying",
         width: "100",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
 
@@ -286,28 +287,28 @@ export default {
         label: "قیمت اعمال",
         key: "StrikePrice",
         width: "100",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
       {
         label: "فاصله تا سر رسید",
         key: "TTM",
         width: "130",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
       {
         label: "قیمت دارایی پایه",
         key: "AssetPrice",
         width: "120",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
       {
         label: "قیمت عادلانه",
         key: "averageFairprice",
         width: "230",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle: "قیمت به دست آمده از مدل بلک شولز"
       },
@@ -315,14 +316,14 @@ export default {
         label: "قیمت بهترین سفارش فروش",
         key: "priceseller",
         width: "130",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
       {
         label: "حجم بهترین سفارش فروش",
         key: "volumeseller",
         width: "130",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
 
@@ -330,7 +331,7 @@ export default {
         label: "ارزندگی بهترین سفارش فروش",
         key: "DifferenceToAverage",
         width: "200",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           " هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی خرید در این قیمت ارزنده تر است"
@@ -340,7 +341,7 @@ export default {
         label: "پوشش قیمت سهام با بهترین سفارش فروش",
         key: "PPP",
         width: "200",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           "قیمت تمام شده سهام با توجه به قیمت بهترین سفارش فروش آپشن است و این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
@@ -350,7 +351,7 @@ export default {
         label: "پرداخت کنونی بهترین سفارش(میلیون ریال)",
         key: "TotalValue",
         width: "120",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           "مبلغی که در صورت خرید کامل بهترین سفارش فروش، امروز باید پرداخت شود"
@@ -359,7 +360,7 @@ export default {
         label: "پرداخت نهایی بهترین سفارش(میلیون ریال)",
         key: "FinalPayment",
         width: "100",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           "مبلغی که در صورت خرید کامل بهترین سفارش فروش، در روز اعمال باید پرداخت شود"
@@ -368,7 +369,7 @@ export default {
         label: "قیمت آخرین معامله",
         key: "LastTrade",
         width: "130",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       },
 
@@ -376,7 +377,7 @@ export default {
         label: "ارزندگی آخرین معامله",
         key: "DifferenceToLast",
         width: "200",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           " هر چه این مقدار بزرگتر و نزدیکتر به عدد 1 باشد یعنی خرید در این قیمت ارزنده تر است"
@@ -385,7 +386,7 @@ export default {
         label: "پوشش قیمت سهام با آخرین معامله",
         key: "ArzandegiLast",
         width: "130",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true,
         headerTitle:
           "قیمت تمام شده سهام با توجه به قیمت آخرین معامله آپشن است و این نسبت به طوری اصلاح شده که هر چه بزرگتر و نزدیکتر به عدد 1 باشد قرارداد ارزنده تر است"
@@ -395,7 +396,7 @@ export default {
         label: "حجم",
         key: "TradeVolume",
         width: "100",
-        thClass: "bb-table-head",
+        thClass: "option-table-head",
         sortable: true
       }
     ]
@@ -568,31 +569,31 @@ export default {
 .Mychips {
   text-align: center;
 }
-.bb-table-head {
+.option-table-head {
   font-size: 0.8rem !important;
   font-weight: 500;
 }
-.bb-table {
+.option-table {
   text-align: center;
   /* font-size: 1em; */
   line-height: 1;
   font-family: "Vazir-Medium-FD";
 }
-.bb-table-row:hover {
+.option-table-row:hover {
   background-color: #999999 !important;
 }
 @media screen and (max-width: 1366px) {
-  .bb-table-cell-s {
+  .option-table-cell-s {
     vertical-align: middle !important;
     text-align: center;
-    font-size: 0.7em;
+    font-size: 0.8em;
     line-height: 1;
     font-weight: 400;
     font-family: "Vazir-Medium-FD";
   }
 }
 @media screen and (min-width: 1600px) {
-  .bb-table-cell-s {
+  .option-table-cell-s {
     vertical-align: middle !important;
     text-align: center;
     font-size: 1em;
@@ -602,10 +603,10 @@ export default {
   }
 }
 @media screen and (max-width: 1366px) {
-  .bb-table-cell-r {
+  .option-table-cell-r {
     vertical-align: middle !important;
     text-align: center;
-    font-size: 0.7em;
+    font-size: 0.8em;
     color: red;
     line-height: 1;
     font-weight: 400;
@@ -613,7 +614,7 @@ export default {
   }
 }
 @media screen and (min-width: 1600px) {
-  .bb-table-cell-r {
+  .option-table-cell-r {
     vertical-align: middle !important;
     text-align: center;
     font-size: 1em;
@@ -623,50 +624,50 @@ export default {
     font-family: "Vazir-Medium-FD";
   }
 }
-.bb-table-cell {
+.option-table-cell {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.9em;
   line-height: 1;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
 }
-/* .bb-table-cell {
+/* .option-table-cell {
   text-align: center;
   font-size: 1em;
   line-height: 1;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
 } */
-.bb-table-cell-green {
+.option-table-cell-green {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.9em;
   line-height: 1;
   color: green;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
 }
-.bb-table-cell-red {
+.option-table-cell-red {
   text-align: center;
   vertical-align: middle !important;
-  font-size: 1em;
+  font-size: 0.9em;
   line-height: 1;
   color: red;
   font-weight: 400;
   /* font-family: "Vazir-Medium-FD"; */
   font-family: "Dirooz FD";
 }
-.bb-table-cell-bold {
+.option-table-cell-bold {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.9em;
   line-height: 1;
-  font-weight: 600;
+  font-weight: 500;
   /* font-family: "Vazir-Medium-FD";  */
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
-.bb-table-row {
+.option-table-row {
   direction: ltr;
   vertical-align: middle !important;
 }

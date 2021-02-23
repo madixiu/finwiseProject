@@ -1,6 +1,5 @@
 <template>
-  <!-- <div id="mapparent" class="container-fluid"> -->
-  <div width="100%" height="100%">
+  <div id="MarketMapID" class="MarketMapContainer" width="100" height="100%">
     <treemap
       :inputData="map"
       :inputWidth="width"
@@ -8,8 +7,6 @@
       v-if="dataFetched"
     ></treemap>
   </div>
-  <!-- <treemap></treemap> -->
-  <!-- </div> -->
 </template>
 <script>
 import treemap from "@/view/content/d3/treemap.vue";
@@ -18,10 +15,7 @@ import treemap from "@/view/content/d3/treemap.vue";
 export default {
   name: "marketmap",
   components: {
-    // Error,
     treemap
-
-    // ErrorMine
   },
   data() {
     return {
@@ -116,7 +110,8 @@ export default {
 };
 </script>
 <style scoped>
-#mapparent {
-  display: contents;
-}
+/* div#MarketMapID.MarketMapContainer {
+  background-color: #252830 !important;
+  padding-left: 0px !important;
+} */
 </style>
