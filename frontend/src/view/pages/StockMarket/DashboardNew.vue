@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-xxl-9 col-lg-9" id="ChartOneDiv">
+    <div class="col-xxl-9 col-lg-9 col-md-12 col-sm 12" id="ChartOneDiv">
       <ChartVol
         :inputData="highestTvalueData"
         :inputWidth="width"
@@ -8,7 +8,7 @@
         v-if="dataFetched"
       ></ChartVol>
     </div>
-    <div class="col-xxl-3 col-lg-3">
+    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm 12">
       <div class="row">
         <ChartTradeValue
           :inputData="AssetTradeValue"
@@ -137,7 +137,7 @@ export default {
         .get("/api/LatestNews")
         .then(response1 => {
           this.News = response1.data;
-          console.log(response1.data);
+          // console.log(response1.data);
         })
         .catch(error => {
           // console.log("GetTwoeCatch");

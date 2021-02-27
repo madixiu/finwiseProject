@@ -114,7 +114,16 @@ def get_AdminsNotice(identifier):
         # return(json.loads(resp.text))
     else:
         return("No Data")                    
+def getIndicesDetails(identifier):
+    head = {'Accept-Profile':'indices'}
+    resp = requests.get('http://37.152.180.99:3000/View_Index_Include?ID=eq.'+str(identifier),headers=head)
+    if resp.status_code == 200:
 
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")  
 
 def TradeValueHH():
     head = {'Accept-Profile':'marketwatch'}

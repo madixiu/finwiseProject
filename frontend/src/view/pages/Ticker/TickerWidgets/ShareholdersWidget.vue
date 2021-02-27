@@ -16,11 +16,9 @@
     <div class="row">
       <div class="col-xxl-9 FinancialStrength">
         <div class="card-body d-flex flex-column" v-if="loading == false">
-          <v-chip v-if="notices.length != 0" label
-            >اطلاعات سهامداران عمده</v-chip
-          >
+          <v-chip v-if="!loading" label>اطلاعات سهامداران عمده</v-chip>
           <v-data-table
-            v-if="notices.length != 0"
+            v-if="!loading"
             :headers="boardheaders"
             :items="DataItems2"
             class="elevation-1 FinancialStrength "
@@ -29,14 +27,28 @@
             hide-default-footer
             disable-pagination
           >
+            <template v-slot:[`item.name`]="{ item }">
+              <span class="cellItem">{{ item.name }} </span>
+            </template>
+            <template v-slot:[`item.count`]="{ item }">
+              <span class="cellItem"
+                >{{ numberWithCommas(roundTo(item.count / 1000000, 2)) }} میلیون
+                سهم
+              </span>
+            </template>
+            <template v-slot:[`item.Ownership`]="{ item }">
+              <span class="cellItem"
+                >{{ numberWithCommas(roundTo(item.Ownership, 2)) }} ٪
+              </span>
+            </template>
           </v-data-table>
         </div>
       </div>
       <div class="col-xxl-3 FinancialStrength">
         <div class="card-body d-flex flex-column" v-if="loading == false">
-          <v-chip v-if="notices.length != 0" label>اطلاعات سهم</v-chip>
+          <v-chip v-if="!loading" label>اطلاعات سهم</v-chip>
           <v-data-table
-            v-if="notices.length != 0"
+            v-if="!loading"
             :headers="Infoheaders"
             :items="DataItems3"
             class="elevation-1 FinancialStrength"
@@ -45,15 +57,17 @@
             hide-default-footer
             disable-pagination
           >
-            <template v-slot:[`item.Ownership`]="{ item }">
-              <v-tooltip left>
-                <template v-slot:activator="{ on }">
-                  <v-chip label small v-on="on"
-                    >{{ this.roundTo(item.Ownership, 2) }} درصد</v-chip
-                  >
-                </template>
-                <span class="small">{{ item.persianDate }}</span>
-              </v-tooltip>
+            <template v-slot:[`item.Shenavari`]="{ item }">
+              <span class="cellItem">{{ item.Shenavari }} ٪ </span>
+            </template>
+            <template v-slot:[`item.persianDate`]="{ item }">
+              <span class="cellItem">{{ item.persianDate }} </span>
+            </template>
+
+            <template v-slot:[`item.ShareCount`]="{ item }">
+              <span class="cellItem"
+                >{{ numberWithCommas(item.ShareCount / 1000000) }} میلیون سهم
+              </span>
             </template>
           </v-data-table>
         </div>
@@ -96,12 +110,15 @@ export default {
   methods: {
     populateData() {
       this.DataItems2 = this.notices;
+      if (this.notices.length > 0) {
+        this.loading = false;
+      }
     },
     populatesubData() {
       var dd = {
-        persianDate: this.notices[0]["persianDate"],
-        Shenavari: this.notices[0]["Shenavari"],
-        ShareCount: this.notices[0]["ShareCount"]
+        persianDate: this.DataItems2[0]["persianDate"],
+        Shenavari: this.DataItems2[0]["Shenavari"],
+        ShareCount: this.DataItems2[0]["ShareCount"]
       };
       this.DataItems3 = [dd];
     },
@@ -156,6 +173,10 @@ export default {
 };
 </script>
 <style scoped>
+.cellItem {
+  font-family: "Dirooz FD";
+  font-weight: 700;
+}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

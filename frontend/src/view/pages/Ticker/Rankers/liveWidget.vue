@@ -771,7 +771,7 @@ export default {
       }
     },
     populateData3() {
-      console.log(this.liveData);
+      // console.log(this.liveData);
       this.DataItems3 = this.liveData;
       if (this.DataItems3.length != 0) {
         this.tickerfull = this.DataItems3[0]["name"];

@@ -224,36 +224,36 @@ export default {
           thClass: "oraq_table_head",
           sortable: true
         },
-        {
-          label: "کف مجاز قیمت",
-          key: "MinRange",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "سقف مجاز قیمت",
-          key: "MaxRange",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "بالاترین قیمت",
-          key: "high",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "کمترین قیمت",
-          key: "low",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "اولین قیمت",
-          key: "first",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
+        // {
+        //   label: "کف مجاز قیمت",
+        //   key: "MinRange",
+        //   thClass: "oraq_table_head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "سقف مجاز قیمت",
+        //   key: "MaxRange",
+        //   thClass: "oraq_table_head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "بالاترین قیمت",
+        //   key: "high",
+        //   thClass: "oraq_table_head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "کمترین قیمت",
+        //   key: "low",
+        //   thClass: "oraq_table_head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "اولین قیمت",
+        //   key: "first",
+        //   thClass: "oraq_table_head",
+        //   sortable: true
+        // },
         {
           label: "تعداد خرید حقیقی",
           key: "CountBuy_Haghighi",

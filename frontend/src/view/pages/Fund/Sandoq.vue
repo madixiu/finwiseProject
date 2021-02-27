@@ -5,7 +5,7 @@
     <div class="row mr-1 ml-1">
       <v-card width="100%">
         <div id="FundsFilterRow2" class="row">
-          <div class="col-4 mr-3">
+          <div class="col-xxl-4 col-lg-4  col-md-8 col-sm-12 mr-3 mt-1">
             <b-input-group size="sm">
               <b-form-input
                 v-model="Tablefilter"
@@ -20,7 +20,7 @@
               </b-input-group-append>
             </b-input-group>
           </div>
-          <div class="col-xxl-4 col-lg-4 mt-1">
+          <div class="col-xxl-4 col-lg-4 col-md-8 col-sm-12 mt-1">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"
@@ -242,36 +242,36 @@ export default {
         // { label: "نام", key: "name" },
         // { label: "صنعت", key: "industry" },
         // { label: "آخرین بروز رسانی", key: "updatedAt" },
-        {
-          label: "کف مجاز قیمت",
-          key: "MinRange",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "سقف مجاز قیمت",
-          key: "MaxRange",
-          thClass: "Funds-table-head"
-        },
-        // { label: "EPS", key: "EPS", thClass: "Funds-table-head" },
-        {
-          label: "بالاترین قیمت",
-          key: "high",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "کمترین قیمت",
-          key: "low",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "اولین قیمت",
-          key: "first",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
+        // {
+        //   label: "کف مجاز قیمت",
+        //   key: "MinRange",
+        //   thClass: "Funds-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "سقف مجاز قیمت",
+        //   key: "MaxRange",
+        //   thClass: "Funds-table-head"
+        // },
+        // // { label: "EPS", key: "EPS", thClass: "Funds-table-head" },
+        // {
+        //   label: "بالاترین قیمت",
+        //   key: "high",
+        //   thClass: "Funds-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "کمترین قیمت",
+        //   key: "low",
+        //   thClass: "Funds-table-head",
+        //   sortable: true
+        // },
+        // {
+        //   label: "اولین قیمت",
+        //   key: "first",
+        //   thClass: "Funds-table-head",
+        //   sortable: true
+        // },
         {
           label: "تعداد خرید حقیقی",
           key: "CountBuy_Haghighi",

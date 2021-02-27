@@ -1,7 +1,10 @@
 import requests
 import json
 import time
-
+import pandas as pd
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
 # id = 0
 
 dataAvailablity = False
@@ -40,6 +43,79 @@ def getTickerID(tickerName):
     for ticker in parsed_json:
         if ticker['ticker'] == tickerName:
             return ticker['ID']
+
+def getTechnicalIndicators(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'technical'}
+        resp = requests.get('http://37.152.180.99:3000/View_Technical_Indicators?firm=eq.'+str(identifier),headers=head,timeout=10)
+        if resp.status_code == 200 and resp.text!='[]' :
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            print('http://37.152.180.99:3000/View_Technical_Indicators?firm=eq.'+str(identifier))
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+
+def getIndicesHistoric():
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'indices'}
+        resp = requests.get('http://37.152.180.99:3000/View_indices_lastMarketCap',headers=head)
+        if resp.status_code == 200:
+            DF=resp.text
+            resp2 = requests.get('http://37.152.180.99:3000/View_Indices_Historic',headers=head)
+            if resp2.status_code == 200:
+                DF2=resp2.text
+                Indices=pd.read_json(DF)
+                Indices['D1']=0
+                Indices['W1']=0
+                Indices['M1']=0
+                Indices['M3']=0
+                Indices['Y1']=0
+                Indices['T']=0
+                Indices['Name']=''
+                Values=pd.read_json(DF2)
+                for t in Values.CorrectName.unique().tolist():
+                    temp=Values[(Values['CorrectName']==t)&(Values['Value']!=0)]
+                    temp.sort_values(by=['englishDate'],ascending=False,inplace=True)
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'D1']=((temp.iloc[0]['Value']-temp.iloc[1]['Value'])/temp.iloc[1]['Value'])*100
+                    OneW = datetime.strftime(datetime.strptime(temp.iloc[0]['englishDate'],'%Y-%m-%d')- timedelta(days=7),'%Y-%m-%d')    
+                    OneM = datetime.strftime(datetime.strptime(temp.iloc[0]['englishDate'],'%Y-%m-%d')- timedelta(days=30),'%Y-%m-%d')
+                    ThreeM = datetime.strftime(datetime.strptime(temp.iloc[0]['englishDate'],'%Y-%m-%d')- timedelta(days=90),'%Y-%m-%d')
+                    OneY = datetime.strftime(datetime.strptime(temp.iloc[0]['englishDate'],'%Y-%m-%d')- timedelta(days=365),'%Y-%m-%d')
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'W1']=((temp[temp['englishDate']>OneW].iloc[0]['Value']-temp[temp['englishDate']>OneW].iloc[-1]['Value'])/temp[temp['englishDate']>OneW].iloc[-1]['Value'])*100
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'M1']=((temp[temp['englishDate']>OneM].iloc[0]['Value']-temp[temp['englishDate']>OneM].iloc[-1]['Value'])/temp[temp['englishDate']>OneM].iloc[-1]['Value'])*100
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'M3']=((temp[temp['englishDate']>ThreeM].iloc[0]['Value']-temp[temp['englishDate']>ThreeM].iloc[-1]['Value'])/temp[temp['englishDate']>ThreeM].iloc[-1]['Value'])*100
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'Y1']=((temp[temp['englishDate']>OneY].iloc[0]['Value']-temp[temp['englishDate']>OneY].iloc[-1]['Value'])/temp[temp['englishDate']>OneY].iloc[-1]['Value'])*100
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'T']=((temp.iloc[0]['Value']-temp.iloc[-1]['Value'])/temp.iloc[-1]['Value'])*100
+                    Indices.loc[Indices['indexID']==temp.indexID.unique().tolist()[0],'Name']=temp.iloc[0]['CorrectName']
+                return(json.loads(pd.DataFrame.to_json(Indices,orient="index")))
+        else:
+            time.sleep(2)
+            ct=ct+1
+    return ("noData")
+# def getIndicesLatestCap():
+#     ct=0
+#     while ct<3:
+#         head = {'Accept-Profile':'indices'}
+#         resp = requests.get('http://37.152.180.99:3000/View_indices_lastMarketCap',headers=head)
+#         if resp.status_code == 200:
+#             DF=pd.esp.text)
+#             # return(resp.text)
+#             resp2 = requests.get('http://37.152.180.99:3000/View_Indices_Historic',headers=head)
+#             if resp2.status_code == 200:
+#                 print(resp2.text)
+#             return (json.loads(resp.text))
+#         # return(json.loads(resp.text))
+#         else:
+#             time.sleep(2)
+#             ct=ct+1
+        
+#     return ("noData")    
 
 
 

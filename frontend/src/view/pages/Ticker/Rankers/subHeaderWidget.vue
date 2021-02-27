@@ -2,8 +2,12 @@
   <!--begin::Mixed Widget 14-->
   <div>
     <v-card width="100%">
-      <!-- <div class="row border-0 pb-4 pt-2"> -->
-      <div class="row  pt-4 mb-2">
+      <v-skeleton-loader
+        type=" table-heading, table-thead, table-tbody"
+        v-if="loading"
+      ></v-skeleton-loader>
+
+      <div class="row  pt-4 mb-2" v-if="!loading">
         <div
           class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
         >
@@ -158,6 +162,7 @@ export default {
   props: ["tickerdata"],
   data() {
     return {
+      loading: true,
       search: "",
       LiveDataItems: []
     };
@@ -168,6 +173,7 @@ export default {
   methods: {
     LivepopulateData() {
       this.LiveDataItems = this.tickerdata;
+      this.loading = false;
       // console.log(this.LiveDataItems.length);
       // console.log(this.LiveDataItems);
     },

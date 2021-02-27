@@ -72,8 +72,23 @@ export default {
               });
             });
           }
+          if (this.typeofReport == "leasing") {
+            this.getleasingCost().then(response => {
+              console.log(response);
+              this.getleasingrevenue().then(function() {
+                this.getleasingdelegated().then(function() {
+                  console.log("ChainDone");
+                });
+              });
+            });
+          }
           if (this.typeofReport == "production") {
             this.getProduction().then(response => {
+              console.log(response);
+            });
+          }
+          if (this.typeofReport == "service") {
+            this.getService().then(response => {
               console.log(response);
             });
           }
@@ -86,8 +101,9 @@ export default {
             this.loadInvest();
           }
           if (this.typeofReport == "construction") {
+            // eslint-disable-next-line no-unused-vars
             this.getConstructionSold().then(response => {
-              console.log(response);
+              // console.log(response);
               this.getConstructionOngoing().then(function() {
                 console.log("ChainDone");
               });
@@ -95,6 +111,66 @@ export default {
           }
         });
       });
+    },
+    async getleasingCost() {
+      await this.axios
+        .get("/api/Monthly/Leasing/Cost/" + this.$route.params.id + "/")
+        .then(response2 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.notice = response2.data;
+          console.log(this.notice);
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getleasingrevenue() {
+      await this.axios
+        .get("/api/Monthly/Leasing/Revenue/" + this.$route.params.id + "/")
+        .then(response3 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.deposits = response3.data;
+          console.log(this.notice);
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getleasingdelegated() {
+      await this.axios
+        .get("/api/Monthly/Leasing/Delegated/" + this.$route.params.id + "/")
+        .then(response4 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.portfo = response4.data;
+          console.log(this.notice);
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
     },
     async getConstructionSold() {
       await this.axios
@@ -139,6 +215,26 @@ export default {
     async getProduction() {
       await this.axios
         .get("/api/Monthly/Production/" + this.$route.params.id + "/")
+        .then(response2 => {
+          // console.log(response.data[0][0]);
+          // console.log(this.$route.params.id);
+          // console.log("SecondDone");
+          this.notice = response2.data;
+          console.log(this.notice);
+          // console.log(response2.data);
+          // console.log("GetTwoStart:");
+          // console.log(response.data);
+          // console.log(this.notice);
+          // console.log("GetTwoEnd:");
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getService() {
+      await this.axios
+        .get("/api/Monthly/Service/" + this.$route.params.id + "/")
         .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);

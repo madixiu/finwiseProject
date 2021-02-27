@@ -2,7 +2,12 @@
   <div>
     <div class="row">
       <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape> -->
-      <div class="col-xxl-4 col-md-6">
+
+      <div class="col-12">
+        <IndustryChart :inputData="this.IndustryData"></IndustryChart>
+      </div>
+
+      <div class="col-xxl-4 col-md-6 mb-4">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
@@ -64,7 +69,8 @@
           /> -->
         </v-card>
       </div>
-      <div class="col-xxl-12 col-lg-12">
+      -->
+      <div class="col-xxl-8 col-md-8">
         <v-card>
           <v-card-title
             >بار چارت افقی با تایم فریم برای بازدهی صنایع</v-card-title
@@ -114,14 +120,16 @@
 </template>
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
-// import TickerTape from "@/view/content/TickerTapeContainer.vue";
+// import TickerTape from "@/view/content/TickerTape.vue";
+import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
   name: "Industries",
   components: {
-    ApexChart
-    // TickerTape
+    ApexChart,
+    // TickerTape,
+    IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
     // MarqueeText
@@ -129,7 +137,8 @@ export default {
   data() {
     return {
       // paused: false,
-      // TickerTapeData: [],
+      IndustryData: [],
+      TickerTapeData: [],
       ReturnSeries: [
         {
           data: [
@@ -730,11 +739,11 @@ export default {
     },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getPieChartData();
 
-      // this.getTickerTapeData().then(response => {
-      //   this.getPieChartData();
-      // });
+      // eslint-disable-next-line no-unused-vars
+      this.getPieChartData().then(resx => {
+        this.getIndustries();
+      });
     },
     async getPieChartData() {
       await this.axios.get("/api/IndexMarketCap").then(responsive => {
@@ -749,11 +758,11 @@ export default {
           marketCaps.push(item.marketCap);
           itemValue.push({ name: item.persianName, value: item.Value });
         }
-        marketCaps.push(data[1].Others.marketCapSum)
-        persianNames.push("سایر")
+        marketCaps.push(data[1].Others.marketCapSum);
+        persianNames.push("سایر");
         // console.log(persianNames);
         this.PiechartOptions.labels = persianNames;
-        
+
         // console.log(this.chartOptions.labels);
         // marketCaps.sort(function(a, b) {
         //   return b - a;
@@ -772,6 +781,17 @@ export default {
         this.Barseries = [{ data: values }];
         this.BarchartOptions.xaxis.categories = names;
       });
+    },
+    async getIndustries() {
+      await this.axios
+        .get("/api/Indices/HistoricCap/ ")
+        .then(responseInd => {
+          this.IndustryData = responseInd.data;
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
     },
     async getTickerTapeData() {
       await this.axios

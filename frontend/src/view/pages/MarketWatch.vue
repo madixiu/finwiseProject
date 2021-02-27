@@ -10,7 +10,7 @@
     <div class="row mr-1 ml-1">
       <v-card width="100%">
         <div id="marketwatchFilterRow1" class="row">
-          <div class="col-xxl-1 col-lg-1 mr-1 mt-2 dropdown-rtl">
+          <div class="col-xxl-1 col-lg-1 col-md-6 col-sm-12 mr-1 mt-2 dropdown-rtl">
             <span>بازار</span>
             <b-form-select
               label="بازار"
@@ -99,7 +99,7 @@
           </div> -->
           <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
           <!-- industry selector -->
-          <div class="col-xxl-3 col-lg-3  dropdown-rtl">
+          <div class="col-xxl-3 col-lg-3 col-md-6 col-sm-12 dropdown-rtl">
             <div>
               <b-form-group label="صنعت" label-for="tags-with-dropdown">
                 <b-form-tags
@@ -179,7 +179,7 @@
           <!-- END OF SANNNAT  -->
         </div>
         <div id="marketwatchFilterRow2" class="row">
-          <div class="col-4 mr-3">
+          <div class="col-xxl-3 col-lg-3 col-md-6 col-sm-12 mr-3">
             <b-input-group size="sm">
               <b-form-input
                 v-model="Tablefilter"
@@ -194,7 +194,7 @@
               </b-input-group-append>
             </b-input-group>
           </div>
-          <div class="col-xxl-4 col-lg-4 mt-1">
+          <div class="col-xxl-4 col-lg-4 col-md-8 col-sm-12 mt-1">
             <b-form-group>
               <b-form-checkbox-group
                 v-model="selectedHeaderOptions"

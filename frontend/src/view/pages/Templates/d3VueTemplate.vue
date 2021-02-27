@@ -4,29 +4,22 @@
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
       <div class="row">
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
+        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-4">
           خرید
           <br />
           <v-chip color="#30cc5a"><span class="chiptext"> 4 </span></v-chip>
         </div>
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
+        <div class="col-xxl-3 col-lg-3 col-md-44 col-sm-4">
           خنثی
           <br />
           <v-chip color="#404e55">
             <span class="chiptext"> 4 </span>
           </v-chip>
         </div>
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
+        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-4">
           فروش
           <br />
           <v-chip color="#f63538"><span class="chiptext"> 4 </span></v-chip>
-        </div>
-      </div>
-      <div class="row" v-if="loading">
-        <div class="col-6 offset-3">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
         </div>
       </div>
       <div class="row">
@@ -58,21 +51,15 @@ export default {
       height: 0,
       width: 0,
       DataItems2: [],
-      loading: true,
-      sum: 0
+      loading: true
     };
   },
   methods: {
     populateData() {
       this.DataItems2 = this.Indicators;
-      if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
-        this.loading = false;
-        // this.sum=this.DataItems2.sum_signal
-        this.sum = this.DataItems2[0].sum_signal;
-        console.log(this.sum);
-      }
+      this.loading = false;
     },
-    initrender() {
+    renderChart() {
       if (document.getElementsByTagName("svg")) {
         d3.selectAll("svg").remove();
       }
@@ -82,23 +69,13 @@ export default {
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
-      // eslint-disable-next-line no-unused-vars
       var parent = document.getElementById("TechnicalGauge");
       // eslint-disable-next-line no-unused-vars
-      var svg = d3
+      let svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "chartContainer")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
-      // eslint-disable-next-line no-unused-vars
-    },
-    renderChart() {
-      var parent = document.getElementById("chartContainer");
-      var svg = d3.select(parent);
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("g").remove();
-      }
       const chart = svg
         .append("g")
         .attr(
@@ -122,7 +99,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         tt = 3000,
         // eslint-disable-next-line no-unused-vars
-        scale = d3.scaleLinear().range([startAngle, endAngle]).domain([-6,6]),
+        scale = d3.scaleLinear().range([startAngle, endAngle]),
         // eslint-disable-next-line no-unused-vars
 
         // colorScale = d3
@@ -173,11 +150,11 @@ export default {
       chart
         .append("g")
         .append("text")
-
+        
         .text("خنثی")
         .attr(
           "transform",
-          `translate(${this.width / 2 + this.margin.left / 10},${0})`
+          `translate(${(this.width/2)+this.margin.left/10},${0})`
         )
         .style("font-size", "1.5em");
       var slice = innerD
@@ -203,13 +180,55 @@ export default {
         .attr("fill-opacity", 1)
         .attr("stroke", "black")
         .attr("stroke-width", "2px");
+      // eslint-disable-next-line no-unused-vars
+      // var text = innerD
+      //   .append("g")
+      //   .append("text")
+      //   .attr("class", "text")
+      //   .attr("text-anchor", "middle")
+      //   .attr("dy", "-0.45em")
+      // .classed("monospace", true);
       function update(oldValue, newValue) {
         needle
           .datum({ oldValue: oldValue })
           .transition()
           .duration(tt)
           .attrTween("d", lineTween(newValue))
+          .on("end", function() {
+            update(newValue, scale(Math.random()));
+          });
+
+        // text
+        //   .datum({ oldValue: oldValue })
+        //   .transition()
+        //   .duration(tt)
+        //   .attrTween("transform", transformTween(newValue))
+        //   .tween("text", textTween(newValue));
       }
+
+      // function textTween(newValue) {
+      //   return function(d) {
+      //     var that = d3.select(this),
+      //       i = d3.interpolate(d.oldValue, newValue);
+
+      //     return function(t) {
+      //       that.text(d3.format(".1%")(scale.invert(i(t))));
+      //     };
+      //   };
+      // }
+
+      // function transformTween(newValue) {
+      //   return function(d) {
+      //     var interpolate = d3.interpolate(d.oldValue, newValue);
+
+      //     return function(t) {
+      //       var _in = interpolate(t) - halfPi,
+      //         centerX = (radius + 20) * Math.cos(_in),
+      //         centerY = (radius + 20) * Math.sin(_in);
+      //       return "translate(" + centerX + "," + centerY + ")";
+      //     };
+      //   };
+      // }
 
       function lineTween(newValue) {
         return function(d) {
@@ -240,20 +259,21 @@ export default {
         };
       }
 
-      update(scale(this.sum), scale(this.sum));
+      update(scale(0), scale(Math.random()));
+
       window.addEventListener("resize", this.renderChart);
     }
   },
   mounted() {
     this.populateData();
-    this.initrender();
+    this.renderChart();
   },
   watch: {
     Indicators() {
+      // console.log("Watcher");
       this.populateData();
-      if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
-        this.renderChart();
-      }
+      this.renderChart();
+      console.log(this.Indicators);
     }
   }
 };

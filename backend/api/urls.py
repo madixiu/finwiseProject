@@ -18,6 +18,7 @@ urlpatterns = [
    path("getAllTradesValue",getAllTradesValue),
    path("getTodayTepix",getTodayTepix),
    path("LatestNews",getLatestNews),
+   path("Indices/HistoricCap/",getHistoricCap),
    ######
    path("tse/getHighestValue/",getHighestValue),
    ######
@@ -29,6 +30,9 @@ urlpatterns = [
    path("StatsTicker/<identifier>/",getStatsTicker),
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
    path("LiveTicker/<identifier>/",getLiveTicker),
+   path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
+   path("IndexDetails/<identifier>/",getIndexDetails),
+
    path("Alldps/<identifier>/",getAllDPS),
    path("AdminNotice/<identifier>/",getAdminNotices),
    ####Monthly
@@ -39,12 +43,17 @@ urlpatterns = [
    path("Monthly/Construction/Ongoing/<identifier>/",getMonthlyConstOngoing),
    path("Monthly/Construction/Sold/<identifier>/",getMonthlyConstSold),
    path("Monthly/Production/<identifier>/",getMonthlyProduction),
-
+   path("Monthly/Service/<identifier>/",getMonthlyServices),
+   path("Monthly/Leasing/Cost/<identifier>/",getMonthlyLeasingCost),
+   path("Monthly/Leasing/Delegated/<identifier>/",getMonthlyLeasingDelegated),
+   path("Monthly/Leasing/Revenue/<identifier>/",getMonthlyLeasingRevenue),
    path("Monthly/Investment/InTransactions/<identifier>/",getMonthlyInvestment_InTrans),
    path("Monthly/Investment/OutTransactions/<identifier>/",getMonthlyInvestment_OutTrans),
    path("Monthly/Investment/Portfolio/<identifier>/",getMonthlyInvestment_Portfo),
    path("Monthly/Investment/Summary/<identifier>/",getMonthlyInvestment_Summary),
    path("Statement/BalanceSheet/<identifier>/",getBalanceSheetAll),
+   path("Statement/IncomeStatement/<identifier>/",getIncomeStatementAll),
+   path("Statement/CashFlow/<identifier>/",getCFAll),
 ############
 
    path("CurrentBoard/<identifier>/",getCurrentBoard),

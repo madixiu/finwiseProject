@@ -114,7 +114,7 @@ export default {
     },
     async getOne() {
       await this.axios
-        .get("/api/SubHeaderW/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];

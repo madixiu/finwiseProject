@@ -1,12 +1,32 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-xxl-12 col-md-12 mb-3">
+      <div class="col-xxl-3 col-md-6 ">
         <v-card>
           <v-card-title>شرکتهای موجود در شاخص</v-card-title>
+          <v-divider></v-divider>
+          <v-data-table
+            :headers="headerstock"
+            :items="stocklist"
+            class="elevation-1 FinancialStrength"
+          >
+            <template v-slot:[`item.marketcap`]="{ item }">
+              <span class="cellItem"
+                >{{ numberWithCommas(roundTo(item.marketcap / 1000000000, 2)) }}
+                میلیارد ریال
+              </span>
+            </template>
+            <template v-slot:[`item.close`]="{ item }">
+              <span
+                class="spandata"
+                v-bind:class="[item.close > item.open ? 'greenItem' : 'redItem']">
+                 
+              </span>
+            </template>
+          </v-data-table>
         </v-card>
       </div>
-      <div class="col-xxl-5 col-md-5 mb-3">
+      <div class="col-xxl-3 col-md-6 ">
         <v-card>
           <v-card-title>شاخص صنعت</v-card-title>
           <ApexChart
@@ -18,19 +38,18 @@
           />
         </v-card>
       </div>
-      <div class="col-xxl-4 col-md-4 mb-3">
+      <div class="col-xxl-3 col-md-6">
         <v-card>
           <v-card-title>ارزش شرکت ها</v-card-title>
           <ApexChart
             type="pie"
             width="100%"
-            height="200%"
             :series="IndustruesValue"
             :chartOptions="IndustruesValueOptions"
           />
         </v-card>
       </div>
-      <div class="col-xxl-3 col-md-3 mb-3">
+      <div class="col-xxl-3 col-md-6 ">
         <v-card>
           <v-card-title>?</v-card-title>
           <template>
@@ -45,15 +64,15 @@
           </template>
         </v-card>
       </div>
-      <div class="col-xxl-6 col-md-6 mb-3">
+      <div class="col-xxl-6 col-md-6 ">
         <v-card>
           <v-card-title>تاثیر در شاخص</v-card-title>
           <ApexChart
             type="bar"
             width="100%"
             height="200%"
-            :series="HHseries"
-            :chartOptions="HHoptions"
+            :series="ImpactSeries.data"
+            :chartOptions="ImpactOptions"
           />
           <div class="Mychips">
             <v-chip class="mb-2" label large>
@@ -65,7 +84,7 @@
           </div>
         </v-card>
       </div>
-      <div class="col-xxl-6 col-md-6 mb-3">
+      <div class="col-xxl-6 col-md-6 ">
         <v-card>
           <v-card-title>ورود و خروج حقیقی</v-card-title>
           <ApexChart
@@ -85,7 +104,7 @@
           </div>
         </v-card>
       </div>
-      <div class="col-xxl-4 col-md-6 col-xs-12 col-sm-12">
+      <!-- <div class="col-xxl-4 col-md-6 col-xs-12 col-sm-12">
         <FSWidget />
       </div>
       <div class="col-xxl-4 col-md-6 col-xs-12 col-sm-12">
@@ -100,7 +119,7 @@
       </div>
       <div class="col-xxl-4 col-md-4">
         <DivWidget />
-      </div>
+      </div> -->
       <div class="col-xxl-4 col-md-4 mb-4">
         <v-card>
           <v-card-title>technical</v-card-title>
@@ -113,7 +132,7 @@
           />
         </v-card>
       </div>
-      <div class="col-xxl-12 col-md-12">
+      <!-- <div class="col-xxl-12 col-md-12">
         <v-card>
           <v-card-title>یه سری پای چارت</v-card-title>
           <div>
@@ -126,28 +145,44 @@
             />
           </div>
         </v-card>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
-import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
-import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
-import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
-import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
-import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
+// import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
+// import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
+// import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
+// import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
+// import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
 export default {
   components: {
-    ApexChart,
-    FSWidget,
-    VWidget,
-    PWidget,
-    ReturnWidget,
-    DivWidget
+    ApexChart
+    // FSWidget,
+    // VWidget,
+    // PWidget,
+    // ReturnWidget,
+    // DivWidget
   },
   data() {
     return {
+      News: [],
+      headerstock: [
+        {
+          text: "نماد",
+          value: "ticker"
+        },
+        {
+          text: "ارزش بازار",
+          value: "marketcap"
+        },
+        {
+          text: "زمان ارسال",
+          value: "close"
+        }
+      ],
+
       radarChartSeries: [{ data: [20, 100, 40, 30, 50, 80, 33] }],
       radarChartOptions: {
         chart: {
@@ -303,13 +338,13 @@ export default {
           }
         }
       },
-      IndustruesValue: [44, 55, 13, 43, 22],
+      IndustruesValue: [],
       IndustruesValueOptions: {
         chart: {
           width: 380,
           type: "pie"
         },
-        labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+        labels: [],
         legend: {
           show: false,
           position: "bottom"
@@ -326,6 +361,108 @@ export default {
         ]
       },
 
+      ImpactSeries: [
+        {
+          data: [
+          ]
+        }
+      ],
+      ImpactOptions: {
+        chart: {
+          type: "bar",
+          height: 100,
+          stacked: true,
+          toolbar: {
+            show: false
+          }
+        },
+        // colors: ["#16f222", "#FF4560"],
+        colors: [
+          function({ value }) {
+            if (value > 0) {
+              return "#00ad13";
+            } else {
+              return "#dc0600";
+            }
+          }
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            barHeight: "100%",
+            startingShape: "flat",
+            endingShape: "rounded"
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        // stroke: {
+        //   width: 1,
+        //   colors: ["#fff"]
+        // },
+        grid: {
+          xaxis: {
+            lines: {
+              show: true
+            }
+          }
+        },
+        stroke: {
+          width: 0,
+          colors: ["#fff"]
+        },
+        yaxis: {
+          min: -5,
+          max: 5,
+          title: {
+            // text: 'Age',
+          }
+        },
+        tooltip: {
+          shared: false,
+          x: {
+            formatter: function(val) {
+              return val;
+            }
+          },
+          y: {
+            formatter: function(val) {
+              return Math.abs(val) + "%";
+            }
+          }
+        },
+        // title: {
+        //   text: "Mauritius population pyramid 2011"
+        // },
+        xaxis: {
+          categories: [
+            "85+",
+            "80-84",
+            "75-79",
+            "70-74",
+            "65-69",
+            "60-64",
+            "55-59",
+            "50-54",
+            "45-49",
+            "40-44",
+            "35-39",
+            "30-34",
+            "25-29",
+            "20-24",
+            "15-19",
+            "10-14",
+            "5-9",
+            "0-4"
+          ],
+          labels: {
+            formatter: function(val) {
+              return Math.abs(Math.round(val)) + "%";
+            }
+          }
+        }
+      },
       HHseries: [
         {
           data: [
@@ -447,8 +584,79 @@ export default {
     };
   },
   computed: {},
-
+  mounted() {
+    // this.loadData2();
+    this.loadData();
+  },
+  watch: {
+    News() {
+      // console.log("Watcher");
+      this.populateData();
+      this.loading = false;
+      // console.log(this.notices);
+    }
+  },
   methods: {
+    numberWithCommas(x) {
+      if (x == "-") {
+        return x;
+      }
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      if (n == "-") {
+        return n;
+      }
+
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
+    loadData() {
+      // eslint-disable-next-line no-unused-vars
+      this.getNews().then(response => {
+        // eslint-disable-next-line no-unused-vars
+        // this.getOne().then(response2 => {
+        //   this.getTwo().then(function() {});
+        // });
+      });
+    },
+    populateData() {
+      // eslint-disable-next-line no-unused-vars
+      // var tList = [];
+      // for (var tKey in this.News) tList.push(this.News[tKey]);
+      // console.log(tList)
+
+      this.IndustruesValue = this.News.map(function(obj) {
+        return obj["marketcap"];
+      });
+      this.IndustruesValueOptions.labels = this.News.map(function(obj) {
+        return obj["ticker"];
+      });
+      this.stocklist = this.News;
+      this.ImpactSeries.data=this.News.map(function(obj) {
+        return obj["Impact"];
+      });
+      console.log(this.IndustruesValue);
+      console.log(this.IndustruesValueOptions);
+    },
     generateDayWiseTimeSeries(s, count) {
       let values = [
         [4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5],
@@ -464,11 +672,31 @@ export default {
       }
       // console.log(series);
       return series;
+    },
+    async getNews() {
+      await this.axios
+        .get("/api/IndexDetails/" + this.$route.params.id + "/")
+        .then(responsex => {
+          this.News = responsex.data;
+          // console.log(response1.data);
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
     }
   }
 };
 </script>
 <style scoped>
+.cellItem {
+  font-family: "Dirooz FD";
+  font-weight: 700;
+}
+.FinancialStrength {
+  direction: rtl;
+  text-align: right;
+}
 .Persiantable {
   direction: rtl;
   text-align: right;
