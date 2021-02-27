@@ -13,12 +13,9 @@
     </div>
     <!--end::Header-->
     <!--begin::Body-->
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'bank' && loading == false"
-    >
+    <div class="card-body d-flex flex-column" v-if="type == 'bank'">
       <v-tabs
-        background-color="#3F51B5"
+        background-color="#1e1e2d"
         color="#FFF"
         dark
         prev-icon="mdi-arrow-right-bold-box-outline"
@@ -28,6 +25,7 @@
         <v-tab
           v-for="item in this.todatesyears"
           :key="item.key"
+          class="itemFilters"
           @click="GetFilteredYearly(item.value)"
         >
           {{ item.value }}
@@ -35,7 +33,7 @@
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
           <v-tabs
             vertical
-            background-color="#1A237E"
+            background-color="#212529 "
             color="#FFF"
             dark
             next-icon="mdi-arrow-right-bold-box-outline"
@@ -45,6 +43,7 @@
             <v-tab
               v-for="item in todates"
               :key="item.key"
+              class="itemFilters"
               @click="GetFiltered(item.value)"
             >
               {{ item.value }}
@@ -65,6 +64,125 @@
                   hide-default-footer
                   disable-pagination
                 >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template
+                    v-slot:[`item.StartPeriod_RemainingFacility`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.StartPeriod_RemainingFacility)
+                      }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.StartPeriod_RemainingFacility_modifications`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.StartPeriod_RemainingFacility_modifications
+                        )
+                      }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.StartPeriod_RemainingFacility_modified`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.StartPeriod_RemainingFacility_modified
+                        )
+                      }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.thisPeriod_IssuedFacilitiy`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriod_IssuedFacilitiy) }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.thisPeriod_SetteledFacility`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriod_SetteledFacility) }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.EnePeriod_RemainingFacility`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.EnePeriod_RemainingFacility) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_RevenueFromFacility`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_RevenueFromFacility
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_RevenueFromFacility_modification`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_RevenueFromFacility_modification
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_RevenueFromFacility_modified`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_RevenueFromFacility_modified
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisPeriod_RevenueFromFacility`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.thisPeriod_RevenueFromFacility)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisYear_RevenueFromFacility`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisYear_RevenueFromFacility) }}
+                    </span>
+                  </template>
                 </v-data-table>
                 <div class="card-header border-0">
                   <h4 class="card-title font-weight-bolder FinancialStrength">
@@ -80,6 +198,109 @@
                   hide-default-footer
                   disable-pagination
                 >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.StartPeriod_Deposits`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.StartPeriod_Deposits) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.StartPeriod_Deposits_modifications`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.StartPeriod_Deposits_modifications
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.StartPeriod_Deposits_modified`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.StartPeriod_Deposits_modified)
+                      }}
+                    </span>
+                  </template>
+
+                  <template
+                    v-slot:[`item.thisPeriod_IncomingDeposit`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriod_IncomingDeposit) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisPeriod_setteledDeposits`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriod_setteledDeposits) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.EndPeriod_Deposits`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.EndPeriod_Deposits) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_InterestOnDeposits`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_InterestOnDeposits
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_InterestOnDeposits_modifications`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_InterestOnDeposits_modifications
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_InterestOnDeposits_modified`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_InterestOnDeposits_modified
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisPeriod_InterestOnDeposits`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.thisPeriod_InterestOnDeposits)
+                      }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.Total_InterestOnDeposits`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_InterestOnDeposits) }}
+                    </span>
+                  </template>
                 </v-data-table>
               </div>
             </v-tab-item>
@@ -87,12 +308,9 @@
         </v-tab-item>
       </v-tabs>
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'insurance' && loading == false"
-    >
+    <div class="card-body d-flex flex-column" v-if="type == 'insurance'">
       <v-tabs
-        background-color="#3F51B5"
+        background-color="#1e1e2d"
         color="#FFF"
         dark
         prev-icon="mdi-arrow-right-bold-box-outline"
@@ -102,6 +320,7 @@
         <v-tab
           v-for="item in this.todatesyears"
           :key="item.key"
+          class="itemFilters"
           @click="GetFilteredYearly(item.value)"
         >
           {{ item.value }}
@@ -109,7 +328,7 @@
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
           <v-tabs
             vertical
-            background-color="#1A237E"
+            background-color="#212529"
             color="#FFF"
             dark
             next-icon="mdi-arrow-right-bold-box-outline"
@@ -119,6 +338,7 @@
             <v-tab
               v-for="item in todates"
               :key="item.key"
+              class="itemFilters"
               @click="GetFiltered(item.value)"
             >
               {{ item.value }}
@@ -139,6 +359,184 @@
                   hide-default-footer
                   disable-pagination
                 >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_IssuedInsurance_Amount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_IssuedInsurance_Amount
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_IssuedInusrance_Share`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_IssuedInusrance_Share
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousPeriods_DamageRepaid_Amount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousPeriods_DamageRepaid_Amount
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Modification_IssuedInsurance_Amount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.Modification_IssuedInsurance_Amount
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Modification_DamageRepaid_Amount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.Modification_DamageRepaid_Amount)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousModified_IssuedInsurance_Amount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousModified_IssuedInsurance_Amount
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousModified_IssuedInusrance_Share`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousModified_IssuedInusrance_Share
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousModified_DamageRepaid_Amount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousModified_DamageRepaid_Amount
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.PreviousModified_DamageRepaid_Share`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.PreviousModified_DamageRepaid_Share
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.ThisPeriod_IssuedInsurance_Amount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.ThisPeriod_IssuedInsurance_Amount)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.ThisPeriod_IssuedInusrance_Share`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.ThisPeriod_IssuedInusrance_Share)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.ThisPeriod_DamageRepaid_Amount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.ThisPeriod_DamageRepaid_Amount)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.ThisPeriod_DamageRepaid_Share`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.ThisPeriod_DamageRepaid_Share)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Total_IssuedInsurance_Amount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_IssuedInsurance_Amount) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Total_IssuedInusrance_Share`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_IssuedInusrance_Share) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Total_DamageRepaid_Amount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_DamageRepaid_Amount) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.Total_DamageRepaid_Share`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_DamageRepaid_Share) }}
+                    </span>
+                  </template>
                 </v-data-table>
               </div>
             </v-tab-item>
@@ -146,10 +544,7 @@
         </v-tab-item>
       </v-tabs>
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'production' && loading == false"
-    >
+    <div class="card-body d-flex flex-column" v-if="type == 'production'">
       <v-tabs
         background-color="#1e1e2d"
         color="#FFF"
@@ -199,7 +594,147 @@
                   :disable-sort="true"
                   hide-default-footer
                   disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
                 >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.status`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.status) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.unit`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.unit) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.category`]="{ item }">
+                    <span class="FinancialStrength"
+                      >{{ categoryProduct(item.category) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.totalProductionPeriod`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.totalProductionPeriod) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.totalSalePeriod`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.totalSalePeriod) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.saleAmountPeriod`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.saleAmountPeriod) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.totalProductionYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.totalProductionYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.totalSaleYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.totalSaleYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.saleRateYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.saleRateYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.saleAmountYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.saleAmountYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.prevTotalProductionYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prevTotalProductionYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.prevTotalSalesYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prevTotalSalesYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.prevTotalSalesRateYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prevTotalSalesRateYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.prevTotalSalesAmountYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prevTotalSalesAmountYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.modification_Production`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.modification_Production) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.modification_Sales`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.modification_Sales) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.modification_SalesAmount`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.modification_SalesAmount) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.prev_modified_TotalProduction`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.prev_modified_TotalProduction)
+                      }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.prev_modified_TotalSales`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prev_modified_TotalSales) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.prev_modified_TotalSalesRate`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.prev_modified_TotalSalesRate) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.prev_modified_TotalSalesAmount`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.prev_modified_TotalSalesAmount)
+                      }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.lastyear_Production`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastyear_Production) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.lastyear_saleCount`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastyear_saleCount) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.lastyear_saleRate`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastyear_saleRate) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.lastyear_saleAmount`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastyear_saleAmount) }}
+                    </span>
+                  </template>
                 </v-data-table>
               </div>
             </v-tab-item>
@@ -208,22 +743,291 @@
       </v-tabs>
     </div>
 
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'leasing' && loading == false"
-    >
-      <span class="rtl_centerd">leasing</span>
+    <div class="card-body d-flex flex-column" v-if="type == 'leasing'">
+      <v-tabs
+        background-color="#1e1e2d"
+        color="#FFF"
+        dark
+        prev-icon="mdi-arrow-right-bold-box-outline"
+        next-icon="mdi-arrow-left-bold-box-outline"
+        show-arrows
+      >
+        <v-tab
+          v-for="item in this.todatesyears"
+          :key="item.key"
+          class="itemFilters"
+          @click="GetFilteredYearly(item.value)"
+        >
+          {{ item.value }}
+        </v-tab>
+        <v-tab-item v-for="item in this.todatesyears" :key="item.key">
+          <v-tabs
+            vertical
+            background-color="#212529"
+            color="#FFF"
+            dark
+            next-icon="mdi-arrow-right-bold-box-outline"
+            prev-icon="mdi-arrow-left-bold-box-outline"
+            show-arrows
+          >
+            <v-tab
+              v-for="item in todates"
+              :key="item.key"
+              class="itemFilters"
+              @click="GetFiltered(item.value)"
+            >
+              {{ item.value }}
+            </v-tab>
+            <v-tab-item v-for="itemR in todates" :key="itemR.key">
+              <div class="card-body d-flex flex-column">
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    هزینه ها
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headersLeasingCost"
+                  :items="filteredItems"
+                  class="elevation-1 FinancialStrength itemFilters"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
+                >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.thisPeriod_Achievedcost`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriod_Achievedcost) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.Total_Achievedcost`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_Achievedcost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisPeriod_TakenFacilityRemaind`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.thisPeriod_TakenFacilityRemaind)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.Total_TakenFacilityRemained`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.Total_TakenFacilityRemained) }}
+                    </span>
+                  </template>
+                </v-data-table>
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    درآمدها
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headersLeasingRevenue"
+                  :items="filteredItems2"
+                  class="elevation-1 FinancialStrength itemFilters"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
+                >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.thisPeriodAmount`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisPeriodAmount) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.TotalAmount`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalAmount) }}
+                    </span>
+                  </template>
+                </v-data-table>
+                <!-- <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    گزارش تولید و فروش
+                  </h4>
+                </div>
+               
+                <v-data-table
+                  :headers="headersLeasingDelegated"
+                  :items="filteredItems3"
+                  class="elevation-1 FinancialStrength itemFilters"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
+                >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.status`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.status) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.unit`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.unit) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.category`]="{ item }">
+                    <span class="FinancialStrength"
+                      >{{ categoryProduct(item.category) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.totalProductionPeriod`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.totalProductionPeriod) }}
+                    </span>
+                  </template>
+                </v-data-table> -->
+              </div>
+            </v-tab-item>
+          </v-tabs>
+        </v-tab-item>
+      </v-tabs>
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'service' && loading == false"
-    >
-      <span class="rtl_centerd">service</span>
+    <div class="card-body d-flex flex-column" v-if="type == 'service'">
+      <v-tabs
+        background-color="#1e1e2d"
+        color="#FFF"
+        dark
+        prev-icon="mdi-arrow-right-bold-box-outline"
+        next-icon="mdi-arrow-left-bold-box-outline"
+        show-arrows
+      >
+        <v-tab
+          v-for="item in this.todatesyears"
+          :key="item.key"
+          class="itemFilters"
+          @click="GetFilteredYearly(item.value)"
+        >
+          {{ item.value }}
+        </v-tab>
+        <v-tab-item v-for="item in this.todatesyears" :key="item.key">
+          <v-tabs
+            vertical
+            background-color="#212529"
+            color="#FFF"
+            dark
+            next-icon="mdi-arrow-right-bold-box-outline"
+            prev-icon="mdi-arrow-left-bold-box-outline"
+            show-arrows
+          >
+            <v-tab
+              v-for="item in todates"
+              :key="item.key"
+              class="itemFilters"
+              @click="GetFiltered(item.value)"
+            >
+              {{ item.value }}
+            </v-tab>
+            <v-tab-item v-for="itemR in todates" :key="itemR.key">
+              <div class="card-body d-flex flex-column">
+                <div class="card-header border-0">
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    گزارش درآمد خدمات
+                  </h4>
+                </div>
+                <v-data-table
+                  :headers="headersService"
+                  :items="filteredItems"
+                  class="elevation-1 FinancialStrength itemFilters"
+                  :header-props="{ sortIcon: null }"
+                  :disable-sort="true"
+                  hide-default-footer
+                  disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
+                >
+                  <template v-slot:[`item.toDate`]="{ item }">
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template v-slot:[`item.contractDate`]="{ item }">
+                    <span class="cellItem">{{ item.contractDate }} </span>
+                  </template>
+                  <template v-slot:[`item.contract_Duration`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.contract_Duration) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.RevenueUntilStartOfPeriod`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.RevenueUntilStartOfPeriod) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.ModificationToStart`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.ModificationToStart) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.TotalYearToStartOfPeriodModified`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.TotalYearToStartOfPeriodModified)
+                      }}
+                    </span>
+                  </template>
+                  <!-- <template
+                    v-slot:[`item.RevenueUntilStartOfPeriod`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.RevenueUntilStartOfPeriod) }}
+                    </span>
+                  </template> -->
+                  <template
+                    v-slot:[`item.TotalYearIncludingThisPeriod`]="{ item }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalYearIncludingThisPeriod) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.TotalRevLastYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalRevLastYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.PredictionRevenueYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.PredictionRevenueYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.PredictionCostYear`]="{ item }">
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.PredictionCostYear) }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.ItemDesc`]="{ item }">
+                    <span class="cellItem">{{ item.ItemDesc }} </span>
+                  </template>
+                </v-data-table>
+              </div>
+            </v-tab-item>
+          </v-tabs>
+        </v-tab-item>
+      </v-tabs>
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'investment' && loading == false"
-    >
+    <div class="card-body d-flex flex-column" v-if="type == 'investment'">
       <v-tabs
         background-color="#212529"
         color="#FFF"
@@ -288,14 +1092,14 @@
                   disable-pagination
                 >
                 </v-data-table>
-                 <div class="card-header border-0">
-                  <h4 class="card-title font-weight-bolder FinancialStrength">
-                   
-                  </h4>
+                <div class="card-header border-0">
+                  <h4
+                    class="card-title font-weight-bolder FinancialStrength"
+                  >خلاصه</h4>
                 </div>
                 <v-data-table
-                  :headers="headesInvestTransOut"
-                  :items="filteredItems2"
+                  :headers="headesInvestPortfo"
+                  :items="filteredItems3"
                   class="elevation-1 FinancialStrength"
                   :header-props="{ sortIcon: null }"
                   :disable-sort="true"
@@ -303,14 +1107,14 @@
                   disable-pagination
                 >
                 </v-data-table>
-                 <div class="card-header border-0">
+                <div class="card-header border-0">
                   <h4 class="card-title font-weight-bolder FinancialStrength">
                     پورتفوی سرمایه گذاری
                   </h4>
                 </div>
                 <v-data-table
-                  :headers="headesInvestPortfo"
-                  :items="filteredItems3"
+                  :headers="headesInvestSummary"
+                  :items="filteredItems4"
                   class="elevation-1 FinancialStrength"
                   :header-props="{ sortIcon: null }"
                   :disable-sort="true"
@@ -325,10 +1129,7 @@
       </v-tabs>
     </div>
 
-    <div
-      class="card-body d-flex flex-column"
-      v-if="type == 'construction' && loading == false"
-    >
+    <div class="card-body d-flex flex-column" v-if="type == 'construction'">
       <v-tabs
         background-color="#212529"
         color="#FFF"
@@ -340,6 +1141,7 @@
         <v-tab
           v-for="item in this.todatesyears"
           :key="item.key"
+          class="itemFilters"
           @click="GetFilteredYearly(item.value)"
         >
           {{ item.value }}
@@ -347,7 +1149,7 @@
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
           <v-tabs
             vertical
-            background-color="#1A237E"
+            background-color="#212529"
             color="#FFF"
             dark
             next-icon="mdi-arrow-right-bold-box-outline"
@@ -357,6 +1159,7 @@
             <v-tab
               v-for="item in todates"
               :key="item.key"
+              class="itemFilters"
               @click="GetFiltered(item.value)"
             >
               {{ item.value }}
@@ -376,7 +1179,106 @@
                   :disable-sort="true"
                   hide-default-footer
                   disable-pagination
+                  loading
+                  loading-text="در حال بارگزاری"
                 >
+                  <template
+                    v-slot:[`item.toDate`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_Cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_Cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_MeterSold`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_MeterSold) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_SaleAmount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_SaleAmount) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.FromBefore_Cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.FromBefore_Cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_SaleRate`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_SaleRate) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.FromBefore_Revenue`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.FromBefore_Revenue) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.TotalYear_Cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalYear_Cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.TotalYear_MeterSold`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalYear_MeterSold) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.TotalYear_SaleRate`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalYear_SaleRate) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.TotalYear_SaleAmount`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.TotalYear_SaleAmount) }}
+                    </span>
+                  </template>
                 </v-data-table>
                 <div class="card-header border-0">
                   <h4 class="card-title font-weight-bolder FinancialStrength">
@@ -392,6 +1294,120 @@
                   hide-default-footer
                   disable-pagination
                 >
+                  <template
+                    v-slot:[`item.toDate`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem">{{ item.toDate }} </span>
+                  </template>
+                  <template
+                    v-slot:[`item.NetMeter`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.NetMeter) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.lastMonth_physicalProgress`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastMonth_physicalProgress) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.lastMonth_Cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastMonth_Cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.lastMonth_EstimationOfRemainingCost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(
+                          item.lastMonth_EstimationOfRemainingCost
+                        )
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.lastMonth_EstmiatedTotalCost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.lastMonth_EstmiatedTotalCost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.SoldProjectsDuringMonth_meter`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.SoldProjectsDuringMonth_meter)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.SoldProjectsDuringMonth_cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.SoldProjectsDuringMonth_cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_physicalProgress`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_physicalProgress) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_cost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_cost) }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_EstimationRemainingCost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{
+                        numberWithCommas(item.thisMonth_EstimationRemainingCost)
+                      }}
+                    </span>
+                  </template>
+                  <template
+                    v-slot:[`item.thisMonth_EsitmatedTotalCost`]="{
+                      item
+                    }"
+                  >
+                    <span class="cellItem"
+                      >{{ numberWithCommas(item.thisMonth_EsitmatedTotalCost) }}
+                    </span>
+                  </template>
                 </v-data-table>
               </div>
             </v-tab-item>
@@ -423,15 +1439,59 @@ export default {
       todatesyears: [],
       selectedMonth: "",
       selectedYear: "",
-      headersfacility: [
+      headersLeasingCost: [
         {
           text: "منتهی به",
           value: "toDate"
         },
         {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
+          text: "عنوان",
+          value: "itemTitle"
         },
+        {
+          text: "هزینه های دوره",
+          value: "thisPeriod_Achievedcost"
+        },
+        {
+          text: "هزینه ها از شروع سال مالی",
+          value: "Total_Achievedcost"
+        },
+        {
+          text: "تسهیلات اخذ شده دوره",
+          value: "thisPeriod_TakenFacilityRemaind"
+        },
+        {
+          text: "تهسیلات اخذ شده سال مالی",
+          value: "Total_TakenFacilityRemained"
+        }
+      ],
+      headersLeasingRevenue: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        {
+          text: "عنوان",
+          value: "itemTitle"
+        },
+        {
+          text: "درآمد دوره",
+          value: "thisPeriodAmount"
+        },
+        {
+          text: "درآمد کل سال مالی",
+          value: "TotalAmount"
+        }
+      ],
+      headersfacility: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "عنوان",
           value: "title"
@@ -486,10 +1546,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "عنوان",
           value: "title"
@@ -546,14 +1606,14 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
-        {
-          text: "عنوان",
-          value: "title"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
+        // {
+        //   text: "عنوان",
+        //   value: "title"
+        // },
         {
           text: "رشته بیمه ای",
           value: "InsuranceField"
@@ -636,10 +1696,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "عنوان پروژه",
           value: "projectName"
@@ -702,10 +1762,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "عنوان پروژه",
           value: "projectName"
@@ -776,10 +1836,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "خریداری شده",
           value: "in_firm"
@@ -806,10 +1866,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "واگذار شده",
           value: "out_firm"
@@ -844,10 +1904,10 @@ export default {
           text: "منتهی به",
           value: "toDate"
         },
-        {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
-        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
         {
           text: "نوع شرکت",
           value: "typeOfCompany"
@@ -903,20 +1963,78 @@ export default {
         {
           text: "ارزش بازار انتهای دوره",
           value: "end_MarketValue"
-        }
-        ,
+        },
         {
           text: "ارزش هر سهم انتهای دوره",
           value: "end_valueperShare"
-        }
-        ,
+        },
         {
           text: "افزایش (کاهش) انتهای دوره",
           value: "end_TotalChange"
         }
-        
       ],
-      headesInvestSummary: [],
+      headesInvestSummary: [{
+          text: "منتهی به",
+          value: "toDate"
+        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
+        {
+          text: "صنعت",
+          value: "industry"
+        },
+        {
+          text: "تعداد شرکت های بورسی",
+          value: "public_start_companyCount"
+        },
+        {
+          text: "بهای تمام شده شرکت های بورسی ابتدای دوره ",
+          value: "public_start_cost"
+        },
+        {
+          text: "ارزش بازار شرکت های بورسی در ابتدای دوره",
+          value: "public_start_marketValue"
+        },
+        {
+          text: " تغییرات ارزش بازار شرکت های بورسی",
+          value: "public_changes_marketValue"
+        },
+        {
+          text: "تعداد شرکت های بورسی در انتهای دوره",
+          value: "public_end_companyCount"
+        },
+        {
+          text: "بهای تمام شده شرکتهای بورسی در انتهای دوره",
+          value: "public_end_cost"
+        },
+        {
+          text: "ارزش بازار شرکت های بورسی در انتهای دوره",
+          value: "public_end_marketValue"
+        },
+        {
+          text: "تعداد شرکتهای غیر بورسی در ابتدای دوره",
+          value: "private_start_companyCount"
+        },
+        {
+          text: "بهای تمام شده شرکتهای غیر بورسی در ابتدای دوره",
+          value: "private_start_cost"
+        },
+        {
+          text: "تغییرات بهای تمام شده شرکتهای غیر بورسی ",
+          value: "private_changes_cost"
+        },
+        {
+          text: "تعداد شرکتهای غیر بورسی در انتهای دوره",
+          value: "private_end_companyCount"
+        },
+        {
+          text: "بهای تمام شده شرکتهای غیر بورسی در انتهای دوره",
+          value: "private_end_cost"
+        },
+      ],
+
       headersProduction: [
         {
           text: "منتهی به",
@@ -928,7 +2046,7 @@ export default {
         // },
         {
           text: "عنوان",
-          value: "product"
+          value: "name"
         },
         {
           text: "واحد",
@@ -988,11 +2106,68 @@ export default {
           value: "prev_modified_TotalSalesAmount"
         },
 
-        { text: "تولید سال مالی فبل", value: "lastyear_Production" },
-        { text: "تعداد فروش سال مالی قبل", value: "lastyear_saleCount" },
+        {
+          text: "تولید سال مالی فبل",
+          value: "lastyear_Production"
+        },
+        {
+          text: "تعداد فروش سال مالی قبل",
+          value: "lastyear_saleCount"
+        },
 
-        { text: "نرخ فروش سال مالی قبل", value: "lastyear_saleRate" },
-        { text: "مبلغ فروش سال مالی قبل", value: "lastyear_saleAmount" }
+        {
+          text: "نرخ فروش سال مالی قبل",
+          value: "lastyear_saleRate"
+        },
+        {
+          text: "مبلغ فروش سال مالی قبل",
+          value: "lastyear_saleAmount"
+        }
+      ],
+      headersService: [
+        {
+          text: "منتهی به",
+          value: "toDate"
+        },
+        // {
+        //   text: "شرکت گزارش دهنده",
+        //   value: "reported_firm"
+        // },
+        {
+          text: "عنوان",
+          value: "name"
+        },
+        {
+          text: "تاریخ عقد قرارداد",
+          value: "contractDate"
+        },
+        {
+          text: "مدت قرارداد",
+          value: "contract_Duration"
+        },
+        {
+          text: "درآمد تا ابتدای دوره",
+          value: "RevenueUntilStartOfPeriod"
+        },
+        {
+          text: "اصلاحات تا ابتدای دوره",
+          value: "ModificationToStart"
+        },
+        {
+          text: "درآمد از ابتدای سال - اصلاح شده",
+          value: "TotalYearToStartOfPeriodModified"
+        },
+        {
+          text: "درآمد کل سال",
+          value: "TotalYearIncludingThisPeriod"
+        },
+        { text: "درآمد کل سال مالی قبل", value: "TotalRevLastYear" },
+        { text: "پیش بینی درآمد سال", value: "PredictionRevenueYear" },
+        { text: "پیش بینی هزینه های سال", value: "PredictionCostYear" },
+        {
+          text: "توضیحات",
+          value: "ItemDesc"
+        }
       ],
       DataItems2: [],
       DataItems3: [],
@@ -1024,11 +2199,72 @@ export default {
     }
   },
   methods: {
+    numberWithCommas(x) {
+      if (x === null) {
+        return "-";
+      }
+      if (x == 0) {
+        return "-";
+      }
+      if (x == "") {
+        return "-";
+      }
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
+    categoryProduct(x) {
+      if (x === null) {
+        return "";
+      }
+      if (x == "Domestic_Sale") {
+        return "فروش داخلی";
+      }
+      if (x == "Export_Sale") {
+        return "فروش صادراتی";
+      }
+      if (x == "Whole") {
+        return "عمده";
+      }
+      if (x == "Discount") {
+        return "تخفیف";
+      }
+      if (x == "Refund") {
+        return "بازگشت از فروش";
+      }
+      if (x == "Service_revenue") {
+        return "خدمات";
+      }
+      return "";
+    },
+
     populateData() {
       this.DataItems2 = this.notices;
       this.DataItems3 = this.deposits;
       this.DataItems4 = this.portfos;
       this.DataItems5 = this.summaries;
+      // console.log(this.DataItems4)
+      // console.log(this.DataItems5)
     },
     gettabs() {
       var lookup = {};
@@ -1109,8 +2345,8 @@ export default {
     },
     setType() {
       this.type = this.typeOf;
-      console.log(this.type);
-      console.log(this.deposits);
+      // console.log(this.type);
+      // console.log(this.deposits);
     }
   },
   mounted() {
@@ -1119,20 +2355,35 @@ export default {
   },
   watch: {
     notices() {
-      console.log("Watcher");
+      // console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
-      console.log(this.notices);
+      // console.log(this.notices);
     },
     deposits() {
-      console.log("Watcher");
+      // console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
 
-      console.log(this.notices);
+      // console.log(this.notices);
+    },
+     portfos() {
+      // console.log("Watcher");
+      this.populateData();
+      this.gettabs();
+      this.getOnesfromthisyear();
+
+      // console.log(this.notices);
+    }, summaries() {
+      // console.log("Watcher");
+      this.populateData();
+      this.gettabs();
+      this.getOnesfromthisyear();
+
+      // console.log(this.notices);
     },
     selectedYear: function() {
       this.getOnesfromthisyear();
@@ -1145,6 +2396,9 @@ export default {
 };
 </script>
 <style scoped>
+.cellItem {
+  font-family: "Dirooz FD";
+}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

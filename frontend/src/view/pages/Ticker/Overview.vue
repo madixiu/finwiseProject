@@ -13,7 +13,7 @@
         ></liveWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
-        <TechnicalWidget :Indicators="subheaders"></TechnicalWidget>
+        <TechnicalWidget :Indicators="techdata"></TechnicalWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
@@ -76,7 +76,8 @@ export default {
       // allowed: [],
       stats: [],
       hhdata: [],
-      livedata: []
+      livedata: [],
+      techdata:[]
     };
   },
   mounted() {
@@ -102,8 +103,8 @@ export default {
     },
     "$route.params": {
       handler(newValue, oldValue) {
-        console.log(newValue);
-        console.log(oldValue);
+        // console.log(newValue);
+        // console.log(oldValue);
 
         if (newValue != oldValue) {
           this.loadData();
@@ -122,13 +123,13 @@ export default {
       // eslint-disable-next-line no-unused-vars
       // this.getAllowed().then(response => {
       // eslint-disable-next-line no-unused-vars
-      this.getOne().then(response2 => {
+      this.getOne().then(responx => {
         // eslint-disable-next-line no-unused-vars
-        this.getTwo().then(response3 => {
+        this.getTwo().then(responx1 => {
           // eslint-disable-next-line no-unused-vars
-          this.getHH().then(response4 => {
+          this.getHH().then(responx2 => {
             // eslint-disable-next-line no-unused-vars
-            // this.getLiveData().then();
+            this.getTechnical().then();
           });
         });
       });
@@ -172,6 +173,18 @@ export default {
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
         .then(response2 => {
           this.stats = response2.data;
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
+        });
+    },
+    async getTechnical() {
+      await this.axios
+        .get("/api/Ticker/TechnicalIndicators/" + this.$route.params.id + "/")
+        .then(responsetech => {
+          this.techdata = responsetech.data;
+          console.log(this.techdata)
         })
         .catch(error => {
           // console.log("GetTwoeCatch");

@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 # from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from requestcall.getOptions import optionRequest
-from requestcall.getTickerData import getDataTable, getDataTableHeaders, tickerNameRequest,tableNameRequest
+from requestcall.getTickerData import *
 # from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
 from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFilterLists,getFilteredData
 from requestcall.getCodalNotices import *
@@ -46,6 +46,8 @@ def getAllDPS(self,identifier):
     return JsonResponse(getAllDps(identifier),safe=False)    
 def getAdminNotices(self,identifier):
     return JsonResponse(get_AdminsNotice(identifier),safe=False)    
+def getIndexDetails(self,identifier):
+    return JsonResponse(getIndicesDetails(identifier),safe=False)
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
@@ -65,7 +67,14 @@ def getMonthlyConstOngoing(self,identifier):
     return JsonResponse(monthlyConstOngoing(identifier),safe=False)  
 def getMonthlyProduction(self,identifier):
     return JsonResponse(monthlyProduction(identifier),safe=False)
-
+def getMonthlyServices(self,identifier):
+    return JsonResponse(monthlyService(identifier),safe=False)
+def getMonthlyLeasingCost(self,identifier):
+    return JsonResponse(monthly_leasing_cost(identifier),safe=False)
+def getMonthlyLeasingDelegated(self,identifier):
+    return JsonResponse(monthly_leasing_delegated(identifier),safe=False)
+def getMonthlyLeasingRevenue(self,identifier):
+    return JsonResponse(monthly_leasing_revenue(identifier),safe=False)
 def getMonthlyInvestment_InTrans(self,identifier):
     return JsonResponse(monthlyInvestInTransactions(identifier),safe=False)
 def getMonthlyInvestment_OutTrans(self,identifier):
@@ -78,9 +87,17 @@ def getShareHolders(self,identifier):
     return JsonResponse(getShareholdersList(identifier),safe=False)
 def getBalanceSheetAll(self,identifier):
     return JsonResponse(getBalanceSheetFirm(identifier),safe=False)
-
+def getIncomeStatementAll(self,identifier):
+    return JsonResponse(getIncomeStatementFirm(identifier),safe=False)
+def getCFAll(self,identifier):
+    return JsonResponse(getCFFirm(identifier),safe=False)
 
 ##############Monthly Ends Here
+def getIndicators(self,identifier):
+    return JsonResponse(getTechnicalIndicators(identifier),safe=False)
+def getHistoricCap(self):
+    return JsonResponse(getIndicesHistoric(),safe=False)
+
 
 
 

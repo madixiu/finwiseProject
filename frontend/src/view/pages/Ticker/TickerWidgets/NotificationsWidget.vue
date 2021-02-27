@@ -23,7 +23,7 @@
       >
         <template v-slot:[`item.HtmlUrl`]="{ item }">
           <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir${item.HtmlUrl}%`">گزارش </a>
+            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`">گزارش </a>
           </v-chip>
         </template>
         <template v-slot:[`item.AttachmentUrl`]="{ item }">
@@ -32,7 +32,7 @@
             small
             :disabled="item.AttachmentUrl == '' ? true : false"
           >
-            <a v-bind:href="`http://codal.ir${item.AttachmentUrl}%`">فایل </a>
+            <a v-bind:href="`http://codal.ir${item.AttachmentUrl}`">فایل </a>
           </v-chip>
         </template>
         <template v-slot:[`item.ExcelUrl`]="{ item }">
@@ -42,7 +42,7 @@
         </template>
         <template v-slot:[`item.PdfUrl`]="{ item }">
           <v-chip label small :disabled="item.PdfUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir/${item.PdfUrl}%`">پی دی اف </a>
+            <a v-bind:href="`http://codal.ir/${item.PdfUrl}`">پی دی اف </a>
           </v-chip>
         </template>
       </v-data-table>

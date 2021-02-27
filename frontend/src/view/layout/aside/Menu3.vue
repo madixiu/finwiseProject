@@ -377,7 +377,7 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <router-link
+          <!-- <router-link
             :to="`/ticker/TickerAssembly/Calendar/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -395,7 +395,7 @@
                 <span class="menu-text">تقویم مجامع</span>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
           <router-link
             :to="`/ticker/TickerAssembly/Report/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"

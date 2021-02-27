@@ -105,7 +105,7 @@ export default {
         .get("/api/MainSearchBar")
         .then(SearchResponse => {
           let data = SearchResponse.data;
-          console.log(data);
+          // console.log(data);
           if (data != "noData") this.$store.dispatch("setSearch", data);
         })
         .catch(error => {

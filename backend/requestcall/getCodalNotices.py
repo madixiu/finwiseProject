@@ -81,7 +81,7 @@ def monthlyBankDeposits(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Deposit?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/bankdeposits_monthly?a='+identifier,headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -96,7 +96,7 @@ def monthlyInsurance(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Insurance?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/insurancemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -111,7 +111,7 @@ def monthlyConstOngoing(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Ongoing?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/construction_ongoing_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -126,7 +126,20 @@ def monthlyConstSold(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Const_Sold?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/construction_sold_monthly?a='+(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+def monthlyService(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/servicemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -141,7 +154,7 @@ def monthlyBankFacility(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Bank_Facility?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/bankfacilities_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -156,7 +169,55 @@ def monthlyProduction(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://185.97.117.60:3000/View_Monthly_Production?StockID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.97.117.60:3000/rpc/productionmonthly?a='+(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+
+
+
+def monthly_leasing_cost(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/leasingcost_monthly?a='+(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+def monthly_leasing_delegated(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/leasingdelegated_monthly?a='+(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")
+def monthly_leasing_revenue(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/leasingrevenue_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -246,6 +307,38 @@ def getBalanceSheetFirm(identifier):
             ct=ct+1
         
     return ("noData") 
+def getIncomeStatementFirm(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/isall?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")     
+def getCFFirm(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://185.97.117.60:3000/rpc/cfall?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")     
+
+    
 def getBoard(identifier): 
     ct=0
     while ct<3:
