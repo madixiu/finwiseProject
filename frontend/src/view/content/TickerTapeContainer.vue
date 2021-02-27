@@ -71,6 +71,7 @@ export default {
         .get("/api/TapeData")
         .then(TickerTapeResponse => {
           let data = TickerTapeResponse.data;
+          console.log(data);
           this.TickerTapeData = data[0];
           this.IndustryTapeData = data[1];
 

@@ -8,7 +8,7 @@
           <ApexChart
             v-if="Pieseries.length"
             type="pie"
-            height="150%"
+            height="200%"
             width="100%"
             :series="Pieseries"
             :chartOptions="PiechartOptions"
@@ -32,36 +32,36 @@
       <div class="col-xxl-6 col-md-6 mb-4">
         <v-card>
           <v-card-title>تاثیر صنایع در شاخص</v-card-title>
-          <ApexChart
+          <!-- <ApexChart
             type="bar"
             width="100%"
             :series="EffectOnIndexSeries"
             :chartOptions="EffectOnIndexOptions"
-          />
+          /> -->
         </v-card>
       </div>
       <div class="col-xxl-6 col-md-6 mb-4">
         <v-card>
           <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
-          <ApexChart
+          <!-- <ApexChart
             type="bar"
             width="100%"
             height="200%"
             :series="HHseries"
             :chartOptions="HHoptions"
-          />
+          /> -->
         </v-card>
       </div>
       <div class="col-xxl-6 col-md-6">
         <v-card>
           <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
-          <ApexChart
+          <!-- <ApexChart
             type="bar"
             width="100%"
             height="200%"
             :series="test"
             :chartOptions="testOptions"
-          />
+          /> -->
         </v-card>
       </div>
       <div class="col-xxl-12 col-lg-12">
@@ -400,7 +400,6 @@ export default {
       },
       Pieseries: [],
       Barseries: [],
-
       HHseries: [
         {
           name: "Males",
@@ -614,6 +613,9 @@ export default {
         chart: {
           type: "bar",
           height: 350,
+          animations: {
+            enabled: false
+          },
           toolbar: {
             show: false
           },
@@ -660,7 +662,7 @@ export default {
       PiechartOptions: {
         chart: {
           width: 400,
-          height: 350,
+          height: 100,
           type: "pie",
           fontFamily: "Vazir-Medium-FD",
           animations: {
@@ -676,6 +678,7 @@ export default {
               // console.log(chartContext);
               // console.log(event);
               // console.log(config);
+              console.log(config);
               this.testing(config.dataPointIndex);
             }
           }
@@ -683,8 +686,8 @@ export default {
         legend: {
           // show: false,
           fontSize: 10,
-          fontFamily: "Vazir-Medium-FD"
-          // position: "bottom"
+          fontFamily: "Vazir-Medium-FD",
+          position: "bottom"
         },
         labels: [],
         responsive: [
@@ -704,9 +707,6 @@ export default {
     this.loadData();
   },
   methods: {
-    clickMarquee(item) {
-      console.log("CLICKED", item);
-    },
     testing(seriesIndex) {
       // console.log(this.PiechartOptions.labels[seriesIndex]);
       // console.log(this.Pieseries[seriesIndex]);
@@ -742,18 +742,22 @@ export default {
         let persianNames = [];
         let marketCaps = [];
         let itemValue = [];
-        for (let item of data) {
+        console.log(data);
+        for (let item of data[0].TopIndustries) {
           // console.log(item);
           persianNames.push(item.persianName);
           marketCaps.push(item.marketCap);
           itemValue.push({ name: item.persianName, value: item.Value });
         }
+        marketCaps.push(data[1].Others.marketCapSum)
+        persianNames.push("سایر")
         // console.log(persianNames);
         this.PiechartOptions.labels = persianNames;
+        
         // console.log(this.chartOptions.labels);
-        marketCaps.sort(function(a, b) {
-          return b - a;
-        });
+        // marketCaps.sort(function(a, b) {
+        //   return b - a;
+        // });
         this.Pieseries = marketCaps;
         itemValue.sort(this.compareValues("value", "desc"));
         itemValue = itemValue.slice(0, 6);

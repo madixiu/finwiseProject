@@ -110,7 +110,7 @@ export default {
   mounted() {
     this.BreadCrumbRouteCheck();
     this.AsideRouteCheck();
-    this.TickerTapeRouteCheck();
+    // this.TickerTapeRouteCheck();
     // check if current user is authenticated
     // if (!this.isAuthenticated) {
     //   this.$router.push({ name: "login" });
@@ -126,22 +126,32 @@ export default {
     // $route: "fetchRoute"
     $route() {
       this.AsideRouteCheck();
+      // this.TickerTapeRouteCheck();
       this.BreadCrumbRouteCheck();
-      this.TickerTapeRouteCheck();
       // react to route changes...
     }
   },
   methods: {
     BreadCrumbRouteCheck() {
       let route = this.$route.name;
-      if (this.BreadCrumbRoutes.includes(route)) {
+      if (
+        this.BreadCrumbRoutes.includes(route) ||
+        this.TickerTapeRoutes.includes(route)
+      ) {
         this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-fixed");
         this.$store.dispatch(ADD_BODY_CLASSNAME, "subheader-enabled");
-        this.subheaderDisplay = true;
+        if (this.BreadCrumbRoutes.includes(route)) {
+          this.subheaderDisplay = true;
+          this.TickerTapeDisplay = false;
+        } else {
+          this.TickerTapeDisplay = true;
+          this.subheaderDisplay = false;
+        }
       } else {
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-fixed");
         this.$store.dispatch(REMOVE_BODY_CLASSNAME, "subheader-enabled");
         this.subheaderDisplay = false;
+        this.TickerTapeDisplay = false;
       }
       console.log(route);
     },

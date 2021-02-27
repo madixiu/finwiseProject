@@ -59,7 +59,7 @@ def IndustryDataFix(input):
             Sorted.append(temp[i])
 
     for i in range(0,len(Sorted),2):
-        result.append({"ticker":Sorted[i]["CorrectName"],"unix":Sorted[i+1]["unix"],"close":Sorted[i+1]["Value"],"Change":perCentCalc(Sorted[i+1]["Value"],Sorted[i]["Value"])})
+        result.append({"ID":Sorted[i]["indexID"],"ticker":Sorted[i]["CorrectName"],"unix":Sorted[i+1]["unix"],"close":Sorted[i+1]["Value"],"Change":perCentCalc(Sorted[i+1]["Value"],Sorted[i]["Value"])})
     return result
 
 def perCentCalc(x2,x1):

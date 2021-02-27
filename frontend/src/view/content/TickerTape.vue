@@ -47,6 +47,17 @@ export default {
     return {
       paused: false
     };
+  },
+  methods: {
+    clickMarquee(item) {
+      console.log("CLICKED", item);
+      if (this.TickerType)
+        this.$router.push({ path: `/ticker/Overview/Overall/${item.ID}` });
+      else this.$router.push({
+        name: "IndustriesDetail",
+        params: { id: item.ID }
+      });
+    }
   }
 };
 </script>
