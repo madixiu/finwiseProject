@@ -127,7 +127,7 @@ class MarketWatch(AsyncWebsocketConsumer):
             
 
     async def disconnect(self, code):
-        print("MarketWatchWS", code)
+        # print("MarketWatchWS", code)
         self.close()
         raise StopConsumer()
 

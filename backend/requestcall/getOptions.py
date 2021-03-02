@@ -1,6 +1,7 @@
 
 import requests
 import json
+import pandas as pd
 from .util.Convereter_trunc import truncater, converter
 
 
@@ -13,9 +14,16 @@ def optionRequest():
     head = {'Accept-Profile':'options'}
     resp = requests.get('http://37.152.180.99:3000/callOptionsView',headers = head)
     if resp.status_code == 200:
- 
+        DF=pd.read_json(resp.text)
+        DF.loc[DF['DifferenceToLast']==-1001,'ArzandegiLast']=-1001
+        DF.loc[DF['DifferenceToLast']==-1000,'ArzandegiLast']=-1000
+        DF.loc[DF['DifferenceToAverage']==-100001,'PPP']=-1001
+        DF.loc[DF['DifferenceToAverage']==-100000,'PPP']=-1000
         # return(resp.text)
-        return cleanOutput(json.loads(resp.text))
+        return cleanOutput(json.loads(DF.to_json(orient="records")))
+        # return(json.loads(resp.text))
+
+        # return cleanOutput(json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
         
@@ -34,7 +42,7 @@ def optionRequest():
 #     return flag
 
 def cleanOutput(option):
-    keys = option[0].keys()
+    # keys = option[0].keys()
     for item in option:
   
         if isinstance(item['FinalPayment'], float):

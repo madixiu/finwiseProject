@@ -153,7 +153,7 @@ def getMarketWatchFilterOptions(request):
 def getMarketWatch(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        print(len(getFilteredData(data.get("marketName"),data.get('marketIndustry'))))
+        # print(len(getFilteredData(data.get("marketName"),data.get('marketIndustry'))))
         return JsonResponse(getFilteredData(data.get("marketName"),data.get('marketIndustry')),safe=False)
     if request.method == 'GET':
         return JsonResponse(getMarketWatchRequest(),safe=False)

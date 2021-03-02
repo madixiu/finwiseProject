@@ -101,8 +101,18 @@
               <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value < 0" class="option-table-cell-red">{{
-                data.value.toLocaleString()
+              <b
+                v-if="
+                  data.value < 0 && data.value != -1001 && data.value != -1000
+                "
+                class="option-table-cell-red"
+                >{{ data.value.toLocaleString() }}</b
+              >
+              <b v-if="data.value == -1001" class="option-table-cell-s">{{
+                "سفارش فروش ندارد"
+              }}</b>
+              <b v-if="data.value == -1000" class="option-table-cell-r">{{
+                "ارزنده نیست"
               }}</b>
               <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value.toLocaleString()
@@ -123,18 +133,18 @@
               }}</b>
               <b
                 v-if="
-                  data.value > 0 && data.value != 1001 && data.value != 1000
+                  data.value < 0 && data.value != -1001 && data.value != -1000
                 "
-                class="option-table-cell-green"
+                class="option-table-cell-red"
                 >{{ data.value }}</b
               >
-              <b v-if="data.value < 0" class="option-table-cell-red">{{
+              <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value
               }}</b>
-              <b v-if="data.value == 1001" class="option-table-cell-s">{{
+              <b v-if="data.value == -1001" class="option-table-cell-s">{{
                 "بدون معامله"
               }}</b>
-              <b v-if="data.value == 1000" class="option-table-cell-r">{{
+              <b v-if="data.value == -1000" class="option-table-cell-r">{{
                 "ارزنده نیست"
               }}</b>
             </template>
@@ -142,11 +152,21 @@
               <b v-if="data.value > 0" class="option-table-cell-green">{{
                 data.value.toLocaleString()
               }}</b>
-              <b v-if="data.value < 0" class="option-table-cell-red">{{
-                data.value.toLocaleString()
-              }}</b>
+              <b
+                v-if="
+                  data.value < 0 && data.value != -1001 && data.value != -1000
+                "
+                class="option-table-cell-red"
+                >{{ data.value.toLocaleString() }}</b
+              >
               <b v-if="data.value == 0" class="option-table-cell">{{
                 data.value.toLocaleString()
+              }}</b>
+              <b v-if="data.value == -1001" class="option-table-cell-s">{{
+                "بدون معامله"
+              }}</b>
+              <b v-if="data.value == -1000" class="option-table-cell-r">{{
+                "ارزنده نیست"
               }}</b>
             </template>
             <template #cell(TradeVolume)="data">
@@ -570,12 +590,13 @@ export default {
   text-align: center;
 }
 .option-table-head {
-  font-size: 0.8rem !important;
+  font-size: 1.1em !important;
   font-weight: 500;
 }
 .option-table {
   text-align: center;
-  /* font-size: 1em; */
+  font-size: 0.8rem;
+  vertical-align: middle !important;
   line-height: 1;
   font-family: "Vazir-Medium-FD";
 }
@@ -586,7 +607,7 @@ export default {
   .option-table-cell-s {
     vertical-align: middle !important;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.9em;
     line-height: 1;
     font-weight: 400;
     font-family: "Vazir-Medium-FD";
@@ -606,7 +627,7 @@ export default {
   .option-table-cell-r {
     vertical-align: middle !important;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 1em;
     color: red;
     line-height: 1;
     font-weight: 400;
@@ -627,7 +648,7 @@ export default {
 .option-table-cell {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
@@ -642,7 +663,7 @@ export default {
 .option-table-cell-green {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1;
   color: green;
   font-weight: 400;
@@ -651,7 +672,7 @@ export default {
 .option-table-cell-red {
   text-align: center;
   vertical-align: middle !important;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1;
   color: red;
   font-weight: 400;
@@ -661,9 +682,9 @@ export default {
 .option-table-cell-bold {
   vertical-align: middle !important;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
   /* font-family: "Vazir-Medium-FD";  */
   font-family: "Vazir-Medium-FD";
 }

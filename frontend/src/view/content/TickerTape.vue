@@ -14,7 +14,8 @@
     >
       <div v-for="item in this.TickerData" :key="item.ticker" class=" mr-4">
         <div
-          class="mr-2 py-lg-2 py-xxl-3"
+          class="mr-2 py-lg-3"
+          v-bind:class="[LowRes ? 'py-xl-2' : 'py-xl-4']"
           style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
         >
@@ -45,18 +46,27 @@ export default {
   props: { TickerData: Array, duration: Number, TickerType: Boolean },
   data() {
     return {
-      paused: false
+      paused: false,
+      LowRes: false
     };
+  },
+  mounted() {
+    this.checkResolution();
   },
   methods: {
     clickMarquee(item) {
       console.log("CLICKED", item);
       if (this.TickerType)
         this.$router.push({ path: `/ticker/Overview/Overall/${item.ID}` });
-      else this.$router.push({
-        name: "IndustriesDetail",
-        params: { id: item.ID }
-      });
+      else
+        this.$router.push({
+          name: "IndustriesDetail",
+          params: { id: item.ID }
+        });
+    },
+    checkResolution() {
+      if (window.screen.height < 1080) this.LowRes = true;
+      else this.LowRes = false;
     }
   }
 };

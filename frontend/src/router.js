@@ -39,7 +39,7 @@ const Board = () => import("@/view/pages/Ticker/Board.vue");
 const ShareHolders = () => import("@/view/pages/Ticker/ShareHolders.vue");
 const AdjustedPrices = () => import("@/view/pages/Ticker/AdjustedPrices.vue");
 const Bonyadi = () => import("@/view/pages/Ticker/Bonyadi.vue");
-const TickerTechnical = () => import("@/view/pages/Ticker/SahmTechnical.vue");
+const TickerTechnical = () => import("@/view/pages/Ticker/TickerTechnical.vue");
 const BalanceSheet = () =>
   import("@/view/pages/Ticker/Sheets/BalanceSheet.vue");
 const IncomeStatement = () =>

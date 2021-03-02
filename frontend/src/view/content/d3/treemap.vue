@@ -332,8 +332,8 @@ export default {
     // eslint-disable-next-line no-unused-vars
 
     selectedNode(newData, oldData) {
-      console.log("The selected node changed...");
-      console.log(newData.data);
+      // console.log("The selected node changed...");
+      // console.log(newData.data);
       // console.log(oldData.depth);
       if (newData.depth == 1) {
         // this.initialize()
@@ -543,7 +543,7 @@ export default {
     // and the template reflects the changes
     selectNode(event) {
       // console.log(event.target.id);
-      console.log(event.target);
+      // console.log(event.target);
       this.selected = event.target.id;
 
       // this.accumulate(this.selected,this)
@@ -631,7 +631,7 @@ export default {
       if (c < 0.1) return "font-size:0rem";
     },
     getColor(val) {
-      console.log(this.positiveColor(0.05));
+      // console.log(this.positiveColor(0.05));
 
       // let color = this.colors[1];
       let color = "fill:#414554";
@@ -642,14 +642,14 @@ export default {
       // let negativeBase = -0.22777777777777775;
       // val = parseFloat(val);
       if (0.05 > val && val > -0.05) {
-        console.log(val);
-        console.log("black");
+        // console.log(val);
+        // console.log("black");
         color = "fill:#414554"; // color 0
       } else if (0.05 <= val && val <= 6) {
-        console.log("pos");
+        // console.log("pos");
         color = "fill:" + this.positiveColor(val);
       } else if (-2 <= val && val <= -0.05) {
-        console.log("neg");
+        // console.log("neg");
         color = "fill:" + this.negativeColor(val);
       } else if (val > 6) color = "fill:#30cc5a";
       else if (val < -2) color = "fill:#f63538";

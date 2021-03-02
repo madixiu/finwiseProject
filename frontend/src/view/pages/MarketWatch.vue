@@ -910,7 +910,7 @@ export default {
   font-family: "Vazir-Medium-FD";
 }
 .marketwatch-table-ticker {
-  color: #4682b4;
+  /* color: #4682b4; */
   cursor: pointer;
   vertical-align: middle !important;
 }

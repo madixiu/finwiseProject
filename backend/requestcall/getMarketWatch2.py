@@ -45,14 +45,13 @@ def additionalDataMarketWatch(input):
 
 def getFilteredData(marketName,marketIndustry):
     dataTemp=[]
-    print(marketName)
-    print(marketIndustry)
+    # print(marketName)
+    # print(marketIndustry)
     input = getMarketWatchRequest()
 
     # print(input)
     if marketIndustry == []:
         if marketName =='همه':
-            print("green")
             return input
         elif marketName == 'بورس':
             dataTemp = [x for x in input if x["marketParent"] == 1]
@@ -64,8 +63,6 @@ def getFilteredData(marketName,marketIndustry):
         if marketName =='همه':
             dataTemp=[]
             dataTemp = [x for x in input if (x["industry"] in marketIndustry)]
-            print("yellow")
-            print(len(dataTemp))
 
             return dataTemp
         elif marketName == "بورس":
