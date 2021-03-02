@@ -4,22 +4,22 @@
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
       <div class="row">
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
-          خرید
+        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <span class="rtl_centerd">خرید </span>
+
           <br />
-          <v-chip color="#30cc5a"><span class="chiptext"> 4 </span></v-chip>
+          <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
         </div>
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
-          خنثی
+        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <span class="rtl_centerd">خنثی </span>
           <br />
-          <v-chip color="#404e55">
-            <span class="chiptext"> 4 </span>
-          </v-chip>
+
+          <span class="chiptext" style="color:#414554">{{ neutral }} </span>
         </div>
-        <div class="col-xxl-3 col-lg-3 col-md-4 col-sm-12">
-          فروش
+        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <span class="rtl_centerd">فروش </span>
           <br />
-          <v-chip color="#f63538"><span class="chiptext"> 4 </span></v-chip>
+          <span class="chiptext" style="color:#f63538">{{ negative }}</span>
         </div>
       </div>
       <div class="row" v-if="loading">
@@ -59,7 +59,10 @@ export default {
       width: 0,
       DataItems2: [],
       loading: true,
-      sum: 0
+      sum: 0,
+      positive: 0,
+      negative: 0,
+      neutral: 0
     };
   },
   methods: {
@@ -67,9 +70,38 @@ export default {
       this.DataItems2 = this.Indicators;
       if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
         this.loading = false;
+        this.positive = 0;
+        this.negative = 0;
+        this.neutral = 0;
+        this.sum = 0;
         // this.sum=this.DataItems2.sum_signal
-        this.sum = this.DataItems2[0].sum_signal;
-        console.log(this.sum);
+       
+        var allkeys = Object.keys(this.DataItems2[0]);
+        var signals = allkeys.filter(item => {
+          return String(item).includes("Signal");
+        });
+        let that = this;
+        signals.forEach(function(element) {
+          let val = that.DataItems2[0][String(element)];
+          if (val == 1) {
+            that.positive = that.positive + 1;
+            that.sum = that.sum + 1;
+          }
+          if (val == -1) {
+            that.negative = that.negative + 1;
+            that.sum = that.sum-1;
+          }
+          if (val == 0) {
+            that.neutral = that.neutral + 1;
+          }
+        })
+
+        // this.sum = this.DataItems2[0].sum_signal;
+        if (this.sum>17){
+          this.sum=17
+        }
+        if (this.sum<-17){
+          this.sum=-17        }
       }
     },
     initrender() {
@@ -78,7 +110,7 @@ export default {
       }
       this.width = parseInt(d3.select("#TechnicalGauge").style("width"), 10);
       this.height = (this.width * 9) / 16;
-      this.margin.top = this.height * 0.2;
+      this.margin.top = this.height * 0.5;
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
@@ -92,6 +124,40 @@ export default {
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
+    },
+    getFull() {
+      if (this.sum > 10.2) {
+        return "خرید قوی";
+      }
+      if (this.sum > 3.4) {
+        return "خرید";
+      }
+      if (this.sum > -3.4) {
+        return "خنثی";
+      }
+      if (this.sum > -10.2) {
+        return "فروش";
+      }
+      if (this.sum < -10.2) {
+        return "فروش قوی";
+      }
+    },
+     getFullColor() {
+      if (this.sum > 10.2) {
+        return "#30cc5a";
+      }
+      if (this.sum > 3.4) {
+        return "#379a58";
+      }
+      if (this.sum > -3.4) {
+        return "#404e55";
+      }
+      if (this.sum > -10.2) {
+        return "#b33b43";
+      }
+      if (this.sum < -10.2) {
+        return "#f63538";
+      }
     },
     renderChart() {
       var parent = document.getElementById("chartContainer");
@@ -122,7 +188,10 @@ export default {
         // eslint-disable-next-line no-unused-vars
         tt = 3000,
         // eslint-disable-next-line no-unused-vars
-        scale = d3.scaleLinear().range([startAngle, endAngle]).domain([-6,6]),
+        scale = d3
+          .scaleLinear()
+          .range([startAngle, endAngle])
+          .domain([-17, 17]),
         // eslint-disable-next-line no-unused-vars
 
         // colorScale = d3
@@ -173,13 +242,67 @@ export default {
       chart
         .append("g")
         .append("text")
-
+        .attr("text-anchor", "start")
         .text("خنثی")
         .attr(
           "transform",
-          `translate(${this.width / 2 + this.margin.left / 10},${0})`
+          `translate(${this.width / 2 - this.margin.left / 4},${(-2 *
+            this.margin.top) /
+            3})`
         )
-        .style("font-size", "1.5em");
+        .style("font-size", "1.3em");
+      chart
+        .append("g")
+        .append("text")
+
+        .text("فروش")
+        .attr(
+          "transform",
+          `translate(${this.width / 4},${-0.4 * this.margin.top})`
+        )
+        .style("font-size", "1.3em");
+      chart
+        .append("g")
+        .append("text")
+
+        .text("خرید قوی")
+        .attr(
+          "transform",
+          `translate(${(7 * this.width) / 8},${this.margin.top / 5})`
+        )
+        .style("font-size", "1.3em");
+      chart
+        .append("g")
+        .append("text")
+
+        .text("فروش قوی")
+        .attr(
+          "transform",
+          `translate(${(1 * this.width) / 7},${this.margin.top / 5})`
+        )
+        .style("font-size", "1.3em");
+      chart
+        .append("g")
+        .append("text")
+
+        .text("خرید")
+        .attr(
+          "transform",
+          `translate(${0.72 * this.width},${-0.4 * this.margin.top})`
+        )
+        .style("font-size", "1.3em");
+      chart
+        .append("g")
+        .append("text")
+        
+        .style('fill',this.getFullColor)
+        .text(this.getFull())
+        .attr(
+          "transform",
+          `translate(${this.width / 2},${0.7 * this.margin.top})`
+        )
+        .style("font-size", "2.5em");
+
       var slice = innerD
         .append("g")
         .selectAll("path.slice")
@@ -208,7 +331,7 @@ export default {
           .datum({ oldValue: oldValue })
           .transition()
           .duration(tt)
-          .attrTween("d", lineTween(newValue))
+          .attrTween("d", lineTween(newValue));
       }
 
       function lineTween(newValue) {
@@ -265,9 +388,12 @@ export default {
   font-weight: bolder;
 }
 .chiptext {
-  color: white;
+  font-family: "Dirooz FD";
+  font-size: 2.4em;
+  text-align: center;
 }
 .rtl_centerd {
+  font-size: 1em;
   direction: rtl;
   text-align: center;
 }

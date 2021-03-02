@@ -18,7 +18,15 @@ urlpatterns = [
    path("getAllTradesValue",getAllTradesValue),
    path("getTodayTepix",getTodayTepix),
    path("LatestNews",getLatestNews),
+   path("LatestIC",getLastestIC),
+   path("LatestICDone/<identifier>/",getLastestICDone),
    path("Indices/HistoricCap/",getHistoricCap),
+   path("ImpactOnIndex",getImpactOnIndex),
+   path("HHMarketDetails",getHHMarket),
+   path("HighestDemands",getHighestDemands),
+   path("HighestSupplies",getHighestSupplies),
+   path("HighestQ",getHighestQ),
+   path("Dashboard",getAllDashboard),
    ######
    path("tse/getHighestValue/",getHighestValue),
    ######
@@ -32,7 +40,6 @@ urlpatterns = [
    path("LiveTicker/<identifier>/",getLiveTicker),
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
    path("IndexDetails/<identifier>/",getIndexDetails),
-
    path("Alldps/<identifier>/",getAllDPS),
    path("AdminNotice/<identifier>/",getAdminNotices),
    ####Monthly

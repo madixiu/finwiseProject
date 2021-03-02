@@ -22,13 +22,14 @@
             <span class="small">Valuation & Return</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
             rounded
+            class="blured"
             height="25"
           >
           </v-progress-linear>
@@ -46,8 +47,11 @@
             <template v-slot:activator="{ on }">
               <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
             </template>
-            <span class="small">{{ item.name }}</span>
+            <span class="blured">{{ item.name }}</span>
           </v-tooltip>
+        </template>
+        <template v-slot:[`item.now`]="{ item }">
+            <span class="blured">{{ item.now }}</span>
         </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
@@ -55,6 +59,7 @@
             :height="15"
             :width="150"
             :rounded="true"
+            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.industry * 100"
           >
@@ -66,6 +71,7 @@
             :height="15"
             :width="150"
             :rounded="true"
+             class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.historic * 100"
           >
@@ -167,5 +173,12 @@ export default {
 }
 .valign * {
   vertical-align: middle;
+}
+.blured{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
 </style>

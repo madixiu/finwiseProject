@@ -19,10 +19,10 @@
           آمار سهم
           <v-icon left>mdi-thermostat</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           اطلاعات سهم
           <v-icon left>mdi-information-variant</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab-item>
           <v-card flat>
             <v-card-text>

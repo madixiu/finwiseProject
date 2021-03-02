@@ -14,7 +14,7 @@
     >
       <div v-for="item in this.TickerData" :key="item.ticker" class=" mr-4">
         <div
-          class="mr-2 py-lg-2 py-xxl-3"
+          class="mr-2 py-lg-2  py-xl-4"
           style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
         >

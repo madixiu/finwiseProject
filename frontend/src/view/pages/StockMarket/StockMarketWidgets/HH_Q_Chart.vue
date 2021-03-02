@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
+  <div class="card card-custom">
     <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"
@@ -9,14 +9,14 @@
         >نمودار وضعیت بازار -
         <b-form-group class="pt-3">
           <b-form-radio-group
-            :click="this.renderChart()"
-            v-model="SortBy"
-            :options="options"
+            :click="this.renderChart1()"
+            v-model="SortBy1"
+            :options="options1"
             name="radio-inline"
           ></b-form-radio-group> </b-form-group
       ></v-card-title>
       <v-divider class="mt-0"></v-divider>
-      <div id="ChartContainer_Status"></div>
+      <div id="ChartContainer_HH"></div>
       <!--end::Header-->
     </v-card>
   </div>
@@ -25,8 +25,8 @@
 <script>
 import * as d3 from "d3";
 export default {
-  name: "ChartVol",
-  props: { inputDataStatus: Array, inputDataImpact: Array },
+  name: "ChartHH",
+  props: { inputDataHH: Array, inputDataQ: Array },
   data() {
     return {
       jsonData: [],
@@ -42,26 +42,26 @@ export default {
         bottom: 0,
         left: 0
       },
-      options: [
-        { text: "ارزش و حجم معاملات", value: "VolumeVal" },
-        { text: "تاثیر بر شاخص", value: "Impact" }
+      options1: [
+        { text: "بیشترین ورود و خروج حقیقی", value: "HH" },
+        { text: "بیشترین عرضه تقاضای لحظه ای", value: "DS" }
       ],
-      SortBy: "VolumeVal"
+      SortBy1: "HH"
     };
   },
   watch: {
-    inputDataStatus() {
-      this.renderData();
+    inputDataHH() {
+      this.renderData1();
       if (this.isRealValue(this.highestValues)) {
-        this.renderChart();
+        this.renderChart1();
       }
     }
   },
   mounted() {
-    this.renderData();
+    this.renderData1();
     this.initrender();
     if (this.isRealValue(this.highestValues)) {
-      this.renderChart();
+      this.renderChart1();
     }
   },
   methods: {
@@ -97,44 +97,50 @@ export default {
     isRealValue(obj) {
       return obj && obj !== "null" && obj !== "undefined";
     },
-    renderData() {
-      if (this.isRealValue(this.inputDataStatus)) {
-        this.jsonData = [...this.inputDataStatus];
-        this.jsonData.sort((a, b) => b.Value - a.Value);
+    renderData1() {
+      if (!(this.inputDataHH === undefined || this.inputDataHH.length == 0)) {
+        this.jsonData = [...this.inputDataHH];
+        this.jsonData.sort((a, b) => b.netHaghighi - a.netHaghighi);
         this.highestValues = this.jsonData.slice(0, 10);
-        this.jsonData.sort((a, b) => b.Vol - a.Vol);
+        this.jsonData.sort((a, b) => a.netHaghighi - b.netHaghighi);
         this.highestVolumes = this.jsonData.slice(0, 10);
+        // console.log("HH");
+        // console.log(this.highestValues);
+        // console.log(this.highestVolumes);
       }
-      if (this.isRealValue(this.inputDataImpact)) {
-        this.jsonData2 = [...this.inputDataImpact];
-        this.jsonData2.sort((a, b) => b.Impact - a.Impact);
+      if (!(this.inputDataQ === undefined || this.inputDataQ.length == 0)) {
+        this.jsonData2 = [...this.inputDataQ[0]];
+        this.jsonData2.sort((a, b) => b.Value - a.Value);
         this.highestImpcats = this.jsonData2.slice(0, 10);
-        this.jsonData2.sort((a, b) => a.Impact - b.Impact);
-        this.lowestImpcats = this.jsonData2.slice(0, 10);
+        console.log("Demands");
+        console.log(this.highestImpcats);
+        this.jsonData3 = [...this.inputDataQ[1]];
+        this.jsonData3.sort((a, b) => b.Value - a.Value);
+        this.lowestImpcats = this.jsonData3.slice(0, 10);
+        // console.log("Supplies");
+        // console.log(this.lowestImpcats);
       }
     },
     initrender() {
-      if (document.getElementById("ChartContainer_Status_svg")) {
-        d3.selectAll("#ChartContainer_Status_svg").remove();
+      if (document.getElementById("ChartContainer_HH_svg")) {
+        d3.selectAll("#ChartContainer_HH_svg").remove();
       }
       this.width =
-        0.85 * parseInt(d3.select("#ChartContainer_Status").style("width"), 10);
+        0.85 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
       this.height = (this.width * 8) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
-        parseInt(d3.select("#ChartContainer_Status").style("width"), 10) *
-        0.075;
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.075;
       this.margin.left =
-        parseInt(d3.select("#ChartContainer_Status").style("width"), 10) *
-        0.075;
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.075;
       this.offsetY = this.margin.top;
-      var parent = document.getElementById("ChartContainer_Status");
+      var parent = document.getElementById("ChartContainer_HH");
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "ChartContainer_Status_svg")
+        .attr("id", "ChartContainer_HH_svg")
         .attr(
           "viewBox",
           `0 0 ${this.width + this.margin.right + this.margin.left},${this
@@ -145,16 +151,16 @@ export default {
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
     },
-    renderChart() {
-      if (document.getElementById("ChartContainer_Status_svg")) {
-        d3.selectAll("#ChartContainer_Status_svg").remove();
+    renderChart1() {
+      if (document.getElementById("ChartContainer_HH_svg")) {
+        d3.selectAll("#ChartContainer_HH_svg").remove();
       }
 
-      var parent = document.getElementById("ChartContainer_Status");
+      var parent = document.getElementById("ChartContainer_HH");
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "ChartContainer_Status_svg")
+        .attr("id", "ChartContainer_HH_svg")
         .attr(
           "viewBox",
           `0 0 ${this.width + this.margin.right + this.margin.left},${this
@@ -171,7 +177,7 @@ export default {
           `translate(${this.margin.left}, ${this.margin.top})`
         );
       // eslint-disable-next-line no-unused-vars
-      if (this.SortBy == "VolumeVal") {
+      if (this.SortBy1 == "HH") {
         const xLeft = d3
           .scaleBand()
           .domain(this.highestValues.map(x => x.ticker))
@@ -180,7 +186,10 @@ export default {
 
         const yLeft = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
+          .domain([
+            0,
+            Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         // eslint-disable-next-line no-unused-vars
@@ -193,17 +202,26 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const yRight = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestVolumes.map(x => x.Vol)) * 1.2])
+          .domain([
+            0,
+            Math.min(...this.highestVolumes.map(x => x.netHaghighi)) * 1.2
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         ///////////////
         var mycolor = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
+          .domain([
+            0,
+            Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
+          ])
           .range(["#66BB6A", "#1B5E20"]);
         var mycolor2 = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestVolumes.map(x => x.Vol)) * 1.2])
+          .domain([
+            0,
+            Math.min(...this.highestVolumes.map(x => x.netHaghighi)) * 1.2
+          ])
           .range(["#4DD0E1", "#006064"]);
         //////////////
         let aXisY2 = d3
@@ -227,8 +245,8 @@ export default {
           .attr("transform", `translate(0,0)`)
           // .attr("dx", "-8em")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY2Axe
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -244,13 +262,13 @@ export default {
         let aXisY1 = d3
           .axisRight(yRight)
           .tickFormat(d => {
-            if (d <= 0) {
+            if (d >= 0) {
               return d;
             } else {
               return (
-                this.numberWithCommas(this.roundTo(d / 1000000, 0)) +
+                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
                 "  " +
-                "میلیون"
+                "میلیارد ریال"
               );
             }
           })
@@ -264,8 +282,8 @@ export default {
           .selectAll("text")
           .style("text-anchor", "end")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY1Axe
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -288,7 +306,7 @@ export default {
           .style("font-size", `${this.width / 950}em`)
           .attr("x", d => xLeft(d.ticker) + xLeft.bandwidth() * 0.5)
           .attr("y", d => {
-            return yLeft(d["Value"]) - 0.05 * this.height;
+            return yLeft(d["netHaghighi"]) - 0.05 * this.height;
           })
           .text(d => d.ticker)
           .attr("transform", function() {
@@ -309,7 +327,7 @@ export default {
           .style("font-size", `${this.width / 950}em`)
           .attr("x", d => xRight(d.ticker) + xRight.bandwidth() * 0.5)
           .attr("y", d => {
-            return yRight(d["Vol"]) - 0.05 * this.height;
+            return yRight(d["netHaghighi"]) - 0.05 * this.height;
           })
           .text(d => d.ticker)
           .attr("transform", function() {
@@ -371,7 +389,7 @@ export default {
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           .style("font-size", "1em")
-          .text("بیشترین ارزش معاملات");
+          .text("بیشترین ورود حقیقی");
 
         chart
           .append("text")
@@ -383,7 +401,7 @@ export default {
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           .style("font-size", "1em")
-          .text("بیشترین حجم معاملات");
+          .text("بیشترین خروج حقیقی");
 
         // eslint-disable-next-line no-unused-vars
         const tooltip = d3
@@ -418,21 +436,25 @@ export default {
                   d.ticker +
                   "<hr/>" +
                   " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+                  that.numberWithCommas(
+                    that.roundTo(d.TradeValue / 1000000000, 0)
+                  ) +
                   "میلیارد ریال " +
                   "<br>" +
                   " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+                  that.numberWithCommas(
+                    that.roundTo(d.TradeVolume / 1000000, 0)
+                  ) +
                   "میلیون " +
                   "<br>" +
-                  "ارزش بازار: " +
+                  "خروج حقیقی: " +
                   that.numberWithCommas(
-                    that.roundTo(d.MarketCap / 1000000000000, 0)
+                    that.roundTo((d.netHaghighi * -1) / 1000000000, 0)
                   ) +
-                  "هزار میلیارد ریال " +
+                  "میلیارد ریال " +
                   "<br>" +
-                  "بازار:" +
-                  d.persianName
+                  "صنعت:" +
+                  d.industry
               )
               .style("visibility", "visible");
             d3.select(this)
@@ -451,14 +473,17 @@ export default {
           .duration(2000)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
-            return yRight(d.Vol);
+            return yRight(d.netHaghighi);
           })
           .attr("height", s =>
-            Math.max(yRight(0) - yRight(s.Vol), yRight(s.Vol) - yRight(0))
+            Math.max(
+              yRight(0) - yRight(s.netHaghighi),
+              yRight(s.netHaghighi) - yRight(0)
+            )
           )
           .attr("width", xRight.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2(d.Vol);
+            return mycolor2(d.netHaghighi);
           });
         chart
           .selectAll()
@@ -474,21 +499,25 @@ export default {
                   d.ticker +
                   "<hr/>" +
                   " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+                  that.numberWithCommas(
+                    that.roundTo(d.TradeValue / 1000000000, 0)
+                  ) +
                   "میلیارد ریال " +
                   "<br>" +
                   " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+                  that.numberWithCommas(
+                    that.roundTo(d.TradeVolume / 1000000, 0)
+                  ) +
                   "میلیون " +
                   "<br>" +
-                  "ارزش بازار: " +
+                  "ورود حقیقی: " +
                   that.numberWithCommas(
-                    that.roundTo(d.MarketCap / 1000000000000, 0)
+                    that.roundTo(d.netHaghighi / 1000000000, 0)
                   ) +
-                  "هزار میلیارد ریال " +
+                  "میلیارد ریال " +
                   "<br>" +
-                  "بازار:" +
-                  d.persianName
+                  "صنعت:" +
+                  d.industry
               )
               .style("visibility", "visible");
             d3.select(this)
@@ -507,18 +536,21 @@ export default {
           .duration(2000)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
-            return yLeft(d.Value);
+            return yLeft(d.netHaghighi);
           })
           .attr("height", s =>
-            Math.max(yLeft(0) - yLeft(s.Value), yLeft(s.Value) - yLeft(0))
+            Math.max(
+              yLeft(0) - yLeft(s.netHaghighi),
+              yLeft(s.netHaghighi) - yLeft(0)
+            )
           )
           .attr("width", xLeft.bandwidth())
           .attr("fill", function(d) {
-            return mycolor(d.Value);
+            return mycolor(d.netHaghighi);
           })
           .style("opacity", "80%");
       }
-      if (this.SortBy == "Impact") {
+      if (this.SortBy1 == "DS") {
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
@@ -527,7 +559,10 @@ export default {
 
         const yLeft_2 = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestImpcats.map(x => x.Impact)) * 1.2])
+          .domain([
+            0,
+            Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         // eslint-disable-next-line no-unused-vars
@@ -540,46 +575,45 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const yRight_2 = d3
           .scaleLinear()
-          .domain([0, Math.min(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
+          .domain([0, Math.max(...this.lowestImpcats.map(x => x.Value)) * 1.2])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         ///////////////
-          var mycolor_2 = d3
-            .scaleLinear()
-            .domain([0, Math.max(...this.highestImpcats.map(x => x.Impact)) * 1.2])
-            .range(["#66BB6A", "#1B5E20"]);
-          var mycolor2_2= d3
-            .scaleLinear()
-            .domain([0, Math.max(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
-            .range(["#a01a58", "#b7094c"]);
+        var mycolor_2 = d3
+          .scaleLinear()
+          .domain([
+            0,
+            Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2
+          ])
+          .range(["#66BB6A", "#1B5E20"]);
+        var mycolor2_2 = d3
+          .scaleLinear()
+          .domain([0, Math.max(...this.lowestImpcats.map(x => x.Value)) * 1.2])
+          .range(["#a01a58", "#b7094c"]);
         //////////////
-        let aXisY2_2= d3
+        let aXisY2_2 = d3
           .axisLeft(yLeft_2)
           .tickFormat(d => {
             if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d ,0)) +
-                "  " +
-                "واحد"
-              );
+              return this.numberWithCommas(this.roundTo(d/1000000000, 0)) + "  " + "میلیارد ریال";
             }
           })
           .tickSizeInner(-this.width / 2 + this.margin.left / 2);
-        let aXisY2Axe_2= chart.append("g").call(aXisY2_2);
+        let aXisY2Axe_2 = chart.append("g").call(aXisY2_2);
         aXisY2Axe_2
           .selectAll("text")
           .style("text-anchor", "start")
-          .attr("transform", `translate(0,0)`)
-          // .attr("dx", "-8em")
-          .style("font-size", `${this.width / 1000}em`);
+          .style("font-size", `${this.width / 1000}em`)
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY2Axe_2
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
           .style("opacity", "0.2")
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         chart
           .append("g")
           .call(d3.axisBottom(xLeft_2))
@@ -591,31 +625,24 @@ export default {
         let aXisY1_2 = d3
           .axisRight(yRight_2)
           .tickFormat(d => {
-            
-              if (d >= 0) {
+            if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d ,0)) +
-                "  " +
-                "واحد"
-              );
+              return this.numberWithCommas(this.roundTo(d/1000000000, 0)) + "  " + "میلیارد ریال";
             }
-            
           })
           .tickSizeInner(-this.width / 2 - this.margin.right / 2);
         var aXisY1Axe_2 = chart
           .append("g")
           .call(aXisY1_2)
-          .attr("transform", `translate(${this.width},0)`)
-          
+          .attr("transform", `translate(${this.width},0)`);
 
         aXisY1Axe_2
           .selectAll("text")
           .style("text-anchor", "end")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY1Axe_2
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -638,7 +665,7 @@ export default {
           .style("font-size", `${this.width / 950}em`)
           .attr("x", d => xLeft_2(d.ticker) + xLeft_2.bandwidth() * 0.5)
           .attr("y", d => {
-            return yLeft_2(d["Impact"]) - 0.05 * this.height;
+            return yLeft_2(d["Value"]) - 0.05 * this.height;
           })
           .text(d => d.ticker)
           .attr("transform", function() {
@@ -659,7 +686,7 @@ export default {
           .style("font-size", `${this.width / 950}em`)
           .attr("x", d => xRight_2(d.ticker) + xRight_2.bandwidth() * 0.5)
           .attr("y", d => {
-            return yRight_2(d["Impact"]) - 0.05 * this.height;
+            return yRight_2(d["Value"]) - 0.05 * this.height;
           })
           .text(d => d.ticker)
           .attr("transform", function() {
@@ -721,7 +748,7 @@ export default {
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           .style("font-size", "1em")
-          .text("بیشترین ");
+          .text("بیشترین تقاضا ");
 
         chart
           .append("text")
@@ -733,7 +760,7 @@ export default {
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           .style("font-size", "1em")
-          .text("کمترین ");
+          .text("بیشترین عرضه ");
 
         // eslint-disable-next-line no-unused-vars
         const tooltip = d3
@@ -767,9 +794,22 @@ export default {
                 "نماد: " +
                   d.ticker +
                   "<hr/>" +
-                  " تاثیر روی شاخص: " +
-                  that.numberWithCommas(that.roundTo(d.Impact, 0)) +
-                  "واحد " +
+                  " ارزش معاملات: " +
+                  that.numberWithCommas(
+                    that.roundTo(d.Value / 1000000000, 0)
+                  ) +
+                  "میلیارد ریال " +
+                  "<br>" +
+                  " حجم معاملات: " +
+                  that.numberWithCommas(
+                    that.roundTo(d.Vol / 1000000, 0)
+                  ) +
+                  "میلیون " +
+                  "<br>" +
+                  "قیمت: " +
+                  that.numberWithCommas(
+                    that.roundTo((d.Price ) , 0)
+                  ) +
                   "<br>" 
               )
               .style("visibility", "visible");
@@ -789,14 +829,17 @@ export default {
           .duration(2000)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
-            return yRight_2(d.Impact);
+            return yRight_2(d.Value);
           })
           .attr("height", s =>
-            Math.max(yRight_2(0) - yRight_2(s.Impact), yRight_2(s.Impact) - yRight_2(0))
+            Math.max(
+              yRight_2(0) - yRight_2(s.Value),
+              yRight_2(s.Value) - yRight_2(0)
+            )
           )
           .attr("width", xRight_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2_2(d.Impact);
+            return mycolor2_2(d.Value);
           });
         chart
           .selectAll()
@@ -811,9 +854,22 @@ export default {
                 "نماد: " +
                   d.ticker +
                   "<hr/>" +
-                  " تاثیر روی شاخص: " +
-                  that.numberWithCommas(that.roundTo(d.Impact, 0)) +
-                  "واحد " +
+                  " ارزش معاملات: " +
+                  that.numberWithCommas(
+                    that.roundTo(d.Value / 1000000000, 0)
+                  ) +
+                  "میلیارد ریال " +
+                  "<br>" +
+                  " حجم معاملات: " +
+                  that.numberWithCommas(
+                    that.roundTo(d.Vol / 1000000, 0)
+                  ) +
+                  "میلیون " +
+                  "<br>" +
+                  "قیمت: " +
+                  that.numberWithCommas(
+                    that.roundTo((d.Price ) , 0)
+                  ) +
                   "<br>" 
               )
               .style("visibility", "visible");
@@ -833,14 +889,17 @@ export default {
           .duration(2000)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
-            return yLeft_2(d.Impact);
+            return yLeft_2(d.Value);
           })
           .attr("height", s =>
-            Math.max(yLeft_2(0) - yLeft_2(s.Impact), yLeft_2(s.Impact) - yLeft_2(0))
+            Math.max(
+              yLeft_2(0) - yLeft_2(s.Value),
+              yLeft_2(s.Value) - yLeft_2(0)
+            )
           )
           .attr("width", xLeft_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor_2(d.Impact);
+            return mycolor_2(d.Value);
           })
           .style("opacity", "80%");
       }
@@ -863,8 +922,8 @@ export default {
   font-size: 1.2em;
   font-family: "Dirooz FD";
 }
-.cellItem{
-   font-family: "Dirooz FD";
+.cellItem {
+  font-family: "Dirooz FD";
 }
 /deep/ .dot {
   height: 25px;

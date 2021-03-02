@@ -1,21 +1,29 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="card card-custom card-stretch gutter-b">
+  <div
+    class="card card-custom card-stretch gutter-b col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+  >
     <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"
     ></v-skeleton-loader> -->
 
     <v-card>
-      <v-card-title>ارزش معاملات</v-card-title>
+      <v-card-title
+        >ارزش معاملات-
+        <span class="cellItem">
+          {{
+            this.numberWithCommas(
+              this.roundTo(
+                (this.jsonData.Tepix + this.jsonData.IFB) / 1000000000,
+                0
+              )
+            )
+          }} میلیارد ریال
+        </span></v-card-title
+      >
       <v-divider class="mt-0"></v-divider>
-      <div class="row">
-        <div
-          id="Chartcontainer2"
-          class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-        ></div>
-      </div>
-      <!--end::Header-->
+      <div id="ChartContainer_TradeValue"></div>
     </v-card>
   </div>
 </template>
@@ -25,7 +33,7 @@ import * as d3 from "d3";
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "ChartTradeValue",
-  props: { inputData: Array, inputWidth: Number, inputHeight: Number },
+  props: { inputDataTV: Array },
   data() {
     return {
       loading: true,
@@ -35,31 +43,64 @@ export default {
       min: 0,
       max: 10,
       number: 3,
+      height: 0,
+      width: 0,
       margin: {
-        top: 20,
-        right: 200,
+        top: 0,
+        right: 0,
         bottom: 0,
-        left: 150
+        left: 0
       },
-      offsetY: 50
+      offsetY: 0
     };
   },
   watch: {
-    inputData() {
-      this.loading = false;
+    inputDataTV() {
+      if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
+        this.renderData();
+        // console.log(this.jsonData);
+        this.renderChart();
+      }
+    }
+  },
+  // In the beginning...
+  mounted() {
+    this.initrender();
+
+    if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
       this.renderData();
       this.renderChart();
     }
   },
-  created() {
-    this.renderData();
-  },
-  // In the beginning...
-  mounted() {
-    this.renderChart();
-  },
   computed: {},
   methods: {
+    isRealValue(obj) {
+      return obj && obj !== "null" && obj !== "undefined";
+    },
+    initrender() {
+      if (document.getElementById("chartContainer_TradeValue_svg")) {
+        d3.select("#chartContainer_TradeValue_svg").remove();
+      }
+      this.width = parseInt(
+        d3.select("#ChartContainer_TradeValue").style("width"),
+        10
+      );
+      this.height = (this.width * 10) / 16;
+      this.margin.top = this.height * 0.05;
+      this.margin.bottom = this.height * 0.05;
+      this.margin.right = this.width * 0.05;
+      this.margin.left = this.width * 0.05;
+      this.offsetY = this.margin.top;
+      var parent = document.getElementById("ChartContainer_TradeValue");
+      // eslint-disable-next-line no-unused-vars
+      var svg = d3
+        .select(parent)
+        .append("svg")
+        .attr("id", "chartContainer_TradeValue_svg")
+        .attr("viewBox", `0 0 ${this.width},${this.height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
+      // eslint-disable-next-line no-unused-vars
+    },
     numberWithCommas(x) {
       if (x == "-") {
         return x;
@@ -104,9 +145,6 @@ export default {
       });
     },
     renderData() {
-      this.width = this.inputWidth;
-      this.height = 700;
-      // console.log(this.height - this.margin.bottom - this.margin.top);
       this.jsonData = {
         Haghighi: 0,
         Hoghughi: 0,
@@ -123,62 +161,64 @@ export default {
         Tepix: 0,
         Total2: 0
       };
-      if (this.inputData[0] !== null) {
-        this.jsonData.Haghighi = this.inputData[0][0]["Haghighi"] * 100;
-        this.jsonData.Hoghughi = this.inputData[0][0]["Hoghughi"] * 100;
+      if (this.inputDataTV[0] !== null) {
+        this.jsonData.Haghighi = this.inputDataTV[0][0]["Haghighi"] * 100;
+        this.jsonData.Hoghughi = this.inputDataTV[0][0]["Hoghughi"] * 100;
       }
 
-      if (this.inputData[2] !== null) {
-        this.jsonData.Bond = this.inputData[2].filter(item => {
+      if (this.inputDataTV[2] !== null) {
+        this.jsonData.Bond = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "BondTradeValues") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.BondBlock = this.inputData[2].filter(item => {
+        this.jsonData.BondBlock = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "BondTradeValues_2_3_4") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.ETF = this.inputData[2].filter(item => {
+        this.jsonData.ETF = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "ETFTradeValues") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.ETFBlock = this.inputData[2].filter(item => {
+        this.jsonData.ETFBlock = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "ETFTradeValues_2_3_4") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.HaghTradeValues = this.inputData[2].filter(item => {
+        this.jsonData.HaghTradeValues = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "HaghTradeValues") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.HaghTradeValuesBlock = this.inputData[2].filter(item => {
-          if (item["Type"] == "HaghTradeValues_2_3_4") {
-            if (item["sum"] == item["sum"]) {
-              return true;
+        this.jsonData.HaghTradeValuesBlock = this.inputDataTV[2].filter(
+          item => {
+            if (item["Type"] == "HaghTradeValues_2_3_4") {
+              if (item["sum"] == item["sum"]) {
+                return true;
+              }
             }
           }
-        })[0]["sum"];
-        this.jsonData.Stock = this.inputData[2].filter(item => {
+        )[0]["sum"];
+        this.jsonData.Stock = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "StockTradeValues") {
             if (item["sum"] == item["sum"]) {
               return true;
             }
           }
         })[0]["sum"];
-        this.jsonData.StockBlock = this.inputData[2].filter(item => {
+        this.jsonData.StockBlock = this.inputDataTV[2].filter(item => {
           if (item["Type"] == "StockTradeValues_2_3_4") {
             if (item["sum"] == item["sum"]) {
               return true;
@@ -199,36 +239,31 @@ export default {
           this.jsonData.HaghTradeValues;
         // console.log(this.jsonData);
       }
-      if (this.inputData[3] !== null) {
-        this.jsonData.Tepix = this.inputData[3][0]["TradeValue"] = this
-          .inputData[3][0]["TradeValue"]
-          ? this.inputData[3][0]["TradeValue"]
+      if (this.inputDataTV[3] !== null) {
+        this.jsonData.Tepix = this.inputDataTV[3][0]["TradeValue"] = this
+          .inputDataTV[3][0]["TradeValue"]
+          ? this.inputDataTV[3][0]["TradeValue"]
           : 0;
-        this.jsonData.IFB = this.inputData[3][1]["TradeValue"] = this
-          .inputData[3][1]["TradeValue"]
-          ? this.inputData[3][1]["TradeValue"]
+        this.jsonData.IFB = this.inputDataTV[3][1]["TradeValue"] = this
+          .inputDataTV[3][1]["TradeValue"]
+          ? this.inputDataTV[3][1]["TradeValue"]
           : 0;
         this.jsonData.Total2 = this.jsonData.Tepix + this.jsonData.IFB;
       }
     },
     renderChart() {
-      // if (document.getElementsByTagName("svg")) {
-      //   d3.selectAll("svg").remove();
-      // }
+      if (document.getElementById("chartContainer_TradeValue_svg")) {
+        d3.select("#chartContainer_TradeValue_svg").remove();
+      }
       let leftOffset = 2 * this.margin.left;
-      let BoxWidth = this.width - this.margin.right - this.margin.left;
-      let BoxHeight = 3 * this.margin.top;
-      let parent = document.getElementById("Chartcontainer2");
+      let BoxWidth = this.width * 0.7;
+      let BoxHeight = this.height * 0.1;
+      let parent = document.getElementById("ChartContainer_TradeValue");
       let svg = d3
         .select(parent)
         .append("svg")
-        .attr(
-          "viewBox",
-          `0 0 ${this.width + this.margin.right + this.margin.left},${this
-            .height +
-            this.margin.bottom +
-            this.margin.top}`
-        )
+        .attr("id", "chartContainer_TradeValue_svg")
+        .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
       const chart = svg
@@ -251,14 +286,14 @@ export default {
         .text("کل ارزش معاملات")
         .attr(
           "transform",
-          `translate(${this.margin.left * 1.7},${this.margin.top +
+          `translate(${this.margin.left * 2.8},${this.margin.top +
             BoxHeight * 0.5})`
         )
-        .style("font-size", "3.5em");
-      let that = this;
+        .style("font-size", `${this.width / 500}em`);
+      const that = this;
       chart
         .append("rect")
-        .attr("x", leftOffset)
+        .attr("x", leftOffset * 1.5)
         .attr("y", this.margin.top)
         .attr("height", BoxHeight)
         .attr("width", BoxWidth)
@@ -291,7 +326,7 @@ export default {
 
       let c1 = chart
         .append("rect")
-        .attr("x", leftOffset)
+        .attr("x", leftOffset * 1.5)
         .attr("y", BoxHeight + this.margin.top + this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
@@ -340,7 +375,8 @@ export default {
         .append("rect")
         .attr(
           "x",
-          leftOffset + (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2
+          leftOffset * 1.5 +
+            (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2
         )
         .attr("y", BoxHeight + this.margin.top + this.offsetY)
         .attr("height", BoxHeight)
@@ -395,16 +431,16 @@ export default {
         )
         .attr(
           "transform",
-          `translate(${leftOffset * 0.8},${BoxHeight +
+          `translate(${leftOffset * 1.5 * 0.8},${BoxHeight +
             this.margin.top +
             this.offsetY +
             0.5 * BoxHeight})`
         )
-        .style("font-size", "3.5em");
+        .style("font-size", `${this.width / 500}em`);
 
       let c3 = chart
         .append("rect")
-        .attr("x", leftOffset)
+        .attr("x", leftOffset * 1.5)
         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
@@ -443,7 +479,7 @@ export default {
         .attr("width", (BoxWidth * that.jsonData.Hoghughi) / 100);
       let c4 = chart
         .append("rect")
-        .attr("x", leftOffset + (BoxWidth * this.jsonData.Hoghughi) / 100)
+        .attr("x", leftOffset * 1.5 + (BoxWidth * this.jsonData.Hoghughi) / 100)
         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
@@ -485,15 +521,15 @@ export default {
         .text("حقیقی - حقوقی")
         .attr(
           "transform",
-          `translate(${leftOffset * 0.8},${2 * BoxHeight +
+          `translate(${leftOffset * 1.5 * 0.8},${2 * BoxHeight +
             this.margin.top +
             2 * this.offsetY +
             0.5 * BoxHeight})`
         )
-        .style("font-size", "3.5em");
+        .style("font-size", `${this.width / 500}em`);
       let c5 = chart
         .append("rect")
-        .attr("x", leftOffset)
+        .attr("x", leftOffset * 1.5)
         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
@@ -541,7 +577,8 @@ export default {
         .append("rect")
         .attr(
           "x",
-          leftOffset + BoxWidth * (this.jsonData.Blocks / this.jsonData.Total)
+          leftOffset * 1.5 +
+            BoxWidth * (this.jsonData.Blocks / this.jsonData.Total)
         )
         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
         .attr("height", BoxHeight)
@@ -595,16 +632,16 @@ export default {
         .text("عادی - بلوکی")
         .attr(
           "transform",
-          `translate(${leftOffset * 0.8},${3 * BoxHeight +
+          `translate(${leftOffset * 1.5 * 0.8},${3 * BoxHeight +
             this.margin.top +
             3 * this.offsetY +
             0.5 * BoxHeight})`
         )
-        .style("font-size", "3.5em");
+        .style("font-size", `${this.width / 500}em`);
 
       let c7 = chart
         .append("rect")
-        .attr("x", leftOffset)
+        .attr("x", leftOffset * 1.5)
         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
@@ -661,7 +698,7 @@ export default {
         .append("rect")
         .attr(
           "x",
-          leftOffset +
+          leftOffset * 1.5 +
             BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total)
@@ -721,7 +758,7 @@ export default {
         .append("rect")
         .attr(
           "x",
-          leftOffset +
+          leftOffset * 1.5 +
             BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total) +
@@ -786,17 +823,17 @@ export default {
         .text("نوع دارایی")
         .attr(
           "transform",
-          `translate(${leftOffset * 0.8},${4 * BoxHeight +
+          `translate(${leftOffset * 1.5 * 0.8},${4 * BoxHeight +
             this.margin.top +
             4 * this.offsetY +
             0.5 * BoxHeight})`
         )
-        .style("font-size", "3.5em");
+        .style("font-size", `${this.width / 500}em`);
       let c9 = chart
         .append("rect")
         .attr(
           "x",
-          leftOffset +
+          leftOffset * 1.5 +
             BoxWidth *
               ((this.jsonData.StockBlock + this.jsonData.Stock) /
                 this.jsonData.Total) +
@@ -952,5 +989,9 @@ export default {
   margin: -4px 0 0 -1px;
   top: 50%;
   left: 100%;
+}
+.cellItem {
+  font-family: "Dirooz FD";
+  font-weight: 600;
 }
 </style>

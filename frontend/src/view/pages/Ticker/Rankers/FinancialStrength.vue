@@ -5,13 +5,16 @@
         <div class="col-sm-4">
           <span class="mr-3 strong">Financial Strength</span>
         </div>
-        <div class="col-sm-2 strong">{{ this.FinancialStrength }} /10</div>
+        <div class="col-sm-2 strong blured">
+          {{ this.FinancialStrength }} /10
+        </div>
         <div class="col-sm-5">
           <v-progress-linear
             :value="this.FinancialStrengthPercent"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
             rounded
+            class="blured"
             height="15"
           >
           </v-progress-linear>
@@ -38,6 +41,7 @@
                   background-color="#E9ECEF"
                   rounded
                   height="15"
+                  class="blured"
                 >
                 </v-progress-linear>
               </div>
@@ -49,6 +53,7 @@
                   :color="getColor(this.FinancialStrength * 10)"
                   background-color="#E9ECEF"
                   rounded
+                  class="blured"
                   height="15"
                 >
                 </v-progress-linear>
@@ -75,6 +80,7 @@
                 <v-progress-linear
                   :value="this.FinancialStrengthPercent"
                   :color="getColor(this.FinancialStrength * 10)"
+                  class="blured"
                   background-color="#E9ECEF"
                   rounded
                   height="15"
@@ -243,7 +249,7 @@
             <td>Beneish M-Score</td>
             <td>-2.63</td>
             <td class="d-flex justify-content-center align-items-center">
-              <div class="col-sm-11">
+              <div class="col-sm-12 blured">
                 <b-progress show-value>
                   <b-progress-bar value="50" variant="success">
                     Not Manipulator</b-progress-bar
@@ -260,7 +266,7 @@
             <td>WACC vs ROIC</td>
             <td></td>
             <td class="d-flex justify-content-center align-items-center">
-              <div class="col-sm-11">
+              <div class="col-sm-12 blured">
                 <b-progress>
                   <b-progress-bar :value="getRoicPercent()" variant="success">
                     ROIC {{ ROIC }}%</b-progress-bar
@@ -323,6 +329,13 @@ export default {
 };
 </script>
 <style scoped>
+.blured { 
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
+}
 /* this is for blue table  */
 table.Financial {
   width: 100%;

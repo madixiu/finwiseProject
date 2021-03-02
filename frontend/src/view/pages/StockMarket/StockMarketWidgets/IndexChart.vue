@@ -3,11 +3,11 @@
   <div class="card card-custom card-stretch gutter-b">
     <v-card>
       <v-card-title>شاخص کل</v-card-title>
-      <v-divider class="mt-0"></v-divider> 
+      <v-divider class="mt-0"></v-divider>
       <div class="row">
         <div
-          id="Chartcontainer3"
-          class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+          id="Chartcontainer_index"
+          class="col-xxl-9 col-lg-9 col-md-12 col-sm-12"
         ></div>
       </div>
       <!--end::Header-->
@@ -16,40 +16,44 @@
 </template>
 
 <script>
-// import * as d3 from "d3";
+import * as d3 from "d3";
+
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "IndexChart",
-  props: { inputData: Object, inputWidth: Number, inputHeight: Number },
+  props: { inputDataIndex: Array },
   data() {
     return {
       loading: true,
       jsonData: {},
+      indexData: [],
       min: 0,
       max: 10,
       number: 3,
       margin: {
-        top: 20,
-        right: 200,
+        top: 0,
+        right: 0,
         bottom: 0,
-        left: 150
+        left: 0
       },
-      offsetY: 50
+      offsetY: 0
     };
   },
   watch: {
-    inputData() {
-      this.loading = false;
+    inputDataIndex() {
       this.renderData();
-      this.renderChart();
+      if (this.isRealValue(this.indexData)) {
+        this.renderChart();
+      }
     }
-  },
-  created() {
-    this.renderData();
   },
   // In the beginning...
   mounted() {
-    // this.renderChart();
+    this.renderData();
+    this.initrender();
+    if (!(this.indexData === undefined || this.indexData.length == 0)) {
+      this.renderChart();
+    }
   },
   computed: {},
   methods: {
@@ -82,794 +86,181 @@ export default {
       }
       return n;
     },
-    isNull(obj, key) {
-      return obj[key] == null || obj[key] === undefined || obj[key] === "null";
+    isRealValue(obj) {
+      return obj && obj !== "null" && obj !== "undefined";
     },
-    validate(obj) {
-      let objKeys = Object.keys(obj);
-      objKeys.forEach(key => {
-        if (this.isNull(obj, key)) {
-          obj[key] = 0;
-        }
-        if (typeof obj[key] == "object") {
-          this.validate(obj[key]);
-        }
-      });
+    initrender() {
+      if (document.getElementById("Chartcontainer_index_svg")) {
+        d3.selectAll("#Chartcontainer_index_svg").remove();
+      }
+      this.width =
+        0.85 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+      this.height = (this.width * 8) / 16;
+      this.margin.top = this.height * 0.05;
+      this.margin.bottom = this.height * 0.05;
+      this.margin.right =
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.075;
+      this.margin.left =
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.075;
+      this.offsetY = this.margin.top;
+      var parent = document.getElementById("Chartcontainer_index");
+      // eslint-disable-next-line no-unused-vars
+      var svg = d3
+        .select(parent)
+        .append("svg")
+        .attr("id", "Chartcontainer_index_svg")
+        .attr(
+          "viewBox",
+          `0 0 ${this.width + this.margin.right + this.margin.left},${this
+            .height +
+            this.margin.top +
+            this.margin.bottom}`
+        )
+        .attr("preserveAspectRatio", "xMidYMid meet");
+      // eslint-disable-next-line no-unused-vars
     },
     renderData() {
-      this.width = this.inputWidth;
-      this.height = 700;
-      // console.log(this.height - this.margin.bottom - this.margin.top);
-      this.jsonData = {
-        Haghighi: 0,
-        Hoghughi: 0,
-        Stock: 0,
-        StockBlock: 0,
-        HaghTradeValues: 0,
-        HaghTradeValuesBlock: 0,
-        ETF: 0,
-        ETFBlock: 0,
-        Bond: 0,
-        BondBlock: 0,
-        Blocks: 0,
-        IFB: 0,
-        Tepix: 0,
-        Total2: 0
-      };
-      if (this.inputData[0] !== null) {
-        this.jsonData.Haghighi = this.inputData[0][0]["Haghighi"] * 100;
-        this.jsonData.Hoghughi = this.inputData[0][0]["Hoghughi"] * 100;
-      }
-
-      if (this.inputData[2] !== null) {
-        this.jsonData.Bond = this.inputData[2].filter(item => {
-          if (item["Type"] == "BondTradeValues") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.BondBlock = this.inputData[2].filter(item => {
-          if (item["Type"] == "BondTradeValues_2_3_4") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.ETF = this.inputData[2].filter(item => {
-          if (item["Type"] == "ETFTradeValues") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.ETFBlock = this.inputData[2].filter(item => {
-          if (item["Type"] == "ETFTradeValues_2_3_4") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.HaghTradeValues = this.inputData[2].filter(item => {
-          if (item["Type"] == "HaghTradeValues") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.HaghTradeValuesBlock = this.inputData[2].filter(item => {
-          if (item["Type"] == "HaghTradeValues_2_3_4") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.Stock = this.inputData[2].filter(item => {
-          if (item["Type"] == "StockTradeValues") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.jsonData.StockBlock = this.inputData[2].filter(item => {
-          if (item["Type"] == "StockTradeValues_2_3_4") {
-            if (item["sum"] == item["sum"]) {
-              return true;
-            }
-          }
-        })[0]["sum"];
-        this.validate(this.jsonData);
-        this.jsonData.Blocks =
-          this.jsonData.StockBlock +
-          this.jsonData.HaghTradeValuesBlock +
-          this.jsonData.ETFBlock +
-          this.jsonData.BondBlock;
-        this.jsonData.Total =
-          this.jsonData.Blocks +
-          this.jsonData.Bond +
-          this.jsonData.Stock +
-          this.jsonData.ETF +
-          this.jsonData.HaghTradeValues;
-        console.log(this.jsonData);
-      }
-      if (this.inputData[3] !== null) {
-        this.jsonData.Tepix = this.inputData[3][0]["TradeValue"] = this
-          .inputData[3][0]["TradeValue"]
-          ? this.inputData[3][0]["TradeValue"]
-          : 0;
-        this.jsonData.IFB = this.inputData[3][1]["TradeValue"] = this
-          .inputData[3][1]["TradeValue"]
-          ? this.inputData[3][1]["TradeValue"]
-          : 0;
-        this.jsonData.Total2 = this.jsonData.Tepix + this.jsonData.IFB;
-      }
+      let data = [...this.inputDataIndex];
+      console.log(data);
+      var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+      data.forEach(
+        function(d) {
+          d.date = parseTime(d.englishDate.split(".")[0]);
+          d.value = d.Index;
+        },
+        // eslint-disable-next-line no-unused-vars
+        function(error, data) {
+          if (error) throw error;
+        }
+      );
+      data.sort(function(a, b) {
+        return a.date - b.date;
+      });
+      console.log(data);
+      data = data.filter(function(d) {
+        if (d.date.getHours() > 8 && d.Market == 1) {
+          return d;
+        }
+      });
+      this.indexData = data;
     },
     renderChart() {
-//       if (document.getElementsByTagName("svg")) {
-//         d3.selectAll("svg").remove();
-//       }
-//       let leftOffset = 2 * this.margin.left;
-//       let BoxWidth = this.width - this.margin.right - this.margin.left;
-//       let BoxHeight = 3 * this.margin.top;
-//       let parent = document.getElementById("Chartcontainer2");
-//       let svg = d3
-//         .select(parent)
-//         .append("svg")
-//         .attr(
-//           "viewBox",
-//           `0 0 ${this.width + this.margin.right + this.margin.left},${this
-//             .height +
-//             this.margin.bottom +
-//             this.margin.top}`
-//         )
-//         .attr("preserveAspectRatio", "xMidYMid meet");
-//       // eslint-disable-next-line no-unused-vars
-//       const chart = svg
-//         .append("g")
-//         .attr(
-//           "transform",
-//           `translate(${this.margin.left}, ${this.margin.top})`
-//         );
+      if (document.getElementById("Chartcontainer_index_svg")) {
+        d3.selectAll("#Chartcontainer_index_svg").remove();
+      }
 
-//       const tooltip = d3
-//         .select(parent)
-//         .append("div")
-//         .attr("class", "d3-tip")
-//         .style("position", "absolute")
-//         .style("visibility", "hidden");
+      var parent = document.getElementById("Chartcontainer_index");
+      var svg = d3
+        .select(parent)
+        .append("svg")
+        .attr("id", "Chartcontainer_index_svg")
+        .attr(
+          "viewBox",
+          `0 0 ${this.width + this.margin.right + this.margin.left},${this
+            .height +
+            this.margin.top +
+            this.margin.bottom}`
+        )
+        .attr("preserveAspectRatio", "xMidYMid meet");
+      // eslint-disable-next-line no-unused-vars
+      const chart = svg
+        .append("g")
+        .attr(
+          "transform",
+          `translate(${this.margin.left}, ${this.margin.top})`
+        );
+      // eslint-disable-next-line no-unused-vars
+      var xScale = d3
+        .scaleTime()
+        .domain(d3.extent(this.indexData, d => d.date))
+        .range([0, this.width - this.margin.right]);
+      // eslint-disable-next-line no-unused-vars
+      var yScale = d3
+        .scaleLinear()
+        .domain([
+          d3.min(this.indexData, function(d) {
+            return d.value;
+          }),
+          d3.max(this.indexData, function(d) {
+            return d.value;
+          })
+        ])
+        .nice()
+        .range([this.height - this.margin.bottom, this.margin.top]);
+      // eslint-disable-next-line no-unused-vars
+      var xAxis = g =>
+        g
+          .attr("class", "xAxis")
+          .attr("transform", `translate(0,${this.height - this.margin.top})`)
+          .transition()
+          .duration(1000)
+          .ease(d3.easeSin)
+          .call(
+            d3
+              .axisBottom(xScale)
+              .ticks(this.width / 80)
+              .tickSizeOuter(0)
+          )
+          .style("font-family", "Dirooz FD")
+          .style("stroke-opacity", ".1");
 
-//       chart
-//         .append("g")
-//         .append("text")
-//         .text("کل ارزش معاملات")
-//         .attr(
-//           "transform",
-//           `translate(${this.margin.left * 1.7},${this.margin.top +
-//             BoxHeight * 0.5})`
-//         )
-//         .style("font-size", "3.5em");
-//       let that = this;
-//       chart
-//         .append("rect")
-//         .attr("x", leftOffset)
-//         .attr("y", this.margin.top)
-//         .attr("height", BoxHeight)
-//         .attr("width", BoxWidth)
-//         .attr("fill", "#845EC2")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5);
-//           tooltip
-//             .text(
-//               "کل ارزش معاملات:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(that.jsonData.Total / 1000000000000, 2)
-//                 ) +
-//                 "هزار میلیارد ریال"
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
+      let xAxisAxe = chart.append("g").call(xAxis);
+      xAxisAxe
+        .style("font-size", `${this.width / 1000}em`)
+        .style("font-family", "Dirooz FD")
+        .style("font-weight", "800");
+      var yAxis = g =>
+        g
+          .attr("class", "yAxis")
+          .attr("transform", `translate(${this.margin.left},0)`)
+          .transition()
+          .duration(1000)
+          .call(d3.axisLeft(yScale))
+          .style("stroke-opacity", ".1")
+          .style("font-family", "Dirooz FD");
+      let yAxisAxe = chart.append("g").call(yAxis);
+      yAxisAxe
+        .style("text-anchor", "start")
+        .attr("transform", `translate(0,0)`)
+        .style("font-size", `${this.width / 1000}em`)
+        .style("font-family", "Dirooz FD")
+        .style("font-weight", "800");
+d3.selectAll("g.yAxis g.tick")
+    .append("line")
+    .attr("class", "gridline")
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", this.width-this.margin.left*2)
+    .attr("y2", 0);
+      var line = d3
+        .line()
+        .defined(d => !isNaN(d.date))
+        .x(d => xScale(d.date))
+        .y(d => yScale(d.value));
 
-//       let c1 = chart
-//         .append("rect")
-//         .attr("x", leftOffset)
-//         .attr("y", BoxHeight + this.margin.top + this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#4B4453")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات فرابورس:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     (that.jsonData.IFB * 100) / that.jsonData.Total2,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", that.margin.top * 2 + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
+      // eslint-disable-next-line no-unused-vars
+      var path = chart
+        .append("path")
+        .datum(this.indexData.filter(line.defined()))
+        .style("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 4)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", line);
+      const pathLength = path.node().getTotalLength();
+const transitionPath = d3
+  .transition()
+  .ease(d3.easeSinOut)
+  .duration(5500);
 
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-
-//       c1.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr("width", (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2);
-//       let c2 = chart
-//         .append("rect")
-//         .attr(
-//           "x",
-//           leftOffset + (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2
-//         )
-//         .attr("y", BoxHeight + this.margin.top + this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#00C0A3")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               (BoxWidth * that.jsonData.Tepix) / that.jsonData.Total2
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات بورس:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     (that.jsonData.Tepix * 100) / that.jsonData.Total2,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 2 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c2.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr("width", (BoxWidth * that.jsonData.Tepix) / that.jsonData.Total2);
-//       chart
-//         .append("g")
-//         .append("text")
-//         .html(
-//           "<span class='dot'></span>" +
-//             "بورس" +
-//             " - فرابورس" +
-//             "<span class='dot'></span>"
-//         )
-//         .attr(
-//           "transform",
-//           `translate(${leftOffset * 0.8},${BoxHeight +
-//             this.margin.top +
-//             this.offsetY +
-//             0.5 * BoxHeight})`
-//         )
-//         .style("font-size", "3.5em");
-
-//       let c3 = chart
-//         .append("rect")
-//         .attr("x", leftOffset)
-//         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#00896F")
-
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr("width", (BoxWidth * that.jsonData.Hoghughi) / 100);
-//           tooltip
-//             .text(
-//               "ارزش معاملات حقوقی:" +
-//                 that.numberWithCommas(that.roundTo(that.jsonData.Hoghughi, 2)) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 3 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c3.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr("width", (BoxWidth * that.jsonData.Hoghughi) / 100);
-//       let c4 = chart
-//         .append("rect")
-//         .attr("x", leftOffset + (BoxWidth * this.jsonData.Hoghughi) / 100)
-//         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#B0A8B9")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr("width", (BoxWidth * that.jsonData.Haghighi) / 100);
-//           tooltip
-//             .text(
-//               "ارزش معاملات حقیقی:" +
-//                 that.numberWithCommas(that.roundTo(that.jsonData.Haghighi, 2)) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 3 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c4.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr("width", (BoxWidth * this.jsonData.Haghighi) / 100);
-//       /////////// Stock: 0,
-//       chart
-//         .append("g")
-//         .append("text")
-//         .text("حقیقی - حقوقی")
-//         .attr(
-//           "transform",
-//           `translate(${leftOffset * 0.8},${2 * BoxHeight +
-//             this.margin.top +
-//             2 * this.offsetY +
-//             0.5 * BoxHeight})`
-//         )
-//         .style("font-size", "3.5em");
-//       let c5 = chart
-//         .append("rect")
-//         .attr("x", leftOffset)
-//         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#4B4453")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth * (that.jsonData.Blocks / that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات بلوکی:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     (that.jsonData.Blocks / that.jsonData.Total) * 100,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c5.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr("width", BoxWidth * (this.jsonData.Blocks / this.jsonData.Total));
-//       let c6 = chart
-//         .append("rect")
-//         .attr(
-//           "x",
-//           leftOffset + BoxWidth * (this.jsonData.Blocks / this.jsonData.Total)
-//         )
-//         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#00896F")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth * (1 - that.jsonData.Blocks / that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات عادی:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     100 - (that.jsonData.Blocks * 100) / that.jsonData.Total,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c6.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr(
-//           "width",
-//           BoxWidth * (1 - that.jsonData.Blocks / that.jsonData.Total)
-//         );
-//       chart
-//         .append("g")
-//         .append("text")
-//         .text("عادی - بلوکی")
-//         .attr(
-//           "transform",
-//           `translate(${leftOffset * 0.8},${3 * BoxHeight +
-//             this.margin.top +
-//             3 * this.offsetY +
-//             0.5 * BoxHeight})`
-//         )
-//         .style("font-size", "3.5em");
-
-//       let c7 = chart
-//         .append("rect")
-//         .attr("x", leftOffset)
-//         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#B0A8B9")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth *
-//                 ((that.jsonData.StockBlock + that.jsonData.Stock) /
-//                   that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات سهام:" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     ((that.jsonData.StockBlock + that.jsonData.Stock) * 100) /
-//                       that.jsonData.Total,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c7.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr(
-//           "width",
-//           BoxWidth *
-//             ((this.jsonData.StockBlock + this.jsonData.Stock) /
-//               this.jsonData.Total)
-//         );
-
-//       let c10 = chart
-//         .append("rect")
-//         .attr(
-//           "x",
-//           leftOffset +
-//             BoxWidth *
-//               ((this.jsonData.StockBlock + this.jsonData.Stock) /
-//                 this.jsonData.Total)
-//         )
-//         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#00896F")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth *
-//                 ((that.jsonData.ETF + that.jsonData.ETFBlock) /
-//                   that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات صندوق های قابل معامله :" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     ((that.jsonData.ETF + that.jsonData.ETFBlock) * 100) /
-//                       that.jsonData.Total,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c10
-//         .transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr(
-//           "width",
-//           BoxWidth *
-//             ((this.jsonData.ETF + this.jsonData.ETFBlock) / this.jsonData.Total)
-//         );
-//       let c8 = chart
-//         .append("rect")
-//         .attr(
-//           "x",
-//           leftOffset +
-//             BoxWidth *
-//               ((this.jsonData.StockBlock + this.jsonData.Stock) /
-//                 this.jsonData.Total) +
-//             BoxWidth *
-//               ((this.jsonData.ETF + this.jsonData.ETFBlock) /
-//                 this.jsonData.Total)
-//         )
-//         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .attr("fill", "#4B4453")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth *
-//                 ((that.jsonData.Bond + that.jsonData.BondBlock) /
-//                   that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات اوراق :" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     ((that.jsonData.BondBlock + that.jsonData.Bond) * 100) /
-//                       that.jsonData.Total,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c8.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr(
-//           "width",
-//           BoxWidth *
-//             ((this.jsonData.Bond + this.jsonData.BondBlock) /
-//               this.jsonData.Total)
-//         );
-//       chart
-//         .append("g")
-//         .append("text")
-//         .text("نوع دارایی")
-//         .attr(
-//           "transform",
-//           `translate(${leftOffset * 0.8},${4 * BoxHeight +
-//             this.margin.top +
-//             4 * this.offsetY +
-//             0.5 * BoxHeight})`
-//         )
-//         .style("font-size", "3.5em");
-//       let c9 = chart
-//         .append("rect")
-//         .attr(
-//           "x",
-//           leftOffset +
-//             BoxWidth *
-//               ((this.jsonData.StockBlock + this.jsonData.Stock) /
-//                 this.jsonData.Total) +
-//             BoxWidth *
-//               ((this.jsonData.ETF + this.jsonData.ETFBlock) /
-//                 this.jsonData.Total) +
-//             BoxWidth *
-//               ((this.jsonData.Bond + this.jsonData.BondBlock) /
-//                 this.jsonData.Total)
-//         )
-//         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
-//         .attr("height", BoxHeight)
-//         .attr("width", 0)
-//         .style("fill", "#00896F")
-//         .on("mouseenter touchstart", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 0.5)
-//             .transition()
-//             .duration(1000)
-//             .ease(d3.easePolyOut)
-//             .attr(
-//               "width",
-//               BoxWidth *
-//                 (1 -
-//                   (that.jsonData.Bond +
-//                     that.jsonData.BondBlock +
-//                     that.jsonData.ETF +
-//                     that.jsonData.ETFBlock +
-//                     that.jsonData.StockBlock +
-//                     that.jsonData.Stock) /
-//                     that.jsonData.Total)
-//             );
-//           tooltip
-//             .text(
-//               "ارزش معاملات غیره :" +
-//                 that.numberWithCommas(
-//                   that.roundTo(
-//                     (1 -
-//                       (that.jsonData.Bond +
-//                         that.jsonData.BondBlock +
-//                         that.jsonData.ETF +
-//                         that.jsonData.ETFBlock +
-//                         that.jsonData.StockBlock +
-//                         that.jsonData.Stock) /
-//                         that.jsonData.Total) *
-//                       100,
-//                     2
-//                   )
-//                 ) +
-//                 "درصد "
-//             )
-//             .attr("class", "d3-tip")
-//             .style("visibility", "visible")
-//             .style("left", that.margin.left + "px")
-//             .style("top", 4 * that.margin.top + "px");
-//         })
-//         .on("mouseleave touchend", function() {
-//           d3.select(this)
-//             .transition()
-//             .duration(200)
-//             .style("opacity", 1);
-//           tooltip.style("visibility", "hidden");
-//         });
-//       c9.transition()
-//         .duration(1000)
-//         .ease(d3.easePolyOut)
-//         .attr(
-//           "width",
-//           BoxWidth *
-//             (1 -
-//               (this.jsonData.Bond +
-//                 this.jsonData.BondBlock +
-//                 this.jsonData.ETF +
-//                 this.jsonData.ETFBlock +
-//                 this.jsonData.StockBlock +
-//                 this.jsonData.Stock) /
-//                 this.jsonData.Total)
-//         );
+path
+  
+  .attr("stroke-dashoffset", pathLength)
+  
+  .attr("stroke-dasharray", pathLength)
+  .transition(transitionPath)
+  .attr("stroke-dashoffset", 0)
     }
   }
 };
@@ -880,6 +271,7 @@ export default {
   font-size: 1.2em;
   font-family: "Dirooz FD";
 }
+
 /deep/ .dot {
   height: 25px;
   width: 25px;

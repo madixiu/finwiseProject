@@ -56,8 +56,6 @@ const AssemblyAll = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyAll.vue");
 const AssemblyDPS = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyDPS.vue");
-const AssemblyIncreaseCapital = () =>
-  import("@/view/pages/Ticker/AssemblyWidget/AssemblyIncreaseCapital.vue");
 const Subset = () => import("@/view/pages/Ticker/Subset.vue");
 const Robot = () => import("@/view/pages/Robot/Robot.vue");
 const Login = () => import("@/view/pages/auth/Login");
@@ -318,15 +316,15 @@ export default new Router({
               component: AssemblyAll
             },
             {
-              path: "TickerAssembly/DPS/:id",
-              name: "TickerAssemblyDPS",
+              path: "TickerAssembly/DPSAndIC/:id",
+              name: "TickerAssemblyDPSAndIC",
               component: AssemblyDPS
             },
-            {
-              path: "TickerAssembly/IC/:id",
-              name: "TickerAssemblyIC",
-              component: AssemblyIncreaseCapital
-            },
+            // {
+            //   path: "TickerAssembly/IC/:id",
+            //   name: "TickerAssemblyIC",
+            //   component: AssemblyIncreaseCapital
+            // },
             {
               path: "subset/:id",
               name: "subset",
