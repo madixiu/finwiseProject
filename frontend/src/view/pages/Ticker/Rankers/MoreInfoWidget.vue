@@ -25,6 +25,9 @@
             <span class="small">{{ item.name }}</span>
           </v-tooltip>
         </template>
+        <template v-slot:[`item.value`]="{ item }">
+            <span class="small blured">{{ item.value }}</span>
+        </template>
       </v-data-table>
     </div>
     <!--end::Body-->
@@ -109,5 +112,12 @@ export default {
 }
 .valign * {
   vertical-align: middle;
+}
+.blured{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
 </style>

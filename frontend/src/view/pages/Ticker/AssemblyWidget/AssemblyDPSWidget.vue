@@ -71,10 +71,7 @@ export default {
         }
       ],
       headers: [
-        {
-          text: "نوع",
-          value: "type"
-        },
+
         {
           text: "منتهی به",
           value: "ToDate"

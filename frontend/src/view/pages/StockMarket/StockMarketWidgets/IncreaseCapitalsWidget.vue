@@ -4,7 +4,7 @@
     <!--begin::Header-->
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-        افزایش سرمایه
+        افزایش سرمایه ها
       </h3>
     </div>
     <!--end::Header-->
@@ -14,33 +14,28 @@
         type=" table-heading, table-thead, table-tbody"
       ></v-skeleton-loader>
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="this.DataItems2.length != 0 && loading == false"
-    >
-      <div>
-        <v-data-table
-          v-if="loading == false"
-          :headers="headers"
-          :items="DataItems2"
-          class="elevation-1 FinancialStrength"
-          :header-props="{ sortIcon: null }"
-          :disable-sort="true"
-          hide-default-footer
-          disable-pagination
-        >
-        <template v-slot:[`item.PublishTime`]="{ item }">
-           <span class="cellItem"
-                      >{{ item.PublishTime.split(" ")[0] }}
-            </span>
-        </template>
-        <template v-slot:[`item.IncreasePercent`]="{ item }">
+    <div class="card-body d-flex flex-column">
+      <v-data-table
+        v-if="loading == false"
+        :headers="headers"
+        :items="DataItems2"
+        class="elevation-1 FinancialStrength"
+      >
+      <template v-slot:[`item.IncreasePercent`]="{ item }">
            <span class="cellItem"
                       >{{ roundTo(item.IncreasePercent,2) }}%
             </span>
         </template>
-        </v-data-table>
-      </div>
+        <template v-slot:[`item.AttachmentUrl`]="{ item }">
+          <v-chip
+            label
+            small
+            :disabled="item.HtmlUrl == '' ? true : false"
+          >
+            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`" target="_blank">اطلاعیه </a>
+          </v-chip>
+        </template>
+      </v-data-table>
     </div>
     <!--end::Body-->
   </div>
@@ -50,57 +45,46 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "AssemblyIC",
+  name: "ICWidget",
   props: ["notices"],
   data() {
     return {
       search: "",
       loading: true,
-      inset: true,
-      items: [
-        {
-          action: "mdi-label",
-          title: "List item 1"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 2"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 3"
-        }
-      ],
       headers: [
         {
-          text: "تاریخ",
+          text: "سهم",
+          value: "ticker"
+        },
+        {
+          text: "زمان انتشار",
           value: "PublishTime"
         },
         {
-          text: "درصد افزایش",
+          text: "نوع اطلاعیه",
+          value: "Title"
+        },
+        {
+          text: "درصد افزایش سرمایه",
           value: "IncreasePercent"
         },
         {
           text: "محل افزایش سرمایه",
           value: "CapitalChangeType"
+        },
+        {
+          text: "لینک فایلها",
+          value: "AttachmentUrl"
         }
       ],
-      DataItems2: [],
-      years: [],
-      filtered: []
+      DataItems2: []
     };
   },
   computed: {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
-    roundTo(n, digits) {
+      roundTo(n, digits) {
       let negative = false;
       if (digits === undefined) {
         digits = 0;
@@ -119,15 +103,17 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
-    },
+    }
   },
   mounted() {
     this.populateData();
   },
   watch: {
     notices() {
+      // console.log("Watcher");
       this.populateData();
       this.loading = false;
+      // console.log(this.notices);
     }
   }
 };

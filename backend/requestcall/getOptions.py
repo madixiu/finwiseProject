@@ -1,4 +1,4 @@
-
+import pandas as pd
 import requests
 import json
 import pandas as pd
@@ -19,12 +19,7 @@ def optionRequest():
         DF.loc[DF['DifferenceToLast']==-1000,'ArzandegiLast']=-1000
         DF.loc[DF['DifferenceToAverage']==-100001,'PPP']=-1001
         DF.loc[DF['DifferenceToAverage']==-100000,'PPP']=-1000
-        # return(resp.text)
         return cleanOutput(json.loads(DF.to_json(orient="records")))
-        # return(json.loads(resp.text))
-
-        # return cleanOutput(json.loads(resp.text))
-        # return(json.loads(resp.text))
     else:
         
         return ("noData")

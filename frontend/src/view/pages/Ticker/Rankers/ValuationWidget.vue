@@ -22,56 +22,64 @@
             <span class="small">Valuation</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">
+          {{ this.FinancialStrength }}/10
+        </div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
             rounded
+            class="blured"
             height="25"
           >
           </v-progress-linear>
         </div>
+        <v-data-table
+          :headers="headers"
+          :items="ValuatedItems"
+          :hide-default-footer="true"
+          class="elevation-1 FinancialStrength"
+          :header-props="{ sortIcon: null }"
+        >
+          <template v-slot:[`item.persianname`]="{ item }">
+            <v-tooltip left>
+              <template v-slot:activator="{ on }">
+                <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
+              </template>
+              <span class="small">{{ item.name }}</span>
+            </v-tooltip>
+          </template>
+            <template v-slot:[`item.now`]="{ item }">
+              <span class="small blured">{{ item.now }}</span>
+          </template>
+          <template v-slot:[`item.industry`]="{ item }">
+            <v-progress-linear
+              background-color="#E9ECEF"
+              :height="15"
+              :width="150"
+              :rounded="true"
+              class="blured"
+              :color="getColor(item.FinancialStrength * 100)"
+              :value="item.industry * 100"
+            >
+            </v-progress-linear>
+          </template>
+          <template v-slot:[`item.historic`]="{ item }">
+            <v-progress-linear
+              background-color="#E9ECEF"
+              :height="15"
+              :width="150"
+              :rounded="true"
+              class="blured"
+              :color="getColor(item.FinancialStrength * 100)"
+              :value="item.historic * 100"
+            >
+            </v-progress-linear>
+          </template>
+        </v-data-table>
       </div>
-      <v-data-table
-        :headers="headers"
-        :items="ValuatedItems"
-        :hide-default-footer="true"
-        class="elevation-1 FinancialStrength"
-        :header-props="{ sortIcon: null }"
-      >
-        <template v-slot:[`item.persianname`]="{ item }">
-          <v-tooltip left>
-            <template v-slot:activator="{ on }">
-              <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
-            </template>
-            <span class="small">{{ item.name }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:[`item.industry`]="{ item }">
-          <v-progress-linear
-            background-color="#E9ECEF"
-            :height="15"
-            :width="150"
-            :rounded="true"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.industry * 100"
-          >
-          </v-progress-linear>
-        </template>
-        <template v-slot:[`item.historic`]="{ item }">
-          <v-progress-linear
-            background-color="#E9ECEF"
-            :height="15"
-            :width="150"
-            :rounded="true"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.historic * 100"
-          >
-          </v-progress-linear>
-        </template>
-      </v-data-table>
     </div>
     <!--end::Body-->
   </div>
@@ -207,5 +215,12 @@ export default {
 }
 .valign * {
   vertical-align: middle;
+}
+.blured {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
 </style>

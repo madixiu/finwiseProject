@@ -416,7 +416,7 @@
             </li>
           </router-link>
           <router-link
-            :to="`/ticker/TickerAssembly/DPS/${$route.params.id}/`"
+            :to="`/ticker/TickerAssembly/DPSAndIC/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -430,12 +430,12 @@
             >
               <a :href="href" class="menu-link" @click="navigate">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">سود نقدی</span>
+                <span class="menu-text">سود نقدی و افزایش سرمایه</span>
               </a>
             </li>
           </router-link>
-          <router-link
-            :to="`/ticker/TickerAssembly/IC/${$route.params.id}/`"
+          <!-- <router-link
+            :to="`/ticker/TickerAssembly/DPSAndIC/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -452,7 +452,7 @@
                 <span class="menu-text">افزایش سرمایه</span>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
         </ul>
       </div>
     </li>

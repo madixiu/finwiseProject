@@ -494,7 +494,7 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketOptions.send(JSON.stringify(barier));
-      }, 30000);
+      }, 3000);
     },
     liveChecker() {
       let date = new Date();

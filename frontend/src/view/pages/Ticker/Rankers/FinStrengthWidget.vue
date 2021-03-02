@@ -22,13 +22,14 @@
             <span class="small">Financial Strength</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
             rounded
+            class="blured"
             height="25"
           >
           </v-progress-linear>
@@ -49,12 +50,16 @@
             <span class="small">{{ item.name }}</span>
           </v-tooltip>
         </template>
+        <template v-slot:[`item.now`]="{ item }">
+            <span class="small blured">{{ item.now }}</span>
+        </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
             :width="150"
             :rounded="true"
+            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.industry * 100"
           >
@@ -66,6 +71,7 @@
             :height="15"
             :width="150"
             :rounded="true"
+            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.historic * 100"
           >
@@ -85,7 +91,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4">
+          <div class="valign pt-4 blured">
             <b-progress show-value class="align-center">
               <b-progress-bar value="10" variant="piotroski-color-0">
                 0</b-progress-bar
@@ -138,7 +144,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4">
+          <div class="valign pt-4 blured  ">
             <b-progress show-value>
               <b-progress-bar value="40" variant="altman-color-0">
                 DISTRESS</b-progress-bar
@@ -170,7 +176,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4">
+          <div class="valign pt-4 blured">
             <b-progress show-value>
               <b-progress-bar value="50" variant="success">
                 Not Manipulator</b-progress-bar
@@ -199,7 +205,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div>
+          <div class="blured">
             <b-progress>
               <b-progress-bar :value="getRoicPercent(item)" variant="success">
                 ROIC {{ item.ROIC }}</b-progress-bar
@@ -400,6 +406,13 @@ export default {
 };
 </script>
 <style scoped>
+.blured { 
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
+}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

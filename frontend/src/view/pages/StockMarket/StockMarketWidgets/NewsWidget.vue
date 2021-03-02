@@ -1,6 +1,6 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div>
+  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm 12">
     <v-card>
       <!--begin::Header-->
       <div class="card-header border-0 pt-2">
@@ -29,7 +29,7 @@
           :items-per-page="10"
         >
           <template v-slot:[`item.title`]="{ item }">
-            <a :href=item.href  target="_blank">
+            <a :href="item.href" target="_blank">
               {{ item.title }}
             </a>
           </template>
@@ -56,7 +56,7 @@ export default {
       DataItems: [],
       mvheaders: [
         { text: "عنوان", value: "title", sortabale: false },
-        { text: "منبع", value: "source", sortabale: false }
+        // { text: "منبع", value: "source", sortabale: false }
       ]
     };
   },

@@ -22,9 +22,10 @@
             <span class="small">Dividend & Buyback</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
         <div class="col-sm-6">
           <v-progress-linear
+          class="blured"
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
@@ -49,12 +50,16 @@
             <span class="small">{{ item.name }}</span>
           </v-tooltip>
         </template>
+        <template v-slot:[`item.now`]="{ item }">
+            <span class="small blured">{{ item.now }}</span>
+        </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
             :width="150"
             :rounded="true"
+             class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.industry * 100"
           >
@@ -64,6 +69,7 @@
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
+             class="blured"
             :width="150"
             :rounded="true"
             :color="getColor(item.FinancialStrength * 100)"
@@ -168,5 +174,12 @@ export default {
 }
 .valign * {
   vertical-align: middle;
+}
+.blured{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
 </style>

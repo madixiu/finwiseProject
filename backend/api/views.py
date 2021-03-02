@@ -48,6 +48,19 @@ def getAdminNotices(self,identifier):
     return JsonResponse(get_AdminsNotice(identifier),safe=False)    
 def getIndexDetails(self,identifier):
     return JsonResponse(getIndicesDetails(identifier),safe=False)
+def getHighestSupplies(self):
+    return JsonResponse(highestSupplies(),safe=False)
+def getHighestDemands(self):
+    return JsonResponse(highestDemands(),safe=False)
+def getHighestQ(self):
+    return JsonResponse([highestSupplies(),highestDemands()],safe=False)
+def getLastestIC(self):
+    return JsonResponse(get_IC_ALL(),safe=False)
+def getLastestICDone(self,identifier):
+    return JsonResponse(get_IC_Done(identifier),safe=False)
+def getAllDashboard(self):
+    return JsonResponse([ImpactOnIndex(),highestTvalues(),
+    [TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],getNews(),getMarketHH(),[highestSupplies(),highestDemands()],getLastActiveDayTepix()],safe=False)
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
@@ -195,6 +208,11 @@ def getSearchBarData(self):
 def getMarketMap(self):
     return JsonResponse(getMapData(),safe=False)
 
+def getImpactOnIndex(self):
+    return JsonResponse(ImpactOnIndex(),safe=False)
+
+def getHHMarket(self):
+    return JsonResponse(getMarketHH(),safe=False)
 def getMainAssembly(self):
     return JsonResponse(AssemblyListData(),safe=False)
 def getMainCalendar(self):

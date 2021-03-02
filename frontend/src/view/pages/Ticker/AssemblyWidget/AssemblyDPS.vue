@@ -5,8 +5,11 @@
       <div class="col-xxl-12">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
-      <div class="col-xxl-12">
+      <div class="col-xxl-6">
         <DPSWidget :notices="notice"></DPSWidget>
+      </div>
+      <div class="col-xxl-6">
+        <ICWidget :notices="deposits"></ICWidget>
       </div>
     </div>
   </div>
@@ -17,17 +20,20 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import DPSWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyDPSWidget.vue";
+import ICWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyICwidget.vue";
 // import axios from "axios";
 export default {
   name: "Notifications",
   components: {
     SubHeaderWidget,
-    DPSWidget
+    DPSWidget,
+    ICWidget
   },
   data() {
     return {
       allowed: [],
       subheaders: [],
+      deposits:[],
       notice: []
     };
   },
@@ -56,7 +62,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.getAllowed().then(response => {
+      this.getOne().then(response => {
         console.log(response);
         //add this to package.json in developement
         //         "eslintConfig": {
@@ -65,21 +71,21 @@ export default {
         //       "no-unused-vars": "off"
         //     }
         // },
-        this.getOne().then(response2 => {
-          console.log(response2);
+        // eslint-disable-next-line no-unused-vars
+        this.getThree().then(response2 => {
           this.getTwo().then(function() {});
           // console.log("ChainDone");
         });
       });
     },
-    async getAllowed() {
+     async getTwo() {
       await this.axios
-        .get("/api/tickerallnames")
-        .then(response3 => {
+        .get("/api/Alldps/" + this.$route.params.id + "/")
+        .then(response2 => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
           // console.log("SecondDone");
-          this.allowed = response3.data;
+          this.notice = response2.data;
           // console.log("GetTwoStart:");
           // console.log(response.data);
           // console.log(this.notice);
@@ -90,15 +96,14 @@ export default {
           console.log(error);
         });
     },
-    async getTwo() {
+    async getThree() {
       await this.axios
-        .get("/api/Alldps/" + this.$route.params.id + "/")
-        .then(response2 => {
+        .get("/api/LatestICDone/" + this.$route.params.id + "/")
+        .then(responsex => {
           // console.log(response.data[0][0]);
           // console.log(this.$route.params.id);
           // console.log("SecondDone");
-          this.notice = response2.data;
-          console.log(response2.data);
+          this.deposits = responsex.data;
           // console.log("GetTwoStart:");
           // console.log(response.data);
           // console.log(this.notice);
