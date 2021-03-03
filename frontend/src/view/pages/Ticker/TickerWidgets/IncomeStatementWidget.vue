@@ -70,38 +70,34 @@
                       hide-default-footer
                       disable-pagination
                     >
-                    <template v-slot:[`item.toDate`]="{ item }">
-                    <span class="cellItem" 
-                      >{{ item.toDate }}
-                    </span>
-                    </template>
-                    <template v-slot:[`item.Translated`]="{ item }">
-                    <span class="cellItem" 
-                      >{{ item.Translated }}
-                    </span>
-                    </template>
-                    <template v-slot:[`item.lastYear`]="{ item }">
-                    <span class="cellItem" v-bind:class="[
-                    item.lastYear> 0
-                      ? 'greenItem ltr_aligned'
-                      : 'redItem ltr_aligned'
-                  ]"
-                      >{{ numberWithCommas(item.lastYear) }}
-                    </span>
-                  </template>
-                  <template
-                    v-slot:[`item.thisPeriod`]="{ item }"
-                  >
-                    <span class="cellItem"  v-bind:class="[
-                    item.thisPeriod> 0
-                      ? 'greenItem ltr_aligned'
-                      : 'redItem ltr_aligned'
-                  ]"
-                      >{{
-                        numberWithCommas(item.thisPeriod)
-                      }}
-                    </span>
-                  </template>
+                      <template v-slot:[`item.toDate`]="{ item }">
+                        <span class="cellItem">{{ item.toDate }} </span>
+                      </template>
+                      <template v-slot:[`item.Translated`]="{ item }">
+                        <span class="cellItem">{{ item.Translated }} </span>
+                      </template>
+                      <template v-slot:[`item.lastYear`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.lastYear > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.lastYear) }}
+                        </span>
+                      </template>
+                      <template v-slot:[`item.thisPeriod`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.thisPeriod > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.thisPeriod) }}
+                        </span>
+                      </template>
                     </v-data-table>
                   </div>
                 </div>
@@ -165,7 +161,7 @@ export default {
     }
   },
   methods: {
-      numberWithCommas(x) {
+    numberWithCommas(x) {
       if (x === null) {
         return "-";
       }

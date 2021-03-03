@@ -54,11 +54,24 @@ def getTechnicalIndicators(identifier):
             return (json.loads(resp.text))
         # return(json.loads(resp.text))
         else:
-            print('http://37.152.180.99:3000/View_Technical_Indicators?firm=eq.'+str(identifier))
             time.sleep(2)
             ct=ct+1
         
     return ("noData")
+def getTechnicalIndicatorsAll():
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'technical'}
+        resp = requests.get('http://37.152.180.99:3000/View_Technical_IndicatorsAll',headers=head,timeout=10)
+        if resp.status_code == 200 and resp.text!='[]' :
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")    
 
 def getIndicesHistoric():
     ct=0

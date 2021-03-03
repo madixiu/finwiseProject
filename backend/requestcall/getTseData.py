@@ -5,7 +5,7 @@ from .util.Convereter_trunc import truncater
 # import time
 def Top5MostViewed():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/ViewTop5MostViewed',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/ViewTop5MostViewed',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -15,7 +15,7 @@ def Top5MostViewed():
         return("No Data")
 def ImpactOnIndex():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/ViewImpactOnIndex',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/ViewImpactOnIndex',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -25,7 +25,7 @@ def ImpactOnIndex():
         return("No Data") 
 def getLiveHHtickerData(identifier):
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_Live_Stock_HH?ID=eq.'+str(identifier),headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_Live_Stock_HH?ID=eq.'+str(identifier),headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -35,7 +35,7 @@ def getLiveHHtickerData(identifier):
         return("No Data")       
 def getShareholdersList(identifier):
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_ShareHolders?ID=eq.'+str(identifier),headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_ShareHolders?ID=eq.'+str(identifier),headers=head)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -46,7 +46,7 @@ def getShareholdersList(identifier):
 
 def getStatisticsTicker(identifier):
     head = {'Accept-Profile':'public'}
-    resp = requests.get('http://37.152.180.99:3000/rpc/statisticsticker?a='+str(identifier),headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/rpc/statisticsticker?a='+str(identifier),headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -56,7 +56,7 @@ def getStatisticsTicker(identifier):
         return("No Data")           
 def getLive_ticker(identifier):
     head = {'Accept-Profile':'public'}
-    resp = requests.get('http://37.152.180.99:3000/rpc/liveticker?a='+str(identifier),headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/rpc/liveticker?a='+str(identifier),headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -66,7 +66,7 @@ def getLive_ticker(identifier):
         return("No Data")           
 def highestTvolumes():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/ViewHighestTradeVolumes',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/ViewHighestTradeVolumes',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -76,7 +76,7 @@ def highestTvolumes():
         return("No Data") 
 def getMarketHH():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/ViewDashboard_HHDetailsStock',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/ViewDashboard_HHDetailsStock',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -97,7 +97,7 @@ def highestTvalues():
         return("No Data")        
 def highestDemands():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_HighestDemands',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_HighestDemands',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -107,7 +107,7 @@ def highestDemands():
         return("No Data")        
 def highestSupplies():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_HighestSupplies',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_HighestSupplies',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -117,7 +117,7 @@ def highestSupplies():
         return("No Data")                                
 def get_AdminsNotice(identifier):
     head = {'Accept-Profile':'public'}
-    resp = requests.get('http://37.152.180.99:3000/rpc/adminsnotice?a='+str(identifier),headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/rpc/adminsnotice?a='+str(identifier),headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -209,7 +209,7 @@ def DataModifier(input):
 # ****************************************************************************************************************
 def TradeValueHH():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Total',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Total',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -219,7 +219,7 @@ def TradeValueHH():
         return("No Data")  
 def TradeValueHHBasedOnAsset():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Assets',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValuesHH_Assets',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -229,7 +229,7 @@ def TradeValueHHBasedOnAsset():
         return("No Data")  
 def TradeValueAsset():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_TradeValues_Assets',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_TradeValues_Assets',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -239,7 +239,7 @@ def TradeValueAsset():
         return("No Data")  
 def getLatestTwoIndex():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_LiveIndex',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_LiveIndex',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)
@@ -250,7 +250,7 @@ def getLatestTwoIndex():
 
 def getLastActiveDayTepix():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_today_Tepix',headers=head ,timeout=5)
+    resp = requests.get('http://37.152.180.99:3000/View_today_Tepix',headers=head ,timeout=10)
     if resp.status_code == 200:
 
         # return(resp.text)

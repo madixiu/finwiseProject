@@ -18,7 +18,7 @@
       v-if="this.notices != '' && loading == false"
     >
       <v-tabs
-        background-color="#3F51B5"
+        background-color="#212529"
         color="#FFF"
         dark
         prev-icon="mdi-arrow-right-bold-box-outline"
@@ -28,6 +28,7 @@
         <v-tab
           v-for="item in this.todatesyears"
           :key="item.key"
+          class="itemFilters"
           @click="GetFilteredYearly(item.value)"
         >
           {{ item.value }}
@@ -35,9 +36,10 @@
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
           <v-tabs
             vertical
-            background-color="#1A237E"
+            background-color="#212529"
             color="#FFF"
             dark
+            class="itemFilters"
             next-icon="mdi-arrow-right-bold-box-outline"
             prev-icon="mdi-arrow-left-bold-box-outline"
             show-arrows
@@ -45,6 +47,7 @@
             <v-tab
               v-for="item in todates"
               :key="item.key"
+              class="itemFilters"
               @click="GetFiltered(item.value)"
             >
               {{ item.value }}
@@ -75,6 +78,34 @@
                       hide-default-footer
                       disable-pagination
                     >
+                      <template v-slot:[`item.toDate`]="{ item }">
+                        <span class="cellItem">{{ item.toDate }} </span>
+                      </template>
+                      <template v-slot:[`item.Translated`]="{ item }">
+                        <span class="cellItem">{{ item.Translated }} </span>
+                      </template>
+                      <template v-slot:[`item.lastYear`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.lastYear > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.lastYear) }}
+                        </span>
+                      </template>
+                      <template v-slot:[`item.thisPeriod`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.thisPeriod > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.thisPeriod) }}
+                        </span>
+                      </template>
                     </v-data-table>
                   </div>
                 </div>
@@ -96,6 +127,34 @@
                       hide-default-footer
                       disable-pagination
                     >
+                      <template v-slot:[`item.toDate`]="{ item }">
+                        <span class="cellItem">{{ item.toDate }} </span>
+                      </template>
+                      <template v-slot:[`item.Translated`]="{ item }">
+                        <span class="cellItem">{{ item.Translated }} </span>
+                      </template>
+                      <template v-slot:[`item.lastYear`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.lastYear > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.lastYear) }}
+                        </span>
+                      </template>
+                      <template v-slot:[`item.thisPeriod`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.thisPeriod > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.thisPeriod) }}
+                        </span>
+                      </template>
                     </v-data-table>
                   </div>
                   <div class="card-body d-flex flex-column">
@@ -115,6 +174,34 @@
                       hide-default-footer
                       disable-pagination
                     >
+                      <template v-slot:[`item.toDate`]="{ item }">
+                        <span class="cellItem">{{ item.toDate }} </span>
+                      </template>
+                      <template v-slot:[`item.Translated`]="{ item }">
+                        <span class="cellItem">{{ item.Translated }} </span>
+                      </template>
+                      <template v-slot:[`item.lastYear`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.lastYear > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.lastYear) }}
+                        </span>
+                      </template>
+                      <template v-slot:[`item.thisPeriod`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.thisPeriod > 0
+                              ? 'greenItem ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.thisPeriod) }}
+                        </span>
+                      </template>
                     </v-data-table>
                   </div>
                 </div>
@@ -188,6 +275,40 @@ export default {
     }
   },
   methods: {
+    numberWithCommas(x) {
+      if (x === null) {
+        return "-";
+      }
+      if (x == 0) {
+        return "-";
+      }
+      if (x == "") {
+        return "-";
+      }
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
     populateData() {
       this.DataItems2 = this.notices;
       //   console.log(this.DataItems2);
@@ -298,6 +419,10 @@ export default {
 };
 </script>
 <style scoped>
+.cellItem {
+  font-family: "Dirooz FD";
+  font-weight: 700;
+}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

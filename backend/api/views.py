@@ -60,7 +60,8 @@ def getLastestICDone(self,identifier):
     return JsonResponse(get_IC_Done(identifier),safe=False)
 def getAllDashboard(self):
     return JsonResponse([ImpactOnIndex(),highestTvalues(),
-    [TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],getNews(),getMarketHH(),[highestSupplies(),highestDemands()],getLastActiveDayTepix()],safe=False)
+    [TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],getNews(),getMarketHH(),[highestSupplies(),highestDemands()]
+    ,getLastActiveDayTepix(),getTechnicalIndicatorsAll()],safe=False)
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
@@ -108,6 +109,8 @@ def getCFAll(self,identifier):
 ##############Monthly Ends Here
 def getIndicators(self,identifier):
     return JsonResponse(getTechnicalIndicators(identifier),safe=False)
+def getIndicatorsAll(self):
+    return JsonResponse(getTechnicalIndicatorsAll(),safe=False)
 def getHistoricCap(self):
     return JsonResponse(getIndicesHistoric(),safe=False)
 
