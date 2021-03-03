@@ -11,8 +11,9 @@
           <b-form-radio-group
             :click="this.renderChart1()"
             v-model="SortBy1"
+            value="HH"
             :options="options1"
-            name="radio-inline"
+            name="radio-inline_q"
           ></b-form-radio-group> </b-form-group
       ></v-card-title>
       <v-divider class="mt-0"></v-divider>
@@ -177,6 +178,17 @@ export default {
           `translate(${this.margin.left}, ${this.margin.top})`
         );
       // eslint-disable-next-line no-unused-vars
+      svg
+        .append("text")
+        .attr("class", "source")
+        .attr("x", this.width / 2 + this.margin.right)
+        .attr("y", this.height * 0.1)
+        .attr("text-anchor", "start")
+        .text("Source: FinWise")
+        .style("font-weight", "700")
+        .style("font-family", "'Tlwg Mono', sans-serif")
+        .style("font-size", "10px")
+        .style("opacity", "0.3");
       if (this.SortBy1 == "HH") {
         const xLeft = d3
           .scaleBand()
@@ -188,8 +200,33 @@ export default {
           .scaleLinear()
           .domain([
             0,
-            Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
+            Math.abs(
+              Math.max(
+                Math.max(
+                  ...this.highestValues.map(x => {
+                    if (x.netHaghighi > 0) {
+                      return x.netHaghighi;
+                    } else {
+                      return x.netHaghighi * -1;
+                    }
+                  })
+                ),
+                Math.max(
+                  ...this.highestVolumes.map(x => {
+                    if (x.netHaghighi > 0) {
+                      return x.netHaghighi;
+                    } else {
+                      return x.netHaghighi * -1;
+                    }
+                  })
+                )
+              ) * 1.2
+            )
           ])
+          // .domain([
+          //   0,
+          //   Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
+          // ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         // eslint-disable-next-line no-unused-vars
@@ -204,7 +241,29 @@ export default {
           .scaleLinear()
           .domain([
             0,
-            Math.min(...this.highestVolumes.map(x => x.netHaghighi)) * 1.2
+            -1 *
+              Math.abs(
+                Math.max(
+                  Math.max(
+                    ...this.highestValues.map(x => {
+                      if (x.netHaghighi > 0) {
+                        return x.netHaghighi;
+                      } else {
+                        return x.netHaghighi * -1;
+                      }
+                    })
+                  ),
+                  Math.max(
+                    ...this.highestVolumes.map(x => {
+                      if (x.netHaghighi > 0) {
+                        return x.netHaghighi;
+                      } else {
+                        return x.netHaghighi * -1;
+                      }
+                    })
+                  )
+                ) * 1.2
+              )
           ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
@@ -561,7 +620,28 @@ export default {
           .scaleLinear()
           .domain([
             0,
-            Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2
+            Math.abs(
+              Math.max(
+                Math.max(
+                  ...this.highestImpcats.map(x => {
+                    if (x.Value > 0) {
+                      return x.Value;
+                    } else {
+                      return x.Value * -1;
+                    }
+                  })
+                ),
+                Math.max(
+                  ...this.lowestImpcats.map(x => {
+                    if (x.Value > 0) {
+                      return x.Value;
+                    } else {
+                      return x.Value * -1;
+                    }
+                  })
+                )
+              ) * 1.2
+            )
           ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
@@ -575,16 +655,37 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const yRight_2 = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.lowestImpcats.map(x => x.Value)) * 1.2])
+          .domain([
+            0,
+            Math.abs(
+              Math.max(
+                Math.max(
+                  ...this.highestImpcats.map(x => {
+                    if (x.Value > 0) {
+                      return x.Value;
+                    } else {
+                      return x.Value * -1;
+                    }
+                  })
+                ),
+                Math.max(
+                  ...this.lowestImpcats.map(x => {
+                    if (x.Value > 0) {
+                      return x.Value;
+                    } else {
+                      return x.Value * -1;
+                    }
+                  })
+                )
+              ) * 1.2
+            )
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         ///////////////
         var mycolor_2 = d3
           .scaleLinear()
-          .domain([
-            0,
-            Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2
-          ])
+          .domain([0, Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2])
           .range(["#66BB6A", "#1B5E20"]);
         var mycolor2_2 = d3
           .scaleLinear()
@@ -597,7 +698,11 @@ export default {
             if (d <= 0) {
               return d;
             } else {
-              return this.numberWithCommas(this.roundTo(d/1000000000, 0)) + "  " + "میلیارد ریال";
+              return (
+                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                "  " +
+                "میلیارد ریال"
+              );
             }
           })
           .tickSizeInner(-this.width / 2 + this.margin.left / 2);
@@ -628,7 +733,11 @@ export default {
             if (d <= 0) {
               return d;
             } else {
-              return this.numberWithCommas(this.roundTo(d/1000000000, 0)) + "  " + "میلیارد ریال";
+              return (
+                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                "  " +
+                "میلیارد ریال"
+              );
             }
           })
           .tickSizeInner(-this.width / 2 - this.margin.right / 2);
@@ -795,22 +904,16 @@ export default {
                   d.ticker +
                   "<hr/>" +
                   " ارزش معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.Value / 1000000000, 0)
-                  ) +
+                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
                   "میلیارد ریال " +
                   "<br>" +
                   " حجم معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.Vol / 1000000, 0)
-                  ) +
+                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
                   "میلیون " +
                   "<br>" +
                   "قیمت: " +
-                  that.numberWithCommas(
-                    that.roundTo((d.Price ) , 0)
-                  ) +
-                  "<br>" 
+                  that.numberWithCommas(that.roundTo(d.Price, 0)) +
+                  "<br>"
               )
               .style("visibility", "visible");
             d3.select(this)
@@ -855,22 +958,16 @@ export default {
                   d.ticker +
                   "<hr/>" +
                   " ارزش معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.Value / 1000000000, 0)
-                  ) +
+                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
                   "میلیارد ریال " +
                   "<br>" +
                   " حجم معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.Vol / 1000000, 0)
-                  ) +
+                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
                   "میلیون " +
                   "<br>" +
                   "قیمت: " +
-                  that.numberWithCommas(
-                    that.roundTo((d.Price ) , 0)
-                  ) +
-                  "<br>" 
+                  that.numberWithCommas(that.roundTo(d.Price, 0)) +
+                  "<br>"
               )
               .style("visibility", "visible");
             d3.select(this)

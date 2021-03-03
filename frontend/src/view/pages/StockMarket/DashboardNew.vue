@@ -1,19 +1,18 @@
 <template>
   <div class="row">
     <div class="col-xxl-9 col-lg-9 col-md-12 col-sm 12">
-      <IndexChart
-          :inputDataIndex="TodayTepix"
-        ></IndexChart>
-      <!-- <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
+      <IndexChart :inputDataIndex="TodayTepix"></IndexChart>
       <ChartVol
         :inputDataStatus="highestTvalueData"
         :inputDataImpact="ImpactsData"
-      ></ChartVol> -->
+      ></ChartVol>
+      <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm 12">
       <div class="row">
-        <!-- <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
-        <NewsW :inputDataNews="News"></NewsW> -->
+        <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
+        <Technical :inputDataTechnical="TechnicalData"></Technical>
+        <NewsW :inputDataNews="News"></NewsW>
       </div>
     </div>
     <!-- <div class="col-xxl-3 col-lg-3"> -->
@@ -36,24 +35,24 @@
 <script>
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import MostViewedWidget from "@/view/pages/StockMarket/StockMarketWidgets/MostViewed.vue";
-// import HighestTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/HighestTradeValues.vue";
-// import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
-// import ChartHH from "@/view/pages/StockMarket/StockMarketWidgets/HH_Q_Chart.vue";
-// import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
+import Technical from "@/view/pages/StockMarket/StockMarketWidgets/TechnicalHighest.vue";
+import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
+import ChartHH from "@/view/pages/StockMarket/StockMarketWidgets/HH_Q_Chart.vue";
+import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
 // import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
 import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
-// import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
+import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
 // import axios from "axios";
 export default {
   name: "Dashboard",
   components: {
-    // ChartVol,
-    // ChartHH,
-    // ChartTradeValue,
+    ChartVol,
+    ChartHH,
+    ChartTradeValue,
     // // IndicesText,
-     IndexChart,
-    // NewsW
-    // HighestDemand,
+    IndexChart,
+    NewsW,
+    Technical
     // HighestSupply
   },
   data() {
@@ -66,7 +65,8 @@ export default {
       ImpactsData: [],
       HHData: [],
       QData: [],
-      mostviewed: []
+      mostviewed: [],
+      TechnicalData: []
     };
   },
   mounted() {
@@ -88,6 +88,7 @@ export default {
             this.HHData = first_response.data[4];
             this.QData = first_response.data[5];
             this.TodayTepix = first_response.data[6];
+            this.TechnicalData = first_response.data[7];
           }
         )
       );

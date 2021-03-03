@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="card card-custom card-stretch gutter-b">
+  <div class="card card-custom">
     <v-card>
       <v-card-title>شاخص کل</v-card-title>
       <v-divider class="mt-0"></v-divider>
@@ -9,6 +9,24 @@
           id="Chartcontainer_index"
           class="col-xxl-9 col-lg-9 col-md-12 col-sm-12"
         ></div>
+        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 card card-custom">
+          <v-card-title>شاخص کل {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title>شاخص هم وزن {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title>شاخص فرابورس {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title>ارزش بازار بورس {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title>ارزش بازار فرابورس {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title>ارزش معاملات بورس {{ this.latestIndex }}</v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >ارزش معاملات فرابورس {{ this.latestIndex }}</v-card-title
+          >
+          <v-divider class="mt-0"></v-divider>
+        </div>
       </div>
       <!--end::Header-->
     </v-card>
@@ -26,6 +44,13 @@ export default {
     return {
       loading: true,
       jsonData: {},
+      latestIndex: 0,
+      latestSW: 0,
+      latestTradeValue: 0,
+      MarketCapTotal: 0,
+      IFBlatestIndex: 0,
+      IFBMarketCapTotal: 0,
+
       indexData: [],
       min: 0,
       max: 10,
@@ -121,7 +146,6 @@ export default {
     },
     renderData() {
       let data = [...this.inputDataIndex];
-      console.log(data);
       var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
       data.forEach(
         function(d) {
@@ -136,13 +160,13 @@ export default {
       data.sort(function(a, b) {
         return a.date - b.date;
       });
-      console.log(data);
+
       data = data.filter(function(d) {
         if (d.date.getHours() > 8 && d.Market == 1) {
           return d;
         }
       });
-      this.indexData = data;
+      this.indexData = [...data];
     },
     renderChart() {
       if (document.getElementById("Chartcontainer_index_svg")) {
@@ -225,15 +249,16 @@ export default {
         .style("font-size", `${this.width / 1000}em`)
         .style("font-family", "Dirooz FD")
         .style("font-weight", "800");
-d3.selectAll("g.yAxis g.tick")
-    .append("line")
-    .attr("class", "gridline")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", this.width-this.margin.left*2)
-    .attr("y2", 0);
+      d3.selectAll("g.yAxis g.tick")
+        .append("line")
+        .attr("class", "gridline")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", this.width - this.margin.left * 2)
+        .attr("y2", 0);
       var line = d3
         .line()
+        .curve(d3.curveBasis)
         .defined(d => !isNaN(d.date))
         .x(d => xScale(d.date))
         .y(d => yScale(d.value));
@@ -244,23 +269,189 @@ d3.selectAll("g.yAxis g.tick")
         .datum(this.indexData.filter(line.defined()))
         .style("fill", "none")
         .attr("stroke", "steelblue")
-        .attr("stroke-width", 4)
+        .attr("stroke-width", 2)
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("d", line);
       const pathLength = path.node().getTotalLength();
-const transitionPath = d3
-  .transition()
-  .ease(d3.easeSinOut)
-  .duration(5500);
+      const transitionPath = d3
+        .transition()
+        .ease(d3.easeSinOut)
+        .duration(5500);
 
-path
-  
-  .attr("stroke-dashoffset", pathLength)
-  
-  .attr("stroke-dasharray", pathLength)
-  .transition(transitionPath)
-  .attr("stroke-dashoffset", 0)
+      path
+        .attr("stroke-dashoffset", pathLength)
+        .attr("stroke-dasharray", pathLength)
+        .transition(transitionPath)
+        .attr("stroke-dashoffset", 0);
+
+      const tooltip = chart.append("g");
+      var dates = this.indexData.map(function(d) {
+        return d.date;
+      });
+      function formatValue(value) {
+        return value.toLocaleString("en", {});
+      }
+      function formatDate(date) {
+        return date.toLocaleString("en", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        });
+      }
+      // eslint-disable-next-line no-unused-vars
+      var callout2 = (g, value1, value2, value) => {
+        if (!value2) return g.style("display", "none");
+        // g.style("display", null).style("pointer-events", "none");
+        // const path = g
+        //   .selectAll("path")
+        //   .data([null])
+        //   .join("path")
+        //   .attr("fill", "white")
+        //   .attr("stroke", "black")
+        //   .style("stroke-dasharray", "2, 6")
+        //   .style("Opacity", "0.2 ");
+        // path.attr(
+        //   "d",
+        //   `M${0} ${0} L${0} ${this.height -
+        //     this.margin.top -
+        //     yScale(this.indexData[value2].value)} L${0} ${this.margin.top -
+        //     yScale(this.indexData[value2].value)}`
+        // );
+        // const circle = g
+        //   .selectAll("circle")
+        //   .data([null])
+        //   .join("circle")
+        //   .attr("fill", "steelblue")
+        //   .attr("stroke-width", 2)
+        //   .style("stroke", "black");
+
+        // circle
+        //   .attr("r", "5")
+        //   .attr("cx", "0")
+        //   .attr("cy", "0");
+        // const text = g
+        //   .selectAll("text")
+        //   .data([null])
+        //   .join("text")
+        //   .call(text =>
+        //     text
+        //       .selectAll("tspan")
+        //       .data((value + "").split(/\n/))
+        //       .join("tspan")
+        //       .attr("x", 0)
+        //       .attr("y", (d, i) => `${i * 1.1}em`)
+        //       .style("font-weight", (_, i) => (i ? null : "bold"))
+        //       .text(d => d.split("-")[0])
+        //   )
+        //   .style("fill", "black")
+        //   .style("font-size", "14px");
+        // // eslint-disable-next-line no-unused-vars
+        // const { x, y, width: w, height: h } = text.node().getBBox();
+        // text.attr("transform", `translate(${0},${-h})`);
+        // const pathnew = g
+        //   .selectAll("pathnew")
+        //   .data([null])
+        //   .join("path")
+        //   .attr("fill", "#001170")
+        //   .style("stroke", "black")
+        //   .style("stroke-dasharray", "3,3")
+        //   .style("Opacity", "0.8");
+        // pathnew
+        //   .attr(
+        //     "d",
+        //     `M${0} ${this.height -
+        //       this.margin.top -
+        //       yScale(this.indexData[value2].value)} H-6 l7,-5l5,5H 25 V${this.height -
+        //       this.margin.top -
+        //       yScale(this.indexData[value2].value) +
+        //       40} H-30 V${this.height - this.margin.right - yScale(this.indexData[value2].value)}z`
+        //   )
+        //   .attr("stroke", "black");
+
+        // const text2 = g
+        //   .selectAll("text2")
+        //   .data([null])
+        //   .join("text")
+        //   .call(text2 =>
+        //     text2
+        //       .selectAll("tspan")
+        //       .data((value + "").split(/\n/))
+        //       .join("tspan")
+        //       .attr("x", 0)
+        //       .attr("y", (d, i) => `${i * 1.1}em`)
+        //       .style("font-weight", (_, i) => (i ? null : "bold"))
+        //       .text(d => d.split("-")[1].split(" ")[0])
+        //   )
+        //   .style("fill", "white")
+        //   .style("font-size", "11px")
+        //   .style("Opacity", "1 ");
+        // // eslint-disable-next-line no-unused-vars
+        // const { x2, y2, width: w2, height: h2 } = text2.node().getBBox();
+        // text2.attr(
+        //   "transform",
+        //   `translate(${-w2 / 2 - 1},${this.height -
+        //     this.margin.top -
+        //     yScale(this.indexData[value2].value) +
+        //     20})`
+        // );
+        // const pathnew2 = g
+        //   .selectAll("pathnew2")
+        //   .data([null])
+        //   .join("path")
+        //   .attr("fill", "gray")
+        //   .style("stroke", "black")
+        //   // .style("stroke-dasharray", ("3,3"))
+        //   .style("Opacity", "0.4");
+        // pathnew2
+        //   .attr("d", `M${-10} ${-10} H${90} V${-50} H${-10}z`)
+        //   .attr("stroke", "black");
+      };
+      chart.on("touchmove mousemove", function(event) {
+        const x1 = d3.pointer(event, this)[0];
+        const y1 = d3.pointer(event, this)[1];
+        if (x1 - this.margin.left < this.width - this.margin.right) {
+          const date = xScale.invert(x1 - this.margin.left);
+          // eslint-disable-next-line no-unused-vars
+          const y2 = yScale.invert(y1 - this.margin.top);
+          const idx = d3.bisect(dates, date);
+          tooltip
+            .attr(
+              "transform",
+              `translate(${xScale(this.indexData[idx].date)},${yScale(
+                this.indexData[idx].value
+              )})`
+            )
+            .call(
+              callout2,
+              x1,
+              idx,
+              `${formatValue(this.indexData[idx].value)}-${formatDate(
+                this.indexData[idx].date
+              )}-`
+            );
+        }
+      });
+
+      chart.on("touchend mouseleave", () => tooltip.call(callout2, null));
+      svg
+        .append("text")
+        .attr("class", "title")
+        .attr("x", this.width / 2 + this.margin.left)
+        .attr("y", 40)
+        .attr("text-anchor", "middle")
+        .text("شاخص کل");
+      svg
+        .append("text")
+        .attr("class", "source")
+        .attr("x", this.width - this.margin.left)
+        .attr("y", this.height*0.9)
+        .attr("text-anchor", "start")
+        .text("Source: FinWise")
+        .style("font-weight", "700")
+        .style("font-family", "'Tlwg Mono', sans-serif")
+        .style("font-size", "10px")
+        .style("opacity", "0.3");
     }
   }
 };

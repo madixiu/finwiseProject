@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
+  <div class="card card-custom ">
     <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"
@@ -11,8 +11,9 @@
           <b-form-radio-group
             :click="this.renderChart()"
             v-model="SortBy"
+            value="VolumeVal"
             :options="options"
-            name="radio-inline"
+            name="radio-inline_status"
           ></b-form-radio-group> </b-form-group
       ></v-card-title>
       <v-divider class="mt-0"></v-divider>
@@ -36,6 +37,7 @@ export default {
       highestVolumes: [],
       highestImpcats: [],
       lowestImpcats: [],
+      SortBy: "VolumeVal",
       margin: {
         top: 0,
         right: 0,
@@ -45,8 +47,7 @@ export default {
       options: [
         { text: "ارزش و حجم معاملات", value: "VolumeVal" },
         { text: "تاثیر بر شاخص", value: "Impact" }
-      ],
-      SortBy: "VolumeVal"
+      ]
     };
   },
   watch: {
@@ -171,6 +172,17 @@ export default {
           `translate(${this.margin.left}, ${this.margin.top})`
         );
       // eslint-disable-next-line no-unused-vars
+      svg
+        .append("text")
+        .attr("class", "source")
+        .attr("x", this.width/2+this.margin.right)
+        .attr("y", this.height*0.1)
+        .attr("text-anchor", "start")
+        .text("Source: FinWise")
+        .style("font-weight", "700")
+        .style("font-family", "'Tlwg Mono', sans-serif")
+        .style("font-size", "10px")
+        .style("opacity", "0.3");
       if (this.SortBy == "VolumeVal") {
         const xLeft = d3
           .scaleBand()
@@ -227,8 +239,8 @@ export default {
           .attr("transform", `translate(0,0)`)
           // .attr("dx", "-8em")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY2Axe
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -264,8 +276,8 @@ export default {
           .selectAll("text")
           .style("text-anchor", "end")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY1Axe
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -527,7 +539,31 @@ export default {
 
         const yLeft_2 = d3
           .scaleLinear()
-          .domain([0, Math.max(...this.highestImpcats.map(x => x.Impact)) * 1.2])
+          .domain([
+            0,
+            Math.abs(
+              Math.max(
+                Math.max(
+                  ...this.highestImpcats.map(x => {
+                    if (x.Impact > 0) {
+                      return x.Impact;
+                    } else {
+                      return x.Impact * -1;
+                    }
+                  })
+                ),
+                Math.max(
+                  ...this.lowestImpcats.map(x => {
+                    if (x.Impact > 0) {
+                      return x.Impact;
+                    } else {
+                      return x.Impact * -1;
+                    }
+                  })
+                )
+              ) * 1.2
+            )
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         // eslint-disable-next-line no-unused-vars
@@ -540,46 +576,90 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const yRight_2 = d3
           .scaleLinear()
-          .domain([0, Math.min(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
+          .domain([
+            0,
+            -1 *
+              Math.abs(
+                Math.max(
+                  Math.max(
+                    ...this.highestImpcats.map(x => {
+                      if (x.Impact > 0) {
+                        return x.Impact;
+                      } else {
+                        return x.Impact * -1;
+                      }
+                    })
+                  ),
+                  Math.max(
+                    ...this.lowestImpcats.map(x => {
+                      if (x.Impact > 0) {
+                        return x.Impact;
+                      } else {
+                        return x.Impact * -1;
+                      }
+                    })
+                  )
+                ) * 1.2
+              )
+          ])
           .range([this.height - this.margin.bottom, this.margin.top])
           .nice();
         ///////////////
-          var mycolor_2 = d3
-            .scaleLinear()
-            .domain([0, Math.max(...this.highestImpcats.map(x => x.Impact)) * 1.2])
-            .range(["#66BB6A", "#1B5E20"]);
-          var mycolor2_2= d3
-            .scaleLinear()
-            .domain([0, Math.max(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
-            .range(["#a01a58", "#b7094c"]);
+        var mycolor_2 = d3
+          .scaleLinear()
+          .domain([
+            0,
+            Math.max(
+              Math.max(
+                ...this.highestImpcats.map(x => {
+                  if (x.Impact > 0) {
+                    return x.Impact;
+                  } else {
+                    return x.Impact * -1;
+                  }
+                })
+              ),
+              Math.max(
+                ...this.lowestImpcats.map(x => {
+                  if (x.Impact > 0) {
+                    return x.Impact;
+                  } else {
+                    return x.Impact * -1;
+                  }
+                })
+              )
+            ) * 1.2
+          ])
+          .range(["#66BB6A", "#1B5E20"]);
+        var mycolor2_2 = d3
+          .scaleLinear()
+          .domain([0, Math.max(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
+          .range(["#a01a58", "#b7094c"]);
         //////////////
-        let aXisY2_2= d3
+        let aXisY2_2 = d3
           .axisLeft(yLeft_2)
           .tickFormat(d => {
             if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d ,0)) +
-                "  " +
-                "واحد"
-              );
+              return this.numberWithCommas(this.roundTo(d, 0)) + "  " + "واحد";
             }
           })
           .tickSizeInner(-this.width / 2 + this.margin.left / 2);
-        let aXisY2Axe_2= chart.append("g").call(aXisY2_2);
+        let aXisY2Axe_2 = chart.append("g").call(aXisY2_2);
         aXisY2Axe_2
           .selectAll("text")
           .style("text-anchor", "start")
           .attr("transform", `translate(0,0)`)
           // .attr("dx", "-8em")
-          .style("font-size", `${this.width / 1000}em`);
+          .style("font-size", `${this.width / 1000}em`)
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY2Axe_2
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
-          .style("opacity", "0.2")
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("opacity", "0.2");
+
         chart
           .append("g")
           .call(d3.axisBottom(xLeft_2))
@@ -591,31 +671,24 @@ export default {
         let aXisY1_2 = d3
           .axisRight(yRight_2)
           .tickFormat(d => {
-            
-              if (d >= 0) {
+            if (d >= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d ,0)) +
-                "  " +
-                "واحد"
-              );
+              return this.numberWithCommas(this.roundTo(d, 0)) + "  " + "واحد";
             }
-            
           })
           .tickSizeInner(-this.width / 2 - this.margin.right / 2);
         var aXisY1Axe_2 = chart
           .append("g")
           .call(aXisY1_2)
-          .attr("transform", `translate(${this.width},0)`)
-          
+          .attr("transform", `translate(${this.width},0)`);
 
         aXisY1Axe_2
           .selectAll("text")
           .style("text-anchor", "end")
           .style("font-size", `${this.width / 1000}em`)
-          .style("font-family",'Dirooz FD')
-          .style("font-weight",'800')
+          .style("font-family", "Dirooz FD")
+          .style("font-weight", "800");
         aXisY1Axe_2
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -770,7 +843,7 @@ export default {
                   " تاثیر روی شاخص: " +
                   that.numberWithCommas(that.roundTo(d.Impact, 0)) +
                   "واحد " +
-                  "<br>" 
+                  "<br>"
               )
               .style("visibility", "visible");
             d3.select(this)
@@ -792,7 +865,10 @@ export default {
             return yRight_2(d.Impact);
           })
           .attr("height", s =>
-            Math.max(yRight_2(0) - yRight_2(s.Impact), yRight_2(s.Impact) - yRight_2(0))
+            Math.max(
+              yRight_2(0) - yRight_2(s.Impact),
+              yRight_2(s.Impact) - yRight_2(0)
+            )
           )
           .attr("width", xRight_2.bandwidth())
           .attr("fill", function(d) {
@@ -814,7 +890,7 @@ export default {
                   " تاثیر روی شاخص: " +
                   that.numberWithCommas(that.roundTo(d.Impact, 0)) +
                   "واحد " +
-                  "<br>" 
+                  "<br>"
               )
               .style("visibility", "visible");
             d3.select(this)
@@ -836,7 +912,10 @@ export default {
             return yLeft_2(d.Impact);
           })
           .attr("height", s =>
-            Math.max(yLeft_2(0) - yLeft_2(s.Impact), yLeft_2(s.Impact) - yLeft_2(0))
+            Math.max(
+              yLeft_2(0) - yLeft_2(s.Impact),
+              yLeft_2(s.Impact) - yLeft_2(0)
+            )
           )
           .attr("width", xLeft_2.bandwidth())
           .attr("fill", function(d) {
@@ -863,8 +942,8 @@ export default {
   font-size: 1.2em;
   font-family: "Dirooz FD";
 }
-.cellItem{
-   font-family: "Dirooz FD";
+.cellItem {
+  font-family: "Dirooz FD";
 }
 /deep/ .dot {
   height: 25px;
