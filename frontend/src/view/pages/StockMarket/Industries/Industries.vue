@@ -3,9 +3,9 @@
     <div class="row">
       <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape> -->
 
-      <div class="col-12">
+      <!-- <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
-      </div>
+      </div> -->
 
       <div class="col-xxl-4 col-md-6 mb-4">
         <v-card>
@@ -121,7 +121,7 @@
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
 // import TickerTape from "@/view/content/TickerTape.vue";
-import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
+// import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
@@ -129,7 +129,7 @@ export default {
   components: {
     ApexChart,
     // TickerTape,
-    IndustryChart
+    // IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
     // MarqueeText

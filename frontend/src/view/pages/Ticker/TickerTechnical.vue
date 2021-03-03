@@ -1,5 +1,8 @@
 <template>
-  <TradingView></TradingView>
+<div v-if="ticker.length">
+  <TradingView  :symbol="ticker"></TradingView>
+
+</div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -9,15 +12,23 @@ export default {
   components: {
     TradingView
   },
+  watch: {
+    searchItems() {
+      // this.ticker = "شتران"
+      // if(this.searchItems.length)
+    }
+  },
+  data() {
+    return {
+      items: [],
+      ticker: ""
+    }
+  },
+  props:{
+    // ticker: String
+  },
   created() {
     console.log(this.searchItems);
-  },
-  mounted() {
-    console.log(this.Ticker(this.$route.params.id));
-    // console.log(this.$route.params.id);
-    // console.log(this.$route.name);
-    // console.log(this.$route.path);
-    // console.log(this.getSearchListData);
   },
   computed: {
     // ...mapState({
@@ -25,13 +36,25 @@ export default {
     // }),
     ...mapGetters({ searchItems: "getSearchListData" })
   },
+  mounted() {
+    this.ticker = this.Ticker(this.$route.params.id)
+
+    if (this.searchItems.length)
+    // console.log(this.Ticker(this.$route.params.id));
+    console.log(this.$route.params.id);
+    // console.log(this.$route.name);
+    // console.log(this.$route.path);
+    // console.log(this.searchItems);
+  },
+
   methods: {
     Ticker(ID) {
+      console.log(this.searchItems);
       let itemA = this.searchItems.filter(function(item) {
         return item.ID == ID && (item.TypeID == 25 || item.TypeID == 1);
       });
-      console.log(this.itemA);
-      return itemA.ticker;
+      console.log(itemA[0].ticker);
+      return itemA[0].ticker;
     }
   }
 };

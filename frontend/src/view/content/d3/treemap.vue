@@ -552,10 +552,11 @@ export default {
       return (x1 - x0) / 2 + x0;
     },
     YText(y0, y1) {
-      return (y1 - y0) / 2 + y0 - 7;
+      return (y1 - y0) / 2 + y0 - 5;
     },
     YText2(y0, y1) {
-      return (y1 - y0) / 4 + y0 - 7;
+      return (y1 - y0) / 4 + y0 - 5;
+      // return (y1 - y0) / 2 +y0-7;
     },
     test(input) {
       return d3
@@ -603,9 +604,9 @@ export default {
         ((children.x1 - children.x0) * (children.y1 - children.y0) * 100) /
         (height * width);
       if (c >= 4) return "font-size:1.4rem";
-      if (c < 4 && c >= 3) return "font-size:1.3rem";
-      if (c < 3 && c >= 2) return "font-size:1.2rem";
-      if (c < 2 && c >= 1) return "font-size:1rem";
+      if (c < 4 && c >= 3) return "font-size:1.3em";
+      if (c < 3 && c >= 2) return "font-size:1.2em";
+      if (c < 2 && c >= 1) return "font-size:1em";
       if (c < 1 && c >= 0.8) return "font-size:0.95rem";
       if (c < 0.8 && c >= 0.6) return "font-size:0.75rem";
       if (c < 0.6 && c >= 0.5) return "font-size:0.65rem";
@@ -617,18 +618,22 @@ export default {
     tickerTextFontSizeAdjust(x0, x1, y0, y1) {
       let c = ((x1 - x0) * (y1 - y0) * 100) / (this.height * this.width);
       // console.log(c);
+      let constant = 0.7335775996;
       // console.log(name);
-
-      if (c >= 4) return "font-size:1.7rem";
-      if (c < 4 && c >= 3) return "font-size:1.4rem";
-      if (c < 3 && c >= 2) return "font-size:1.2rem";
-      if (c < 2 && c >= 1) return "font-size:1rem";
-      if (c < 1 && c >= 0.8) return "font-size:0.95rem";
-      if (c < 0.8 && c >= 0.6) return "font-size:0.75rem";
-      if (c < 0.6 && c >= 0.5) return "font-size:0.65rem";
-
-      if (c < 0.5 && c >= 0.1) return "font-size:0.5rem";
+      // console.log(Math.pow(c,0.2)/constant);
       if (c < 0.1) return "font-size:0rem";
+      else return `font-size:${Math.pow(c, 0.5) / constant}em`;
+
+      // if (c >= 4) return "font-size:2em";
+      // if (c < 4 && c >= 3) return "font-size:2.6em";
+      // if (c < 3 && c >= 2) return "font-size:1.2rem";
+      // if (c < 2 && c >= 1) return "font-size:1rem";
+      // if (c < 1 && c >= 0.8) return "font-size:0.95rem";
+      // if (c < 0.8 && c >= 0.6) return "font-size:0.75rem";
+      // if (c < 0.6 && c >= 0.5) return "font-size:0.65rem";
+
+      // if (c < 0.5 && c >= 0.1) return "font-size:0.5rem";
+      // if (c < 0.1) return "font-size:0rem";
     },
     getColor(val) {
       // console.log(this.positiveColor(0.05));
@@ -711,13 +716,13 @@ rect {
 .childTickerName {
   fill: white;
   text-anchor: middle;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .childTickerValue {
   fill: white;
   text-align: center;
   text-anchor: middle;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 /* .parent:hover {
   cursor: pointer;

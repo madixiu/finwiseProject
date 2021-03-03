@@ -464,65 +464,19 @@ export default {
           fontFamily: "Vazir-Light-FD"
         },
         tooltip: {
-          custom: function({
-            // eslint-disable-next-line no-unused-vars
-            series,
-            seriesIndex,
-            dataPointIndex,
-            // eslint-disable-next-line no-unused-vars
-            categories,
-            w
-          }) {
-            // return (
-            //   '<div class="arrow_box">' +
-            //   "<span>" +
-            //   series[seriesIndex][dataPointIndex] +
-            //   "</span>" +
-            //   "<span>" +
-            //   series[dataPointIndex][categories] +
-            //   "</span>" +
-            //   "</div>"
-
-            // var color = _ref5.color,
-            //             seriesName = _ref5.seriesName,
-            //             ylabel = _ref5.ylabel,
-            //             start = _ref5.start,
-            //             end = _ref5.end;
-
-            // );
-            var color = "#000";
-            var start = w.globals.seriesRangeStart[seriesIndex][dataPointIndex];
-            var end = w.globals.seriesRangeEnd[seriesIndex][dataPointIndex];
-            var ylabel = w.globals.labels[dataPointIndex];
-            var seriesName = w.config.series[seriesIndex].name;
-            return (
-              '<div class="apexcharts-tooltip-rangebar">' +
-              '<div> <span class="series-name" style="color: ' +
-              color +
-              '">' +
-              (seriesName ? seriesName : "") +
-              "</span></div>" +
-              '<div> <span class="category">' +
-              ylabel +
-              ' </span> <span class="value start-value">' +
-              start +
-              '</span> <span class="separator">-</span> <span class="value end-value">' +
-              end +
-              "</span></div>" +
-              "</div>"
-            );
+          
+       
+          shared: false,
+          x: {
+            formatter: function(val) {
+              return val;
+            }
+          },
+          y: {
+            formatter: function(val) {
+              return val + "%";
+            }
           }
-          // shared: false,
-          // x: {
-          //   formatter: function(val) {
-          //     return val;
-          //   }
-          // }
-          // y: {
-          //   formatter: function(val) {
-          //     return val + "%";
-          //   }
-          // }
         },
         // title: {
         //   text: "Mauritius population pyramid 2011"

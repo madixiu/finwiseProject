@@ -72,12 +72,12 @@ export default {
   data() {
     return {
       search: "",
-      subheaders: [],
+      subheaders: {},
       // allowed: [],
       stats: [],
       hhdata: [],
       livedata: [],
-      techdata:[]
+      techdata: []
     };
   },
   mounted() {
@@ -129,7 +129,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getHH().then(responx2 => {
             // eslint-disable-next-line no-unused-vars
-            this.getTechnical().then();
+            this.getTechnical();
           });
         });
       });
@@ -184,7 +184,7 @@ export default {
         .get("/api/Ticker/TechnicalIndicators/" + this.$route.params.id + "/")
         .then(responsetech => {
           this.techdata = responsetech.data;
-          console.log(this.techdata)
+          console.log(this.techdata);
         })
         .catch(error => {
           // console.log("GetTwoeCatch");
@@ -197,8 +197,12 @@ export default {
         .then(response1 => {
           // console.log("firstDone");
           this.subheaders = response1.data[0];
+          console.log(this.subheaders);
+
           this.livedata = response1.data;
-          this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+          this.$store.dispatch(ADD_BREADCRUMB, [
+            { title: this.subheaders.ticker }
+          ]);
 
           // console.log(response1.data);
         })

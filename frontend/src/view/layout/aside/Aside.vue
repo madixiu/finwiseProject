@@ -96,8 +96,9 @@ export default {
         "TickerAssembly",
         "TickerAssemblyCalendar",
         "TickerAssemblyReport",
-        "TickerAssemblyDPS",
-        "TickerAssemblyIC",
+        "TickerAssemblyDPSAndIC",
+        // "TickerAssemblyDPS",
+        // "TickerAssemblyIC",
         "subset"
       ],
       AsideState1: true,
