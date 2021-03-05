@@ -40,8 +40,8 @@ Vue.use(PersianCalendar);
 // HTTP connection to the API graphql/apollo
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  // uri: "http://45.82.136.21/graphql"
-  uri: "http://localhost:8000/graphql"
+  uri: "http://45.82.136.21/graphql"
+  // uri: "http://localhost:8000/graphql"
 });
 const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {
