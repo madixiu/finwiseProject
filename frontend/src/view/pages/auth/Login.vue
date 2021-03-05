@@ -49,13 +49,13 @@
             class="form-control form-control-solid h-auto py-3 px-3"
             id="example-input-1"
             name="example-input-1"
-            v-model="$v.form.email.$model"
-            :state="validateState('email')"
+            v-model="$v.form.phonenumber.$model"
+            :state="validateState('phonenumber')"
             aria-describedby="input-1-live-feedback"
           ></b-form-input>
 
           <b-form-invalid-feedback id="input-1-live-feedback">
-            ایمیل باید وارد شود
+            شماره موبایل خود را وارد کنید
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -124,7 +124,13 @@ import { mapGetters } from "vuex";
 // import { LOGIN, LOGOUT } from "@/core/services/store/auth2.module";
 // import { LOGIN } from "@/core/services/store/auth";
 import { validationMixin } from "vuelidate";
-import { email, minLength, required } from "vuelidate/lib/validators";
+import {
+  email,
+  minLength,
+  required,
+  maxLength,
+  integer
+} from "vuelidate/lib/validators";
 import { LOGIN_USER } from "@/graphql/mutations";
 import JwtService from "@/core/services/jwt.service";
 
@@ -144,6 +150,7 @@ export default {
       // Remove this dummy login info
       form: {
         email: "",
+        phonenumber: "",
         password: ""
       }
     };
@@ -153,6 +160,12 @@ export default {
       email: {
         required,
         email
+      },
+      phonenumber: {
+        integer,
+        required,
+        minLength: minLength(11),
+        maxLength: maxLength(11)
       },
       password: {
         required,
@@ -182,6 +195,7 @@ export default {
     },
     resetForm() {
       this.form = {
+        phonenumber: null,
         email: null,
         password: null
       };
@@ -206,7 +220,8 @@ export default {
         return;
       }
 
-      const email = this.$v.form.email.$model;
+      // const email = this.$v.form.email.$model;
+      const phoneNumber = this.$v.form.phonenumber.$model;
       const password = this.$v.form.password.$model;
 
       // add apollo
@@ -214,7 +229,8 @@ export default {
         .mutate({
           mutation: LOGIN_USER,
           variables: {
-            email: email,
+            phoneNumber: phoneNumber,
+            // email: email,
             password: password
           }
         })
@@ -254,7 +270,7 @@ export default {
               "SET_ERROR",
               LoginData.errors.nonFieldErrors[0]
             );
-            let user = { email: this.form.email };
+            let user = { phoneNumber: this.form.phonenumber };
             this.$store.dispatch("SET_USER", user);
             // console.log(LoginData.errors.nonFieldErrors[0]);
             this.checkError();

@@ -97,23 +97,15 @@ export default {
     };
   },
   watch: {
-    subheaders() {
-      // this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
-      // console.log(this.notices);
-    },
     "$route.params": {
       handler(newValue, oldValue) {
         // console.log(newValue);
         // console.log(oldValue);
 
         if (newValue != oldValue) {
-          this.loadData();
+          // this.loadData();
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
         }
-
-        // const { userName } = newValue
-
-        // this.fetchData(userName)
       },
       immediate: true
     }
@@ -200,6 +192,8 @@ export default {
           console.log(this.subheaders);
 
           this.livedata = response1.data;
+          // this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.subheaders.ticker }
           ]);
@@ -250,7 +244,7 @@ export default {
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (date.getHours() > 8 && date.getHours() < 14) {
         this.WebsocketRequest = true;
         this.liveData();
       } else {

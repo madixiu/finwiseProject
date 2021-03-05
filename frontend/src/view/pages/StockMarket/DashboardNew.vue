@@ -71,9 +71,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
-    // this.loadData();
+    this.loadData();
 
-    this.make_requests_handler();
+    // this.make_requests_handler();
   },
   methods: {
     make_requests_handler() {
@@ -97,22 +97,22 @@ export default {
       return this.axios.get("/api/Dashboard");
     },
     loadData() {
-      this.getTradesValue()
+      this.getDashboard()
         // eslint-disable-next-line no-unused-vars
         .then(r1 => {
           // eslint-disable-next-line no-unused-vars
-          this.getImpacts().then(r5 => {
-            // eslint-disable-next-line no-unused-vars
-            this.getTradesAll().then(r2 => {
-              // eslint-disable-next-line no-unused-vars
-              this.getTepixToday().then(r3 => {
-                // eslint-disable-next-line no-unused-vars
-                this.getNews().then(r4 => {
-                  this.dataFetched = true;
-                });
-              });
-            });
-          });
+          // this.getImpacts().then(r5 => {
+          //   // eslint-disable-next-line no-unused-vars
+          //   this.getTradesAll().then(r2 => {
+          //     // eslint-disable-next-line no-unused-vars
+          //     this.getTepixToday().then(r3 => {
+          //       // eslint-disable-next-line no-unused-vars
+          //       this.getNews().then(r4 => {
+          //         this.dataFetched = true;
+          //       });
+          //     });
+          //   });
+          // });
         })
 
         // for (let item of data) {
@@ -121,6 +121,27 @@ export default {
         // console.log(tickerNames);
         // this.states = tickerNames;
         .catch(error => {
+          console.log(error);
+        });
+    },
+    async getDashboard() {
+      console.log("hhjhh");
+      await this.axios
+        .get("/api/Dashboard")
+        .then(first_response => {
+          console.log("here");
+          console.log(first_response);
+          this.ImpactsData = first_response.data[0];
+          this.highestTvalueData = first_response.data[1];
+          this.AssetTradeValue = first_response.data[2];
+          this.News = first_response.data[3];
+          this.HHData = first_response.data[4];
+          this.QData = first_response.data[5];
+          this.TodayTepix = first_response.data[6];
+          this.TechnicalData = first_response.data[7]; // console.log(respoey.data)
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
           console.log(error);
         });
     },

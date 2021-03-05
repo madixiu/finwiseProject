@@ -9,7 +9,7 @@
       >
         Hi,
       </span> -->
-      <v-icon size="30px" color="#4682B4" class="mr-1"
+      <v-icon size="25px" color="#4682B4" class="mr-1"
         >mdi-account-circle</v-icon
       >
       <!-- <span
@@ -32,11 +32,11 @@
     >
       <!--begin::Header-->
       <div
-        class="offcanvas-header d-flex align-items-center justify-content-between pb-5"
+        class="offcanvas-header d-flex align-items-center justify-content-between pb-1"
       >
         <h3 class="font-weight-bold m-0">
-          User Profile
-          <small class="text-muted font-size-sm ml-2">12 messages</small>
+          پروفایل کاربری
+          <!-- <small class="text-muted font-size-sm ml-2">12 messages</small> -->
         </h3>
         <a
           href="#"
@@ -56,84 +56,65 @@
         <!--begin::Header-->
         <div class="d-flex align-items-center mt-5">
           <div class="symbol symbol-100 mr-5">
-            <img class="symbol-label" :src="picture" alt="" />
-            <i class="symbol-badge bg-success"></i>
+            <!-- <img class="symbol-label" :src="picture" alt="" /> -->
+            <!-- <i class="symbol-badge bg-success"></i> -->
           </div>
           <div class="d-flex flex-column">
             <a
               href="#"
               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
             >
-              James Jones
+              حسن ثابت
             </a>
-            <div class="text-muted mt-1">Application Developer</div>
+            <!-- <div class="text-muted mt-1">Application Developer</div> -->
             <div class="navi mt-2">
               <a href="#" class="navi-item">
                 <span class="navi-link p-0 pb-2">
-                  <span class="navi-icon mr-1">
-                    <span class="svg-icon svg-icon-lg svg-icon-primary">
-                      <!--begin::Svg Icon-->
-                      <inline-svg
+                  <!-- <span class="navi-icon mr-1"> -->
+                  <!-- <span class="svg-icon svg-icon-lg svg-icon-primary"> -->
+                  <!--begin::Svg Icon-->
+                  <!-- <inline-svg
                         src="media/svg/icons/Communication/Mail-notification.svg"
-                      />
-                      <!--end::Svg Icon-->
-                    </span>
-                  </span>
+                      /> -->
+                  <!--end::Svg Icon-->
+                  <!-- </span> -->
+                  <!-- </span> -->
                   <span class="navi-text text-muted text-hover-primary">
                     jm@softplus.com
                   </span>
                 </span>
               </a>
             </div>
-            <button class="btn btn-light-primary btn-bold" @click="onLogout">
-              Sign out
+            <button
+              v-if="!LoginStatus"
+              class="btn btn-light-primary btn-bold"
+              @click="onLogin"
+            >
+              ورود
+            </button>
+            <button
+              v-if="LoginStatus"
+              class="btn btn-light-primary btn-bold"
+              @click="onLogout"
+            >
+              خروج
             </button>
           </div>
         </div>
         <!--end::Header-->
         <div class="separator separator-dashed mt-8 mb-5"></div>
         <!--begin::Nav-->
-        <div class="navi navi-spacer-x-0 p-0">
-          <!--begin::Item-->
-          <router-link
-            to="/builder"
-            @click.native="closeOffcanvas"
-            href="#"
-            class="navi-item"
-          >
-            <div class="navi-link">
-              <div class="symbol symbol-40 bg-light mr-3">
-                <div class="symbol-label">
-                  <span class="svg-icon svg-icon-md svg-icon-success">
-                    <!--begin::Svg Icon-->
-                    <inline-svg
-                      src="media/svg/icons/General/Notification2.svg"
-                    />
-                    <!--end::Svg Icon-->
-                  </span>
-                </div>
-              </div>
-              <div class="navi-text">
-                <div class="font-weight-bold">My Profile</div>
-                <div class="text-muted">
-                  Account settings and more
-                  <span
-                    class="label label-light-danger label-inline font-weight-bold"
-                  >
-                    update
-                  </span>
-                </div>
-              </div>
-            </div>
-          </router-link>
-          <!--end:Item-->
-          <!--begin::Item-->
+        <!-- <div class="navi navi-spacer-x-0 p-0"> -->
+        <!--begin::Item-->
 
-          <!--end:Item-->
-          <!--begin::Item-->
+        <!--end:Item-->
+        <!--begin::Item-->
 
-          <!--end:Item-->
-        </div>
+        <!--end:Item-->
+        <!--begin::Item-->
+
+        <!--end:Item-->
+        <!-- </div> -->
         <!--end::Nav-->
         <!-- <div class="separator separator-dashed my-7"></div> -->
         <!--begin::Notifications-->
@@ -160,6 +141,7 @@ export default {
   name: "KTQuickUser",
   data() {
     return {
+      LoginStatus: false,
       list: [
         {
           title: "Another purpose persuade",
@@ -194,6 +176,7 @@ export default {
   },
   mounted() {
     // Init Quick User Panel
+    this.LoginStatus = this.$store.getters.isAuthenticated;
     KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
   },
   methods: {
@@ -201,6 +184,9 @@ export default {
       this.$store
         .dispatch("LOGOUT")
         .then(() => this.$router.push({ name: "login" }));
+    },
+    onLogin() {
+      this.$router.push({ name: "login" });
     },
     closeOffcanvas() {
       new KTOffcanvas(KTLayoutQuickUser.getElement()).hide();

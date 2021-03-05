@@ -186,7 +186,7 @@ def DataModifier(input):
         temp2.append({"ticker":item["ticker"],"marketcap":item["marketcap"]})
         temp3.append({"ticker":item["ticker"],"HH":item["HH"]})
         temp4.append({"ticker":item["ticker"],"signal":item["signal"]})
-        temp5.append({"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"]})
+        temp5.append({"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"],"marketcap":item["marketcap"]})
         ImpactSum += item["Impact"]
         HHSum += item["HH"]
 
@@ -194,6 +194,7 @@ def DataModifier(input):
     temp2 = sorted(temp2, key=lambda x : x['marketcap'], reverse=True)
     temp3 = sorted(temp3, key=lambda x : x['HH'], reverse=True)
     temp4 = sorted(temp4, key=lambda x : x['signal'], reverse=True)
+    temp5 = sorted(temp5, key=lambda x : x['marketcap'], reverse=True)
 
 
     result["Impact"] = {"ImpactData" : temp, "Sum":ImpactSum}

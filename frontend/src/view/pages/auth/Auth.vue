@@ -6,7 +6,7 @@
     >
       <!--begin::Aside-->
       <div
-        class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-15"
+        class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-30"
         :style="{ backgroundImage: `url(${backgroundImage})` }"
       >
         <!--begin: Aside Container -->
@@ -23,10 +23,10 @@
             <h3 class="font-size-h1 mt-10 mb-5 text-white">
               به فین وایز خوش آمدید
             </h3>
-            <p class="font-weight-lighter text-white opacity-80">
+            <!-- <p class="font-weight-lighter text-white opacity-80">
               The ultimate Bootstrap, Angular 8, React &amp; VueJS admin theme
               framework for next generation web apps.
-            </p>
+            </p> -->
           </div>
           <!--end: Aside content -->
           <!--begin: Aside footer for desktop -->
@@ -37,9 +37,9 @@
               © 2020 Finwise
             </div>
             <div class="d-flex">
-              <a href="#" class="text-white">Privacy</a>
+              <!-- <a href="#" class="text-white">Privacy</a>
               <a href="#" class="text-white ml-10">Legal</a>
-              <a href="#" class="text-white ml-10">Contact</a>
+              <a href="#" class="text-white ml-10">Contact</a> -->
             </div>
           </div>
           <!--end: Aside footer for desktop -->

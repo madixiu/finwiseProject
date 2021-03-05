@@ -131,7 +131,13 @@
           <div class="Mychips">
             <v-chip class="mb-2" label large>
               مجموع وضعیت تاثیر در شاخص
-              <v-chip color="#ad0018" small dark label class="mr-3">
+              <v-chip
+                v-bind:class="[this.sumImpact >= 0 ? 'greenItem' : 'redItem']"
+                small
+                dark
+                label
+                class="mr-3"
+              >
                 <span style="font-family:'Vazir-Medium-FD';direction:ltr">{{
                   parseInt(sumImpact)
                 }}</span>
@@ -153,8 +159,14 @@
           />
           <div class="Mychips">
             <v-chip class="mb-2" label large>
-              مجموع وضعیت تاثیر در شاخص
-              <v-chip color="#00ad19" small dark label class="mr-3">
+              مجموع ورود خروج حقیقی
+              <v-chip
+                v-bind:class="[this.sumHH >= 0 ? 'greenItem' : 'redItem']"
+                small
+                dark
+                label
+                class="mr-3"
+              >
                 <span style="font-family:'Vazir-Medium-FD';direction:ltr">{{
                   fixer(sumHH)
                 }}</span>
@@ -272,15 +284,19 @@ export default {
       TechnicalOptions: {
         chart: {
           height: 100,
-          type: "radar"
+          type: "radar",
+          toolbar: {
+            show: false
+          }
         },
+
         labels: [],
         dataLabels: {
           enabled: true
         },
         plotOptions: {
           radar: {
-            size: 140,
+            size: 100,
             polygons: {
               strokeColors: "#e9e9e9",
               fill: {
@@ -330,7 +346,7 @@ export default {
       Shakhes: [
         {
           name: "XYZ MOTORS",
-          data: this.generateDayWiseTimeSeries(0, 2)
+          data: this.generateDayWiseTimeSeries(0, 30)
         }
       ],
       ShakhesOptions: {
@@ -344,6 +360,7 @@ export default {
             autoScaleYaxis: true
           },
           toolbar: {
+            show: false,
             autoSelected: "zoom"
           }
         },
@@ -393,10 +410,11 @@ export default {
           type: "pie",
           fontFamily: "Vazir-Medium-FD"
         },
+        // colors: ["#573956", "#9e556a", "#db7b6a", "#fdb462", "#f9f871"],
         labels: [],
         legend: {
-          show: false,
-          position: "bottom"
+          show: true,
+          position: "right"
         },
         responsive: [
           {
@@ -437,7 +455,7 @@ export default {
           }
         },
         dataLabels: {
-          enabled: true,
+          enabled: false,
           style: {
             fontSize: "0.7em",
             fontFamily: "Vazir-Medium-FD"
@@ -464,8 +482,6 @@ export default {
           fontFamily: "Vazir-Light-FD"
         },
         tooltip: {
-          
-       
           shared: false,
           x: {
             formatter: function(val) {
@@ -828,5 +844,15 @@ export default {
 }
 .Mychips {
   text-align: center;
+}
+.redItem {
+  color: aliceblue;
+  background-color: #f63538 !important;
+  font-family: "Vazir-Medium-FD" !important;
+}
+.greenItem {
+  color: aliceblue;
+  background-color: #30cc5a !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 </style>

@@ -81,8 +81,8 @@
       <h4 class="menu-text">سایر</h4>
       <i class="menu-icon flaticon-more-v2"></i>
     </li>
-<!-- **************************** TECHNICAL ONE BUTTON **************************** -->
-   <router-link
+    <!-- **************************** TECHNICAL ONE BUTTON **************************** -->
+    <router-link
       to="/StockMarket/Technical/Data"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -102,7 +102,7 @@
       </li>
     </router-link>
 
-<!-- ************************* TECHNICAL FULL DETAIL ************************* -->
+    <!-- ************************* TECHNICAL FULL DETAIL ************************* -->
     <!-- <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -178,8 +178,7 @@
         </ul>
       </div>
     </li> -->
-<!-- ************************* TECHNICAL FULL DETAIL ************************* -->
-
+    <!-- ************************* TECHNICAL FULL DETAIL ************************* -->
 
     <li
       aria-haspopup="true"
@@ -196,7 +195,8 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <router-link
+          <!-- Calendar ********************************************* -->
+          <!-- <router-link
             to="/StockMarket/Assembly/Calendar"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -214,7 +214,7 @@
                 <span class="menu-text">تقویم</span>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
           <router-link
             to="/StockMarket/Assembly/Decisions"
             v-slot="{ href, navigate, isActive, isExactActive }"

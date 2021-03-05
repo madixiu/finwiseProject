@@ -52,8 +52,8 @@ export const REGISTER_USER = gql`
 // `;
 
 export const LOGIN_USER = gql`
-  mutation tokenAuth($email: String!, $password: String!) {
-    tokenAuth(email: $email, password: $password) {
+  mutation tokenAuth($phoneNumber: String!, $password: String!) {
+    tokenAuth(phoneNumber: $phoneNumber, password: $password) {
       success
       errors
       unarchiving

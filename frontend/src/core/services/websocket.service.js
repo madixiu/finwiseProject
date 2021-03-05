@@ -22,7 +22,6 @@ const WsService = {
       let Oraq = new WebSocket("ws://" + URI + "/ws/oraq");
       let HaghTaghadom = new WebSocket("ws://" + URI + "/ws/taghadom");
 
-      // const option_ws2 = new WebSocket('ws://45.82.136.21/ws/test')
       // Vue.prototype.$socketMostViewed = MostViewed;
       // Vue.prototype.$socketImpactOnIndex = ImpactOnIndex;
       // Vue.prototype.$socketMarketHighestDemands = highestDemand;
@@ -36,12 +35,6 @@ const WsService = {
       Vue.prototype.$socketSandoq = Sandoq;
       Vue.prototype.$socketOraq = Oraq;
       Vue.prototype.$socketTaqadom = HaghTaghadom;
-
-      // option_ws.onopen = (event) => console.log('ws connected' + event)
-
-      // define store dispatch here -------------
-      // store.dispatch("setSocketOpen");
-      // store.dispatch('websocketIndex/setSocketOpen')
     } catch (error) {
       console.log("error in websocket:" + error);
     }
