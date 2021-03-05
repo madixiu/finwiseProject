@@ -166,8 +166,8 @@
                   class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
                 > -->
                 <!-- here -->
-                  <!-- <h5 class="titleHeaders-smaller ">چارت</h5> -->
-                  <!-- <ApexChart
+                <!-- <h5 class="titleHeaders-smaller ">چارت</h5> -->
+                <!-- <ApexChart
                     type="area"
                     height="100%"
                     width="100%"

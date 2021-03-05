@@ -75,7 +75,7 @@ export default {
         this.neutral = 0;
         this.sum = 0;
         // this.sum=this.DataItems2.sum_signal
-       
+
         var allkeys = Object.keys(this.DataItems2[0]);
         var signals = allkeys.filter(item => {
           return String(item).includes("Signal");
@@ -89,19 +89,20 @@ export default {
           }
           if (val == -1) {
             that.negative = that.negative + 1;
-            that.sum = that.sum-1;
+            that.sum = that.sum - 1;
           }
           if (val == 0) {
             that.neutral = that.neutral + 1;
           }
-        })
+        });
 
         // this.sum = this.DataItems2[0].sum_signal;
-        if (this.sum>17){
-          this.sum=17
+        if (this.sum > 17) {
+          this.sum = 17;
         }
-        if (this.sum<-17){
-          this.sum=-17        }
+        if (this.sum < -17) {
+          this.sum = -17;
+        }
       }
     },
     initrender() {
@@ -142,7 +143,7 @@ export default {
         return "فروش قوی";
       }
     },
-     getFullColor() {
+    getFullColor() {
       if (this.sum > 10.2) {
         return "#30cc5a";
       }
@@ -294,8 +295,8 @@ export default {
       chart
         .append("g")
         .append("text")
-        
-        .style('fill',this.getFullColor)
+
+        .style("fill", this.getFullColor)
         .text(this.getFull())
         .attr(
           "transform",
