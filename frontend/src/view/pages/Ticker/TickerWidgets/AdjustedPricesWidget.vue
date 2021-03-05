@@ -55,7 +55,7 @@
         </template>
         <template v-slot:[`item.adjustedclosing`]="{ item }">
           <span class="FinancialStrength"
-            >{{ numberWithCommas(roundTo(item.adjustedclosing, 2)) }}
+            >{{ numberWithCommas(roundTo(item.adjustedclosing, 0)) }}
           </span>
         </template>
         <template v-slot:[`item.last`]="{ item }">

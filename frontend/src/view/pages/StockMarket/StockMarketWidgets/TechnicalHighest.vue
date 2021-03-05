@@ -81,7 +81,7 @@ export default {
       lowestValues:[],
       highestValues:[],
       selectedAttribute:1,
-      mvheaders: [{ text: "نماد", value: "ticker" },{ text: "مقدار شاخص", value: "sum" }]
+      mvheaders: [{ text: "نماد", value: "ticker" },{ text: "امتیاز", value: "sum" }]
     };
   },
   computed: {

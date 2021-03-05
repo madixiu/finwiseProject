@@ -56,7 +56,7 @@ export default {
       DataItems: [],
       mvheaders: [
         { text: "عنوان", value: "title", sortabale: false },
-        // { text: "منبع", value: "source", sortabale: false }
+        { text: "منبع", value: "source", sortabale: false }
       ]
     };
   },

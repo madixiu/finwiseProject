@@ -16,6 +16,9 @@
         <TechnicalWidget :Indicators="techdata"></TechnicalWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
+        <FundamentalRobotWidget></FundamentalRobotWidget>
+      </div>
+      <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
@@ -30,6 +33,7 @@
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <DivWidget></DivWidget>
       </div>
+      
       <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
       </div>
@@ -51,6 +55,7 @@ import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
 import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
 import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
 import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
+import FundamentalRobotWidget from "@/view/pages/Ticker/Rankers/FundamentalRobotWidget.vue";
 // import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
 // import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
@@ -64,6 +69,7 @@ export default {
     PWidget,
     ReturnWidget,
     DivWidget,
+    FundamentalRobotWidget,
     // AnalystWidget,
     // MoreSMtatisticsWidget,
     TechnicalWidget,

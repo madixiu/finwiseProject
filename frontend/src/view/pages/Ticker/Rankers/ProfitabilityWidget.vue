@@ -1,6 +1,6 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <div class="card card-custom">
     <!--begin::Header-->
     <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder  FinancialStrength">
