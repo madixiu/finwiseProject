@@ -34,8 +34,8 @@
           <div class="text-center">
             <b-button color="#6c757d">
               آخرین قیمت <br />
-              <b-badge variant="light"
-                >{{ numberWithCommas(LiveDataItems.last) }} (
+              <b-badge style="direction:ltr" variant="light"
+                >(
                 <span
                   class="spandata"
                   v-bind:class="[
@@ -51,6 +51,7 @@
                     ) / 100
                   }}</span
                 >)
+                <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
               </b-badge>
             </b-button>
           </div>
@@ -65,8 +66,8 @@
           <div class="text-center">
             <b-button color="#6c757d">
               قیمت پایانی <br />
-              <b-badge variant="light"
-                >{{ numberWithCommas(LiveDataItems.close) }} (
+              <b-badge style="direction:ltr" variant="light">
+                (
                 <span
                   class="spandata"
                   v-bind:class="[
@@ -82,6 +83,7 @@
                     ) / 100
                   }}</span
                 >)
+                <span>{{ numberWithCommas(LiveDataItems.close) }}</span>
               </b-badge>
             </b-button>
           </div>

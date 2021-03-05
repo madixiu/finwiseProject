@@ -343,6 +343,6 @@ export default {
   vertical-align: middle !important;
 }
 .paginationClass {
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 </style>

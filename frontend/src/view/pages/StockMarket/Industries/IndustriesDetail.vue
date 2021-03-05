@@ -831,7 +831,7 @@ export default {
   vertical-align: middle !important;
 }
 .cellItem {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
   font-weight: 700;
 }
 .FinancialStrength {

@@ -28,7 +28,7 @@
             <v-card-text>
               <div class="row">
                 <div
-                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
                 >
                   <h5 class="subheaderTitles">اطلاعات قیمت</h5>
                   <hr />
@@ -41,7 +41,7 @@
                         this.close > this.open ? 'greenItem' : 'redItem'
                       ]"
                     >
-                      % {{ setclosingperc }}
+                      % {{ setclosingperc.toString() }}
                     </span>
 
                     )
@@ -96,7 +96,7 @@
                 </div>
 
                 <div
-                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                  class="col-xl-4 col-lg-5 col-md-6 col-sm-12 FinancialStrength"
                 >
                   <h5 class="subheaderTitles">مشخصات</h5>
                   <hr />
@@ -131,7 +131,7 @@
                   </h5>
                 </div>
                 <div
-                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
                 >
                   <h5 class="subheaderTitles">معاملات</h5>
                   <hr />
@@ -162,19 +162,20 @@
                     >
                   </h5>
                 </div>
-                <div
+                <!-- <div
                   class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
-                >
+                > -->
+                <!-- here -->
                   <!-- <h5 class="titleHeaders-smaller ">چارت</h5> -->
-                  <ApexChart
+                  <!-- <ApexChart
                     type="area"
                     height="100%"
                     width="100%"
                     :series="priceOverViewSeries"
                     :chartOptions="priceOverViewchartOptions"
                   >
-                  </ApexChart>
-                </div>
+                  </ApexChart> -->
+                <!-- </div> -->
               </div>
             </v-card-text>
           </v-card>
@@ -548,12 +549,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import ApexChart from "@/view/content/charts/ApexChart";
+// import ApexChart from "@/view/content/charts/ApexChart";
 
 export default {
   name: "PWidget",
   components: {
-    ApexChart
+    // ApexChart
   },
   props: ["statistics", "hh", "liveData"],
   data() {
@@ -889,11 +890,12 @@ export default {
   padding: 5px;
   font-size: 1.2em;
   font-weight: 700;
-  text-align: right;
+  /* text-align: right; */
   font-family: "Vazir-Medium-FD";
 }
 .spandata {
   color: rgb(4, 17, 53);
+  direction: ltr;
   font-size: 1.1em;
   font-weight: 800;
   margin-top: 5px;

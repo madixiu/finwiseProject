@@ -109,7 +109,7 @@ export default {
         // console.log(oldValue);
 
         if (newValue != oldValue) {
-          // this.loadData();
+          this.loadData();
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
         }
       },

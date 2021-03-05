@@ -764,13 +764,13 @@ rect {
   fill: white;
   font-size: 0.6rem;
   text-anchor: start;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .parentChildsValue {
   fill-opacity: 1;
   fill: white;
   text-anchor: start;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .parentSquare {
   /* fill: #262931; */

@@ -388,7 +388,7 @@ export default {
   font-weight: bolder;
 }
 .chiptext {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
   font-size: 2.4em;
   text-align: center;
 }
@@ -429,6 +429,6 @@ export default {
   margin-left: 50%;
 }
 .customAlert {
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 </style>
