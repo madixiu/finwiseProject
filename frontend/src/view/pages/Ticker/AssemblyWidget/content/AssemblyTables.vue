@@ -137,7 +137,9 @@
             :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
           >
             <template #cell(ShareCount)="data">
-              <span class="ticker-assembly-table-cell-number">{{ parseInt(data.value).toLocaleString()}}</span>
+              <span class="ticker-assembly-table-cell-number">{{
+                parseInt(data.value).toLocaleString()
+              }}</span>
             </template>
             <template #cell(OwnerPercentage)="data">
               <b class="ticker-assembly-table-cell-number">{{ data.value }}</b>
@@ -187,7 +189,9 @@
             :fields="stepThreeItemsTableHeaders.StatementHeaders"
           >
             <template #cell(Value)="data">
-              <b class="ticker-assembly-table-cell-number">{{parseInt(data.value).toLocaleString() }}</b>
+              <b class="ticker-assembly-table-cell-number">{{
+                parseInt(data.value).toLocaleString()
+              }}</b>
             </template>
           </b-table>
         </v-card>

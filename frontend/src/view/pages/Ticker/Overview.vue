@@ -33,7 +33,7 @@
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <DivWidget></DivWidget>
       </div>
-      
+
       <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
       </div>

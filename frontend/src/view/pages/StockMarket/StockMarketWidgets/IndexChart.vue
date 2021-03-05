@@ -454,7 +454,7 @@ export default {
           .style("Opacity", "0.4 ");
         path.attr(
           "d",
-          `M${ 0} ${0} L${0} ${that.height -
+          `M${0} ${0} L${0} ${that.height -
             that.margin.top -
             yScale(that.indexData[value2].value)} L${0} ${that.margin.top -
             yScale(that.indexData[value2].value)}`
@@ -489,11 +489,13 @@ export default {
               .style("font-family", "Vazir-Medium-FD")
               .text(d => d.split("-")[0])
           )
-          .style("fill", "black")
-          
+          .style("fill", "black");
+
         //eslint-disable-next-line no-unused-vars
         const { x, y, width: w, height: h } = text.node().getBBox();
-        text.attr("transform", `translate(${that.margin.left+w/10},${-h})`).style("font-family", "Dirooz FD")
+        text
+          .attr("transform", `translate(${that.margin.left + w / 10},${-h})`)
+          .style("font-family", "Dirooz FD");
         const pathnew = g
           .selectAll("pathnew")
           .data([null])
@@ -508,14 +510,12 @@ export default {
             "d",
             `M${0} ${that.height -
               that.margin.top -
-              yScale(
-                that.indexData[value2].value
-              )} H-6 
+              yScale(that.indexData[value2].value)} H-6 
               l7,-5l5,5H 25 V
               ${that.height -
-              that.margin.top -
-              yScale(that.indexData[value2].value) +
-              40} H-30 V${that.height -
+                that.margin.top -
+                yScale(that.indexData[value2].value) +
+                40} H-30 V${that.height -
               that.margin.top -
               yScale(that.indexData[value2].value)}z`
           )
@@ -544,7 +544,7 @@ export default {
         const { x2, y2, width: w2, height: h2 } = text2.node().getBBox();
         text2.attr(
           "transform",
-          `translate(${w2/2},${that.height -
+          `translate(${w2 / 2},${that.height -
             that.margin.top -
             yScale(that.indexData[value2].value) +
             20})`

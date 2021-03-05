@@ -1022,14 +1022,14 @@ export default {
 .cellItem {
   font-family: "Dirooz FD";
 }
- .dot {
+.dot {
   height: 25px;
   width: 25px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
 }
- .d3-tip {
+.d3-tip {
   font-family: "Vazir-Medium-FD";
   line-height: 1.4;
   z-index: 300;
@@ -1044,7 +1044,7 @@ export default {
 }
 
 /* Creates a small triangle extender for the tooltip */
- .d3-tip:after {
+.d3-tip:after {
   box-sizing: border-box;
   display: inline;
   font-size: 10px;
@@ -1055,7 +1055,7 @@ export default {
 }
 
 /* Northward tooltips */
- .d3-tip.n:after {
+.d3-tip.n:after {
   content: "▼";
   margin: -1px 0 0 0;
   top: 100%;
@@ -1064,7 +1064,7 @@ export default {
 }
 
 /* Eastward tooltips */
- .d3-tip.e:after {
+.d3-tip.e:after {
   content: "◀";
   margin: -4px 0 0 0;
   top: 50%;
@@ -1072,7 +1072,7 @@ export default {
 }
 
 /* Southward tooltips */
- .d3-tip.s:after {
+.d3-tip.s:after {
   content: "▲";
   margin: 0 0 1px 0;
   top: -8px;
@@ -1081,7 +1081,7 @@ export default {
 }
 
 /* Westward tooltips */
- .d3-tip.w:after {
+.d3-tip.w:after {
   content: "▶";
   margin: -4px 0 0 -1px;
   top: 50%;

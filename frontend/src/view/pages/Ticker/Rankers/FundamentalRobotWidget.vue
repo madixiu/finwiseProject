@@ -35,10 +35,9 @@
             height="25"
           >
           </v-progress-linear>
-        
         </div>
         <div class="blured">
-         <ApexChart
+          <ApexChart
             type="bar"
             width="100%"
             :series="series"
@@ -62,32 +61,40 @@ export default {
   },
   data() {
     return {
-        
       search: "",
       FinancialStrength: 7,
-      series: [{
-            data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-          }],
-          chartOptions: {
-            chart: {
-              type: 'bar',
-              height: 350
-            },
-            plotOptions: {
-              bar: {
-                horizontal: true,
-              }
-            },
-            dataLabels: {
-              enabled: false
-            },
-            xaxis: {
-              categories: ['Earning Power Value', 'Current Asset Value', 'TangibleBook', 
-              'Projected FCF', 'Median PS Value', 'Graham Number', 'Peter Lynch Value',
-                'DCF (FCF BASED)', 'DCF (Earning Based)'
-              ],
-            }
-          },
+      series: [
+        {
+          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        }
+      ],
+      chartOptions: {
+        chart: {
+          type: "bar",
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: [
+            "Earning Power Value",
+            "Current Asset Value",
+            "TangibleBook",
+            "Projected FCF",
+            "Median PS Value",
+            "Graham Number",
+            "Peter Lynch Value",
+            "DCF (FCF BASED)",
+            "DCF (Earning Based)"
+          ]
+        }
+      },
       headers: [
         {
           text: "نسبت مالی",

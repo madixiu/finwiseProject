@@ -2,7 +2,8 @@
   <div class="card card-custom card-stretch gutter-b">
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-صورت جریان وجوه نقد        <b-spinner
+        صورت جریان وجوه نقد
+        <b-spinner
           class="titleHeaders"
           type="grow"
           small
