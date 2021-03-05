@@ -80,7 +80,7 @@
                           class="cellItem"
                           v-bind:class="[
                             item.lastYear > 0
-                              ? 'greenItem ltr_aligned'
+                              ? 'ltr_aligned'
                               : 'redItem ltr_aligned'
                           ]"
                           >{{ numberWithCommas(item.lastYear) }}
@@ -91,7 +91,7 @@
                           class="cellItem"
                           v-bind:class="[
                             item.thisPeriod > 0
-                              ? 'greenItem ltr_aligned'
+                              ? 'ltr_aligned'
                               : 'redItem ltr_aligned'
                           ]"
                           >{{ numberWithCommas(item.thisPeriod) }}
@@ -102,7 +102,7 @@
                           class="cellItem"
                           v-bind:class="[
                             item.LastYear > 0
-                              ? 'greenItem ltr_aligned'
+                              ? 'ltr_aligned'
                               : 'redItem ltr_aligned'
                           ]"
                           >{{ numberWithCommas(item.LastYear) }}
@@ -113,7 +113,7 @@
                           class="cellItem"
                           v-bind:class="[
                             item.LastYearThisPeriod > 0
-                              ? 'greenItem ltr_aligned'
+                              ? 'ltr_aligned'
                               : 'redItem ltr_aligned'
                           ]"
                           >{{ numberWithCommas(item.LastYearThisPeriod) }}

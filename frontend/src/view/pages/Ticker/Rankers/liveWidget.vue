@@ -355,7 +355,7 @@
                     <span class="spandata" v-if="!isNaN(this.avgval3month)">
                       {{
                         numberWithCommas(
-                          roundTo(this.avgval3month / 1000000, 2)
+                          roundTo(this.avgval3month / 1000000000, 2)
                         )
                       }}
                       میلیون</span
@@ -883,20 +883,20 @@ export default {
   font-size: 1em;
   font-weight: 700;
   text-align: right;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .titleHeaders-smaller {
   padding: 5px;
   font-size: 1.2em;
   font-weight: 700;
   text-align: right;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .spandata {
   color: rgb(4, 17, 53);
   font-size: 1.1em;
   font-weight: 800;
   margin-top: 5px;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 </style>

@@ -7,23 +7,136 @@
       <div class="row">
         <div
           id="Chartcontainer_index"
-          class="col-xxl-9 col-lg-9 col-md-12 col-sm-12"
+          class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
         ></div>
-        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 card card-custom">
-          <v-card-title>شاخص کل {{ this.latestIndex }}</v-card-title>
-          <v-divider class="mt-0"></v-divider>
-          <v-card-title>شاخص هم وزن {{ this.latestIndex }}</v-card-title>
-          <v-divider class="mt-0"></v-divider>
-          <v-card-title>شاخص فرابورس {{ this.latestIndex }}</v-card-title>
-          <v-divider class="mt-0"></v-divider>
-          <v-card-title>ارزش بازار بورس {{ this.latestIndex }}</v-card-title>
-          <v-divider class="mt-0"></v-divider>
-          <v-card-title>ارزش بازار فرابورس {{ this.latestIndex }}</v-card-title>
-          <v-divider class="mt-0"></v-divider>
-          <v-card-title>ارزش معاملات بورس {{ this.latestIndex }}</v-card-title>
+        <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 card card-custom">
+          <v-card-title
+            >شاخص کل :
+            <span
+              v-bind:class="[
+                this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
+              ]"
+            >
+              {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
+            ><span
+              v-bind:class="[
+                this.lastestIndexChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
+              ]"
+            >
+              ({{
+                numberWithCommas(roundTo(this.lastestIndexChange), 0)
+              }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.lastestIndexChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-arrow-{{
+                  this.lastestIndexChange > 0 ? "up" : "down "
+                }}-circle-outline</v-icon
+              ></span
+            >
+          </v-card-title>
           <v-divider class="mt-0"></v-divider>
           <v-card-title
-            >ارزش معاملات فرابورس {{ this.latestIndex }}</v-card-title
+            >شاخص هم وزن :
+            <span class="cellItem">{{
+              numberWithCommas(roundTo(this.latestSW), 0)
+            }}</span>
+            <span
+              v-bind:class="[
+                this.lastestSWChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
+              ]"
+            >
+              ({{ numberWithCommas(roundTo(this.lastestSWChange), 0) }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.lastestSWChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-arrow-{{
+                  this.lastestSWChange > 0 ? "up" : "down "
+                }}-circle-outline</v-icon
+              ></span
+            >
+          </v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >شاخص فرابورس:
+            <span class="cellItem">{{
+              numberWithCommas(roundTo(this.IFBlatestIndex), 0)
+            }}</span>
+            <span
+              v-bind:class="[
+                this.IFBLatestChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
+              ]"
+            >
+              ({{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.IFBLatestChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-arrow-{{
+                  this.IFBLatestChange > 0 ? "up" : "down "
+                }}-circle-outline</v-icon
+              ></span
+            >
+          </v-card-title>
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >ارزش بازار بورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(roundTo(this.MarketCapTotal / 1000000000), 0)
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >ارزش بازار فرابورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.IFBMarketCapTotal / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >ارزش معاملات بورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(roundTo(this.latestTradeValue / 1000000000, 0))
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title
+            >ارزش معاملات فرابورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.latestTradeValueIFB / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
           >
           <v-divider class="mt-0"></v-divider>
         </div>
@@ -45,12 +158,15 @@ export default {
       loading: true,
       jsonData: {},
       latestIndex: 0,
+      lastestIndexChange: 0,
       latestSW: 0,
+      lastestSWChange: 0,
       latestTradeValue: 0,
       MarketCapTotal: 0,
       IFBlatestIndex: 0,
+      IFBLatestChange: 0,
       IFBMarketCapTotal: 0,
-
+      latestTradeValueIFB: 0,
       indexData: [],
       min: 0,
       max: 10,
@@ -145,28 +261,50 @@ export default {
       // eslint-disable-next-line no-unused-vars
     },
     renderData() {
-      let data = [...this.inputDataIndex];
-      var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
-      data.forEach(
-        function(d) {
-          d.date = parseTime(d.englishDate.split(".")[0]);
-          d.value = d.Index;
-        },
+      if (
+        !(this.inputDataIndex === undefined || this.inputDataIndex.length == 0)
+      ) {
+        let data = [...this.inputDataIndex];
+        console.log(data);
+        var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+        data.forEach(
+          function(d) {
+            d.date = parseTime(d.englishDate.split(".")[0]);
+            d.value = d.Index;
+          },
+          // eslint-disable-next-line no-unused-vars
+          function(error, data) {
+            if (error) throw error;
+          }
+        );
+        data.sort(function(a, b) {
+          return a.date - b.date;
+        });
         // eslint-disable-next-line no-unused-vars
-        function(error, data) {
-          if (error) throw error;
-        }
-      );
-      data.sort(function(a, b) {
-        return a.date - b.date;
-      });
-
-      data = data.filter(function(d) {
-        if (d.date.getHours() > 8 && d.Market == 1) {
-          return d;
-        }
-      });
-      this.indexData = [...data];
+        var data2 = data.filter(function(d) {
+          if (d.date.getHours() > 8 && d.Market == 2) {
+            return d;
+          }
+        });
+        data = data.filter(function(d) {
+          if (d.date.getHours() > 8 && d.Market == 1) {
+            return d;
+          }
+        });
+        var lastItem = data.pop();
+        var lastItem2 = data2.pop();
+        this.latestIndex = lastItem["Index"];
+        this.lastestIndexChange = lastItem["IndexChange"];
+        this.lastestSWChange = lastItem["SW_Index_Change"];
+        this.latestSW = lastItem["SW_Index"];
+        this.latestTradeValue = lastItem["TradeValue"];
+        this.MarketCapTotal = lastItem["MarketCapTotal"];
+        this.IFBlatestIndex = lastItem2["Index"];
+        this.IFBLatestChange = lastItem2["IndexChange"];
+        this.latestTradeValueIFB = lastItem2["TradeValue"];
+        this.IFBMarketCapTotal = lastItem2["MarketCapTotal"];
+        this.indexData = [...data];
+      }
     },
     renderChart() {
       if (document.getElementById("Chartcontainer_index_svg")) {
@@ -230,13 +368,14 @@ export default {
 
       let xAxisAxe = chart.append("g").call(xAxis);
       xAxisAxe
-        .style("font-size", `${this.width / 1000}em`)
+        .selectAll("text")
+        .style("font-size", `${this.width / 700}em`)
         .style("font-family", "Dirooz FD")
         .style("font-weight", "800");
       var yAxis = g =>
         g
           .attr("class", "yAxis")
-          .attr("transform", `translate(${this.margin.left},0)`)
+          // .attr("transform", `translate(${this.margin.left},0)`)
           .transition()
           .duration(1000)
           .call(d3.axisLeft(yScale))
@@ -244,9 +383,10 @@ export default {
           .style("font-family", "Dirooz FD");
       let yAxisAxe = chart.append("g").call(yAxis);
       yAxisAxe
+        .selectAll("text")
         .style("text-anchor", "start")
-        .attr("transform", `translate(0,0)`)
-        .style("font-size", `${this.width / 1000}em`)
+        // .attr("transform", `translate(${-this.margin.left},0)`)
+        .style("font-size", `${this.width / 700}em`)
         .style("font-family", "Dirooz FD")
         .style("font-weight", "800");
       d3.selectAll("g.yAxis g.tick")
@@ -299,141 +439,156 @@ export default {
           second: "numeric"
         });
       }
+      let that = this;
       // eslint-disable-next-line no-unused-vars
       var callout2 = (g, value1, value2, value) => {
         if (!value2) return g.style("display", "none");
-        // g.style("display", null).style("pointer-events", "none");
-        // const path = g
-        //   .selectAll("path")
-        //   .data([null])
-        //   .join("path")
-        //   .attr("fill", "white")
-        //   .attr("stroke", "black")
-        //   .style("stroke-dasharray", "2, 6")
-        //   .style("Opacity", "0.2 ");
-        // path.attr(
-        //   "d",
-        //   `M${0} ${0} L${0} ${this.height -
-        //     this.margin.top -
-        //     yScale(this.indexData[value2].value)} L${0} ${this.margin.top -
-        //     yScale(this.indexData[value2].value)}`
-        // );
-        // const circle = g
-        //   .selectAll("circle")
-        //   .data([null])
-        //   .join("circle")
-        //   .attr("fill", "steelblue")
-        //   .attr("stroke-width", 2)
-        //   .style("stroke", "black");
+        g.style("display", null).style("pointer-events", "none");
+        const path = g
+          .selectAll("path")
+          .data([null])
+          .join("path")
+          .attr("fill", "white")
+          .attr("stroke", "black")
+          .style("stroke-dasharray", "2, 6")
+          .style("Opacity", "0.4 ");
+        path.attr(
+          "d",
+          `M${ 0} ${0} L${0} ${that.height -
+            that.margin.top -
+            yScale(that.indexData[value2].value)} L${0} ${that.margin.top -
+            yScale(that.indexData[value2].value)}`
+        );
+        // eslint-disable-next-line no-unused-vars
+        const circle = g
+          .selectAll("circle")
+          .data([null])
+          .join("circle")
+          .attr("fill", "steelblue")
+          .attr("stroke-width", 2)
+          .style("stroke", "black");
 
-        // circle
-        //   .attr("r", "5")
-        //   .attr("cx", "0")
-        //   .attr("cy", "0");
-        // const text = g
-        //   .selectAll("text")
-        //   .data([null])
-        //   .join("text")
-        //   .call(text =>
-        //     text
-        //       .selectAll("tspan")
-        //       .data((value + "").split(/\n/))
-        //       .join("tspan")
-        //       .attr("x", 0)
-        //       .attr("y", (d, i) => `${i * 1.1}em`)
-        //       .style("font-weight", (_, i) => (i ? null : "bold"))
-        //       .text(d => d.split("-")[0])
-        //   )
-        //   .style("fill", "black")
-        //   .style("font-size", "14px");
-        // // eslint-disable-next-line no-unused-vars
-        // const { x, y, width: w, height: h } = text.node().getBBox();
-        // text.attr("transform", `translate(${0},${-h})`);
-        // const pathnew = g
-        //   .selectAll("pathnew")
-        //   .data([null])
-        //   .join("path")
-        //   .attr("fill", "#001170")
-        //   .style("stroke", "black")
-        //   .style("stroke-dasharray", "3,3")
-        //   .style("Opacity", "0.8");
-        // pathnew
-        //   .attr(
-        //     "d",
-        //     `M${0} ${this.height -
-        //       this.margin.top -
-        //       yScale(this.indexData[value2].value)} H-6 l7,-5l5,5H 25 V${this.height -
-        //       this.margin.top -
-        //       yScale(this.indexData[value2].value) +
-        //       40} H-30 V${this.height - this.margin.right - yScale(this.indexData[value2].value)}z`
-        //   )
-        //   .attr("stroke", "black");
+        circle
+          .attr("r", "5")
+          .attr("cx", "0")
+          .attr("cy", "0");
+        // eslint-disable-next-line no-unused-vars
+        const text = g
+          .selectAll("text")
+          .data([null])
+          .join("text")
+          .call(text =>
+            text
+              .selectAll("tspan")
+              .data((value + "").split(/\n/))
+              .join("tspan")
+              .attr("x", 0)
+              .attr("y", (d, i) => `${i * 1.1}em`)
+              .style("font-weight", (_, i) => (i ? null : "bold"))
+              .style("font-size", "14px")
+              .style("font-family", "Vazir-Medium-FD")
+              .text(d => d.split("-")[0])
+          )
+          .style("fill", "black")
+          
+        //eslint-disable-next-line no-unused-vars
+        const { x, y, width: w, height: h } = text.node().getBBox();
+        text.attr("transform", `translate(${that.margin.left+w/10},${-h})`).style("font-family", "Dirooz FD")
+        const pathnew = g
+          .selectAll("pathnew")
+          .data([null])
+          .join("path")
+          .attr("fill", "#001170")
+          .style("font-family", "Dirooz FD")
+          .style("stroke", "black")
+          .style("stroke-dasharray", "3,3")
+          .style("Opacity", "0.8");
+        pathnew
+          .attr(
+            "d",
+            `M${0} ${that.height -
+              that.margin.top -
+              yScale(
+                that.indexData[value2].value
+              )} H-6 
+              l7,-5l5,5H 25 V
+              ${that.height -
+              that.margin.top -
+              yScale(that.indexData[value2].value) +
+              40} H-30 V${that.height -
+              that.margin.top -
+              yScale(that.indexData[value2].value)}z`
+          )
+          .attr("stroke", "black");
 
-        // const text2 = g
-        //   .selectAll("text2")
-        //   .data([null])
-        //   .join("text")
-        //   .call(text2 =>
-        //     text2
-        //       .selectAll("tspan")
-        //       .data((value + "").split(/\n/))
-        //       .join("tspan")
-        //       .attr("x", 0)
-        //       .attr("y", (d, i) => `${i * 1.1}em`)
-        //       .style("font-weight", (_, i) => (i ? null : "bold"))
-        //       .text(d => d.split("-")[1].split(" ")[0])
-        //   )
-        //   .style("fill", "white")
-        //   .style("font-size", "11px")
-        //   .style("Opacity", "1 ");
-        // // eslint-disable-next-line no-unused-vars
-        // const { x2, y2, width: w2, height: h2 } = text2.node().getBBox();
-        // text2.attr(
-        //   "transform",
-        //   `translate(${-w2 / 2 - 1},${this.height -
-        //     this.margin.top -
-        //     yScale(this.indexData[value2].value) +
-        //     20})`
-        // );
-        // const pathnew2 = g
-        //   .selectAll("pathnew2")
-        //   .data([null])
-        //   .join("path")
-        //   .attr("fill", "gray")
-        //   .style("stroke", "black")
-        //   // .style("stroke-dasharray", ("3,3"))
-        //   .style("Opacity", "0.4");
-        // pathnew2
-        //   .attr("d", `M${-10} ${-10} H${90} V${-50} H${-10}z`)
-        //   .attr("stroke", "black");
+        const text2 = g
+          .selectAll("text2")
+          .data([null])
+          .join("text")
+          .call(text2 =>
+            text2
+              .selectAll("tspan")
+              .data((value + "").split(/\n/))
+              .join("tspan")
+              .attr("x", 0)
+              .attr("y", (d, i) => `${i * 1.1}em`)
+              .style("font-weight", (_, i) => (i ? null : "bold"))
+              .style("font-family", "Dirooz FD")
+              .text(d => d.split("-")[1].split(" ")[0])
+          )
+          .style("fill", "white")
+          .style("font-family", "Dirooz FD")
+          .style("font-size", "11px")
+          .style("Opacity", "1 ");
+        // eslint-disable-next-line no-unused-vars
+        const { x2, y2, width: w2, height: h2 } = text2.node().getBBox();
+        text2.attr(
+          "transform",
+          `translate(${w2/2},${that.height -
+            that.margin.top -
+            yScale(that.indexData[value2].value) +
+            20})`
+        );
+        const pathnew2 = g
+          .selectAll("pathnew2")
+          .data([null])
+          .join("path")
+          .attr("fill", "gray")
+          .style("stroke", "black")
+          // .style("stroke-dasharray", ("3,3"))
+          .style("Opacity", "0.4");
+        pathnew2
+          .attr("d", `M${-10} ${-10} H${90} V${-50} H${-10}z`)
+          .attr("stroke", "black");
       };
-      chart.on("touchmove mousemove", function(event) {
+
+      svg.on("touchmove mousemove", function(event) {
         const x1 = d3.pointer(event, this)[0];
         const y1 = d3.pointer(event, this)[1];
-        if (x1 - this.margin.left < this.width - this.margin.right) {
-          const date = xScale.invert(x1 - this.margin.left);
+        if (x1 - that.margin.left < that.width - that.margin.right) {
+          const date = xScale.invert(x1 - that.margin.left);
           // eslint-disable-next-line no-unused-vars
-          const y2 = yScale.invert(y1 - this.margin.top);
+          const y2 = yScale.invert(y1 - that.margin.top);
           const idx = d3.bisect(dates, date);
           tooltip
             .attr(
               "transform",
-              `translate(${xScale(this.indexData[idx].date)},${yScale(
-                this.indexData[idx].value
+              `translate(${xScale(that.indexData[idx].date)},${yScale(
+                that.indexData[idx].value
               )})`
             )
             .call(
               callout2,
               x1,
               idx,
-              `${formatValue(this.indexData[idx].value)}-${formatDate(
-                this.indexData[idx].date
+              `${formatValue(that.indexData[idx].value)}-${formatDate(
+                that.indexData[idx].date
               )}-`
             );
         }
       });
 
-      chart.on("touchend mouseleave", () => tooltip.call(callout2, null));
+      svg.on("touchend mouseleave", () => tooltip.call(callout2, null));
       svg
         .append("text")
         .attr("class", "title")
@@ -445,7 +600,7 @@ export default {
         .append("text")
         .attr("class", "source")
         .attr("x", this.width - this.margin.left)
-        .attr("y", this.height*0.9)
+        .attr("y", this.height * 0.9)
         .attr("text-anchor", "start")
         .text("Source: FinWise")
         .style("font-weight", "700")
@@ -458,19 +613,39 @@ export default {
 </script>
 
 <style scoped>
+.cellItem {
+  direction: ltr;
+  text-align: right;
+  font-family: "Vazir-Medium-FD";
+  font-weight: 700;
+  font-size: 1.1em;
+}
+.cellItem2 {
+  font-family: "Vazir-Medium-FD";
+  font-weight: 700;
+  font-size: 1.1em;
+}
+.redItem {
+  color: red !important;
+  font-family: "Vazir-Medium-FD" !important;
+}
+.greenItem {
+  color: green !important;
+  font-family: "Vazir-Medium-FD" !important;
+}
 .Chart1title * {
   font-size: 1.2em;
   font-family: "Dirooz FD";
 }
 
-/deep/ .dot {
+.dot {
   height: 25px;
   width: 25px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
 }
-/deep/ .d3-tip {
+.d3-tip {
   font-family: "Vazir-Medium-FD";
   line-height: 1.4;
   z-index: 300;
@@ -483,9 +658,11 @@ export default {
   border-radius: 4px;
   opacity: 80%;
 }
-
+.inlineIcon {
+  display: inline;
+}
 /* Creates a small triangle extender for the tooltip */
-/deep/ .d3-tip:after {
+.d3-tip:after {
   box-sizing: border-box;
   display: inline;
   font-size: 10px;
@@ -497,7 +674,7 @@ export default {
 }
 
 /* Northward tooltips */
-/deep/ .d3-tip.n:after {
+.d3-tip.n:after {
   content: "▼";
   margin: -1px 0 0 0;
   top: 100%;
@@ -506,7 +683,7 @@ export default {
 }
 
 /* Eastward tooltips */
-/deep/ .d3-tip.e:after {
+.d3-tip.e:after {
   content: "◀";
   margin: -4px 0 0 0;
   top: 50%;
@@ -514,7 +691,7 @@ export default {
 }
 
 /* Southward tooltips */
-/deep/ .d3-tip.s:after {
+.d3-tip.s:after {
   content: "▲";
   margin: 0 0 1px 0;
   top: -8px;
@@ -523,7 +700,7 @@ export default {
 }
 
 /* Westward tooltips */
-/deep/ .d3-tip.w:after {
+.d3-tip.w:after {
   content: "▶";
   margin: -4px 0 0 -1px;
   top: 50%;

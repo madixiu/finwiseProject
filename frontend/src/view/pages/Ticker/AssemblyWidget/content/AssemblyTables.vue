@@ -123,7 +123,7 @@
 
       <div class="col-xxl-12 col-lg-12 " v-if="ShareholdersItems.length">
         <v-card>
-          <v-card-title>سهامداران</v-card-title>
+          <v-card-title>حاضرین</v-card-title>
           <b-table
             class="ticker-assembly-table"
             tbody-tr-class="ticker-assembly-table-row"

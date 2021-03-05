@@ -1,10 +1,10 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom  ">
+  <div class="card card-custom card-stretch gutter-b">
     <!--begin::Header-->
     <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-        نسبت های بازگشت سرمایه
+        ربات تحلیلگر بنیادی
       </h3>
     </div>
     <!--end::Header-->
@@ -19,10 +19,12 @@
                 <v-icon left>mdi-label</v-icon>
               </v-chip>
             </template>
-            <span class="small">Valuation & Return</span>
+            <span class="small">Valuation</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">
+          {{ this.FinancialStrength }}/10
+        </div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
@@ -33,51 +35,17 @@
             height="25"
           >
           </v-progress-linear>
+        
+        </div>
+        <div class="blured">
+         <ApexChart
+            type="bar"
+            width="100%"
+            :series="series"
+            :chartOptions="chartOptions"
+          />
         </div>
       </div>
-      <v-data-table
-        :headers="headers"
-        :items="ValuatedItems"
-        :hide-default-footer="true"
-        class="elevation-1 FinancialStrength"
-        :header-props="{ sortIcon: null }"
-      >
-        <template v-slot:[`item.persianname`]="{ item }">
-          <v-tooltip left>
-            <template v-slot:activator="{ on }">
-              <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
-            </template>
-            <span class="blured">{{ item.name }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:[`item.now`]="{ item }">
-            <span class="blured">{{ item.now }}</span>
-        </template>
-        <template v-slot:[`item.industry`]="{ item }">
-          <v-progress-linear
-            background-color="#E9ECEF"
-            :height="15"
-            :width="150"
-            :rounded="true"
-            class="blured"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.industry * 100"
-          >
-          </v-progress-linear>
-        </template>
-        <template v-slot:[`item.historic`]="{ item }">
-          <v-progress-linear
-            background-color="#E9ECEF"
-            :height="15"
-            :width="150"
-            :rounded="true"
-             class="blured"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.historic * 100"
-          >
-          </v-progress-linear>
-        </template>
-      </v-data-table>
     </div>
     <!--end::Body-->
   </div>
@@ -86,13 +54,40 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import ApexChart from "@/view/content/charts/ApexChart";
 export default {
-  name: "PWidget",
+  name: "FundamentalRobot",
+  components: {
+    ApexChart
+  },
   data() {
     return {
+        
       search: "",
-      FinancialStrength: 5,
+      FinancialStrength: 7,
+      series: [{
+            data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+          }],
+          chartOptions: {
+            chart: {
+              type: 'bar',
+              height: 350
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: ['Earning Power Value', 'Current Asset Value', 'TangibleBook', 
+              'Projected FCF', 'Median PS Value', 'Graham Number', 'Peter Lynch Value',
+                'DCF (FCF BASED)', 'DCF (Earning Based)'
+              ],
+            }
+          },
       headers: [
         {
           text: "نسبت مالی",
@@ -109,16 +104,56 @@ export default {
       ],
       ValuatedItems: [
         {
-          name: "Price To Tanglible Book",
-          persianname: "قیمت به ارزش دفتری",
+          name: "PE Ratio",
+          persianname: "نسبت P/E",
           historic: 0.6,
           now: "30%",
           industry: 0.2,
           FinancialStrength: 0.8
         },
         {
-          name: "Price To Intrinsic Value Projected FCF",
-          persianname: "قیمت به ارزش ذاتی",
+          name: "Forward PE Ratio",
+          persianname: "P/E Forward",
+          historic: 5,
+          now: "70%",
+          industry: 0.6,
+          FinancialStrength: 0.8
+        },
+        {
+          name: "PE Ratio Without NRI",
+          persianname: "P/E - NRI",
+          historic: 5,
+          now: "70%",
+          industry: 0.6,
+          FinancialStrength: 0.8
+        },
+        {
+          name: "Price-to-Owner-Earnings",
+          persianname: "نسبت قیمت به درآمد مالک",
+          historic: 5,
+          now: "70%",
+          industry: 0.6,
+          FinancialStrength: 0.8
+        },
+        {
+          name: "PB Ratio",
+          persianname: "P/B",
+          historic: 5,
+          now: "70%",
+          industry: 0.6,
+          FinancialStrength: 0.8
+        },
+        {
+          name: "PS Ratio",
+          persianname: "P/S",
+          historic: 5,
+          now: "70%",
+          industry: 0.6,
+          FinancialStrength: 0.8
+        },
+        {
+          name: "Price-to-Free-Cash-Flow",
+          persianname: "قیمت به جریان نقدی عملیاتی",
           historic: 5,
           now: "70%",
           industry: 0.6,
@@ -174,11 +209,11 @@ export default {
 .valign * {
   vertical-align: middle;
 }
-.blured{
+.blured {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
-  filter: blur(10px);
+  filter: blur(5px);
 }
 </style>
