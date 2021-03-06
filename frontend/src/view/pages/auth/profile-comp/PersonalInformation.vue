@@ -7,7 +7,7 @@
         اطلاعات شخصی
       </b-card-title>
       <b-card-sub-title style="text-align:right">
-        Update your personal informaiton
+        ویرایش اطلاعات شخصی
       </b-card-sub-title>
       <div class="card-toolbar">
         <button
@@ -16,10 +16,10 @@
           @click="save()"
           ref="kt_save_changes"
         >
-          Save Changes
+          ذخیره
         </button>
         <button type="reset" class="btn btn-secondary" @click="cancel()">
-          Cancel
+          لغو
         </button>
       </div>
     </div>
@@ -36,13 +36,12 @@
         <!-- </div> -->
         <div class="form-group row">
           <span class="col-xl-3 col-lg-3  text-right"
-            >First Name</span
+            >نام</span
           >
           <div class="col-lg-3 col-xl-4">
-            
             <input
               ref="name"
-              class="form-control form-control-lg "
+              class="form-control form-control-lg form-control-solid "
               type="text"
               v-bind:value="currentUserPersonalInfo.name"
             />
@@ -50,7 +49,7 @@
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Last Name</label
+            >نام خانوادگی</label
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -63,7 +62,7 @@
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Company Name</label
+            >نام شرکت</label
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -73,20 +72,19 @@
               v-bind:value="currentUserPersonalInfo.company_name"
             />
             <span class="form-text text-muted"
-              >If you want your invoices addressed to a company. Leave blank to
-              use your full name.</span
+              >در صورتی که برای شخصیت حقوقی قصد ثبت نام دارید، با ما مستقیما تماس بگیرید</span
             >
           </div>
         </div>
         <div class="row">
           <label class="col-xl-3"></label>
-          <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
+          <div class="col-lg-12 col-xl-12">
+            <h5 class="font-weight-bold mb-6 text-right">اطلاعات تماس</h5>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Contact Phone</label
+            >تلفن همراه</label
           >
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -103,14 +101,11 @@
                 v-bind:value="currentUserPersonalInfo.phone"
               />
             </div>
-            <span class="form-text text-muted"
-              >We'll never share your email with anyone else.</span
-            >
           </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Email Address</label
+            >ایمیل</label
           >
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -131,7 +126,7 @@
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Company Site</label
+            >سایت</label
           >
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -142,9 +137,6 @@
                 placeholder="Username"
                 v-bind:value="currentUserPersonalInfo.company_site"
               />
-              <div class="input-group-append">
-                <span class="input-group-text">.com</span>
-              </div>
             </div>
           </div>
         </div>

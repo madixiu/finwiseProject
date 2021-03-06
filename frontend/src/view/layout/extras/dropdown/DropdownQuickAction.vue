@@ -6,11 +6,11 @@
       :style="{ backgroundImage: `url(${backgroundImage})` }"
     >
       <h4 class="text-white font-weight-bold">
-        Quick Actions
+        حساب کاربری
       </h4>
-      <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
+      <!-- <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
         23 tasks pending
-      </span>
+      </span> -->
     </div>
     <!--end::Header -->
 
@@ -52,27 +52,27 @@ export default {
     return {
       list: [
         {
-          title: "Accounting",
-          desc: "eCommerce",
-          svg: process.env.BASE_URL + "media/svg/icons/Shopping/Euro.svg"
+          title: "تنظیمات",
+          desc: "",
+          svg: process.env.BASE_URL + "media/svg/icons/Communication/Mail-attachment.svg"
         },
         {
-          title: "Administration",
-          desc: "Console",
+          title: "خروج",
+          desc: "",
           svg:
             process.env.BASE_URL +
-            "media/svg/icons/Communication/Mail-attachment.svg"
+            "media/svg/icons/Navigation/Sign-out.svg"
         },
-        {
-          title: "Projects",
-          desc: "Pending Tasks",
-          svg: process.env.BASE_URL + "media/svg/icons/Shopping/Box2.svg"
-        },
-        {
-          title: "Customers",
-          desc: "Latest Cases",
-          svg: process.env.BASE_URL + "media/svg/icons/Communication/Group.svg"
-        }
+        // {
+        //   title: "Projects",
+        //   desc: "Pending Tasks",
+        //   svg: process.env.BASE_URL + "media/svg/icons/Shopping/Box2.svg"
+        // },
+        // {
+        //   title: "Customers",
+        //   desc: "Latest Cases",
+        //   svg: process.env.BASE_URL + "media/svg/icons/Communication/Group.svg"
+        // }
       ]
     };
   },

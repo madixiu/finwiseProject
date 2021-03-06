@@ -53,9 +53,9 @@
       </b-dropdown-text>
     </b-dropdown> -->
     <!--end: Notifications -->
-
+<Clock></Clock>
     <!--begin: Quick Actions -->
-    <!-- <b-dropdown
+    <b-dropdown
       size="sm"
       variant="link"
       toggle-class="topbar-item text-decoration-none"
@@ -73,7 +73,7 @@
       <b-dropdown-text tag="div" class="min-w-md-350px">
         <KTDropdownQuickAction></KTDropdownQuickAction>
       </b-dropdown-text>
-    </b-dropdown> -->
+    </b-dropdown>
     <!--end: Quick Actions -->
 
     <!--begin: My Cart -->
@@ -128,10 +128,10 @@
     </div> -->
     <!--end: Language bar -->
     <!-- Clock -->
-    <Clock></Clock>
+    
     <!-- Clock end -->
     <!--begin: User Bar -->
-    <KTQuickUser></KTQuickUser>
+    <!-- <KTQuickUser></KTQuickUser> -->
     <!-- <KTQuickUser2 /> -->
 
     <!--end: User Bar -->
@@ -171,10 +171,10 @@ import Clock from "@/view/content/Clock.vue";
 // import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
 // import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
 
-// import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
+import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
 // import KTDropdownMyCart from "@/view/layout/extras/dropdown/DropdownMyCart.vue";
 // import KTDropdownLanguage from "@/view/layout/extras/dropdown/DropdownLanguage.vue";
-import KTQuickUser from "@/view/layout/extras/offcanvas/QuickUser.vue";
+// import KTQuickUser from "@/view/layout/extras/offcanvas/QuickUser.vue";
 // import KTQuickUser2 from "@/view/layout/extras/offcanvas/QuickUser2.vue";
 
 // import KTQuickPanel from "@/view/layout/extras/offcanvas/QuickPanel.vue";
@@ -193,10 +193,10 @@ export default {
     Clock,
     // KTSearchDefault,
     // KTDropdownNotification,
-    // KTDropdownQuickAction,
+    KTDropdownQuickAction,
     // KTDropdownMyCart,
     // KTDropdownLanguage,
-    KTQuickUser,
+    // KTQuickUser,
     // KTQuickUser2
     // KTQuickPanel
   },
@@ -215,7 +215,7 @@ export default {
       return process.env.BASE_URL + "media/svg/icons/Code/Compiling.svg";
     },
     QuickActionIcon() {
-      return process.env.BASE_URL + "media/svg/icons/Media/Equalizer.svg";
+      return process.env.BASE_URL + "media/svg/icons/Communication/Shield-user.svg";
     },
     MyCartIcon() {
       return process.env.BASE_URL + "media/svg/icons/Shopping/Cart3.svg";

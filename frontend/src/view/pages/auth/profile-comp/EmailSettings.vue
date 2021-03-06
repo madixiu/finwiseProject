@@ -3,14 +3,14 @@
     <!--begin::Header-->
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
-        <h3 class="card-label font-weight-bolder text-dark">Email Settings</h3>
+        <h3 class="card-label font-weight-bolder text-dark">تنظیمات ایمیل</h3>
         <span class="text-muted font-weight-bold font-size-sm mt-1"
-          >Change your email settings</span
+          >تغییرات ایمیل های دریافتی فین وایز</span
         >
       </div>
       <div class="card-toolbar">
-        <button type="reset" class="btn btn-success mr-2">Save Changes</button>
-        <button type="reset" class="btn btn-secondary">Cancel</button>
+        <button type="reset" class="btn btn-success mr-2">ذخیره</button>
+        <button type="reset" class="btn btn-secondary">لغو</button>
       </div>
     </div>
     <!--end::Header-->
@@ -18,21 +18,20 @@
     <form class="form">
       <div class="card-body">
         <div class="row">
-          <label class="col-xl-3"></label>
-          <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Setup Email Notification:</h5>
+          <label class="col-xl-12 col-md-12 col-xs-12"></label>
+          <div class="col-xl-12 col-md-12 col-xs-12">
+            <h5 class="font-weight-bold mb-6 text-right">ایمیل های دریافتی</h5>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Email Notification</label
+          <label class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
+            >اطلاع رسانی از طریق ایمیل</label
           >
-          <div class="col-lg-9 col-xl-6">
+          <div class="col-lg-9 col-xl-9 col-md-9 col-xs-12">
             <span class="switch switch-sm">
               <label>
                 <input
                   type="checkbox"
-                  checked="checked"
                   name="email_notification_1"
                 />
                 <span></span>
@@ -41,10 +40,10 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Send Copy To Personal Email</label
+           <label class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
+            >ارسال کپی به ایمیل شخصی</label
           >
-          <div class="col-lg-9 col-xl-6">
+           <div class="col-lg-9 col-xl-9 col-md-9 col-xs-12">
             <span class="switch switch-sm">
               <label>
                 <input type="checkbox" name="email_notification_2" />
@@ -55,33 +54,33 @@
         </div>
         <div class="separator separator-dashed my-10"></div>
         <div class="row">
-          <label class="col-xl-3"></label>
-          <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Activity Related Emails:</h5>
+          <label class="col-xl-12 col-md-12 col-xs-12"></label>
+          <div class="col-xl-12 col-md-12 col-xs-12">
+            <h5 class="font-weight-bold mb-6 text-right">موضوعات</h5>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >When To Email</label
+            >مواقع دریافت:</label
           >
           <div class="col-lg-9 col-xl-6">
             <div class="checkbox-list">
               <label class="checkbox">
                 <input type="checkbox" />
-                <span></span> You have new notifications.
+                <span></span> نوتیفیکشن جدید
               </label>
               <label class="checkbox">
                 <input type="checkbox" />
-                <span></span> You're sent a direct message
+                <span></span> اطلاعات سهم های مورد علاقه
               </label>
-              <label class="checkbox">
+              <!-- <label class="checkbox">
                 <input type="checkbox" checked="checked" />
                 <span></span> Someone adds you as a connection
-              </label>
+              </label> -->
             </div>
           </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
             >When To Escalate Emails</label
           >
@@ -101,40 +100,31 @@
               </label>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="separator separator-dashed my-10"></div>
         <div class="row">
-          <label class="col-xl-3"></label>
-          <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Updates From Keenthemes:</h5>
+          <label class="col-xl-12 col-md-12 col-xs-12"></label>
+          <div class="col-xl-12 col-md-12 col-xs-12">
+            <h5 class="font-weight-bold mb-6 text-right">ایمیل های فین وایز</h5>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >Email You With</label
+            >موضوعات:</label
           >
           <div class="col-lg-9 col-xl-6">
             <div class="checkbox-list">
               <label class="checkbox">
                 <input type="checkbox" />
-                <span></span> News about Keenthemes products and feature updates
+                <span></span> اطلاعات در مورد آپدیتهای جدید فینوایز
               </label>
               <label class="checkbox">
                 <input type="checkbox" />
-                <span></span> Tips on getting more out of Keen
+                <span></span> توضیحات و آموزش امکانات فینوایز
               </label>
               <label class="checkbox">
-                <input type="checkbox" checked="checked" />
-                <span></span> Things you missed since you last logged into Keen
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" checked="checked" />
-                <span></span> News about Metronic on partner products and other
-                services
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" checked="checked" />
-                <span></span> Tips on Metronic business products
+                <input type="checkbox"/>
+                <span></span> خبرنامه
               </label>
             </div>
           </div>
