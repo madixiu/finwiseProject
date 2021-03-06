@@ -10,7 +10,7 @@
 
     <v-card>
       <v-card-title
-        >ارزش معاملات-
+        >ارزش معاملات 
         <span class="cellItem">
           {{
             this.numberWithCommas(

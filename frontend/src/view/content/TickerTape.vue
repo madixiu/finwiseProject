@@ -43,7 +43,7 @@ export default {
   components: {
     MarqueeText
   },
-  props: { TickerData: Array, duration: Number, TickerType: Boolean },
+props: { TickerData: Array, duration: Number, TickerType: Boolean },
   data() {
     return {
       paused: false,

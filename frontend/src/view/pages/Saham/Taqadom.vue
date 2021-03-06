@@ -139,7 +139,7 @@
           <b class="taghadom-table-cell">{{ data.value.toLocaleString() }}</b>
         </template>
         <template #cell(Coverage)="data">
-          <b class="taghadom-table-cell">{{ data.value }}</b>
+          <b class="taghadom-table-cell" v-bind:class="[data.value >= 0 ? 'greenItem' : 'redItem']" >{{ data.value }}%</b>
         </template>
       </b-table>
     </v-card>
@@ -477,5 +477,13 @@ export default {
 .taghadom-table-row {
   direction: ltr;
   vertical-align: middle !important;
+}
+.redItem {
+  color: #f63538 !important;
+  font-family: "Vazir-Medium-FD" !important;
+}
+.greenItem {
+  color: #30cc5a !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 </style>

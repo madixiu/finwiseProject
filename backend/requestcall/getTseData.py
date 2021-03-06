@@ -126,6 +126,29 @@ def get_AdminsNotice(identifier):
     else:
         return("No Data")   
 
+def AllIndicesImpact():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_IndicesImpactOnIndex',headers=head ,timeout=10)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")    
+def AllIndicesHH():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://37.152.180.99:3000/View_Industries_HH',headers=head ,timeout=10)
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("No Data")    
+
+
+
 # ****************************************************************************************************************                 
 def getIndicesDetails(identifier):
     head = {'Accept-Profile':'indices'}

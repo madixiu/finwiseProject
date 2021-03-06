@@ -48,10 +48,17 @@ def getAdminNotices(self,identifier):
     return JsonResponse(get_AdminsNotice(identifier),safe=False)    
 def getIndexDetails(self,identifier):
     return JsonResponse(getIndicesDetails(identifier),safe=False)
+def getIndicesHH(self):
+    return JsonResponse(AllIndicesHH(),safe=False)
+def getIndicesImpact(self):
+    return JsonResponse(AllIndicesImpact(),safe=False)
 def getHighestSupplies(self):
     return JsonResponse(highestSupplies(),safe=False)
 def getHighestDemands(self):
     return JsonResponse(highestDemands(),safe=False)
+
+
+
 def getHighestQ(self):
     return JsonResponse([highestSupplies(),highestDemands()],safe=False)
 def getLastestIC(self):
