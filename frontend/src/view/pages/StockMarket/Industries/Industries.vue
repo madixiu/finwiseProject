@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="row">
-      <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape>  -->
 
       <!-- <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
@@ -60,7 +59,6 @@
 </template>
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
-// import TickerTape from "@/view/content/TickerTape.vue";
 // import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
@@ -68,7 +66,6 @@ export default {
   name: "Industries",
   components: {
     ApexChart
-    // TickerTape,
     // IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
@@ -78,7 +75,6 @@ export default {
     return {
       // paused: false,
       IndustryData: [],
-      TickerTapeData: [],
       ReturnSeries: [
         {
           data: [
@@ -822,18 +818,6 @@ export default {
           console.log(error);
         });
     },
-    async getTickerTapeData() {
-      await this.axios
-        .get("/api/TickerTape")
-        .then(response => {
-          let data = response.data;
-          this.TickerTapeData = data;
-          // this.TickerTape.pop();
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
     async getHHDATA() {
       await this.axios
         .get("/api/Indices/HH")
@@ -852,7 +836,6 @@ export default {
           this.HHoptions.labels = HHseries2Labels;
           this.HHoptions.xaxis.categories = HHseries2Labels;
           console.log(HHseries2data);
-          // this.TickerTape.pop();
         })
         .catch(error => {
           console.log(error);
@@ -876,7 +859,6 @@ export default {
           this.EffectOnIndexOptions.labels = Impactseries2Labels;
           this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
           console.log(Impactseries2data);
-          // this.TickerTape.pop();
         })
         .catch(error => {
           console.log(error);
