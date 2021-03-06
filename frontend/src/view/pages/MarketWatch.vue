@@ -911,6 +911,12 @@ export default {
 }
 .marketwatch-table-ticker {
   /* color: #4682b4; */
+  color: #000;
+  cursor: pointer;
+  vertical-align: middle !important;
+}
+.marketwatch-table-ticker:hover {
+  color: #4682b4;
   cursor: pointer;
   vertical-align: middle !important;
 }

@@ -125,7 +125,7 @@ import { mapGetters } from "vuex";
 // import { LOGIN } from "@/core/services/store/auth";
 import { validationMixin } from "vuelidate";
 import {
-  email,
+  // email,
   minLength,
   required,
   maxLength,
@@ -149,7 +149,7 @@ export default {
       ],
       // Remove this dummy login info
       form: {
-        email: "",
+        // email: "",
         phonenumber: "",
         password: ""
       }
@@ -157,10 +157,10 @@ export default {
   },
   validations: {
     form: {
-      email: {
-        required,
-        email
-      },
+      // email: {
+      //   required,
+      //   email
+      // },
       phonenumber: {
         integer,
         required,
@@ -196,7 +196,7 @@ export default {
     resetForm() {
       this.form = {
         phonenumber: null,
-        email: null,
+        // email: null,
         password: null
       };
 
@@ -215,21 +215,24 @@ export default {
       return decrypted;
     },
     onSubmit() {
+      console.log("fuck");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-
       // const email = this.$v.form.email.$model;
-      const phoneNumber = this.$v.form.phonenumber.$model;
+      const phonenumber = this.$v.form.phonenumber.$model;
       const password = this.$v.form.password.$model;
+      console.log(password);
+      console.log(phonenumber);
+      console.log(typeof(phonenumber));
 
       // add apollo
       this.$apollo
         .mutate({
           mutation: LOGIN_USER,
           variables: {
-            phoneNumber: phoneNumber,
+            phoneNumber: phonenumber,
             // email: email,
             password: password
           }

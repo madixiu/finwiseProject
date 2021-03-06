@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 class CustomUser(AbstractUser):
 
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False) 
-    email = models.EmailField(blank=False, max_length=254, verbose_name="email address",unique=True,error_messages={ 'unique':_("A user with that phonenumber already exists."),},)
+    email = models.EmailField(blank=False, max_length=254, verbose_name="email address",unique=True,error_messages={ 'unique':_("A user with that email already exists."),},)
     phone_number = models.CharField(max_length =11,default = None,null = True,unique=True,error_messages={ 'unique':_("A user with that phonenumber already exists."),},)
     role = models.IntegerField(default = 1 , null = False)
     balance = models.FloatField(default = 0)

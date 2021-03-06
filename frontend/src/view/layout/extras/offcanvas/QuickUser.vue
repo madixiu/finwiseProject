@@ -1,5 +1,5 @@
 <template>
-  <div class="topbar-item">
+  <div class="topbar-item" @click="Clicked">
     <div
       class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
       id="kt_quick_user_toggle"
@@ -10,7 +10,7 @@
         Hi,
       </span> -->
       <v-icon size="25px" color="#4682B4" class="mr-1"
-        >mdi-account-circle</v-icon
+       >mdi-account-circle</v-icon
       >
       <!-- <span
         class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"
@@ -60,11 +60,13 @@
             <!-- <i class="symbol-badge bg-success"></i> -->
           </div>
           <div class="d-flex flex-column">
-            <a
+            <a 
+              v-if="LoginStatus"
+
               href="#"
               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
             >
-              حسن ثابت
+              {{this.$store.getters.currentUser.firstName}}
             </a>
             <!-- <div class="text-muted mt-1">Application Developer</div> -->
             <div class="navi mt-2">
@@ -180,6 +182,9 @@ export default {
     KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
   },
   methods: {
+    Clicked() {
+      console.log("testing the click");
+    },
     onLogout() {
       this.$store
         .dispatch("LOGOUT")

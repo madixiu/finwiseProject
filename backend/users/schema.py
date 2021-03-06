@@ -15,7 +15,7 @@ class QuestionType(DjangoObjectType):
 class Query(graphene.ObjectType):
     questions = graphene.List(QuestionType)
     question_by_id = graphene.Field(QuestionType, id=graphene.String())
-    question_by_email = graphene.Field(QuestionType, enail=graphene.String())
+    question_by_email = graphene.Field(QuestionType, email=graphene.String())
     def resolve_questions(root, info, **kwargs):
         # Querying a list
         return CustomUser.objects.all()
@@ -25,4 +25,4 @@ class Query(graphene.ObjectType):
         return CustomUser.objects.get(pk=id)
     
     def resolve_question_by_email(root, info, email):
-        return CustomUser.objects.get(emaii = email)
+        return CustomUser.objects.get(email = email)

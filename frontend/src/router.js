@@ -61,6 +61,7 @@ const Robot = () => import("@/view/pages/Robot/Robot.vue");
 const Login = () => import("@/view/pages/auth/Login");
 const Register = () => import("@/view/pages/auth/Register");
 const Verify = () => import("@/view/pages/auth/Verify");
+const Profile = () => import("@/view/pages/auth/Profile");
 const ERROR = () => import("@/view/pages/error/Error-1.vue");
 
 Vue.use(Router);
@@ -331,6 +332,11 @@ export default new Router({
               component: Subset
             }
           ]
+        },
+        {
+          name: "profile",
+          path: "/profile",
+          component: Profile
         },
         // added route for robot!
         {

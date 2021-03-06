@@ -2,8 +2,8 @@ import Vue from "vue";
 // import store from "../store";
 
 // let vm = this
-// let URI = "localhost:8000";
-let URI = "45.82.136.21";
+let URI = "localhost:8000";
+// let URI = "45.82.136.21";
 
 const WsService = {
   init() {

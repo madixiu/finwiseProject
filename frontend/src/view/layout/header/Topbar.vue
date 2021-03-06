@@ -132,6 +132,8 @@
     <!-- Clock end -->
     <!--begin: User Bar -->
     <KTQuickUser></KTQuickUser>
+    <KTQuickUser2 />
+    
     <!--end: User Bar -->
   </div>
   <!-- end:: Header Topbar -->
@@ -173,6 +175,8 @@ import Clock from "@/view/content/Clock.vue";
 // import KTDropdownMyCart from "@/view/layout/extras/dropdown/DropdownMyCart.vue";
 // import KTDropdownLanguage from "@/view/layout/extras/dropdown/DropdownLanguage.vue";
 import KTQuickUser from "@/view/layout/extras/offcanvas/QuickUser.vue";
+import KTQuickUser2 from "@/view/layout/extras/offcanvas/QuickUser2.vue";
+
 // import KTQuickPanel from "@/view/layout/extras/offcanvas/QuickPanel.vue";
 import i18nService from "@/core/services/i18n.service.js";
 
@@ -192,7 +196,8 @@ export default {
     // KTDropdownQuickAction,
     // KTDropdownMyCart,
     // KTDropdownLanguage,
-    KTQuickUser
+    KTQuickUser,
+    KTQuickUser2
     // KTQuickPanel
   },
   methods: {

@@ -25,7 +25,7 @@ const entries = {
 
 const mainConfig = function() {
   return {
-    mode: "production",
+    mode: "development",
     stats: "errors-only",
     performance: {
       hints: false
