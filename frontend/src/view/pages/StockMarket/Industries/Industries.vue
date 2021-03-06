@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="row">
-
       <!-- <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div> -->
@@ -17,9 +16,7 @@
             :series="Pieseries"
             :chartOptions="PiechartOptions"
           />
-
         </v-card>
-        
       </div>
 
       <div class="col-xxl-6 col-md-6">
@@ -34,7 +31,7 @@
             :chartOptions="BarchartOptions"
           />
         </v-card>
-         <v-card class="mt-1">
+        <v-card class="mt-1">
           <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
           <ApexChart
             type="bar"
@@ -441,200 +438,7 @@ export default {
             // }
           }
         }
-      }, EffectOnIndexOptions: {
-        chart: {
-          type: "bar",
-          height: 100,
-          fontFamily: "Vazir-Medium-FD",
-          // stacked: true,
-          toolbar: {
-            show: false
-          }
-        },
-        tooltip: {
-          custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            return (
-              '<div class="arrow_box">' +
-              "<span>" +
-              w.globals.labels[dataPointIndex] +
-              ": " +
-              series[seriesIndex][dataPointIndex] +
-              "</span>" +
-              "</div>"
-            );
-          }
-        },
-        labels: [],
-        // colors: ["#16f222", "#FF4560"],
-        colors: [
-          function({ value }) {
-            if (value > 0) {
-              return "#00ad13";
-            } else {
-              return "#dc0600";
-            }
-          }
-        ],
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            barHeight: "100%",
-            startingShape: "flat"
-            // endingShape: "rounded"
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-
-        grid: {
-          xaxis: {
-            lines: {
-              show: false
-            }
-          }
-        },
-        stroke: {
-          width: 1,
-          colors: ["#3e3e4e"]
-        },
-        yaxis: {
-          // min: -5,
-          // max: 5,
-          title: {
-            text: "میلیارد ریال"
-          }
-        },
-        // tooltip: {
-        //   shared: false,
-        //   followCursor: true,
-        //   intersect: false,
-        //   fillSeriesColor: true,
-
-        //   x: {
-        //     formatter: function(val) {
-        //       return val;
-        //     }
-        //   },
-        //   y: {
-        //     title: {
-        //       formatter: seriesName => seriesName
-        //     }
-        //     // formatter: function(value) {
-        //     //   return value;
-        //     // }
-        //   }
-        // },
-        // title: {
-        //   text: "Mauritius population pyramid 2011"
-        // },
-        xaxis: {
-          categories: [],
-          labels: {
-            // formatter: function(val) {
-            //   return Math.abs(Math.round(val)) + "%";
-            // }
-          }
-        }
-      }
-      ,
-      EffectOnIndexSeries: [
-        {
-          data: [
-          ]
-        }
-      ],
-      BarchartOptions: {
-        chart: {
-          type: "bar",
-          height: 350,
-          animations: {
-            enabled: false
-          },
-          toolbar: {
-            show: false
-          },
-          fontFamily: "Vazir"
-        },
-        legend: {
-          show: false
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            barHeight: "100%",
-            distributed: true
-          }
-        },
-        colors: ["#33b2df", "#546E7A", "#d4526e", "#13d8aa", "#A5978B"],
-        dataLabels: {
-          enabled: true,
-
-          style: {
-            colors: ["#fff"]
-          }
-        },
-        xaxis: {
-          categories: [
-            "South Korea",
-            "Canada",
-            "United Kingdom",
-            "Netherlands",
-            "Italy",
-            "France",
-            "Japan",
-            "United States",
-            "China",
-            "Germany"
-          ],
-          labels: {
-            show: true
-          },
-          offsetX: 109,
-          offsetY: 500
-        }
       },
-      PiechartOptions: {
-        chart: {
-          width: 400,
-          height: 100,
-          type: "pie",
-          fontFamily: "Vazir-Medium-FD",
-          animations: {
-            enabled: false
-          },
-          events: {
-            // legendClick: function(chartContext, seriesIndex, config) {
-            //   // console.log(chartContext);
-            //   // console.log(seriesIndex);
-            //   // console.log(config);
-            // },
-            dataPointSelection: (event, chartContext, config) => {
-              // console.log(chartContext);
-              // console.log(event);
-              // console.log(config);
-              console.log(config);
-              this.testing(config.dataPointIndex);
-            }
-          }
-        },
-        legend: {
-          // show: false,
-          fontSize: 10,
-          fontFamily: "Vazir-Medium-FD",
-          position: "bottom"
-        },
-        labels: [],
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 200
-              }
-            }
-          }
-        ],
       EffectOnIndexOptions: {
         chart: {
           type: "bar",
@@ -729,10 +533,203 @@ export default {
             //   return Math.abs(Math.round(val)) + "%";
             // }
           }
-        }}
-        
-    
-  }}},
+        }
+      },
+      EffectOnIndexSeries: [
+        {
+          data: []
+        }
+      ],
+      BarchartOptions: {
+        chart: {
+          type: "bar",
+          height: 350,
+          animations: {
+            enabled: false
+          },
+          toolbar: {
+            show: false
+          },
+          fontFamily: "Vazir"
+        },
+        legend: {
+          show: false
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: "100%",
+            distributed: true
+          }
+        },
+        colors: ["#33b2df", "#546E7A", "#d4526e", "#13d8aa", "#A5978B"],
+        dataLabels: {
+          enabled: true,
+
+          style: {
+            colors: ["#fff"]
+          }
+        },
+        xaxis: {
+          categories: [
+            "South Korea",
+            "Canada",
+            "United Kingdom",
+            "Netherlands",
+            "Italy",
+            "France",
+            "Japan",
+            "United States",
+            "China",
+            "Germany"
+          ],
+          labels: {
+            show: true
+          },
+          offsetX: 109,
+          offsetY: 500
+        }
+      },
+      PiechartOptions: {
+        chart: {
+          width: 400,
+          height: 100,
+          type: "pie",
+          fontFamily: "Vazir-Medium-FD",
+          animations: {
+            enabled: false
+          },
+          events: {
+            // legendClick: function(chartContext, seriesIndex, config) {
+            //   // console.log(chartContext);
+            //   // console.log(seriesIndex);
+            //   // console.log(config);
+            // },
+            dataPointSelection: (event, chartContext, config) => {
+              // console.log(chartContext);
+              // console.log(event);
+              // console.log(config);
+              console.log(config);
+              this.testing(config.dataPointIndex);
+            }
+          }
+        },
+        legend: {
+          // show: false,
+          fontSize: 10,
+          fontFamily: "Vazir-Medium-FD",
+          position: "bottom"
+        },
+        labels: [],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              }
+            }
+          }
+        ],
+        EffectOnIndexOptions: {
+          chart: {
+            type: "bar",
+            height: 100,
+            fontFamily: "Vazir-Medium-FD",
+            // stacked: true,
+            toolbar: {
+              show: false
+            }
+          },
+          tooltip: {
+            custom: function({ series, seriesIndex, dataPointIndex, w }) {
+              return (
+                '<div class="arrow_box">' +
+                "<span>" +
+                w.globals.labels[dataPointIndex] +
+                ": " +
+                series[seriesIndex][dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
+            }
+          },
+          labels: [],
+          // colors: ["#16f222", "#FF4560"],
+          colors: [
+            function({ value }) {
+              if (value > 0) {
+                return "#00ad13";
+              } else {
+                return "#dc0600";
+              }
+            }
+          ],
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              barHeight: "100%",
+              startingShape: "flat"
+              // endingShape: "rounded"
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+
+          grid: {
+            xaxis: {
+              lines: {
+                show: false
+              }
+            }
+          },
+          stroke: {
+            width: 1,
+            colors: ["#3e3e4e"]
+          },
+          yaxis: {
+            // min: -5,
+            // max: 5,
+            title: {
+              text: "میلیارد ریال"
+            }
+          },
+          // tooltip: {
+          //   shared: false,
+          //   followCursor: true,
+          //   intersect: false,
+          //   fillSeriesColor: true,
+
+          //   x: {
+          //     formatter: function(val) {
+          //       return val;
+          //     }
+          //   },
+          //   y: {
+          //     title: {
+          //       formatter: seriesName => seriesName
+          //     }
+          //     // formatter: function(value) {
+          //     //   return value;
+          //     // }
+          //   }
+          // },
+          // title: {
+          //   text: "Mauritius population pyramid 2011"
+          // },
+          xaxis: {
+            categories: [],
+            labels: {
+              // formatter: function(val) {
+              //   return Math.abs(Math.round(val)) + "%";
+              // }
+            }
+          }
+        }
+      }
+    };
+  },
   mounted() {
     this.loadData();
   },
