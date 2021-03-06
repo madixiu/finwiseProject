@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="row">
-      <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape> -->
+      <!-- <TickerTape :TickerData="TickerTapeData"></TickerTape>  -->
 
       <!-- <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div> -->
 
-      <div class="col-xxl-4 col-md-6 mb-4">
+      <div class="col-xxl-6 col-md-6 mb-4">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
@@ -18,12 +18,14 @@
             :series="Pieseries"
             :chartOptions="PiechartOptions"
           />
+
         </v-card>
+        
       </div>
 
       <div class="col-xxl-6 col-md-6">
-        <v-card>
-          <v-card-title>برترین گروه های صنعت</v-card-title>
+        <v-card class="mt-1">
+          <v-card-title>صنایع با بیشترین ارزش معاملات</v-card-title>
           <ApexChart
             v-if="Barseries.length"
             type="bar"
@@ -33,87 +35,25 @@
             :chartOptions="BarchartOptions"
           />
         </v-card>
-      </div>
-      <div class="col-xxl-6 col-md-6 mb-4">
-        <v-card>
-          <v-card-title>تاثیر صنایع در شاخص</v-card-title>
-          <!-- <ApexChart
-            type="bar"
-            width="100%"
-            :series="EffectOnIndexSeries"
-            :chartOptions="EffectOnIndexOptions"
-          /> -->
-        </v-card>
-      </div>
-      <div class="col-xxl-6 col-md-6 mb-4">
-        <v-card>
+         <v-card class="mt-1">
           <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
-          <!-- <ApexChart
+          <ApexChart
             type="bar"
             width="100%"
             height="200%"
             :series="HHseries"
             :chartOptions="HHoptions"
-          /> -->
+          />
         </v-card>
-      </div>
-      <div class="col-xxl-6 col-md-6">
-        <v-card>
-          <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
-          <!-- <ApexChart
-            type="bar"
-            width="100%"
-            height="200%"
-            :series="test"
-            :chartOptions="testOptions"
-          /> -->
-        </v-card>
-      </div>
-      -->
-      <div class="col-xxl-8 col-md-8">
-        <v-card>
-          <v-card-title
-            >بار چارت افقی با تایم فریم برای بازدهی صنایع</v-card-title
-          >
-          <div class="mr-5">
-            <span>بازه زمانی:</span>
-            <b-button-group>
-              <b-button class="mr-1" pill variant="outline-primary"
-                >ماه</b-button
-              >
-              <b-button class="mr-1" pill variant="outline-primary"
-                >۳ ماه</b-button
-              >
-              <b-button class="mr-1" pill variant="outline-primary"
-                >۶ ماه</b-button
-              >
-              <b-button class="mr-1" pill variant="outline-primary"
-                >سال</b-button
-              >
-              <b-button class="mr-1" pill variant="outline-primary"
-                >۳ سال</b-button
-              >
-              <b-button class="mr-1" pill variant="outline-primary"
-                >کل</b-button
-              >
-            </b-button-group>
-          </div>
+        <v-card class="mt-1">
+          <v-card-title>تاثیر صنایع در شاخص</v-card-title>
           <ApexChart
             type="bar"
             width="100%"
-            height="500%"
-            :series="ReturnSeries"
-            :chartOptions="ReturnOptions"
+            :series="EffectOnIndexSeries"
+            :chartOptions="EffectOnIndexOptions"
           />
         </v-card>
-      </div>
-      <div class="col-xxl-4 col-md-4">
-        <v-tabs>
-          <!-- <v-tab>بهترین</v-tab>
-          <v-tab>بدترین</v-tab>
-          <v-tab-item><IndustryTechnicalBest /></v-tab-item>
-          <v-tab-item><IndustryTechnicalWorse /></v-tab-item> -->
-        </v-tabs>
       </div>
     </div>
   </div>
@@ -127,7 +67,7 @@ import ApexChart from "@/view/content/charts/ApexChart";
 export default {
   name: "Industries",
   components: {
-    ApexChart,
+    ApexChart
     // TickerTape,
     // IndustryChart
     // IndustryTechnicalBest,
@@ -409,215 +349,205 @@ export default {
       },
       Pieseries: [],
       Barseries: [],
-      HHseries: [
-        {
-          name: "Males",
-          data: [
-            5.4,
-            4.65,
-            3.76,
-            2.88,
-            2.5,
-            2.1,
-            2,
-            1.8,
-            -4,
-            -4.4,
-            -4.3,
-            -4.2,
-            -4,
-            -3,
-            -2.5,
-            -1
-          ]
-        }
-      ],
+      HHseries: [],
       HHoptions: {
         chart: {
           type: "bar",
           height: 100,
-          stacked: true
+          fontFamily: "Vazir-Medium-FD",
+          // stacked: true,
+          toolbar: {
+            show: false
+          }
         },
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_box">' +
+              "<span>" +
+              w.globals.labels[dataPointIndex] +
+              ": " +
+              series[seriesIndex][dataPointIndex] +
+              "</span>" +
+              "</div>"
+            );
+          }
+        },
+        labels: [],
         // colors: ["#16f222", "#FF4560"],
         colors: [
           function({ value }) {
             if (value > 0) {
-              return "#36eb0e";
+              return "#00ad13";
             } else {
-              return "#D9534F";
+              return "#dc0600";
             }
           }
         ],
         plotOptions: {
           bar: {
             horizontal: false,
-            barHeight: "80%"
+            barHeight: "100%",
+            startingShape: "flat"
+            // endingShape: "rounded"
           }
         },
         dataLabels: {
           enabled: false
         },
-        stroke: {
-          width: 1,
-          colors: ["#fff"]
-        },
+
         grid: {
           xaxis: {
             lines: {
-              show: true
+              show: false
             }
           }
+        },
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
         },
         yaxis: {
-          min: -5,
-          max: 5,
+          // min: -5,
+          // max: 5,
           title: {
-            // text: 'Age',
+            text: "میلیارد ریال"
           }
         },
-        tooltip: {
-          shared: false,
-          x: {
-            formatter: function(val) {
-              return val;
-            }
-          },
-          y: {
-            formatter: function(val) {
-              return Math.abs(val) + "%";
-            }
-          }
-        },
+        // tooltip: {
+        //   shared: false,
+        //   followCursor: true,
+        //   intersect: false,
+        //   fillSeriesColor: true,
+
+        //   x: {
+        //     formatter: function(val) {
+        //       return val;
+        //     }
+        //   },
+        //   y: {
+        //     title: {
+        //       formatter: seriesName => seriesName
+        //     }
+        //     // formatter: function(value) {
+        //     //   return value;
+        //     // }
+        //   }
+        // },
         // title: {
         //   text: "Mauritius population pyramid 2011"
         // },
         xaxis: {
-          categories: [
-            "85+",
-            "80-84",
-            "75-79",
-            "70-74",
-            "65-69",
-            "60-64",
-            "55-59",
-            "50-54",
-            "45-49",
-            "40-44",
-            "35-39",
-            "30-34",
-            "25-29",
-            "20-24",
-            "15-19",
-            "10-14",
-            "5-9",
-            "0-4"
-          ],
-          title: {
-            text: "Percent"
-          },
+          categories: [],
           labels: {
-            formatter: function(val) {
-              return Math.abs(Math.round(val)) + "%";
-            }
+            // formatter: function(val) {
+            //   return Math.abs(Math.round(val)) + "%";
+            // }
           }
         }
-      },
-
-      EffectOnIndexSeries: [
-        {
-          data: [
-            44,
-            55,
-            41,
-            64,
-            22,
-            43,
-            -21,
-            -32,
-            -42,
-            -45,
-            -56,
-            -12,
-            41,
-            64,
-            22,
-            43,
-            -21,
-            -32,
-            -42,
-            -45,
-            -56,
-            -12,
-            41,
-            64,
-            22,
-            43,
-            -21,
-            -32,
-            -42,
-            -45,
-            -56,
-            -12,
-            41,
-            64,
-            22,
-            43,
-            -21,
-            -32,
-            -42,
-            -45,
-            -56,
-            -12
-          ]
-        }
-      ],
-      EffectOnIndexOptions: {
+      }, EffectOnIndexOptions: {
         chart: {
           type: "bar",
-          height: 50,
+          height: 100,
+          fontFamily: "Vazir-Medium-FD",
+          // stacked: true,
           toolbar: {
-            show: true
+            show: false
           }
         },
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_box">' +
+              "<span>" +
+              w.globals.labels[dataPointIndex] +
+              ": " +
+              series[seriesIndex][dataPointIndex] +
+              "</span>" +
+              "</div>"
+            );
+          }
+        },
+        labels: [],
+        // colors: ["#16f222", "#FF4560"],
+        colors: [
+          function({ value }) {
+            if (value > 0) {
+              return "#00ad13";
+            } else {
+              return "#dc0600";
+            }
+          }
+        ],
         plotOptions: {
           bar: {
             horizontal: false,
             barHeight: "100%",
-            distributed: true
+            startingShape: "flat"
+            // endingShape: "rounded"
           }
         },
-
         dataLabels: {
-          enabled: true,
+          enabled: false
+        },
 
-          style: {
-            fontSize: "7px",
-            colors: ["#fff"]
+        grid: {
+          xaxis: {
+            lines: {
+              show: false
+            }
           }
         },
-        labels: {
-          show: true
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
         },
+        yaxis: {
+          // min: -5,
+          // max: 5,
+          title: {
+            text: "میلیارد ریال"
+          }
+        },
+        // tooltip: {
+        //   shared: false,
+        //   followCursor: true,
+        //   intersect: false,
+        //   fillSeriesColor: true,
+
+        //   x: {
+        //     formatter: function(val) {
+        //       return val;
+        //     }
+        //   },
+        //   y: {
+        //     title: {
+        //       formatter: seriesName => seriesName
+        //     }
+        //     // formatter: function(value) {
+        //     //   return value;
+        //     // }
+        //   }
+        // },
+        // title: {
+        //   text: "Mauritius population pyramid 2011"
+        // },
         xaxis: {
-          categories: [
-            "South Korea",
-            "Canada",
-            "United Kingdom",
-            "Netherlands",
-            "Italy",
-            "France",
-            "Japan",
-            "United States",
-            "China",
-            "Germany"
-          ],
+          categories: [],
           labels: {
-            show: true
-          },
-          offsetX: 109,
-          offsetY: 500
+            // formatter: function(val) {
+            //   return Math.abs(Math.round(val)) + "%";
+            // }
+          }
         }
-      },
+      }
+      ,
+      EffectOnIndexSeries: [
+        {
+          data: [
+          ]
+        }
+      ],
       BarchartOptions: {
         chart: {
           type: "bar",
@@ -708,10 +638,105 @@ export default {
               }
             }
           }
-        ]
-      }
-    };
-  },
+        ],
+      EffectOnIndexOptions: {
+        chart: {
+          type: "bar",
+          height: 100,
+          fontFamily: "Vazir-Medium-FD",
+          // stacked: true,
+          toolbar: {
+            show: false
+          }
+        },
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_box">' +
+              "<span>" +
+              w.globals.labels[dataPointIndex] +
+              ": " +
+              series[seriesIndex][dataPointIndex] +
+              "</span>" +
+              "</div>"
+            );
+          }
+        },
+        labels: [],
+        // colors: ["#16f222", "#FF4560"],
+        colors: [
+          function({ value }) {
+            if (value > 0) {
+              return "#00ad13";
+            } else {
+              return "#dc0600";
+            }
+          }
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            barHeight: "100%",
+            startingShape: "flat"
+            // endingShape: "rounded"
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+
+        grid: {
+          xaxis: {
+            lines: {
+              show: false
+            }
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
+        },
+        yaxis: {
+          // min: -5,
+          // max: 5,
+          title: {
+            text: "میلیارد ریال"
+          }
+        },
+        // tooltip: {
+        //   shared: false,
+        //   followCursor: true,
+        //   intersect: false,
+        //   fillSeriesColor: true,
+
+        //   x: {
+        //     formatter: function(val) {
+        //       return val;
+        //     }
+        //   },
+        //   y: {
+        //     title: {
+        //       formatter: seriesName => seriesName
+        //     }
+        //     // formatter: function(value) {
+        //     //   return value;
+        //     // }
+        //   }
+        // },
+        // title: {
+        //   text: "Mauritius population pyramid 2011"
+        // },
+        xaxis: {
+          categories: [],
+          labels: {
+            // formatter: function(val) {
+            //   return Math.abs(Math.round(val)) + "%";
+            // }
+          }
+        }}
+        
+    
+  }}},
   mounted() {
     this.loadData();
   },
@@ -742,7 +767,11 @@ export default {
 
       // eslint-disable-next-line no-unused-vars
       this.getPieChartData().then(resx => {
-        this.getIndustries();
+        // eslint-disable-next-line no-unused-vars
+        this.getIndustries().then(resy => {
+          // eslint-disable-next-line no-undef
+          this.getHHDATA().then();
+        });
       });
     },
     async getPieChartData() {
@@ -756,7 +785,7 @@ export default {
           // console.log(item);
           persianNames.push(item.persianName);
           marketCaps.push(item.marketCap);
-          itemValue.push({ name: item.persianName, value: item.Value });
+          itemValue.push({ name: item.persianName, value: item.TradeValue });
         }
         marketCaps.push(data[1].Others.marketCapSum);
         persianNames.push("سایر");
@@ -799,6 +828,54 @@ export default {
         .then(response => {
           let data = response.data;
           this.TickerTapeData = data;
+          // this.TickerTape.pop();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async getHHDATA() {
+      await this.axios
+        .get("/api/Indices/HH")
+        .then(responsea => {
+          let data = responsea.data;
+          // this.HHseries = data;
+          // eslint-disable-next-line no-unused-vars
+          let HHseries2Labels = [];
+          let HHseries2data = [];
+          for (let i = 0; i < data.length; i++) {
+            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
+            HHseries2Labels.push(data[i]["CorrectName"]);
+            HHseries2data.push(data[i]["sum"]);
+          }
+          this.HHseries = [{ data: HHseries2data }];
+          this.HHoptions.labels = HHseries2Labels;
+          this.HHoptions.xaxis.categories = HHseries2Labels;
+          console.log(HHseries2data);
+          // this.TickerTape.pop();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async getImpactData() {
+      await this.axios
+        .get("/api/Indices/Impact")
+        .then(responsea => {
+          let data = responsea.data;
+          // this.HHseries = data;
+          // eslint-disable-next-line no-unused-vars
+          let Impactseries2Labels = [];
+          let Impactseries2data = [];
+          for (let i = 0; i < data.length; i++) {
+            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
+            Impactseries2Labels.push(data[i]["CorrectName"]);
+            Impactseries2data.push(data[i]["IMPACT"]);
+          }
+          this.EffectOnIndexSeries = [{ data: Impactseries2data }];
+          this.EffectOnIndexOptions.labels = Impactseries2Labels;
+          this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
+          console.log(Impactseries2data);
           // this.TickerTape.pop();
         })
         .catch(error => {

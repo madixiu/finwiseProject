@@ -11,7 +11,7 @@
       <v-divider class="mt-0 "></v-divider>
       <div class="row">
         <div class="col-xxl-10 col-lg-10 col-md-10 col-sm-10 mb-2">
-          <div id="TechnicalGauge"></div>
+          <div id="IndustriesChart"></div>
         </div>
         <div class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 mb-2 rtl_aligned">
           <v-card>
@@ -48,7 +48,7 @@ import * as d3 from "d3";
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "ChartTradeValue",
-  props: { inputData: Object },
+  props: { inputData: Array },
   data() {
     return {
       options: [
@@ -82,8 +82,11 @@ export default {
   watch: {
     inputData() {
       this.populateData();
-      this.loading = false;
+      // this.loading = false;
       this.renderChart();
+    }
+    ,loading(){
+      console.log('LoadingCalled')
     }
   },
   // In the beginning...
@@ -104,40 +107,42 @@ export default {
       return JSON.stringify(obj) === JSON.stringify({});
     },
     populateData() {
-      // this.inputData;
-      var tList = [];
-      for (var tKey in this.inputData) tList.push(this.inputData[tKey]);
+      if (!(this.inputData === undefined || this.inputData.length == 0)) {
+      let ll = Object.assign({}, this.inputData);
+
+      let tList = [];
+      for (var tKey in ll) tList.push(ll[tKey]);
       this.DataItems2 = tList;
       if (!this.isEmpty(this.DataItems2)) {
-        this.loading = false;
+        // this.loading = false;
         this.sortByMarketCap("D1");
         // console.log(this.DataItems2);
-      }
+      }}
     },
     sortByMarketCap(M) {
-      let f = this.DataItems2;
+      let f = [...this.DataItems2]
       f.sort(function(a, b) {
         return b[M] - a[M];
       });
-      this.DataItems2 = f;
+      this.DataItems2 = [...f]
     },
     initrender() {
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("svg").remove();
+      if (document.getElementById("IndustriesChart_SVG")) {
+        d3.selectAll("#IndustriesChart_SVG").remove();
       }
-      this.width = parseInt(d3.select("#TechnicalGauge").style("width"), 10);
+      this.width = parseInt(d3.select("#IndustriesChart").style("width"), 10);
       this.height = (this.width * 6) / 16;
-      this.margin.top = this.height * 0.1;
+      this.margin.top = this.height * 0.15;
       this.margin.bottom = this.height * 0.05;
       this.margin.right = this.width * 0.05;
       this.margin.left = this.width * 0.05;
       // eslint-disable-next-line no-unused-vars
-      var parent = document.getElementById("TechnicalGauge");
+      var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "chartContainer")
+        .attr("id", "IndustriesChart_SVG")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
@@ -146,17 +151,24 @@ export default {
       this.loading=true
       this.sortByMarketCap(this.SortBy);
       let Param = this.freq;
-      var parent = document.getElementById("chartContainer");
-      var svg = d3.select(parent);
       // const tooltip = d3
       //   .select(parent)
       //   .append("div")
       //   .attr("class", "d3-tip")
       //   .style("position", "absolute")
       //   .style("visibility", "hidden");
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("g").remove();
+      if (document.getElementById("IndustriesChart_SVG")) {
+        d3.selectAll("#IndustriesChart_SVG").remove();
+        
       }
+      var parent = document.getElementById("IndustriesChart");
+      // eslint-disable-next-line no-unused-vars
+      var svg = d3
+        .select(parent)
+        .append("svg")
+        .attr("id", "IndustriesChart_SVG")
+        .attr("viewBox", `0 0 ${this.width},${this.height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -175,7 +187,7 @@ export default {
         .domain([
           0,
           d3.max(Object.entries(this.DataItems2).map(item => item[1][Param])) *
-            1.1
+            1.5
         ])
         .range([
           (this.height - this.margin.bottom - this.margin.top) / 2,
@@ -188,7 +200,7 @@ export default {
           0,
           d3.max(
             Object.entries(this.DataItems2).map(item => item[1]["marketCap"])
-          ) * 1.1
+          ) * 1.5
         ])
         .range([
           (this.height - this.margin.bottom - this.margin.top) / 2,

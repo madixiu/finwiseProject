@@ -3,7 +3,7 @@
   <div class="card card-custom">
     <v-card>
       <v-card-title>شاخص کل</v-card-title>
-      <v-divider class="mt-0"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
       <div class="row">
         <div
           id="Chartcontainer_index"
@@ -40,7 +40,7 @@
               ></span
             >
           </v-card-title>
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >شاخص هم وزن :
             <span class="cellItem">{{
@@ -66,7 +66,7 @@
               ></span
             >
           </v-card-title>
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >شاخص فرابورس:
             <span class="cellItem">{{
@@ -92,7 +92,7 @@
               ></span
             >
           </v-card-title>
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >ارزش بازار بورس :
             <span class="cellItem2"
@@ -102,7 +102,7 @@
               میلیارد ریال</span
             ></v-card-title
           >
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >ارزش بازار فرابورس :
             <span class="cellItem2"
@@ -115,7 +115,7 @@
               میلیارد ریال</span
             ></v-card-title
           >
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >ارزش معاملات بورس :
             <span class="cellItem2"
@@ -125,7 +125,7 @@
               میلیارد ریال</span
             ></v-card-title
           >
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
           <v-card-title
             >ارزش معاملات فرابورس :
             <span class="cellItem2"
@@ -138,7 +138,7 @@
               میلیارد ریال</span
             ></v-card-title
           >
-          <v-divider class="mt-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
         </div>
       </div>
       <!--end::Header-->
@@ -612,7 +612,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .cellItem {
   direction: ltr;
   text-align: right;
