@@ -293,10 +293,6 @@ export default {
         }
       }
       if (errors.username) {
-        for (let x of errors.username){
-          if (x.code == "unique")
-          listOfErrors.push("")
-        }
         this.ErrorMsgText.username = "نام کاربری قبلا ثبت شده است";
       }
       if (errors.email) {
