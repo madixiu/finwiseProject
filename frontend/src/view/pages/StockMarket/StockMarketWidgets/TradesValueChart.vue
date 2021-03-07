@@ -920,7 +920,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .Chart1title * {
   font-size: 1.2em;
   font-family: "Dirooz FD";

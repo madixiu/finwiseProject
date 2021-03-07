@@ -293,6 +293,10 @@ export default {
         }
       }
       if (errors.username) {
+        for (let x of errors.username){
+          if (x.code == "unique")
+          listOfErrors.push("")
+        }
         this.ErrorMsgText.username = "نام کاربری قبلا ثبت شده است";
       }
       if (errors.email) {
@@ -358,6 +362,7 @@ export default {
             // HAVE TO write code for saving encrypted refresh token to storage
             // LATER
             this.$store.dispatch("REGISTER", data.data.register.user);
+            this.$router.push({ name: "Dashboard" });
           } else if (data.data.register.success == false) {
             // console.log(data.data.register.errors.password2);
             this.$store.dispatch("SET_ERROR", data.data.register.errors);
@@ -389,7 +394,6 @@ export default {
         //   })
         //   .then(() => this.$router.push({ name: "dashboard" }));
         // if (this.$store.getters.isAuthenticated)
-        this.$router.push({ name: "Dashboard" });
 
         submitButton.classList.remove(
           "spinner",

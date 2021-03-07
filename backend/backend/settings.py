@@ -109,7 +109,7 @@ GRAPHQL_AUTH = {
     "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
     "REGISTER_MUTATION_FIELDS_OPTIONAL": ["age","gender","degree"],
     "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree"],
-    "ALLOW_LOGIN_NOT_VERIFIED": False,
+    "ALLOW_LOGIN_NOT_VERIFIED": True,
     "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
     "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),
     "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
