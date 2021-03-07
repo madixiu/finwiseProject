@@ -1,4 +1,4 @@
-    <template>
+<template>
   <div class="d-flex flex-row">
     <!-- <div
       class="flex-row-auto offcanvas-mobile w-300px w-xl-350px"
@@ -146,7 +146,7 @@
                   />
                 </span>
               </span>
-            <span>تنظیمات ایمیل</span>
+              <span>تنظیمات ایمیل</span>
             </template>
             <KTEmailSettings></KTEmailSettings>
           </b-tab>
