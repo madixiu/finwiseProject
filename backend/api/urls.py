@@ -23,6 +23,7 @@ urlpatterns = [
    path("Indices/HistoricCap/",getHistoricCap),
    path("Indices/Impact/",getIndicesImpact),
    path("Indices/HH/",getIndicesHH),
+   path("IndsutriesPage/",getAllIndustriesData),
    path("ImpactOnIndex",getImpactOnIndex),
    path("HHMarketDetails",getHHMarket),
    path("HighestDemands",getHighestDemands),

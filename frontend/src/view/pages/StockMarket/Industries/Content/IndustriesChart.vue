@@ -48,7 +48,7 @@ import * as d3 from "d3";
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "ChartTradeValue",
-  props: { inputData: Array },
+  props: { inputData: Object },
   data() {
     return {
       options: [
@@ -85,9 +85,9 @@ export default {
       // this.loading = false;
       this.renderChart();
     }
-    ,loading(){
-      console.log('LoadingCalled')
-    }
+    // ,loading(){
+    //   console.log('LoadingCalled')
+    // }
   },
   // In the beginning...
   mounted() {
@@ -131,9 +131,9 @@ export default {
         d3.selectAll("#IndustriesChart_SVG").remove();
       }
       this.width = parseInt(d3.select("#IndustriesChart").style("width"), 10);
-      this.height = (this.width * 6) / 16;
+      this.height = (this.width * 7) / 16;
       this.margin.top = this.height * 0.15;
-      this.margin.bottom = this.height * 0.05;
+      this.margin.bottom = this.height * 0.1;
       this.margin.right = this.width * 0.05;
       this.margin.left = this.width * 0.05;
       // eslint-disable-next-line no-unused-vars
@@ -396,6 +396,37 @@ export default {
 
       window.addEventListener("resize", this.renderChart);
       this.loading=false
+        svg
+        .append("text")
+        .attr("class", "source")
+        .attr("x", this.width / 2 + this.margin.right)
+        .attr("y", this.height * 0.1)
+        .attr("text-anchor", "start")
+        .text("Source: FinWise")
+        .style("font-weight", "700")
+        .style("font-family", "'Tlwg Mono', sans-serif")
+        .style("font-size", "10px")
+        .style("opacity", "0.3"); 
+        chart
+        .append("text")
+        .attr("class", "source")
+        .attr("x", 0)
+        .attr("y", this.height * 0.1)
+        .attr("text-anchor", "start")
+        .text("بازدهی")
+        .style("font-weight", "700")
+        .style("font-family", "Vazir")
+        .style("font-size", "1em")
+        chart
+        .append("text")
+        .attr("class", "source")
+        .attr("x", 0)
+        .attr("y", this.height * 0.8)
+        .attr("text-anchor", "start")
+        .text("ارزش بازار روز")
+        .style("font-weight", "700")
+        .style("font-family", "Vazir")
+        .style("font-size", "1em")
     }
   }
 };

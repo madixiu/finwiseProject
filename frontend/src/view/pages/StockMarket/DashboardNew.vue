@@ -125,7 +125,6 @@ export default {
         });
     },
     async getDashboard() {
-      console.log("hhjhh");
       await this.axios
         .get("/api/Dashboard")
         .then(first_response => {
