@@ -104,3 +104,6 @@ export const REVOKE_TOKEN = gql`
     }
   }
 `;
+
+// export const UPDATE_USER = gql`
+// mutation updateAccount($email: String!,)`;

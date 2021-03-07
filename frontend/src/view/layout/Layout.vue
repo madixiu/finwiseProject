@@ -96,7 +96,8 @@ export default {
         "oraq",
         "shakhes",
         "robot",
-        "Funds"
+        "Funds",
+        "profile"
       ]
     };
   },

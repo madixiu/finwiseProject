@@ -170,8 +170,8 @@ export default {
         });
     },
     getAccessTokenAndUser(RefreshToken) {
-      console.log(RefreshToken);
-      console.log("we are in");
+      // console.log(RefreshToken);
+      // console.log("we are in");
       this.$apollo
         .mutate({
           mutation: REFRESH_ACCESS_TOKEN,
