@@ -225,12 +225,12 @@ export default {
       ErrorMsgText: { phoneNumber: "", email: "", username: "", password2: [] },
       ErrorMsgflag: false,
       form: {
-        username: "test",
-        email: "admin@demo.com",
-        password: "demo",
-        firstname: "yest",
-        lastname: "yest",
-        phonenumber: "09166616666"
+        username: "",
+        email: "",
+        password: "",
+        firstname: "",
+        lastname: "",
+        phonenumber: ""
       }
     };
   },
@@ -389,7 +389,7 @@ export default {
         //   })
         //   .then(() => this.$router.push({ name: "dashboard" }));
         // if (this.$store.getters.isAuthenticated)
-        this.$router.push({ name: "verify" });
+        this.$router.push({ name: "Dashboard" });
 
         submitButton.classList.remove(
           "spinner",
