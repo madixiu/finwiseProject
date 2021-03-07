@@ -56,7 +56,8 @@ def getHighestSupplies(self):
     return JsonResponse(highestSupplies(),safe=False)
 def getHighestDemands(self):
     return JsonResponse(highestDemands(),safe=False)
-
+def getAllIndustriesData(self):
+    return JsonResponse([getIndicesHistoric(),IndexMarketCapRequest(),AllIndicesHH(),AllIndicesImpact()],safe=False)
 
 
 def getHighestQ(self):

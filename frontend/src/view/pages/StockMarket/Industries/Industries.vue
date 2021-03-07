@@ -5,7 +5,7 @@
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div> -->
 
-      <div class="col-xxl-6 col-md-6 mb-4">
+      <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
@@ -18,8 +18,7 @@
           />
         </v-card>
       </div>
-
-      <div class="col-xxl-6 col-md-6">
+      <div class="col-xxl-9 col-md-9 col-sm-12 col-xs-12">
         <v-card class="mt-1">
           <v-card-title>صنایع با بیشترین ارزش معاملات</v-card-title>
           <ApexChart
@@ -34,6 +33,7 @@
         <v-card class="mt-1">
           <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
           <ApexChart
+            v-if="HHseries.length"
             type="bar"
             width="100%"
             height="200%"
@@ -44,8 +44,10 @@
         <v-card class="mt-1">
           <v-card-title>تاثیر صنایع در شاخص</v-card-title>
           <ApexChart
+            v-if="EffectOnIndexSeries.length"
             type="bar"
             width="100%"
+            height="200%"
             :series="EffectOnIndexSeries"
             :chartOptions="EffectOnIndexOptions"
           />
@@ -62,7 +64,7 @@ import ApexChart from "@/view/content/charts/ApexChart";
 export default {
   name: "Industries",
   components: {
-    ApexChart
+    ApexChart,
     // IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
@@ -74,50 +76,7 @@ export default {
       IndustryData: [],
       ReturnSeries: [
         {
-          data: [
-            400,
-            390,
-            386,
-            378,
-            375,
-            364,
-            355,
-            341,
-            337,
-            332,
-            323,
-            321,
-            286,
-            278,
-            275,
-            264,
-            255,
-            241,
-            237,
-            232,
-            223,
-            221,
-            186,
-            178,
-            175,
-            164,
-            155,
-            141,
-            137,
-            132,
-            123,
-            121,
-            86,
-            78,
-            75,
-            64,
-            55,
-            41,
-            37,
-            32,
-            23,
-            21
-          ]
+          data: []
         }
       ],
       ReturnOptions: {
@@ -353,14 +312,30 @@ export default {
             show: false
           }
         },
-        tooltip: {
+           tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let n = series[seriesIndex][dataPointIndex]/1000000000;
+            let negative = false;
+            let digits = 0;
+            if (n < 0) {
+              negative = true;
+              n = n * -1;
+            }
+            let multiplicator = Math.pow(10, digits);
+            n = parseFloat((n * multiplicator).toFixed(11));
+            n = (Math.round(n) / multiplicator).toFixed(digits);
+            if (negative) {
+              n = (n * -1).toFixed(digits);
+            }
+            let parts = n.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let val=parts.join(".");
             return (
               '<div class="arrow_box">' +
               "<span>" +
               w.globals.labels[dataPointIndex] +
               ": " +
-              series[seriesIndex][dataPointIndex] +
+              val +
               "</span>" +
               "</div>"
             );
@@ -405,7 +380,26 @@ export default {
           // max: 5,
           title: {
             text: "میلیارد ریال"
-          }
+          },
+            labels:{ formatter: function(value) {
+              let n = value/1000000000;
+              let negative = false;
+              let digits = 0;
+              if (n < 0) {
+                negative = true;
+                n = n * -1;
+              }
+              let multiplicator = Math.pow(10, digits);
+              n = parseFloat((n * multiplicator).toFixed(11));
+              n = (Math.round(n) / multiplicator).toFixed(digits);
+              if (negative) {
+                n = (n * -1).toFixed(digits);
+              }
+              let parts = n.toString().split(".");
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              return parts.join(".");
+            }
+            }
         },
         // tooltip: {
         //   shared: false,
@@ -439,6 +433,7 @@ export default {
           }
         }
       },
+      EffectOnIndexSeries: [],
       EffectOnIndexOptions: {
         chart: {
           type: "bar",
@@ -451,12 +446,28 @@ export default {
         },
         tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let n = series[seriesIndex][dataPointIndex];
+            let negative = false;
+            let digits = 0;
+            if (n < 0) {
+              negative = true;
+              n = n * -1;
+            }
+            let multiplicator = Math.pow(10, digits);
+            n = parseFloat((n * multiplicator).toFixed(11));
+            n = (Math.round(n) / multiplicator).toFixed(digits);
+            if (negative) {
+              n = (n * -1).toFixed(digits);
+            }
+            let parts = n.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let val=parts.join(".");
             return (
               '<div class="arrow_box">' +
               "<span>" +
               w.globals.labels[dataPointIndex] +
               ": " +
-              series[seriesIndex][dataPointIndex] +
+              val +
               "</span>" +
               "</div>"
             );
@@ -499,8 +510,25 @@ export default {
         yaxis: {
           // min: -5,
           // max: 5,
-          title: {
-            text: "میلیارد ریال"
+          labels: {
+            formatter: function(value) {
+              let n = value;
+              let negative = false;
+              let digits = 0;
+              if (n < 0) {
+                negative = true;
+                n = n * -1;
+              }
+              let multiplicator = Math.pow(10, digits);
+              n = parseFloat((n * multiplicator).toFixed(11));
+              n = (Math.round(n) / multiplicator).toFixed(digits);
+              if (negative) {
+                n = (n * -1).toFixed(digits);
+              }
+              let parts = n.toString().split(".");
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              return parts.join(".");
+            }
           }
         },
         // tooltip: {
@@ -535,11 +563,6 @@ export default {
           }
         }
       },
-      EffectOnIndexSeries: [
-        {
-          data: []
-        }
-      ],
       BarchartOptions: {
         chart: {
           type: "bar",
@@ -549,8 +572,7 @@ export default {
           },
           toolbar: {
             show: false
-          },
-          fontFamily: "Vazir"
+          }
         },
         legend: {
           show: false
@@ -565,27 +587,60 @@ export default {
         colors: ["#33b2df", "#546E7A", "#d4526e", "#13d8aa", "#A5978B"],
         dataLabels: {
           enabled: true,
+          formatter: function(value) {
+            let n = value / 1000000000;
+            let negative = false;
+            let digits = 0;
+            if (n < 0) {
+              negative = true;
+              n = n * -1;
+            }
+            let multiplicator = Math.pow(10, digits);
+            n = parseFloat((n * multiplicator).toFixed(11));
+            n = (Math.round(n) / multiplicator).toFixed(digits);
+            if (negative) {
+              n = (n * -1).toFixed(digits);
+            }
+            let parts = n.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+          },
 
           style: {
             colors: ["#fff"]
           }
         },
         xaxis: {
-          categories: [
-            "South Korea",
-            "Canada",
-            "United Kingdom",
-            "Netherlands",
-            "Italy",
-            "France",
-            "Japan",
-            "United States",
-            "China",
-            "Germany"
-          ],
-          labels: {
-            show: true
+          categories: [],
+          title: {
+            text: "میلیارد ریال"
           },
+          labels: {
+            // eslint-disable-next-line no-unused-vars
+            formatter: function(value, opts) {
+              let n = value / 1000000000;
+              let negative = false;
+              let digits = 0;
+              if (n < 0) {
+                negative = true;
+                n = n * -1;
+              }
+              let multiplicator = Math.pow(10, digits);
+              n = parseFloat((n * multiplicator).toFixed(11));
+              n = (Math.round(n) / multiplicator).toFixed(digits);
+              if (negative) {
+                n = (n * -1).toFixed(digits);
+              }
+              let parts = n.toString().split(".");
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              return parts.join(".");
+            },
+            show: true,
+            style: {
+              fontFamily: "Vazir-Medium-FD"
+            }
+          },
+
           offsetX: 109,
           offsetY: 500
         }
@@ -609,7 +664,7 @@ export default {
               // console.log(chartContext);
               // console.log(event);
               // console.log(config);
-              console.log(config);
+              // console.log(config);
               this.testing(config.dataPointIndex);
             }
           }
@@ -755,17 +810,109 @@ export default {
     index() {
       this.$router.push({ name: "IndustriesDetail", params: { id: 2 } });
     },
+    numberWithCommas(x) {
+      let parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    // populateData() {
+    //   this.DataItems = this.mostviewed;
+    // },
+    roundTo(n, digits) {
+      let negative = false;
+      if (digits === undefined) {
+        digits = 0;
+      }
+      if (n < 0) {
+        negative = true;
+        n = n * -1;
+      }
+      let multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(digits);
+      if (negative) {
+        n = (n * -1).toFixed(digits);
+      }
+      return n;
+    },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-
+      this.getAll().then();
       // eslint-disable-next-line no-unused-vars
-      this.getPieChartData().then(resx => {
-        // eslint-disable-next-line no-unused-vars
-        this.getIndustries().then(resy => {
-          // eslint-disable-next-line no-undef
-          this.getHHDATA().then();
+      // this.getPieChartData().then(resx => {
+      //   // eslint-disable-next-line no-unused-vars
+      //   this.getIndustries().then(resy => {
+      //     // eslint-disable-next-line no-unused-vars
+      //     this.getHHDATA().then(resz=>{
+      //       this.getImpactData().then()
+      //     });
+      //   });
+      // });
+    },
+    async getAll() {
+      await this.axios
+        .get("/api/IndsutriesPage")
+        .then(first_response => {
+          // console.log(first_response);
+          this.IndustryData = first_response.data[0];
+          /////////////////
+          let second = first_response.data[1];
+          let persianNames = [];
+          let marketCaps = [];
+          let itemValue = [];
+          for (let item of second[0].TopIndustries) {
+            persianNames.push(item.persianName);
+            marketCaps.push(item.marketCap);
+            itemValue.push({ name: item.persianName, value: item.TradeValue });
+          }
+          marketCaps.push(second[1].Others.marketCapSum);
+          persianNames.push("سایر");
+          this.PiechartOptions.labels = persianNames;
+          this.Pieseries = marketCaps;
+          itemValue.sort(this.compareValues("value", "desc"));
+          itemValue = itemValue.slice(0, 6);
+          let names = [];
+          let values = [];
+          for (let item of itemValue) {
+            names.push(item.name);
+            values.push(item.value);
+          }
+          this.Barseries = [{ data: values }];
+          this.BarchartOptions.xaxis.categories = names;
+          // console.log(this.Barseries);
+          /////////////
+          let third = first_response.data[2];
+          // this.HHseries = data;
+          // eslint-disable-next-line no-unused-vars
+          let HHseries2Labels = [];
+          let HHseries2data = [];
+          for (let i = 0; i < third.length; i++) {
+            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
+            HHseries2Labels.push(third[i]["CorrectName"]);
+            HHseries2data.push(third[i]["sum"]);
+          }
+          this.HHseries = [{ data: HHseries2data }];
+          this.HHoptions.labels = HHseries2Labels;
+          this.HHoptions.xaxis.categories = HHseries2Labels;
+          /////
+          let fourth = first_response.data[3];
+          // this.HHseries = data;
+          // eslint-disable-next-line no-unused-vars
+          let Impactseries2Labels = [];
+          let Impactseries2data = [];
+          for (let i = 0; i < fourth.length; i++) {
+            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
+            Impactseries2Labels.push(fourth[i]["CorrectName"]);
+            Impactseries2data.push(fourth[i]["IMPACT"]);
+          }
+          this.EffectOnIndexSeries = [{ data: Impactseries2data }];
+          this.EffectOnIndexOptions.labels = Impactseries2Labels;
+          this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
+        })
+        .catch(error => {
+          // console.log("GetTwoeCatch");
+          console.log(error);
         });
-      });
     },
     async getPieChartData() {
       await this.axios.get("/api/IndexMarketCap").then(responsive => {
@@ -773,7 +920,7 @@ export default {
         let persianNames = [];
         let marketCaps = [];
         let itemValue = [];
-        console.log(data);
+        // console.log(data);
         for (let item of data[0].TopIndustries) {
           // console.log(item);
           persianNames.push(item.persianName);
@@ -855,7 +1002,7 @@ export default {
           this.EffectOnIndexSeries = [{ data: Impactseries2data }];
           this.EffectOnIndexOptions.labels = Impactseries2Labels;
           this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
-          console.log(Impactseries2data);
+          // console.log(Impactseries2data);
         })
         .catch(error => {
           console.log(error);
