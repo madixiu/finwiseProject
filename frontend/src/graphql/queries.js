@@ -1,23 +1,43 @@
 import gql from "graphql-tag";
 
+// export const GET_USER = gql`
+//   query {
+//     me {
+//       id
+//       username
+//       email
+//       lastName
+//       firstName
+//       phoneNumber
+//       expirationDate
+//       role
+//       isStaff
+//       isActive
+//       verified
+//     }
+//   }
+// `;
 export const GET_USER = gql`
-  query {
-    me {
-      id
-      username
-      email
-      lastName
-      firstName
-      phoneNumber
-      expirationDate
-      role
-      isStaff
-      isActive
-      verified
+  query users($username: String!) {
+    users(username: $username) {
+      edges {
+        node {
+          id
+          username
+          email
+          lastName
+          firstName
+          phoneNumber
+          expirationDate
+          role
+          isStaff
+          isActive
+          verified
+        }
+      }
     }
   }
 `;
-
 //dummy, delete soon
 export const USER = gql`
   query {

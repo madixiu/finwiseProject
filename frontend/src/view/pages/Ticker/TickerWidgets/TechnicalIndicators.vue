@@ -1,39 +1,57 @@
 <template>
   <div class="card card-custom card-stretch gutter-b">
-    <v-card>
+    <v-card height="420">
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
-      <div class="row">
-        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
-          <span class="rtl_centerd">خرید </span>
+      <div v-if="this.$store.getters.isAuthenticated">
+        <div class="row">
+          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+            <span class="rtl_centerd">خرید </span>
 
-          <br />
-          <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
-        </div>
-        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
-          <span class="rtl_centerd">خنثی </span>
-          <br />
+            <br />
+            <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
+          </div>
+          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+            <span class="rtl_centerd">خنثی </span>
+            <br />
 
-          <span class="chiptext" style="color:#414554">{{ neutral }} </span>
+            <span class="chiptext" style="color:#414554">{{ neutral }} </span>
+          </div>
+          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+            <span class="rtl_centerd">فروش </span>
+            <br />
+            <span class="chiptext" style="color:#f63538">{{ negative }}</span>
+          </div>
         </div>
-        <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
-          <span class="rtl_centerd">فروش </span>
-          <br />
-          <span class="chiptext" style="color:#f63538">{{ negative }}</span>
+        <div class="row" v-if="loading">
+          <div class="col-6 offset-3">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row" v-if="loading">
-        <div class="col-6 offset-3">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+        <div class="row">
+          <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <div id="TechnicalGauge"></div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <div id="TechnicalGauge"></div>
+      <div class="lockedTechnical" v-if="!this.$store.getters.isAuthenticated">
+        <div class="row lockedTechnical">
+          <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
+        </div>
+        <div class="row lockedTechnical">
+          <v-btn
+            color="#607d8b"
+            class="ma-2"
+            elevation="5"
+            style="margin: auto;"
+            @click="onClick"
+            >ورود</v-btn
+          >
         </div>
       </div>
+
       <!--end::Header-->
     </v-card>
   </div>
@@ -66,6 +84,9 @@ export default {
     };
   },
   methods: {
+    onClick() {
+      this.$router.push({ name: "login" });
+    },
     populateData() {
       this.DataItems2 = this.Indicators;
       if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
@@ -261,7 +282,7 @@ export default {
           "transform",
           `translate(${this.width / 4},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "1.3em");
+        .style("font-size", "1.1em");
       chart
         .append("g")
         .append("text")
@@ -271,7 +292,7 @@ export default {
           "transform",
           `translate(${(7 * this.width) / 8},${this.margin.top / 5})`
         )
-        .style("font-size", "1.3em");
+        .style("font-size", "1.1em");
       chart
         .append("g")
         .append("text")
@@ -281,7 +302,7 @@ export default {
           "transform",
           `translate(${(1 * this.width) / 7},${this.margin.top / 5})`
         )
-        .style("font-size", "1.3em");
+        .style("font-size", "1.1em");
       chart
         .append("g")
         .append("text")
@@ -291,7 +312,7 @@ export default {
           "transform",
           `translate(${0.72 * this.width},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "1.3em");
+        .style("font-size", "1.1em");
       chart
         .append("g")
         .append("text")
@@ -302,7 +323,7 @@ export default {
           "transform",
           `translate(${this.width / 2},${0.7 * this.margin.top})`
         )
-        .style("font-size", "2.5em");
+        .style("font-size", "2.3em");
 
       var slice = innerD
         .append("g")
@@ -383,6 +404,18 @@ export default {
 };
 </script>
 <style scoped>
+.lockIcon {
+  margin-top: 90px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.lockedTechnical {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
+  text-align: center;
+}
 .monospace {
   font-family: monospace, "Lucida Console", "Courier New", sans-serif;
   font-size: 16px;

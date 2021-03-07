@@ -235,7 +235,11 @@
             </li>
           </router-link>
           <router-link
-            to="/StockMarket/Assembly/IncreaseCapitals"
+            :to="
+              this.$store.getters.isAuthenticated
+                ? '/StockMarket/Assembly/IncreaseCapitals'
+                : '/login'
+            "
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -276,7 +280,7 @@
       </li>
     </router-link>
     <router-link
-      to="/StockMarket/Option"
+      :to="!OptionLock ? '/StockMarket/Option' : '#'"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -290,7 +294,13 @@
       >
         <a :href="href" class="menu-link" @click="navigate">
           <i class="menu-icon flaticon-clipboard"></i>
-          <span class="menu-text">آپشن</span>
+
+          <span class="menu-text"
+            >آپشن
+            <v-icon v-if="OptionLock" size="15px" color="#4682B4"
+              >mdi-lock-outline</v-icon
+            >
+          </span>
         </a>
       </li>
     </router-link>
@@ -300,6 +310,39 @@
 <script>
 export default {
   name: "KTMenu",
+  // created() {
+  //   this.OptionStatus = this.$store.watch(
+  //     getters => getters.getLockStatus,
+  //     (newValue, oldValue) => {
+  //       console.log(newValue, oldValue);
+  //     }
+  //   );
+  // },
+  watch: {
+    OptionLock(newCount) {
+      // console.log(newCount);
+      this.OptionStatus = newCount;
+    }
+    // IncreaseCapitalsLock(newValue) {
+    //   this.IncreaseCapitalsStatus = newValue;
+    // }
+  },
+  data() {
+    return {
+      OptionStatus: true,
+      // IncreaseCapitalsStatus: false
+    };
+  },
+  computed: {
+    OptionLock() {
+      console.log(this.$store.getters.getLockStatus);
+      return this.$store.getters.getLockStatus;
+    }
+    // IncreaseCapitalsLock() {
+    //   // return this.$store.getters.
+    //   return this.$store.getters.isAuthenticated;
+    // }
+  },
   methods: {
     hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;

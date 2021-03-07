@@ -2,9 +2,9 @@
 import graphene
 from graphql_auth.schema import UserQuery, MeQuery
 from graphql_auth import mutations
-import users.schema 
+import users.schema
 
-class Query(MeQuery, graphene.ObjectType):
+class Query(MeQuery,UserQuery, graphene.ObjectType):
     pass
 
 

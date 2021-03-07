@@ -174,6 +174,13 @@ export default {
     }
   },
   methods: {
+    LockCheck() {
+      // console.log(this.$store.getters.currentUser.role);
+      let user = this.$store.getters.currentUser;
+      // console.log(user.role);
+
+      if (user.role == 2) this.$store.dispatch("setOptionStatus", false);
+    },
     checkError() {
       let errors = this.$store.getters.errors;
       console.log(errors);
@@ -215,7 +222,6 @@ export default {
       return decrypted;
     },
     onSubmit() {
-      console.log("fuck");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
@@ -223,9 +229,8 @@ export default {
       // const email = this.$v.form.email.$model;
       const phonenumber = this.$v.form.phonenumber.$model;
       const password = this.$v.form.password.$model;
-      console.log(password);
-      console.log(phonenumber);
-      console.log(typeof(phonenumber));
+      // console.log(password);
+      // console.log(phonenumber);
 
       // add apollo
       this.$apollo
@@ -264,6 +269,8 @@ export default {
             user.token = LoginData.token;
             console.log(user);
             this.$store.dispatch("LOGIN", user);
+            this.LockCheck();
+
             // if (user.verified == true) {
             //   console.log("verified");
             //   this.$store.dispatch("LOGIN", user);
@@ -309,7 +316,7 @@ export default {
         // .then(() => this.$router.push({ name: "dashboard" }));
         if (this.$store.getters.isAuthenticated)
           this.$router.push({ name: "Dashboard" });
-        if (this.verified == false) this.$router.push({ name: "verify" });
+        // if (this.verified == false) this.$router.push({ name: "verify" });
 
         submitButton.classList.remove(
           "spinner",

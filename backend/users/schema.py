@@ -6,6 +6,17 @@ from .models import CustomUser
 # import graphene
 # from graphene_django import DjangoObjectType
 
+class UserType(DjangoObjectType):
+    class Meta:
+         model = CustomUser
+
+# class Query(id):
+#     user = graphene.Field(UserType)
+
+#     def resolve_user(self, args, context, info):
+#        if context.user.is_authenticated:
+#           return context.user
+
 
 class QuestionType(DjangoObjectType):
     class Meta:

@@ -45,6 +45,15 @@ export default {
   name: "Finwise",
   mounted() {
     this.loadData();
+    //****************NEW CODE ***********************************/
+    if (JwtService.getToken) {
+      let refreshToken = this.CryptoJS.AES.decrypt(
+        JwtService.getToken(),
+        "key"
+      ).toString(this.CryptoJS.enc.Utf8);
+      this.getAccessTokenAndUser(refreshToken);
+    }
+    // ***************OLD CODE************************************/
     // if (
     //   this.$route.name !== "login" &&
     //   !this.$store.getters.isAuthenticated &&
@@ -112,23 +121,26 @@ export default {
           console.log(error);
         });
     },
-    getQueryUser() {
+    getQueryUser(UserName) {
       // let token = this.$store.getters.currentUserAccessToken;
       this.$apollo
         .query({
-          query: GET_USER
+          query: GET_USER,
           // headers: {
           // authorization: token ? `JWT ${token}` : ""
           // }
-          // variables: {
-          //   userId
-          //   }
+          variables: {
+            username: UserName
+          }
         })
         .then(data => {
-          console.log("query");
-          console.log(data.data.me);
-          this.$store.dispatch("LOGIN", data.data.me);
-          this.$router.push({ path: "/" });
+          // console.log("query");
+          console.log(data);
+          // console.log(data.data.me);
+          this.$store.dispatch("LOGIN", data.data.users.edges[0].node);
+          this.LockCheck();
+
+          // this.$router.push({ path: "/" });
         });
     },
     verifyAccessToken(AccessToken) {
@@ -144,7 +156,7 @@ export default {
           let LoginData = data.data.verifyToken;
           console.log(LoginData.success);
           if (LoginData.success) {
-            this.$router.push({ name: "Dashboard" });
+            // this.$router.push({ name: "Dashboard" });
           } else if (LoginData == false) {
             let Rtoken = this.CryptoJS.AES.decrypt(
               JwtService.getToken(),
@@ -177,12 +189,12 @@ export default {
               // store new acc token to vuex
 
               this.$store.dispatch("RenewAccessToken", LoginData.token);
-              this.getQueryUser();
-              this.$router.push({ name: "Dashboard" });
+              this.getQueryUser(LoginData.payload.username);
+              // this.$router.push({ name: "Dashboard" });
             } else {
               console.log(LoginData.errors.nonFieldErrors[0].message);
               this.$store.dispatch("LOGOUT");
-              this.$router.push({ name: "login" });
+              // this.$router.push({ name: "login" });
               // this.$router.push({ name: "verify" });
             }
           } else {
@@ -192,6 +204,14 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    LockCheck() {
+      console.log(this.$store.getters.currentUser.role);
+      let user = this.$store.getters.currentUser;
+      console.log(user.role);
+
+      if (this.$store.getters.isAuthenticated && user.role == 2)
+        this.$store.dispatch("setOptionStatus", false);
     }
     // checkVerify() {
     //   if (!JwtService.getToken()) {

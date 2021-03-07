@@ -10,7 +10,7 @@
         Hi,
       </span> -->
       <v-icon size="25px" color="#4682B4" class="mr-1"
-       >mdi-account-circle</v-icon
+        >mdi-account-circle</v-icon
       >
       <!-- <span
         class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"
@@ -60,13 +60,12 @@
             <!-- <i class="symbol-badge bg-success"></i> -->
           </div>
           <div class="d-flex flex-column">
-            <a 
-              v-if="LoginStatus"
-
+            <a
+              v-if="this.$store.isAuthenticated"
               href="#"
               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
             >
-              {{this.$store.getters.currentUser.firstName}}
+              {{ this.$store.getters.currentUser.firstName }}
             </a>
             <!-- <div class="text-muted mt-1">Application Developer</div> -->
             <div class="navi mt-2">
@@ -88,14 +87,14 @@
               </a>
             </div>
             <button
-              v-if="!LoginStatus"
+              v-if="!this.$store.getters.isAuthenticated"
               class="btn btn-light-primary btn-bold"
               @click="onLogin"
             >
               ورود
             </button>
             <button
-              v-if="LoginStatus"
+              v-if="this.$store.getters.isAuthenticated"
               class="btn btn-light-primary btn-bold"
               @click="onLogout"
             >
@@ -143,7 +142,7 @@ export default {
   name: "KTQuickUser",
   data() {
     return {
-      LoginStatus: false,
+      // LoginStatus: false,
       list: [
         {
           title: "Another purpose persuade",
@@ -178,7 +177,7 @@ export default {
   },
   mounted() {
     // Init Quick User Panel
-    this.LoginStatus = this.$store.getters.isAuthenticated;
+    // this.LoginStatus = this.$store.getters.isAuthenticated;
     KTLayoutQuickUser.init(this.$refs["kt_quick_user"]);
   },
   methods: {
