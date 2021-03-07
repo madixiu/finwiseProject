@@ -5,8 +5,8 @@
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
   
-        <b-card-title>Account Information</b-card-title>
-        <b-card-sub-title>Change your account settings</b-card-sub-title>
+        <b-card-title>اطلاعات حساب کاربری</b-card-title>
+        <b-card-sub-title>تغییرات اطلاعات کاربری </b-card-sub-title>
 
       </div>
       <div class="card-toolbar">
@@ -16,10 +16,10 @@
           @click="save()"
           ref="kt_save_changes"
         >
-          Save Changes
+          ذخیره
         </button>
         <button type="reset" class="btn btn-secondary" @click="cancel()">
-          Cancel
+          لغو
         </button>
       </div>
     </div>
@@ -31,12 +31,12 @@
         <div class="row">
           <label class="col-xl-3"></label>
           <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Account:</h5>
+<h5 class="font-weight-bold mb-6 text-right">حساب کاربری:</h5>
           </div>
         </div>
         <!--begin::Form Group-->
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">نام کاربری</label>
           <div class="col-lg-9 col-xl-6">
             <div class="spinner spinner-sm spinner-success spinner-right">
               <input
@@ -50,7 +50,7 @@
         </div>
         <!--begin::Form Group-->
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">ایمیل</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
               <div class="input-group-prepend">
@@ -66,24 +66,20 @@
                 placeholder="Email"
               />
             </div>
-            <span class="form-text text-muted"
-              >Email will not be publicly displayed.
-              <a href="#" class="kt-link">Learn more</a>.</span
-            >
           </div>
         </div>
  
         <!--begin::Form Group-->
         <div class="separator separator-dashed my-5"></div>
         <!--begin::Form Group-->
-        <div class="row">
+        <!-- <div class="row">
           <label class="col-xl-3"></label>
           <div class="col-lg-9 col-xl-6">
             <h5 class="font-weight-bold mb-6">Security:</h5>
           </div>
-        </div>
+        </div> -->
         <!--begin::Form Group-->
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label"
             >Login verification</label
           >
@@ -100,7 +96,7 @@
               compromised. <a href="#" class="font-weight-bold">Learn more</a>.
             </p>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </form>

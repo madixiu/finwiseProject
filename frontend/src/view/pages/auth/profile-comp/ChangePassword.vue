@@ -4,9 +4,9 @@
     <!--begin::Header-->
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
-        <h3 class="card-label font-weight-bolder text-dark">Change Password</h3>
+        <h3 class="card-label font-weight-bolder text-dark">رمز عبور</h3>
         <span class="text-muted font-weight-bold font-size-sm mt-1"
-          >Change your account password</span
+          >تغییر رمز عبور</span
         >
       </div>
       <div class="card-toolbar">
@@ -16,10 +16,10 @@
           @click="save()"
           ref="kt_save_changes"
         >
-          Save Changes
+          ذخیره
         </button>
         <button type="reset" class="btn btn-secondary" @click="cancel()">
-          Cancel
+          لغو
         </button>
       </div>
     </div>
@@ -28,14 +28,14 @@
     <form class="form" id="kt_password_change_form">
       <div class="card-body">
         <!--begin::Alert-->
-        <div
+        <!-- <div
           class="alert alert-custom alert-light-danger fade show mb-10"
           role="alert"
         >
           <div class="alert-icon">
-            <span class="svg-icon svg-icon-3x svg-icon-danger">
+            <span class="svg-icon svg-icon-3x svg-icon-danger"> -->
               <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Info-circle.svg-->
-              <svg
+              <!-- <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="24px"
@@ -68,11 +68,11 @@
                     rx="1"
                   />
                 </g>
-              </svg>
+              </svg> -->
               <!--end::Svg Icon-->
-            </span>
-          </div>
-          <div class="alert-text font-weight-bold">
+            <!-- </span> -->
+          <!-- </div> -->
+          <!-- <div class="alert-text font-weight-bold">
             Configure user passwords to expire periodically. Users will need
             warning that their passwords are going to expire, <br />or they
             might inadvertently get locked out of the system!
@@ -88,35 +88,35 @@
                 <i class="ki ki-close"></i>
               </span>
             </button>
-          </div>
-        </div>
+          </div> -->
+        <!-- </div> -->
         <!--end::Alert-->
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >Current Password</label
+            >رمز عبور فعلی</label
           >
           <div class="col-lg-9 col-xl-6">
             <input
               type="password"
               class="form-control form-control-lg form-control-solid mb-2"
               value=""
-              placeholder="Current password"
+              placeholder="رمز عبور فعلی"
               name="current_password"
               ref="current_password"
             />
-            <a href="#" class="text-sm font-weight-bold">Forgot password ?</a>
+            <a href="#" class="text-sm font-weight-bold">فراموشی رمز عبور ?</a>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >New Password</label
+            >رمز عبور جدید</label
           >
           <div class="col-lg-9 col-xl-6">
             <input
               type="password"
               class="form-control form-control-lg form-control-solid"
               value=""
-              placeholder="New password"
+              placeholder="رمز عبور جدید"
               name="new_password"
               ref="new_password"
             />
@@ -124,14 +124,14 @@
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >Verify Password</label
+            >تکرار رمز عبور</label
           >
           <div class="col-lg-9 col-xl-6">
             <input
               type="password"
               class="form-control form-control-lg form-control-solid"
               value=""
-              placeholder="Verify password"
+              placeholder="تکرار رمز عبور"
               name="verify_password"
               ref="verify_password"
             />

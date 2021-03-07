@@ -1,4 +1,4 @@
-<template>
+    <template>
   <div class="d-flex flex-row">
     <!-- <div
       class="flex-row-auto offcanvas-mobile w-300px w-xl-350px"
@@ -106,7 +106,7 @@
                   <inline-svg src="media/svg/icons/General/User.svg" />
                 </span>
               </span>
-              <span>Personal Information</span>
+              <span>اطلاعات شخصی</span>
             </template>
             <KTPersonalInformation></KTPersonalInformation>
           </b-tab>
@@ -118,7 +118,7 @@
                   <inline-svg src="media/svg/icons/Code/Compiling.svg" />
                 </span>
               </span>
-              <span>Account Information</span>
+              <span>اطلاعات حساب</span>
             </template>
             <KTAccountInformation></KTAccountInformation>
           </b-tab>
@@ -132,7 +132,7 @@
                   />
                 </span>
               </span>
-              <span>Change Password</span>
+              <span>رمز عبور</span>
             </template>
             <KTChangePassword></KTChangePassword>
           </b-tab>
@@ -146,7 +146,7 @@
                   />
                 </span>
               </span>
-              <span>Email Settings</span>
+            <span>تنظیمات ایمیل</span>
             </template>
             <KTEmailSettings></KTEmailSettings>
           </b-tab>

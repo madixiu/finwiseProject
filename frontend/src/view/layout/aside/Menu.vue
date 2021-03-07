@@ -329,7 +329,7 @@ export default {
   },
   data() {
     return {
-      OptionStatus: true,
+      OptionStatus: true
       // IncreaseCapitalsStatus: false
     };
   },

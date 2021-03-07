@@ -6,39 +6,70 @@
       :style="{ backgroundImage: `url(${backgroundImage})` }"
     >
       <h4 class="text-white font-weight-bold">
-        Quick Actions
+        حساب کاربری
       </h4>
-      <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
+      <!-- <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">
         23 tasks pending
-      </span>
+      </span> -->
     </div>
     <!--end::Header -->
 
     <!--begin::Nav -->
     <div class="row row-paddingless">
+      <div class="col-6 item" @click="ToProfile">
+        <span class="svg-icon svg-icon-3x svg-icon-success">
+          <!--begin::Svg Icon-->
+          <inline-svg :src="list[0].svg" />
+          <!--end::Svg Icon-->
+        </span>
+        <span
+          class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1"
+        >
+          {{ list[0].title }}
+        </span>
+        <span class="d-block text-dark-50 font-size-lg">
+          {{ list[0].desc }}
+        </span>
+      </div>
+      <div
+        v-if="!this.$store.getters.isAuthenticated"
+        class="col-6 item"
+        @click="LogIn"
+      >
+        <span class="svg-icon svg-icon-3x svg-icon-success">
+          <!--begin::Svg Icon-->
+          <inline-svg :src="list[1].svg" />
+          <!--end::Svg Icon-->
+        </span>
+        <span
+          class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1"
+        >
+          {{ list[1].title }}
+        </span>
+        <span class="d-block text-dark-50 font-size-lg">
+          {{ list[1].desc }}
+        </span>
+      </div>
+      <div
+        v-if="this.$store.getters.isAuthenticated"
+        class="col-6 item"
+        @click="LogOut"
+      >
+        <span class="svg-icon svg-icon-3x svg-icon-success">
+          <!--begin::Svg Icon-->
+          <inline-svg :src="list[2].svg" />
+          <!--end::Svg Icon-->
+        </span>
+        <span
+          class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1"
+        >
+          {{ list[2].title }}
+        </span>
+        <span class="d-block text-dark-50 font-size-lg">
+          {{ list[2].desc }}
+        </span>
+      </div>
       <!--begin:Item-->
-      <template v-for="(item, i) in list">
-        <div class="col-6" v-bind:key="i">
-          <router-link
-            to="builder"
-            class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom"
-          >
-            <span class="svg-icon svg-icon-3x svg-icon-success">
-              <!--begin::Svg Icon-->
-              <inline-svg :src="item.svg" />
-              <!--end::Svg Icon-->
-            </span>
-            <span
-              class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1"
-            >
-              {{ item.title }}
-            </span>
-            <span class="d-block text-dark-50 font-size-lg">
-              {{ item.desc }}
-            </span>
-          </router-link>
-        </div>
-      </template>
       <!--end:Item-->
     </div>
     <!--end::Nav -->
@@ -52,30 +83,49 @@ export default {
     return {
       list: [
         {
-          title: "Accounting",
-          desc: "eCommerce",
-          svg: process.env.BASE_URL + "media/svg/icons/Shopping/Euro.svg"
-        },
-        {
-          title: "Administration",
-          desc: "Console",
+          title: "تنظیمات",
+          desc: "",
           svg:
             process.env.BASE_URL +
             "media/svg/icons/Communication/Mail-attachment.svg"
         },
         {
-          title: "Projects",
-          desc: "Pending Tasks",
-          svg: process.env.BASE_URL + "media/svg/icons/Shopping/Box2.svg"
+          title: "ورود",
+          desc: "",
+          svg: process.env.BASE_URL + "media/svg/icons/Navigation/Sign-in.svg"
         },
         {
-          title: "Customers",
-          desc: "Latest Cases",
-          svg: process.env.BASE_URL + "media/svg/icons/Communication/Group.svg"
+          title: "خروج",
+          desc: "",
+          svg: process.env.BASE_URL + "media/svg/icons/Navigation/Sign-out.svg"
         }
+        // {
+        //   title: "Projects",
+        //   desc: "Pending Tasks",
+        //   svg: process.env.BASE_URL + "media/svg/icons/Shopping/Box2.svg"
+        // },
+        // {
+        //   title: "Customers",
+        //   desc: "Latest Cases",
+        //   svg: process.env.BASE_URL + "media/svg/icons/Communication/Group.svg"
+        // }
       ]
     };
   },
+  methods: {
+    LogOut() {
+      this.$store
+        .dispatch("LOGOUT")
+        .then(() => this.$router.push({ name: "login" }));
+    },
+    LogIn() {
+      this.$router.push({ name: "login" });
+    },
+    ToProfile() {
+      this.$router.push({ name: "profile" });
+    }
+  },
+
   computed: {
     backgroundImage() {
       return process.env.BASE_URL + "media/misc/bg-1.jpg";
@@ -83,3 +133,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.item {
+  text-align: center;
+  cursor: pointer;
+}
+</style>
