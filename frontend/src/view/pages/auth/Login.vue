@@ -215,7 +215,6 @@ export default {
       return decrypted;
     },
     onSubmit() {
-      console.log("fuck");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
