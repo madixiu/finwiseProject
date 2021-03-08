@@ -35,7 +35,7 @@
           </div> -->
         <!-- </div> -->
         <div class="form-group row">
-          <span class="col-xl-3 col-lg-3  text-right">نام</span>
+          <span class="col-xl-1 col-lg-1 profile-labels">نام</span>
           <div class="col-lg-3 col-xl-4">
             <input
               ref="name"
@@ -46,8 +46,8 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >نام خانوادگی</label
+          <span class="col-xl-1 col-lg-1 col-form-label profile-labels"
+            >نام خانوادگی</span
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -59,8 +59,8 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >نام شرکت</label
+          <span class="col-xl-1 col-lg-1 col-form-label profile-labels"
+            >نام شرکت</span
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -300,3 +300,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.profile-labels {
+  text-align: right !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important  ;
+}
+</style>

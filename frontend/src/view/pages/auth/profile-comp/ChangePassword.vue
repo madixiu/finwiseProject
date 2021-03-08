@@ -34,8 +34,8 @@
         >
           <div class="alert-icon">
             <span class="svg-icon svg-icon-3x svg-icon-danger"> -->
-              <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Info-circle.svg-->
-              <!-- <svg
+        <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Info-circle.svg-->
+        <!-- <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="24px"
@@ -69,10 +69,10 @@
                   />
                 </g>
               </svg> -->
-              <!--end::Svg Icon-->
-            <!-- </span> -->
-          <!-- </div> -->
-          <!-- <div class="alert-text font-weight-bold">
+        <!--end::Svg Icon-->
+        <!-- </span> -->
+        <!-- </div> -->
+        <!-- <div class="alert-text font-weight-bold">
             Configure user passwords to expire periodically. Users will need
             warning that their passwords are going to expire, <br />or they
             might inadvertently get locked out of the system!
@@ -92,10 +92,10 @@
         <!-- </div> -->
         <!--end::Alert-->
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >رمز عبور فعلی</label
+          <span class="col-xl-2 col-lg-2 col-form-label profile-labels"
+            >رمز عبور فعلی</span
           >
-          <div class="col-lg-9 col-xl-6">
+          <div class="col-lg-6 col-xl-6">
             <input
               type="password"
               class="form-control form-control-lg form-control-solid mb-2"
@@ -108,8 +108,8 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >رمز عبور جدید</label
+          <span class="col-xl-2 col-lg-2 col-form-label profile-labels"
+            >رمز عبور جدید</span
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -123,8 +123,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-alert"
-            >تکرار رمز عبور</label
+          <span
+            class="col-xl-2 col-lg-2 col-form-label text-alert profile-labels"
+            >تکرار رمز عبور</span
           >
           <div class="col-lg-9 col-xl-6">
             <input
@@ -263,4 +264,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.profile-labels {
+  text-align: right;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+</style>

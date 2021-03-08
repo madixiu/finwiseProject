@@ -152,9 +152,9 @@ export default {
           }
         })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           let LoginData = data.data.verifyToken;
-          console.log(LoginData.success);
+          // console.log(LoginData.success);
           if (LoginData.success) {
             // this.$router.push({ name: "Dashboard" });
           } else if (LoginData == false) {

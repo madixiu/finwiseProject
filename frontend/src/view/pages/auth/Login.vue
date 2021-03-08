@@ -26,7 +26,7 @@
       <b-form class="form" @submit.stop.prevent="onSubmit">
         <div role="alert" class="alert alert-info">
           <div class="alert-text">
-            <strong>نام کاربری</strong> و <strong>رمز عبور</strong>خود را وارد
+            <strong>شماره موبایل</strong> و <strong>رمز عبور</strong>خود را وارد
             کنید
           </div>
         </div>
@@ -83,7 +83,7 @@
           class="form-group d-flex flex-wrap justify-content-between align-items-center"
         >
           <p class="WrongCredMsg" v-if="ErrorMsgflag">
-            نام کاربری و رمز عبور صحیح نمی باشد
+            شماره موبایل و رمز عبور صحیح نمی باشد
           </p>
         </div>
         <div

@@ -64,7 +64,7 @@ import ApexChart from "@/view/content/charts/ApexChart";
 export default {
   name: "Industries",
   components: {
-    ApexChart,
+    ApexChart
     // IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
@@ -312,9 +312,9 @@ export default {
             show: false
           }
         },
-           tooltip: {
+        tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            let n = series[seriesIndex][dataPointIndex]/1000000000;
+            let n = series[seriesIndex][dataPointIndex] / 1000000000;
             let negative = false;
             let digits = 0;
             if (n < 0) {
@@ -329,7 +329,7 @@ export default {
             }
             let parts = n.toString().split(".");
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            let val=parts.join(".");
+            let val = parts.join(".");
             return (
               '<div class="arrow_box">' +
               "<span>" +
@@ -381,8 +381,9 @@ export default {
           title: {
             text: "میلیارد ریال"
           },
-            labels:{ formatter: function(value) {
-              let n = value/1000000000;
+          labels: {
+            formatter: function(value) {
+              let n = value / 1000000000;
               let negative = false;
               let digits = 0;
               if (n < 0) {
@@ -399,7 +400,7 @@ export default {
               parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               return parts.join(".");
             }
-            }
+          }
         },
         // tooltip: {
         //   shared: false,
@@ -461,7 +462,7 @@ export default {
             }
             let parts = n.toString().split(".");
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            let val=parts.join(".");
+            let val = parts.join(".");
             return (
               '<div class="arrow_box">' +
               "<span>" +
@@ -843,9 +844,9 @@ export default {
       //   // eslint-disable-next-line no-unused-vars
       //   this.getIndustries().then(resy => {
       //     // eslint-disable-next-line no-unused-vars
-      //     this.getHHDATA().then(resz=>{
-      //       this.getImpactData().then()
-      //     });
+      // this.getHHDATA().then(resz=>{
+      //   this.getImpactData().then()
+      // });
       //   });
       // });
     },
@@ -1030,13 +1031,37 @@ export default {
   }
 };
 </script>
-<style scoped>
-@import "~bootstrap/dist/css/bootstrap.css";
-#fi {
+<style>
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+/* #fi {
   color: red !important;
+} */
+/* .apexcharts-pie-label,
+.apexcharts-datalabels,
+.apexcharts-datalabel,
+.apexcharts-datalabel-label,
+.apexcharts-datalabel-value {
+  cursor: default;
+  pointer-events: none;
+  font-family: "Vazir-Medium-FD" !important;
+} */
+.apexcharts-legend-text,
+.apexcharts-text,
+.apexcharts-title-text,
+.apexcharts-tooltip {
+  /* font-family: Poppins, Helvetica, "sans-serif" !important; */
+  font-family: "Vazir-Medium-FD" !important;
 }
+/* .apexcharts-series {
+  font-family: "Vazir-Medium-FD" !important;
 
-.apexcharts-text tspan {
-  font-family: "Vazir";
 }
+.apexcharts-text tspan {
+  font-family: "Vazir-Medium-FD" !important;
+}
+.apexcharts-legend-text,
+.apexcharts-text,
+.apexcharts-title-text {
+  font-family: "Vazir-Medium-FD" !important;
+} */
 </style>

@@ -3,27 +3,27 @@
     <v-card height="420">
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
-      <div v-if="this.$store.getters.isAuthenticated">
+      <div v-show="this.$store.getters.isAuthenticated">
         <div class="row">
-          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
             <span class="rtl_centerd">خرید </span>
 
             <br />
             <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
           </div>
-          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
             <span class="rtl_centerd">خنثی </span>
             <br />
 
             <span class="chiptext" style="color:#414554">{{ neutral }} </span>
           </div>
-          <div class="col-xxl-4 col-lg-3 col-md-4 col-sm-12">
+          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
             <span class="rtl_centerd">فروش </span>
             <br />
             <span class="chiptext" style="color:#f63538">{{ negative }}</span>
           </div>
         </div>
-        <div class="row" v-if="loading">
+        <div class="row" v-show="loading">
           <div class="col-6 offset-3">
             <div class="spinner-border text-primary" role="status">
               <span class="sr-only">Loading...</span>
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="lockedTechnical" v-if="!this.$store.getters.isAuthenticated">
+      <div class="lockedTechnical" v-show="!this.$store.getters.isAuthenticated">
         <div class="row lockedTechnical">
           <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
         </div>
