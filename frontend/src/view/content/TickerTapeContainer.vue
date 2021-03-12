@@ -71,14 +71,14 @@ export default {
         .get("/api/TapeData")
         .then(TickerTapeResponse => {
           let data = TickerTapeResponse.data;
-          
+
           this.TickerTapeData = data[0];
           this.IndustryTapeData = data[1];
 
           // this.TickerTape.pop();
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   },

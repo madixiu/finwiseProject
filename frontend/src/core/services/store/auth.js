@@ -12,6 +12,7 @@ export const SET_ACCTOKEN = "setAccessToken";
 export const RENEW_TOKEN = "RenewAccessToken";
 export const SET_USER_ID = "setUserID";
 export const SET_AUTH_NOT_VERIFIED = "setUserNotVerified";
+
 // const apolloClient = ApolloService.init();
 export default {
   state: {
@@ -53,6 +54,9 @@ export default {
     },
     [SET_USER_ID](state, user) {
       state.user = user;
+    },
+    [UPDATE_USER](state, user) {
+      state.user = user;
     }
   },
   actions: {
@@ -73,26 +77,9 @@ export default {
     },
     SET_USER: ({ commit }, payload) => {
       commit(SET_USER_ID, payload);
+    },
+    updateUser: ({ commit }, payload) => {
+      commit(UPDATE_USER, payload);
     }
-    // VERIFY: () => {
-    //   // console.log(VERIFY_ACCESS_TOKEN.toString());
-    //   console.log("vuex");
-    //   Vue.apolloClient
-    //     .mutate({
-    //       mutation: VERIFY_ACCESS_TOKEN,
-    //       variables: {
-    //         token:
-    //           "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjA5Mzg2ODg2NjE2IiwiZXhwIjoxNjA1OTQ5MDAwLCJvcmlnSWF0IjoxNjA1OTQ4MzQwfQ.eeW-t3wNG0eSuaoTiZEVqNdrdfY46yK_CT7vx7vQrwM"
-    //       }
-    //     })
-    //     .then(data => {
-    //       let LoginData = data.data.verifyToken;
-    //       console.log(LoginData.success);
-    //       // let enc = this.Cryptojs.AES.encrypt(LoginData.success, "key").toString();
-    //       // console.log(enc);
-    //     });
-    //   // commit(SET_AUTH, payload)
-    //   // commit(SET_AUTH, payload);
-    // },
   }
 };

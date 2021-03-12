@@ -176,8 +176,6 @@ export default {
     LivepopulateData() {
       this.LiveDataItems = this.tickerdata;
       this.loading = false;
-      // console.log(this.LiveDataItems.length);
-      // console.log(this.LiveDataItems);
     },
     numberWithCommas(x) {
       if (isNaN(x)) {
@@ -224,8 +222,6 @@ export default {
   watch: {
     tickerdata() {
       this.LivepopulateData();
-      // console.log(this.tickerdata);
-      // console.log("WatcherSubHeader");
     }
   }
 };

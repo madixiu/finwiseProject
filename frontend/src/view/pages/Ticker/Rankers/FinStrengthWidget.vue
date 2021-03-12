@@ -22,7 +22,9 @@
             <span class="small">Financial Strength</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">
+          {{ this.FinancialStrength }}/10
+        </div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
@@ -51,7 +53,7 @@
           </v-tooltip>
         </template>
         <template v-slot:[`item.now`]="{ item }">
-            <span class="small blured">{{ item.now }}</span>
+          <span class="small blured">{{ item.now }}</span>
         </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
@@ -395,7 +397,6 @@ export default {
       return "";
     },
     setStyle: function() {
-      console.log(this.ValuatedItems2.percentage);
       return `border:1 px `;
     }
   },
@@ -406,7 +407,7 @@ export default {
 };
 </script>
 <style scoped>
-.blured { 
+.blured {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);

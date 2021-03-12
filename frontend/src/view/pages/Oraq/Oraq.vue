@@ -315,7 +315,6 @@ export default {
     this.height = this.getHeight();
     this.$socketOraq.onmessage = data => {
       // this.tableData = JSON.parse(data.data);
-      // console.log(!!this.tableData.length);
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
         // this.$store.dispatch("setSahm", JSON.parse(data.data));
         this.tableData = JSON.parse(data.data);
@@ -333,11 +332,10 @@ export default {
 
           let data = response.data;
           this.tableData = data;
-          console.log(data);
         })
         .catch(error => {
           this.isBusy = false;
-          console.log(error);
+          console.error(error);
         });
     },
     TriggerFilteredHeader() {
@@ -381,7 +379,6 @@ export default {
           for (let i = 0; i < 8; i++) header.pop();
           break;
       }
-      console.log(header);
       return header;
     },
     getHeight() {
@@ -396,7 +393,6 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketOraq.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 3000);
     },
     liveChecker() {

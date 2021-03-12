@@ -758,7 +758,6 @@ export default {
       });
     },
     populateData2() {
-      // console.log(this.hh)
       this.DataItems3 = this.hh;
       if (this.DataItems3.length != 0) {
         this.countbuyerHaghighi = this.DataItems3[0]["CountBuy_Haghighi"];
@@ -772,7 +771,6 @@ export default {
       }
     },
     populateData3() {
-      // console.log(this.liveData);
       this.DataItems3 = this.liveData;
       if (this.DataItems3.length != 0) {
         this.tickerfull = this.DataItems3[0]["name"];

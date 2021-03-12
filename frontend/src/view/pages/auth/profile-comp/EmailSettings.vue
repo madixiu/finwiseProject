@@ -1,11 +1,11 @@
 <template>
-  <div class="card card-custom">
+  <b-card>
     <!--begin::Header-->
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
-        <h3 class="card-label font-weight-bolder text-dark">تنظیمات ایمیل</h3>
-        <span class="text-muted font-weight-bold font-size-sm mt-1"
-          >تغییرات ایمیل های دریافتی فین وایز</span
+        <b-card-title style="text-align:right">تنظیمات ایمیل</b-card-title>
+        <b-card-sub-title style="text-align:right"
+          >تغییرات ایمیل های دریافتی فین وایز</b-card-sub-title
         >
       </div>
       <div class="card-toolbar">
@@ -24,26 +24,25 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
+          <label
+            class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
             >اطلاع رسانی از طریق ایمیل</label
           >
           <div class="col-lg-9 col-xl-9 col-md-9 col-xs-12">
             <span class="switch switch-sm">
               <label>
-                <input
-                  type="checkbox"
-                  name="email_notification_1"
-                />
+                <input type="checkbox" name="email_notification_1" />
                 <span></span>
               </label>
             </span>
           </div>
         </div>
         <div class="form-group row">
-           <label class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
+          <label
+            class="col-xl-3 col-lg-3 col-md-3 col-xs-6 col-form-label text-right"
             >ارسال کپی به ایمیل شخصی</label
           >
-           <div class="col-lg-9 col-xl-9 col-md-9 col-xs-12">
+          <div class="col-lg-9 col-xl-9 col-md-9 col-xs-12">
             <span class="switch switch-sm">
               <label>
                 <input type="checkbox" name="email_notification_2" />
@@ -73,34 +72,9 @@
                 <input type="checkbox" />
                 <span></span> اطلاعات سهم های مورد علاقه
               </label>
-              <!-- <label class="checkbox">
-                <input type="checkbox" checked="checked" />
-                <span></span> Someone adds you as a connection
-              </label> -->
             </div>
           </div>
         </div>
-        <!-- <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >When To Escalate Emails</label
-          >
-          <div class="col-lg-9 col-xl-6">
-            <div class="checkbox-list">
-              <label class="checkbox checkbox-primary">
-                <input type="checkbox" />
-                <span></span> Upon new order.
-              </label>
-              <label class="checkbox checkbox-primary">
-                <input type="checkbox" />
-                <span></span> New membership approval
-              </label>
-              <label class="checkbox checkbox-primary">
-                <input type="checkbox" checked="checked" />
-                <span></span> Member registration
-              </label>
-            </div>
-          </div>
-        </div> -->
         <div class="separator separator-dashed my-10"></div>
         <div class="row">
           <label class="col-xl-12 col-md-12 col-xs-12"></label>
@@ -123,7 +97,7 @@
                 <span></span> توضیحات و آموزش امکانات فینوایز
               </label>
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <span></span> خبرنامه
               </label>
             </div>
@@ -132,7 +106,7 @@
       </div>
     </form>
     <!--end::Form-->
-  </div>
+  </b-card>
 </template>
 
 <script>

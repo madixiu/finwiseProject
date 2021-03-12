@@ -2,6 +2,7 @@
   <!--begin::Card-->
   <b-card>
     <!--begin::Header-->
+
     <div class="card-header py-3">
       <b-card-title style="text-align:right">
         اطلاعات شخصی
@@ -28,17 +29,11 @@
     <form class="form">
       <!--begin::Body-->
       <b-card-body>
-        <!-- <div class="row"> -->
-        <!-- <label class="col-xl-3"></label> -->
-        <!-- <div class="col-lg-1 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Customer Info</h5>
-          </div> -->
-        <!-- </div> -->
         <div class="form-group row">
           <span class="col-xl-1 col-lg-1 profile-labels">نام</span>
           <div class="col-lg-3 col-xl-4">
             <input
-              ref="name"
+              ref="firstName"
               class="form-control form-control-lg form-control-solid "
               type="text"
               v-bind:value="currentUser.firstName"
@@ -51,93 +46,70 @@
           >
           <div class="col-lg-9 col-xl-6">
             <input
-              ref="surname"
+              ref="lastName"
               class="form-control form-control-lg form-control-solid"
               type="text"
               v-bind:value="currentUser.lastName"
             />
           </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <span class="col-xl-1 col-lg-1 col-form-label profile-labels"
-            >نام شرکت</span
+            >سن</span
           >
           <div class="col-lg-9 col-xl-6">
             <input
-              ref="company_name"
+              ref="age"
               class="form-control form-control-lg form-control-solid"
               type="text"
-              v-bind:value="currentUser.company_name"
+              v-bind:value="currentUser.age"
             />
-            <span class="form-text text-muted"
-              >در صورتی که برای شخصیت حقوقی قصد ثبت نام دارید، با ما مستقیما
-              تماس بگیرید</span
+       
+          </div>
+        </div> -->
+        <div class="form-group row">
+          <b-form inline>
+            <label class="mr-3 ml-4 pl-3" for="inline-form-custom-select-pref"
+              >سن</label
             >
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-xl-3"></label>
-          <div class="col-lg-12 col-xl-12">
-            <h5 class="font-weight-bold mb-6 text-right">اطلاعات تماس</h5>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >تلفن همراه</label
-          >
-          <div class="col-lg-9 col-xl-6">
-            <div class="input-group input-group-lg input-group-solid">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="la la-phone"></i>
-                </span>
-              </div>
-              <input
-                ref="phone"
-                type="text"
-                class="form-control form-control-lg form-control-solid"
-                placeholder="Phone"
-                v-bind:value="currentUser.phoneNumber"
-              />
-            </div>
-          </div>
+            <b-form-select
+              id="inline-form-custom-select-pref"
+              class="mb-2 mr-4 mb-sm-0"
+              :options="ages"
+              v-model="currentUser.age"
+            >
+              <template #first>
+                <b-form-select-option :value="null" disabled
+                  >-- انتخاب کنید --</b-form-select-option
+                >
+              </template>
+            </b-form-select>
+          </b-form>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >ایمیل</label
-          >
-          <div class="col-lg-9 col-xl-6">
-            <div class="input-group input-group-lg input-group-solid">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="la la-at"></i>
-                </span>
-              </div>
-              <input
-                ref="email"
-                type="text"
-                class="form-control form-control-lg form-control-solid"
-                placeholder="Email"
-                v-bind:value="currentUser.email"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label text-right"
-            >سایت</label
-          >
-          <div class="col-lg-9 col-xl-6">
-            <div class="input-group input-group-lg input-group-solid">
-              <input
-                ref="company_site"
-                type="text"
-                class="form-control form-control-lg form-control-solid"
-                placeholder="Username"
-                v-bind:value="currentUser.company_site"
-              />
-            </div>
-          </div>
+          <b-form inline>
+            <label class="mr-sm-2" for="inline-form-custom-select-pref"
+              >مقطع تحصیلی</label
+            >
+            <b-form-select
+              id="inline-form-custom-select-pref"
+              class="mb-2 mr-sm-2 mb-sm-0"
+              v-model="currentUser.degree"
+              :options="[
+                'کارشناسی',
+                'کارشناسی ارشد',
+                'دکترا',
+                'دیپلم',
+                'زیر دیپلم'
+              ]"
+            >
+              <template #first>
+                <b-form-select-option :value="null" disabled
+                  >-- انتخاب کنید --</b-form-select-option
+                >
+              </template>
+            </b-form-select>
+          </b-form>
         </div>
       </b-card-body>
 
@@ -149,38 +121,43 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { VERIFY_ACCESS_TOKEN, REFRESH_ACCESS_TOKEN } from "@/graphql/mutations";
+import {
+  VERIFY_ACCESS_TOKEN,
+  REFRESH_ACCESS_TOKEN,
+  UPDATE_USER
+} from "@/graphql/mutations";
 import JwtService from "@/core/services/jwt.service";
-
-// import { UPDATE_PERSONAL_INFO } from "@/core/services/store/profile.module";
-
 export default {
   name: "PersonalInformation",
   data() {
     return {
-      // default_photo: "media/users/blank.png",
-      // current_photo: null
+      form: { age: "", degree: "" },
+      ages: ["18", "19", "20", "21", "22"],
+      Rtoken: "",
+      Atocken: ""
     };
   },
-  mounted() {
-    // this.current_photo = this.currentUser.photo;
+  created() {
+    for (let i = 23; i < 100; i++) {
+      this.ages.push(i.toString());
+    }
   },
+  mounted() {},
   methods: {
-    verifyAccessToken(AccessToken) {
+    verifyAccessToken() {
       this.$apollo
         .mutate({
           mutation: VERIFY_ACCESS_TOKEN,
           variables: {
-            token: AccessToken
+            token: this.$store.getters.currentUserAccessToken
           }
         })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           let LoginData = data.data.verifyToken;
-          console.log(LoginData.success);
           if (LoginData.success) {
-            // this.$router.push({ name: "Dashboard" });
-            this.$store.dispatch("RenewAccessToken", LoginData.token);
+            // this.$store.dispatch("RenewAccessToken", LoginData.token);
+            this.UpdateAccount();
           } else if (LoginData == false) {
             let Rtoken = this.CryptoJS.AES.decrypt(
               JwtService.getToken(),
@@ -190,7 +167,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     refreshAccessToken(RefreshToken) {
@@ -202,50 +179,84 @@ export default {
           }
         })
         .then(data => {
-          console.log(data);
           let LoginData = data.data.refreshToken;
-          console.log(LoginData);
           if (!data.data.errors) {
-            console.log(LoginData.success);
             if (LoginData.success) {
               // store new acc token to vuex
 
               this.$store.dispatch("RenewAccessToken", LoginData.token);
+              this.UpdateAccount();
               // this.getQueryUser(LoginData.payload.username);
               // this.$router.push({ name: "Dashboard" });
             } else {
-              console.log(LoginData.errors.nonFieldErrors[0].message);
+              // console.log(LoginData.errors.nonFieldErrors[0].message);
               this.$store.dispatch("LOGOUT");
               // this.$router.push({ name: "login" });
               // this.$router.push({ name: "verify" });
             }
           } else {
-            console.log(LoginData.errors.nonFieldErrors[0].message);
+            // console.log(LoginData.errors.nonFieldErrors[0].message);
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     UpdateAccount() {
-      // this.$apollo
-      // .mutate({})
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_USER,
+          variables: {
+            firstName: this.$refs.firstName.value,
+            lastName: this.$refs.lastName.value,
+            age: this.currentUser.age,
+            degree: this.currentUser.degree,
+
+            username: this.$store.getters.currentUser.username,
+            email: this.$store.getters.currentUser.email,
+            gender: ""
+          }
+        })
+        .then(data => {
+          if (data.data.updateAccount.success) {
+            // console.log(data);
+            // console.log("Success");
+            let user = this.currentUser;
+            // console.log(user);
+            (user.firstName = this.$refs.firstName.value),
+              (user.lastName = this.$refs.lastName.value),
+              (user.age = this.currentUser.age),
+              (user.degree = this.currentUser.degree),
+              (user.gender = "");
+            this.$store.dispatch("updateUser", user);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     save() {
       // var name = this.$refs.firstName.value;
       // var surname = this.$refs.lastName.value;
-      // var company_name = this.$refs.company_name.value;
-      // var phone = this.$refs.phoneNumber.value;
-      // var email = this.$refs.email.value;
-      // var company_site = this.$refs.company_site.value;
-      // var photo = this.photo;
-
+      // var age = this.$refs.age.value;
+      // var ageNew = this.form.age;
+      // // var email = this.$refs.email.value;
+      // var degree = this.form.degree;
+      // console.log(name, surname, age, ageNew, degree);
       // set spinner to submit button
       const submitButton = this.$refs["kt_save_changes"];
       submitButton.classList.add("spinner", "spinner-light", "spinner-right");
 
       // dummy delay
       setTimeout(() => {
+        if (this.$store.getters.currentUserAccessToken)
+          this.verifyAccessToken();
+        else
+          this.refreshAccessToken(
+            this.CryptoJS.AES.decrypt(JwtService.getToken(), "key").toString(
+              this.CryptoJS.enc.Utf8
+            )
+          );
         // send update request
 
         // this.$store.dispatch(UPDATE_PERSONAL_INFO, {
@@ -255,7 +266,6 @@ export default {
         //   phone,
         //   email,
         //   company_site,
-        //   photo
         // });
 
         submitButton.classList.remove(
@@ -272,31 +282,25 @@ export default {
       this.$refs.phoneNumber.value = this.currentUser.phoneNumber;
       this.$refs.email.value = this.currentUser.email;
       // this.$refs.company_site.value = this.currentUser.company_site;
-      // this.current_photo = this.currentUser.photo;
-    },
-    onFileChange(e) {
-      const file = e.target.files[0];
-
-      if (typeof FileReader === "function") {
-        const reader = new FileReader();
-
-        reader.onload = event => {
-          this.current_photo = event.target.result;
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-        alert("Sorry, FileReader API not supported");
-      }
     }
+    // onFileChange(e) {
+    //   const file = e.target.files[0];
+
+    //   if (typeof FileReader === "function") {
+    //     const reader = new FileReader();
+
+    //     reader.onload = event => {
+    //       this.current_photo = event.target.result;
+    //     };
+
+    //     reader.readAsDataURL(file);
+    //   } else {
+    //     alert("Sorry, FileReader API not supported");
+    //   }
+    // }
   },
   computed: {
-    ...mapGetters(["currentUser"]),
-    photo() {
-      return this.current_photo == null
-        ? this.default_photo
-        : this.current_photo;
-    }
+    ...mapGetters(["currentUser"])
   }
 };
 </script>

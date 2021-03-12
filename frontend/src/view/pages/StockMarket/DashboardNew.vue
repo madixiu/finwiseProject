@@ -118,18 +118,15 @@ export default {
         // for (let item of data) {
         //   tickerNames.append(item.ticker);
         // }
-        // console.log(tickerNames);
         // this.states = tickerNames;
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getDashboard() {
       await this.axios
         .get("/api/Dashboard")
         .then(first_response => {
-          console.log("here");
-          console.log(first_response);
           this.ImpactsData = first_response.data[0];
           this.highestTvalueData = first_response.data[1];
           this.AssetTradeValue = first_response.data[2];
@@ -137,11 +134,9 @@ export default {
           this.HHData = first_response.data[4];
           this.QData = first_response.data[5];
           this.TodayTepix = first_response.data[6];
-          this.TechnicalData = first_response.data[7]; // console.log(respoey.data)
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getImpacts() {
@@ -149,11 +144,9 @@ export default {
         .get("/api/ImpactOnIndex")
         .then(respoey => {
           this.ImpactsData = respoey.data;
-          // console.log(respoey.data)
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getTradesValue() {
@@ -161,11 +154,9 @@ export default {
         .get("/api/tse/getHighestValue/")
         .then(respoex => {
           this.highestTvalueData = respoex.data;
-          // console.log(respoex)
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getTradesAll() {
@@ -175,8 +166,7 @@ export default {
           this.AssetTradeValue = response2.data;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getNews() {
@@ -184,11 +174,9 @@ export default {
         .get("/api/LatestNews")
         .then(response1 => {
           this.News = response1.data;
-          // console.log(response1.data);
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getTepixToday() {
@@ -198,8 +186,7 @@ export default {
           this.TodayTepix = response3.data;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
 

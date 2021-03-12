@@ -67,7 +67,6 @@ export default {
       if (this.DataItems.length > 0) {
         this.loading = false;
       }
-      //   console.log(this.DataItems);
     }
   },
   mounted() {

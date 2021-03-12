@@ -14,7 +14,8 @@ class CustomUser(AbstractUser):
     expiration_date = models.DateTimeField(default = None, auto_now=False, auto_now_add=False, null = True)
     gender = models.CharField(max_length = 6, blank = True, null = True)
     birth = models.DateField(default = None, auto_now=False, auto_now_add=False, null = True)
-    age = models.CharField(blank = True, null = True ,max_length=10, validators=[MinLengthValidator(10)])
+    # age = models.CharField(blank = True, null = True ,max_length=10, validators=[MinLengthValidator(10)])
+    age = models.CharField(blank = True, null = True ,max_length=10)
     degree = models.CharField(max_length =20, blank = True, null = True)
 
     USERNAME_FIELD = "username"   # e.g: "username", "email"

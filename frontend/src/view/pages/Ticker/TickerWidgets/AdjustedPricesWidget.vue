@@ -189,9 +189,7 @@ export default {
   },
   watch: {
     adjusted() {
-      console.log("Watcher");
       this.populateData();
-      // console.log(this.notices);
     }
   }
 };

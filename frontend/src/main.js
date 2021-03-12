@@ -47,6 +47,7 @@ const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {
     var token = store.getters.currentUserAccessToken;
     // console.log(store.getters.currentUserAccessToken);
+    // console.log(`JWT ${token}`);
   }
 
   // return the headers to the context so httpLink can read them

@@ -657,15 +657,8 @@ export default {
           },
           events: {
             // legendClick: function(chartContext, seriesIndex, config) {
-            //   // console.log(chartContext);
-            //   // console.log(seriesIndex);
-            //   // console.log(config);
             // },
             dataPointSelection: (event, chartContext, config) => {
-              // console.log(chartContext);
-              // console.log(event);
-              // console.log(config);
-              // console.log(config);
               this.testing(config.dataPointIndex);
             }
           }
@@ -791,10 +784,7 @@ export default {
   },
   methods: {
     testing(seriesIndex) {
-      // console.log(this.PiechartOptions.labels[seriesIndex]);
-      // console.log(this.Pieseries[seriesIndex]);
       // this.PiechartOptions.labels = persianNames;
-      // console.log(this.chartOptions.labels);
 
       // this.Pieseries = marketCaps;
       this.$router.push({
@@ -854,7 +844,6 @@ export default {
       await this.axios
         .get("/api/IndsutriesPage")
         .then(first_response => {
-          // console.log(first_response);
           this.IndustryData = first_response.data[0];
           /////////////////
           let second = first_response.data[1];
@@ -880,7 +869,6 @@ export default {
           }
           this.Barseries = [{ data: values }];
           this.BarchartOptions.xaxis.categories = names;
-          // console.log(this.Barseries);
           /////////////
           let third = first_response.data[2];
           // this.HHseries = data;
@@ -911,8 +899,7 @@ export default {
           this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getPieChartData() {
@@ -921,26 +908,21 @@ export default {
         let persianNames = [];
         let marketCaps = [];
         let itemValue = [];
-        // console.log(data);
         for (let item of data[0].TopIndustries) {
-          // console.log(item);
           persianNames.push(item.persianName);
           marketCaps.push(item.marketCap);
           itemValue.push({ name: item.persianName, value: item.TradeValue });
         }
         marketCaps.push(data[1].Others.marketCapSum);
         persianNames.push("سایر");
-        // console.log(persianNames);
         this.PiechartOptions.labels = persianNames;
 
-        // console.log(this.chartOptions.labels);
         // marketCaps.sort(function(a, b) {
         //   return b - a;
         // });
         this.Pieseries = marketCaps;
         itemValue.sort(this.compareValues("value", "desc"));
         itemValue = itemValue.slice(0, 6);
-        // console.log(itemValue);
         let names = [];
         let values = [];
         for (let item of itemValue) {
@@ -959,8 +941,7 @@ export default {
           this.IndustryData = responseInd.data;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getHHDATA() {
@@ -980,10 +961,9 @@ export default {
           this.HHseries = [{ data: HHseries2data }];
           this.HHoptions.labels = HHseries2Labels;
           this.HHoptions.xaxis.categories = HHseries2Labels;
-          console.log(HHseries2data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getImpactData() {
@@ -1003,10 +983,9 @@ export default {
           this.EffectOnIndexSeries = [{ data: Impactseries2data }];
           this.EffectOnIndexOptions.labels = Impactseries2Labels;
           this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
-          // console.log(Impactseries2data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     compareValues(key, order = "asc") {

@@ -267,7 +267,7 @@ export default {
   methods: {
     checkError() {
       let listOfErrors = [];
-      console.log(this.$store.getters.errors);
+      // console.log(this.$store.getters.errors);
       let errors = this.$store.getters.errors;
       if (errors.password2) {
         for (let x of errors.password2) {
@@ -289,7 +289,7 @@ export default {
             listOfErrors.push("رمز وارد شده فقط متشکل از اعداد است");
 
           this.ErrorMsgText.password2 = listOfErrors;
-          console.log(listOfErrors);
+          // console.log(listOfErrors);
         }
       }
       if (errors.username) {
@@ -301,7 +301,7 @@ export default {
       if (errors.phoneNumber) {
         this.ErrorMsgText.phoneNumber = "شماره تلفن قبلا ثبت شده است";
       }
-      console.log(listOfErrors);
+      // console.log(listOfErrors);
     },
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
@@ -351,7 +351,7 @@ export default {
           }
         })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           if (data.data.register.success == true) {
             // clear existing errors
             this.$store.dispatch("LOGOUT");
@@ -368,7 +368,7 @@ export default {
         })
 
         .catch(error => {
-          console.log(error);
+          console.error(error);
           // console.log(phonenumber + " " + username);
           // this.$store.dispatch("SET_ERROR", error.data.errors);
         });

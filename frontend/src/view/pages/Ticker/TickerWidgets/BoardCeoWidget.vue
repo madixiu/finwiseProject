@@ -98,16 +98,12 @@ export default {
   },
   watch: {
     notices() {
-      //   console.log("Watcher");
       this.populateData();
       this.loading = false;
-      console.log(this.notices);
     },
     deposits() {
-      //   console.log("Watcher");
       this.populateData();
       this.loading = false;
-      console.log(this.deposits);
     }
   }
 };

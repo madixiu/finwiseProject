@@ -55,7 +55,6 @@ export default {
   methods: {
     // loadData() {
     //   this.getMostViewed().then(response => {
-    //     console.log(response);
     //   });
     // },
     // async getMostViewed() {
@@ -67,7 +66,7 @@ export default {
 
     //     })
     //     .catch(error => {
-    //       console.log(error);
+    //       console.error(error);
     //     });
     // },
     setActiveTab1(event) {

@@ -154,7 +154,7 @@ export default {
         this.subheaderDisplay = false;
         this.TickerTapeDisplay = false;
       }
-      console.log(route);
+      // console.log(route);
     },
     TickerTapeRouteCheck() {
       let route = this.$route.name;

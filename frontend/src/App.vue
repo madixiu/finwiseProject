@@ -62,13 +62,10 @@ export default {
     //   // next({ name: "login" });
     //   this.$router.push({ name: "login" });
     //   // this.$router.push({ name: "verify" });
-    //   console.log("nothing");
     // } else if (JwtService.getToken() && !this.$store.getters.isAuthenticated) {
-    //   console.log("here1");
     //   console.log(!!this.$store.getters.currentUser.length);
     //   let hasUser = !!this.$store.getters.currentUser.length;
     //   if (hasUser) {
-    //     console.log("has");
     //     // var LoginData;
     //     this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
     //   } else if (this.$store.isAuthenticated) {
@@ -85,7 +82,6 @@ export default {
     //     //   }, 100);
     //     // });
     //   } else if (!hasUser) {
-    //     console.log("else if");
     //     let refreshToken = this.CryptoJS.AES.decrypt(
     //       JwtService.getToken(),
     //       "key"
@@ -97,7 +93,6 @@ export default {
     //     console.log(this.$store.getters.currentUserAccessToken);
     //   }
     //   // else {
-    //   //   console.log("else");
     //   //   this.$router.push({ name: "login" });
     //   //   return;
     //   // }
@@ -118,7 +113,7 @@ export default {
           if (data != "noData") this.$store.dispatch("setSearch", data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     getQueryUser(UserName) {
@@ -135,7 +130,7 @@ export default {
         })
         .then(data => {
           // console.log("query");
-          console.log(data);
+          // console.log(data);
           // console.log(data.data.me);
           this.$store.dispatch("LOGIN", data.data.users.edges[0].node);
           this.LockCheck();
@@ -166,7 +161,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     getAccessTokenAndUser(RefreshToken) {
@@ -180,11 +175,11 @@ export default {
           }
         })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           let LoginData = data.data.refreshToken;
-          console.log(LoginData);
+          // console.log(LoginData);
           if (!data.data.errors) {
-            console.log(LoginData.success);
+            // console.log(LoginData.success);
             if (LoginData.success) {
               // store new acc token to vuex
 
@@ -192,36 +187,32 @@ export default {
               this.getQueryUser(LoginData.payload.username);
               // this.$router.push({ name: "Dashboard" });
             } else {
-              console.log(LoginData.errors.nonFieldErrors[0].message);
+              // console.log(LoginData.errors.nonFieldErrors[0].message);
               this.$store.dispatch("LOGOUT");
               // this.$router.push({ name: "login" });
               // this.$router.push({ name: "verify" });
             }
           } else {
-            console.log(LoginData.errors.nonFieldErrors[0].message);
+            // console.log(LoginData.errors.nonFieldErrors[0].message);
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     LockCheck() {
-      console.log(this.$store.getters.currentUser.role);
       let user = this.$store.getters.currentUser;
-      console.log(user.role);
 
       if (this.$store.getters.isAuthenticated && user.role == 2)
         this.$store.dispatch("setOptionStatus", false);
     }
     // checkVerify() {
     //   if (!JwtService.getToken()) {
-    //     console.log("here");
     //     // push to login
     //   } else {
     //     // do refresh the access token
     //   }
     //   if (this.$store.getters.isAuthenticated == false) {
-    //     console.log("there");
     //   }
     // }
   }

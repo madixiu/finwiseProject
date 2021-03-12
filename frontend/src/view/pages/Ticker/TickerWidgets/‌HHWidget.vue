@@ -114,8 +114,6 @@ export default {
   methods: {
     populateLabels() {
       this.options.labels = this.datalabels;
-      console.log("Watcher");
-      console.log(this.options.labels);
     }
   },
   watch: {

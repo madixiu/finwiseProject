@@ -59,7 +59,6 @@ export default {
     inputDataTV() {
       if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
         this.renderData();
-        // console.log(this.jsonData);
         this.renderChart();
       }
     }
@@ -238,7 +237,6 @@ export default {
           this.jsonData.Stock +
           this.jsonData.ETF +
           this.jsonData.HaghTradeValues;
-        // console.log(this.jsonData);
       }
       if (this.inputDataTV[3] !== null) {
         this.jsonData.Tepix = this.inputDataTV[3][0]["TradeValue"] = this

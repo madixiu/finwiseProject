@@ -465,7 +465,6 @@ export default {
       clickableSteps: false // allow step clicking
     });
     this.wizard = wizard;
-    console.log(wizard.isFirstStep());
     // Validation before going to next page
     wizard.on("beforeNext", function(/*wizardObj*/) {
       // validate the form and use below function to stop the wizard's step
@@ -494,10 +493,9 @@ export default {
       })
         .then(response => {
           this.stepTwoItems = response.data;
-          console.log(response.data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     stepTwoDataPostReq() {
@@ -512,7 +510,6 @@ export default {
       })
         .then(response => {
           let data = response.data;
-          console.log(data);
           if (this.stepOneData.TypeSelected == "AssemblyGeneral") {
             this.ICData = [];
             this.StatementData = data[0];
@@ -546,7 +543,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     submit: function(e) {
@@ -558,7 +555,6 @@ export default {
         !!this.wizard.isLastStep() == false
       ) {
         if (this.stepTwoSelected.length) {
-          console.log("ok");
           this.stepTwoDataPostReq();
         } else {
           this.wizard.stop();

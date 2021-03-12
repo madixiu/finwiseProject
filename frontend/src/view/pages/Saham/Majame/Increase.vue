@@ -48,7 +48,7 @@ export default {
           this.notice = response2.data;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   }

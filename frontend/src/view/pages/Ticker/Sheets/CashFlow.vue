@@ -17,7 +17,6 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import CashFlowWidget from "@/view/pages/Ticker/TickerWidgets/CashFlowWidget.vue";
-// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -33,18 +32,19 @@ export default {
   },
   mounted() {
     this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "صورت جریان وجوه نقد خام" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [
+      { title: "صورت جریان وجوه نقد خام" }
+    ]);
   },
   watch: {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
-      // console.log(this.notices);
     }
   },
   methods: {
     loadData() {
+      // eslint-disable-next-line no-unused-vars
       this.getOne().then(response => {
-        console.log(response);
         //add this to package.json in developement
         //         "eslintConfig": {
         //     "rules": {
@@ -53,26 +53,17 @@ export default {
         //     }
         // },
         // eslint-disable-next-line no-unused-vars
-        this.getTwo().then(response => {});
+        this.getTwo();
       });
     },
     async getTwo() {
       await this.axios
         .get("api/Statement/CashFlow/" + this.$route.params.id + "/")
         .then(response2 => {
-          // console.log(response.data[0][0]);
-          // console.log(this.$route.params.id);
-          // console.log("SecondDone");
           this.notice = response2.data;
-          // console.log(response2.data);
-          // console.log("GetTwoStart:");
-          // console.log(response.data);
-          // console.log(this.notice);
-          // console.log("GetTwoEnd:");
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
 
@@ -80,13 +71,10 @@ export default {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
-          // console.log("firstDone");
           this.subheaders = response1.data[0];
-          // console.log(response1.data);
         })
         .catch(error => {
-          // console.log("GetOneCatch");
-          console.log(error);
+          console.error(error);
         });
     }
   }

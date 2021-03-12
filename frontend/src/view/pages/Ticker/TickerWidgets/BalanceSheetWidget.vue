@@ -311,7 +311,6 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
-      //   console.log(this.DataItems2);
     },
     gettabs() {
       var lookup = {};
@@ -345,7 +344,6 @@ export default {
       }
 
       this.todates = result;
-      console.log(this.todates);
       this.todatesyears = result2;
       this.fillNewestMonth();
     },
@@ -368,8 +366,6 @@ export default {
         }
       }
       this.todates = result;
-      // console.log(result);
-      // console.log(this.selectedYear);
     },
     GetFiltered(selectedItem) {
       //   return this.DataItems2.filter(d => {
@@ -389,12 +385,10 @@ export default {
       this.selectedYear = selectedItem;
     },
     fillNewestMonth() {
-      //   console.log(this.todates[0][0]);
       this.selectedMonth = this.todates[0].value;
       this.selectedYear = this.todatesyears[0].value;
     },
     SetNewPagefirstMonth() {
-      //   console.log(this.todates[0][0]);
       this.selectedMonth = this.todates[0].value;
       // this.selectedYear = this.todatesyears[0].value;
     }
@@ -404,12 +398,10 @@ export default {
   },
   watch: {
     notices() {
-      //   console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
-      //   console.log(this.notices);
     },
     selectedYear: function() {
       this.getOnesfromthisyear();

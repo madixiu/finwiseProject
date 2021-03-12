@@ -1093,9 +1093,9 @@
                 >
                 </v-data-table>
                 <div class="card-header border-0">
-                  <h4
-                    class="card-title font-weight-bolder FinancialStrength"
-                  >خلاصه</h4>
+                  <h4 class="card-title font-weight-bolder FinancialStrength">
+                    خلاصه
+                  </h4>
                 </div>
                 <v-data-table
                   :headers="headesInvestPortfo"
@@ -1973,7 +1973,8 @@ export default {
           value: "end_TotalChange"
         }
       ],
-      headesInvestSummary: [{
+      headesInvestSummary: [
+        {
           text: "منتهی به",
           value: "toDate"
         },
@@ -2032,7 +2033,7 @@ export default {
         {
           text: "بهای تمام شده شرکتهای غیر بورسی در انتهای دوره",
           value: "private_end_cost"
-        },
+        }
       ],
 
       headersProduction: [
@@ -2263,8 +2264,6 @@ export default {
       this.DataItems3 = this.deposits;
       this.DataItems4 = this.portfos;
       this.DataItems5 = this.summaries;
-      // console.log(this.DataItems4)
-      // console.log(this.DataItems5)
     },
     gettabs() {
       var lookup = {};
@@ -2313,8 +2312,6 @@ export default {
         }
       }
       this.todates = result;
-      // console.log(result);
-      // console.log(this.selectedYear);
     },
     GetFiltered(selectedItem) {
       //   return this.DataItems2.filter(d => {
@@ -2334,19 +2331,15 @@ export default {
       this.selectedYear = selectedItem;
     },
     fillNewestMonth() {
-      //   console.log(this.todates[0][0]);
       this.selectedMonth = this.todates[0].value;
       this.selectedYear = this.todatesyears[0].value;
     },
     SetNewPagefirstMonth() {
-      //   console.log(this.todates[0][0]);
       this.selectedMonth = this.todates[0].value;
       // this.selectedYear = this.todatesyears[0].value;
     },
     setType() {
       this.type = this.typeOf;
-      // console.log(this.type);
-      // console.log(this.deposits);
     }
   },
   mounted() {
@@ -2355,35 +2348,25 @@ export default {
   },
   watch: {
     notices() {
-      // console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
-      // console.log(this.notices);
     },
     deposits() {
-      // console.log("Watcher");
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
-
-      // console.log(this.notices);
     },
-     portfos() {
-      // console.log("Watcher");
+    portfos() {
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
-
-      // console.log(this.notices);
-    }, summaries() {
-      // console.log("Watcher");
+    },
+    summaries() {
       this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
-
-      // console.log(this.notices);
     },
     selectedYear: function() {
       this.getOnesfromthisyear();

@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     Clicked() {
-      console.log("testing the click");
+      // console.log("testing the click");
     },
     onLogout() {
       this.$store

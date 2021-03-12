@@ -65,7 +65,7 @@ export default {
           this.allowed = response3.data;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getTwo() {
@@ -75,7 +75,7 @@ export default {
           this.notice = response2.data;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getOne() {
@@ -85,7 +85,7 @@ export default {
           this.subheaders = response1.data[0];
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   }

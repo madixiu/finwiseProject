@@ -67,7 +67,6 @@ export default {
   },
   tvWidget: null,
   mounted() {
-    console.log(Datafeed);
     const INTERVAL = {
       MINUTE: "1",
       MINUTES_5: "5",
@@ -143,9 +142,7 @@ export default {
           tvWidget.showNoticeDialog({
             title: "Notification",
             body: "TradingView Charting Library API works correctly",
-            callback: () => {
-              console.log("Noticed!");
-            }
+            callback: () => {}
           })
         )[0].innerHTML = "Notice";
 

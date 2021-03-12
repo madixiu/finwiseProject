@@ -163,11 +163,9 @@ export default {
   },
   watch: {
     notices() {
-      //   console.log("Watcher");
       this.populateData();
       this.loading = false;
       this.populatesubData();
-      //   console.log(this.notices);
     }
   }
 };

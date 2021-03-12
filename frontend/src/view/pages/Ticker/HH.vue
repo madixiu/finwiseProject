@@ -41,14 +41,10 @@ export default {
   methods: {
     getData() {
       this.axios
-        .get(
-          // "http://localhost:8000/api/CodalNotices/" + this.$route.params.id + "/"
-          "/api/HHhistoryGraph/2788/"
-        )
+        .get("/api/HHhistoryGraph/2788/")
+        // eslint-disable-next-line no-unused-vars
         .then(response => {
-          // console.log(response.data[0][0]);
           // this.labels = response.data[0][0];
-          console.log(response.data[0]);
         });
       // this.options.labels = response.data.data[0];
 

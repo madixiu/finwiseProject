@@ -35,8 +35,6 @@ export default {
     this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
-    // console.log(this.width);
-    // console.log(this.height);
     this.loadData();
 
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +43,6 @@ export default {
     this.liveChecker();
     this.$socketMarketMap.onmessage = data => {
       // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
-      // console.log(!!this.DataItems.length);
       if (
         (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) &&
         this.dataFetched == true
@@ -55,8 +52,6 @@ export default {
       // this.loading = false;
     };
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    // console.log(this.map);
   },
   methods: {
     loadData() {
@@ -65,18 +60,16 @@ export default {
         .then(response => {
           let data = response.data;
           // let tickerNames = [];
-          console.log(data);
           if (data != "noData") this.map = data;
           this.dataFetched = true;
 
           // for (let item of data) {
           //   tickerNames.append(item.ticker);
           // }
-          // console.log(tickerNames);
           // this.states = tickerNames;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,7 +81,6 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketMarketMap.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 30000);
     },
     liveChecker() {

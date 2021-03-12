@@ -270,10 +270,8 @@ export default {
   },
   watch: {
     Indicators() {
-      // console.log("Watcher");
       this.populateData();
       this.renderChart();
-      console.log(this.Indicators);
     }
   }
 };

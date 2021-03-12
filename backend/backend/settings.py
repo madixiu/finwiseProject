@@ -99,8 +99,8 @@ GRAPHQL_JWT = {
     ],
     # optional for long running refresh token
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=11),
-    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=1),
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=21),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }
 
 # graphql options
@@ -108,7 +108,7 @@ GRAPHQL_AUTH = {
     "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
     "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
     "REGISTER_MUTATION_FIELDS_OPTIONAL": ["age","gender","degree"],
-    "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree"],
+    "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree","first_name","last_name"],
     "ALLOW_LOGIN_NOT_VERIFIED": True,
     "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
     "EXPIRATION_ACTIVATION_TOKEN": timedelta(days=1),

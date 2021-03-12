@@ -72,6 +72,8 @@ export const LOGIN_USER = gql`
         isStaff
         isActive
         verified
+        age
+        degree
       }
     }
   }
@@ -105,5 +107,27 @@ export const REVOKE_TOKEN = gql`
   }
 `;
 
-// export const UPDATE_USER = gql`
-// mutation updateAccount($email: String!,)`;
+export const UPDATE_USER = gql`
+  mutation updateAccount(
+    $email: String!
+    $username: String!
+    $gender: String!
+    $degree: String!
+    $firstName: String!
+    $lastName: String!
+    $age: String!
+  ) {
+    updateAccount(
+      email: $email
+      username: $username
+      gender: $gender
+      degree: $degree
+      firstName: $firstName
+      lastName: $lastName
+      age: $age
+    ) {
+      success
+      errors
+    }
+  }
+`;

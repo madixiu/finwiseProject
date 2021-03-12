@@ -156,7 +156,7 @@ export default {
           });
         }
         this.events = temp;
-      } else console.log("empty data");
+      }
     },
     async DataReq() {
       await this.axios
@@ -166,14 +166,14 @@ export default {
           this.formater();
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
-    test(i) {
-      console.log(i);
+    test() {
+      // console.log(i);
     },
     test2() {
-      console.log("today");
+      // console.log("today");
     }
   }
 };

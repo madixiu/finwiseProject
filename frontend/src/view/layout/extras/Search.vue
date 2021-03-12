@@ -83,7 +83,6 @@ export default {
       //   //   return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
       //   // });
       // }, 1500);
-      // console.log(val);
       // val && val !== this.select && this.querySelections(val);
     }
   },
@@ -97,8 +96,6 @@ export default {
     }
   },
   mounted() {
-    console.log("search mount");
-
     // this.loadData();
   },
   methods: {
@@ -137,7 +134,7 @@ export default {
     //       if (data != "noData") this.searchData = data;
     //     })
     //     .catch(error => {
-    //       console.log(error);
+    //       console.error(error);
     //     });
     // },
     querySelections(v) {
@@ -150,7 +147,6 @@ export default {
         // });
         // let res = users.filter(it => it.name.includes("oli"));
         this.items = this.searchData.filter(e => {
-          // console.log(e.ticker);
           return e.ticker.indexOf(v) > -1;
         });
         this.loading = false;

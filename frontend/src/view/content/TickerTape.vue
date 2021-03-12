@@ -43,7 +43,7 @@ export default {
   components: {
     MarqueeText
   },
-props: { TickerData: Array, duration: Number, TickerType: Boolean },
+  props: { TickerData: Array, duration: Number, TickerType: Boolean },
   data() {
     return {
       paused: false,
@@ -55,7 +55,6 @@ props: { TickerData: Array, duration: Number, TickerType: Boolean },
   },
   methods: {
     clickMarquee(item) {
-      console.log("CLICKED", item);
       if (this.TickerType)
         this.$router.push({ path: `/ticker/Overview/Overall/${item.ID}` });
       else

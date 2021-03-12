@@ -37,16 +37,13 @@ export default {
   watch: {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
-      // console.log(this.notices);
     }
   },
   methods: {
     loadData() {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(response => {
-        this.getTwo().then(function() {
-          console.log("ChainDone");
-        });
+        this.getTwo();
       });
     },
     async getTwo() {
@@ -56,7 +53,7 @@ export default {
           this.adjustedprices = responsePrice.data;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getOne() {
@@ -66,7 +63,7 @@ export default {
           this.subheaders = responseHeader.data[0];
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   }

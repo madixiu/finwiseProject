@@ -314,13 +314,11 @@ export default {
   //   this.OptionStatus = this.$store.watch(
   //     getters => getters.getLockStatus,
   //     (newValue, oldValue) => {
-  //       console.log(newValue, oldValue);
   //     }
   //   );
   // },
   watch: {
     OptionLock(newCount) {
-      // console.log(newCount);
       this.OptionStatus = newCount;
     }
     // IncreaseCapitalsLock(newValue) {
@@ -335,7 +333,6 @@ export default {
   },
   computed: {
     OptionLock() {
-      console.log(this.$store.getters.getLockStatus);
       return this.$store.getters.getLockStatus;
     }
     // IncreaseCapitalsLock() {

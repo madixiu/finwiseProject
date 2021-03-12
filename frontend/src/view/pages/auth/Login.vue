@@ -183,7 +183,7 @@ export default {
     },
     checkError() {
       let errors = this.$store.getters.errors;
-      console.log(errors);
+      // console.log(errors);
       if (errors.code == "invalid_credentials") {
         this.ErrorMsgflag = true;
         this.ErrorMsgText = this.ErrorMsg[1];
@@ -246,28 +246,26 @@ export default {
           let LoginData = data.data.tokenAuth;
           if (LoginData.success == true) {
             this.ErrorMsgflag = false;
-            console.log(LoginData.token);
-            console.log(LoginData.refreshToken);
+            // console.log(LoginData.token);
+            // console.log(LoginData.refreshToken);
             let encryptedRefreshToken = this.encryption(
               LoginData.refreshToken,
               "key"
             );
-            let decryptedRefreshToken = this.decryption(
-              encryptedRefreshToken,
-              "key"
-            );
-            console.log(encryptedRefreshToken);
-            console.log(decryptedRefreshToken);
+            // let decryptedRefreshToken = this.decryption(
+            //   encryptedRefreshToken,
+            //   "key"
+            // );
+            // console.log(encryptedRefreshToken);
             JwtService.destroyToken();
             JwtService.saveToken(encryptedRefreshToken);
-            console.log(JwtService.getToken());
             let user = LoginData.user;
             // user.token = this.encryption(
             //   LoginData.token,
             //   LoginData.refreshToken
             // );
             user.token = LoginData.token;
-            console.log(user);
+            // console.log(user);
             this.$store.dispatch("LOGIN", user);
             this.LockCheck();
 
@@ -294,7 +292,7 @@ export default {
         })
 
         .catch(error => {
-          console.log(error);
+          console.error(error);
           // console.log(LOGIN_USER);
           // console.log(email + " " + password);
           // this.$store.dispatch(SET_ERROR, error.data.errors);

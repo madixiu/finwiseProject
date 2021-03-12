@@ -105,7 +105,6 @@ export default {
       });
     },
     renderData() {
-      // console.log(this.   - this.margin.bottom - this.margin.top);
       this.jsonData = {
         Haghighi: 0,
         Hoghughi: 0,
@@ -196,7 +195,6 @@ export default {
           this.jsonData.Stock +
           this.jsonData.ETF +
           this.jsonData.HaghTradeValues;
-        console.log(this.jsonData);
       }
       if (this.inputData[3] !== null) {
         this.jsonData.Tepix = this.inputData[3][0]["TradeValue"] = this

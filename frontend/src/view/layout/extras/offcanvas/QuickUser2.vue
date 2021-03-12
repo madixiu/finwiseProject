@@ -96,9 +96,7 @@ export default {
     };
   },
   methods: {
-    Clicked() {
-      console.log("fuck herer");
-    },
+    Clicked() {},
     // ********************************************************
     onClose() {
       this.popoverShow = false;

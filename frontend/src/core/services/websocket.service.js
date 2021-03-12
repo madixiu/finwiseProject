@@ -36,7 +36,7 @@ const WsService = {
       Vue.prototype.$socketOraq = Oraq;
       Vue.prototype.$socketTaqadom = HaghTaghadom;
     } catch (error) {
-      console.log("error in websocket:" + error);
+      console.error("error in websocket:" + error);
     }
   }
 };

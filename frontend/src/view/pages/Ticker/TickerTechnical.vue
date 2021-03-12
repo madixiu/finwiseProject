@@ -1,8 +1,7 @@
 <template>
-<div v-if="ticker.length">
-  <TradingView  :symbol="ticker"></TradingView>
-
-</div>
+  <div v-if="ticker.length">
+    <TradingView :symbol="ticker"></TradingView>
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -22,13 +21,12 @@ export default {
     return {
       items: [],
       ticker: ""
-    }
+    };
   },
-  props:{
+  props: {
     // ticker: String
   },
   created() {
-    console.log(this.searchItems);
   },
   computed: {
     // ...mapState({
@@ -37,23 +35,16 @@ export default {
     ...mapGetters({ searchItems: "getSearchListData" })
   },
   mounted() {
-    this.ticker = this.Ticker(this.$route.params.id)
+    this.ticker = this.Ticker(this.$route.params.id);
 
-    if (this.searchItems.length)
-    // console.log(this.Ticker(this.$route.params.id));
-    console.log(this.$route.params.id);
-    // console.log(this.$route.name);
-    // console.log(this.$route.path);
-    // console.log(this.searchItems);
+    // if (this.searchItems.length)
   },
 
   methods: {
     Ticker(ID) {
-      console.log(this.searchItems);
       let itemA = this.searchItems.filter(function(item) {
         return item.ID == ID && (item.TypeID == 25 || item.TypeID == 1);
       });
-      console.log(itemA[0].ticker);
       return itemA[0].ticker;
     }
   }

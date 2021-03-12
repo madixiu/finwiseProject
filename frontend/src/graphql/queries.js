@@ -33,6 +33,8 @@ export const GET_USER = gql`
           isStaff
           isActive
           verified
+          age
+          degree
         }
       }
     }

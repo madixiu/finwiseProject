@@ -183,7 +183,6 @@ export default {
   computed: {
     // search() {
     //   this.isBusy = true;
-    //   setTimeout(() => {  console.log("World!"); }, 2000);
     // },
     sortOptions() {
       // Create an options list from our fields
@@ -213,7 +212,6 @@ export default {
     //     let response = await this.axios.get("/api/MainAssemblyDataList");
     //     this.isBusy = false;
     //     this.totalRows = response.data.length;
-    //     console.log(response.data);
     //     return response.data;
     //   } catch (error) {
     //     this.isBusy = false;
@@ -233,7 +231,7 @@ export default {
         .catch(error => {
           this.isBusy = false;
 
-          console.log(error);
+          console.error(error);
         });
     },
     TablesReq(ID, type) {
@@ -248,7 +246,6 @@ export default {
       })
         .then(response => {
           let data = response.data;
-          console.log(data);
           if (type == "General") {
             this.ICData = [];
             this.StatementData = data[0];
@@ -282,12 +279,10 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     titleClick(item) {
-      console.log(item);
-      console.log(item.item.ID, item.item.Type);
       this.TablesReq(item.item.ID, item.item.Type);
       this.AssemblyName = item.item.Ticker;
       this.cardKey = false;
@@ -296,7 +291,6 @@ export default {
       // this.infoModal.title = `Row index: ${index}`;
       // this.infoModal.content = JSON.stringify(item, null, 2);
       // this.$root.$emit("bv::show::modal", this.infoModal.id, button);
-      console.log(item);
       window.open("https://codal.ir" + item.HtmlUrl, "_blank");
     },
     // resetInfoModal() {

@@ -433,7 +433,6 @@ export default {
     this.liveChecker();
     this.$socketOptions.onmessage = data => {
       // this.DataItems = JSON.parse(data.data);
-      // console.log(!!this.DataItems.length);
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
         this.$store.dispatch("setSahm", JSON.parse(data.data));
     };
@@ -456,13 +455,12 @@ export default {
         .get("/api/ViewOptionAssetVolatility")
         .then(response => {
           let data = response.data;
-          console.log(data);
           if (data != "noData") {
             this.OptionAsset = data;
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async OptionTableReq() {
@@ -472,14 +470,13 @@ export default {
         .then(response => {
           let data = response.data;
           this.isBusy = false;
-          console.log(data);
           if (data != "noData") {
             this.$store.dispatch("setSahm", data);
           }
         })
         .catch(error => {
           this.isBusy = false;
-          console.log(error);
+          console.error(error);
         });
     },
     getHeight() {

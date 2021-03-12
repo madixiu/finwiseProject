@@ -21,7 +21,6 @@
         :items="DataItems2"
         class="elevation-1 FinancialStrength"
       >
-
       </v-data-table>
     </div>
     <!--end::Body-->
@@ -51,11 +50,11 @@ export default {
         {
           text: "عنوان",
           value: "Title"
-        } ,
+        },
         {
           text: "توضیحات",
           value: "Text"
-        },
+        }
       ],
       DataItems2: []
     };
@@ -73,10 +72,8 @@ export default {
   },
   watch: {
     notices() {
-      // console.log("Watcher");
       this.populateData();
       this.loading = false;
-      // console.log(this.notices);
     }
   }
 };

@@ -91,7 +91,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$store.getters.currentUser.email);
     this.EmailpostRequest();
   },
   methods: {
@@ -135,7 +134,6 @@ export default {
         // responseType: 'json'
       })
         .then(response => {
-          console.log(response.data);
           if (response.data[0] == "GRANTED") {
             if (this.WrongCredFlag) this.WrongCredFlag = false;
             let token = response.data[1];
@@ -148,7 +146,6 @@ export default {
                 }
               })
               .then(data => {
-                console.log(data);
                 let response = data.data.verifyAccount;
                 if (response.success) {
                   this.$router.push({ name: "login" });
@@ -158,7 +155,7 @@ export default {
               })
               .catch(error => {
                 this.ErrorMsgflag = true;
-                console.log(error);
+                console.error(error);
               });
             //
           } else if (response.data[0] == "DENIED") {
@@ -166,7 +163,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     EmailpostRequest() {
@@ -183,8 +180,6 @@ export default {
         // responseType: 'json'
       })
         .then(response => {
-          console.log(response.data);
-
           if (response.data == null || response.data == "error") {
             this.ErrorMsgflag = true;
           } else if (response.data == "OK") {
@@ -192,7 +187,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
           this.ErrorMsgflag = true;
         });
     }

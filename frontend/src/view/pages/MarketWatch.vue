@@ -10,7 +10,9 @@
     <div class="row mr-1 ml-1">
       <v-card width="100%">
         <div id="marketwatchFilterRow1" class="row">
-          <div class="col-xxl-1 col-lg-1 col-md-6 col-sm-12 mr-1 mt-2 dropdown-rtl">
+          <div
+            class="col-xxl-1 col-lg-1 col-md-6 col-sm-12 mr-1 mt-2 dropdown-rtl"
+          >
             <span>بازار</span>
             <b-form-select
               label="بازار"
@@ -549,7 +551,6 @@ export default {
   },
   // watch: {
   //   selectedHeaderOptions() {
-  //     // console.log(this.selectedHeaderOptions);
   //     // this.TriggerFilteredHeader();
   //   }
   // },
@@ -614,11 +615,10 @@ export default {
   },
   mounted() {
     this.height = this.getHeight();
-    let container = document.getElementById("kt_content");
+    // let container = document.getElementById("kt_content");
     // this.width = window.screen.width;
     // this.height = (window.screen.height * 72) / 100;
-    let height = container.offsetHeight;
-    console.log(height);
+    // let height = container.offsetHeight;
     this.loadData();
     this.TriggerFilteredHeader();
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -627,18 +627,14 @@ export default {
     this.liveChecker();
     this.$socketMarketWatch.onmessage = data => {
       // this.DataItems = JSON.parse(data.data);
-      // console.log(!!this.DataItems.length);
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
         this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
     };
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    // console.log(this.TableFilteredY());
   },
   methods: {
     tickerClick(data) {
       this.$router.push({ path: `/ticker/Overview/Overall/${data.item.ID}` });
-      // console.log(data);
     },
     setFilterSelected() {
       // this.selectedFilters = [
@@ -657,7 +653,6 @@ export default {
       }
     },
     test() {
-      console.log(this.tableMarketIndustrySelected);
       this.MarketWatchFilterPost();
     },
     TriggerFilteredHeader() {
@@ -667,7 +662,6 @@ export default {
       let SwCase = 0;
       if (options.length == 0) SwCase = 0;
       else if (options.length == 1) {
-        console.log(options);
         if (options[0] == "yesterday") SwCase = 1;
         else if (options[0] == "EPS") SwCase = 2;
         else if (options[0] == "HH") SwCase = 3;
@@ -776,12 +770,11 @@ export default {
         .then(response => {
           this.isBusy = false;
           this.$store.dispatch("setMarketWatchItems", response.data);
-          console.log(this.tableData);
         })
         .catch(error => {
           this.isBusy = false;
 
-          console.log(error);
+          console.error(error);
         });
     },
     async MarketWatchFilterListReq() {
@@ -802,11 +795,10 @@ export default {
         xsrfHeaderName: "X-CSRFToken"
       })
         .then(response2 => {
-          // console.log(response2.data);
           this.$store.dispatch("setMarketWatchItems", response2.data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
 
@@ -814,13 +806,11 @@ export default {
       addTag(option);
       this.TypeSearch = "";
       this.MarketWatchFilterPost();
-      console.log(option);
     },
     IndustryonOptionClick({ option, addTag }) {
       addTag(option);
       this.IndustrySearch = "";
       this.MarketWatchFilterPost();
-      console.log(option);
     },
     getHeight() {
       let filterRow = document.getElementById("marketwatchFilterRow1")
@@ -828,8 +818,6 @@ export default {
       let filterRow2 = document.getElementById("marketwatchFilterRow2")
         .offsetHeight;
 
-      console.log(filterRow);
-      console.log(filterRow2);
       return (
         (window.innerHeight - 100 - filterRow - filterRow2).toString() + "px"
       );
@@ -849,7 +837,6 @@ export default {
           }
         };
         this.$socketMarketWatch.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 3000);
     },
     liveChecker() {

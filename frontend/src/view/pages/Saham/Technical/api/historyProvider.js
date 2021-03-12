@@ -10,8 +10,6 @@ export default {
   getMarks: function(symbolInfo, from, to, onDataCallback, resolution) {
     // if (localStorage.bnApiStatus.toString() == "true") {
     // let symbol = symbolInfo.name;
-    // console.log(symbolInfo.name);
-    console.log(symbolInfo);
 
     var result = [];
     var el = {
@@ -28,7 +26,6 @@ export default {
     return result;
   },
   getBars: function(symbolInfo, resolution, from, to, first, limit) {
-    console.log(symbolInfo);
     // var split_symbol = symbolInfo.name.split(/[:/]/)
     // const url = resolution === 'D' ? '/data/histoday' : resolution >= 60 ? '/data/histohour' : '/data/histominute'
     var url = "";
@@ -45,7 +42,6 @@ export default {
       // order:'utc.desc'
     };
 
-    console.log({ qs });
     return rp({
       //   url: `${api_root}${url}`,
       // url: `http://37.152.180.99:3000/View_TV_Daily?`,
@@ -53,17 +49,10 @@ export default {
 
       qs
     }).then(data => {
-      console.log(data);
-
-      // console.log({data})
       if (data.Response && data.Response === "Error") {
-        // console.log('CryptoCompare API error:',data.Message)
         return [];
       }
       if (data.length) {
-        console.log(data);
-        // console.log(qs);
-        // console.log(`Actually returned: ${new Date(data.TimeFrom * 1000).toISOString()} - ${new Date(data.TimeTo * 1000).toISOString()}`)
         var bars = data.map(el => {
           return {
             time: el.utc * 1000, //TradingView requires bar time in ms
@@ -76,7 +65,6 @@ export default {
         });
         if (first) {
           var lastBar = bars[bars.length - 1];
-          console.log(lastBar);
           history[symbolInfo.name] = { lastBar: lastBar };
         }
         return bars;

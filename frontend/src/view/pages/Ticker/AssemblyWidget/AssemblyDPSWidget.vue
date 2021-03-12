@@ -96,12 +96,6 @@ export default {
   methods: {
     filteredItems(value) {
       return this.DataItems2.filter(item => {
-        // console.log("Value");
-        // console.log(value);
-        // console.log("Item");
-        // console.log(item.ToDate);
-        // console.log("Equality");
-        // console.log(item.ToDate == value);
         return item.ToDate.normalize("NFC") == value.normalize("NFC");
       });
     },
@@ -138,7 +132,6 @@ export default {
   },
   watch: {
     notices() {
-      // console.log("Watcher");
       this.populateData();
       this.loading = false;
       this.setYears();

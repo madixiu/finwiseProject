@@ -139,7 +139,11 @@
           <b class="taghadom-table-cell">{{ data.value.toLocaleString() }}</b>
         </template>
         <template #cell(Coverage)="data">
-          <b class="taghadom-table-cell" v-bind:class="[data.value >= 0 ? 'greenItem' : 'redItem']" >{{ data.value }}%</b>
+          <b
+            class="taghadom-table-cell"
+            v-bind:class="[data.value >= 0 ? 'greenItem' : 'redItem']"
+            >{{ data.value }}%</b
+          >
         </template>
       </b-table>
     </v-card>
@@ -225,18 +229,18 @@ export default {
           thClass: "taghadom-table-head",
           sortable: true
         },
-             {
+        {
           label: "قیمت دارایی پایه",
           key: "ParentLast",
           thClass: "taghadom-table-head",
           sortable: true
         },
-         {
+        {
           label: "حاشیه سود",
           key: "Coverage",
           thClass: "taghadom-table-head",
           sortable: true
-        },
+        }
         // {
         //   label: "کف مجاز قیمت",
         //   key: "MinRange",
@@ -344,11 +348,10 @@ export default {
 
           let data = response.data;
           this.tableData = data;
-          console.log(data);
         })
         .catch(error => {
           this.isBusy = false;
-          console.log(error);
+          console.error(error);
         });
     },
     onFiltered(filteredItems) {
@@ -384,7 +387,6 @@ export default {
           for (let i = 0; i < 8; i++) header.pop();
           break;
       }
-      console.log(header);
       return header;
     },
     getHeight() {
@@ -399,7 +401,6 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketTaqadom.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 3000);
     },
     liveChecker() {

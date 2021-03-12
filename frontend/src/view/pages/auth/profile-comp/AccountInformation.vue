@@ -4,8 +4,12 @@
     <!--begin::Header-->
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
-        <b-card-title>اطلاعات حساب کاربری</b-card-title>
-        <b-card-sub-title>تغییرات اطلاعات کاربری </b-card-sub-title>
+        <b-card-title style="text-align:right"
+          >اطلاعات حساب کاربری</b-card-title
+        >
+        <b-card-sub-title style="text-align:right"
+          >تغییرات اطلاعات کاربری
+        </b-card-sub-title>
       </div>
       <div class="card-toolbar">
         <button
@@ -37,12 +41,12 @@
             >نام کاربری</label
           >
           <div class="col-lg-9 col-xl-6">
-            <div class="spinner spinner-sm spinner-success spinner-right">
+            <div class=" spinner-sm spinner-success spinner-right">
               <input
                 class="form-control form-control-lg form-control-solid"
                 type="text"
                 ref="username"
-                :value="currentUserAccountInfo.username"
+                :value="currentUser.username"
               />
             </div>
           </div>
@@ -65,7 +69,7 @@
                 type="text"
                 class="form-control form-control-lg form-control-solid"
                 ref="email"
-                :value="currentUserAccountInfo.email"
+                :value="currentUser.email"
                 placeholder="Email"
               />
             </div>
@@ -109,8 +113,13 @@
 </template>
 
 <script>
+import {
+  VERIFY_ACCESS_TOKEN,
+  REFRESH_ACCESS_TOKEN,
+  UPDATE_USER
+} from "@/graphql/mutations";
+import JwtService from "@/core/services/jwt.service";
 import { mapGetters } from "vuex";
-import { UPDATE_ACCOUNT_INFO } from "@/core/services/store/profile.module";
 
 export default {
   name: "AccountInformation",
@@ -118,17 +127,100 @@ export default {
     return {};
   },
   methods: {
+    verifyAccessToken() {
+      this.$apollo
+        .mutate({
+          mutation: VERIFY_ACCESS_TOKEN,
+          variables: {
+            token: this.$store.getters.currentUserAccessToken
+          }
+        })
+        .then(data => {
+          // console.log(data);
+          let LoginData = data.data.verifyToken;
+          if (LoginData.success) {
+            // this.$store.dispatch("RenewAccessToken", LoginData.token);
+            this.UpdateAccount();
+          } else if (LoginData == false) {
+            let Rtoken = this.CryptoJS.AES.decrypt(
+              JwtService.getToken(),
+              "key"
+            ).toString(this.CryptoJS.enc.Utf8);
+            this.refreshAccessToken(Rtoken);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    refreshAccessToken(RefreshToken) {
+      this.$apollo
+        .mutate({
+          mutation: REFRESH_ACCESS_TOKEN,
+          variables: {
+            refreshToken: RefreshToken
+          }
+        })
+        .then(data => {
+          let LoginData = data.data.refreshToken;
+          if (!data.data.errors) {
+            if (LoginData.success) {
+              // store new acc token to vuex
+
+              this.$store.dispatch("RenewAccessToken", LoginData.token);
+              this.UpdateAccount();
+              // this.getQueryUser(LoginData.payload.username);
+              // this.$router.push({ name: "Dashboard" });
+            } else {
+              // console.log(LoginData.errors.nonFieldErrors[0].message);
+              this.$store.dispatch("LOGOUT");
+              // this.$router.push({ name: "login" });
+              // this.$router.push({ name: "verify" });
+            }
+          } else {
+            // console.log(LoginData.errors.nonFieldErrors[0].message);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    UpdateAccount() {
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_USER,
+          variables: {
+            firstName: this.$store.getters.currentUser.firstName,
+            lastName: this.$store.getters.currentUser.lastName,
+            age: this.$store.getters.currentUser.age,
+            degree: this.$store.getters.currentUser.degree,
+
+            username: this.$refs.username.value,
+            email: this.$refs.email.value,
+            gender: ""
+          }
+        })
+        .then(data => {
+          if (data.data.updateAccount.success) {
+            // console.log(data);
+            // console.log("Success");
+            let user = this.currentUser;
+            // console.log(user);
+            (user.firstName = this.$refs.firstName.value),
+              (user.lastName = this.$refs.lastName.value),
+              (user.age = this.currentUser.age),
+              (user.degree = this.currentUser.degree),
+              (user.gender = "");
+            this.$store.dispatch("updateUser", user);
+          } else console.error("error");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     save() {
-      var username = this.$refs.username.value;
-      var email = this.$refs.email.value;
-      var language = this.$refs.language.value;
-      var time_zone = this.$refs.time_zone.value;
-      var communication = {
-        email: this.$refs.email_com.checked,
-        sms: this.$refs.sms_com.checked,
-        phone: this.$refs.phone_com.checked
-      };
-      var verification = this.$refs.verification.checked;
+      // var username = this.$refs.username.value;
+      // var email = this.$refs.email.value;
 
       // set spinner to submit button
       const submitButton = this.$refs["kt_save_changes"];
@@ -136,15 +228,20 @@ export default {
 
       // dummy delay
       setTimeout(() => {
+        if (this.$store.getters.currentUserAccessToken)
+          this.verifyAccessToken();
+        else
+          this.refreshAccessToken(
+            this.CryptoJS.AES.decrypt(JwtService.getToken(), "key").toString(
+              this.CryptoJS.enc.Utf8
+            )
+          );
         // send update request
-        this.$store.dispatch(UPDATE_ACCOUNT_INFO, {
-          username,
-          email,
-          language,
-          time_zone,
-          communication,
-          verification
-        });
+        // this.$store.dispatch(UPDATE_ACCOUNT_INFO, {
+        //   username,
+        //   email
+
+        // });
 
         submitButton.classList.remove(
           "spinner",
@@ -154,18 +251,12 @@ export default {
       }, 2000);
     },
     cancel() {
-      this.$refs.username.value = this.currentUserAccountInfo.username;
-      this.$refs.email.value = this.currentUserAccountInfo.email;
-      this.$refs.language.value = this.currentUserAccountInfo.language;
-      this.$refs.time_zone.value = this.currentUserAccountInfo.time_zone;
-      this.$refs.email_com.checked = this.currentUserAccountInfo.communication.email;
-      this.$refs.sms_com.checked = this.currentUserAccountInfo.communication.sms;
-      this.$refs.phone_com.checked = this.currentUserAccountInfo.communication.phone;
-      this.$refs.verification.checked = this.currentUserAccountInfo.verification;
+      this.$refs.username.value = this.currentUser.username;
+      this.$refs.email.value = this.currentUser.email;
     }
   },
   computed: {
-    ...mapGetters(["currentUserAccountInfo"])
+    ...mapGetters(["currentUser"])
   }
 };
 </script>

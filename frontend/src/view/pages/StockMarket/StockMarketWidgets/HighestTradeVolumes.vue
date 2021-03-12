@@ -94,7 +94,6 @@ export default {
   computed: {
     ...mapGetters(["layoutConfig"]),
     filteredItems() {
-      //   console.log(this.selectedMarket);
       return this.DataItems.filter(item => {
         return item.marketID == this.selectedMarket;
       });
@@ -134,7 +133,6 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketMarketHighestTVolumes.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 300000);
     },
     liveChecker() {
@@ -167,7 +165,6 @@ export default {
     // watch: {
     //   mostviewed() {
     //     this.populateData();
-    //     // console.log("WatcherSubHeader");
     //   }
     // }
   },

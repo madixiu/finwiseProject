@@ -21,18 +21,14 @@
         :items="DataItems2"
         class="elevation-1 FinancialStrength"
       >
-      <template v-slot:[`item.IncreasePercent`]="{ item }">
-           <span class="cellItem"
-                      >{{ roundTo(item.IncreasePercent,2) }}%
-            </span>
+        <template v-slot:[`item.IncreasePercent`]="{ item }">
+          <span class="cellItem">{{ roundTo(item.IncreasePercent, 2) }}% </span>
         </template>
         <template v-slot:[`item.AttachmentUrl`]="{ item }">
-          <v-chip
-            label
-            small
-            :disabled="item.HtmlUrl == '' ? true : false"
-          >
-            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`" target="_blank">اطلاعیه </a>
+          <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
+            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`" target="_blank"
+              >اطلاعیه
+            </a>
           </v-chip>
         </template>
       </v-data-table>
@@ -84,7 +80,7 @@ export default {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
-      roundTo(n, digits) {
+    roundTo(n, digits) {
       let negative = false;
       if (digits === undefined) {
         digits = 0;
@@ -110,10 +106,8 @@ export default {
   },
   watch: {
     notices() {
-      // console.log("Watcher");
       this.populateData();
       this.loading = false;
-      // console.log(this.notices);
     }
   }
 };

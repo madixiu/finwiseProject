@@ -132,8 +132,6 @@ export default {
   },
   methods: {
     fetchRoute() {
-      // console.log(this.$route.path);
-      // console.log(this.$route.name);
       let path = this.$route.name;
       this.AsideState1 = this.saham.includes(path);
       this.AsideState2 = this.kala.includes(path);

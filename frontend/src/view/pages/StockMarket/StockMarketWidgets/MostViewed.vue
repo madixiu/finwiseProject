@@ -107,7 +107,6 @@ export default {
         }
         let barier = { request: "get" };
         this.$socketMostViewed.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 300000);
     },
     liveChecker() {
@@ -134,16 +133,13 @@ export default {
     this.$socketMostViewed.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      console.log(JSON.parse(data.data));
       if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
         this.loading = false;
 
-      console.log(this.loading);
     };
     // watch: {
     //   mostviewed() {
     //     this.populateData();
-    //     // console.log("WatcherSubHeader");
     //   }
     // }
   },

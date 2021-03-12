@@ -92,7 +92,6 @@ export default {
     this.$socketLiveTickerData.onmessage = data => {
       // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
       // this.DataItems = JSON.parse(data.data);
-      // console.log(!!this.DataItems.length);
       if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) {
         this.subheaders = JSON.parse(data.data)[0][0];
         this.livedata = JSON.parse(data.data)[0];
@@ -105,9 +104,6 @@ export default {
   watch: {
     "$route.params": {
       handler(newValue, oldValue) {
-        // console.log(newValue);
-        // console.log(oldValue);
-
         if (newValue != oldValue) {
           this.loadData();
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
@@ -140,8 +136,7 @@ export default {
     //       this.allowed = response3.data;
     //     })
     //     .catch(error => {
-    //       // console.log("GetTwoeCatch");
-    //       console.log(error);
+    //       console.error(error);
     //     });
     // },
     async getHH() {
@@ -149,10 +144,9 @@ export default {
         .get("/api/LiveHHTicker/" + this.$route.params.id + "/")
         .then(response3 => {
           this.hhdata = response3.data;
-          // console.log(response3.data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     // async getLiveData() {
@@ -160,10 +154,9 @@ export default {
     //     .get("/api/LiveTicker/" + this.$route.params.id + "/")
     //     .then(response3 => {
     //       this.livedata = response3.data;
-    //       // console.log(response3.data);
     //     })
     //     .catch(error => {
-    //       console.log(error);
+    //       console.error(error);
     //     });
     // },
     async getTwo() {
@@ -173,8 +166,7 @@ export default {
           this.stats = response2.data;
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getTechnical() {
@@ -182,20 +174,16 @@ export default {
         .get("/api/Ticker/TechnicalIndicators/" + this.$route.params.id + "/")
         .then(responsetech => {
           this.techdata = responsetech.data;
-          console.log(this.techdata);
         })
         .catch(error => {
-          // console.log("GetTwoeCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     async getOne() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
-          // console.log("firstDone");
           this.subheaders = response1.data[0];
-          console.log(this.subheaders);
 
           this.livedata = response1.data;
           // this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
@@ -203,12 +191,9 @@ export default {
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.subheaders.ticker }
           ]);
-
-          // console.log(response1.data);
         })
         .catch(error => {
-          // console.log("GetOneCatch");
-          console.log(error);
+          console.error(error);
         });
     },
     setActiveTab1(event) {
@@ -245,7 +230,6 @@ export default {
         }
         let barier = { request: "get", id: this.$route.params.id };
         this.$socketLiveTickerData.send(JSON.stringify(barier));
-        // console.log(this.WebsocketRequest);
       }, 3000);
     },
     liveChecker() {

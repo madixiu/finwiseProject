@@ -265,7 +265,6 @@ export default {
         !(this.inputDataIndex === undefined || this.inputDataIndex.length == 0)
       ) {
         let data = [...this.inputDataIndex];
-        console.log(data);
         var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
         data.forEach(
           function(d) {

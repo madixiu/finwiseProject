@@ -603,7 +603,6 @@ export default {
   },
   watch: {
     // News() {
-    //   // console.log("Watcher");
     //   this.populateData();
     //   this.loading = false;
     // }
@@ -654,8 +653,6 @@ export default {
     // populateData() {
     //   this.stocklist = this.News;
 
-    //   // console.log(this.IndustriesValue);
-    //   // console.log(this.IndustriesValueOptions);
     // },
     generateDayWiseTimeSeries(s, count) {
       let values = [
@@ -670,7 +667,6 @@ export default {
         x += 3000000;
         i++;
       }
-      console.log(series);
       return series;
     },
     async loadData() {
@@ -678,9 +674,6 @@ export default {
         .get("/api/IndexDetails/" + this.$route.params.id + "/")
         .then(responsex => {
           let data = responsex.data[0];
-          console.log(data.Impact.ImpactData.length);
-          console.log(data.marketCap.marketCapData[0].marketcap);
-          // console.log(this.News);
           //     this.IndustriesValue = this.News.map(function(obj) {
           //   return obj["marketcap"];
           // });
@@ -707,7 +700,6 @@ export default {
             technicalList.push(data.Technical.TechnicalData[i].signal);
             technicalNames.push(data.Technical.TechnicalData[i].ticker);
           }
-          console.log(IndustriesListNames);
           // for (let item of this.News) {
           //   IndustriesList.push(item.marketcap);
           //   impactList.push(item.Impact);
@@ -769,11 +761,9 @@ export default {
             this.HHoptions.yaxis.max = Math.abs(HHseries[HHseries.length - 1]);
           }
 
-          console.log(impactList);
-          console.log(responsex.data);
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   }

@@ -32,7 +32,6 @@ export default {
     };
   },
 
-  
   mounted() {
     // this.loadData2();
     this.loadData();
@@ -41,8 +40,7 @@ export default {
   watch: {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
-      // console.log(this.notices);
-    },
+    }
     // // allowed() {
     // //   var flag = false;
     // //   for (var i = 0; i < this.allowed.length; i++) {
@@ -60,20 +58,17 @@ export default {
     loadData() {
       // eslint-disable-next-line no-unused-vars
       // this.getAllowed().then(response => {
-        // console.log(response);
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
-        // eslint-disable-next-line no-unused-vars
-        this.getOne().then(response2 => {
-          // console.log(response2);
-          this.getTwo().then(function() {});
-          // console.log("ChainDone");
-        });
+      //add this to package.json in developement
+      //         "eslintConfig": {
+      //     "rules": {
+      //       "no-console": "off",
+      //       "no-unused-vars": "off"
+      //     }
+      // },
+      // eslint-disable-next-line no-unused-vars
+      this.getOne().then(response2 => {
+        this.getTwo().then(function() {});
+      });
       // });
     },
     // async getAllowed() {
@@ -83,7 +78,7 @@ export default {
     //       this.allowed = response3.data;
     //     })
     //     .catch(error => {
-    //       console.log(error);
+    //       console.error(error);
     //     });
     // },
     async getTwo() {
@@ -93,7 +88,7 @@ export default {
           this.notice = response2.data;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     },
     async getOne() {
@@ -103,7 +98,7 @@ export default {
           this.subheaders = response1.data[0];
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
     }
   }
