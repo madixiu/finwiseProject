@@ -45,8 +45,8 @@ ListOfFilterIndustry = []
 def getParsedData():
     
     try:
-        # resp = requests.get('http://37.152.180.99:3000/ViewWatch', headers = head)
-        resp = requests.get('http://37.152.180.99:3000/ViewWatch')
+        # resp = requests.get('http://185.231.115.223:3000/ViewWatch', headers = head)
+        resp = requests.get('http://185.231.115.223:3000/ViewWatch')
         if resp.status_code == 200:
             if resp.text:
                 global parsed_data

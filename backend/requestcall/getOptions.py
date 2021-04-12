@@ -12,7 +12,7 @@ from .util.Convereter_trunc import truncater, converter
 
 def optionRequest():
     head = {'Accept-Profile':'options'}
-    resp = requests.get('http://37.152.180.99:3000/callOptionsView',headers = head)
+    resp = requests.get('http://185.231.115.223:3000/callOptionsView',headers = head)
     if resp.status_code == 200:
         DF=pd.read_json(resp.text)
         DF.loc[DF['DifferenceToLast']==-1001,'ArzandegiLast']=-1001
@@ -27,7 +27,7 @@ def optionRequest():
 
 # def optionFlag():
 #     head = {'Accept-Profile':'options'}
-#     resp = requests.get('http://37.152.180.99:3000/Freeze',headers = head)
+#     resp = requests.get('http://185.231.115.223:3000/Freeze',headers = head)
 #     flag = False
 #     if resp.status_code == 200:
 #         jsonDATA = json.loads(resp.text)

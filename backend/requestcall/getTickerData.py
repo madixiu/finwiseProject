@@ -17,7 +17,7 @@ parsed_tableList = []
 
 def getParsedData():
     head = {'Accept-Profile':'public'}
-    baseUrl = 'http://185.97.117.60:3000/'
+    baseUrl = 'http://130.185.74.40:3000/'
     try:
         resp = requests.get(baseUrl + 'FirmsAll',headers = head)
         if resp.status_code == 200:
@@ -48,7 +48,7 @@ def getTechnicalIndicators(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'technical'}
-        resp = requests.get('http://37.152.180.99:3000/View_Technical_Indicators?firm=eq.'+str(identifier),headers=head,timeout=10)
+        resp = requests.get('http://185.231.115.223:3000/View_Technical_Indicators?firm=eq.'+str(identifier),headers=head,timeout=10)
         if resp.status_code == 200 and resp.text!='[]' :
             # return(resp.text)
             return (json.loads(resp.text))
@@ -57,12 +57,31 @@ def getTechnicalIndicators(identifier):
             time.sleep(2)
             ct=ct+1
         
-    return ("noData")
+    return ([])
+def getTechnicalIndicators2(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'technical'}
+        resp = requests.get('http://185.231.115.223:3000/View_Technical_Indicators?firm=eq.'+str(identifier),headers=head,timeout=10)
+        if resp.status_code == 200 and resp.text!='[]' :
+            # return(resp.text)
+            DF=pd.DataFrame(json.loads(resp.text))
+            if len(DF.columns)!=0:
+                DF=DF.transpose().reset_index()
+                DF.columns=["title",'Value']
+                return(json.loads(DF.to_json(orient="records")))
+            else:
+                return(json.loads(DF.to_json(orient="records")))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ([])    
 def getTechnicalIndicatorsAll():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'technical'}
-        resp = requests.get('http://37.152.180.99:3000/View_Technical_IndicatorsAll',headers=head,timeout=10)
+        resp = requests.get('http://185.231.115.223:3000/View_Technical_IndicatorsAll',headers=head,timeout=10)
         if resp.status_code == 200 and resp.text!='[]' :
             # return(resp.text)
             return (json.loads(resp.text))
@@ -77,10 +96,10 @@ def getIndicesHistoric():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'indices'}
-        resp = requests.get('http://37.152.180.99:3000/View_indices_lastMarketCap',headers=head)
+        resp = requests.get('http://185.231.115.223:3000/View_indices_lastMarketCap',headers=head)
         if resp.status_code == 200:
             DF=resp.text
-            resp2 = requests.get('http://37.152.180.99:3000/View_Indices_Historic',headers=head)
+            resp2 = requests.get('http://185.231.115.223:3000/View_Indices_Historic',headers=head)
             if resp2.status_code == 200:
                 DF2=resp2.text
                 Indices=pd.read_json(DF)
@@ -115,11 +134,11 @@ def getIndicesHistoric():
 #     ct=0
 #     while ct<3:
 #         head = {'Accept-Profile':'indices'}
-#         resp = requests.get('http://37.152.180.99:3000/View_indices_lastMarketCap',headers=head)
+#         resp = requests.get('http://185.231.115.223:3000/View_indices_lastMarketCap',headers=head)
 #         if resp.status_code == 200:
 #             DF=pd.esp.text)
 #             # return(resp.text)
-#             resp2 = requests.get('http://37.152.180.99:3000/View_Indices_Historic',headers=head)
+#             resp2 = requests.get('http://185.231.115.223:3000/View_Indices_Historic',headers=head)
 #             if resp2.status_code == 200:
 #                 print(resp2.text)
 #             return (json.loads(resp.text))
@@ -135,7 +154,7 @@ def getIndicesHistoric():
 def tickerNameRequest(): 
     ct=0
     while ct<3:
-        resp = requests.get('http://185.97.117.60:3000/View_tickerOnly')
+        resp = requests.get('http://130.185.74.40:3000/View_tickerOnly')
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -167,14 +186,14 @@ def tableNameRequest():
 def getDataTableHeaders(tickerName,tableName):
     
     # if id != 0:
-    #     resp = requests.get('http://185.97.117.60:3000/firm', {"ID":'eq.'+})
+    #     resp = requests.get('http://130.185.74.40:3000/firm', {"ID":'eq.'+})
     #     if resp.status_code == 200:
     #         return (return.text)
     # else:
     #     return ("noData")
     
     if len(parsed_json) !=0 and dataAvailablity:
-        baseUrl = 'http://185.97.117.60:3000/'
+        baseUrl = 'http://130.185.74.40:3000/'
         url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
         print("here is URL:" + url)
         data = requests.get(url)
@@ -212,7 +231,7 @@ def getDataTableHeaders(tickerName,tableName):
 
 
 def getDataTable(tickerName ,tableName):
-    baseUrl = 'http://185.97.117.60:3000/'
+    baseUrl = 'http://130.185.74.40:3000/'
     url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
     resp = requests.get(url)
     parsed_dataTable = json.loads(resp.text) 
@@ -220,9 +239,9 @@ def getDataTable(tickerName ,tableName):
 
 
 # def getCEOchange(tickerName):
-#     baseUrl = 'http://185.97.117.60:3000/BoardChange_CEOChanges'
+#     baseUrl = 'http://130.185.74.40:3000/BoardChange_CEOChanges'
 #     # if id != 0:
-#     #     resp = requests.get('http://185.97.117.60:3000/firm', {"ID":'eq.'+})
+#     #     resp = requests.get('http://130.185.74.40:3000/firm', {"ID":'eq.'+})
 #     #     if resp.status_code == 200:
 #     #         return (return.text)
 #     # else:

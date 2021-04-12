@@ -48,8 +48,8 @@ export default {
     console.log({ qs });
     return rp({
       //   url: `${api_root}${url}`,
-      // url: `http://37.152.180.99:3000/View_TV_Daily?`,
-      url: `http://37.152.180.99:3000/rpc/ViewTVDaily?`,
+      // url: `http://185.231.115.223:3000/View_TV_Daily?`,
+      url: `http://185.231.115.223:3000/rpc/ViewTVDaily?`,
 
       qs
     }).then(data => {

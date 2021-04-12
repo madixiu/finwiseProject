@@ -117,6 +117,8 @@ def getCFAll(self,identifier):
 ##############Monthly Ends Here
 def getIndicators(self,identifier):
     return JsonResponse(getTechnicalIndicators(identifier),safe=False)
+def getIndicators2(self,identifier):
+    return JsonResponse(getTechnicalIndicators2(identifier),safe=False)    
 def getIndicatorsAll(self):
     return JsonResponse(getTechnicalIndicatorsAll(),safe=False)
 def getHistoricCap(self):

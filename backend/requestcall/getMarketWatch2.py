@@ -4,7 +4,7 @@ from .util.Convereter_trunc import truncater
 
 def getMarketWatchRequest(name,industry):
     # try:
-    resp = requests.get('http://37.152.180.99:3000/ViewWatch')
+    resp = requests.get('http://185.231.115.223:3000/ViewWatch')
     if resp.status_code == 200:
         if resp.text:
             js = json.loads(resp.text)
@@ -15,7 +15,7 @@ def getMarketWatchRequest(name,industry):
             else:
                 return js
 def getMarketWatchRequest():
-    resp = requests.get('http://37.152.180.99:3000/ViewWatch')
+    resp = requests.get('http://185.231.115.223:3000/ViewWatch')
     if resp.status_code == 200:
         if resp.text:
             js = json.loads(resp.text)

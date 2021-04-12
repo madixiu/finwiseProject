@@ -112,7 +112,7 @@ export default {
       if (!(this.inputDataQ === undefined || this.inputDataQ.length == 0)) {
         this.jsonData2 = [...this.inputDataQ[1]];
         this.jsonData2.sort((a, b) => b.Value - a.Value);
-        this.lowestImpcats = this.jsonData2.slice(0, 10);
+        this.highestImpcats = this.jsonData2.slice(0, 10);
         // console.log("Demands");
         // console.log(this.highestImpcats);
         this.jsonData3 = [...this.inputDataQ[0]];
@@ -610,6 +610,7 @@ export default {
           .style("opacity", "80%");
       }
       if (this.SortBy1 == "DS") {
+        console.log(this.highestImpcats)
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
@@ -763,6 +764,7 @@ export default {
           .attr("transform", `translate(0,${this.height - this.margin.bottom})`)
           .selectAll("text")
           .style("Visibility", "hidden");
+        
         chart
           .selectAll("text.bar")
           .data(this.highestImpcats)

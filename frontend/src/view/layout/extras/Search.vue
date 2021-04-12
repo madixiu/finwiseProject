@@ -97,8 +97,7 @@ export default {
     }
   },
   mounted() {
-    console.log("search mount");
-
+    // console.log("search mount");
     // this.loadData();
   },
   methods: {
@@ -125,7 +124,8 @@ export default {
         // this.$router.push({ name: "TickerOverall", params: { id: result.ID } });
         this.$router.push({ path: `/ticker/Overview/Overall/${result.ID}` });
       else {
-        alert(`You selected ${result.ID} which is oraq and not created`);
+       if (result.TypeID == 1000) this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
+      else{alert(`You selected ${result.ID} which is oraq and not created`)}
       }
     },
     // async loadData() {

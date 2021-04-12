@@ -45,7 +45,7 @@ const BalanceSheet = () =>
 const IncomeStatement = () =>
   import("@/view/pages/Ticker/Sheets/IncomeStatement.vue");
 const CashFlow = () => import("@/view/pages/Ticker/Sheets/CashFlow.vue");
-
+const TechnicalMoreInfo = () => import("@/view/pages/Ticker/TechnicalIndicatorsMoreInfo.vue");
 const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
 const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
 const Relations = () => import("@/view/pages/Ticker/Relations.vue");
@@ -232,6 +232,12 @@ export default new Router({
               name: "StatusChange",
               component: StatusChange
             },
+            {
+              path: "TechnicalDetailed/:id",
+              name: "TechnicalMoreInfo",
+              component: TechnicalMoreInfo
+            },
+            
             {
               path: "Overview/HH/:id",
               name: "HH",

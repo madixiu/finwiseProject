@@ -42,6 +42,7 @@ urlpatterns = [
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
    path("LiveTicker/<identifier>/",getLiveTicker),
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
+   path("Ticker/TechnicalIndicatorSingle/<identifier>/",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
    path("IndexDetails/<identifier>/",getIndexDetails),
    path("Alldps/<identifier>/",getAllDPS),

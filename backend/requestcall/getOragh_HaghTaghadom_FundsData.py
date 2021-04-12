@@ -4,7 +4,7 @@ from .util.Convereter_trunc import truncater
 
 def getOraghData():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://37.152.180.99:3000/View_Watch_Bonds',headers = head)
+    resp = requests.get('http://185.231.115.223:3000/View_Watch_Bonds',headers = head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
         additionalData(js)
@@ -13,7 +13,7 @@ def getOraghData():
         return ("noData")
 
 def getHaghTaghadomData(): 
-    resp = requests.get('http://37.152.180.99:3000/View_Watch_HaghTaghadoms')
+    resp = requests.get('http://185.231.115.223:3000/View_Watch_HaghTaghadoms')
     if resp.status_code == 200:
         js = json.loads(resp.text)
         TaghadomDataFix(js)
@@ -22,7 +22,7 @@ def getHaghTaghadomData():
         return ("noData")
 
 def getFundsData():
-    resp = requests.get('http://37.152.180.99:3000/View_Watch_ETF')
+    resp = requests.get('http://185.231.115.223:3000/View_Watch_ETF')
     if resp.status_code == 200:
         js = json.loads(resp.text)
         additionalData(js)

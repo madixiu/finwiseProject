@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <!-- <v-skeleton-loader
-      type=" table-heading,table-row@12"
-      v-if="loading"
-    ></v-skeleton-loader> -->
-
-    <v-card>
-      <v-card-title>بازدهی صنایع</v-card-title>
-      <v-divider class="mt-0 "></v-divider>
+  <div class="card card-custom">
+    <v-card id="ParentCard" :height="cardheight">
+      <v-card-title id="ParentCardTitle">
+        <span> sss صنایع </span>
+      </v-card-title>
+      <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
         <div class="col-xxl-10 col-lg-10 col-md-10 col-sm-10 mb-2">
           <div id="IndustriesChart"></div>
@@ -38,7 +35,6 @@
           </v-card>
         </div>
       </div>
-      <!--end::Header-->
     </v-card>
   </div>
 </template>
@@ -51,6 +47,7 @@ export default {
   props: { inputData: Object },
   data() {
     return {
+      cardheight: 0,
       options: [
         { text: "بازدهی", value: "D1" },
         { text: "ارزش بازار", value: "marketCap" },
@@ -80,62 +77,61 @@ export default {
     };
   },
   watch: {
-    inputData() {
-      this.populateData();
-      // this.loading = false;
-      this.renderChart();
-    }
+    // inputData() {
+    //   this.populateData();
+    //   // this.loading = false;
+    //   this.renderChart();
+    // }
     // ,loading(){
     //   console.log('LoadingCalled')
     // }
   },
+  created() {
+    this.cardheight = this.heightCalc();
+  },
   // In the beginning...
   mounted() {
-    this.initrender();
-    this.populateData();
+    // this.initrender();
+    // this.populateData();
     // this.renderChart("T","T");
   },
-  computed: {},
   methods: {
-    isEmpty(obj) {
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-          return false;
-        }
-      }
-
-      return JSON.stringify(obj) === JSON.stringify({});
-    },
     populateData() {
       if (!(this.inputData === undefined || this.inputData.length == 0)) {
-      let ll = Object.assign({}, this.inputData);
+        let ll = Object.assign({}, this.inputData);
 
-      let tList = [];
-      for (var tKey in ll) tList.push(ll[tKey]);
-      this.DataItems2 = tList;
-      if (!this.isEmpty(this.DataItems2)) {
-        // this.loading = false;
-        this.sortByMarketCap("D1");
-        // console.log(this.DataItems2);
-      }}
+        let tList = [];
+        for (var tKey in ll) tList.push(ll[tKey]);
+        this.DataItems2 = tList;
+        if (!this.isEmpty(this.DataItems2)) {
+          // this.loading = false;
+          this.sortByMarketCap("D1");
+          // console.log(this.DataItems2);
+        }
+      }
     },
     sortByMarketCap(M) {
-      let f = [...this.DataItems2]
+      let f = [...this.DataItems2];
       f.sort(function(a, b) {
         return b[M] - a[M];
       });
-      this.DataItems2 = [...f]
+      this.DataItems2 = [...f];
     },
     initrender() {
       if (document.getElementById("IndustriesChart_SVG")) {
         d3.selectAll("#IndustriesChart_SVG").remove();
       }
       this.width = parseInt(d3.select("#IndustriesChart").style("width"), 10);
-      this.height = (this.width * 7) / 16;
-      this.margin.top = this.height * 0.15;
-      this.margin.bottom = this.height * 0.1;
-      this.margin.right = this.width * 0.05;
-      this.margin.left = this.width * 0.05;
+      this.height =
+        parseInt(d3.select("#ParentCard").style("height"), 10) -
+        parseInt(d3.select("#ParentDivider").style("height"), 10) -
+        parseInt(d3.select("#ParentCardTitle").style("height"), 10);
+      this.margin.top = this.height * 0.1;
+      this.margin.bottom = 0;
+      this.margin.right = this.width * 0.1;
+      this.margin.left = this.width * 0.1;
+      console.log(this.width);
+      console.log(this.height);
       // eslint-disable-next-line no-unused-vars
       var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars
@@ -146,9 +142,66 @@ export default {
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
+      let that = this;
+      var n = 20,
+        r = 5,
+        p = 1000;
+      // eslint-disable-next-line no-unused-vars
+      const chart = svg
+        .append("svg")
+        .attr(
+          "transform",
+          `translate(${this.width * 0.3}, ${this.height * 0.3})`
+        )
+        .attr("width", this.width * 0.5)
+        .attr("height", this.height * 0.5);
+
+      var g = chart
+        .selectAll("g")
+        .data(d3.range(0, 2 * Math.PI, (2 * Math.PI) / n))
+        .enter()
+        .append("g")
+        .attr("transform", function(d) {
+          var x = that.width * 0.4 * (0.35 * Math.cos(d) + 0.5),
+            y = that.height * 0.4 * (0.35 * Math.sin(d) + 0.5);
+          return "translate(" + [x, y] + ")rotate(" + (d * 180) / Math.PI + ")";
+        });
+      chart
+        .append("g")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .text(`در حال بارگذاری`)
+        .attr(
+          "transform",
+          `translate(${this.margin.left * 2},${this.margin.top * 1.3})`
+        )
+        .style("font-family", "Vazir-Medium-FD")
+        .style("font-size", `${this.width / 500}em`);
+      var moons = g.append("path").attr("fill", "#212529");
+      d3.timer(function(t) {
+        var θ = 2 * Math.PI * ((t % p) / p);
+        moons.attr("d", function(d) {
+          return moon((θ + d) % (2 * Math.PI));
+        });
+      });
+      function moon(θ) {
+        var rx0 = θ < Math.PI ? r : -r,
+          s0 = θ < Math.PI ? 0 : 1,
+          rx1 = r * Math.cos(θ),
+          s1 =
+            θ < Math.PI / 2 || (Math.PI <= θ && θ < (3 * Math.PI) / 2) ? 0 : 1;
+        return (
+          "M" +
+          [0, r] +
+          "A" +
+          [rx0, r, 0, 0, s0, 0, -r] +
+          "A" +
+          [rx1, r, 0, 0, s1, 0, r]
+        );
+      }
     },
     renderChart() {
-      this.loading=true
+      this.loading = true;
       this.sortByMarketCap(this.SortBy);
       let Param = this.freq;
       // const tooltip = d3
@@ -159,7 +212,6 @@ export default {
       //   .style("visibility", "hidden");
       if (document.getElementById("IndustriesChart_SVG")) {
         d3.selectAll("#IndustriesChart_SVG").remove();
-        
       }
       var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars
@@ -342,32 +394,32 @@ export default {
         .attr("opacity", "0.8")
         .attr("fill", function(d) {
           return colorScale(d[1][Param]);
-        })
-        // .on("mousemove touchstart", function() {
-        //   d3.select(this)
-        //     .transition()
-        //     .duration(200)
-        //     .style("opacity", 0.5)
-        //     .transition()
-        //     .duration(1000)
-        //     .ease(d3.easePolyOut)
-        //   tooltip
-        //     .text(
-        //       "ارزش معاملات اوراق :" +
-        //         "درصد "
-        //     )
-        //     .attr("class", "d3-tip")
-        //     .style("visibility", "visible")
-        //     .style("left", that.margin.left + "px")
-        //     .style("top", that.margin.top + "px");
-        // })
-        // .on("mousemove touchend", function() {
-        //   d3.select(this)
-        //     .transition()
-        //     .duration(200)
-        //     .style("opacity", 1);
-        //   tooltip.style("visibility", "hidden");
-        // });
+        });
+      // .on("mousemove touchstart", function() {
+      //   d3.select(this)
+      //     .transition()
+      //     .duration(200)
+      //     .style("opacity", 0.5)
+      //     .transition()
+      //     .duration(1000)
+      //     .ease(d3.easePolyOut)
+      //   tooltip
+      //     .text(
+      //       "ارزش معاملات اوراق :" +
+      //         "درصد "
+      //     )
+      //     .attr("class", "d3-tip")
+      //     .style("visibility", "visible")
+      //     .style("left", that.margin.left + "px")
+      //     .style("top", that.margin.top + "px");
+      // })
+      // .on("mousemove touchend", function() {
+      //   d3.select(this)
+      //     .transition()
+      //     .duration(200)
+      //     .style("opacity", 1);
+      //   tooltip.style("visibility", "hidden");
+      // });
 
       chart
         .selectAll()
@@ -395,8 +447,8 @@ export default {
         });
 
       window.addEventListener("resize", this.renderChart);
-      this.loading=false
-        svg
+      this.loading = false;
+      svg
         .append("text")
         .attr("class", "source")
         .attr("x", this.width / 2 + this.margin.right)
@@ -406,8 +458,8 @@ export default {
         .style("font-weight", "700")
         .style("font-family", "'Tlwg Mono', sans-serif")
         .style("font-size", "10px")
-        .style("opacity", "0.3"); 
-        chart
+        .style("opacity", "0.3");
+      chart
         .append("text")
         .attr("class", "source")
         .attr("x", 0)
@@ -416,8 +468,8 @@ export default {
         .text("بازدهی")
         .style("font-weight", "700")
         .style("font-family", "Vazir")
-        .style("font-size", "1em")
-        chart
+        .style("font-size", "1em");
+      chart
         .append("text")
         .attr("class", "source")
         .attr("x", 0)
@@ -426,7 +478,23 @@ export default {
         .text("ارزش بازار روز")
         .style("font-weight", "700")
         .style("font-family", "Vazir")
-        .style("font-size", "1em")
+        .style("font-size", "1em");
+    },
+    heightCalc() {
+      if (screen.height * 2 > screen.width) {
+        // console.log(screen.height * 0.5)
+        return Math.max(600, screen.height * 0.75);
+      } else {
+        if (screen.height * 1.5 > screen.width) {
+          return Math.max(600, screen.height * 0.7);
+        } else {
+          if (screen.height > screen.width) {
+            return Math.max(600, screen.height * 0.65);
+          }
+          // console.log(screen.width * 0.5)
+          else return Math.max(600, screen.height * 0.6);
+        }
+      }
     }
   }
 };
@@ -441,7 +509,7 @@ export default {
   direction: rtl;
   text-align: right;
 }
- .d3-tip {
+.d3-tip {
   font-family: "Vazir-Medium-FD";
   line-height: 1.4;
   z-index: 300;
@@ -468,7 +536,7 @@ export default {
 }
 
 /* Northward tooltips */
- .d3-tip.n:after {
+.d3-tip.n:after {
   content: "▼";
   margin: -1px 0 0 0;
   top: 100%;
@@ -477,7 +545,7 @@ export default {
 }
 
 /* Eastward tooltips */
- .d3-tip.e:after {
+.d3-tip.e:after {
   content: "◀";
   margin: -4px 0 0 0;
   top: 50%;
@@ -485,7 +553,7 @@ export default {
 }
 
 /* Southward tooltips */
- .d3-tip.s:after {
+.d3-tip.s:after {
   content: "▲";
   margin: 0 0 1px 0;
   top: -8px;
@@ -494,7 +562,7 @@ export default {
 }
 
 /* Westward tooltips */
- .d3-tip.w:after {
+.d3-tip.w:after {
   content: "▶";
   margin: -4px 0 0 -1px;
   top: 50%;
