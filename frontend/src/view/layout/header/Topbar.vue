@@ -55,26 +55,47 @@
     <!--end: Notifications -->
     <!-- Clock -->
     <Clock></Clock>
-
+    <div class="topbar-item mr-2" v-if="!this.$store.getters.isAuthenticated">
+      <v-btn small color="#3d3e4e" dark @click="loginClick">
+        <v-icon dense class="" color="#4177a5">mdi-account-circle</v-icon>
+        ورود
+      </v-btn>
+    </div>
+    <!-- <Profile />\ -->
     <!-- Clock end -->
     <!--begin: Quick Actions -->
+    <!-- <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
+      <v-icon size="25px" color="#4682B4" class="mr-1"
+        >mdi-account-circle</v-icon
+      >
+      <Profile />
+    </div> -->
+    <!-- v-if="this.$store.getters.isAuthenticated" -->
+
     <b-dropdown
-      size="sm"
+      ref="profileDropdown"
+      size="lg"
       variant="link"
       toggle-class="topbar-item text-decoration-none"
       no-caret
-      right
+      left
       no-flip
+      menu-class="profileDropdownClass"
     >
       <template v-slot:button-content>
-        <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
-          <span class="svg-icon svg-icon-xl svg-icon-primary">
+        <div class="btn btn-icon btn-clean btn-dropdown mr-1">
+          <v-icon size="25px" color="#4682B4" class="mr-1"
+            >mdi-account-circle</v-icon
+          >
+          <!-- <span class="svg-icon svg-icon-xl svg-icon-primary">
             <inline-svg :src="QuickActionIcon" />
-          </span>
+            
+          </span> -->
         </div>
       </template>
-      <b-dropdown-text tag="div" class="min-w-md-350px">
-        <KTDropdownQuickAction></KTDropdownQuickAction>
+      <b-dropdown-text tag="div">
+        <!-- <KTDropdownQuickAction></KTDropdownQuickAction> -->
+        <Profile />
       </b-dropdown-text>
     </b-dropdown>
     <!--end: Quick Actions -->
@@ -154,7 +175,34 @@
       }
     }
   }
+  // .profileDropdownClass.show {
+  //   border-radius: 5px;
+  //   // transition-property: height;
+  //   transition-property: height;
+  //   transition-duration: 2s;
+  //   transition-timing-function: linear;
+  //   background-color: aqua;
+  //   // height: 100px;
+  //       // box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+  // }
+  .profileDropdownClass {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .profileDropdownClass.show {
+    /* For Bootstrap 4, use .dropdown.show instead of .dropdown.open */
+    max-height: 300px;
+    opacity: 1;
+  }
   .dropdown-menu {
     margin: 0;
     padding: 0;
@@ -169,10 +217,11 @@
 <script>
 import SearchDefault from "@/view/layout/extras/Search.vue";
 import Clock from "@/view/content/Clock.vue";
+import Profile from "@/view/layout/extras/dropdown/ProfileDropdown";
 // import KTDropdownNotification from "@/view/layout/extras/dropdown/DropdownNotification.vue";
 // import KTSearchDefault from "@/view/layout/extras/dropdown/SearchDefault.vue";
 
-import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
+// import KTDropdownQuickAction from "@/view/layout/extras/dropdown/DropdownQuickAction.vue";
 // import KTDropdownMyCart from "@/view/layout/extras/dropdown/DropdownMyCart.vue";
 // import KTDropdownLanguage from "@/view/layout/extras/dropdown/DropdownLanguage.vue";
 // import KTQuickUser from "@/view/layout/extras/offcanvas/QuickUser.vue";
@@ -192,9 +241,11 @@ export default {
   components: {
     SearchDefault,
     Clock,
+    Profile
     // KTSearchDefault,
     // KTDropdownNotification,
-    KTDropdownQuickAction
+    // KTDropdownQuickAction
+
     // KTDropdownMyCart,
     // KTDropdownLanguage,
     // KTQuickUser,
@@ -206,7 +257,14 @@ export default {
       this.languageFlag = this.languages.find(val => {
         return val.lang === i18nService.getActiveLanguage();
       }).flag;
+    },
+    loginClick() {
+      this.$router.push({ name: "login" });
     }
+    // onClick() {
+    //   // Close the menu and (by passing true) return focus to the toggle button
+    //   this.$refs.dropdown.hide(true);
+    // }
   },
   computed: {
     SearchIcon() {

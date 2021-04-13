@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from django.core import signing
 # from users.auth.Verification import 
 from .models import CustomUser
-from .auth.Verification import SendVerificationNumber
-from .utils.util import VerifyToken
+from .auth.Verification import SendVerificationNumber,SendPasswordResetNumber
+from .utils.util import VerifyToken,PasswordResetToken
 # Create your views here.
 # def get_token(self):
 #     payload = {"username": "finwise", "action": "activation"}
@@ -22,20 +22,14 @@ from .utils.util import VerifyToken
 def verifyUser(request):
     
     if request.method == 'POST':
-        # phone = CustomUser.objects.get(email="mahdi.moradi72@gmail.com")
-        # print(phone.phone_number)
         data = JSONParser().parse(request)
-        # print(request)
-        # return HttpResponse("ok")
         if data.get('request') == "activation":
             verificationNumber = SendVerificationNumber(data.get('email'))
             cache.set(data.get('email'),str(verificationNumber))
-            # return HttpResponse(str(verificationNumber))
             return HttpResponse("OK")
         if data.get('request') == "verification":
             verificationNumber = cache.get(data.get('email'))
-            # print(verificationNumber)
-            # print(data.get('number'))
+
             if verificationNumber == data.get('number'):
                 user = CustomUser.objects.get(email = data.get('email'))
                 username = user.username
@@ -43,8 +37,29 @@ def verifyUser(request):
                 return JsonResponse(["GRANTED",token],safe=False)
             else:
                 return JsonResponse(["DENIED"],safe=False)
-        # if data.get('request') == "check":
-        #     if data.get("number") == verificationNumber:
-        #         return HttpResponse("True")
-        #     else:
-        #         return HttpResponse("False")
+@csrf_exempt
+def passwordReset(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        print(data)
+        if data.get('request') == "activation":
+            verifcationNumber = SendPasswordResetNumber(data.get('email'))
+            cache.set(data.get('email'),str(verifcationNumber))
+            return HttpResponse("OK")
+        if data.get('request') == "verification":
+            print("we are in verification")
+            verifcationNumber = cache.get(data.get('email'))
+            print("here is the verification number:")
+            print(verifcationNumber)
+            print("email is:")
+            print(data.get('email'))
+            print("whole data:")
+            print(data)
+            if verifcationNumber == data.get('number'):
+                token = PasswordResetToken(data.get('email'))
+                return JsonResponse(["GRANTED",token],safe=False)
+            else:
+                return JsonResponse(["DENIED"],safe=False)
+        else:
+            
+            return HttpResponse("error")

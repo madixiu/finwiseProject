@@ -10,3 +10,8 @@ def VerifyToken(username):
     payload = {"username": username, "action": "activation"}
     token = signing.dumps(payload)
     return token
+
+def PasswordResetToken(email):
+    payload = {"email": email, "action": "password_reset"}
+    token = signing.dumps(payload)
+    return token

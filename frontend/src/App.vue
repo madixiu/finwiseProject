@@ -44,9 +44,9 @@ import JwtService from "@/core/services/jwt.service";
 export default {
   name: "Finwise",
   mounted() {
-    this.loadData();
+    // this.loadData();
     //****************NEW CODE ***********************************/
-    if (JwtService.getToken) {
+    if (JwtService.getToken()) {
       let refreshToken = this.CryptoJS.AES.decrypt(
         JwtService.getToken(),
         "key"

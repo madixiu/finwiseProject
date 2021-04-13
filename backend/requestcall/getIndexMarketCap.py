@@ -27,5 +27,5 @@ def dataAlter(input):
     result = [{"TopIndustries":Sorted},{"Others":{"marketCapSum":marketCapOthers,"List":Others}}]
     return result
 
-IndexMarketCapRequest()
+# IndexMarketCapRequest()
 

@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div
+  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+    <!-- <div
     class="card card-custom card-stretch gutter-b col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-  >
+  > -->
     <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"
@@ -10,7 +11,7 @@
 
     <v-card>
       <v-card-title
-        >ارزش معاملات 
+        >ارزش معاملات
         <span class="cellItem">
           {{
             this.numberWithCommas(

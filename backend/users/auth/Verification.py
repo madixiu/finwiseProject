@@ -3,23 +3,16 @@ from django.core.mail import send_mail
 from django.conf import settings as django_settings
 
 def SendVerificationNumber(email):
-# print(get_number())
-    # send_mail()
     number = get_number()
-    sendMail("Finwise Activation",str(number),email)
+    sendMail("Finwise Account Activation",str(number),email)
     return number
-    # return send_mail(
-    # subject="testDjango",
-    # from_email=django_settings.GRAPHQL_AUTH['EMAIL_FROM'],
-    # # html_message=html_message,
-    # recipient_list=(
-    #     ["mahdi.moradi72@gmail.com"]
-    #     # recipient_list or [getattr(self.user, UserModel.EMAIL_FIELD)]
-    # ),
-    # fail_silently=False,
-# )
+ 
 
-# def 
+def SendPasswordResetNumber (email):
+    number = get_number()
+    sendMail("Finwise Password Reset",str(number),email)
+    return number
+
 def sendMail(subject,message,email):
 
     return send_mail(

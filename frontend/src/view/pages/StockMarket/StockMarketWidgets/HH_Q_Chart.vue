@@ -1,26 +1,26 @@
 <template>
-  <div class="card card-custom">
-    <!-- <v-skeleton-loader
+  <!-- <div class="card card-custom"> -->
+  <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"
     ></v-skeleton-loader> -->
-    <v-card>
-      <v-card-title
-        >نمودار وضعیت بازار -
-        <b-form-group class="pt-3">
-          <b-form-radio-group
-            :click="this.renderChart1()"
-            v-model="SortBy1"
-            value="HH"
-            :options="options1"
-            name="radio-inline_q"
-          ></b-form-radio-group> </b-form-group
-      ></v-card-title>
-      <v-divider class="mt-0"></v-divider>
-      <div id="ChartContainer_HH"></div>
-      <!--end::Header-->
-    </v-card>
-  </div>
+  <v-card>
+    <v-card-title
+      >نمودار وضعیت بازار -
+      <b-form-group class="pt-3">
+        <b-form-radio-group
+          :click="this.renderChart1()"
+          v-model="SortBy1"
+          value="HH"
+          :options="options1"
+          name="radio-inline_q"
+        ></b-form-radio-group> </b-form-group
+    ></v-card-title>
+    <v-divider class="mt-0"></v-divider>
+    <div id="ChartContainer_HH"></div>
+    <!--end::Header-->
+  </v-card>
+  <!-- </div> -->
 </template>
 
 <script>

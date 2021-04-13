@@ -137,9 +137,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mr.robotc7@gmail.com'
+EMAIL_HOST_USER = 'finwiseIran@gmail.com'
 #Must generate specific password for your app in [gmail settings][1]
-EMAIL_HOST_PASSWORD = 'yamahdi001'
+EMAIL_HOST_PASSWORD = 'i5K5hvZFhTII'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # graphQL end

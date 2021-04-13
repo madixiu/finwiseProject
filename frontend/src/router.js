@@ -61,6 +61,7 @@ const Robot = () => import("@/view/pages/Robot/Robot.vue");
 const Login = () => import("@/view/pages/auth/Login");
 const Register = () => import("@/view/pages/auth/Register");
 const Verify = () => import("@/view/pages/auth/Verify");
+const passwordReset = () => import("@/view/pages/auth/PasswordReset");
 const Profile = () => import("@/view/pages/auth/Profile");
 const ERROR = () => import("@/view/pages/error/Error-1.vue");
 
@@ -401,6 +402,11 @@ export default new Router({
           name: "verify",
           path: "/verify",
           component: Verify
+        },
+        {
+          name: "passwordReset",
+          path: "/passReset",
+          component: passwordReset
         }
       ]
     },

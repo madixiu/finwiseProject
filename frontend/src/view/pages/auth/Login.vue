@@ -1,122 +1,157 @@
 <template>
   <div>
     <!--begin::Content header-->
-    <div
-      class="position-absolute top-0 left-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
-    >
-      <span class="font-weight-bold font-size-3 text-dark-60">
-        ثبت نام نکرده اید؟
-      </span>
-      <router-link
-        class="font-weight-bold font-size-3 ml-2"
-        :to="{ name: 'register' }"
+    <!-- 
+    <div class="container">
+      <v-container>
+        <v-row>
+
+        </v-row>
+      </v-container>
+    </div> -->
+    <v-card class="cardColor">
+      <v-container>
+        <!-- <v-divider></v-divider> -->
+        <!-- <div class=" justify-content-center position-absolute top-0 right-0">
+    
+          <router-link
+            class="font-weight-bold font-size-3 ml-2"
+            :to="{ name: 'register' }"
+          >
+            ثبت نام
+          </router-link>
+        </div> -->
+        <!--end::Content header-->
+
+        <!--begin::Signin-->
+        <!-- MAY REMOVE THIS DIV (REDUNDANT) -->
+        <div class="">
+          <div class="text-center">
+            <v-chip class="chip-top">
+              <span style="color:white" class="pr-2 pl-2">ورود</span>
+            </v-chip>
+          </div>
+          <v-divider></v-divider>
+
+          <!--begin::Form-->
+
+          <b-form
+            class="form"
+            autocomplete="off"
+            @submit.stop.prevent="onSubmit"
+          >
+            <!-- <div role="alert" class="alert alert-info">
+              <div class="alert-text">
+                <strong>شماره موبایل</strong> و <strong>رمز عبور</strong>خود را
+                وارد کنید
+              </div>
+            </div> -->
+            <div
+              v-if="errors.length"
+              role="alert"
+              v-bind:class="{ show: errors.length }"
+              class="alert fade alert-danger"
+            >
+              <div class="alert-text" v-for="(error, i) in errors" :key="i">
+                {{ error }}
+              </div>
+            </div>
+            <b-form-group
+              id="login-input-group-1"
+              label=""
+              label-for="login-input-1"
+            >
+              <b-form-input
+                class="input-form"
+                id="login-input-1"
+                name="login-input-1"
+                placeholder="شماره موبایل"
+                v-model="$v.form.phonenumber.$model"
+                :state="validateState('phonenumber')"
+                aria-describedby="phone-live-feedback"
+              ></b-form-input>
+
+              <b-form-invalid-feedback id="phone-live-feedback">
+                شماره موبایل خود را وارد کنید
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group
+              id="login-input-group-2"
+              label=""
+              label-for="login-input-2"
+            >
+              <b-form-input
+                class="input-form"
+                type="password"
+                id="login-input-2"
+                name="login-input-2"
+                placeholder="رمز عبور"
+                v-model="$v.form.password.$model"
+                :state="validateState('password')"
+                aria-describedby="password-live-feedback"
+              ></b-form-input>
+
+              <b-form-invalid-feedback id="password-live-feedback">
+                رمز عبور خود را صحیح وارد کنید
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <!--begin::Action-->
+            <div
+              class="form-group d-flex flex-wrap justify-content-between align-items-center"
+            >
+              <p class="WrongCredMsg" v-if="ErrorMsgflag">
+                شماره موبایل و رمز عبور صحیح نمی باشد
+              </p>
+            </div>
+            <div
+              class="form-group d-flex flex-wrap justify-content-center align-items-center"
+            >
+              <v-btn
+                block
+                color="#4CAF50"
+                class="submit-button"
+                :loading="buttonLoading"
+                @click="onSubmit"
+                >ورود</v-btn
+              >
+              <!-- <button
+                ref="kt_login_signin_submit"
+                class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
+              >
+                ورود
+              </button> -->
+              <router-link
+                class="text-dark-60 text-hover-primary mt-2"
+                id="kt_login_forgot"
+                :to="{ name: 'passwordReset' }"
+
+              >
+                فراموشی رمز عبور
+              </router-link>
+            </div>
+            <v-divider></v-divider>
+            <div class=" justify-content-center ">
+              <!-- <span class="font-weight-bold font-size-3 text-dark-60">
+            ثبت نام نکرده اید؟
+          </span> -->
+              <router-link
+                class="font-weight-bold font-size-3 ml-2"
+                :to="{ name: 'register' }"
+              >
+                ثبت نام
+              </router-link>
+            </div>
+            <!--end::Action-->
+            <!--end::Form-->
+          </b-form>
+        </div></v-container
       >
-        ثبت نام
-      </router-link>
-    </div>
-    <!--end::Content header-->
+    </v-card>
 
-    <!--begin::Signin-->
-    <div class="login-form login-signin">
-      <div class="text-center mb-10 mb-lg-20">
-        <h3 class="font-size-h1">ورود</h3>
-        <p class="text-muted font-weight-semi-bold"></p>
-      </div>
-      <!--begin::Form-->
-      <b-form class="form" @submit.stop.prevent="onSubmit">
-        <div role="alert" class="alert alert-info">
-          <div class="alert-text">
-            <strong>شماره موبایل</strong> و <strong>رمز عبور</strong>خود را وارد
-            کنید
-          </div>
-        </div>
-        <div
-          v-if="errors"
-          role="alert"
-          v-bind:class="{ show: errors.length }"
-          class="alert fade alert-danger"
-        >
-          <div class="alert-text" v-for="(error, i) in errors" :key="i">
-            {{ error }}
-          </div>
-        </div>
-        <b-form-group
-          id="example-input-group-1"
-          label=""
-          label-for="example-input-1"
-        >
-          <b-form-input
-            class="form-control form-control-solid h-auto py-3 px-3"
-            id="example-input-1"
-            name="example-input-1"
-            v-model="$v.form.phonenumber.$model"
-            :state="validateState('phonenumber')"
-            aria-describedby="input-1-live-feedback"
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-1-live-feedback">
-            شماره موبایل خود را وارد کنید
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group
-          id="example-input-group-2"
-          label=""
-          label-for="example-input-2"
-        >
-          <b-form-input
-            class="form-control form-control-solid h-auto py-3 px-3"
-            type="password"
-            id="example-input-2"
-            name="example-input-2"
-            v-model="$v.form.password.$model"
-            :state="validateState('password')"
-            aria-describedby="input-2-live-feedback"
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-2-live-feedback">
-            رمز عبور خود را صحیح وارد کنید
-          </b-form-invalid-feedback>
-        </b-form-group>
-        <!--begin::Action-->
-        <div
-          class="form-group d-flex flex-wrap justify-content-between align-items-center"
-        >
-          <p class="WrongCredMsg" v-if="ErrorMsgflag">
-            شماره موبایل و رمز عبور صحیح نمی باشد
-          </p>
-        </div>
-        <div
-          class="form-group d-flex flex-wrap justify-content-between align-items-center"
-        >
-          <button
-            ref="kt_login_signin_submit"
-            class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
-          >
-            ورود
-          </button>
-          <a
-            href="#"
-            class="text-dark-60 text-hover-primary my-3 mr-2"
-            id="kt_login_forgot"
-          >
-            رمز عبور را فراموش کرده اید؟
-          </a>
-        </div>
-        <!--end::Action-->
-        <!--end::Form-->
-      </b-form>
-    </div>
     <!--end::Signin-->
   </div>
 </template>
-
-<style lang="scss" scoped>
-.spinner.spinner-right {
-  padding-right: 3.5rem !important;
-}
-</style>
-
 <script>
 // import { mapState } from "vuex";
 import { mapGetters } from "vuex";
@@ -139,6 +174,7 @@ export default {
   name: "login",
   data() {
     return {
+      buttonLoading: false,
       verified: true,
       ErrorMsgflag: false,
       ErrorMsgText: "",
@@ -226,11 +262,8 @@ export default {
       if (this.$v.form.$anyError) {
         return;
       }
-      // const email = this.$v.form.email.$model;
       const phonenumber = this.$v.form.phonenumber.$model;
       const password = this.$v.form.password.$model;
-      // console.log(password);
-      // console.log(phonenumber);
 
       // add apollo
       this.$apollo
@@ -244,6 +277,7 @@ export default {
         })
         .then(data => {
           let LoginData = data.data.tokenAuth;
+          console.log(LoginData);
           if (LoginData.success == true) {
             this.ErrorMsgflag = false;
             // console.log(LoginData.token);
@@ -252,21 +286,15 @@ export default {
               LoginData.refreshToken,
               "key"
             );
-            // let decryptedRefreshToken = this.decryption(
-            //   encryptedRefreshToken,
-            //   "key"
-            // );
-            // console.log(encryptedRefreshToken);
+
             JwtService.destroyToken();
             JwtService.saveToken(encryptedRefreshToken);
             let user = LoginData.user;
-            // user.token = this.encryption(
-            //   LoginData.token,
-            //   LoginData.refreshToken
-            // );
+
             user.token = LoginData.token;
-            // console.log(user);
             this.$store.dispatch("LOGIN", user);
+            this.$store.dispatch("RenewAccessToken", LoginData.token);
+
             this.LockCheck();
 
             // if (user.verified == true) {
@@ -302,9 +330,9 @@ export default {
       // this.$store.dispatch(LOGOUT);
 
       // set spinner to submit button
-      const submitButton = this.$refs["kt_login_signin_submit"];
-      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
-
+      // const submitButton = this.$refs["kt_login_signin_submit"];
+      // submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+      this.buttonLoading = true;
       // dummy delay
       setTimeout(() => {
         // send login request
@@ -315,19 +343,26 @@ export default {
         if (this.$store.getters.isAuthenticated)
           this.$router.push({ name: "Dashboard" });
         // if (this.verified == false) this.$router.push({ name: "verify" });
-
-        submitButton.classList.remove(
-          "spinner",
-          "spinner-light",
-          "spinner-right"
-        );
+        this.buttonLoading = false;
+        // submitButton.classList.remove(
+        //   "spinner",
+        //   "spinner-light",
+        //   "spinner-right"
+        // );
       }, 2000);
     }
   },
   computed: {
+    // height() {
+    //   console.log(document.getElementById("loginFormID"));
+    //   return document.getElementById("loginFormID").clientHeight * 0.98;
+    // },
     // ...mapState({
     //   errors: state => state.auth.errors
     // })
+    // width() {
+    //   return document.getElementsByClassName("login-form-page").width / 2;
+    // },
     ...mapGetters(["errors"])
   }
 };
@@ -336,4 +371,86 @@ export default {
 .WrongCredMsg {
   color: red;
 }
+.submit-button {
+  color: antiquewhite;
+  font-size: 1em;
+  font-weight: 600;
+}
+.submit-button:hover {
+  color: rgb(29, 7, 7);
+}
+.input-form {
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  color: white;
+}
+.chip-top {
+  background-color: rgba(0, 0, 0, 0.212) !important;
+  color: white;
+}
+.form-control {
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  color: white;
+  border-radius: 0.75rem;
+}
+input:-internal-autofill-selected {
+  color: white !important;
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  background-image: none;
+}
+input:-webkit-autofill {
+  color: white !important;
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  -webkit-background-clip: text;
+  -webkit-box-shadow: 0 0 0 30px rgba(82, 70, 70, 0.281) inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(252, 252, 252) !important;
+}
+/* Change the white to any color */
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px rgba(82, 70, 70, 0.281) inset !important;
+} */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  background-color: rgba(82, 70, 70, 0.281) !important;
+}
+
+.input-form .form-control .is-valid {
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  color: white;
+}
+.cardColor {
+  background-color: rgba(226, 194, 194, 0.61) !important;
+  border-color: black !important;
+  max-height: 100vh;
+  min-width: 312px;
+}
+
+/* placeholder css */
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(233, 233, 233);
+  opacity: 1; /* Firefox */
+  /* font-size: 0.9em; */
+}
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgb(214, 197, 197);
+  /* font-size: 0.9em; */
+}
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  /* font-size: 0.9em; */
+  color: rgb(214, 197, 197);
+}
+/* placeholder css end */
 </style>

@@ -3,14 +3,16 @@
   <div class="col-xxl-12 col-lg-12 col-md-12 col-sm 12">
     <v-card>
       <!--begin::Header-->
-      <div class="card-header border-0 pt-2">
-        <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
+      <!-- <div class="card-header border-0 pt-2"> -->
+      <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
         بیشترین تقاضا
       </h3> -->
-        <v-card-title>
-          آخرین اخبار
-        </v-card-title>
-      </div>
+      <v-card-title>
+        آخرین اخبار
+      </v-card-title>
+      <v-divider class="mt-0"></v-divider>
+
+      <!-- </div> -->
       <!--end::Header-->
       <!--begin::Body-->
       <div class="card-body d-flex flex-column">

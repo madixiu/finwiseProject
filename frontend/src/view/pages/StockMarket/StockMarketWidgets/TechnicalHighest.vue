@@ -1,7 +1,7 @@
 <template>
   <!--begin::Mixed Widget 14-->
   <!-- <div class="card card-custom card-stretch gutter-b"> -->
-  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12 card card-custom">
+  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
     <v-card>
       <!--begin::Header-->
       <!-- <div class="card-header border-0 pt-2"> -->
@@ -11,6 +11,7 @@
       <v-card-title>
         ربات تحلیلگر تکنیکال
       </v-card-title>
+      <v-divider class="mt-0"></v-divider>
       <!-- </div> -->
       <!--end::Header-->
       <!--begin::Body-->

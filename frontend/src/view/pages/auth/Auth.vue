@@ -1,69 +1,119 @@
 <template>
-  <div class="d-flex flex-column flex-root">
-    <div
+  <!-- <div class="d-flex flex-column flex-root"> -->
+  <!-- <div
       class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-row-fluid bg-white"
       id="kt_login"
-    >
-      <!--begin::Aside-->
-      <div
-        class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-30"
-        :style="{ backgroundImage: `url(${backgroundImage})` }"
-      >
-        <!--begin: Aside Container -->
-        <div class="d-flex flex-row-fluid flex-column justify-content-between">
-          <!--begin: Aside header -->
-          <a href="#" class="flex-column-auto">
-            <img src="media/logos/logo-letter-1.png" class="h-25" />
-          </a>
-          <!--end: Aside header -->
-          <!--begin: Aside content -->
+    > -->
+  <!--begin::Aside-->
+  <div id="loginFormID" class="login-form-page d-flex">
+    <v-container fluid style="height: 100vh">
+      <v-row style="height:100%">
+        <v-col
+          lg="3"
+          xs="12"
+          sm="3"
+          md="4"
+          xl="4"
+          col="4"
+          class="d-flex gradient justify-content-center align-items-center"
+        >
+          <!--begin: Aside Container -->
           <div
-            class="flex-column-fluid d-flex flex-column justify-content-center"
+            class="d-flex flex-row-fluid flex-column justify-content-center align-items-center"
           >
-            <h3 class="font-size-h1 mt-10 mb-5 text-white">
-              به فین وایز خوش آمدید
-            </h3>
-            <!-- <p class="font-weight-lighter text-white opacity-80">
-              The ultimate Bootstrap, Angular 8, React &amp; VueJS admin theme
-              framework for next generation web apps.
-            </p> -->
+            <!--begin: Aside header -->
+            <a href="#" class="flex-column-auto">
+              <img
+                src="media/logos/logo-letter-1.png"
+                style="max-height:80px"
+              />
+            </a>
+            <!--end: Aside header -->
+            <!--begin: Aside content -->
+            <div
+              class="flex-column-fluid d-flex flex-column justify-content-center mt-3"
+            >
+              <span class="welcome-text">
+                به فین وایز خوش آمدید
+              </span>
+            </div>
+            <!--end: Aside content -->
+            <!--begin: Aside footer for desktop -->
+            <div
+              class="flex-column-fluid d-flex flex-column justify-content-center mt-2"
+            >
+              <div class="finwiseCo">
+                © 2021 Finwise
+              </div>
+            </div>
+            <!--end: Aside footer for desktop -->
           </div>
-          <!--end: Aside content -->
-          <!--begin: Aside footer for desktop -->
+          <!--end: Aside Container -->
+        </v-col>
+        <v-col
+          xs="12"
+          sm="9"
+          md="8"
+          lg="9"
+          xl="8"
+          col="8"
+          class="d-flex gradient justify-content-center align-items-center"
+        >
+          <!--begin::Content-->
           <div
-            class="d-none flex-column-auto d-lg-flex justify-content-between mt-15"
+            class="flex-row-fluid d-flex flex-column position-relative overflow-hidden"
           >
-            <div class="opacity-70 font-weight-bold text-white">
-              © 2020 Finwise
-            </div>
-            <div class="d-flex">
-              <!-- <a href="#" class="text-white">Privacy</a>
-              <a href="#" class="text-white ml-10">Legal</a>
-              <a href="#" class="text-white ml-10">Contact</a> -->
+            <div class="d-flex flex-column-fluid flex-center">
+              <router-view></router-view>
             </div>
           </div>
-          <!--end: Aside footer for desktop -->
-        </div>
-        <!--end: Aside Container -->
-      </div>
-      <!--begin::Aside-->
-
-      <!--begin::Content-->
-      <div
-        class="flex-row-fluid d-flex flex-column position-relative p-7 overflow-hidden"
-      >
-        <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
-          <router-view></router-view>
-        </div>
-      </div>
-      <!--end::Content-->
-    </div>
+          <!--end::Content-->
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
+  <!--begin::Aside-->
+
+  <!-- </div> -->
+  <!-- </div> -->
 </template>
 
 <!-- Load login custom page styles -->
 <style lang="scss">
 @import "@/assets/sass/pages/login/login-4.scss";
+// .login-form-page {
+//   background-size: cover;
+//   background-position: center center;
+//   height: calc(100vh);
+// }
+.welcome-text {
+  font-size: 1em;
+  color: white;
+}
+.finwiseCo {
+  // opacity-70 font-weight-bold text-white
+  opacity: 0.7;
+  direction: ltr;
+  font-size: 0.9em;
+  color: white;
+}
+.login-form-page {
+  background: linear-gradient(-90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  // animation: gradient 95s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 </style>
 
 <script>
@@ -77,7 +127,14 @@ export default {
       errors: state => state.auth.errors
     }),
     backgroundImage() {
-      return process.env.BASE_URL + "media/bg/bg-1.jpg";
+      return process.env.BASE_URL + "media/bg/bg-2.jpg";
+    },
+    ratio() {
+      console.log(window.screen.width);
+      console.log(window.screen.height);
+
+      if (window.screen.height > window.screen.width) return true;
+      else return false;
     }
   }
 };

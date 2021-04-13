@@ -159,7 +159,7 @@
 
 <script>
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 // import KTDropdown2 from "@/view/pages/auth/profile-comp/Dropdown2";
 // import KTProfileOverview from "@/view/pages/auth/profile-comp/ProfileOverview";
 import KTPersonalInformation from "@/view/pages/auth/profile-comp/PersonalInformation";
@@ -211,15 +211,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentUserPersonalInfo"]),
-
-    getFullName() {
-      return (
-        this.currentUserPersonalInfo.name +
-        " " +
-        this.currentUserPersonalInfo.surname
-      );
-    }
+    // ...mapGetters(["currentUserPersonalInfo"]),
+    // getFullName() {
+    //   return (
+    //     this.currentUserPersonalInfo.name +
+    //     " " +
+    //     this.currentUserPersonalInfo.surname
+    //   );
+    // }
   }
 };
 </script>

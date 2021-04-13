@@ -1,14 +1,15 @@
 <template>
   <div class="row">
-    <div class="col-xxl-9 col-lg-9 col-md-12 col-sm 12">
-      <IndexChart :inputDataIndex="TodayTepix"></IndexChart>
+    <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-12">
+      <IndexChart :inputDataIndex="TodayTepix" class="mb-4"></IndexChart>
       <ChartVol
         :inputDataStatus="highestTvalueData"
         :inputDataImpact="ImpactsData"
+        class="mb-4"
       ></ChartVol>
       <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
     </div>
-    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm 12">
+    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div class="row">
         <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
         <Technical :inputDataTechnical="TechnicalData"></Technical>
