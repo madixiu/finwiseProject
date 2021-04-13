@@ -191,7 +191,7 @@
         </a>
       </li>
     </router-link> -->
-    
+
     <!-- <router-link
       :to="`/ticker/TickerTechnical/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -212,7 +212,6 @@
       </li>
     </router-link> -->
 
-
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -222,7 +221,7 @@
       }"
     >
       <a href="#" class="menu-link menu-toggle">
-         <i class="menu-icon flaticon-analytics"></i>
+        <i class="menu-icon flaticon-analytics"></i>
         <span class="menu-text">تکنیکال سهم</span>
         <i class="menu-arrow"></i>
       </a>
@@ -269,8 +268,6 @@
         </ul>
       </div>
     </li>
-
-
 
     <li
       aria-haspopup="true"

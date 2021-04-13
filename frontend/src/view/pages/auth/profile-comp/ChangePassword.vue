@@ -252,9 +252,9 @@ export default {
       setTimeout(() => {
         // send update request
         // this.$store
-          // .dispatch(UPDATE_PASSWORD, { password })
-          // go to which page after successfully update
-          // .then(() => this.$router.push({ name: "dashboard" }));
+        // .dispatch(UPDATE_PASSWORD, { password })
+        // go to which page after successfully update
+        // .then(() => this.$router.push({ name: "dashboard" }));
 
         submitButton.classList.remove(
           "spinner",

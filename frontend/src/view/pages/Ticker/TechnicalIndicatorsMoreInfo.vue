@@ -70,7 +70,9 @@ export default {
     // },
     async getTwo() {
       await this.axios
-        .get("/api/Ticker/TechnicalIndicatorSingle/" + this.$route.params.id + "/")
+        .get(
+          "/api/Ticker/TechnicalIndicatorSingle/" + this.$route.params.id + "/"
+        )
         .then(response2 => {
           this.notice = response2.data;
         })
