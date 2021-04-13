@@ -191,7 +191,8 @@
         </a>
       </li>
     </router-link> -->
-    <router-link
+    
+    <!-- <router-link
       :to="`/ticker/TickerTechnical/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -209,7 +210,68 @@
           <span class="menu-text">تکنیکال</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
+
+
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-active': hasActiveChildren('/Technical')
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+         <i class="menu-icon flaticon-analytics"></i>
+        <span class="menu-text">تکنیکال سهم</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+        <ul class="menu-subnav">
+          <router-link
+            :to="`/ticker/TickerTechnical/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">نمودار پیشرفته</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            :to="`/ticker/TechnicalDetailed/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">بررسی اندیکاتور ها</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+
+
+
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"

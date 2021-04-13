@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="row">
-      <!-- <div class="col-12">
+      <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
-      </div> -->
+      </div>
 
-      <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
+      <!-- <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
@@ -52,20 +52,20 @@
             :chartOptions="EffectOnIndexOptions"
           />
         </v-card>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script>
-import ApexChart from "@/view/content/charts/ApexChart";
-// import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
+// import ApexChart from "@/view/content/charts/ApexChart";
+import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
   name: "Industries",
   components: {
-    ApexChart
-    // IndustryChart
+    // ApexChart
+    IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
     // MarqueeText

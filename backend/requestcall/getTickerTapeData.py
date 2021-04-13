@@ -6,7 +6,7 @@ from .util.Convereter_trunc import truncater
 import json
 
 def TickerTapeData():
-    resp = requests.get('http://37.152.180.99:3000/View_Marquee')
+    resp = requests.get('http://185.231.115.223:3000/View_Marquee')
     if resp.status_code == 200:
         return (json.loads(resp.text))
     else:
@@ -14,7 +14,7 @@ def TickerTapeData():
 
 def IndustryTapeData():
     head = {"Accept-Profile":"indices"}
-    resp = requests.get('http://37.152.180.99:3000/View_TapeTicker_Indices',headers = head)
+    resp = requests.get('http://185.231.115.223:3000/View_TapeTicker_Indices',headers = head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
         result = IndustryDataFix(js)

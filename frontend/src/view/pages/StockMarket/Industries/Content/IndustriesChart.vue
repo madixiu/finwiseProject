@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <!-- <v-skeleton-loader
-      type=" table-heading,table-row@12"
-      v-if="loading"
-    ></v-skeleton-loader> -->
-
-    <v-card>
-      <v-card-title>بازدهی صنایع</v-card-title>
-      <v-divider class="mt-0 "></v-divider>
+  <div class="card card-custom">
+    <v-card id="ParentCard" :height="cardheight">
+      <v-card-title id="ParentCardTitle">
+        <span> sss صنایع </span>
+      </v-card-title>
+      <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
         <div class="col-xxl-10 col-lg-10 col-md-10 col-sm-10 mb-2">
           <div id="IndustriesChart"></div>
@@ -38,7 +35,6 @@
           </v-card>
         </div>
       </div>
-      <!--end::Header-->
     </v-card>
   </div>
 </template>
@@ -51,6 +47,7 @@ export default {
   props: { inputData: Object },
   data() {
     return {
+      cardheight: 0,
       options: [
         { text: "بازدهی", value: "D1" },
         { text: "ارزش بازار", value: "marketCap" },
@@ -80,32 +77,25 @@ export default {
     };
   },
   watch: {
-    inputData() {
-      this.populateData();
-      // this.loading = false;
-      this.renderChart();
-    }
+    // inputData() {
+    //   this.populateData();
+    //   // this.loading = false;
+    //   this.renderChart();
+    // }
     // ,loading(){
     //   console.log('LoadingCalled')
     // }
   },
+  created() {
+    this.cardheight = this.heightCalc();
+  },
   // In the beginning...
   mounted() {
-    this.initrender();
-    this.populateData();
+    // this.initrender();
+    // this.populateData();
     // this.renderChart("T","T");
   },
-  computed: {},
   methods: {
-    isEmpty(obj) {
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-          return false;
-        }
-      }
-
-      return JSON.stringify(obj) === JSON.stringify({});
-    },
     populateData() {
       if (!(this.inputData === undefined || this.inputData.length == 0)) {
         let ll = Object.assign({}, this.inputData);
@@ -132,11 +122,16 @@ export default {
         d3.selectAll("#IndustriesChart_SVG").remove();
       }
       this.width = parseInt(d3.select("#IndustriesChart").style("width"), 10);
-      this.height = (this.width * 7) / 16;
-      this.margin.top = this.height * 0.15;
-      this.margin.bottom = this.height * 0.1;
-      this.margin.right = this.width * 0.05;
-      this.margin.left = this.width * 0.05;
+      this.height =
+        parseInt(d3.select("#ParentCard").style("height"), 10) -
+        parseInt(d3.select("#ParentDivider").style("height"), 10) -
+        parseInt(d3.select("#ParentCardTitle").style("height"), 10);
+      this.margin.top = this.height * 0.1;
+      this.margin.bottom = 0;
+      this.margin.right = this.width * 0.1;
+      this.margin.left = this.width * 0.1;
+      console.log(this.width);
+      console.log(this.height);
       // eslint-disable-next-line no-unused-vars
       var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars
@@ -147,6 +142,63 @@ export default {
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
+      let that = this;
+      var n = 20,
+        r = 5,
+        p = 1000;
+      // eslint-disable-next-line no-unused-vars
+      const chart = svg
+        .append("svg")
+        .attr(
+          "transform",
+          `translate(${this.width * 0.3}, ${this.height * 0.3})`
+        )
+        .attr("width", this.width * 0.5)
+        .attr("height", this.height * 0.5);
+
+      var g = chart
+        .selectAll("g")
+        .data(d3.range(0, 2 * Math.PI, (2 * Math.PI) / n))
+        .enter()
+        .append("g")
+        .attr("transform", function(d) {
+          var x = that.width * 0.4 * (0.35 * Math.cos(d) + 0.5),
+            y = that.height * 0.4 * (0.35 * Math.sin(d) + 0.5);
+          return "translate(" + [x, y] + ")rotate(" + (d * 180) / Math.PI + ")";
+        });
+      chart
+        .append("g")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .text(`در حال بارگذاری`)
+        .attr(
+          "transform",
+          `translate(${this.margin.left * 2},${this.margin.top * 1.3})`
+        )
+        .style("font-family", "Vazir-Medium-FD")
+        .style("font-size", `${this.width / 500}em`);
+      var moons = g.append("path").attr("fill", "#212529");
+      d3.timer(function(t) {
+        var θ = 2 * Math.PI * ((t % p) / p);
+        moons.attr("d", function(d) {
+          return moon((θ + d) % (2 * Math.PI));
+        });
+      });
+      function moon(θ) {
+        var rx0 = θ < Math.PI ? r : -r,
+          s0 = θ < Math.PI ? 0 : 1,
+          rx1 = r * Math.cos(θ),
+          s1 =
+            θ < Math.PI / 2 || (Math.PI <= θ && θ < (3 * Math.PI) / 2) ? 0 : 1;
+        return (
+          "M" +
+          [0, r] +
+          "A" +
+          [rx0, r, 0, 0, s0, 0, -r] +
+          "A" +
+          [rx1, r, 0, 0, s1, 0, r]
+        );
+      }
     },
     renderChart() {
       this.loading = true;
@@ -427,6 +479,22 @@ export default {
         .style("font-weight", "700")
         .style("font-family", "Vazir")
         .style("font-size", "1em");
+    },
+    heightCalc() {
+      if (screen.height * 2 > screen.width) {
+        // console.log(screen.height * 0.5)
+        return Math.max(600, screen.height * 0.75);
+      } else {
+        if (screen.height * 1.5 > screen.width) {
+          return Math.max(600, screen.height * 0.7);
+        } else {
+          if (screen.height > screen.width) {
+            return Math.max(600, screen.height * 0.65);
+          }
+          // console.log(screen.width * 0.5)
+          else return Math.max(600, screen.height * 0.6);
+        }
+      }
     }
   }
 };

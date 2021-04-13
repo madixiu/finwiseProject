@@ -2,7 +2,7 @@ import requests
 import json
 from .util.Convereter_trunc import truncater
 def getMapData():
-    resp = requests.get("http://37.152.180.99:3000/View_TreeMapInitial")
+    resp = requests.get("http://185.231.115.223:3000/View_TreeMapInitial")
     if resp.status_code == 200:
         js = json.loads(resp.text)
         temp = js[0]["industry"]

@@ -99,7 +99,8 @@ export default {
         "TickerAssemblyDPSAndIC",
         // "TickerAssemblyDPS",
         // "TickerAssemblyIC",
-        "subset"
+        "subset",
+        "TechnicalMoreInfo"
       ],
       AsideState1: true,
       AsideState2: false,

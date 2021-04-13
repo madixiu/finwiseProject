@@ -2,147 +2,118 @@
   <!--begin::Mixed Widget 14-->
   <div>
     <v-card width="100%">
-      <v-skeleton-loader
-        type=" table-heading, table-thead, table-tbody"
-        v-if="loading"
-      ></v-skeleton-loader>
-
-      <div class="row  pt-4 mb-2" v-if="!loading">
+      <div class="row mb-1" v-if="!loading">
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
           نماد
         </v-chip> -->
           <div class="text-center">
-            <b-button class="testB" color="#212529">
-              نماد
-              <br /><b-badge variant="light">{{
-                LiveDataItems.ticker
-              }}</b-badge>
-            </b-button>
+            نماد
+            <br />{{ LiveDataItems.ticker }}
           </div>
           <!-- {{ LiveDataItems.ticker }} -->
         </div>
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             نام شرکت
           </v-chip>
           {{ LiveDataItems.name }} -->
           <div class="text-center">
-            <b-button color="#6c757d">
-              آخرین قیمت <br />
-              <b-badge style="direction:ltr" variant="light"
-                >(
-                <span
-                  class="spandata"
-                  v-bind:class="[
-                    LiveDataItems.last > LiveDataItems.yesterday
-                      ? 'greenItem ltr_aligned'
-                      : 'redItem ltr_aligned'
-                  ]"
-                  >{{
-                    Math.round(
-                      (LiveDataItems.last / LiveDataItems.yesterday - 1) *
-                        100 *
-                        100
-                    ) / 100
-                  }}</span
-                >)
-                <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
-              </b-badge>
-            </b-button>
+            آخرین قیمت <br />
+            (
+            <span
+              class="spandata ltr_aligned"
+              v-bind:class="[
+                LiveDataItems.last > LiveDataItems.yesterday
+                  ? 'greenItem ltr_aligned'
+                  : 'redItem ltr_aligned'
+              ]"
+              >%{{
+                Math.round(
+                  (LiveDataItems.last / LiveDataItems.yesterday - 1) * 100 * 100
+                ) / 100
+              }}</span
+            >)
+            <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
           </div>
         </div>
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             تابلو
           </v-chip>
           {{ LiveDataItems.board }} -->
           <div class="text-center">
-            <b-button color="#6c757d">
-              قیمت پایانی <br />
-              <b-badge style="direction:ltr" variant="light">
-                (
-                <span
-                  class="spandata"
-                  v-bind:class="[
-                    LiveDataItems.close > LiveDataItems.yesterday
-                      ? 'greenItem ltr_aligned'
-                      : 'redItem ltr_aligned'
-                  ]"
-                  >{{
-                    Math.round(
-                      (LiveDataItems.close / LiveDataItems.yesterday - 1) *
-                        100 *
-                        100
-                    ) / 100
-                  }}</span
-                >)
-                <span>{{ numberWithCommas(LiveDataItems.close) }}</span>
-              </b-badge>
-            </b-button>
+            قیمت پایانی <br />
+            (
+            <span
+              class="spandata ltr_aligned"
+              v-bind:class="[
+                LiveDataItems.close > LiveDataItems.yesterday
+                  ? 'greenItem ltr_aligned'
+                  : 'redItem ltr_aligned'
+              ]"
+              >%{{
+                Math.round(
+                  (LiveDataItems.close / LiveDataItems.yesterday - 1) *
+                    100 *
+                    100
+                ) / 100
+              }}</span
+            >)
+            <span style="direction:ltr">{{
+              numberWithCommas(LiveDataItems.close)
+            }}</span>
           </div>
         </div>
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             صنعت
           </v-chip>
           {{ LiveDataItems.subIndustry }} -->
           <div class="text-center">
-            <b-button color="#6c757d">
-              ارزش معاملات <br /><b-badge variant="light"
-                >{{
-                  numberWithCommas(
-                    roundTo(LiveDataItems.TradeValue / 1000000000, 2)
-                  )
-                }}
-                میلیارد ریال</b-badge
-              >
-            </b-button>
+            ارزش معاملات <br /><span class="text-center">{{
+              numberWithCommas(
+                roundTo(LiveDataItems.TradeValue / 1000000000, 2)
+              )
+            }}</span>
+            میلیارد ریال
           </div>
         </div>
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             بازار
           </v-chip>
           {{ LiveDataItems.market }} -->
           <div class="text-center">
-            <b-button color="#6c757d">
-              حجم معاملات <br /><b-badge variant="light"
-                >{{
-                  numberWithCommas(
-                    roundTo(LiveDataItems.TradeVolume / 1000000, 2)
-                  )
-                }}
-                میلیون</b-badge
-              >
-            </b-button>
+            حجم معاملات <br /><span class="text-center"
+              >{{
+                numberWithCommas(
+                  roundTo(LiveDataItems.TradeVolume / 1000000, 2)
+                )
+              }}
+            </span>
+            میلیون
           </div>
         </div>
 
         <div
-          class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 col-xs-6 FinancialStrength "
+          class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
         >
           <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
             گروه
           </v-chip>
           {{ LiveDataItems.parentIndustry }} -->
-          <div class="text-center">
-            <b-button color="#6c757d">
-              وضعیت <br /><b-badge variant="light">{{
-                LiveDataItems.Status
-              }}</b-badge>
-            </b-button>
-          </div>
+          <div class="text-center">وضعیت <br />{{ LiveDataItems.Status }}</div>
         </div>
       </div>
     </v-card>
@@ -175,6 +146,33 @@ export default {
   methods: {
     LivepopulateData() {
       this.LiveDataItems = this.tickerdata;
+      if (this.LiveDataItems === undefined || this.LiveDataItems.length == 0) {
+        this.LiveDataItems = [
+          {
+            ID: "-",
+            englishDate: "-",
+            Status: "-",
+            Hour: "-",
+            ticker: "-",
+            name: "-",
+            ShareCount: "-",
+            Mabna: "-",
+            Shenavari: "-",
+            persianDate: "-",
+            first: "-",
+            close: "-",
+            last: "-",
+            low: "-",
+            high: "-",
+            yesterday: "-",
+            TradeCount: "-",
+            TradeValue: "-",
+            TradeVolume: "-",
+            EPS: "-",
+            market: "-"
+          }
+        ];
+      }
       this.loading = false;
     },
     numberWithCommas(x) {
@@ -230,11 +228,12 @@ export default {
 .FinancialStrength {
   direction: rtl;
   text-align: right;
-  font-size: 0.8em;
+  font-size: 1em;
+  font-family: "Vazir-Medium-FD";
 }
 .text-center * {
-  font-family: "Dirooz FD";
-  font-size: 1.1em;
+  font-family: "Vazir-Medium-FD";
+  font-size: 1em;
 }
 .rtl_centerd {
   direction: rtl;
@@ -242,7 +241,7 @@ export default {
 }
 .ltr_aligned {
   direction: ltr !important;
-  text-align: left;
+  text-align: left !important;
 }
 .valign * {
   vertical-align: middle;
