@@ -52,16 +52,11 @@ def getIndicesHH(self):
     return JsonResponse(AllIndicesHH(),safe=False)
 def getIndicesImpact(self):
     return JsonResponse(AllIndicesImpact(),safe=False)
-def getHighestSupplies(self):
-    return JsonResponse(highestSupplies(),safe=False)
-def getHighestDemands(self):
-    return JsonResponse(highestDemands(),safe=False)
 def getAllIndustriesData(self):
     return JsonResponse([getIndicesHistoric(),IndexMarketCapRequest(),AllIndicesHH(),AllIndicesImpact()],safe=False)
 
 
-def getHighestQ(self):
-    return JsonResponse([highestSupplies(),highestDemands()],safe=False)
+
 def getLastestIC(self):
     return JsonResponse(get_IC_ALL(),safe=False)
 def getLastestICDone(self,identifier):
@@ -70,6 +65,7 @@ def getAllDashboard(self):
     return JsonResponse([ImpactOnIndex(),highestTvalues(),
     [TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],getNews(),getMarketHH(),[highestSupplies(),highestDemands()]
     ,getLastActiveDayTepix(),getTechnicalIndicatorsAll()],safe=False)
+
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
@@ -132,11 +128,15 @@ def getHistoricCap(self):
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
+############### OPTOIN ###############
+
 def getOptions(self):
-    # if(optionFlag()):
-        return JsonResponse(optionRequest(),safe=False)
-    # else:
-    #     return HttpResponse("noData")
+    return JsonResponse(optionRequest(),safe=False)
+
+def getOptionAssets(self):
+    return JsonResponse(OptionAssetVolatility(),safe=False)
+############### OPTOIN ###############
+
 
 def getTickersNames(self):
     return JsonResponse(tickerNameRequest(),safe=False)
@@ -175,6 +175,9 @@ def getMarketWatchFilterOptions(request):
 #         return HttpResponse(json.dumps(getMarketWatchRequest()))
 ## OLD MARKETWATCH VIEW *************************************************************************************************
 
+
+############### MARKET WATCH ###############
+
 @csrf_exempt
 def getMarketWatch(request):
     if request.method == 'POST':
@@ -186,18 +189,20 @@ def getMarketWatch(request):
 
 def getMarketWatchFilters(self):
     return JsonResponse(getMarketWatchFilterLists(),safe=False)
+############### MARKET WATCH ###############
 
 
-def getOptionAssets(self):
-    return JsonResponse(OptionAssetVolatility(),safe=False)
 
+############### TICKER TAPE ###############
 
 def getTape(self):
     return JsonResponse([TickerTapeData(),IndustryTapeData()],safe=False)
+############### TICKER TAPE ###############
 
 # def get_csrf_token(request):
 #     token = django.middleware.csrf.get_token(request)
 #     return JsonResponse({'token': token})
+
 
 @csrf_exempt
 def getAssembly(request):
@@ -215,17 +220,19 @@ def getAssemblyDetails(request):
     #     # data = JSONParser().parse(request)
     #     return JsonResponse(secondStepAssembly(), safe=False)
 
+
+############### SEARCH BAR DATA ###############
 def getSearchBarData(self):
     return JsonResponse(SearchData(),safe=False)
+############### SEARCH BAR DATA ###############
 
+############### MARKET MAP ###############
 def getMarketMap(self):
     return JsonResponse(getMapData(),safe=False)
+############### MARKET MAP ###############
 
-def getImpactOnIndex(self):
-    return JsonResponse(ImpactOnIndex(),safe=False)
 
-def getHHMarket(self):
-    return JsonResponse(getMarketHH(),safe=False)
+
 def getMainAssembly(self):
     return JsonResponse(AssemblyListData(),safe=False)
 def getMainCalendar(self):
@@ -243,11 +250,23 @@ def getTradingViewData(self):
 ####################################################
 
 
+
+
+
+                      
+
+
+###################################################
+############### DASHBOARD #########################
+
+
+def getImpactOnIndex(self):
+    return JsonResponse(ImpactOnIndex(),safe=False)
+
 def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
-def getLatestNews(self):
-        return JsonResponse(getNews(),safe=False)
 
+## ASSET TRADE VALUE ##
 def getTVHHTotal(self):
         return JsonResponse(TradeValueHH(),safe=False)
 def getTVHHAsset(self):
@@ -256,10 +275,29 @@ def getTVHHAsset(self):
 def getTVAssets(self):
         return JsonResponse(TradeValueAsset(),safe=False)
 def getIFBTEPIX(self):
-        return JsonResponse(getLatestTwoIndex(),safe=False)                        
+        return JsonResponse(getLatestTwoIndex(),safe=False)  
+## ASSET TRADE VALUE ##
+
+## NEWS
+def getLatestNews(self):
+        return JsonResponse(getNews(),safe=False)
+
+def getHHMarket(self):
+    return JsonResponse(getMarketHH(),safe=False)
+
+def getHighestSupplies(self):
+    return JsonResponse(highestSupplies(),safe=False)
+def getHighestDemands(self):
+    return JsonResponse(highestDemands(),safe=False)
+
+def getHighestQ(self):
+    return JsonResponse([highestSupplies(),highestDemands()],safe=False)
+
+
 def getTodayTepix(self):
     return JsonResponse(getLastActiveDayTepix(),safe=False)                        
 def getAllTradesValue(self):
     return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)
 
-###################################################
+# def TechnicalIndicatorAll():
+#     return JsonResponse(getTechnicalIndicatorsAll(), safe=False)

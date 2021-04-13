@@ -1,6 +1,9 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm 12">
+  <div
+    class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+    style="padding-top:0px;padding-right:0px"
+  >
     <v-card>
       <!--begin::Header-->
       <!-- <div class="card-header border-0 pt-2"> -->

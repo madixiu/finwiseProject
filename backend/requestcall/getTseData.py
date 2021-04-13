@@ -12,7 +12,7 @@ def Top5MostViewed():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")
+        return("noData")
 def ImpactOnIndex():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/ViewImpactOnIndex',headers=head ,timeout=10)
@@ -22,7 +22,7 @@ def ImpactOnIndex():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data") 
+        return("noData") 
 def getLiveHHtickerData(identifier):
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_Live_Stock_HH?ID=eq.'+str(identifier),headers=head ,timeout=10)
@@ -32,7 +32,7 @@ def getLiveHHtickerData(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")       
+        return("noData")       
 def getShareholdersList(identifier):
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_ShareHolders?ID=eq.'+str(identifier),headers=head)
@@ -42,7 +42,7 @@ def getShareholdersList(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")       
+        return("noData")       
 
 def getStatisticsTicker(identifier):
     head = {'Accept-Profile':'public'}
@@ -53,7 +53,7 @@ def getStatisticsTicker(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")           
+        return("noData")           
 def getLive_ticker(identifier):
     head = {'Accept-Profile':'public'}
     resp = requests.get('http://185.231.115.223:3000/rpc/liveticker?a='+str(identifier),headers=head ,timeout=10)
@@ -63,7 +63,7 @@ def getLive_ticker(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")           
+        return("noData")           
 def highestTvolumes():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/ViewHighestTradeVolumes',headers=head ,timeout=10)
@@ -73,7 +73,7 @@ def highestTvolumes():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data") 
+        return("noData") 
 def getMarketHH():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/ViewDashboard_HHDetailsStock',headers=head ,timeout=10)
@@ -83,7 +83,7 @@ def getMarketHH():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")  
+        return("noData")  
 def highestTvalues():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/ViewHighestTradeValues',headers=head,timeout=8)
@@ -93,8 +93,7 @@ def highestTvalues():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        print('an')
-        return("No Data")        
+        return("noData")        
 def highestDemands():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_HighestDemands',headers=head ,timeout=10)
@@ -104,7 +103,7 @@ def highestDemands():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")        
+        return("noData")        
 def highestSupplies():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_HighestSupplies',headers=head ,timeout=10)
@@ -114,7 +113,7 @@ def highestSupplies():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")                                
+        return("noData")                                
 def get_AdminsNotice(identifier):
     head = {'Accept-Profile':'public'}
     resp = requests.get('http://185.231.115.223:3000/rpc/adminsnotice?a='+str(identifier),headers=head ,timeout=10)
@@ -124,7 +123,7 @@ def get_AdminsNotice(identifier):
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")   
+        return("noData")   
 
 def AllIndicesImpact():
     head = {'Accept-Profile':'marketwatch'}
@@ -135,7 +134,7 @@ def AllIndicesImpact():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")    
+        return("noData")    
 def AllIndicesHH():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_Industries_HH',headers=head ,timeout=10)
@@ -145,7 +144,7 @@ def AllIndicesHH():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")    
+        return("noData")    
 
 
 
@@ -240,7 +239,7 @@ def TradeValueHH():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")  
+        return("noData")  
 def TradeValueHHBasedOnAsset():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_TradeValuesHH_Assets',headers=head ,timeout=10)
@@ -250,7 +249,7 @@ def TradeValueHHBasedOnAsset():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")  
+        return("noData")  
 def TradeValueAsset():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_TradeValues_Assets',headers=head ,timeout=10)
@@ -260,7 +259,7 @@ def TradeValueAsset():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")  
+        return("noData")  
 def getLatestTwoIndex():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_LiveIndex',headers=head ,timeout=10)
@@ -270,7 +269,7 @@ def getLatestTwoIndex():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")                                  
+        return("noData")                                  
 
 def getLastActiveDayTepix():
     head = {'Accept-Profile':'marketwatch'}
@@ -281,4 +280,4 @@ def getLastActiveDayTepix():
         return (json.loads(resp.text))
         # return(json.loads(resp.text))
     else:
-        return("No Data")          
+        return("noData")          

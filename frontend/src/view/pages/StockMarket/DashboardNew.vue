@@ -77,52 +77,54 @@ export default {
     // this.make_requests_handler();
   },
   methods: {
-    make_requests_handler() {
-      this.axios.all([this.request_1()]).then(
-        this.axios.spread(
-          // (first_response, second_response, third, fourth,fifth,sixth) => {
-          first_response => {
-            this.ImpactsData = first_response.data[0];
-            this.highestTvalueData = first_response.data[1];
-            this.AssetTradeValue = first_response.data[2];
-            this.News = first_response.data[3];
-            this.HHData = first_response.data[4];
-            this.QData = first_response.data[5];
-            this.TodayTepix = first_response.data[6];
-            this.TechnicalData = first_response.data[7];
-          }
-        )
-      );
-    },
-    request_1() {
-      return this.axios.get("/api/Dashboard");
-    },
+    // make_requests_handler() {
+    //   this.axios.all([this.request_1()]).then(
+    //     this.axios.spread(
+    //       // (first_response, second_response, third, fourth,fifth,sixth) => {
+    //       first_response => {
+    //         this.ImpactsData = first_response.data[0];
+    //         this.highestTvalueData = first_response.data[1];
+    //         this.AssetTradeValue = first_response.data[2];
+    //         this.News = first_response.data[3];
+    //         this.HHData = first_response.data[4];
+    //         this.QData = first_response.data[5];
+    //         this.TodayTepix = first_response.data[6];
+    //         this.TechnicalData = first_response.data[7];
+    //       }
+    //     )
+    //   );
+    // },
+    // request_1() {
+    //   return this.axios.get("/api/Dashboard");
+    // },
     loadData() {
-      this.getDashboard()
+      // this.getDashboard();
+      // eslint-disable-next-line no-unused-vars
+      this.getTepixToday().then(resp0 => {
         // eslint-disable-next-line no-unused-vars
-        .then(r1 => {
+        this.getTradesAll().then(resp1 => {
           // eslint-disable-next-line no-unused-vars
-          // this.getImpacts().then(r5 => {
-          //   // eslint-disable-next-line no-unused-vars
-          //   this.getTradesAll().then(r2 => {
-          //     // eslint-disable-next-line no-unused-vars
-          //     this.getTepixToday().then(r3 => {
-          //       // eslint-disable-next-line no-unused-vars
-          //       this.getNews().then(r4 => {
-          //         this.dataFetched = true;
-          //       });
-          //     });
-          //   });
-          // });
-        })
-
-        // for (let item of data) {
-        //   tickerNames.append(item.ticker);
-        // }
-        // this.states = tickerNames;
-        .catch(error => {
-          console.error(error);
+          this.getTradesValue().then(resp2 => {
+            // this.getNews();
+            // eslint-disable-next-line no-unused-vars
+            this.getNews().then(resp3 => {
+              this.loadData2();
+            });
+          });
         });
+      });
+    },
+    loadData2() {
+      // eslint-disable-next-line no-unused-vars
+      this.getImpacts().then(resp4 => {
+        // eslint-disable-next-line no-unused-vars
+        this.getHHData().then(resp5 => {
+          // eslint-disable-next-line no-unused-vars
+          this.getHighestQ().then(resp6 => {
+            this.getTechnicalData();
+          });
+        });
+      });
     },
     async getDashboard() {
       await this.axios
@@ -135,6 +137,7 @@ export default {
           this.HHData = first_response.data[4];
           this.QData = first_response.data[5];
           this.TodayTepix = first_response.data[6];
+          this.TechnicalData = first_response.data[7];
         })
         .catch(error => {
           console.error(error);
@@ -143,8 +146,8 @@ export default {
     async getImpacts() {
       await this.axios
         .get("/api/ImpactOnIndex")
-        .then(respoey => {
-          this.ImpactsData = respoey.data;
+        .then(getImpactsResp => {
+          this.ImpactsData = getImpactsResp.data;
         })
         .catch(error => {
           console.error(error);
@@ -152,9 +155,9 @@ export default {
     },
     async getTradesValue() {
       await this.axios
-        .get("/api/tse/getHighestValue/")
-        .then(respoex => {
-          this.highestTvalueData = respoex.data;
+        .get("/api/tse/getHighestValue")
+        .then(getTradesValueResp => {
+          this.highestTvalueData = getTradesValueResp.data;
         })
         .catch(error => {
           console.error(error);
@@ -163,8 +166,8 @@ export default {
     async getTradesAll() {
       await this.axios
         .get("/api/getAllTradesValue")
-        .then(response2 => {
-          this.AssetTradeValue = response2.data;
+        .then(getTradesAllResp => {
+          this.AssetTradeValue = getTradesAllResp.data;
         })
         .catch(error => {
           console.error(error);
@@ -173,8 +176,8 @@ export default {
     async getNews() {
       await this.axios
         .get("/api/LatestNews")
-        .then(response1 => {
-          this.News = response1.data;
+        .then(getNewsResp => {
+          this.News = getNewsResp.data;
         })
         .catch(error => {
           console.error(error);
@@ -183,14 +186,43 @@ export default {
     async getTepixToday() {
       await this.axios
         .get("/api/getTodayTepix")
-        .then(response3 => {
-          this.TodayTepix = response3.data;
+        .then(getTepixTodayResp => {
+          this.TodayTepix = getTepixTodayResp.data;
         })
         .catch(error => {
           console.error(error);
         });
     },
-
+    async getHHData() {
+      await this.axios
+        .get("/api/HHMarketDetails")
+        .then(getHHDataResp => {
+          this.HHData = getHHDataResp.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getHighestQ() {
+      await this.axios
+        .get("/api/HighestQ")
+        .then(getHighestQResp => {
+          this.QData = getHighestQResp.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getTechnicalData() {
+      await this.axios
+        .get("/api/Ticker/TechnicalIndicatorsAll")
+        .then(getTechnicalDataResp => {
+          this.TechnicalData = getTechnicalDataResp.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },

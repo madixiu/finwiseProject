@@ -277,7 +277,7 @@ export default {
         })
         .then(data => {
           let LoginData = data.data.tokenAuth;
-          console.log(LoginData);
+          // console.log(LoginData);
           if (LoginData.success == true) {
             this.ErrorMsgflag = false;
             // console.log(LoginData.token);

@@ -275,7 +275,7 @@ export default {
         // console.log("done");
         // console.log( this.DataItems2);
       } catch {
-        // console.log("error");
+        console.error("error");
         this.DataItems2 = [];
         this.loading = false;
         this.errorinData = true;

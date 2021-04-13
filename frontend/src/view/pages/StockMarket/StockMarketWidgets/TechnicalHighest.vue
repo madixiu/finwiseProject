@@ -1,8 +1,8 @@
 <template>
   <!--begin::Mixed Widget 14-->
   <!-- <div class="card card-custom card-stretch gutter-b"> -->
-  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
-    <v-card>
+  <div class="col-12" style="padding-right:0px;padding-top:0px">
+    <v-card width="100%">
       <!--begin::Header-->
       <!-- <div class="card-header border-0 pt-2"> -->
       <!-- <h3 class="card-title font-weight-bolder FinancialStrength">

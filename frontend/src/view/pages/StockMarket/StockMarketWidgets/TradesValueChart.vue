@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12" style="padding-right:0px;padding-top:0px">
     <!-- <div
     class="card card-custom card-stretch gutter-b col-xxl-12 col-lg-12 col-md-12 col-sm-12"
   > -->
-    <!-- <v-skeleton-loader
-      type=" table-heading,table-row@12"
-      v-if="loading"
-    ></v-skeleton-loader> -->
+      <v-skeleton-loader
+      type="card"
+      v-show="loading"
+    ></v-skeleton-loader>
+  
 
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title
         >ارزش معاملات
         <span class="cellItem">
@@ -59,6 +60,7 @@ export default {
   watch: {
     inputDataTV() {
       if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
+        this.loading = false;
         this.renderData();
         this.renderChart();
       }
@@ -69,6 +71,7 @@ export default {
     this.initrender();
 
     if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
+      this.loading = false;
       this.renderData();
       this.renderChart();
     }

@@ -354,7 +354,7 @@ export default {
         });
     },
     VerifypostRequest(email, inputNumber) {
-      console.log(email, inputNumber);
+      // console.log(email, inputNumber);
       axios({
         method: "post",
         url: "/user/passwordReset",
@@ -394,7 +394,7 @@ export default {
           let response = data.data.passwordReset;
           if (response.success) {
             this.$router.push({ name: "login" });
-            console.log("PASS CHANGED");
+            // console.log("PASS CHANGED");
           } else {
             // this.ErrorMsgflag = true;
             // this.$store.dispatch("SET_ERROR", data.data.register.errors);

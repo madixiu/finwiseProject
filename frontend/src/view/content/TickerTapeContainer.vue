@@ -8,13 +8,13 @@
       class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap container-custom"
     >
       <TickerTape
-        v-if="Ticker"
+        v-if="Ticker && TickerTapeData.length"
         :TickerType="true"
         :duration="60"
         :TickerData="TickerTapeData"
       />
       <TickerTape
-        v-if="!Ticker"
+        v-if="!Ticker && IndustryTapeData != 'noData'"
         :TickerType="false"
         :duration="200"
         :TickerData="IndustryTapeData"
@@ -58,8 +58,8 @@ export default {
   //     title: String
   //   },
   mounted() {
-    this.RouteCheck();
     this.getTickerTapeData();
+    this.RouteCheck();
   },
   methods: {
     RouteCheck() {
@@ -71,8 +71,7 @@ export default {
         .get("/api/TapeData")
         .then(TickerTapeResponse => {
           let data = TickerTapeResponse.data;
-
-          this.TickerTapeData = data[0];
+          if (data[0]) this.TickerTapeData = data[0];
           this.IndustryTapeData = data[1];
 
           // this.TickerTape.pop();

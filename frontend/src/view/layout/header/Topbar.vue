@@ -73,6 +73,7 @@
     <!-- v-if="this.$store.getters.isAuthenticated" -->
 
     <b-dropdown
+      v-if="this.$store.getters.isAuthenticated"
       ref="profileDropdown"
       size="lg"
       variant="link"

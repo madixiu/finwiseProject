@@ -130,8 +130,8 @@ export default {
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
-      console.log(this.width);
-      console.log(this.height);
+      // console.log(this.width);
+      // console.log(this.height);
       // eslint-disable-next-line no-unused-vars
       var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars

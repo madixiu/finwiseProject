@@ -5,33 +5,44 @@ from .views import *
 
 urlpatterns = [
    # re_path(r'^get-token/$', get_csrf_token),
+
+   ## OPTION
    path("options", getOptions),
+   path("ViewOptionAssetVolatility",getOptionAssets),
+
    path("tickerallnames",getTickersNames),
    path("tableallnames",getTableNames),
    path("findTickerid",findTickerID),
+   
+   ## MARKET WATCH
    path("marketwatch",getMarketWatch),
    path("marketwatchfilterlists",getMarketWatchFilters),
+
+   ## DASHBOARD ##
+   path("ImpactOnIndex",getImpactOnIndex),
+   path("tse/getHighestValue/",getHighestValue),
+   path("getAllTradesValue",getAllTradesValue),
+   path("LatestNews",getLatestNews),
+   path("getTodayTepix",getTodayTepix),
+   path("HHMarketDetails",getHHMarket),
+   path("HighestDemands",getHighestDemands),
+   path("HighestSupplies",getHighestSupplies),
+   path("HighestQ",getHighestQ),
+
+
    path("TradeValue/HH/Total",getTVHHTotal),
    path("TradeValue/HH/Asset",getTVHHAsset),
    path("TradeValue/Asset",getTVAssets),
    path("LatestTepixIFB",getIFBTEPIX),
-   path("getAllTradesValue",getAllTradesValue),
-   path("getTodayTepix",getTodayTepix),
-   path("LatestNews",getLatestNews),
    path("LatestIC",getLastestIC),
    path("LatestICDone/<identifier>/",getLastestICDone),
    path("Indices/HistoricCap/",getHistoricCap),
    path("Indices/Impact/",getIndicesImpact),
    path("Indices/HH/",getIndicesHH),
    path("IndsutriesPage/",getAllIndustriesData),
-   path("ImpactOnIndex",getImpactOnIndex),
-   path("HHMarketDetails",getHHMarket),
-   path("HighestDemands",getHighestDemands),
-   path("HighestSupplies",getHighestSupplies),
-   path("HighestQ",getHighestQ),
+
    path("Dashboard",getAllDashboard),
    ######
-   path("tse/getHighestValue/",getHighestValue),
    ######
    path("CodalNotices",getCodalNoticesAll),
    path("CodalNotices/<identifier>/",getCodalNoticesAll),
@@ -75,7 +86,6 @@ urlpatterns = [
    path("Shareholders/<identifier>/",getShareHolders),
    ####
    path("IndexMarketCap",getIndexMarketCap),
-   path("ViewOptionAssetVolatility",getOptionAssets),
    path("TapeData",getTape),
    ## Ticker Assembly
    path("tickerAssemblyStepOne",getAssembly),

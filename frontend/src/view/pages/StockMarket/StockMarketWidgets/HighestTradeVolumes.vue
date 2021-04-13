@@ -159,7 +159,7 @@ export default {
     this.$socketMarketHighestTVolumes.onmessage = data => {
       // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
       this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "No Data" && !!this.DataItems.length)
+      if (JSON.parse(data.data) != "noData" && !!this.DataItems.length)
         this.loading = false;
     };
     // watch: {
