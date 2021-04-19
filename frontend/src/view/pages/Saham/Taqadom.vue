@@ -426,7 +426,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .taghadom-table-head {
   /* background-color: #e01313; */
   vertical-align: middle !important;
@@ -480,11 +480,11 @@ export default {
   vertical-align: middle !important;
 }
 .redItem {
-  color: #f63538 !important;
+  color: red !important;
   font-family: "Vazir-Medium-FD" !important;
 }
 .greenItem {
-  color: #30cc5a !important;
+  color: green !important;
   font-family: "Vazir-Medium-FD" !important;
 }
 </style>

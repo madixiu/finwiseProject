@@ -3,7 +3,7 @@
 
 // let vm = this
 // let URI = "localhost:8000";
-// let URI = "45.82.136.21";
+// let URI = "171.22.25.73";
 
 const WsService = {
   init() {

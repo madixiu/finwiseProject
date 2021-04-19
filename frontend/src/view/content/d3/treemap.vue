@@ -708,7 +708,7 @@ rect {
   /* margin-bottom: 20px !important; */
 }
 .child:hover {
-  opacity: 40%;
+  opacity: 80%;
 }
 .childG:hover * {
   text-shadow: 1px 1px #000000;

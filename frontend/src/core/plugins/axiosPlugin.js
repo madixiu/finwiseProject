@@ -2,8 +2,9 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 export default {
   install(Vue) {
-    // axios.defaults.baseURL = "http://45.82.136.21";
+    // axios.defaults.baseURL = "https://171.22.25.73";
     axios.defaults.baseURL = "http://localhost:8000";
+    // axios.defaults.timeout = 2000;
     // axios.defaults.headers = {
     //   "Cache-Control": "no-cache",
     //   Pragma: "no-cache",

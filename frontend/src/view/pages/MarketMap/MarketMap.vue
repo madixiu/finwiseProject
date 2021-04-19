@@ -1,5 +1,5 @@
 <template>
-  <div id="MarketMapID" class="MarketMapContainer" width="100" height="100%">
+  <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%">
     <treemap
       :inputData="map"
       :inputWidth="width"
@@ -27,10 +27,19 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    // let chartDiv = document.getElementsByClassName("container-fluid");
+    // console.log(chartDiv);
+    // // this.height = (chartDiv[1].clientHeight);
+    // this.width = (chartDiv[1].clientWidth) ;
+    //  let headerHeight = document.getElementById("kt_header").clientHeight
+    // this.height = (window.innerHeight - headerHeight);
+  },
   mounted() {
+    // let headerHeight = document.getElementById("kt_header").clientHeight
+    // console.log(headerHeight);
     let chartDiv = document.getElementsByClassName("container-fluid");
-    // this.width = window.screen.width;
+
     this.height = (window.screen.height * 73) / 100;
     this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.height = chartDiv[0].clientHeight;

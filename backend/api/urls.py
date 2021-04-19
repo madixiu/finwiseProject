@@ -20,7 +20,7 @@ urlpatterns = [
 
    ## DASHBOARD ##
    path("ImpactOnIndex",getImpactOnIndex),
-   path("tse/getHighestValue/",getHighestValue),
+   path("tse/getHighestValue",getHighestValue),
    path("getAllTradesValue",getAllTradesValue),
    path("LatestNews",getLatestNews),
    path("getTodayTepix",getTodayTepix),
@@ -39,7 +39,7 @@ urlpatterns = [
    path("Indices/HistoricCap/",getHistoricCap),
    path("Indices/Impact/",getIndicesImpact),
    path("Indices/HH/",getIndicesHH),
-   path("IndsutriesPage/",getAllIndustriesData),
+   path("IndsutriesPage",getAllIndustriesData),
 
    path("Dashboard",getAllDashboard),
    ######

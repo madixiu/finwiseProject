@@ -43,7 +43,7 @@ import { GET_USER } from "@/graphql/queries";
 import JwtService from "@/core/services/jwt.service";
 export default {
   name: "Finwise",
-  mounted() {
+  created() {
     this.loadData();
     //****************NEW CODE ***********************************/
     if (JwtService.getToken()) {
@@ -104,8 +104,8 @@ export default {
     // this.$store.dispatch(OVERRIDE_LAYOUT_CONFIG);
   },
   methods: {
-    async loadData() {
-      await this.axios
+     loadData() {
+       this.axios
         .get("/api/MainSearchBar")
         .then(SearchResponse => {
           let data = SearchResponse.data;
@@ -114,6 +114,7 @@ export default {
         })
         .catch(error => {
           console.error(error);
+          console.log(error.code);
         });
     },
     getQueryUser(UserName) {
