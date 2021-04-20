@@ -211,16 +211,16 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getHighestQ().then(resp6 => {
             // eslint-disable-next-line no-unused-vars
-            this.getTechnicalData().then(resp7 => {
-              let TimeoutList = Object.values(this.ResponeseTimeout);
-              for (let item of TimeoutList) {
-                if (item == true) {
-                  setTimeout(() => {
-                    this.loadData();
-                  }, 5000);
-                }
-              }
-            });
+            this.getTechnicalData();
+            //   let TimeoutList = Object.values(this.ResponeseTimeout);
+            //   for (let item of TimeoutList) {
+            //     if (item == true) {
+            //       setTimeout(() => {
+            //         this.loadData();
+            //       }, 5000);
+            //     }
+            //   }
+            // });
           });
         });
       });
