@@ -3,7 +3,7 @@ import Vue from "vue";
 
 // let vm = this
 // let URI = "localhost:8000";
-let URI = "171.22.25.73";
+let URI = "finwise.ir";
 
 const WsService = {
   init() {

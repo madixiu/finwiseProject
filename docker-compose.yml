@@ -41,6 +41,7 @@ services:
       dockerfile: nginx/prod/Dockerfile
     ports:
       - 80:80
+      - 443:443
     networks:
       - main
     volumes:
