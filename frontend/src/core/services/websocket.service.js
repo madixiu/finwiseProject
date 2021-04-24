@@ -2,8 +2,8 @@ import Vue from "vue";
 // import store from "../store";
 
 // let vm = this
-// let URI = "localhost:8000";
-let URI = "finwise.ir";
+// let URI = "ws://localhost:8000";
+let URI = "wss://finwise.ir";
 
 const WsService = {
   init() {
@@ -15,14 +15,14 @@ const WsService = {
       // let highestDemand = new WebSocket("ws://" + URI + "/ws/HighestDemands");
 
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      let highestVolume = new WebSocket("ws://" + URI + "/ws/HighestVolume");
-      let marketWatch = new WebSocket("ws://" + URI + "/ws/marketwatch");
-      let Optoins = new WebSocket("ws://" + URI + "/ws/options");
-      let marketMap = new WebSocket("ws://" + URI + "/ws/marketmap");
-      let LiveTickerData = new WebSocket("ws://" + URI + "/ws/liveTickerData");
-      let Sandoq = new WebSocket("ws://" + URI + "/ws/funds");
-      let Oraq = new WebSocket("ws://" + URI + "/ws/oraq");
-      let HaghTaghadom = new WebSocket("ws://" + URI + "/ws/taghadom");
+      let highestVolume = new WebSocket(URI + "/ws/HighestVolume");
+      let marketWatch = new WebSocket(URI + "/ws/marketwatch");
+      let Optoins = new WebSocket( URI + "/ws/options");
+      let marketMap = new WebSocket( URI + "/ws/marketmap");
+      let LiveTickerData = new WebSocket( URI + "/ws/liveTickerData");
+      let Sandoq = new WebSocket( URI + "/ws/funds");
+      let Oraq = new WebSocket(URI + "/ws/oraq");
+      let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
       // Vue.prototype.$socketMostViewed = MostViewed;

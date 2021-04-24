@@ -899,6 +899,7 @@ export default {
 .marketwatch-table-ticker {
   /* color: #4682b4; */
   color: #000;
+  font-size: 1.2em;
   cursor: pointer;
   vertical-align: middle !important;
 }
