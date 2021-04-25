@@ -3,7 +3,7 @@ import Vue from "vue";
 
 // let vm = this
 // let URI = "ws://localhost:8000";
-let URI = "wss://finwise.ir";
+let URI = "wss://171.22.25.73";
 
 const WsService = {
   init() {
@@ -17,14 +17,14 @@ const WsService = {
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       let highestVolume = new WebSocket(URI + "/ws/HighestVolume");
       let marketWatch = new WebSocket(URI + "/ws/marketwatch");
-      let Optoins = new WebSocket( URI + "/ws/options");
-      let marketMap = new WebSocket( URI + "/ws/marketmap");
-      let LiveTickerData = new WebSocket( URI + "/ws/liveTickerData");
-      let Sandoq = new WebSocket( URI + "/ws/funds");
+      let Optoins = new WebSocket(URI + "/ws/options");
+      let marketMap = new WebSocket(URI + "/ws/marketmap");
+      let LiveTickerData = new WebSocket(URI + "/ws/liveTickerData");
+      let Sandoq = new WebSocket(URI + "/ws/funds");
       let Oraq = new WebSocket(URI + "/ws/oraq");
       let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
+
       // Vue.prototype.$socketMostViewed = MostViewed;
       // Vue.prototype.$socketImpactOnIndex = ImpactOnIndex;
       // Vue.prototype.$socketMarketHighestDemands = highestDemand;
