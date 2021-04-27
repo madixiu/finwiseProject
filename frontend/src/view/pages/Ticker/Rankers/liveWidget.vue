@@ -52,7 +52,7 @@
                       v-bind:class="[
                         this.close >= this.open ? 'greenItem' : 'redItem'
                       ]"
-                      >mdi-arrow-{{
+                      >mdi-chevron-{{
                         this.close >= this.open ? "up" : "down"
                       }}-circle-outline</v-icon
                     >
@@ -73,7 +73,7 @@
                         this.last >= this.open ? 'greenItem' : 'redItem'
                       ]"
                       small
-                      >mdi-arrow-{{
+                      >mdi-chevron-{{
                         this.last >= this.open ? "up" : "down"
                       }}-circle-outline</v-icon
                     >

@@ -7,11 +7,13 @@
           <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
           <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
 
+          <!-- <v-card-title v-if="cardKey">لیست مجامع</v-card-title> -->
+          <!-- <v-card-title v-if="!cardKey">{{ AssemblyName }}</v-card-title> -->
+          <v-card-subtitle style="textalign:right" v-if="!cardKey">
+            <span> {{ subTitle }}</span>
+          </v-card-subtitle>
           <v-spacer></v-spacer>
 
-          <!-- <v-btn v-if="cardKey" icon @click="cardKey = !cardKey">
-            <v-icon>mdi-information-outline</v-icon>
-          </v-btn> -->
           <v-btn v-if="!cardKey" icon @click="cardKey = !cardKey">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
@@ -125,6 +127,7 @@ export default {
     return {
       cardKey: true,
       AssemblyName: "",
+      subTitle: "",
       totalRows: 1,
       currentPage: 1,
       perPage: 15,
@@ -284,6 +287,8 @@ export default {
     },
     titleClick(item) {
       this.TablesReq(item.item.ID, item.item.Type);
+      console.log(item.item);
+      this.subTitle = item.item.title;
       this.AssemblyName = item.item.Ticker;
       this.cardKey = false;
     },

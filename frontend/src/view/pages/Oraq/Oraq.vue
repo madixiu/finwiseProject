@@ -321,11 +321,14 @@ export default {
     };
   },
   methods: {
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
     async loadData() {
       this.isBusy = true;
-
       await this.axios
-
         .get("/api/Oragh")
         .then(response => {
           this.isBusy = false;
@@ -440,6 +443,7 @@ export default {
 }
 .oraq-table-cell {
   text-align: center;
+  vertical-align: middle;
   font-size: 1em;
   line-height: 1;
   font-weight: 400;
@@ -463,6 +467,7 @@ export default {
 }
 .oraq-table-cell-bold {
   text-align: center;
+  vertical-align: middle;
   font-size: 1em;
   line-height: 1;
   font-weight: 700;

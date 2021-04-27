@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <IndustryChart :inputData="this.IndustryData"></IndustryChart>
+        <!-- <IndustryChart :inputData="this.IndustryData"></IndustryChart> -->
       </div>
 
       <!-- <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
@@ -58,14 +58,14 @@
 </template>
 <script>
 // import ApexChart from "@/view/content/charts/ApexChart";
-import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
+// import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
   name: "Industries",
   components: {
     // ApexChart
-    IndustryChart
+    // IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
     // MarqueeText

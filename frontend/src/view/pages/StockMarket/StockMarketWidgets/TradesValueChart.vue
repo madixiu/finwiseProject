@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12" style="padding-right:0px;padding-top:0px">
+  <div
+    class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+    style="padding-right:0px"
+  >
     <!-- <div
     class="card card-custom card-stretch gutter-b col-xxl-12 col-lg-12 col-md-12 col-sm-12"
   > -->
-      <v-skeleton-loader
-      type="card"
-      v-show="loading"
-    ></v-skeleton-loader>
-  
+    <v-skeleton-loader type="card" v-show="loading"></v-skeleton-loader>
 
     <v-card :loading="loading">
       <v-card-title

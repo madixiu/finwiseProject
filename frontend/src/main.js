@@ -83,7 +83,7 @@ const apolloProvider = new VueApollo({
 Vue.config.productionTip = false;
 
 // Global 3rd party plugins
-import "popper.js";
+// import "popper.js";
 import "tooltip.js";
 import PerfectScrollbar from "perfect-scrollbar";
 window.PerfectScrollbar = PerfectScrollbar;
@@ -91,7 +91,7 @@ import ClipboardJS from "clipboard";
 window.ClipboardJS = ClipboardJS;
 
 // Vue 3rd party plugins
-import i18n from "@/core/plugins/vue-i18n";
+// import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";
 import "@/core/plugins/portal-vue";
 import "@/core/plugins/bootstrap-vue";
@@ -133,7 +133,7 @@ new Vue({
   VueCryptojs,
   router,
   store,
-  i18n,
+  // i18n,
   vuetify,
   // injecting apolloProvider here // eslint-disable-next-line
   apolloProvider,

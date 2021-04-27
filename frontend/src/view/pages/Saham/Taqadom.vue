@@ -125,14 +125,14 @@
           >
         </template>
         <template #cell(lastPercent)="data">
-          <b v-if="data.value > 0" class="taghadom-table-cell-green"
-            >{{ data.value }}%</b
+          <span v-if="data.value > 0" class="taghadom-table-cell-green"
+            >{{ data.value }}%</span
           >
-          <b v-if="data.value < 0" class="taghadom-table-cell-red"
-            >{{ data.value }}%</b
+          <span v-if="data.value < 0" class="taghadom-table-cell-red"
+            >{{ data.value }}%</span
           >
-          <b v-if="data.value == 0" class="taghadom-table-cell"
-            >{{ data.value }}%</b
+          <span v-if="data.value == 0" class="taghadom-table-cell"
+            >{{ data.value }}%</span
           >
         </template>
         <template #cell(ParentLast)="data">
@@ -141,7 +141,11 @@
         <template #cell(Coverage)="data">
           <b
             class="taghadom-table-cell"
-            v-bind:class="[data.value >= 0 ? 'greenItem' : 'redItem']"
+            v-bind:class="[
+              data.value >= 0
+                ? 'taghadom-table-cell-green'
+                : 'taghadom-table-cell-red'
+            ]"
             >{{ data.value }}%</b
           >
         </template>
@@ -426,7 +430,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 .taghadom-table-head {
   /* background-color: #e01313; */
   vertical-align: middle !important;
@@ -476,12 +480,13 @@ export default {
   font-weight: 600;
 }
 .taghadom-table-row {
-  direction: ltr;
+  direction: ltr !important;
   vertical-align: middle !important;
 }
 .redItem {
   color: red !important;
   font-family: "Vazir-Medium-FD" !important;
+  /* direction: ltr; */
 }
 .greenItem {
   color: green !important;

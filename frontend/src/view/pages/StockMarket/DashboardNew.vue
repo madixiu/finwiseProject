@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" style="padding-top:5px">
     <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-12">
       <IndexChart :inputDataIndex="TodayTepix" class="mb-4"></IndexChart>
       <ChartVol
@@ -243,150 +243,133 @@ export default {
         });
     },
     async getImpacts() {
-      if (this.ResponeseTimeout.getImpacts)
-        await this.axios
-          .get("/api/ImpactOnIndex", { timeout: 2000 })
-          .then(getImpactsResp => {
-            this.ResponeseTimeout.getImpacts = false;
+      await this.axios
+        .get("/api/ImpactOnIndex")
+        .then(getImpactsResp => {
+          this.ResponeseTimeout.getImpacts = false;
 
-            this.ImpactsData = getImpactsResp.data;
-            return true;
-          })
-          .catch(error => {
-            // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
-            // else console.error(error);
-            if (error.code == "ECONNABORTED") {
-              this.ResponeseTimeout.getImpacts = true;
-              // return false
-            } else console.error(error);
-          });
+          this.ImpactsData = getImpactsResp.data;
+          return true;
+        })
+        .catch(error => {
+          // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
+          // else console.error(error);
+          if (error.code == "ECONNABORTED") {
+            this.ResponeseTimeout.getImpacts = true;
+            // return false
+          } else console.error(error);
+        });
     },
     async getTradesValue() {
-      if (this.ResponeseTimeout.getTradesValue)
-        await this.axios
-          .get("/api/tse/getHighestValue", { timeout: 2000 })
-          .then(getTradesValueResp => {
-            this.ResponeseTimeout.getTradesValue = false;
+      await this.axios
+        .get("/api/tse/getHighestValue")
+        .then(getTradesValueResp => {
+          this.ResponeseTimeout.getTradesValue = false;
 
-            this.highestTvalueData = getTradesValueResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTradesValue(), 1000);
-              this.ResponeseTimeout.getTradesValue = true;
-            else console.error(error);
-          });
+          this.highestTvalueData = getTradesValueResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTradesValue(), 1000);
+            this.ResponeseTimeout.getTradesValue = true;
+          else console.error(error);
+        });
     },
     async getTradesAll() {
-      if (this.ResponeseTimeout.getTradesAll)
-        await this.axios
-          .get("/api/getAllTradesValue", { timeout: 2000 })
-          .then(getTradesAllResp => {
-            this.ResponeseTimeout.getTradesAll = false;
+      await this.axios
+        .get("/api/getAllTradesValue")
+        .then(getTradesAllResp => {
+          this.ResponeseTimeout.getTradesAll = false;
 
-            this.AssetTradeValue = getTradesAllResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTradesAll(), 1000);
-              this.ResponeseTimeout.getTradesAll = true;
-            else console.error(error);
-          });
+          this.AssetTradeValue = getTradesAllResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTradesAll(), 1000);
+            this.ResponeseTimeout.getTradesAll = true;
+          else console.error(error);
+        });
     },
     async getNews() {
-      if (this.ResponeseTimeout.getNews)
-        await this.axios
-          .get("/api/LatestNews", { timeout: 2000 })
-          .then(getNewsResp => {
-            this.ResponeseTimeout.getNews = false;
+      await this.axios
+        .get("/api/LatestNews")
+        .then(getNewsResp => {
+          this.ResponeseTimeout.getNews = false;
 
-            this.News = getNewsResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getNews(), 1000);
-              this.ResponeseTimeout.getNews = true;
-            else {
-              console.error(error);
-              this.ResponeseTimeout.getNews = false;
-            }
-          });
+          this.News = getNewsResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getNews(), 1000);
+            this.ResponeseTimeout.getNews = true;
+          else {
+            console.error(error);
+            this.ResponeseTimeout.getNews = false;
+          }
+        });
     },
     async getTepixToday() {
-      if (this.ResponeseTimeout.getTepixToday)
-        await this.axios
-          .get(
-            "/api/getTodayTepix",
-            { timeout: 2000 },
-            {
-              validateStatus: function(status) {
-                console.log(status);
-                return status < 500; // Resolve only if the status code is less than 500
-              }
-            }
-          )
-          .then(getTepixTodayResp => {
-            this.ResponeseTimeout.getTepixToday = false;
+      await this.axios
+        .get("/api/getTodayTepix")
+        .then(getTepixTodayResp => {
+          this.ResponeseTimeout.getTepixToday = false;
 
-            this.TodayTepix = getTepixTodayResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTepixToday(), 1000);
-              this.ResponeseTimeout.getTepixToday = true;
-            else console.error(error);
-            // the request has either been canceled due to a network timeout,
-            // or because the device is offline
-          });
+          this.TodayTepix = getTepixTodayResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTepixToday(), 1000);
+            this.ResponeseTimeout.getTepixToday = true;
+          else console.error(error);
+          // the request has either been canceled due to a network timeout,
+          // or because the device is offline
+        });
     },
     async getHHData() {
-      if (this.ResponeseTimeout.getHHData)
-        await this.axios
-          .get("/api/HHMarketDetails", { timeout: 2000 })
-          .then(getHHDataResp => {
-            this.ResponeseTimeout.getHHData = false;
+      await this.axios
+        .get("/api/HHMarketDetails")
+        .then(getHHDataResp => {
+          this.ResponeseTimeout.getHHData = false;
 
-            console.log(getHHDataResp);
-            this.HHData = getHHDataResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getHHData(), 1000);
-              this.ResponeseTimeout.getHHData = true;
-            else console.error(error);
-          });
+          console.log(getHHDataResp);
+          this.HHData = getHHDataResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getHHData(), 1000);
+            this.ResponeseTimeout.getHHData = true;
+          else console.error(error);
+        });
     },
     async getHighestQ() {
-      if (this.ResponeseTimeout.getHighestQ)
-        await this.axios
-          .get("/api/HighestQ", { timeout: 2000 })
-          .then(getHighestQResp => {
-            this.ResponeseTimeout.getHighestQ = false;
+      await this.axios
+        .get("/api/HighestQ")
+        .then(getHighestQResp => {
+          this.ResponeseTimeout.getHighestQ = false;
 
-            this.QData = getHighestQResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              this.ResponeseTimeout.getHighestQ = true;
-            // setTimeout(this.getHighestQ(), 1000);
-            else console.error(error);
-          });
+          this.QData = getHighestQResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            this.ResponeseTimeout.getHighestQ = true;
+          // setTimeout(this.getHighestQ(), 1000);
+          else console.error(error);
+        });
     },
     async getTechnicalData() {
-      if (this.ResponeseTimeout.getTechnicalData)
-        await this.axios
-          .get("/api/Ticker/TechnicalIndicatorsAll", { timeout: 2000 })
-          .then(getTechnicalDataResp => {
-            this.ResponeseTimeout.getTechnicalData = false;
+      await this.axios
+        .get("/api/Ticker/TechnicalIndicatorsAll")
+        .then(getTechnicalDataResp => {
+          this.ResponeseTimeout.getTechnicalData = false;
 
-            this.TechnicalData = getTechnicalDataResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              this.ResponeseTimeout.getTechnicalData = true;
-            // setTimeout(this.getTechnicalData(), 1000);
-            else console.error(error);
-          });
+          this.TechnicalData = getTechnicalDataResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            this.ResponeseTimeout.getTechnicalData = true;
+          // setTimeout(this.getTechnicalData(), 1000);
+          else console.error(error);
+        });
     },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);

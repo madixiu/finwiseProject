@@ -83,17 +83,15 @@
               }}</b>
               <b
                 v-if="
-                  data.value < 0 &&
-                    data.value != -100001 &&
-                    data.value != -100000
+                  data.value < 0 && data.value != -10001 && data.value != -10000
                 "
                 class="option-table-cell-red"
                 >{{ data.value }}</b
               >
-              <b v-if="data.value == -100001" class="option-table-cell-s">{{
+              <b v-if="data.value == -10001" class="option-table-cell-s">{{
                 "سفارش فروش ندارد"
               }}</b>
-              <b v-if="data.value == -100000" class="option-table-cell-r">{{
+              <b v-if="data.value == -10000" class="option-table-cell-r">{{
                 "ارزنده نیست"
               }}</b>
             </template>

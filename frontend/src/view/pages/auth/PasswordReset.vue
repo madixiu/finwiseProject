@@ -174,7 +174,7 @@ import {
 import { validationMixin } from "vuelidate";
 import { PASS_RESET } from "@/graphql/mutations";
 // import { mapState } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 export default {
   mixins: [validationMixin],
   name: "passwordReset",
@@ -323,13 +323,14 @@ export default {
       }, 2000);
     },
     EmailpostRequest(email) {
-      axios({
+      this.axios({
         method: "post",
         url: "/user/passwordReset",
         data: {
           request: "activation",
           email: email
         },
+        headers: { "Content-Type": "application/json" },
         xsrfHeaderName: "X-CSRFToken"
         // responseType: 'json'
       })
@@ -355,7 +356,7 @@ export default {
     },
     VerifypostRequest(email, inputNumber) {
       // console.log(email, inputNumber);
-      axios({
+      this.axios({
         method: "post",
         url: "/user/passwordReset",
         data: {
@@ -445,6 +446,9 @@ export default {
   font-size: 1.5em !important;
   color: white;
   /* display: flex; */
+}
+.ResetButton {
+  color: white;
 }
 /* placeholder css */
 .form-control::placeholder {

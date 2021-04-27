@@ -1,6 +1,6 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div>
+  <div style="padding-top:15px">
     <v-card width="100%">
       <div class="row mb-1" v-if="!loading">
         <div
@@ -24,21 +24,25 @@
           {{ LiveDataItems.name }} -->
           <div class="text-center">
             آخرین قیمت <br />
-            (
-            <span
-              class="spandata ltr_aligned"
-              v-bind:class="[
-                LiveDataItems.last > LiveDataItems.yesterday
-                  ? 'greenItem ltr_aligned'
-                  : 'redItem ltr_aligned'
-              ]"
-              >%{{
-                Math.round(
-                  (LiveDataItems.last / LiveDataItems.yesterday - 1) * 100 * 100
-                ) / 100
-              }}</span
-            >)
-            <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
+            <div style="direction:ltr">
+              (
+              <span
+                class="spandata ltr_aligned"
+                v-bind:class="[
+                  LiveDataItems.last > LiveDataItems.yesterday
+                    ? 'greenItem ltr_aligned'
+                    : 'redItem ltr_aligned'
+                ]"
+                >%{{
+                  Math.round(
+                    (LiveDataItems.last / LiveDataItems.yesterday - 1) *
+                      100 *
+                      100
+                  ) / 100
+                }}</span
+              >)
+              <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
+            </div>
           </div>
         </div>
         <div
@@ -50,25 +54,27 @@
           {{ LiveDataItems.board }} -->
           <div class="text-center">
             قیمت پایانی <br />
-            (
-            <span
-              class="spandata ltr_aligned"
-              v-bind:class="[
-                LiveDataItems.close > LiveDataItems.yesterday
-                  ? 'greenItem ltr_aligned'
-                  : 'redItem ltr_aligned'
-              ]"
-              >%{{
-                Math.round(
-                  (LiveDataItems.close / LiveDataItems.yesterday - 1) *
-                    100 *
-                    100
-                ) / 100
-              }}</span
-            >)
-            <span style="direction:ltr">{{
-              numberWithCommas(LiveDataItems.close)
-            }}</span>
+            <div style="direction:ltr">
+              (
+              <span
+                class="spandata ltr_aligned"
+                v-bind:class="[
+                  LiveDataItems.close > LiveDataItems.yesterday
+                    ? 'greenItem ltr_aligned'
+                    : 'redItem ltr_aligned'
+                ]"
+                >%{{
+                  Math.round(
+                    (LiveDataItems.close / LiveDataItems.yesterday - 1) *
+                      100 *
+                      100
+                  ) / 100
+                }}</span
+              >)
+              <span style="direction:ltr">{{
+                numberWithCommas(LiveDataItems.close)
+              }}</span>
+            </div>
           </div>
         </div>
         <div

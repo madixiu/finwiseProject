@@ -1,143 +1,150 @@
 /* eslint-disable no-unused-vars */
 <template>
   <!-- <div class="card card-custom"> -->
-  <v-card>
-    <v-card-title>شاخص کل</v-card-title>
-    <v-divider class="mt-0 mb-0"></v-divider>
-    <div class="row">
-      <div
-        id="Chartcontainer_index"
-        class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
-      ></div>
-      <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12">
-        <v-card-title
-          >شاخص کل :
-          <span
-            v-bind:class="[
-              this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
-            ]"
-          >
-            {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
-          ><span
-            v-bind:class="[
-              this.lastestIndexChange > 0
-                ? 'greenItem cellItem '
-                : 'redItem cellItem'
-            ]"
-          >
-            ({{ numberWithCommas(roundTo(this.lastestIndexChange), 0) }})</span
-          >
-          <span>
-            <v-icon
+  <div>
+    <v-card>
+      <v-card-title>شاخص کل</v-card-title>
+      <v-divider class="mt-0 mb-0"></v-divider>
+      <div class="row">
+        <div
+          id="Chartcontainer_index"
+          class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
+        ></div>
+        <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12">
+          <v-card-title
+            >شاخص کل :
+            <span
               v-bind:class="[
-                this.lastestIndexChange > 0 ? 'greenItem' : 'redItem'
+                this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
               ]"
-              >mdi-arrow-{{
-                this.lastestIndexChange > 0 ? "up" : "down "
-              }}-circle-outline</v-icon
-            ></span
-          >
-        </v-card-title>
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >شاخص هم وزن :
-          <span class="cellItem">{{
-            numberWithCommas(roundTo(this.latestSW), 0)
-          }}</span>
-          <span
-            v-bind:class="[
-              this.lastestSWChange > 0
-                ? 'greenItem cellItem '
-                : 'redItem cellItem'
-            ]"
-          >
-            ({{ numberWithCommas(roundTo(this.lastestSWChange), 0) }})</span
-          >
-          <span>
-            <v-icon
+            >
+              {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
+            ><span
               v-bind:class="[
-                this.lastestSWChange > 0 ? 'greenItem' : 'redItem'
+                this.lastestIndexChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
               ]"
-              >mdi-arrow-{{
-                this.lastestSWChange > 0 ? "up" : "down "
-              }}-circle-outline</v-icon
-            ></span
-          >
-        </v-card-title>
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >شاخص فرابورس:
-          <span class="cellItem">{{
-            numberWithCommas(roundTo(this.IFBlatestIndex), 0)
-          }}</span>
-          <span
-            v-bind:class="[
-              this.IFBLatestChange > 0
-                ? 'greenItem cellItem '
-                : 'redItem cellItem'
-            ]"
-          >
-            ({{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }})</span
-          >
-          <span>
-            <v-icon
+            >
+              ({{
+                numberWithCommas(roundTo(this.lastestIndexChange), 0)
+              }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.lastestIndexChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-chevron-{{
+                  this.lastestIndexChange > 0 ? "up" : "down "
+                }}</v-icon
+              ></span
+            >
+          </v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >شاخص هم وزن :
+            <span class="cellItem pl-2">{{
+              numberWithCommas(roundTo(this.latestSW), 0)
+            }}</span>
+            <span
               v-bind:class="[
-                this.IFBLatestChange > 0 ? 'greenItem' : 'redItem'
+                this.lastestSWChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
               ]"
-              >mdi-arrow-{{
-                this.IFBLatestChange > 0 ? "up" : "down "
-              }}-circle-outline</v-icon
-            ></span
+            >
+              ({{ numberWithCommas(roundTo(this.lastestSWChange), 0) }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.lastestSWChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-chevron-{{
+                  this.lastestSWChange > 0 ? "up" : "down "
+                }}</v-icon
+              ></span
+            >
+          </v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >شاخص فرابورس:
+            <span class="cellItem pl-2">{{
+              numberWithCommas(roundTo(this.IFBlatestIndex), 0)
+            }}</span>
+            <span
+              v-bind:class="[
+                this.IFBLatestChange > 0
+                  ? 'greenItem cellItem '
+                  : 'redItem cellItem'
+              ]"
+            >
+              ({{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }})</span
+            >
+            <span>
+              <v-icon
+                v-bind:class="[
+                  this.IFBLatestChange > 0 ? 'greenItem' : 'redItem'
+                ]"
+                >mdi-chevron-{{
+                  this.IFBLatestChange > 0 ? "up" : "down "
+                }}</v-icon
+              ></span
+            >
+          </v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >ارزش بازار بورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(roundTo(this.MarketCapTotal / 1000000000), 0)
+              }}
+              میلیارد ریال</span
+            ></v-card-title
           >
-        </v-card-title>
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >ارزش بازار بورس :
-          <span class="cellItem2"
-            >{{
-              numberWithCommas(roundTo(this.MarketCapTotal / 1000000000), 0)
-            }}
-            میلیارد ریال</span
-          ></v-card-title
-        >
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >ارزش بازار فرابورس :
-          <span class="cellItem2"
-            >{{
-              numberWithCommas(roundTo(this.IFBMarketCapTotal / 1000000000), 0)
-            }}
-            میلیارد ریال</span
-          ></v-card-title
-        >
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >ارزش معاملات بورس :
-          <span class="cellItem2"
-            >{{
-              numberWithCommas(roundTo(this.latestTradeValue / 1000000000, 0))
-            }}
-            میلیارد ریال</span
-          ></v-card-title
-        >
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >ارزش معاملات فرابورس :
-          <span class="cellItem2"
-            >{{
-              numberWithCommas(
-                roundTo(this.latestTradeValueIFB / 1000000000),
-                0
-              )
-            }}
-            میلیارد ریال</span
-          ></v-card-title
-        >
-        <v-divider class="mt-0 mb-0"></v-divider>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >ارزش بازار فرابورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.IFBMarketCapTotal / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >ارزش معاملات بورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(roundTo(this.latestTradeValue / 1000000000, 0))
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title
+            >ارزش معاملات فرابورس :
+            <span class="cellItem2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.latestTradeValueIFB / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
+          >
+          <v-divider class="mt-0 mb-0"></v-divider>
+        </div>
       </div>
-    </div>
-    <!--end::Header-->
-  </v-card>
+      <!--end::Header-->
+    </v-card>
+  </div>
   <!-- </div> -->
 </template>
 
@@ -611,20 +618,22 @@ export default {
   direction: ltr;
   text-align: right;
   font-family: "Vazir-Medium-FD";
-  font-weight: 700;
-  font-size: 1.1em;
+  /* font-weight: 700; */
+  font-size: 0.9em;
 }
 .cellItem2 {
   font-family: "Vazir-Medium-FD";
   font-weight: 700;
-  font-size: 1.1em;
+  font-size: 0.9em;
 }
 .redItem {
   color: red !important;
+  font-size: 0.9em;
   font-family: "Vazir-Medium-FD" !important;
 }
 .greenItem {
   color: green !important;
+  font-size: 0.9em;
   font-family: "Vazir-Medium-FD" !important;
 }
 .Chart1title * {

@@ -14,8 +14,12 @@
     >
       <div v-for="item in this.TickerData" :key="item.ticker" class=" mr-4">
         <div
-          class="mr-2 py-lg-3"
-          v-bind:class="[LowRes ? 'py-xl-2' : 'py-xl-4']"
+          class="mr-2"
+          v-bind:class="[
+            LowRes
+              ? 'py-xl-4 py-lg-4 py-sm-4 py-xs-4 py-4'
+              : 'py-xl-4 py-lg-4 py-sm-4 py-xs-4 py-4'
+          ]"
           style="height: 100% overflow: hidden; 
     text-align: center; direction:rtl"
         >

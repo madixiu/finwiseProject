@@ -41,20 +41,19 @@ def verifyUser(request):
 def passwordReset(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        print(data)
         if data.get('request') == "activation":
             verifcationNumber = SendPasswordResetNumber(data.get('email'))
             cache.set(data.get('email'),str(verifcationNumber))
             return HttpResponse("OK")
         if data.get('request') == "verification":
-            print("we are in verification")
+            # print("we are in verification")
             verifcationNumber = cache.get(data.get('email'))
-            print("here is the verification number:")
-            print(verifcationNumber)
-            print("email is:")
-            print(data.get('email'))
-            print("whole data:")
-            print(data)
+            # print("here is the verification number:")
+            # print(verifcationNumber)
+            # print("email is:")
+            # print(data.get('email'))
+            # print("whole data:")
+            # print(data)
             if verifcationNumber == data.get('number'):
                 token = PasswordResetToken(data.get('email'))
                 return JsonResponse(["GRANTED",token],safe=False)
