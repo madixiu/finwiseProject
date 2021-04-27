@@ -10,6 +10,8 @@ const Industries = () =>
   import("@/view/pages/StockMarket/Industries/Industries.vue");
 const IndustriesDetail = () =>
   import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
+const Crypto = () => import("@/view/pages/Crypto/CryptoMarket.vue");
+const AI = () => import("@/view/pages/AI/AI.vue");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
 const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
@@ -350,6 +352,18 @@ export default new Router({
           path: "/robot",
           name: "robot",
           component: Robot
+        },
+        // added route for robot!
+        {
+          path: "/AI",
+          name: "ai",
+          component: AI
+        },
+        // added route for robot!
+        {
+          path: "/Crypto",
+          name: "Crypto",
+          component: Crypto
         }
       ]
     },

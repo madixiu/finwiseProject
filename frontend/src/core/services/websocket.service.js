@@ -2,8 +2,8 @@ import Vue from "vue";
 // import store from "../store";
 
 // let vm = this
-// let URI = "ws://localhost:8000";
-let URI = "wss://171.22.25.73";
+let URI = "ws://localhost:8000";
+// let URI = "wss://171.22.25.73";
 
 const WsService = {
   init() {
@@ -23,6 +23,7 @@ const WsService = {
       let Sandoq = new WebSocket(URI + "/ws/funds");
       let Oraq = new WebSocket(URI + "/ws/oraq");
       let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
+      let Crypto = new WebSocket(URI + "/ws/Crypto");
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
       // Vue.prototype.$socketMostViewed = MostViewed;
@@ -40,6 +41,7 @@ const WsService = {
       Vue.prototype.$socketOptions = Optoins;
       Vue.prototype.$socketSandoq = Sandoq;
       Vue.prototype.$socketOraq = Oraq;
+      Vue.prototype.$socketCrypto = Crypto;
       Vue.prototype.$socketTaqadom = HaghTaghadom;
     } catch (error) {
       console.error("error in websocket:" + error);

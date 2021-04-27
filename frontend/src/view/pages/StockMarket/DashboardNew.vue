@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       dataFetched: false,
-      highestTvalueData: null,
+      highestTvalueData: [],
       AssetTradeValue: [],
       TodayTepix: [],
       News: [],
@@ -97,95 +97,6 @@ export default {
     // this.make_requests_handler();
   },
   methods: {
-    test() {
-      let four = "/api/LatestNews";
-      let three = "/api/tse/getHighestValue";
-      let two = "/api/getAllTradesValue";
-      let one = "/api/getTodayTepix";
-      let five = "/api/ImpactOnIndex";
-      let six = "/api/HHMarketDetails";
-      let seven = "/api/HighestQ";
-      let eight = "/api/Ticker/TechnicalIndicatorsAll";
-
-      const request1 = this.axios.get(one);
-      const request2 = this.axios.get(two);
-      const request3 = this.axios.get(three);
-      const request4 = this.axios.get(four);
-
-      const request5 = this.axios.get(five);
-
-      const request6 = this.axios.get(six);
-      const request7 = this.axios.get(seven);
-      const request8 = this.axios.get(eight);
-
-      this.axios
-        .all([
-          request1,
-          request2,
-          request3,
-          request4,
-          request5,
-          request6,
-          request7,
-          request8
-        ])
-        .then(
-          this.axios.spread((...responses) => {
-            const response1 = responses[0];
-            const response2 = responses[1];
-            const response3 = responses[2];
-            const response4 = responses[3];
-            const response5 = responses[4];
-            const response6 = responses[5];
-            const response7 = responses[6];
-            const response8 = responses[7];
-
-            this.ImpactsData = response5.data;
-            this.highestTvalueData = response3.data;
-            this.AssetTradeValue = response2.data;
-            this.News = response4.data;
-            this.HHData = response6.data;
-            this.QData = response7.data;
-            this.TodayTepix = response1.data;
-            this.TechnicalData = response8.data;
-            // use/access the results
-            console.log(
-              response1,
-              response2,
-              response3,
-              response4,
-              response5,
-              response6,
-              response7,
-              response8
-            );
-          })
-        )
-        .catch(errors => {
-          // react on errors.
-          console.error(errors);
-        });
-    },
-    // make_requests_handler() {
-    //   this.axios.all([this.request_1()]).then(
-    //     this.axios.spread(
-    //       // (first_response, second_response, third, fourth,fifth,sixth) => {
-    //       first_response => {
-    //         this.ImpactsData = first_response.data[0];
-    //         this.highestTvalueData = first_response.data[1];
-    //         this.AssetTradeValue = first_response.data[2];
-    //         this.News = first_response.data[3];
-    //         this.HHData = first_response.data[4];
-    //         this.QData = first_response.data[5];
-    //         this.TodayTepix = first_response.data[6];
-    //         this.TechnicalData = first_response.data[7];
-    //       }
-    //     )
-    //   );
-    // },
-    // request_1() {
-    //   return this.axios.get("/api/Dashboard");
-    // },
     loadData() {
       // this.getDashboard();
       // eslint-disable-next-line no-unused-vars
@@ -224,23 +135,6 @@ export default {
           });
         });
       });
-    },
-    async getDashboard() {
-      await this.axios
-        .get("/api/Dashboard")
-        .then(first_response => {
-          this.ImpactsData = first_response.data[0];
-          this.highestTvalueData = first_response.data[1];
-          this.AssetTradeValue = first_response.data[2];
-          this.News = first_response.data[3];
-          this.HHData = first_response.data[4];
-          this.QData = first_response.data[5];
-          this.TodayTepix = first_response.data[6];
-          this.TechnicalData = first_response.data[7];
-        })
-        .catch(error => {
-          console.error(error);
-        });
     },
     async getImpacts() {
       await this.axios
@@ -346,7 +240,6 @@ export default {
         .get("/api/HighestQ")
         .then(getHighestQResp => {
           this.ResponeseTimeout.getHighestQ = false;
-
           this.QData = getHighestQResp.data;
         })
         .catch(error => {

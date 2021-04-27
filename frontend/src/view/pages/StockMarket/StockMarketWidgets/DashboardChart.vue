@@ -56,6 +56,12 @@ export default {
       if (this.isRealValue(this.highestValues)) {
         this.renderChart();
       }
+    },
+    inputDataImpact() {
+      this.renderData();
+      if (this.isRealValue(this.highestValues)) {
+        this.renderChart();
+      }
     }
   },
   mounted() {
@@ -99,6 +105,7 @@ export default {
       return obj && obj !== "null" && obj !== "undefined";
     },
     renderData() {
+      console.log(this.inputDataStatus)
       if (this.isRealValue(this.inputDataStatus)) {
         this.jsonData = [...this.inputDataStatus];
         this.jsonData.sort((a, b) => b.Value - a.Value);

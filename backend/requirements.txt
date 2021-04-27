@@ -16,7 +16,6 @@ django-environ==0.4.5
 django-filter==2.4.0
 django-graphql-auth==0.3.14
 django-graphql-jwt==0.3.0
-django-project==0.7
 django-redis==4.12.1
 djangorestframework==3.12.2
 djangorestframework-jwt==1.11.0
@@ -55,3 +54,4 @@ txaio==20.4.1
 Unidecode==1.1.1
 urllib3==1.26.1
 zope.interface==5.2.0
+Khayyam==3.0.17

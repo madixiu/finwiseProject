@@ -1,5 +1,8 @@
 import requests
 import json 
+import pandas as pd
+from khayyam import *
+from datetime import datetime
 from .util.Convereter_trunc import truncater
 
 def getOraghData():
@@ -52,3 +55,19 @@ def TaghadomDataFix(data):
             item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
+
+def getCryptoMarketData():
+
+    head = {'Accept-Profile':'crypto'}
+    resp = requests.get('http://45.147.77.195:3000/View_Crypto',headers=head)
+    if resp.status_code == 200:
+        js = json.loads(resp.text)
+        DF=pd.DataFrame(js)
+        # DF=pd.read_json(js)
+        # print(DF.head())
+        DF['persianDate']=DF['regularMarketTime'].apply(lambda x:str(JalaliDatetime(datetime.fromtimestamp(x))))
+        # return(json.loads(pd.DataFrame.to_json(DF,orient="index")))
+        return DF.to_dict('records')
+
+    else:
+        return ("noData")
