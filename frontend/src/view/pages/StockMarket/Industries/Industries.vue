@@ -5,7 +5,7 @@
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div>
 
-      <!-- <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
         <v-card>
           <v-card-title>ارزش بازار صنایع</v-card-title>
           <ApexChart
@@ -24,6 +24,7 @@
           <ApexChart
             v-if="Barseries.length"
             type="bar"
+            
             height="200%"
             width="100%"
             :series="Barseries"
@@ -52,19 +53,19 @@
             :chartOptions="EffectOnIndexOptions"
           />
         </v-card>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 <script>
-// import ApexChart from "@/view/content/charts/ApexChart";
+import ApexChart from "@/view/content/charts/ApexChart";
 import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
 // import IndustryTechnicalWorse from "@/view/pages/StockMarket/Industries/Content/IndustryTechnicalWorse";
 export default {
   name: "Industries",
   components: {
-    // ApexChart
+    ApexChart,
     IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
@@ -74,236 +75,12 @@ export default {
     return {
       // paused: false,
       IndustryData: [],
-      ReturnSeries: [
-        {
-          data: []
-        }
-      ],
-      ReturnOptions: {
-        chart: {
-          type: "bar",
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        legend: {
-          show: false
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            distributed: true,
-            barHeight: "100%",
-            dataLabels: {
-              position: "bottom"
-            }
-          }
-        },
-        dataLabels: {
-          enabled: true,
-          textAnchor: "start",
-          style: {
-            colors: ["#fff"]
-          },
-          formatter: function(val, opt) {
-            return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val;
-          }
-        },
-        xaxis: {
-          categories: [
-            "ماشین آلات",
-            "فراورده نفتی",
-            "کانه فلزی",
-            "کانی غیرفلزی",
-            "غذایی بجز قند",
-            "اطلاعات و ارتباطات",
-            "ذغال سنگ",
-            "خودرو",
-            "قند و شکر",
-            "حمل و نقل",
-            "وسایل ارتباطی",
-            "سایرمالی",
-            "انتشار و چاپ",
-            "فلزات اساسی",
-            "شیمیایی",
-            "دستگاههای برقی",
-            "سرمایه گذاریها",
-            "زراعت",
-            "لاستیک",
-            "چند رشته ای صنعتی",
-            "رادیویی",
-            "محصولات چوبی",
-            "بیمه و بازنشسته",
-            "منسوجات",
-            "ابزار پزشکی",
-            "اداره بازارهای مالی",
-            "سایر معادن",
-            "استخراجنفتجزکشف",
-            "خرده فروشی به جز وسایل نقلیه",
-            "محصولات چرمی",
-            "سیمان",
-            "بانکها",
-            "محصولات کاغذ",
-            "شاخص صنعت",
-            "فنی مهندسی",
-            "تامین آب، برق، گاز",
-            "کاشی و سرامیک",
-            "محصولات فلزی",
-            "مواد دارویی",
-            "انبوه سازی",
-            "رایانه"
-          ],
-          labels: {
-            formatter: function(val) {
-              return val + "K";
-            }
-          }
-        },
-        yaxis: {
-          title: {
-            text: undefined
-          }
-        },
-        tooltip: {
-          y: {
-            formatter: function(val) {
-              return val + "K";
-            }
-          }
-        },
-        fill: {
-          opacity: 1
-        }
-      },
-      test: [
-        {
-          data: [
-            1.4,
-            2,
-            2.2,
-            2.5,
-            2.8,
-            3,
-            3.8,
-            4.6,
-            2,
-            2.2,
-            2.5,
-            2.8,
-            3,
-            3.8,
-            4.6,
-            2,
-            2.2,
-            2.5,
-            2.8,
-            3,
-            3.8,
-            4.6
-          ]
-        },
-        {
-          data: [
-            -2.0,
-            -2.9,
-            -3.7,
-            -3.6,
-            -4.4,
-            -4.5,
-            -4.8,
-            -5,
-            -2.9,
-            -3.7,
-            -3.6,
-            -4.4,
-            -4.5,
-            -4.8,
-            -5,
-            -2.9,
-            -3.7,
-            -3.6,
-            -4.4,
-            -4.5,
-            -4.8,
-            -5
-          ]
-        }
-      ],
-      testOptions: {
-        chart: {
-          type: "bar",
-          height: 440,
-          stacked: true,
-          toolbar: {
-            show: false
-          }
-        },
-        colors: ["#008FFB", "#FF4560"],
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            barHeight: "100%",
-            dataLabels: {
-              position: "top"
-            }
-          }
-        },
-        dataLabels: {
-          enabled: true
-        },
-        stroke: {
-          width: 0,
-          colors: ["#fff"]
-        },
-
-        grid: {
-          xaxis: {
-            tickPlacement: "on",
-            lines: {
-              show: false
-            }
-          }
-        },
-        yaxis: {
-          min: -10,
-          max: 10,
-          title: {
-            // text: 'Age',
-          },
-          tickPlacement: "on"
-        },
-        tooltip: {
-          shared: false,
-          x: {
-            formatter: function(val) {
-              return val;
-            }
-          },
-          y: {
-            formatter: function(val) {
-              return Math.abs(val) + "%";
-            }
-          }
-        },
-        xaxis: {
-          categories: [
-            "85+",
-            "80-84",
-            "75-79",
-            "70-74",
-            "65-69",
-            "60-64",
-            "55-59",
-            "50-54"
-          ]
-        }
-      },
       Pieseries: [],
       Barseries: [],
       HHseries: [],
       HHoptions: {
         chart: {
+           animations: {enabled:false},
           type: "bar",
           height: 100,
           fontFamily: "Vazir-Medium-FD",
@@ -437,6 +214,7 @@ export default {
       EffectOnIndexSeries: [],
       EffectOnIndexOptions: {
         chart: {
+           animations: {enabled:false},
           type: "bar",
           height: 100,
           fontFamily: "Vazir-Medium-FD",
@@ -828,17 +606,17 @@ export default {
     },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getAll().then();
+      // this.getAll().then();
       // eslint-disable-next-line no-unused-vars
-      // this.getPieChartData().then(resx => {
-      //   // eslint-disable-next-line no-unused-vars
-      //   this.getIndustries().then(resy => {
-      //     // eslint-disable-next-line no-unused-vars
-      // this.getHHDATA().then(resz=>{
-      //   this.getImpactData().then()
-      // });
-      //   });
-      // });
+      this.getPieChartData().then(resx => {
+        // eslint-disable-next-line no-unused-vars
+        this.getIndustries().then(resy => {
+        // eslint-disable-next-line no-unused-vars
+        this.getHHDATA().then(resz => {
+          this.getImpactData().then();
+        });
+        });
+      });
     },
     async getAll() {
       await this.axios
@@ -916,10 +694,6 @@ export default {
         marketCaps.push(data[1].Others.marketCapSum);
         persianNames.push("سایر");
         this.PiechartOptions.labels = persianNames;
-
-        // marketCaps.sort(function(a, b) {
-        //   return b - a;
-        // });
         this.Pieseries = marketCaps;
         itemValue.sort(this.compareValues("value", "desc"));
         itemValue = itemValue.slice(0, 6);
@@ -929,14 +703,14 @@ export default {
           names.push(item.name);
           values.push(item.value);
         }
-
         this.Barseries = [{ data: values }];
         this.BarchartOptions.xaxis.categories = names;
+        // console.log(this.Barseries);
       });
     },
     async getIndustries() {
       await this.axios
-        .get("/api/Indices/HistoricCap/ ")
+        .get("/api/Indices/HistoricCap/")
         .then(responseInd => {
           this.IndustryData = responseInd.data;
         })
@@ -949,8 +723,6 @@ export default {
         .get("/api/Indices/HH")
         .then(responsea => {
           let data = responsea.data;
-          // this.HHseries = data;
-          // eslint-disable-next-line no-unused-vars
           let HHseries2Labels = [];
           let HHseries2data = [];
           for (let i = 0; i < data.length; i++) {

@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       dataFetched: false,
-      highestTvalueData: null,
+      highestTvalueData: [],
       AssetTradeValue: [],
       TodayTepix: [],
       News: [],
@@ -97,95 +97,6 @@ export default {
     // this.make_requests_handler();
   },
   methods: {
-    test() {
-      let four = "/api/LatestNews";
-      let three = "/api/tse/getHighestValue";
-      let two = "/api/getAllTradesValue";
-      let one = "/api/getTodayTepix";
-      let five = "/api/ImpactOnIndex";
-      let six = "/api/HHMarketDetails";
-      let seven = "/api/HighestQ";
-      let eight = "/api/Ticker/TechnicalIndicatorsAll";
-
-      const request1 = this.axios.get(one);
-      const request2 = this.axios.get(two);
-      const request3 = this.axios.get(three);
-      const request4 = this.axios.get(four);
-
-      const request5 = this.axios.get(five);
-
-      const request6 = this.axios.get(six);
-      const request7 = this.axios.get(seven);
-      const request8 = this.axios.get(eight);
-
-      this.axios
-        .all([
-          request1,
-          request2,
-          request3,
-          request4,
-          request5,
-          request6,
-          request7,
-          request8
-        ])
-        .then(
-          this.axios.spread((...responses) => {
-            const response1 = responses[0];
-            const response2 = responses[1];
-            const response3 = responses[2];
-            const response4 = responses[3];
-            const response5 = responses[4];
-            const response6 = responses[5];
-            const response7 = responses[6];
-            const response8 = responses[7];
-
-            this.ImpactsData = response5.data;
-            this.highestTvalueData = response3.data;
-            this.AssetTradeValue = response2.data;
-            this.News = response4.data;
-            this.HHData = response6.data;
-            this.QData = response7.data;
-            this.TodayTepix = response1.data;
-            this.TechnicalData = response8.data;
-            // use/access the results
-            console.log(
-              response1,
-              response2,
-              response3,
-              response4,
-              response5,
-              response6,
-              response7,
-              response8
-            );
-          })
-        )
-        .catch(errors => {
-          // react on errors.
-          console.error(errors);
-        });
-    },
-    // make_requests_handler() {
-    //   this.axios.all([this.request_1()]).then(
-    //     this.axios.spread(
-    //       // (first_response, second_response, third, fourth,fifth,sixth) => {
-    //       first_response => {
-    //         this.ImpactsData = first_response.data[0];
-    //         this.highestTvalueData = first_response.data[1];
-    //         this.AssetTradeValue = first_response.data[2];
-    //         this.News = first_response.data[3];
-    //         this.HHData = first_response.data[4];
-    //         this.QData = first_response.data[5];
-    //         this.TodayTepix = first_response.data[6];
-    //         this.TechnicalData = first_response.data[7];
-    //       }
-    //     )
-    //   );
-    // },
-    // request_1() {
-    //   return this.axios.get("/api/Dashboard");
-    // },
     loadData() {
       // this.getDashboard();
       // eslint-disable-next-line no-unused-vars
@@ -225,168 +136,137 @@ export default {
         });
       });
     },
-    async getDashboard() {
+    async getImpacts() {
       await this.axios
-        .get("/api/Dashboard")
-        .then(first_response => {
-          this.ImpactsData = first_response.data[0];
-          this.highestTvalueData = first_response.data[1];
-          this.AssetTradeValue = first_response.data[2];
-          this.News = first_response.data[3];
-          this.HHData = first_response.data[4];
-          this.QData = first_response.data[5];
-          this.TodayTepix = first_response.data[6];
-          this.TechnicalData = first_response.data[7];
+        .get("/api/ImpactOnIndex")
+        .then(getImpactsResp => {
+          this.ResponeseTimeout.getImpacts = false;
+
+          this.ImpactsData = getImpactsResp.data;
+          return true;
         })
         .catch(error => {
-          console.error(error);
+          // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
+          // else console.error(error);
+          if (error.code == "ECONNABORTED") {
+            this.ResponeseTimeout.getImpacts = true;
+            // return false
+          } else console.error(error);
         });
     },
-    async getImpacts() {
-      if (this.ResponeseTimeout.getImpacts)
-        await this.axios
-          .get("/api/ImpactOnIndex", { timeout: 2000 })
-          .then(getImpactsResp => {
-            this.ResponeseTimeout.getImpacts = false;
-
-            this.ImpactsData = getImpactsResp.data;
-            return true;
-          })
-          .catch(error => {
-            // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
-            // else console.error(error);
-            if (error.code == "ECONNABORTED") {
-              this.ResponeseTimeout.getImpacts = true;
-              // return false
-            } else console.error(error);
-          });
-    },
     async getTradesValue() {
-      if (this.ResponeseTimeout.getTradesValue)
-        await this.axios
-          .get("/api/tse/getHighestValue", { timeout: 2000 })
-          .then(getTradesValueResp => {
-            this.ResponeseTimeout.getTradesValue = false;
+      await this.axios
+        .get("/api/getHighestValue")
+        .then(getTradesValueResp => {
+          this.ResponeseTimeout.getTradesValue = false;
 
-            this.highestTvalueData = getTradesValueResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTradesValue(), 1000);
-              this.ResponeseTimeout.getTradesValue = true;
-            else console.error(error);
-          });
+          this.highestTvalueData = getTradesValueResp.data;
+          console.log(this.highestTvalueData);
+          console.log(getTradesValueResp.data);
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTradesValue(), 1000);
+            this.ResponeseTimeout.getTradesValue = true;
+          else console.error(error);
+        });
     },
     async getTradesAll() {
-      if (this.ResponeseTimeout.getTradesAll)
-        await this.axios
-          .get("/api/getAllTradesValue", { timeout: 2000 })
-          .then(getTradesAllResp => {
-            this.ResponeseTimeout.getTradesAll = false;
+      await this.axios
+        .get("/api/getAllTradesValue")
+        .then(getTradesAllResp => {
+          this.ResponeseTimeout.getTradesAll = false;
 
-            this.AssetTradeValue = getTradesAllResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTradesAll(), 1000);
-              this.ResponeseTimeout.getTradesAll = true;
-            else console.error(error);
-          });
+          this.AssetTradeValue = getTradesAllResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTradesAll(), 1000);
+            this.ResponeseTimeout.getTradesAll = true;
+          else console.error(error);
+        });
     },
     async getNews() {
-      if (this.ResponeseTimeout.getNews)
-        await this.axios
-          .get("/api/LatestNews", { timeout: 2000 })
-          .then(getNewsResp => {
-            this.ResponeseTimeout.getNews = false;
+      await this.axios
+        .get("/api/LatestNews")
+        .then(getNewsResp => {
+          this.ResponeseTimeout.getNews = false;
 
-            this.News = getNewsResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getNews(), 1000);
-              this.ResponeseTimeout.getNews = true;
-            else {
-              console.error(error);
-              this.ResponeseTimeout.getNews = false;
-            }
-          });
+          this.News = getNewsResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getNews(), 1000);
+            this.ResponeseTimeout.getNews = true;
+          else {
+            console.error(error);
+            this.ResponeseTimeout.getNews = false;
+          }
+        });
     },
     async getTepixToday() {
-      if (this.ResponeseTimeout.getTepixToday)
-        await this.axios
-          .get(
-            "/api/getTodayTepix",
-            { timeout: 2000 },
-            {
-              validateStatus: function(status) {
-                console.log(status);
-                return status < 500; // Resolve only if the status code is less than 500
-              }
-            }
-          )
-          .then(getTepixTodayResp => {
-            this.ResponeseTimeout.getTepixToday = false;
+      await this.axios
+        .get(
+          "/api/getTodayTepix"
+        )
+        .then(getTepixTodayResp => {
+          this.ResponeseTimeout.getTepixToday = false;
 
-            this.TodayTepix = getTepixTodayResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getTepixToday(), 1000);
-              this.ResponeseTimeout.getTepixToday = true;
-            else console.error(error);
-            // the request has either been canceled due to a network timeout,
-            // or because the device is offline
-          });
+          this.TodayTepix = getTepixTodayResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getTepixToday(), 1000);
+            this.ResponeseTimeout.getTepixToday = true;
+          else console.error(error);
+          // the request has either been canceled due to a network timeout,
+          // or because the device is offline
+        });
     },
     async getHHData() {
-      if (this.ResponeseTimeout.getHHData)
-        await this.axios
-          .get("/api/HHMarketDetails", { timeout: 2000 })
-          .then(getHHDataResp => {
-            this.ResponeseTimeout.getHHData = false;
+      await this.axios
+        .get("/api/HHMarketDetails")
+        .then(getHHDataResp => {
+          this.ResponeseTimeout.getHHData = false;
 
-            console.log(getHHDataResp);
-            this.HHData = getHHDataResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              // setTimeout(this.getHHData(), 1000);
-              this.ResponeseTimeout.getHHData = true;
-            else console.error(error);
-          });
+          // console.log(getHHDataResp);
+          this.HHData = getHHDataResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            // setTimeout(this.getHHData(), 1000);
+            this.ResponeseTimeout.getHHData = true;
+          else console.error(error);
+        });
     },
     async getHighestQ() {
-      if (this.ResponeseTimeout.getHighestQ)
-        await this.axios
-          .get("/api/HighestQ", { timeout: 2000 })
-          .then(getHighestQResp => {
-            this.ResponeseTimeout.getHighestQ = false;
-
-            this.QData = getHighestQResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              this.ResponeseTimeout.getHighestQ = true;
-            // setTimeout(this.getHighestQ(), 1000);
-            else console.error(error);
-          });
+      await this.axios
+        .get("/api/HighestQ")
+        .then(getHighestQResp => {
+          this.ResponeseTimeout.getHighestQ = false;
+          this.QData = getHighestQResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            this.ResponeseTimeout.getHighestQ = true;
+          // setTimeout(this.getHighestQ(), 1000);
+          else console.error(error);
+        });
     },
     async getTechnicalData() {
-      if (this.ResponeseTimeout.getTechnicalData)
-        await this.axios
-          .get("/api/Ticker/TechnicalIndicatorsAll", { timeout: 2000 })
-          .then(getTechnicalDataResp => {
-            this.ResponeseTimeout.getTechnicalData = false;
+      await this.axios
+        .get("/api/Ticker/TechnicalIndicatorsAll")
+        .then(getTechnicalDataResp => {
+          this.ResponeseTimeout.getTechnicalData = false;
 
-            this.TechnicalData = getTechnicalDataResp.data;
-          })
-          .catch(error => {
-            if (error.code == "ECONNABORTED")
-              this.ResponeseTimeout.getTechnicalData = true;
-            // setTimeout(this.getTechnicalData(), 1000);
-            else console.error(error);
-          });
+          this.TechnicalData = getTechnicalDataResp.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            this.ResponeseTimeout.getTechnicalData = true;
+          // setTimeout(this.getTechnicalData(), 1000);
+          else console.error(error);
+        });
     },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);

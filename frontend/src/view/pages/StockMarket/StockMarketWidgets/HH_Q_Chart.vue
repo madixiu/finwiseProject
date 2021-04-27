@@ -56,6 +56,12 @@ export default {
       if (this.isRealValue(this.highestValues)) {
         this.renderChart1();
       }
+    },
+    inputDataQ() {
+      this.renderData1();
+      if (this.isRealValue(this.highestValues)) {
+        this.renderChart1();
+      }
     }
   },
   mounted() {

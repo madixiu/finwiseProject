@@ -3,7 +3,7 @@
   <div class="card card-custom">
     <v-card id="ParentCard" :height="cardheight">
       <v-card-title id="ParentCardTitle">
-        <span> sss صنایع </span>
+        <span>صنایع</span>
       </v-card-title>
       <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
@@ -13,10 +13,10 @@
         <div class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 mb-2 rtl_aligned">
           <v-card>
             <v-card-title>تنظیمات</v-card-title>
-            <v-divider class="mt-0"></v-divider>
+            <!-- <v-divider class="mt-0"></v-divider> -->
             <b-form-group label="مرتب سازی بر اساس :" class="px-5">
               <b-form-radio-group
-                :click="this.renderChart()"
+                @input="renderChart()"
                 v-model="SortBy"
                 :options="options"
                 name="radio-inline"
@@ -25,7 +25,7 @@
             <v-divider class="mt-0"></v-divider>
             <b-form-group label="بازه محاسبه بازده:" class="px-5">
               <b-form-radio-group
-                :click="this.renderChart()"
+                @input="renderChart()"
                 v-model="freq"
                 :options="options2"
                 name="radio-inline2"
@@ -59,7 +59,8 @@ export default {
         { text: "یک هفته", value: "W1" },
         { text: "یک ماه اخیر", value: "M1" },
         { text: "۳ ماهه اخیر", value: "M3" },
-        { text: "یکساله", value: "Y1" }
+        { text: "یکساله", value: "Y1" },
+        { text: "کل بازه", value: "T" }
       ],
       search: "",
       margin: {
@@ -77,37 +78,32 @@ export default {
     };
   },
   watch: {
-    // inputData() {
-    //   this.populateData();
-    //   // this.loading = false;
-    //   this.renderChart();
-    // }
-    // ,loading(){
-    //   console.log('LoadingCalled')
-    // }
+    inputData() {
+      this.populateData();
+      this.renderChart();
+    }
   },
   created() {
     this.cardheight = this.heightCalc();
   },
-  // In the beginning...
   mounted() {
-    // this.initrender();
+    this.initrender();
     // this.populateData();
-    // this.renderChart("T","T");
+    // this.renderChart("T", "T");
   },
   methods: {
     populateData() {
       if (!(this.inputData === undefined || this.inputData.length == 0)) {
-        let ll = Object.assign({}, this.inputData);
-
+        var newObject = JSON.parse(JSON.stringify(this.inputData))
+        // let ll = Object.assign({}, newObject);
         let tList = [];
-        for (var tKey in ll) tList.push(ll[tKey]);
-        this.DataItems2 = tList;
-        if (!this.isEmpty(this.DataItems2)) {
-          // this.loading = false;
-          this.sortByMarketCap("D1");
-          // console.log(this.DataItems2);
-        }
+        for (var tKey in newObject) tList.push(newObject[tKey]);
+        this.DataItems2 = [...tList]
+        // if (!this.isEmpty(this.DataItems2)) {
+        // this.loading = false;
+        // this.sortByMarketCap("D1");
+        // console.log(this.DataItems2);
+        // }
       }
     },
     sortByMarketCap(M) {
@@ -126,83 +122,82 @@ export default {
         parseInt(d3.select("#ParentCard").style("height"), 10) -
         parseInt(d3.select("#ParentDivider").style("height"), 10) -
         parseInt(d3.select("#ParentCardTitle").style("height"), 10);
-      this.margin.top = this.height * 0.1;
-      this.margin.bottom = 0;
-      this.margin.right = this.width * 0.1;
-      this.margin.left = this.width * 0.1;
-      // console.log(this.width);
-      // console.log(this.height);
+      this.margin.top = this.height * 0.05;
+      this.margin.bottom = this.height * 0.05;
+      this.margin.right = this.width * 0.05;
+      this.margin.left = this.width * 0.05;
       // eslint-disable-next-line no-unused-vars
-      var parent = document.getElementById("IndustriesChart");
+      // var parent = document.getElementById("IndustriesChart");
       // eslint-disable-next-line no-unused-vars
-      var svg = d3
-        .select(parent)
-        .append("svg")
-        .attr("id", "IndustriesChart_SVG")
-        .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet");
+      // var svg = d3
+      //   .select(parent)
+      //   .append("svg")
+      //   .attr("id", "IndustriesChart_SVG")
+      //   .attr("viewBox", `0 0 ${this.width},${this.height}`)
+      //   .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
-      let that = this;
-      var n = 20,
-        r = 5,
-        p = 1000;
+      // let that = this;
+      // var n = 20,
+      //   r = 5,
+      //   p = 1000;
       // eslint-disable-next-line no-unused-vars
-      const chart = svg
-        .append("svg")
-        .attr(
-          "transform",
-          `translate(${this.width * 0.3}, ${this.height * 0.3})`
-        )
-        .attr("width", this.width * 0.5)
-        .attr("height", this.height * 0.5);
+      // const chart = svg
+      //   .append("svg")
+      //   .attr(
+      //     "transform",
+      //     `translate(${0}, ${0})`
+      //   )
+      //   .attr("width", this.width * 0.5)
+      //   .attr("height", this.height * 0.5);
 
-      var g = chart
-        .selectAll("g")
-        .data(d3.range(0, 2 * Math.PI, (2 * Math.PI) / n))
-        .enter()
-        .append("g")
-        .attr("transform", function(d) {
-          var x = that.width * 0.4 * (0.35 * Math.cos(d) + 0.5),
-            y = that.height * 0.4 * (0.35 * Math.sin(d) + 0.5);
-          return "translate(" + [x, y] + ")rotate(" + (d * 180) / Math.PI + ")";
-        });
-      chart
-        .append("g")
-        .append("text")
-        .attr("text-anchor", "middle")
-        .text(`در حال بارگذاری`)
-        .attr(
-          "transform",
-          `translate(${this.margin.left * 2},${this.margin.top * 1.3})`
-        )
-        .style("font-family", "Vazir-Medium-FD")
-        .style("font-size", `${this.width / 500}em`);
-      var moons = g.append("path").attr("fill", "#212529");
-      d3.timer(function(t) {
-        var θ = 2 * Math.PI * ((t % p) / p);
-        moons.attr("d", function(d) {
-          return moon((θ + d) % (2 * Math.PI));
-        });
-      });
-      function moon(θ) {
-        var rx0 = θ < Math.PI ? r : -r,
-          s0 = θ < Math.PI ? 0 : 1,
-          rx1 = r * Math.cos(θ),
-          s1 =
-            θ < Math.PI / 2 || (Math.PI <= θ && θ < (3 * Math.PI) / 2) ? 0 : 1;
-        return (
-          "M" +
-          [0, r] +
-          "A" +
-          [rx0, r, 0, 0, s0, 0, -r] +
-          "A" +
-          [rx1, r, 0, 0, s1, 0, r]
-        );
-      }
+      // var g = chart
+      //   .selectAll("g")
+      //   .data(d3.range(0, 2 * Math.PI, (2 * Math.PI) / n))
+      //   .enter()
+      //   .append("g")
+      //   .attr("transform", function(d) {
+      //     var x = that.width * 0.4 * (0.35 * Math.cos(d) + 0.5),
+      //       y = that.height * 0.4 * (0.35 * Math.sin(d) + 0.5);
+      //     return "translate(" + [x, y] + ")rotate(" + (d * 180) / Math.PI + ")";
+      //   });
+      // chart
+      //   .append("g")
+      //   .append("text")
+      //   .attr("text-anchor", "middle")
+      //   .text(`در حال بارگذاری`)
+      //   .attr(
+      //     "transform",
+      //     `translate(${this.margin.left * 2},${this.margin.top * 1.3})`
+      //   )
+      //   .style("font-family", "Vazir-Medium-FD")
+      //   .style("font-size", `${this.width / 500}em`);
+      // var moons = g.append("path").attr("fill", "#212529");
+      // d3.timer(function(t) {
+      //   var θ = 2 * Math.PI * ((t % p) / p);
+      //   moons.attr("d", function(d) {
+      //     return moon((θ + d) % (2 * Math.PI));
+      //   });
+      // });
+      // function moon(θ) {
+      //   var rx0 = θ < Math.PI ? r : -r,
+      //     s0 = θ < Math.PI ? 0 : 1,
+      //     rx1 = r * Math.cos(θ),
+      //     s1 =
+      //       θ < Math.PI / 2 || (Math.PI <= θ && θ < (3 * Math.PI) / 2) ? 0 : 1;
+      //   return (
+      //     "M" +
+      //     [0, r] +
+      //     "A" +
+      //     [rx0, r, 0, 0, s0, 0, -r] +
+      //     "A" +
+      //     [rx1, r, 0, 0, s1, 0, r]
+      //   );
+      // }
     },
     renderChart() {
       this.loading = true;
       this.sortByMarketCap(this.SortBy);
+      // eslint-disable-next-line no-unused-vars
       let Param = this.freq;
       // const tooltip = d3
       //   .select(parent)
@@ -214,7 +209,6 @@ export default {
         d3.selectAll("#IndustriesChart_SVG").remove();
       }
       var parent = document.getElementById("IndustriesChart");
-      // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
         .append("svg")
@@ -228,12 +222,13 @@ export default {
           "transform",
           `translate(${this.margin.left}, ${this.margin.top})`
         );
+      // eslint-disable-next-line no-unused-vars
       const xLeft = d3
         .scaleBand()
         .domain(Object.entries(this.DataItems2).map(item => item[1].Name))
         .range([0, this.width - this.margin.right - this.margin.left])
         .padding(0.15);
-      // console.log(d3.min(Object.entries(this.DataItems2).map(item => item[1]['D1'])))
+      // eslint-disable-next-line no-unused-vars
       const yLeft = d3
         .scaleLinear()
         .domain([
@@ -246,6 +241,7 @@ export default {
           this.margin.top
         ])
         .nice();
+      // eslint-disable-next-line no-unused-vars
       const yLeft2 = d3
         .scaleLinear()
         .domain([
@@ -260,6 +256,7 @@ export default {
         ])
         .nice();
       // window.addEventListener("resize", this.renderChart);
+      // eslint-disable-next-line no-unused-vars
       var aXisY1 = d3
         .axisLeft(yLeft)
         .tickFormat(d => {
@@ -316,6 +313,7 @@ export default {
         .selectAll("text")
         .attr("dy", "1em")
         .style("Visibility", "hidden");
+      // eslint-disable-next-line no-unused-vars
       var colorScale = d3
         .scaleQuantize()
         .domain([-100, 100])
@@ -395,32 +393,6 @@ export default {
         .attr("fill", function(d) {
           return colorScale(d[1][Param]);
         });
-      // .on("mousemove touchstart", function() {
-      //   d3.select(this)
-      //     .transition()
-      //     .duration(200)
-      //     .style("opacity", 0.5)
-      //     .transition()
-      //     .duration(1000)
-      //     .ease(d3.easePolyOut)
-      //   tooltip
-      //     .text(
-      //       "ارزش معاملات اوراق :" +
-      //         "درصد "
-      //     )
-      //     .attr("class", "d3-tip")
-      //     .style("visibility", "visible")
-      //     .style("left", that.margin.left + "px")
-      //     .style("top", that.margin.top + "px");
-      // })
-      // .on("mousemove touchend", function() {
-      //   d3.select(this)
-      //     .transition()
-      //     .duration(200)
-      //     .style("opacity", 1);
-      //   tooltip.style("visibility", "hidden");
-      // });
-
       chart
         .selectAll()
         .data(Object.entries(this.DataItems2))
@@ -462,7 +434,7 @@ export default {
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", 0)
+        .attr("x", this.margin.left)
         .attr("y", this.height * 0.1)
         .attr("text-anchor", "start")
         .text("بازدهی")
@@ -472,7 +444,7 @@ export default {
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", 0)
+        .attr("x", this.margin.left)
         .attr("y", this.height * 0.8)
         .attr("text-anchor", "start")
         .text("ارزش بازار روز")

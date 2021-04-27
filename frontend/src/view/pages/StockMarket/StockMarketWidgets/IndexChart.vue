@@ -21,7 +21,7 @@
           ><span
             v-bind:class="[
               this.lastestIndexChange > 0
-                ? 'greenItem cellItem '
+                ? 'greenItem2 cellItem '
                 : 'redItem cellItem'
             ]"
           >
@@ -30,7 +30,7 @@
           <span>
             <v-icon
               v-bind:class="[
-                this.lastestIndexChange > 0 ? 'greenItem' : 'redItem'
+                this.lastestIndexChange > 0 ? 'greenItem2' : 'redItem'
               ]"
               >mdi-arrow-{{
                 this.lastestIndexChange > 0 ? "up" : "down "
@@ -56,7 +56,7 @@
           <span>
             <v-icon
               v-bind:class="[
-                this.lastestSWChange > 0 ? 'greenItem' : 'redItem'
+                this.lastestSWChange > 0 ? 'greenItem2' : 'redItem'
               ]"
               >mdi-arrow-{{
                 this.lastestSWChange > 0 ? "up" : "down "
@@ -73,7 +73,7 @@
           <span
             v-bind:class="[
               this.IFBLatestChange > 0
-                ? 'greenItem cellItem '
+                ? 'greenItem2 cellItem '
                 : 'redItem cellItem'
             ]"
           >
@@ -82,7 +82,7 @@
           <span>
             <v-icon
               v-bind:class="[
-                this.IFBLatestChange > 0 ? 'greenItem' : 'redItem'
+                this.IFBLatestChange > 0 ? 'greenItem2' : 'redItem'
               ]"
               >mdi-arrow-{{
                 this.IFBLatestChange > 0 ? "up" : "down "
@@ -623,7 +623,7 @@ export default {
   color: red !important;
   font-family: "Vazir-Medium-FD" !important;
 }
-.greenItem {
+.greenItem2 {
   color: green !important;
   font-family: "Vazir-Medium-FD" !important;
 }

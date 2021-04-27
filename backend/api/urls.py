@@ -20,7 +20,7 @@ urlpatterns = [
 
    ## DASHBOARD ##
    path("ImpactOnIndex",getImpactOnIndex),
-   path("tse/getHighestValue",getHighestValue),
+   path("getHighestValue",getHighestValue),
    path("getAllTradesValue",getAllTradesValue),
    path("LatestNews",getLatestNews),
    path("getTodayTepix",getTodayTepix),
@@ -102,6 +102,6 @@ urlpatterns = [
    ###
    path("HaghTaghadom",getHaghTaghadom),
    path("Oragh",getOragh),
-   path("Funds",getFunds)
-
+   path("Funds",getFunds),
+   path("CryptoMarket",getCrypto)
 ]

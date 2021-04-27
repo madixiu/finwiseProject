@@ -17,7 +17,7 @@ from requestcall.getAssemblyData import firstStepAssembly,secondStepAssembly
 from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
 from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
-from requestcall.getOragh_HaghTaghadom_FundsData import getOraghData,getHaghTaghadomData,getFundsData
+from requestcall.getOragh_HaghTaghadom_FundsData import getOraghData,getHaghTaghadomData,getFundsData,getCryptoMarketData
 from requestcall.getTVData import ListOfStocks
 
 def getCodalNoticesAll(self,identifier):
@@ -244,7 +244,8 @@ def getOragh(self):
     return JsonResponse(getOraghData(),safe=False)
 def getFunds(self):
     return JsonResponse(getFundsData(),safe=False)
-
+def getCrypto(self):
+    return JsonResponse(getCryptoMarketData(),safe=False)
 def getTradingViewData(self):
     return JsonResponse(ListOfStocks(),safe=False)
 ####################################################

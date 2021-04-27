@@ -349,3 +349,21 @@ class getTaqadom(AsyncWebsocketConsumer):
     async def disconnect(self, code):
         self.close()
         raise StopConsumer() 
+##############################################################
+class getCrypto(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        print(data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getCryptoMarketData());
+            
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()         
