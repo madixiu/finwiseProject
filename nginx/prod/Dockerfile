@@ -12,6 +12,7 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 COPY nginx/prod/prod.conf /etc/nginx/nginx.conf
 COPY nginx/prod/letsencrypt /etc/letsencrypt/
+COPY nginx/prod/SSL /etc/SSL/
 COPY backend/static /usr/src/app/static/
 COPY --from=build-stage /frontend/dist /dist/
 EXPOSE 80
