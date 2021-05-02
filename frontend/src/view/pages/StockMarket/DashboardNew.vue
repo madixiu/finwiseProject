@@ -156,7 +156,7 @@ export default {
     },
     async getTradesValue() {
       await this.axios
-        .get("/api/tse/getHighestValue")
+        .get("/api/getHighestValue")
         .then(getTradesValueResp => {
           this.ResponeseTimeout.getTradesValue = false;
 
