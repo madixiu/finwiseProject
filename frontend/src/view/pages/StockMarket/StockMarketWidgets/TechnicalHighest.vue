@@ -16,7 +16,7 @@
       <!--end::Header-->
       <!--begin::Body-->
       <div class="card-body d-flex flex-column">
-        <v-tabs vertical>
+        <v-tabs>
           <v-tab
             v-for="item in markets"
             :key="item.key"
@@ -32,6 +32,7 @@
             </div>
 
             <v-data-table
+              dense
               v-if="loading == false"
               :headers="mvheaders"
               :items="filteredItems"
@@ -137,6 +138,7 @@ export default {
       // console.log(this.selectedAttribute)
     },
     populateData() {
+      console.log("START OF ");
       this.DataItems = [...this.inputDataTechnical];
       //   console.log(this.inputDataTechnical);
       if (!(this.DataItems === undefined || this.DataItems.length == 0)) {
@@ -184,6 +186,8 @@ export default {
       this.lowestValues = this.DataItems.slice(0, 10);
       // console.log(this.lowestValues)
       // console.log(this.highestValues)
+      console.log("END OF ");
+
     }
   },
   mounted() {

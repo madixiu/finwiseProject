@@ -1,44 +1,30 @@
 /* eslint-disable no-unused-vars */
 <template>
   <!-- <div class="card card-custom"> -->
-    <div>
-  <v-card>
-    <v-card-title>شاخص کل</v-card-title>
-    <v-divider class="mt-0 mb-0"></v-divider>
-    <div class="row">
-      <div
-        id="Chartcontainer_index"
-        class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
-      ></div>
-      <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12">
-        <v-card-title
-          >شاخص کل :
-          <span
-            v-bind:class="[
-              this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
-            ]"
-          >
-            {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
-          ><span
-            v-bind:class="[
-              this.lastestIndexChange > 0
-                ? 'greenItem2 cellItem '
-                : 'redItem cellItem'
-            ]"
-          >
-            ({{ numberWithCommas(roundTo(this.lastestIndexChange), 0) }})</span
-          >
-          <span>
-            <v-icon
+  <div>
+    <v-card>
+      <v-card-title>شاخص کل</v-card-title>
+      <v-divider class="mt-0 mb-0"></v-divider>
+      <div class="row">
+        <div
+          id="Chartcontainer_index"
+          class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
+        ></div>
+        <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12">
+          <v-card-title>
+            <span class="cellHeader">
+              شاخص کل :
+            </span>
+            <span
               v-bind:class="[
-                this.lastestIndexChange > 0 ? 'greenItem2' : 'redItem'
+                this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
               ]"
             >
               {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
             ><span
               v-bind:class="[
                 this.lastestIndexChange > 0
-                  ? 'greenItem2 cellItem '
+                  ? 'greenItem cellItem '
                   : 'redItem cellItem'
               ]"
             >
@@ -58,8 +44,10 @@
             >
           </v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title
-            >شاخص هم وزن :
+          <v-card-title>
+            <span class="cellHeader">
+              شاخص هم وزن :
+            </span>
             <span class="cellItem pl-2">{{
               numberWithCommas(roundTo(this.latestSW), 0)
             }}</span>
@@ -84,8 +72,10 @@
             >
           </v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title
-            >شاخص فرابورس:
+          <v-card-title>
+            <span class="cellHeader">
+              شاخص فرابورس:
+            </span>
             <span class="cellItem pl-2">{{
               numberWithCommas(roundTo(this.IFBlatestIndex), 0)
             }}</span>
@@ -110,47 +100,54 @@
             >
           </v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title
-            >ارزش بازار بورس :
-            <span class="cellItem2"
+          <v-card-title>
+            <span class="cellHeader">
+              ارزش بازار بورس :
+            </span>
+            <span class="cellItem2 pl-2"
               >{{
                 numberWithCommas(roundTo(this.MarketCapTotal / 1000000000), 0)
               }}
               میلیارد ریال</span
             ></v-card-title
           >
-        <v-divider class="mt-0 mb-0"></v-divider>
-        <v-card-title
-          >شاخص فرابورس:
-          <span class="cellItem">{{
-            numberWithCommas(roundTo(this.IFBlatestIndex), 0)
-          }}</span>
-          <span
-            v-bind:class="[
-              this.IFBLatestChange > 0
-                ? 'greenItem2 cellItem '
-                : 'redItem cellItem'
-            ]"
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title>
+            <span class="cellHeader">ارزش بازار فرابورس :</span>
+            <span class="cellItem2 pl-2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.IFBMarketCapTotal / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
           >
           <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title
-            >ارزش معاملات بورس :
-            <span class="cellItem2"
+          <v-card-title>
+            <span class="cellHeader">
+              ارزش معاملات بورس :
+            </span>
+            <span class="cellItem2 pl-2"
               >{{
                 numberWithCommas(roundTo(this.latestTradeValue / 1000000000, 0))
               }}
               میلیارد ریال</span
             ></v-card-title
           >
-          <span>
-            <v-icon
-              v-bind:class="[
-                this.IFBLatestChange > 0 ? 'greenItem2' : 'redItem'
-              ]"
-              >mdi-arrow-{{
-                this.IFBLatestChange > 0 ? "up" : "down "
-              }}</v-icon
-            ></span
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-card-title>
+            <span class="cellHeader">ارزش معاملات فرابورس :</span>
+            <span class="cellItem2 pl-2"
+              >{{
+                numberWithCommas(
+                  roundTo(this.latestTradeValueIFB / 1000000000),
+                  0
+                )
+              }}
+              میلیارد ریال</span
+            ></v-card-title
           >
           <v-divider class="mt-0 mb-0"></v-divider>
         </div>
@@ -626,7 +623,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.cellHeader {
+  /* direction: ltr; */
+  text-align: right;
+  font-family: "Vazir-Medium-FD";
+  font-size: 0.9em;
+}
 .cellItem {
   direction: ltr;
   text-align: right;
@@ -636,15 +639,15 @@ export default {
 }
 .cellItem2 {
   font-family: "Vazir-Medium-FD";
-  font-weight: 700;
-  font-size: 0.9em;
+  font-weight: 600;
+  font-size: 0.7em;
 }
 .redItem {
   color: red !important;
   font-size: 0.9em;
   font-family: "Vazir-Medium-FD" !important;
 }
-.greenItem2 {
+.greenItem {
   color: green !important;
   font-size: 0.9em;
   font-family: "Vazir-Medium-FD" !important;

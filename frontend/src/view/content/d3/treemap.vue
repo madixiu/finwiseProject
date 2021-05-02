@@ -708,7 +708,7 @@ rect {
   /* margin-bottom: 20px !important; */
 }
 .child:hover {
-  opacity: 80%;
+  opacity: 0.8 !important;
 }
 .childG:hover * {
   text-shadow: 1px 1px #000000;
@@ -767,7 +767,7 @@ rect {
   font-family: "Vazir-Medium-FD";
 }
 .parentChildsValue {
-  fill-opacity: 1;
+  /* fill-opacity: 1; */
   fill: white;
   text-anchor: start;
   font-family: "Vazir-Medium-FD";

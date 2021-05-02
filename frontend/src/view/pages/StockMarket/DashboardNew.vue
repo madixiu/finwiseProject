@@ -207,7 +207,6 @@ export default {
         .get("/api/getTodayTepix")
         .then(getTepixTodayResp => {
           this.ResponeseTimeout.getTepixToday = false;
-
           this.TodayTepix = getTepixTodayResp.data;
         })
         .catch(error => {

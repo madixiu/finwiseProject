@@ -607,12 +607,12 @@ export default {
       // eslint-disable-next-line no-unused-vars
       // this.getAll().then();
       // eslint-disable-next-line no-unused-vars
-      this.getPieChartData().then(resx => {
+      this.getIndustries().then(resy => {
         // eslint-disable-next-line no-unused-vars
-        this.getIndustries().then(resy => {
+        this.getPieChartData().then(resx => {
           // eslint-disable-next-line no-unused-vars
           this.getHHDATA().then(resz => {
-            this.getImpactData().then();
+            this.getImpactData();
           });
         });
       });
