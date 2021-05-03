@@ -63,6 +63,6 @@ def IndustryDataFix(input):
     return result
 
 def perCentCalc(x2,x1):
-    return truncater((x2/x1)-1)*100
+    return truncater(((x2/x1)-1)*100)
 
 # IndustryTapeData()
