@@ -28,6 +28,7 @@ export default {
   },
 
   created() {
+    document.title = "Finwise - نقشه بازار";
     // let chartDiv = document.getElementsByClassName("container-fluid");
     // console.log(chartDiv);
     // // this.height = (chartDiv[1].clientHeight);

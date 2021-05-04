@@ -612,6 +612,8 @@ export default {
     ...mapState({
       tableData: state => state.marketwatch.marketWatchItems
     })
+  }, created() {
+    document.title = "Finwise - دیده‌بان";
   },
   mounted() {
     this.height = this.getHeight();

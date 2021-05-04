@@ -7,10 +7,10 @@
       </v-card-title>
       <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
-        <div class="col-xxl-10 col-lg-10 col-md-10 col-sm-10 mb-2">
+        <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-11 mb-2">
           <div id="IndustriesChart"></div>
         </div>
-        <div class="col-xxl-2 col-lg-2 col-md-2 col-sm-2 mb-2 rtl_aligned">
+        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 mb-2 rtl_aligned">
           <v-card>
             <v-card-title>تنظیمات</v-card-title>
             <!-- <v-divider class="mt-0"></v-divider> -->
@@ -122,7 +122,7 @@ export default {
         parseInt(d3.select("#ParentCard").style("height"), 10) -
         parseInt(d3.select("#ParentDivider").style("height"), 10) -
         parseInt(d3.select("#ParentCardTitle").style("height"), 10);
-      this.margin.top = this.height * 0.05;
+      this.margin.top = this.height * 0.1;
       this.margin.bottom = this.height * 0.05;
       this.margin.right = this.width * 0.05;
       this.margin.left = this.width * 0.05;
@@ -233,7 +233,7 @@ export default {
         .scaleLinear()
         .domain([
           0,
-          d3.max(Object.entries(this.DataItems2).map(item => item[1][Param])) *
+          d3.max(Object.entries(this.DataItems2).map(item => Math.abs(item[1][Param]))) *
             1.5
         ])
         .range([

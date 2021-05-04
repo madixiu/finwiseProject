@@ -29,6 +29,8 @@ export default {
       subheaders: [],
       notice: []
     };
+  } , created() {
+    document.title = "Finwise -سهامداران عمده ";
   },
   mounted() {
     this.loadData();

@@ -322,6 +322,8 @@ export default {
         }
       ]
     };
+  }, created() {
+    document.title = "Finwise - صندوق";
   },
   mounted() {
     this.loadData();

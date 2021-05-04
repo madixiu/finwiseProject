@@ -30,6 +30,8 @@ export default {
       subheaders: [],
       notice: []
     };
+  }, created() {
+    document.title = "Finwise - تحلیل تکنیکال";
   },
   mounted() {
     // this.loadData2();

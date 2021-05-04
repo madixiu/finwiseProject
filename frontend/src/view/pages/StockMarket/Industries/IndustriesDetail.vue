@@ -597,6 +597,9 @@ export default {
       }
     };
   },
+   created () {
+            document.title = "Finwise - صنایع";
+        },
   computed: {},
   mounted() {
     this.loadData();

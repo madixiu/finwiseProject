@@ -11,6 +11,7 @@ const Industries = () =>
 const IndustriesDetail = () =>
   import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
 const Crypto = () => import("@/view/pages/Crypto/CryptoMarket.vue");
+const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const AI = () => import("@/view/pages/AI/AI.vue");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
@@ -364,6 +365,11 @@ export default new Router({
           path: "/Crypto",
           name: "Crypto",
           component: Crypto
+        },
+        {
+          path: "/SocialMedia",
+          name: "SocialMedia",
+          component: SocialMedia
         }
       ]
     },

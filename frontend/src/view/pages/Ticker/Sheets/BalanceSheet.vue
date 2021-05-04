@@ -30,6 +30,8 @@ export default {
       notice: [],
       typeofReport: ""
     };
+  }, created() {
+    document.title = "Finwise - ترازنامه";
   },
   mounted() {
     this.loadData();

@@ -32,6 +32,9 @@ export default {
       tickerfull: "تامین اجتماعی",
       labels: []
     };
+  }
+  , created() {
+    document.title = "Finwise - حقیقی حقوقی سهم";
   },
   mounted() {
     this.getData();

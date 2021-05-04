@@ -9,5 +9,8 @@ export default {
     // Error,
     ErrorMine
   }
+  , created() {
+    document.title = "Finwise - هوش مصنوعی";
+  },
 };
 </script>

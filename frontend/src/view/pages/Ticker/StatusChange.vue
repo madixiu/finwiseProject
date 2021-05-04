@@ -33,6 +33,8 @@ export default {
       subheaders: [],
       notice: []
     };
+  }, created() {
+    document.title = "Finwise - تغییر وضعیت سهم";
   },
   mounted() {
     // this.loadData2();

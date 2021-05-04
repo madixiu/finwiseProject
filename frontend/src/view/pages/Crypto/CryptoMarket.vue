@@ -172,6 +172,8 @@ export default {
         }
       ]
     };
+  }, created() {
+    document.title = "Finwise - رمز ارز";
   },
 
   mounted() {

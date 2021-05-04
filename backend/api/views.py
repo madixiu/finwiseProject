@@ -10,6 +10,7 @@ from requestcall.getTickerData import *
 from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFilterLists,getFilteredData
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
+from requestcall.getCryptoData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData,IndustryTapeData
@@ -120,8 +121,9 @@ def getIndicatorsAll(self):
 def getHistoricCap(self):
     return JsonResponse(getIndicesHistoric(),safe=False)
 
-
-
+######### crypto
+def getAllCryptoTechnical(self):
+    return JsonResponse(getCryptoTechnicalIndicators(),safe=False)
 
 
 
