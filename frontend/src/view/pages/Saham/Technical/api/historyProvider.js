@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // import pairs from './pairs'
 var rp = require("request-promise").defaults({ json: true });
+const axios = require("axios");
 // const api_root = 'https://min-api.cryptocompare.com'
 const history = {};
 
@@ -42,12 +43,38 @@ export default {
       // order:'utc.desc'
     };
 
+    // axios
+    //   .get("http://185.231.115.223:3000/rpc/ViewTVDaily", { params: qs })
+    //   .then(data => {
+    //     if (data.Response && data.Response === "Error") {
+    //       return [];
+    //     }
+    //     if (data.length) {
+    //       var bars = data.map(el => {
+    //         return {
+    //           time: el.utc * 1000, //TradingView requires bar time in ms
+    //           low: el.low,
+    //           high: el.high,
+    //           open: el.first,
+    //           close: el.close,
+    //           volume: el.tradevol
+    //         };
+    //       });
+    //       if (first) {
+    //         var lastBar = bars[bars.length - 1];
+    //         history[symbolInfo.name] = { lastBar: lastBar };
+    //       }
+    //       return bars;
+    //     } else {
+    //       return [];
+    //     }
+    //   });
     return rp({
       //   url: `${api_root}${url}`,
       // url: `http://185.231.115.223:3000/View_TV_Daily?`,
-      url: `http://185.231.115.223:3000/rpc/ViewTVDaily?`,
-
-      qs
+      // url: `http://185.231.115.223:3000/rpc/ViewTVDaily?`,
+      url: `http://localhost:8000/api/TVData/${qs.limits}/${qs.url}/${qs.todate}`
+      // qs
     }).then(data => {
       if (data.Response && data.Response === "Error") {
         return [];

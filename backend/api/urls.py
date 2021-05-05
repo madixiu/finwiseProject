@@ -97,7 +97,10 @@ urlpatterns = [
    path("MainSearchBar",getSearchBarData),
    ###
    path("Map",getMarketMap),
-   path("TVData",getTradingViewData),
+
+
+   ### TRADING VIEW
+   path("TVData/<limits>/<url>/<todate>",getTradingViewData),
 
    ###
    path("HaghTaghadom",getHaghTaghadom),

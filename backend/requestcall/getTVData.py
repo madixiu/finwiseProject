@@ -1,4 +1,5 @@
 import json
+from django.http.response import JsonResponse
 import requests
 
 def ListOfStocks():
@@ -12,6 +13,13 @@ def ListOfStocks():
         return (result)
     else:
         return ("NoData")
+
+
+def TVtickerData(limits,url,todate):
+    payload = {'limits': limits, 'url': url,'todate': todate}
+    resp = requests.get("http://185.231.115.223:3000/rpc/ViewTVDaily",payload)
+    if resp.status_code == 200:
+        return json.loads(resp.text)
 
 def ListOfStockNames(js):
     dict={}

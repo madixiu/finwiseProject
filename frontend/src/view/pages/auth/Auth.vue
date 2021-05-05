@@ -51,10 +51,10 @@
           <!--end: Aside Container -->
         </v-col>
         <v-col
+          lg="9"
           xs="12"
           sm="9"
           md="8"
-          lg="9"
           xl="8"
           col="8"
           class="d-flex gradient justify-content-center align-items-center"
