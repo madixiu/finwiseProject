@@ -49,22 +49,34 @@
         @filtered="onFiltered"
       >
         <template #cell(symbol)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b> 
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <template #cell(persianDate)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b> 
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <template #cell(regularMarketDayRange)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b>
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <template #cell(regularMarketPrice)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b>
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <template #cell(regularMarketVolume)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b>
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <template #cell(fiftyTwoWeekRange)="data">
-          <b class="crypto-table-cell-bold">{{ data.value.toLocaleString() }}</b>
+          <b class="crypto-table-cell-bold">{{
+            data.value.toLocaleString()
+          }}</b>
         </template>
         <!-- <template #cell(logoUrl)="data">
           <img :src="data.value" width="55px" height="55px" />
@@ -101,7 +113,7 @@ export default {
       tableData: null,
       Tablefilter: "",
       CryptoTableHeader: [
-          {
+        {
           label: "نماد",
           key: "symbol",
           thClass: "crypto_table_head",
@@ -119,21 +131,21 @@ export default {
           thClass: "crypto_table_head",
           sortable: true
         },
-        
+
         // {
         //   label: "لوگو",
         //   key: "logoUrl",
         //   thClass: "crypto_table_head",
         //   sortable: true
         // },
-      
+
         {
           label: "بازار",
           key: "exchange",
           thClass: "crypto_table_head",
           sortable: true
         },
-        
+
         {
           label: "تغییرات قیمت",
           key: "regularMarketChange",
@@ -172,8 +184,9 @@ export default {
         }
       ]
     };
-  }, created() {
-    document.title = "Finwise - رمز ارز";
+  },
+  created() {
+    document.title = "Finwise - دیده بان رمز ارز";
   },
 
   mounted() {

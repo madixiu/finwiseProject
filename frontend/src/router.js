@@ -11,6 +11,7 @@ const Industries = () =>
 const IndustriesDetail = () =>
   import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
 const Crypto = () => import("@/view/pages/Crypto/CryptoMarket.vue");
+const CryptoDashboard = () => import("@/view/pages/Crypto/CryptoDashboard.vue");
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const AI = () => import("@/view/pages/AI/AI.vue");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
@@ -363,7 +364,12 @@ export default new Router({
         // added route for robot!
         {
           path: "/Crypto",
-          name: "Crypto",
+          name: "CryptoDashboard",
+          component: CryptoDashboard,
+        },
+        {
+          path: "/CryptoMarketWatch",
+          name: "CryptoMarketWatch",
           component: Crypto
         },
         {

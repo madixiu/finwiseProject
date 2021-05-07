@@ -124,7 +124,8 @@ def getHistoricCap(self):
 ######### crypto
 def getAllCryptoTechnical(self):
     return JsonResponse(getCryptoTechnicalIndicators(),safe=False)
-
+def getCryptoCorr(self):
+    return JsonResponse(getCryptoCorrelation(),safe=False)
 
 
 def getIndexMarketCap(self):

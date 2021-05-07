@@ -43,7 +43,7 @@
 // import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
 export default {
-  name: "CryptoTechnical",
+  name: "SocialMedia",
   components: {
     // IndexChart
   },
