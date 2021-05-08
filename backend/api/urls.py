@@ -80,7 +80,7 @@ urlpatterns = [
 ############
    ###Crypto
    path("CryptoTechincalAll/",getAllCryptoTechnical),
-   path("CryptoHistoricCorr/",getCryptoCorr),
+   path("CryptoHistoricCorr",getCryptoCorr),
    ######
    path("CurrentBoard/<identifier>/",getCurrentBoard),
    path("CurrentCeo/<identifier>/",getCurrentCeo),

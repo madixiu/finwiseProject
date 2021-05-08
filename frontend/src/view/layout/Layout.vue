@@ -97,7 +97,9 @@ export default {
         "shakhes",
         "robot",
         "Funds",
-        "profile"
+        "profile",
+        "SocialMedia",
+        "ai"
       ]
     };
   },
