@@ -597,9 +597,9 @@ export default {
       }
     };
   },
-   created () {
-            document.title = "Finwise - صنایع";
-        },
+  created() {
+    document.title = "Finwise - صنایع";
+  },
   computed: {},
   mounted() {
     this.loadData();
@@ -763,7 +763,6 @@ export default {
             this.HHoptions.yaxis.min = HHseries[HHseries.length - 1];
             this.HHoptions.yaxis.max = Math.abs(HHseries[HHseries.length - 1]);
           }
-
         })
         .catch(error => {
           console.error(error);

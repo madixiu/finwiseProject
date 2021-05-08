@@ -79,9 +79,9 @@ export default {
       }
     };
   },
-   created () {
-            document.title = "FinWise - سهام";
-        },
+  created() {
+    document.title = "FinWise - سهام";
+  },
   mounted() {
     // this.test();
     this.ResponeseTimeout = {
