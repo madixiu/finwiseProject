@@ -195,6 +195,8 @@ export default {
           return { text: f.label, value: f.key };
         });
     }
+  }, created() {
+    document.title = "Finwise - تصمیمات مجامع";
   },
   mounted() {
     this.loadData();

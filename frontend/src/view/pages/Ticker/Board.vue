@@ -30,6 +30,8 @@ export default {
       notice: [],
       deposit: []
     };
+  } , created() {
+    document.title = "Finwise - هیئت مدیره";
   },
   mounted() {
     this.loadData();

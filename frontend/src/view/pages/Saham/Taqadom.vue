@@ -331,6 +331,8 @@ export default {
     HD() {
       return this.TriggerFilteredHeader();
     }
+  }, created() {
+    document.title = "Finwise - حق تقدم";
   },
   mounted() {
     this.loadData();

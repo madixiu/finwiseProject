@@ -309,6 +309,8 @@ export default {
     HD() {
       return this.TriggerFilteredHeader();
     }
+  }, created() {
+    document.title = "Finwise - اوراق";
   },
   mounted() {
     this.loadData();

@@ -34,6 +34,7 @@
           <!-- <KTMenu2 v-if="menuItemsList == '/builder'"></KTMenu2> -->
           <KTMenu2 v-if="AsideState2"></KTMenu2>
           <KTMenu3 v-if="AsideState3"></KTMenu3>
+          <KTMenu4 v-if="AsideState4"></KTMenu4>
         </perfect-scrollbar>
       </div>
     </div>
@@ -50,6 +51,7 @@ import KTLayoutAsideMenu from "@/assets/js/layout/base/aside-menu.js";
 import KTMenu from "@/view/layout/aside/Menu.vue";
 import KTMenu2 from "@/view/layout/aside/Menu2.vue";
 import KTMenu3 from "@/view/layout/aside/Menu3.vue";
+import KTMenu4 from "@/view/layout/aside/Menu4.vue";
 export default {
   name: "KTAside",
   data() {
@@ -102,9 +104,11 @@ export default {
         "subset",
         "TechnicalMoreInfo"
       ],
+      crypto: ["CryptoMarketWatch",'CryptoDashboard'],
       AsideState1: true,
       AsideState2: false,
-      AsideState3: false
+      AsideState3: false,
+      AsideState4: false
     };
   },
   // props: {
@@ -116,7 +120,8 @@ export default {
     KTBrand,
     KTMenu,
     KTMenu2,
-    KTMenu3
+    KTMenu3,
+    KTMenu4
   },
   watch: {
     $route: "fetchRoute"
@@ -137,6 +142,7 @@ export default {
       this.AsideState1 = this.saham.includes(path);
       this.AsideState2 = this.kala.includes(path);
       this.AsideState3 = this.ticker.includes(path);
+      this.AsideState4 = this.crypto.includes(path);
       // if (!this.AsideState1 && !this.AsideState2) {
       //   this.AsideState3 = true;
       // } else {

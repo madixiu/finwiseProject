@@ -25,6 +25,8 @@ export default {
       subheaders: [],
       notice: []
     };
+  }, created() {
+    document.title = "Finwise - افزایش سرمایه‌ها";
   },
   mounted() {
     // this.loadData2();

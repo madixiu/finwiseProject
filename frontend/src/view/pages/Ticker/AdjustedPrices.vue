@@ -29,6 +29,9 @@ export default {
       subheaders: [],
       adjustedprices: []
     };
+  }
+  , created() {
+    document.title = "Finwise - سابقه قیمت تعدیلی";
   },
   mounted() {
     this.loadData();

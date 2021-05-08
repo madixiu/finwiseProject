@@ -78,7 +78,10 @@ urlpatterns = [
    path("Statement/IncomeStatement/<identifier>/",getIncomeStatementAll),
    path("Statement/CashFlow/<identifier>/",getCFAll),
 ############
-
+   ###Crypto
+   path("CryptoTechincalAll/",getAllCryptoTechnical),
+   path("CryptoHistoricCorr/",getCryptoCorr),
+   ######
    path("CurrentBoard/<identifier>/",getCurrentBoard),
    path("CurrentCeo/<identifier>/",getCurrentCeo),
    path("AdminNotices/<firm>/",getAdminNotice),
