@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 // import pairs from './pairs'
 var rp = require("request-promise").defaults({ json: true });
-const axios = require("axios");
 // const api_root = 'https://min-api.cryptocompare.com'
 const history = {};
 
@@ -73,7 +72,7 @@ export default {
       //   url: `${api_root}${url}`,
       // url: `http://185.231.115.223:3000/View_TV_Daily?`,
       // url: `http://185.231.115.223:3000/rpc/ViewTVDaily?`,
-      url: `http://localhost:8000/api/TVData/${qs.limits}/${qs.url}/${qs.todate}`
+      url: `https://finwise.ir/api/TVData/${qs.limits}/${qs.url}/${qs.todate}`
       // qs
     }).then(data => {
       if (data.Response && data.Response === "Error") {
