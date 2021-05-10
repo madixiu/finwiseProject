@@ -81,6 +81,7 @@ urlpatterns = [
    ###Crypto
    path("CryptoTechincalAll/",getAllCryptoTechnical),
    path("CryptoHistoricCorr/",getCryptoCorr),
+   path("Crypto/TechnicalIndicatorSingle/<identifier>/",getIndicatorsCrypto),
    ######
    path("CurrentBoard/<identifier>/",getCurrentBoard),
    path("CurrentCeo/<identifier>/",getCurrentCeo),
