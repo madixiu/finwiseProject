@@ -1,10 +1,9 @@
 import requests
 import json
 import time
+from .util.FixGetTechnicalIndicatorsAll import fixData 
 import pandas as pd
-from datetime import date
-from datetime import datetime
-from datetime import timedelta
+
 # id = 0
 
 dataAvailablity = False
@@ -83,14 +82,12 @@ def getTechnicalIndicatorsAll():
         head = {'Accept-Profile':'technical'}
         resp = requests.get('http://185.231.115.223:3000/View_Technical_IndicatorsAll',headers=head)
         if resp.status_code == 200 and resp.text!='[]' :
-            # return(resp.text)
-            return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+            return fixData(json.loads(resp.text))
         else:
             time.sleep(2)
             ct=ct+1
         
-    return ("noData")    
+    return ("noData")   
 
 def getIndicesHistoric():
     ct=0

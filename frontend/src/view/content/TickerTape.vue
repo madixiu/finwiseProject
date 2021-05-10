@@ -29,11 +29,21 @@
           <span v-if="TickerType" class="tickerTapeClose">
             {{ item.close }}
           </span>
-          <v-chip
+          <!-- <v-chip
             label
             v-bind:class="[item.Change >= 0 ? 'greenItem' : 'redItem']"
             @click="clickMarquee(item)"
-            ><span class="tickerTapeChange">{{ item.Change }}%</span></v-chip
+            ></v-chip
+          > -->
+          <!-- <div style="direction:ltr">
+            
+          </div> -->
+          <span
+            dir="ltr"
+            :class="[
+              item.Change >= 0 ? 'tickerTapeChangeGreen' : 'tickerTapeChangeRed'
+            ]"
+            >{{ item.Change }}%</span
           >
         </div>
       </div>
@@ -97,7 +107,15 @@ export default {
   color: white;
   /* font-size: 1.1em; */
 }
-.redItem {
+.tickerTapeChangeGreen {
+  font-family: "Vazir-Medium-FD" !important;
+  color: green;
+}
+.tickerTapeChangeRed {
+  font-family: "Vazir-Medium-FD" !important;
+  color: red;
+}
+/* .redItem {
   color: aliceblue;
   background-color: red !important;
   font-family: "Vazir-Medium-FD" !important;
@@ -106,7 +124,7 @@ export default {
   color: aliceblue;
   background-color: green !important;
   font-family: "Vazir-Medium-FD" !important;
-}
+} */
 .v-chip.v-size--default {
   font-size: 0.8em;
   height: 1.8em;

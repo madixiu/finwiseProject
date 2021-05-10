@@ -1,12 +1,17 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom  ">
+  <!-- <div class="card card-custom"> -->
+  <v-card>
     <!--begin::Header-->
-    <div class="card-header border-0 pt-2">
+    <!-- <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         نسبت های بازگشت سرمایه
       </h3>
-    </div>
+    </div> -->
+    <v-card-title>
+      نسبت های بازگشت سرمایه
+    </v-card-title>
+    <v-divider class="mt-0"></v-divider>
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body d-flex flex-column">
@@ -82,7 +87,8 @@
       </v-data-table>
     </div>
     <!--end::Body-->
-  </div>
+    <!-- </div> -->
+  </v-card>
   <!--end::Mixed Widget 14-->
 </template>
 

@@ -55,7 +55,7 @@
               <span
                 class="spandata"
                 v-bind:class="[
-                  item.close > item.open ? 'greenItem' : 'redItem'
+                  item.close > item.open ? 'industryDetailGreenChip' : 'redItem'
                 ]"
               >
               </span>
@@ -128,11 +128,15 @@
             :series="ImpactSeries"
             :chartOptions="ImpactOptions"
           />
-          <div class="Mychips">
+          <div class="industryDetailChip">
             <v-chip class="mb-2" label large>
               مجموع وضعیت تاثیر در شاخص
               <v-chip
-                v-bind:class="[this.sumImpact >= 0 ? 'greenItem' : 'redItem']"
+                :class="[
+                  this.sumImpact >= 0
+                    ? 'industryDetailGreenChip'
+                    : 'industryDetailRedChip'
+                ]"
                 small
                 dark
                 label
@@ -157,11 +161,15 @@
             :series="HHseries"
             :chartOptions="HHoptions"
           />
-          <div class="Mychips">
+          <div class="industryDetailChip">
             <v-chip class="mb-2" label large>
               مجموع ورود خروج حقیقی
               <v-chip
-                v-bind:class="[this.sumHH >= 0 ? 'greenItem' : 'redItem']"
+                v-bind:class="[
+                  this.sumHH >= 0
+                    ? 'industryDetailGreenChip'
+                    : 'industryDetailRedChip'
+                ]"
                 small
                 dark
                 label
@@ -674,7 +682,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/IndexDetails/" + this.$route.params.id + "/")
+        .get("/api/IndexDetails/" + this.$route.params.id)
         .then(responsex => {
           let data = responsex.data[0];
           //     this.IndustriesValue = this.News.map(function(obj) {
@@ -822,27 +830,27 @@ export default {
   direction: ltr;
   vertical-align: middle !important;
 }
-.cellItem {
+/* .cellItem {
   font-family: "Vazir-Medium-FD";
   font-weight: 700;
-}
-.FinancialStrength {
+} */
+/* .FinancialStrength {
   direction: rtl;
   text-align: right;
-}
-.Persiantable {
+} */
+/* .Persiantable {
   direction: rtl;
   text-align: right;
-}
-.Mychips {
+} */
+.industryDetailChip {
   text-align: center;
 }
-.redItem {
+.industryDetailRedChip {
   color: aliceblue;
   background-color: #f63538 !important;
   font-family: "Vazir-Medium-FD" !important;
 }
-.greenItem {
+.industryDetailGreenChip {
   color: aliceblue;
   background-color: #30cc5a !important;
   font-family: "Vazir-Medium-FD" !important;

@@ -36,14 +36,14 @@
                     قیمت پایانی :
                     <span class="spandata">{{ this.close }} ریال</span> (
                     <span
+                      dir="ltr"
                       class="spandata"
                       v-bind:class="[
                         this.close > this.open ? 'greenItem' : 'redItem'
                       ]"
                     >
-                      % {{ setclosingperc.toString() }}
+                      %{{ setclosingperc.toString() }}
                     </span>
-
                     )
 
                     <v-icon
@@ -54,13 +54,14 @@
                       ]"
                       >mdi-chevron-{{
                         this.close >= this.open ? "up" : "down"
-                      }}-circle-outline</v-icon
+                      }}</v-icon
                     >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     قیمت آخرین معامله :
                     <span class="spandata">{{ this.last }} ریال</span> (
                     <span
+                      dir="ltr"
                       class="spandata"
                       v-bind:class="[
                         last > open ? 'greenItem' : 'redItem ltr_aligned'
@@ -75,7 +76,7 @@
                       small
                       >mdi-chevron-{{
                         this.last >= this.open ? "up" : "down"
-                      }}-circle-outline</v-icon
+                      }}</v-icon
                     >
                   </h5>
                   <h5 class="titleHeaders-smaller ">
@@ -105,11 +106,12 @@
                     <span class="spandata">{{ this.status }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    EPS (منبع TSE): <span class="spandata">{{ this.eps }}</span>
+                    EPS (منبع TSE):
+                    <span class="spandata" dir="ltr">{{ this.eps }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     تعداد سهام:
-                    <span class="spandata">
+                    <span class="spandata" dir="ltr">
                       {{
                         numberWithCommas(
                           roundTo(this.sharecount / 1000000000, 2)
@@ -893,7 +895,6 @@ export default {
 }
 .spandata {
   color: rgb(4, 17, 53);
-  direction: ltr;
   font-size: 1.1em;
   font-weight: 800;
   margin-top: 5px;

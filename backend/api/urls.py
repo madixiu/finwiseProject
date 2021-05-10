@@ -55,7 +55,7 @@ urlpatterns = [
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
    path("Ticker/TechnicalIndicatorSingle/<identifier>/",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
-   path("IndexDetails/<identifier>/",getIndexDetails),
+   path("IndexDetails/<identifier>",getIndexDetails),
    path("Alldps/<identifier>/",getAllDPS),
    path("AdminNotice/<identifier>/",getAdminNotices),
    ####Monthly

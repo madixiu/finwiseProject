@@ -130,8 +130,8 @@ export default {
       return process.env.BASE_URL + "media/bg/bg-2.jpg";
     },
     ratio() {
-      console.log(window.screen.width);
-      console.log(window.screen.height);
+      // console.log(window.screen.width);
+      // console.log(window.screen.height);
 
       if (window.screen.height > window.screen.width) return true;
       else return false;

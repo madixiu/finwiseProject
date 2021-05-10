@@ -436,7 +436,7 @@ export default {
             // legendClick: function(chartContext, seriesIndex, config) {
             // },
             dataPointSelection: (event, chartContext, config) => {
-              this.testing(config.dataPointIndex);
+              this.pieChartClick(config.dataPointIndex);
             }
           }
         },
@@ -563,7 +563,7 @@ export default {
     this.loadData();
   },
   methods: {
-    testing(seriesIndex) {
+    pieChartClick(seriesIndex) {
       // this.PiechartOptions.labels = persianNames;
 
       // this.Pieseries = marketCaps;

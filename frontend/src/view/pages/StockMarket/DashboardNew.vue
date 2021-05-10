@@ -227,7 +227,7 @@ export default {
         .then(getHHDataResp => {
           this.ResponeseTimeout.getHHData = false;
 
-          console.log(getHHDataResp);
+          // console.log(getHHDataResp);
           this.HHData = getHHDataResp.data;
         })
         .catch(error => {
@@ -256,7 +256,6 @@ export default {
         .get("/api/Ticker/TechnicalIndicatorsAll")
         .then(getTechnicalDataResp => {
           this.ResponeseTimeout.getTechnicalData = false;
-
           this.TechnicalData = getTechnicalDataResp.data;
         })
         .catch(error => {

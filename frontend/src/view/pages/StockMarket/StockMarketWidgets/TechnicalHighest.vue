@@ -48,7 +48,9 @@
                 }}</v-chip>
               </template>
               <template v-slot:[`item.sum`]="{ item }">
-                <span class="cellItem ">{{ item.sum }}</span>
+                <div style="direction:ltr">
+                  <span class="cellItem">{{ item.sum }}</span>
+                </div>
               </template>
             </v-data-table>
           </v-tab-item>
@@ -61,11 +63,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-// import axios from "axios";
 export default {
   name: "TradeValues",
-  props: ["inputDataTechnical"],
+  props: { inputDataTechnical: Array },
   data() {
     return {
       search: "",
@@ -78,7 +78,7 @@ export default {
         { key: 1, value: "بهترین", shorthanded: "بهترین" },
         { key: 2, value: "بدترین", shorthanded: "بدترین" }
       ],
-      WebsocketRequest: true,
+      // WebsocketRequest: true,
       lowestValues: [],
       highestValues: [],
       selectedAttribute: 1,
@@ -89,7 +89,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     filteredItems() {
       //   console.log(this.selectedMarket);
       if (this.selectedAttribute == 2) {
@@ -108,9 +107,7 @@ export default {
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
+
     roundTo(n, digits) {
       let negative = false;
       if (digits === undefined) {
@@ -137,66 +134,75 @@ export default {
       this.selectedAttribute = selectedItem;
       // console.log(this.selectedAttribute)
     },
-    populateData() {
-      console.log("START OF ");
-      this.DataItems = [...this.inputDataTechnical];
-      //   console.log(this.inputDataTechnical);
-      if (!(this.DataItems === undefined || this.DataItems.length == 0)) {
+    loadData() {
+      if (
+        !(
+          this.inputDataTechnical === undefined ||
+          this.inputDataTechnical.length == 0
+        )
+      ) {
         this.loading = false;
-        this.DataItems.forEach(
-          function(d) {
-            d.sum =
-              (d.Signal_EMA200 != "NaN" ? d.Signal_EMA200 : 0) +
-              (d.Signal_EMA10 != "NaN" ? d.Signal_EMA10 : 0) +
-              (d.Signal_HMA != "NaN" ? d.Signal_HMA : 0) +
-              (d.Signal_ICHI != "NaN" ? d.Signal_ICHI : 0) +
-              (d.Signal_EMA50 != "NaN" ? d.Signal_EMA50 : 0) +
-              (d.Signal_EMA5 != "NaN" ? d.Signal_EMA5 : 0) +
-              (d.Signal_EMA20 != "NaN" ? d.Signal_EMA20 : 0) +
-              (d.Signal_KETLER != "NaN" ? d.Signal_KETLER : 0) +
-              (d.Signal_MACD != "NaN" ? d.Signal_MACD : 0) +
-              (d.Signal_EMA100 != "NaN" ? d.Signal_EMA100 : 0) +
-              (d.Signal_Awesome != "NaN" ? d.Signal_Awesome : 0) +
-              (d.Signal_CCI != "NaN" ? d.Signal_CCI : 0) +
-              (d.Signal_MFI != "NaN" ? d.Signal_MFI : 0) +
-              (d.Signal_MOM != "NaN" ? d.Signal_MOM : 0) +
-              (d.Signal_PSAR != "NaN" ? d.Signal_PSAR : 0) +
-              (d.Signal_RSI != "NaN" ? d.Signal_RSI : 0) +
-              (d.Signal_Stoch != "NaN" ? d.Signal_Stoch : 0) +
-              (d.Signal_StochRSI != "NaN" ? d.Signal_StochRSI : 0) +
-              (d.Signal_Ultimate != "NaN" ? d.Signal_Ultimate : 0) +
-              (d.Signal_VAMA != "NaN" ? d.Signal_VAMA : 0) +
-              (d.Signal_Williams != "NaN" ? d.Signal_Williams : 0) +
-              (d.Signal_SMA50 != "NaN" ? d.Signal_SMA50 : 0) +
-              (d.Signal_SMA5 != "NaN" ? d.Signal_SMA5 : 0) +
-              (d.Signal_SMA200 != "NaN" ? d.Signal_SMA200 : 0) +
-              (d.Signal_SMA20 != "NaN" ? d.Signal_SMA20 : 0) +
-              (d.Signal_SMA10 != "NaN" ? d.Signal_SMA10 : 0) +
-              (d.Signal_SMA100 != "NaN" ? d.Signal_SMA100 : 0);
-          },
-          // eslint-disable-next-line no-unused-vars
-          function(error, data) {
-            if (error) throw error;
-          }
-        );
+        // console.log(this.inputDataTechnical);
+        this.highestValues = this.inputDataTechnical[0];
+        this.lowestValues = this.inputDataTechnical[1];
       }
-      this.DataItems.sort((a, b) => a.sum - b.sum);
-      this.highestValues = this.DataItems.slice(0, 10);
-      this.DataItems.sort((a, b) => b.sum - a.sum);
-      this.lowestValues = this.DataItems.slice(0, 10);
+      // this.DataItems = [...this.inputDataTechnical];
+      // if (!(this.DataItems === undefined || this.DataItems.length == 0)) {
+      //   this.loading = false;
+      //   this.DataItems.forEach(
+      //     function(d) {
+      //       d.sum =
+      //         (d.Signal_EMA200 != "NaN" ? d.Signal_EMA200 : 0) +
+      //         (d.Signal_EMA10 != "NaN" ? d.Signal_EMA10 : 0) +
+      //         (d.Signal_HMA != "NaN" ? d.Signal_HMA : 0) +
+      //         (d.Signal_ICHI != "NaN" ? d.Signal_ICHI : 0) +
+      //         (d.Signal_EMA50 != "NaN" ? d.Signal_EMA50 : 0) +
+      //         (d.Signal_EMA5 != "NaN" ? d.Signal_EMA5 : 0) +
+      //         (d.Signal_EMA20 != "NaN" ? d.Signal_EMA20 : 0) +
+      //         (d.Signal_KETLER != "NaN" ? d.Signal_KETLER : 0) +
+      //         (d.Signal_MACD != "NaN" ? d.Signal_MACD : 0) +
+      //         (d.Signal_EMA100 != "NaN" ? d.Signal_EMA100 : 0) +
+      //         (d.Signal_Awesome != "NaN" ? d.Signal_Awesome : 0) +
+      //         (d.Signal_CCI != "NaN" ? d.Signal_CCI : 0) +
+      //         (d.Signal_MFI != "NaN" ? d.Signal_MFI : 0) +
+      //         (d.Signal_MOM != "NaN" ? d.Signal_MOM : 0) +
+      //         (d.Signal_PSAR != "NaN" ? d.Signal_PSAR : 0) +
+      //         (d.Signal_RSI != "NaN" ? d.Signal_RSI : 0) +
+      //         (d.Signal_Stoch != "NaN" ? d.Signal_Stoch : 0) +
+      //         (d.Signal_StochRSI != "NaN" ? d.Signal_StochRSI : 0) +
+      //         (d.Signal_Ultimate != "NaN" ? d.Signal_Ultimate : 0) +
+      //         (d.Signal_VAMA != "NaN" ? d.Signal_VAMA : 0) +
+      //         (d.Signal_Williams != "NaN" ? d.Signal_Williams : 0) +
+      //         (d.Signal_SMA50 != "NaN" ? d.Signal_SMA50 : 0) +
+      //         (d.Signal_SMA5 != "NaN" ? d.Signal_SMA5 : 0) +
+      //         (d.Signal_SMA200 != "NaN" ? d.Signal_SMA200 : 0) +
+      //         (d.Signal_SMA20 != "NaN" ? d.Signal_SMA20 : 0) +
+      //         (d.Signal_SMA10 != "NaN" ? d.Signal_SMA10 : 0) +
+      //         (d.Signal_SMA100 != "NaN" ? d.Signal_SMA100 : 0);
+
+      //     },
+      //     // eslint-disable-next-line no-unused-vars
+      //     function(error, data) {
+      //       if (error) throw error;
+      //     }
+      //   );
+      // }
+      // console.log(this.DataItems[2]);
+      // this.DataItems.sort((a, b) => a.sum - b.sum);
+      // this.highestValues = this.DataItems.slice(0, 10);
+      // this.DataItems.sort((a, b) => b.sum - a.sum);
+      // this.lowestValues = this.DataItems.slice(0, 10);
+
       // console.log(this.lowestValues)
       // console.log(this.highestValues)
-      console.log("END OF ");
-
     }
   },
   mounted() {
-    this.populateData();
+    this.loadData();
   },
   watch: {
     inputDataTechnical() {
-      this.populateData();
-      // console.log("WatcherSubHeader");
+      this.loadData();
     }
   }
 };

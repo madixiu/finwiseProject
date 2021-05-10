@@ -289,7 +289,7 @@ export default {
     },
     titleClick(item) {
       this.TablesReq(item.item.ID, item.item.Type);
-      console.log(item.item);
+      // console.log(item.item);
       this.subTitle = item.item.title;
       this.AssemblyName = item.item.Ticker;
       this.cardKey = false;

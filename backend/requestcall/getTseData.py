@@ -204,6 +204,8 @@ def DataModifier(input):
     for item in input:
         if item["Impact"] == None:
             item["Impact"] = 0
+        if item["signal"] == "NaN":
+            item["signal"] = 0
         temp.append({"ticker":item["ticker"],"Impact":item["Impact"]})
         temp2.append({"ticker":item["ticker"],"marketcap":item["marketcap"]})
         temp3.append({"ticker":item["ticker"],"HH":item["HH"]})

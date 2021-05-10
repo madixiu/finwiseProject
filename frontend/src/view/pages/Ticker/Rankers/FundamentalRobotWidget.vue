@@ -1,12 +1,17 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <!-- <div class="card card-custom card-stretch gutter-b"> -->
+  <v-card>
     <!--begin::Header-->
-    <div class="card-header border-0 pt-2">
+    <!-- <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         ربات تحلیلگر بنیادی
       </h3>
-    </div>
+    </div> -->
+    <v-card-title>
+      ربات تحلیلگر بنیادی
+    </v-card-title>
+    <v-divider class="mt-0"></v-divider>
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body d-flex flex-column">
@@ -47,7 +52,8 @@
       </div>
     </div>
     <!--end::Body-->
-  </div>
+    <!-- </div> -->
+  </v-card>
   <!--end::Mixed Widget 14-->
 </template>
 

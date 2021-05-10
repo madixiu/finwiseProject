@@ -1,12 +1,17 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <!-- <div class="card card-custom card-stretch gutter-b"> -->
+  <v-card>
     <!--begin::Header-->
-    <div class="card-header border-0 pt-2">
+    <!-- <div class="card-header border-0 pt-2">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         نسبت های سود نقدی
       </h3>
-    </div>
+    </div> -->
+    <v-card-title>
+      نسبت های سود نقدی
+    </v-card-title>
+    <v-divider class="mt-0"></v-divider>
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body d-flex flex-column">
@@ -22,10 +27,12 @@
             <span class="small">Dividend & Buyback</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong blured">{{ this.FinancialStrength }}/10</div>
+        <div class="col-sm-2 strong blured">
+          {{ this.FinancialStrength }}/10
+        </div>
         <div class="col-sm-6">
           <v-progress-linear
-          class="blured"
+            class="blured"
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
@@ -51,7 +58,7 @@
           </v-tooltip>
         </template>
         <template v-slot:[`item.now`]="{ item }">
-            <span class="small blured">{{ item.now }}</span>
+          <span class="small blured">{{ item.now }}</span>
         </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
@@ -59,7 +66,7 @@
             :height="15"
             :width="150"
             :rounded="true"
-             class="blured"
+            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.industry * 100"
           >
@@ -69,7 +76,7 @@
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
-             class="blured"
+            class="blured"
             :width="150"
             :rounded="true"
             :color="getColor(item.FinancialStrength * 100)"
@@ -80,7 +87,8 @@
       </v-data-table>
     </div>
     <!--end::Body-->
-  </div>
+    <!-- </div> -->
+  </v-card>
   <!--end::Mixed Widget 14-->
 </template>
 
@@ -175,7 +183,7 @@ export default {
 .valign * {
   vertical-align: middle;
 }
-.blured{
+.blured {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
