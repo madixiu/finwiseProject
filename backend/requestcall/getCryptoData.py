@@ -28,3 +28,13 @@ def getCryptoCorrelation():
             time.sleep(2)
             ct=ct+1
     return ("noData")
+def getSingleCryptoTechnical(firm):
+     ct=0
+     while ct<3:
+        resp = requests.get('http://45.147.77.195:3000/View_Crypto_Indicator?coin=eq.'+str(firm))
+        if resp.status_code == 200:
+            return (json.loads(resp.text))
+            # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1  

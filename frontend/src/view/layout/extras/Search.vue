@@ -125,7 +125,11 @@ export default {
         if (result.TypeID == 1000)
           this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
         else {
-          alert(`You selected ${result.ID} which is oraq and not created`);
+          if (result.TypeID == 2000) {
+            this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
+          } else {
+            alert(`You selected ${result.ID} which is oraq and not created`);
+          }
         }
       }
     },

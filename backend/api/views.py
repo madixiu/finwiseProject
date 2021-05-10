@@ -126,8 +126,8 @@ def getAllCryptoTechnical(self):
     return JsonResponse(getCryptoTechnicalIndicators(),safe=False)
 def getCryptoCorr(self):
     return JsonResponse(getCryptoCorrelation(),safe=False)
-
-
+def getIndicatorsCrypto(self,identifier):
+    return JsonResponse(getSingleCryptoTechnical(identifier),safe=False)
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
