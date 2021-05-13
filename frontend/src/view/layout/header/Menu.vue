@@ -111,7 +111,7 @@
         </a>
       </li>
     </router-link>
-       <router-link
+    <router-link
       to="/SocialMedia"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -129,10 +129,7 @@
         </a>
       </li>
     </router-link>
-    <router-link
-      to="/AI"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
+    <!-- <router-link to="/AI" v-slot="{ href, navigate, isActive, isExactActive }">
       <li
         aria-haspopup="true"
         data-menu-toggle="hover"
@@ -146,7 +143,7 @@
           <span class="menu-text">AI</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
     <!-- <router-link
       to="/kala"
       v-slot="{ href, navigate, isActive, isExactActive }"

@@ -12,6 +12,9 @@ import "core-js/stable";
 // import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 // import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 
+// ag grid
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // Adding GOOGLE ANALYTICS
 import VueGtag from "vue-gtag";
 Vue.use(VueGtag, {
