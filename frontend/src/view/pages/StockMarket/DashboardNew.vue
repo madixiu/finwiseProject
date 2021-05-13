@@ -107,7 +107,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         this.getTradesAll().then(resp1 => {
           // eslint-disable-next-line no-unused-vars
-          this.getTradesValue().then(resp2 => {
+          this.getTechnicalData().then(resp2 => {
             // this.getNews();
             // eslint-disable-next-line no-unused-vars
             this.getNews().then(resp3 => {
@@ -125,7 +125,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getHighestQ().then(resp6 => {
             // eslint-disable-next-line no-unused-vars
-            this.getTechnicalData();
+            this.getTradesValue();
             //   let TimeoutList = Object.values(this.ResponeseTimeout);
             //   for (let item of TimeoutList) {
             //     if (item == true) {

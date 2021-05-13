@@ -108,7 +108,8 @@ export default {
         if (e.name == null) return e.ticker.includes(input.toUpperCase());
         else
           return (
-            e.ticker.includes(input.toUpperCase()) || e.name.includes(input.toLowerCase())
+            e.ticker.includes(input.toUpperCase()) ||
+            e.name.includes(input.toLowerCase())
           );
       });
     },
