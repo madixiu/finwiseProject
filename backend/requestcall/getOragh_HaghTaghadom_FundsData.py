@@ -59,7 +59,7 @@ def TaghadomDataFix(data):
 def getCryptoMarketData():
 
     head = {'Accept-Profile':'crypto'}
-    resp = requests.get('http://45.147.77.195:3000/View_Crypto',headers=head)
+    resp = requests.get('http://162.55.15.105:3000/View_Crypto',headers=head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
         DF=pd.DataFrame(js)
