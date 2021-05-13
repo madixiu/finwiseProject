@@ -217,7 +217,10 @@ export default {
         .selectAll("text")
         .style("font-size", `${this.width / 1000}em`)
         .style("font-family", "Dirooz FD")
-        .style("font-weight", "800");
+        .style("font-size", `1.4em`)
+        .style("font-weight", "800")
+        .style("text-anchor", "end")
+        .style("font-family", "Dirooz FD");
       var yAxis = g =>
         g
           .attr("class", "yAxis")
@@ -231,8 +234,8 @@ export default {
       yAxisAxe
         .selectAll("text")
         .style("text-anchor", "start")
-        .attr("transform", `translate(${0},0)`)
-        .style("font-size", `1.2em`)
+        .attr("transform", `translate(${0},${4})`)
+        .style("font-size", `1.3em`)
         .style("font-weight", "800")
         .style("font-family", "Dirooz FD");
 
@@ -277,7 +280,7 @@ export default {
         .transition()
         .duration(2000)
         .ease(d3.easePolyOut)
-        .attr("height", yScale.bandwidth() * 0.5)
+        .attr("height", yScale.bandwidth() * 0.7)
         .attr("fill", function(d) {
           if (d.sum_signal < 0) {
             return mycolor2(d.sum_signal);

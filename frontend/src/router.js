@@ -14,6 +14,7 @@ const Crypto = () => import("@/view/pages/Crypto/CryptoMarket.vue");
 const CryptoTechnicalSingle = () =>
   import("@/view/pages/Crypto/Widgets/TechnicalCyrptoMoreInfo.vue");
 const CryptoDashboard = () => import("@/view/pages/Crypto/CryptoDashboard.vue");
+const CryptoSinglePage = () => import("@/view/pages/Crypto/CryptoSingle.vue");
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const AI = () => import("@/view/pages/AI/AI.vue");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
@@ -380,6 +381,11 @@ export default new Router({
           path: "/CryptoMarketWatch",
           name: "CryptoMarketWatch",
           component: Crypto
+        },
+        {
+          path: "/CryptoSingle/:id",
+          name: "CryptoSingle",
+          component: CryptoSinglePage
         },
         {
           path: "/SocialMedia",

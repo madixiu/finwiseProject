@@ -105,11 +105,10 @@ export default {
         return [];
       }
       return this.searchData.filter(e => {
-        if (e.name == null) return e.ticker.includes(input.toLowerCase());
+        if (e.name == null) return e.ticker.includes(input.toUpperCase());
         else
           return (
-            e.ticker.includes(input.toLowerCase()) ||
-            e.name.includes(input.toLowerCase())
+            e.ticker.includes(input.toUpperCase()) || e.name.includes(input.toLowerCase())
           );
       });
     },
@@ -126,7 +125,7 @@ export default {
           this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
         else {
           if (result.TypeID == 2000) {
-            this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
+            this.$router.push({ path: `/CryptoSingle/${result.ID}` });
           } else {
             alert(`You selected ${result.ID} which is oraq and not created`);
           }

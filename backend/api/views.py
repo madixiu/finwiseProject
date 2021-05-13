@@ -128,6 +128,10 @@ def getCryptoCorr(self):
     return JsonResponse(getCryptoCorrelation(),safe=False)
 def getIndicatorsCrypto(self,identifier):
     return JsonResponse(getSingleCryptoTechnical(identifier),safe=False)
+def getBasicCrypto(self,identifier):
+    return JsonResponse(getBasicCryptoData(identifier),safe=False)
+def getCryptoLive(self,identifier):
+    return JsonResponse(getSingleCryptoLive(identifier),safe=False)
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
