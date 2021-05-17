@@ -12,16 +12,16 @@ export default {
     // let symbol = symbolInfo.name;
 
     var result = [];
-    var el = {
-      id: "Dividend-13800430",
-      color: "green",
-      time: 1610892000,
-      text: "abc",
-      label: "label",
-      labelFontColor: "#fff",
-      minSize: 8
-    };
-    result.push(el);
+    // var el = {
+    //   id: "Dividend-13800430",
+    //   color: "green",
+    //   time: 1610892000,
+    //   text: "abc",
+    //   label: "label",
+    //   labelFontColor: "#fff",
+    //   minSize: 8
+    // };
+    // result.push(el);
     onDataCallback(result);
     return result;
   },

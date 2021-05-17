@@ -17,7 +17,9 @@ import VueGtag from "vue-gtag";
 Vue.use(VueGtag, {
   config: { id: "G-YGH92K65WQ" }
 });
+import LoadScript from 'vue-plugin-load-script';
 
+Vue.use(LoadScript);
 // apollo imports for graphql
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
