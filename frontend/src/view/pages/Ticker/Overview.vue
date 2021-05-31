@@ -85,7 +85,8 @@ export default {
       livedata: [],
       techdata: []
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - سهم";
   },
   mounted() {

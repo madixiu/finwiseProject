@@ -25,7 +25,8 @@ export default {
       subheaders: [],
       notice: []
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - تحلیل تکنیکال";
   },
   mounted() {
@@ -33,11 +34,10 @@ export default {
     this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "بررسی اندیکاتورها" }]);
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     loadData() {
-        this.getTwo().then(function() {});
+      this.getTwo().then(function() {});
     },
     // async getAllowed() {
     //   await this.axios

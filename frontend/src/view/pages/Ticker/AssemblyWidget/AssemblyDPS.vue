@@ -33,7 +33,7 @@ export default {
     return {
       allowed: [],
       subheaders: [],
-      deposits:[],
+      deposits: [],
       notice: []
     };
   },
@@ -76,7 +76,7 @@ export default {
         });
       });
     },
-     async getTwo() {
+    async getTwo() {
       await this.axios
         .get("/api/Alldps/" + this.$route.params.id + "/")
         .then(response2 => {

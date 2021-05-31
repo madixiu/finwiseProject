@@ -270,7 +270,7 @@ export default {
             c = c + 1;
           }
           return g;
-        })
+        });
       // row
       //   .selectAll(".cell")
       //   // eslint-disable-next-line no-unused-vars
@@ -352,8 +352,8 @@ export default {
         .attr("x", this.width / 2)
         .attr("y", this.margin.top / 2)
         .attr("text-anchor", "middle")
-        .text("تحلیل همبستگی در تاریخ " + `${this.updatedAt}`)
-        
+        .text("تحلیل همبستگی در تاریخ " + `${this.updatedAt}`);
+
       svg
         .append("text")
         .attr("class", "source")

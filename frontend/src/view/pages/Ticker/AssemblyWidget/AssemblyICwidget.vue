@@ -29,16 +29,14 @@
           hide-default-footer
           disable-pagination
         >
-        <template v-slot:[`item.PublishTime`]="{ item }">
-           <span class="cellItem"
-                      >{{ item.PublishTime.split(" ")[0] }}
+          <template v-slot:[`item.PublishTime`]="{ item }">
+            <span class="cellItem">{{ item.PublishTime.split(" ")[0] }} </span>
+          </template>
+          <template v-slot:[`item.IncreasePercent`]="{ item }">
+            <span class="cellItem"
+              >{{ roundTo(item.IncreasePercent, 2) }}%
             </span>
-        </template>
-        <template v-slot:[`item.IncreasePercent`]="{ item }">
-           <span class="cellItem"
-                      >{{ roundTo(item.IncreasePercent,2) }}%
-            </span>
-        </template>
+          </template>
         </v-data-table>
       </div>
     </div>
@@ -119,7 +117,7 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
-    },
+    }
   },
   mounted() {
     this.populateData();

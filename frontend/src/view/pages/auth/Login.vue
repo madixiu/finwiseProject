@@ -125,7 +125,6 @@
                 class="text-dark-60 text-hover-primary mt-2"
                 id="kt_login_forgot"
                 :to="{ name: 'passwordReset' }"
-
               >
                 فراموشی رمز عبور
               </router-link>

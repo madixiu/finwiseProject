@@ -25,7 +25,8 @@ export default {
       subheaders: [],
       notice: []
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - افزایش سرمایه‌ها";
   },
   mounted() {
@@ -41,7 +42,7 @@ export default {
   methods: {
     loadData() {
       // eslint-disable-next-line no-unused-vars
-          this.getTwo().then(function() {});
+      this.getTwo().then(function() {});
     },
     async getTwo() {
       await this.axios

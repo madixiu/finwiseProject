@@ -40,7 +40,8 @@ export default {
       summary: [],
       typeofReport: ""
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - گزارش ماهیانه";
   },
   mounted() {

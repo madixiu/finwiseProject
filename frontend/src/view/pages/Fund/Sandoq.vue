@@ -322,7 +322,8 @@ export default {
         }
       ]
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - صندوق";
   },
   mounted() {

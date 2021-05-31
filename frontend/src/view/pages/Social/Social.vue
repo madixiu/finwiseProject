@@ -2,43 +2,54 @@
   <div class="row" style="padding-top:5px">
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div>
-    <v-card>
-      <v-card-title>LinkedIn</v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
-      <div id="curator-feed-new-feed-layout-linkedin">
-        <a href="https://curator.io" target="_blank" class="crt-logo crt-tag"
-          >Powered by Curator.io</a
-        >
-      </div>
+        <v-card>
+          <v-card-title>LinkedIn</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <div id="curator-feed-new-feed-layout-linkedin">
+            <a
+              href="https://curator.io"
+              target="_blank"
+              class="crt-logo crt-tag"
+              >Powered by Curator.io</a
+            >
+          </div>
         </v-card>
-    </div>
+      </div>
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
-       <div>
-    <v-card>
-      <v-card-title>Instagram</v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
-    <div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+      <div>
+        <v-card>
+          <v-card-title>Instagram</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <div id="curator-feed-default-feed-layout">
+            <a
+              href="https://curator.io"
+              target="_blank"
+              class="crt-logo crt-tag"
+              >Powered by Curator.io</a
+            >
+          </div>
         </v-card>
+      </div>
     </div>
-    </div>
-     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
-       <div>
-    <v-card>
-      <v-card-title>Twitch</v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
-      <iframe
-    src="https://player.twitch.tv/finwiselive&parent=https://finwise.ir"
-    height="400"
-    width="100%"
-    allowfullscreen="true">
-</iframe>
+    <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
+      <div>
+        <v-card>
+          <v-card-title>Twitch</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider>
+          <iframe
+            src="https://player.twitch.tv/finwiselive&parent=https://finwise.ir"
+            height="400"
+            width="100%"
+            allowfullscreen="true"
+          >
+          </iframe>
         </v-card>
-    </div>
+      </div>
     </div>
   </div>
 </template>
- 
+
 <script>
 // import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
@@ -70,7 +81,8 @@ export default {
         getTechnicalData: true
       }
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - شبکه های اجتماعی";
   },
   mounted() {

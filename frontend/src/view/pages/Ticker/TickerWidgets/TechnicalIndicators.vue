@@ -36,7 +36,10 @@
           </div>
         </div>
       </div>
-      <div class="lockedTechnical" v-show="!this.$store.getters.isAuthenticated">
+      <div
+        class="lockedTechnical"
+        v-show="!this.$store.getters.isAuthenticated"
+      >
         <div class="row lockedTechnical">
           <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
         </div>

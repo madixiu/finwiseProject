@@ -94,11 +94,11 @@ export default {
   methods: {
     populateData() {
       if (!(this.inputData === undefined || this.inputData.length == 0)) {
-        var newObject = JSON.parse(JSON.stringify(this.inputData))
+        var newObject = JSON.parse(JSON.stringify(this.inputData));
         // let ll = Object.assign({}, newObject);
         let tList = [];
         for (var tKey in newObject) tList.push(newObject[tKey]);
-        this.DataItems2 = [...tList]
+        this.DataItems2 = [...tList];
         // if (!this.isEmpty(this.DataItems2)) {
         // this.loading = false;
         // this.sortByMarketCap("D1");
@@ -233,8 +233,11 @@ export default {
         .scaleLinear()
         .domain([
           0,
-          d3.max(Object.entries(this.DataItems2).map(item => Math.abs(item[1][Param]))) *
-            1.5
+          d3.max(
+            Object.entries(this.DataItems2).map(item =>
+              Math.abs(item[1][Param])
+            )
+          ) * 1.5
         ])
         .range([
           (this.height - this.margin.bottom - this.margin.top) / 2,

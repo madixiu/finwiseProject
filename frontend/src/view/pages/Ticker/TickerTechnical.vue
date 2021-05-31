@@ -26,8 +26,7 @@ export default {
   props: {
     // ticker: String
   },
-  created() {
-  },
+  created() {},
   computed: {
     // ...mapState({
     //   searchData: state => state.search.SearchBarListData

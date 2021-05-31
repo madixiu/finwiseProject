@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const FILTER_TITLE =
   '<div style="text-align: center; background: lightgray; width: 100%; display: block; border-bottom: 1px solid grey;">' +
   "<b>TITLE_NAME</b>" +

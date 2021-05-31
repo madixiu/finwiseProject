@@ -76,11 +76,10 @@ export default {
           // setTimeout(this.getHighestQ(), 1000);
           else console.error(error);
         });
-    }
-    ,
+    },
     async getCorrelationM() {
       await this.axios
-      .get("/api/CryptoHistoricCorr")
+        .get("/api/CryptoHistoricCorr")
         .then(getHighestQResp => {
           this.ResponeseTimeout.getCorrData = false;
           this.CorrData = getHighestQResp.data;

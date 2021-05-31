@@ -30,7 +30,8 @@ export default {
       notice: [],
       typeofReport: ""
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - ترازنامه";
   },
   mounted() {

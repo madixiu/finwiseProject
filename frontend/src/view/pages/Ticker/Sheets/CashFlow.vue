@@ -40,7 +40,8 @@ export default {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
     }
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - صورت جریان وجوه نقد";
   },
   methods: {

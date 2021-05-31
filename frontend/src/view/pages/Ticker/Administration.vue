@@ -30,7 +30,8 @@ export default {
       subheaders: [],
       notice: []
     };
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - پیام ناظر";
   },
 

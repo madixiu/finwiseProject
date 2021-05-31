@@ -27,9 +27,7 @@
       </ag-grid-vue> -->
       <RawGridTemp v-if="flag" :rows="rowData" :cols="MarketTableHeader" />
     </div>
-    <div>
-      <newAG />
-    </div>
+
     <div>
       <agGridTemp />
     </div>
@@ -42,15 +40,15 @@ import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
 // import { AgGridVue } from "ag-grid-vue";
 import agGridTemp from "@/view/content/ag-grid/AgGrid.vue";
 import RawGridTemp from "@/view/content/ag-grid/AgGridTemp.vue";
-import newAG from "@/view/content/ag-grid/ag.vue"
+// import newAG from "@/view/content/ag-grid/ag.vue"
 export default {
   name: "AI",
   components: {
     // Error,
     // ErrorMine
     agGridTemp,
-    RawGridTemp,
-    newAG
+    RawGridTemp
+    // newAG
     // AgGridVue
   },
   data() {

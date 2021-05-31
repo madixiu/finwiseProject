@@ -71,7 +71,6 @@ export default {
         }
       ],
       headers: [
-
         {
           text: "منتهی به",
           value: "ToDate"

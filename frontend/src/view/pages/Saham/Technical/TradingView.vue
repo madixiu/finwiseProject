@@ -65,7 +65,8 @@ export default {
       default: "Light"
     }
   },
-  tvWidget: null, created() {
+  tvWidget: null,
+  created() {
     document.title = "Finwise - نمودار پیشرفته";
   },
   mounted() {

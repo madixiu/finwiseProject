@@ -6674,4 +6674,4 @@ export const data =    [
             type: "سهام",
             urlparam: "23175320865252772"
         }
-    ]
+];

@@ -422,7 +422,8 @@ export default {
 
   computed: {
     ...mapGetters(["getSahm"])
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - آپشن";
   },
   mounted() {
