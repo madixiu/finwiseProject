@@ -92,7 +92,7 @@ export default {
       .getBars(symbolInfo, resolution, from, to, firstDataRequest)
       .then(bars => {
         if (bars.length) {
-          console.log(bars);
+          // console.log(bars);
           onHistoryCallback(bars, { noData: false });
         } else {
           onHistoryCallback(bars, { noData: true });

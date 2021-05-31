@@ -104,8 +104,8 @@ export default {
     // this.$store.dispatch(OVERRIDE_LAYOUT_CONFIG);
   },
   methods: {
-     loadData() {
-       this.axios
+    loadData() {
+      this.axios
         .get("/api/MainSearchBar")
         .then(SearchResponse => {
           let data = SearchResponse.data;
@@ -114,7 +114,6 @@ export default {
         })
         .catch(error => {
           console.error(error);
-          console.log(error.code);
         });
     },
     getQueryUser(UserName) {

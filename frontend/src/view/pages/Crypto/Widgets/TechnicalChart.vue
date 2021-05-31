@@ -145,7 +145,7 @@ export default {
             return b.sum_signal - a.sum_signal;
           })
           .concat(data.slice(0, 10));
-        console.log(this.ChartData);
+        // console.log(this.ChartData);
       }
     },
     renderChart() {
