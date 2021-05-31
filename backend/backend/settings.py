@@ -146,7 +146,9 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 ROOT_URLCONF = 'backend.urls'
-ASGI_APPLICATION = "backend.routing.application"
+# ASGI_APPLICATION = "backend.routing.application"
+ASGI_APPLICATION = "backend.asgi.application"
+
 
 # added this to prevent @took too long to shutdown then killed it@ problem
 ASGI_THREADS = 1000

@@ -3,7 +3,7 @@ import Vue from "vue";
 
 // let vm = this
 let URI = "wss://finwise.ir";
-// let URI = "ws://localhost:8000";
+// let URI = "ws://localhost";
 
 // let URI = "wss://171.22.25.73";
 
