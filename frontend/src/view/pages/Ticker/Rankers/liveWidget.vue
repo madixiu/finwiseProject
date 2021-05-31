@@ -34,7 +34,7 @@
                   <hr />
                   <h5 class="titleHeaders-smaller ">
                     قیمت پایانی :
-                    <span class="spandata">{{ this.close }} ریال</span> (
+                    <span class="spandata">{{ this.close }} ریال</span>
                     <span
                       dir="ltr"
                       class="spandata"
@@ -42,12 +42,10 @@
                         this.close > this.open ? 'greenItem' : 'redItem'
                       ]"
                     >
-                      %{{ setclosingperc.toString() }}
+                      {{ "%" + setclosingperc.toString() }}
                     </span>
-                    )
 
                     <v-icon
-                      left
                       small
                       v-bind:class="[
                         this.close >= this.open ? 'greenItem' : 'redItem'
@@ -59,17 +57,17 @@
                   </h5>
                   <h5 class="titleHeaders-smaller ">
                     قیمت آخرین معامله :
-                    <span class="spandata">{{ this.last }} ریال</span> (
+                    <span class="spandata">{{ this.last }} ریال</span>
                     <span
                       dir="ltr"
-                      class="spandata"
+                      class="spandata mr-1"
                       v-bind:class="[
-                        last > open ? 'greenItem' : 'redItem ltr_aligned'
+                        this.last > this.open ? 'greenItem' : 'redItem'
                       ]"
-                      >% {{ setlastperc }}</span
-                    >)
+                    >
+                      {{ "%" + setlastperc }}</span
+                    >
                     <v-icon
-                      left
                       v-bind:class="[
                         this.last >= this.open ? 'greenItem' : 'redItem'
                       ]"

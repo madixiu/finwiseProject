@@ -465,9 +465,6 @@ export default {
           thClass: "marketwatch-table-head",
           sortable: true
         },
-        // { label: "نام", key: "name" },
-        // { label: "صنعت", key: "industry" },
-        // { label: "آخرین بروز رسانی", key: "updatedAt" },
         {
           label: "کف مجاز قیمت",
           key: "MinRange",
@@ -612,7 +609,8 @@ export default {
     ...mapState({
       tableData: state => state.marketwatch.marketWatchItems
     })
-  }, created() {
+  },
+  created() {
     document.title = "Finwise - دیده‌بان";
   },
   mounted() {

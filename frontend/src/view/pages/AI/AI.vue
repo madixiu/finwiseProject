@@ -1,67 +1,71 @@
 <template>
   <!-- <ErrorMine></ErrorMine> -->
   <div style="height: 100%">
-    <div class="example-wrapper">
-      <div>
-        <span class="button-group">
-          <button v-on:click="showPivotModeSection()">
-            Show Pivot Mode Section
-          </button>
-          <button v-on:click="showRowGroupsSection()">
-            Show Row Groups Section
-          </button>
-          <button v-on:click="showValuesSection()">Show Values Section</button>
-          <button v-on:click="showPivotSection()">Show Pivot Section</button>
-        </span>
-      </div>
-      <ag-grid-vue
-        style="width: 300px; height: 300px;"
-        class="ag-theme-alpine"
-        id="myGrid"
-        :gridOptions="gridOptions"
-        :columnDefs="columnDefs"
+    <div>
+      <!-- <input
+        type="text"
+        id="filter-text-box"
+        placeholder="Filter..."
+        v-model="filter"
+        oninput="onFilterTextBoxChanged()"
+      />
+      <button style="margin-left: 20px;" onclick="onPrintQuickFilterTexts()">
+        Print Quick Filter Texts
+      </button> -->
+      <!-- <ag-grid-vue
+        style="width: 100%; height: 500px;"
+        class="ag-theme-balham"
+        :columnDefs="MarketTableHeader"
         :defaultColDef="defaultColDef"
-        :sideBar="sideBar"
-        :rowData="rowData"
-      ></ag-grid-vue>
+        :rowData="rowDataComputed"
+        rowSelection="multiple"
+        :cacheQuickFilter="true"
+        :sideBar="true"
+        :enableRtl="true"
+        :localeText="localeText"
+      >
+      </ag-grid-vue> -->
+      <RawGridTemp v-if="flag" :rows="rowData" :cols="MarketTableHeader" />
     </div>
     <div>
-      <button @click="getSelectedRows()">Get Selected Rows</button>
-
-      <ag-grid-vue
-        style="width: 500px; height: 500px;"
-        class="ag-theme-alpine"
-        :columnDefs="columnDefs"
-        :defaultColDef="defaultColDef"
-        :rowData="rowData"
-        rowSelection="multiple"
-        :sideBar="true"
-      >
-      </ag-grid-vue>
+      <newAG />
+    </div>
+    <div>
+      <agGridTemp />
     </div>
   </div>
 </template>
 <script>
 // import ErrorMine from "@/view/pages/error/Error-6.vue";
-import { AgGridVue } from "ag-grid-vue";
 
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+// import { AgGridVue } from "ag-grid-vue";
+import agGridTemp from "@/view/content/ag-grid/AgGrid.vue";
+import RawGridTemp from "@/view/content/ag-grid/AgGridTemp.vue";
+import newAG from "@/view/content/ag-grid/ag.vue"
 export default {
   name: "AI",
   components: {
     // Error,
     // ErrorMine
-    AgGridVue
+    agGridTemp,
+    RawGridTemp,
+    newAG
+    // AgGridVue
   },
   data() {
     return {
+      flag: false,
+      filter: null,
+      localeText: null,
       gridOptions: null,
       gridColumnApi: null,
       gridApi: null,
       columnApi: null,
       columnDefs: [
-        { headerName: "Col A", field: "make", sortable: true },
-        { headerName: "Col B", field: "model", sortable: true },
-        { headerName: "Col C", field: "price", sortable: true }
+        { headerName: "Col Aa", field: "make", sortable: true, filter: true },
+        { headerName: "Col B", field: "model", sortable: true, filter: true },
+        { headerName: "Col C", field: "price", sortable: true, filter: true }
       ],
       defaultColDef: null,
       sideBar: {
@@ -91,12 +95,315 @@ export default {
         { make: "Ford", model: "Mondeo", price: 32000 },
         { make: "Porsche", model: "Boxter", price: 72000 }
       ],
+      rowDataTemp: [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+      ],
+      MarketTableHeader: [
+        {
+          headerName: "نماد",
+          field: "ticker",
+          sortable: true,
+          rowDrag: true,
+          pinned: "right"
+        },
+        {
+          headerName: "بازار",
+          field: "marketName",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+
+          sortable: true
+        },
+        {
+          headerName: "عدد",
+          field: "number",
+          cellStyle: params => {
+            if (params.value > 0) {
+              //mark police cells as red
+              return {
+                color: "green",
+                display: "flex",
+                "justify-content": "center",
+                direction: "ltr",
+
+                "align-items": "center"
+              };
+            } else if (params.value < 0) {
+              return {
+                color: "red",
+                display: "flex",
+                "justify-content": "center",
+                direction: "ltr",
+
+                "align-items": "center"
+              };
+            } else
+              return {
+                color: "black",
+                display: "flex",
+                "justify-content": "center",
+                direction: "ltr",
+
+                "align-items": "center"
+              };
+          },
+          sortable: true
+        },
+        {
+          headerName: "تعداد معاملات",
+          field: "TradeCount",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "حجم معاملات",
+          field: "TradeVolume",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "ارزش معاملات",
+          field: "TradeValue",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "قیمت دیروز",
+          field: "yesterday",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "آخرین قیمت",
+          field: "last",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "درصد آخرین قیمت",
+          field: "lastPercent",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center",
+            direction: "ltr"
+          },
+          sortable: true
+        },
+        {
+          headerName: "قیمت پایانی",
+          field: "close",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "درصد قیمت پایانی",
+          field: "closePercent",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "کف مجاز قیمت",
+          field: "MinRange",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "سقف مجاز قیمت",
+          field: "MaxRange",
+          sortable: true,
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          }
+        },
+        { headerName: "EPS", field: "EPS", hide: true },
+        {
+          headerName: "بالاترین قیمت",
+          field: "high",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "کمترین قیمت",
+          field: "low",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "اولین قیمت",
+          field: "first",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true
+        },
+        {
+          headerName: "تعداد خرید حقیقی",
+          field: "CountBuy_Haghighi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "تعداد خرید حقوقی",
+          field: "CountBuy_Hoguhgi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "حجم خرید حقیقی",
+          field: "VolumeBuy_Haghighi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "حجم خرید حقوقی",
+          field: "VolumeBuy_Hoghughi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "تعداد فروش حقیقی",
+          field: "CountSell_Haghighi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "تعداد فروش حقوقی",
+          field: "CountSell_Hoghughi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "حجم فروش حقیقی",
+          field: "VolumeSell_Haghighi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        },
+        {
+          headerName: "حجم فروش حقوقی",
+          field: "VolumeSell_Hoghughi",
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+
+            "align-items": "center"
+          },
+          sortable: true,
+          hide: true
+        }
+      ],
       FundsTableHeader: [
         {
           headerName: "نماد",
           field: "ticker",
-
-          sortable: true
+          sortable: true,
+          rowDrag: true,
+          pinned: "right"
         },
         {
           headerName: "بازار",
@@ -125,7 +432,6 @@ export default {
         {
           headerName: "قیمت دیروز",
           field: "yesterday",
-
           sortable: true
         },
         {
@@ -149,10 +455,18 @@ export default {
         {
           headerName: "درصد قیمت پایانی",
           field: "closePercent",
-
-          sortable: true
+          sortable: true,
+          cellStyle: params => {
+            if (params.value > 0) {
+              //mark police cells as red
+              return { color: "green" };
+            } else if (params.value < 0) {
+              return { color: "red" };
+            } else return { color: "black" };
+          }
         },
-        // { field: "نام", key: "name" },
+
+        // { field: "نام", field: "name" },
         // { field: "صنعت", key: "industry" },
         // { field: "آخرین بروز رسانی", key: "updatedAt" },
         // {
@@ -188,7 +502,6 @@ export default {
         {
           headerName: "تعداد خرید حقیقی",
           field: "CountBuy_Haghighi",
-
           sortable: true
         },
         {
@@ -236,55 +549,37 @@ export default {
       ]
     };
   },
+  computed: {
+    rowDataComputed() {
+      if (this.filter == null) {
+        return this.rowData;
+      } else {
+        // return this.rowData.filter(el =>{
+        //   el.make = this.filter;
+
+        let rowData = this.rowData.filter(function(el) {
+          return el.make == this.filter;
+        });
+        return rowData;
+        // });
+      }
+    }
+  },
   mounted() {
+    this.localeText = AG_GRID_LOCALE_FA;
     this.loadData();
-    this.gridOptions = {};
-    // this.columnDefs = [
-    //   {
-    //     headerName: "Name",
-    //     field: "athlete",
-    //     minWidth: 200
-    //   },
-    //   {
-    //     field: "age",
-    //     enableRowGroup: true
-    //   },
-    //   {
-    //     field: "country",
-    //     minWidth: 200
-    //   },
-    //   { field: "year" },
-    //   {
-    //     field: "date",
-    //     suppressColumnsToolPanel: true,
-    //     minWidth: 180
-    //   },
-    //   {
-    //     field: "sport",
-    //     minWidth: 200
-    //   },
-    //   {
-    //     field: "gold",
-    //     aggFunc: "sum"
-    //   },
-    //   {
-    //     field: "silver",
-    //     aggFunc: "sum"
-    //   },
-    //   {
-    //     field: "bronze",
-    //     aggFunc: "sum"
-    //   },
-    //   {
-    //     field: "total",
-    //     aggFunc: "sum"
-    //   }
-    // ];
+    // setInterval(() => {
+    //   this.loadData();
+    // }, 2000);
+    this.gridOptions = {
+      // localeText: localeText,
+    };
+
     this.defaultColDef = {
       flex: 1,
       minWidth: 100,
       sortable: true,
-      enablePivot: true
+      enablePivot: false
     };
     this.sideBar = {
       toolPanels: [
@@ -312,11 +607,11 @@ export default {
     this.gridColumnApi = this.gridOptions.columnApi;
   },
   created() {
-    this.columnDefs = [
-      { headerName: "Col A", field: "make", sortable: true },
-      { headerName: "Col B", field: "model", sortable: true },
-      { headerName: "Col C", field: "price", sortable: true }
-    ];
+    // this.columnDefs = [
+    //   { headerName: "Col A", field: "make", sortable: true },
+    //   { headerName: "Col B", field: "model", sortable: true },
+    //   { headerName: "Col C", field: "price", sortable: true }
+    // ];
 
     document.title = "Finwise - هوش مصنوعی";
   },
@@ -346,16 +641,15 @@ export default {
       ];
     },
     async loadData() {
-      this.isBusy = true;
-
       await this.axios
 
-        .get("/api/Funds")
+        .get("/api/marketwatch")
         .then(response => {
           this.isBusy = false;
 
           let data = response.data;
-          this.tableData = data;
+          this.rowData = data;
+          this.flag = true;
         })
         .catch(error => {
           this.isBusy = false;
@@ -365,3 +659,7 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+// @import "ag-grid-community/dist/styles/ag-grid.css";
+// @import "ag-grid-community/dist/styles/ag-theme-balham.css";
+</style>

@@ -2,7 +2,9 @@ import Vue from "vue";
 // import store from "../store";
 
 // let vm = this
+// let URI = "wss://finwise.ir";
 let URI = "ws://localhost:8000";
+
 // let URI = "wss://171.22.25.73";
 
 const WsService = {

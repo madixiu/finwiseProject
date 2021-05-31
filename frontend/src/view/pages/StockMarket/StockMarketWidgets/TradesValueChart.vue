@@ -12,7 +12,7 @@
     <v-card :loading="loading">
       <v-card-title
         >ارزش معاملات
-        <span class="cellItem">
+        <span class="cellItemTradesValueChart mr-2">
           {{
             this.numberWithCommas(
               this.roundTo(
@@ -992,8 +992,10 @@ export default {
   top: 50%;
   left: 100%;
 }
-.cellItem {
-  font-family: "Dirooz FD";
+.cellItemTradesValueChart {
+  font-family: "Vazir-Light-FD";
+  color: rgb(82, 82, 82);
   font-weight: 600;
+  font-size: 0.8em;
 }
 </style>

@@ -38,12 +38,23 @@
           <!-- <div style="direction:ltr">
             
           </div> -->
-          <span
+          <!-- <span
             dir="ltr"
             :class="[
               item.Change >= 0 ? 'tickerTapeChangeGreen' : 'tickerTapeChangeRed'
             ]"
-            >{{ item.Change }}%</span
+            >%{{ item.Change }}</span
+          > -->
+          <span dir="ltr" :class="checkSign(item.Change)">{{
+            ChangeValue(item.Change)
+          }}</span>
+          <v-icon
+            v-if="item.Change != 0"
+            small
+            v-bind:class="[
+              item.Change > 0 ? 'tickerTapeChangeGreen' : 'tickerTapeChangeRed'
+            ]"
+            >mdi-chevron-{{ item.Change > 0 ? "up" : "down" }}</v-icon
           >
         </div>
       </div>
@@ -64,10 +75,20 @@ export default {
       LowRes: false
     };
   },
+
   mounted() {
     this.checkResolution();
   },
   methods: {
+    checkSign(change) {
+      if (change > 0) return "tickerTapeChangeGreen";
+      else if (change < 0) return "tickerTapeChangeRed";
+      else return "tickerTapeChangeWhite";
+    },
+    ChangeValue(item) {
+      if (item >= 0) return "%" + item;
+      else if (item < 0) return "%" + "(" + Math.abs(item) + ")";
+    },
     clickMarquee(item) {
       if (this.TickerType)
         this.$router.push({ path: `/ticker/Overview/Overall/${item.ID}` });
@@ -109,11 +130,15 @@ export default {
 }
 .tickerTapeChangeGreen {
   font-family: "Vazir-Medium-FD" !important;
-  color: green;
+  color: #2cd85d;
 }
 .tickerTapeChangeRed {
   font-family: "Vazir-Medium-FD" !important;
-  color: red;
+  color: rgb(255, 25, 25);
+}
+.tickerTapeChangeWhite {
+  font-family: "Vazir-Medium-FD" !important;
+  color: white;
 }
 /* .redItem {
   color: aliceblue;

@@ -90,8 +90,7 @@ export default {
   },
   computed: {
     filteredItems() {
-      //   console.log(this.selectedMarket);
-      if (this.selectedAttribute == 2) {
+      if (this.selectedAttribute == 1) {
         return this.highestValues;
       } else {
         return this.lowestValues;

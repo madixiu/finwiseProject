@@ -25,9 +25,8 @@
           <div class="text-center">
             آخرین قیمت <br />
             <div style="direction:ltr">
-              (
               <span
-                class="spandata ltr_aligned"
+                class="spandata ltr_aligned mr-1"
                 v-bind:class="[
                   LiveDataItems.last > LiveDataItems.yesterday
                     ? 'greenItem ltr_aligned'
@@ -40,7 +39,7 @@
                       100
                   ) / 100
                 }}</span
-              >)
+              >
               <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
             </div>
           </div>
@@ -55,9 +54,8 @@
           <div class="text-center">
             قیمت پایانی <br />
             <div style="direction:ltr">
-              (
               <span
-                class="spandata ltr_aligned"
+                class="spandata ltr_aligned mr-1"
                 v-bind:class="[
                   LiveDataItems.close > LiveDataItems.yesterday
                     ? 'greenItem ltr_aligned'
@@ -70,7 +68,7 @@
                       100
                   ) / 100
                 }}</span
-              >)
+              >
               <span style="direction:ltr">{{
                 numberWithCommas(LiveDataItems.close)
               }}</span>

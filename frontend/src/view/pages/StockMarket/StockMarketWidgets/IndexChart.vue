@@ -28,9 +28,7 @@
                   : 'redItem cellItem'
               ]"
             >
-              ({{
-                numberWithCommas(roundTo(this.lastestIndexChange), 0)
-              }})</span
+              {{ numberWithCommas(roundTo(this.lastestIndexChange), 0) }}</span
             >
             <span>
               <v-icon
@@ -58,7 +56,7 @@
                   : 'redItem cellItem'
               ]"
             >
-              ({{ numberWithCommas(roundTo(this.lastestSWChange), 0) }})</span
+              {{ numberWithCommas(roundTo(this.lastestSWChange), 0) }}</span
             >
             <span>
               <v-icon
@@ -86,7 +84,7 @@
                   : 'redItem cellItem'
               ]"
             >
-              ({{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }})</span
+              {{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }}</span
             >
             <span>
               <v-icon
