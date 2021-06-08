@@ -91,6 +91,8 @@ export default {
   },
   mounted() {
     this.loadData();
+    console.log(this.$store.getters.breadcrumbs);
+    console.log(this.$store.getters.pageTitle);
     this.liveChecker();
     this.$socketLiveTickerData.onmessage = data => {
       // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
@@ -194,6 +196,8 @@ export default {
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.subheaders.ticker }
           ]);
+          console.log(this.$store.getters.breadcrumbs);
+          console.log(this.$store.getters.pageTitle);
         })
         .catch(error => {
           console.error(error);

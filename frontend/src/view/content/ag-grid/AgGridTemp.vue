@@ -62,6 +62,7 @@ export default {
         flex: 1,
         cellClass: "align-center",
         resizable: true,
+        filter:true,
 
         // minWidth: 50,
 
@@ -168,6 +169,8 @@ export default {
 }
 .ag-grid-row-class {
   /* background-color: red !important; */
+  display: flex;
   align-items: center !important;
+  
 }
 </style>

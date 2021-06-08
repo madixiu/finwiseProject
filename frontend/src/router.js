@@ -467,5 +467,10 @@ export default new Router({
       name: "404",
       component: ERROR
     }
-  ]
+  ],
+  // eslint-disable-next-line no-unused-vars
+  scrollBehavior(to, from, savedPosition) {
+    if (to.name == "IndustriesDetail" || to.name == "TickerOverall")
+      return { x: 0, y: 0 };
+  }
 });

@@ -1,28 +1,44 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row" style="padding-top:5px">
       <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div>
 
-      <div class="col-xxl-3 col-md-3 col-sm-6 col-xs-12">
-        <v-card>
-          <v-card-title>ارزش بازار صنایع</v-card-title>
+      <div
+        class="col-xxl-3 col-md-3 col-sm-6 col-xs-12"
+        style="padding-left:0px;padding-top:0px"
+      >
+        <v-card shaped>
+          <v-toolbar dense>
+            <v-toolbar-title>ارزش بازار صنایع</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn icon v-if="PieChartkey == 1" @click="PieChartBackButton">
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <!-- <v-card-title>ارزش بازار صنایع</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider> -->
+
           <ApexChart
+            :key="ApexChartcomponentKey"
             v-if="Pieseries.length"
             type="pie"
-            height="200%"
+            height="300%"
             width="100%"
             :series="Pieseries"
             :chartOptions="PiechartOptions"
           />
         </v-card>
       </div>
-      <div class="col-xxl-9 col-md-9 col-sm-12 col-xs-12">
-        <v-card class="mt-1">
-          <v-card-title>صنایع با بیشترین ارزش معاملات</v-card-title>
+      <div class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
+      style="padding-right:10px;padding-top:0px">
+        <v-card v-if="Barseries.length">
+          <v-toolbar dense>
+            <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
+          </v-toolbar>
           <ApexChart
-            v-if="Barseries.length"
             type="bar"
             height="200%"
             width="100%"
@@ -30,10 +46,11 @@
             :chartOptions="BarchartOptions"
           />
         </v-card>
-        <v-card class="mt-1">
-          <v-card-title>ورود و خروج حقیقی به صنایع</v-card-title>
+        <v-card class="mt-3" v-if="HHseries.length">
+          <v-toolbar dense>
+            <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
+          </v-toolbar>
           <ApexChart
-            v-if="HHseries.length"
             type="bar"
             width="100%"
             height="200%"
@@ -41,10 +58,11 @@
             :chartOptions="HHoptions"
           />
         </v-card>
-        <v-card class="mt-1">
-          <v-card-title>تاثیر صنایع در شاخص</v-card-title>
+        <v-card class="mt-3" v-if="EffectOnIndexSeries.length">
+           <v-toolbar dense>
+            <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
+          </v-toolbar>
           <ApexChart
-            v-if="EffectOnIndexSeries.length"
             type="bar"
             width="100%"
             height="200%"
@@ -68,13 +86,19 @@ export default {
     IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
-    // MarqueeText
   },
   data() {
     return {
+      ApexChartcomponentKey: 0,
+      PieChartData: null,
+      PieChartkey: 0,
       // paused: false,
+      TopIndustries: [],
       IndustryData: [],
+      persianNamesOthers: [],
+      marketCapsOthers: [],
       Pieseries: [],
+      PieseriesOthers: [],
       Barseries: [],
       HHseries: [],
       HHoptions: {
@@ -89,6 +113,9 @@ export default {
           }
         },
         tooltip: {
+          followCursor: true,
+          intersect: false,
+          fillSeriesColor: true,
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let n = series[seriesIndex][dataPointIndex] / 1000000000;
             let negative = false;
@@ -106,15 +133,23 @@ export default {
             let parts = n.toString().split(".");
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             let val = parts.join(".");
-            return (
-              '<div class="arrow_box">' +
-              "<span>" +
-              w.globals.labels[dataPointIndex] +
-              ": " +
-              val +
-              "</span>" +
-              "</div>"
-            );
+            let Class = null;
+            if (parseFloat(val) < 0) Class = "redSpan";
+            else if (parseFloat(val) > 0) Class = "greenSpan";
+
+            return `<div class="ApexTooltip">
+            <div class="topDivTooltip"> 
+              <span>
+              ${w.globals.labels[dataPointIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span class="${Class}">${val}</span>
+            
+
+              </div>
+              </div>
+            `;
           }
         },
         labels: [],
@@ -223,6 +258,9 @@ export default {
           }
         },
         tooltip: {
+          followCursor: true,
+          intersect: false,
+          fillSeriesColor: true,
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let n = series[seriesIndex][dataPointIndex];
             let negative = false;
@@ -240,15 +278,22 @@ export default {
             let parts = n.toString().split(".");
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             let val = parts.join(".");
-            return (
-              '<div class="arrow_box">' +
-              "<span>" +
-              w.globals.labels[dataPointIndex] +
-              ": " +
-              val +
-              "</span>" +
-              "</div>"
-            );
+            let Class = null;
+            if (parseFloat(val) < 0) Class = "redSpan";
+            else if (parseFloat(val) > 0) Class = "greenSpan";
+            return `<div class="ApexTooltip">
+            <div class="topDivTooltip"> 
+              <span>
+              ${w.globals.labels[dataPointIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span class="${Class}">${val}</span>
+            
+
+              </div>
+              </div>
+            `;
           }
         },
         labels: [],
@@ -358,11 +403,18 @@ export default {
         plotOptions: {
           bar: {
             horizontal: true,
-            barHeight: "100%",
+            barHeight: "80%",
             distributed: true
           }
         },
-        colors: ["#33b2df", "#546E7A", "#d4526e", "#13d8aa", "#A5978B"],
+        colors: [
+          "#011627",
+          "#E09F3E",
+          "#9E2A2B",
+          "#05668D",
+          "#1AA47C",
+          "#335C67"
+        ],
         dataLabels: {
           enabled: true,
           formatter: function(value) {
@@ -385,13 +437,15 @@ export default {
           },
 
           style: {
+            fontFamily: "Vazir-Medium-FD",
             colors: ["#fff"]
           }
         },
         xaxis: {
           categories: [],
           title: {
-            text: "میلیارد ریال"
+            text: "میلیارد ریال",
+            offsetY: 25
           },
           labels: {
             // eslint-disable-next-line no-unused-vars
@@ -421,6 +475,38 @@ export default {
 
           offsetX: 109,
           offsetY: 500
+        },
+        tooltip: {
+          followCursor: true,
+          intersect: false,
+          fillSeriesColor: true,
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let n = series[seriesIndex][dataPointIndex];
+            // let val = ""
+            if (n != undefined) {
+              //   let parts = n.toString().split(".");
+              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              //  val = parts.join(".");
+              let val = n.toLocaleString();
+              return `<div class="ApexTooltip">
+            <div class="topDivTooltip"> 
+              <span>
+              ${w.globals.labels[dataPointIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span>${val}</span>
+            
+
+              </div>
+              </div>
+            `;
+            } else {
+              return null;
+            }
+
+            // n = n.toString().toLocaleString();
+          }
         }
       },
       PiechartOptions: {
@@ -430,13 +516,13 @@ export default {
           type: "pie",
           fontFamily: "Vazir-Medium-FD",
           animations: {
-            enabled: false
+            enabled: true
           },
           events: {
             // legendClick: function(chartContext, seriesIndex, config) {
             // },
             dataPointSelection: (event, chartContext, config) => {
-              this.pieChartClick(config.dataPointIndex);
+              this.pieChartClick(chartContext, config.dataPointIndex);
             }
           }
         },
@@ -446,6 +532,8 @@ export default {
           fontFamily: "Vazir-Medium-FD",
           position: "bottom"
         },
+        colors: ["#EF476F", "#E09F3E", "#5F2663"
+        , "#118AB2", "#073B4C","#73BB6F","#068292","#50A3AB","#B50D45","#5ACCB7"],
         labels: [],
         responsive: [
           {
@@ -563,14 +651,62 @@ export default {
     this.loadData();
   },
   methods: {
-    pieChartClick(seriesIndex) {
+    forceUpdate() {
+      this.ApexChartcomponentKey += 1;
+    },
+    PieChartBackButton() {
+      console.log(this.PieChartData);
+      let data = JSON.parse(JSON.stringify(this.PieChartData));
+      console.log(data);
+
+      let marketCaps = data.TopIndustries.marketCap;
+      let persianNames = data.TopIndustries.persianName;
+      this.Pieseries = marketCaps;
+      this.PiechartOptions.labels = persianNames;
+      this.PieChartkey = 0;
+      this.forceUpdate();
+    },
+    checkSign(change) {
+      if (change > 0) return "greenSpan";
+      else if (change < 0) return "redSpan";
+      else return "blackSpan";
+    },
+    pieChartClick(context, seriesIndex) {
       // this.PiechartOptions.labels = persianNames;
 
+      // console.log(founded[0].indexID);
+
+      if (seriesIndex == 9 && this.PieChartkey == 0) {
+        let data = JSON.parse(JSON.stringify(this.PieChartData));
+
+        this.Pieseries = data.OtherIndustries.marketCap;
+        this.PiechartOptions.labels = data.OtherIndustries.persianName;
+        this.PieChartkey = 1;
+        this.forceUpdate();
+      } else if (seriesIndex != 9 && this.PieChartkey == 0) {
+        // let name = context.w.globals.labels[seriesIndex];
+        // let dataClicked = this.PieChartData.TopIndustries.filter(e => {
+        //   return e.persianName == name;
+        // });
+        // this.$router.push({
+        //   name: "IndustriesDetail",
+        //   params: { id: dataClicked[0].indexID }
+        // });
+        this.$router.push({
+          name: "IndustriesDetail",
+          params: { id: this.PieChartData.TopIndustries.indexID[seriesIndex] }
+        });
+      } else {
+        this.$router.push({
+          name: "IndustriesDetail",
+          params: { id: this.PieChartData.OtherIndustries.indexID[seriesIndex] }
+        });
+      }
       // this.Pieseries = marketCaps;
-      this.$router.push({
-        name: "IndustriesDetail",
-        params: { id: seriesIndex }
-      });
+      // this.$router.push({
+      //   name: "IndustriesDetail",
+      //   params: { id: seriesIndex }
+      // });
     },
     changeTimeFrame() {
       this.ReturnSeries = [
@@ -578,37 +714,7 @@ export default {
       ];
       document.getElementById("fi").style.color = "red !important";
     },
-    index() {
-      this.$router.push({ name: "IndustriesDetail", params: { id: 2 } });
-    },
-    numberWithCommas(x) {
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
     loadData() {
-      // eslint-disable-next-line no-unused-vars
-      // this.getAll().then();
       // eslint-disable-next-line no-unused-vars
       this.getIndustries().then(resy => {
         // eslint-disable-next-line no-unused-vars
@@ -620,93 +726,53 @@ export default {
         });
       });
     },
-    async getAll() {
-      await this.axios
-        .get("/api/IndsutriesPage")
-        .then(first_response => {
-          this.IndustryData = first_response.data[0];
-          /////////////////
-          let second = first_response.data[1];
-          let persianNames = [];
-          let marketCaps = [];
-          let itemValue = [];
-          for (let item of second[0].TopIndustries) {
-            persianNames.push(item.persianName);
-            marketCaps.push(item.marketCap);
-            itemValue.push({ name: item.persianName, value: item.TradeValue });
-          }
-          marketCaps.push(second[1].Others.marketCapSum);
-          persianNames.push("سایر");
-          this.PiechartOptions.labels = persianNames;
-          this.Pieseries = marketCaps;
-          itemValue.sort(this.compareValues("value", "desc"));
-          itemValue = itemValue.slice(0, 6);
-          let names = [];
-          let values = [];
-          for (let item of itemValue) {
-            names.push(item.name);
-            values.push(item.value);
-          }
-          this.Barseries = [{ data: values }];
-          this.BarchartOptions.xaxis.categories = names;
-          /////////////
-          let third = first_response.data[2];
-          // this.HHseries = data;
-          // eslint-disable-next-line no-unused-vars
-          let HHseries2Labels = [];
-          let HHseries2data = [];
-          for (let i = 0; i < third.length; i++) {
-            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
-            HHseries2Labels.push(third[i]["CorrectName"]);
-            HHseries2data.push(third[i]["sum"]);
-          }
-          this.HHseries = [{ data: HHseries2data }];
-          this.HHoptions.labels = HHseries2Labels;
-          this.HHoptions.xaxis.categories = HHseries2Labels;
-          /////
-          let fourth = first_response.data[3];
-          // this.HHseries = data;
-          // eslint-disable-next-line no-unused-vars
-          let Impactseries2Labels = [];
-          let Impactseries2data = [];
-          for (let i = 0; i < fourth.length; i++) {
-            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
-            Impactseries2Labels.push(fourth[i]["CorrectName"]);
-            Impactseries2data.push(fourth[i]["IMPACT"]);
-          }
-          this.EffectOnIndexSeries = [{ data: Impactseries2data }];
-          this.EffectOnIndexOptions.labels = Impactseries2Labels;
-          this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
     async getPieChartData() {
       await this.axios.get("/api/IndexMarketCap").then(responsive => {
         let data = responsive.data;
-        let persianNames = [];
-        let marketCaps = [];
-        let itemValue = [];
-        for (let item of data[0].TopIndustries) {
-          persianNames.push(item.persianName);
-          marketCaps.push(item.marketCap);
-          itemValue.push({ name: item.persianName, value: item.TradeValue });
-        }
-        marketCaps.push(data[1].Others.marketCapSum);
+        // BarChart Data injection **************
+        this.Barseries = [{ data: data.BarChart.TradeValue }];
+        this.BarchartOptions.xaxis.categories = data.BarChart.persianName;
+        // *************************************
+
+        // PieChart Data injection**************
+        this.PieChartData = data.PieChart;
+        let marketCaps = data.PieChart.TopIndustries.marketCap;
+        marketCaps.push(data.PieChart.OtherIndustries.marketCapSum);
+        let persianNames = data.PieChart.TopIndustries.persianName;
         persianNames.push("سایر");
-        this.PiechartOptions.labels = persianNames;
         this.Pieseries = marketCaps;
-        itemValue.sort(this.compareValues("value", "desc"));
-        itemValue = itemValue.slice(0, 6);
-        let names = [];
-        let values = [];
-        for (let item of itemValue) {
-          names.push(item.name);
-          values.push(item.value);
-        }
-        this.Barseries = [{ data: values }];
-        this.BarchartOptions.xaxis.categories = names;
+        this.PiechartOptions.labels = persianNames;
+
+        // let persianNames = [];
+        // let marketCaps = [];
+        // let marketCapsOthers = [];
+        // let itemValue = [];
+        // for (let item of data.TopIndustries) {
+        //   persianNames.push(item.persianName);
+        //   marketCaps.push(item.marketCap);
+        //   itemValue.push({ name: item.persianName, value: item.TradeValue });
+        // }
+        // for (let item of data.Others.List) {
+        //   marketCapsOthers.push(item.marketCap);
+        //   this.persianNamesOthers.push(item.persianName);
+        // }
+        // marketCaps.push(data.Others.marketCapSum);
+        // persianNames.push("سایر");
+        // this.PiechartOptions.labels = persianNames;
+        // this.Pieseries = marketCaps;
+        // this.marketCapsOthers = marketCapsOthers;
+
+        // bar chart data fill MUST BE DONE IN BACKEND ** IMPORTANT **
+        // itemValue.sort(this.compareValues("value", "desc"));
+        // itemValue = itemValue.slice(0, 10);
+        // let names = [];
+        // let values = [];
+        // for (let item of itemValue) {
+        //   names.push(item.name);
+        //   values.push(item.value);
+        // }
+        // this.Barseries = [{ data: values }];
+        // this.BarchartOptions.xaxis.categories = names;
         // console.log(this.Barseries);
       });
     },
@@ -744,19 +810,18 @@ export default {
       await this.axios
         .get("/api/Indices/Impact")
         .then(responsea => {
-          let data = responsea.data;
-          // this.HHseries = data;
-          // eslint-disable-next-line no-unused-vars
-          let Impactseries2Labels = [];
-          let Impactseries2data = [];
-          for (let i = 0; i < data.length; i++) {
-            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
-            Impactseries2Labels.push(data[i]["CorrectName"]);
-            Impactseries2data.push(data[i]["IMPACT"]);
+          if (responsea.data != "noData") {
+            let data = responsea.data;
+            let Impactseries2Labels = [];
+            let Impactseries2data = [];
+            for (let i = 0; i < data.length; i++) {
+              Impactseries2Labels.push(data[i]["CorrectName"]);
+              Impactseries2data.push(data[i]["IMPACT"]);
+            }
+            this.EffectOnIndexSeries = [{ data: Impactseries2data }];
+            this.EffectOnIndexOptions.labels = Impactseries2Labels;
+            this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
           }
-          this.EffectOnIndexSeries = [{ data: Impactseries2data }];
-          this.EffectOnIndexOptions.labels = Impactseries2Labels;
-          this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
         })
         .catch(error => {
           console.error(error);
@@ -785,36 +850,47 @@ export default {
 };
 </script>
 <style>
-/* @import "~bootstrap/dist/css/bootstrap.css"; */
-/* #fi {
-  color: red !important;
-} */
-/* .apexcharts-pie-label,
-.apexcharts-datalabels,
-.apexcharts-datalabel,
-.apexcharts-datalabel-label,
-.apexcharts-datalabel-value {
-  cursor: default;
-  pointer-events: none;
-  font-family: "Vazir-Medium-FD" !important;
-} */
+.redSpan {
+  color: red;
+}
+.greenSpan {
+  color: green;
+}
+.ApexTooltip {
+  /* background-color: blueviolet; */
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 8px;
+  display: flex;
+  /* flex-wrap: nowrap; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+}
+.topDivTooltip {
+  background-color: #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.bottomDivTooltip {
+  background-color: #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
 .apexcharts-legend-text,
 .apexcharts-text,
 .apexcharts-title-text,
 .apexcharts-tooltip {
-  /* font-family: Poppins, Helvetica, "sans-serif" !important; */
   font-family: "Vazir-Medium-FD" !important;
 }
-/* .apexcharts-series {
-  font-family: "Vazir-Medium-FD" !important;
-
-}
-.apexcharts-text tspan {
-  font-family: "Vazir-Medium-FD" !important;
-}
-.apexcharts-legend-text,
-.apexcharts-text,
-.apexcharts-title-text {
-  font-family: "Vazir-Medium-FD" !important;
-} */
 </style>

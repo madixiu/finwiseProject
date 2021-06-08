@@ -17,15 +17,6 @@
             </b-input-group-append>
           </b-input-group>
         </b-col>
-        <!-- <b-col lg="4" xxl="4" class="mt-2">
-          <b-form-group>
-            <b-form-checkbox-group
-              v-model="selectedHeaderOptions"
-              :options="HeaderOptions"
-              @change="TriggerFilteredHeader"
-            ></b-form-checkbox-group>
-          </b-form-group>
-        </b-col> -->
       </b-row>
 
       <b-table

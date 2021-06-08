@@ -454,7 +454,14 @@ export default {
 .ticker-assembly-table-head {
   font-size: 0.8rem;
   font-weight: 500;
+  text-align: center;
+
 }
+
+/* .ticker-assembly-table-increaseCapital {
+  font-size: 0.8rem;
+  font-weight: 400;
+} */
 .ticker-assembly-table {
   text-align: center;
   font-size: 0.8rem;
@@ -464,6 +471,8 @@ export default {
 .ticker-assembly-table-row {
   direction: ltr;
   vertical-align: middle !important;
+  text-align: center;
+
 }
 .ticker-assembly-table-cell {
   text-align: center;
@@ -486,6 +495,8 @@ export default {
   text-align: right;
 }
 .ICheader {
-  font-size: 0.8rem !important;
+  font-size: 0.8em !important;
+  font-weight: 300;
+  text-align: center;
 }
 </style>

@@ -9,8 +9,24 @@
   > -->
     <v-skeleton-loader type="card" v-show="loading"></v-skeleton-loader>
 
-    <v-card :loading="loading">
-      <v-card-title
+    <v-card :loading="loading" shaped>
+      <v-toolbar dense class="elevation-2">
+        <v-toolbar-title>
+          ارزش معاملات
+          <span class="cellItemTradesValueChart mr-2">
+            {{
+              this.numberWithCommas(
+                this.roundTo(
+                  (this.jsonData.Tepix + this.jsonData.IFB) / 1000000000,
+                  0
+                )
+              )
+            }}
+            میلیارد ریال
+          </span>
+        </v-toolbar-title>
+      </v-toolbar>
+      <!-- <v-card-title
         >ارزش معاملات
         <span class="cellItemTradesValueChart mr-2">
           {{
@@ -24,7 +40,7 @@
           میلیارد ریال
         </span></v-card-title
       >
-      <v-divider class="mt-0"></v-divider>
+      <v-divider class="mt-0"></v-divider> -->
       <div id="ChartContainer_TradeValue"></div>
     </v-card>
   </div>

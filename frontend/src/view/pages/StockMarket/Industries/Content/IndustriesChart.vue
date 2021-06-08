@@ -1,16 +1,19 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="card card-custom">
+  <div>
     <v-card id="ParentCard" :height="cardheight">
-      <v-card-title id="ParentCardTitle">
+      <!-- <v-card-title id="ParentCardTitle">
         <span>صنایع</span>
-      </v-card-title>
+      </v-card-title> -->
+      <v-toolbar dense id="ParentCardTitle">
+            <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
+          </v-toolbar>
       <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
-        <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-11 mb-2">
+        <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-11">
           <div id="IndustriesChart"></div>
         </div>
-        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 mb-2 rtl_aligned">
+        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 rtl_aligned">
           <v-card>
             <v-card-title>تنظیمات</v-card-title>
             <!-- <v-divider class="mt-0"></v-divider> -->
@@ -44,7 +47,7 @@ import * as d3 from "d3";
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "ChartTradeValue",
-  props: { inputData: Object },
+  props: { inputData: Array },
   data() {
     return {
       cardheight: 0,

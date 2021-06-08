@@ -1,11 +1,19 @@
 <template>
-  <div class="row" style="padding-top:5px">
+  <div class="row">
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-card-title>LinkedIn</v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <div id="curator-feed-new-feed-layout-linkedin">
+          <v-toolbar dense>
+            <v-icon dense class="mb-2 pl-1" color="#0E76A8"
+              >mdi-linkedin</v-icon
+            >
+            <v-toolbar-title>LinkedIn</v-toolbar-title>
+          </v-toolbar>
+          <!-- <v-card-title>
+            <span>LinkedIn</span>
+            </v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider> -->
+          <div id="curator-feed-new-feed-layout-linkedin" class="mt-2">
             <a
               href="https://curator.io"
               target="_blank"
@@ -19,9 +27,15 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-card-title>Instagram</v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <div id="curator-feed-default-feed-layout">
+          <v-toolbar dense>
+            <i
+              class="v-icon notranslate pl-1 v-icon--dense mdi mdi-instagram theme--light instagram-icon"
+            ></i>
+            <v-toolbar-title>Instagram</v-toolbar-title>
+          </v-toolbar>
+          <!-- <v-card-title>Instagram</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider> -->
+          <div id="curator-feed-default-feed-layout" class="mt-2">
             <a
               href="https://curator.io"
               target="_blank"
@@ -35,8 +49,12 @@
     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-card-title>Twitch</v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
+          <v-toolbar dense>
+            <v-icon dense class="pl-1" color="#593a92">mdi-twitch</v-icon>
+            <v-toolbar-title>Twitch</v-toolbar-title>
+          </v-toolbar>
+          <!-- <v-card-title>Twitch</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider> -->
           <iframe
             src="https://player.twitch.tv/finwiselive&parent=https://finwise.ir"
             height="400"
@@ -51,42 +69,12 @@
 </template>
 
 <script>
-// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-// import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
 export default {
   name: "SocialMedia",
-  components: {
-    // IndexChart
-  },
-  data() {
-    return {
-      dataFetched: false,
-      highestTvalueData: [],
-      AssetTradeValue: [],
-      TodayTepix: [],
-      News: [],
-      ImpactsData: [],
-      HHData: [],
-      QData: [],
-      mostviewed: [],
-      TechnicalData: [],
-      ResponeseTimeout: {
-        getImpacts: true,
-        TradesValue: true,
-        getTradesAll: true,
-        getNews: true,
-        getTepixToday: true,
-        getHHData: true,
-        getHighestQ: true,
-        getTechnicalData: true
-      }
-    };
-  },
   created() {
     document.title = "Finwise - شبکه های اجتماعی";
   },
   mounted() {
-    // this.test();
     (function() {
       var i,
         e,
@@ -111,8 +99,23 @@ export default {
       e = d.getElementsByTagName(s)[0];
       e.parentNode.insertBefore(i, e);
     })();
-    // this.make_requests_handler();
   },
   methods: {}
 };
 </script>
+<style scoped>
+.instagram-icon {
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  -webkit-background-clip: text;
+  /* Also define standard property for compatibility */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>

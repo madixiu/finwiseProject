@@ -12,19 +12,50 @@ def IndexMarketCapRequest():
         return("noData")
 
 def dataAlter(input):
-    Sorted = []
-    Others = []
-    marketCapOthers = 0
-    input = sorted(input, key=lambda x : x['marketCap'], reverse=True)
-    
-    for i,item in enumerate(input):
+    PieChartTopIndustries = []
+    PieChartOthersIndustries = []
+    PiechartTopMarketCaps = []
+    PiechartOtherMarketCaps = []
+    PieChartTopNames = []
+    PieChartOtherNames = []
+    PieChartOtherindexID =[]
+    PieChartTopindexID = []
+    marketCapOthersSum = 0
+    pieData = sorted(input, key=lambda x : x['marketCap'], reverse=True)
+    barData = sorted(input, key=lambda x : x['TradeValue'], reverse=True)
+    for i,item in enumerate(pieData):
         if (i < 9):
-            Sorted.append(item)
+            # PieChartTopIndustries.append(item)
+            PiechartTopMarketCaps.append(item["marketCap"])
+            PieChartTopNames.append(item["persianName"])
+            PieChartTopindexID.append(item["indexID"])
         else:
-            marketCapOthers = item["marketCap"] + marketCapOthers
-            Others.append(item)
+            PiechartOtherMarketCaps.append(item["marketCap"])
+            marketCapOthersSum += item["marketCap"]
+            # PieChartOthersIndustries.append(item)
+            PieChartOtherNames.append(item["persianName"])
+            PieChartOtherindexID.append(item["indexID"])
 
-    result = [{"TopIndustries":Sorted},{"Others":{"marketCapSum":marketCapOthers,"List":Others}}]
+    PieChartData = {"TopIndustries":{"indexID":PieChartTopindexID,"persianName":PieChartTopNames,"marketCap":PiechartTopMarketCaps},
+                    "OtherIndustries":{"marketCapSum":marketCapOthersSum,"indexID":PieChartOtherindexID,"persianName":PieChartOtherNames,"marketCap":PiechartOtherMarketCaps}}
+
+    barData = barData[0:6]
+    # print(barData)
+    BarChartTradeValue = []
+    BarChartNames = []
+    BarChartindexID = []
+    check = []
+    for item in barData:
+        BarChartindexID.append(item["indexID"])
+        BarChartNames.append(item["persianName"])
+        BarChartTradeValue.append(item["TradeValue"])
+    BarChartData = {"indexID":BarChartindexID,"persianName":BarChartNames,"TradeValue":BarChartTradeValue}
+
+
+
+    result = {"PieChart":PieChartData,
+    "BarChart":BarChartData}
+
     return result
 
 # IndexMarketCapRequest()

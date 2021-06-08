@@ -3,8 +3,11 @@
   <!-- <div class="card card-custom"> -->
   <div>
     <v-card>
-      <v-card-title>شاخص کل</v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
+      <v-toolbar dense>
+        <v-toolbar-title>شاخص کل</v-toolbar-title>
+      </v-toolbar>
+      <!-- <v-card-title>شاخص کل</v-card-title> -->
+      <!-- <v-divider class="mt-0 mb-0"></v-divider> -->
       <div class="row">
         <div
           id="Chartcontainer_index"
@@ -600,7 +603,7 @@ export default {
       svg.on("touchend mouseleave", () => tooltip.call(callout2, null));
       svg
         .append("text")
-        .attr("class", "title")
+        // .attr("class", "title")
         .attr("x", this.width / 2 + this.margin.left)
         .attr("y", 40)
         .attr("text-anchor", "middle")

@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
-import WsService from "@/core/services/websocket.service.js";
+// import WsService from "@/core/services/websocket.service.js";
 import MarqueeText from "vue-marquee-text-component";
 import "core-js/stable";
 // import '@mdi/font/css/materialdesignicons.css'
@@ -116,7 +116,7 @@ import axiosPlugin from "@/core/plugins/axiosPlugin.js";
 Vue.use(axiosPlugin);
 // API service init
 // ApiService.init();
-WsService.init();
+// WsService.init();
 
 // Remove this to disable mock API
 // MockService.init();

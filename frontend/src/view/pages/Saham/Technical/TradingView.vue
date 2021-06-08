@@ -15,7 +15,7 @@ export default {
   props: {
     symbol: {
       type: String,
-      default: "شستا"
+      default: "آبادا"
     },
     datafeedUrl: {
       // default: 'https://demo_feed.tradingview.com',
@@ -101,7 +101,7 @@ export default {
       debug: false,
       symbol: this.symbol,
       datafeed: Datafeed,
-      custom_css_url: "../assets/chart.css",
+      custom_css_url: "./chart.css",
       interval: this.interval,
       container_id: this.containerId,
       library_path: this.libraryPath,
@@ -137,29 +137,29 @@ export default {
       // .setMarkers([
       // 	{ time: 1610693220, position: 'belowBar', color: 'orange', shape: 'arrowUp' },
       // ]);
-      tvWidget
-        .createButton()
-        .attr("title", "Click to show a notification popup")
-        .addClass("apply-common-tooltip")
-        .on("click", () =>
-          tvWidget.showNoticeDialog({
-            title: "Notification",
-            body: "TradingView Charting Library API works correctly",
-            callback: () => {}
-          })
-        )[0].innerHTML = "Notice";
+      // tvWidget
+      //   .createButton()
+      //   .attr("title", "Click to show a notification popup")
+      //   .addClass("apply-common-tooltip")
+      //   .on("click", () =>
+      //     tvWidget.showNoticeDialog({
+      //       title: "Notification",
+      //       body: "TradingView Charting Library API works correctly",
+      //       callback: () => {}
+      //     })
+      //   )[0].innerHTML = "Notice";
 
-      tvWidget
-        .createButton()
-        .attr("title", "Dark Mode")
-        .addClass("apply-common-tooltip")
-        .on("click", () => tvWidget.changeTheme("Dark"))[0].innerHTML = "Dark";
-      tvWidget
-        .createButton()
-        .attr("title", "Light Mode")
-        .addClass("apply-common-tooltip")
-        .on("click", () => tvWidget.changeTheme("Light"))[0].innerHTML =
-        "Light";
+      // tvWidget
+      //   .createButton()
+      //   .attr("title", "Dark Mode")
+      //   .addClass("apply-common-tooltip")
+      //   .on("click", () => tvWidget.changeTheme("Dark"))[0].innerHTML = "Dark";
+      // tvWidget
+      //   .createButton()
+      //   .attr("title", "Light Mode")
+      //   .addClass("apply-common-tooltip")
+      //   .on("click", () => tvWidget.changeTheme("Light"))[0].innerHTML =
+      //   "Light"
     });
   },
   destroyed() {
@@ -172,7 +172,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+.chart-page {
+  font-family: "Dirooz FD" !important;
+}
 .TVChartContainer {
   height: calc(90vh);
   direction: rtl;

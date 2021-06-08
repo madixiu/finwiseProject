@@ -112,6 +112,7 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
@@ -159,10 +160,13 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
-
+            "border-left-color": "#e2e2e2",
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "حجم معاملات",
@@ -170,10 +174,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "ارزش معاملات",
@@ -181,10 +189,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "قیمت دیروز",
@@ -192,10 +204,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "آخرین قیمت",
@@ -203,10 +219,31 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            direction: "ltr",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          // valueGetter: function (params) {
+          //   // let price = params.getValue("last")
+          //   // let percent = params.getValue ("lastPercent")
+          //   let price = params.data.last
+          //   // let percent = params.data.lastPercent
+
+          //   // return percent.toString() +"  " + price.toString()
+          //   return price
+
+          // },
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+            // let price = params.value.toLocaleString();
+            // let percent = params.data.lastPercent;
+            // let Class = "";
+            // if (percent > 0) Class = "greenCell";
+            // else if (percent < 0) Class = "redCell";
+            // return `<div><span class=${Class}>${percent}</span> <span>${price}</span></div>`;
+          }
         },
         {
           headerName: "درصد آخرین قیمت",
@@ -214,11 +251,22 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center",
             direction: "ltr"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            let Class = "";
+            let percent = params.value;
+            if (percent > 0) Class = "greenCell";
+            else if (percent < 0) {
+              Class = "redCell";
+              percent = "(" + Math.abs(percent) + ")";
+            }
+            return `<span class="${Class}"><span class="${Class}" style="font-size:0.9em">%</span>${percent}</span>`;
+          }
         },
         {
           headerName: "قیمت پایانی",
@@ -226,21 +274,47 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
+            direction: "ltr",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
+          //    cellRenderer: function(params) {
+          //   let price = params.data.close.toLocaleString();
+          //   let percent = params.data.closePercent;
+          //   let Class = "";
+          //   if (percent > 0) Class = "greenCell";
+          //   else if (percent < 0) {Class = "redCell";
+          //   percent = "(" + Math.abs(percent)+")"}
+          //   return `<div><span class=${Class}>%${percent}</span> <span>${price}</span></div>`;
+          // }
         },
+
         {
           headerName: "درصد قیمت پایانی",
           field: "closePercent",
           cellStyle: {
             display: "flex",
             "justify-content": "center",
-
+            "border-left-color": "#e2e2e2",
+            direction: "ltr",
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            let Class = "";
+            let percent = params.value;
+            if (percent > 0) Class = "greenCell";
+            else if (percent < 0) {
+              Class = "redCell";
+              percent = "(" + Math.abs(percent) + ")";
+            }
+            return `<span class="${Class}">%${percent}</span>`;
+          }
         },
         {
           headerName: "کف مجاز قیمت",
@@ -248,10 +322,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "سقف مجاز قیمت",
@@ -260,21 +338,44 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
+          },
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
           }
         },
-        { headerName: "EPS", field: "EPS", hide: true },
+        {
+          headerName: "EPS",
+          field: "EPS",
+          hide: true,
+          sortable: true,
+          cellStyle: {
+            display: "flex",
+            "justify-content": "center",
+            "border-left-color": "#e2e2e2",
+
+            "align-items": "center"
+          },
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
+        },
         {
           headerName: "بالاترین قیمت",
           field: "high",
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "کمترین قیمت",
@@ -282,10 +383,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "اولین قیمت",
@@ -293,10 +398,14 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
-          sortable: true
+          sortable: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "تعداد خرید حقیقی",
@@ -304,11 +413,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "تعداد خرید حقوقی",
@@ -316,11 +429,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "حجم خرید حقیقی",
@@ -328,11 +445,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "حجم خرید حقوقی",
@@ -340,11 +461,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "تعداد فروش حقیقی",
@@ -352,11 +477,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "تعداد فروش حقوقی",
@@ -364,11 +493,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "حجم فروش حقیقی",
@@ -376,11 +509,15 @@ export default {
           cellStyle: {
             display: "flex",
             "justify-content": "center",
+            "border-left-color": "#e2e2e2",
 
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         },
         {
           headerName: "حجم فروش حقوقی",
@@ -392,7 +529,10 @@ export default {
             "align-items": "center"
           },
           sortable: true,
-          hide: true
+          hide: true,
+          cellRenderer: function(params) {
+            return params.value.toLocaleString();
+          }
         }
       ],
       FundsTableHeader: [
@@ -657,7 +797,11 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-// @import "ag-grid-community/dist/styles/ag-grid.css";
-// @import "ag-grid-community/dist/styles/ag-theme-balham.css";
+<style>
+.redCell {
+  color: red;
+}
+.greenCell {
+  color: green;
+}
 </style>

@@ -1,120 +1,120 @@
 <template>
   <div>
-    <div class="col-12">
-      <!-- User Interface controls -->
-      <v-card>
-        <v-toolbar dense flat>
-          <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
-          <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
+    <!-- <div class="col-12"> -->
+    <!-- User Interface controls -->
+    <v-card>
+      <v-toolbar dense>
+        <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
+        <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
 
-          <!-- <v-card-title v-if="cardKey">لیست مجامع</v-card-title> -->
-          <!-- <v-card-title v-if="!cardKey">{{ AssemblyName }}</v-card-title> -->
-          <v-card-subtitle style="textalign:right" v-if="!cardKey">
-            <span> {{ subTitle }}</span>
-          </v-card-subtitle>
-          <v-spacer></v-spacer>
+        <!-- <v-card-title v-if="cardKey">لیست مجامع</v-card-title> -->
+        <!-- <v-card-title v-if="!cardKey">{{ AssemblyName }}</v-card-title> -->
+        <v-card-subtitle style="textalign:right" v-if="!cardKey">
+          <span> {{ subTitle }}</span>
+        </v-card-subtitle>
+        <v-spacer></v-spacer>
 
-          <v-btn v-if="!cardKey" icon @click="cardKey = !cardKey">
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <transition-group name="slide-fade" tag="div">
-          <div v-show="cardKey" key="1">
-            <b-col lg="4" class="my-1">
-              <b-input-group size="sm">
-                <b-form-input
-                  id="filter-input"
-                  v-model="filter"
-                  type="search"
-                  placeholder="جستجو"
-                ></b-form-input>
+        <v-btn v-if="!cardKey" icon @click="cardKey = !cardKey">
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <transition-group name="slide-fade" tag="div">
+        <div v-show="cardKey" key="1">
+          <b-col lg="4" class="my-1">
+            <b-input-group size="sm">
+              <b-form-input
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                placeholder="جستجو"
+              ></b-form-input>
 
-                <b-input-group-append>
-                  <b-button :disabled="!filter" @click="filter = ''"
-                    >پاک کردن</b-button
-                  >
-                </b-input-group-append>
-              </b-input-group>
-            </b-col>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''"
+                  >پاک کردن</b-button
+                >
+              </b-input-group-append>
+            </b-input-group>
+          </b-col>
 
-            <!-- Main table element -->
-            <b-table
-              thClass="Descision-table-head"
-              class="Descision-table"
-              tbody-tr-class="Descision-table-row"
-              striped
-              :items="ListData"
-              :fields="headersListData"
-              :current-page="currentPage"
-              :per-page="perPage"
-              :filter="filter"
-              :filter-debounce="1200"
-              :busy.sync="isBusy"
-              :no-provider-paging="true"
-              no-border-collapse
-              dense
-              bordered
-              outlined
-              small
-              hover
-              responsive
-              @filtered="onFiltered"
-            >
-              <template #table-busy>
-                <div class="text-center text-danger my-2">
-                  <b-spinner class="align-middle mr-2"></b-spinner>
-                  <strong>شکیبا باشید</strong>
-                </div>
-              </template>
-              <template #cell(title)="row">
-                <b class="AssemblyTitle" @click="titleClick(row)">{{
-                  row.value
-                }}</b>
-              </template>
+          <!-- Main table element -->
+          <b-table
+            thClass="Descision-table-head"
+            class="Descision-table"
+            tbody-tr-class="Descision-table-row"
+            striped
+            :items="ListData"
+            :fields="headersListData"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :filter="filter"
+            :filter-debounce="1200"
+            :busy.sync="isBusy"
+            :no-provider-paging="true"
+            no-border-collapse
+            dense
+            bordered
+            outlined
+            small
+            hover
+            responsive
+            @filtered="onFiltered"
+          >
+            <template #table-busy>
+              <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle mr-2"></b-spinner>
+                <strong>شکیبا باشید</strong>
+              </div>
+            </template>
+            <template #cell(title)="row">
+              <b class="AssemblyTitle" @click="titleClick(row)">{{
+                row.value
+              }}</b>
+            </template>
 
-              <template #cell(HtmlUrl)="row">
-                <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
+            <template #cell(HtmlUrl)="row">
+              <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
               لینک
             </b-button> -->
-                <v-icon
-                  size="15px"
-                  color="#4682B4"
-                  @click="info(row.item)"
-                  class="mr-1"
-                  >mdi-link-variant</v-icon
-                >
-              </template>
-            </b-table>
-            <b-col sm="7" md="6" class="my-1">
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="totalRows"
-                :per-page="perPage"
-                align="fill"
-                size="sm"
-                class="my-0 paginationClass"
-              ></b-pagination>
-            </b-col>
-          </div>
-          <div v-if="!cardKey" key="2">
-            <!-- ******************** TABLE COMPONENT ********************* -->
-            <AssemblyTables
-              :ShareholdersItems="ShareholdersData"
-              :ChiefItems="ChiefData"
-              :SummaryItems="SummaryData"
-              :ICitems="ICData"
-              :StatementItems="StatementData"
-              :CEOItems="CEOData"
-              :BoardItems="BoardData"
-              :NewBoardItems="NewBoardData"
-              :WageItems="WageData"
-            >
-            </AssemblyTables>
-            <!-- ******************** TABLE COMPONENT ********************* -->
-          </div>
-        </transition-group>
-      </v-card>
-    </div>
+              <v-icon
+                size="15px"
+                color="#4682B4"
+                @click="info(row.item)"
+                class="mr-1"
+                >mdi-link-variant</v-icon
+              >
+            </template>
+          </b-table>
+          <b-col sm="7" md="6" class="my-1">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              size="sm"
+              class="my-0 paginationClass"
+            ></b-pagination>
+          </b-col>
+        </div>
+        <div v-if="!cardKey" key="2" class="mt-2">
+          <!-- ******************** TABLE COMPONENT ********************* -->
+          <AssemblyTables
+            :ShareholdersItems="ShareholdersData"
+            :ChiefItems="ChiefData"
+            :SummaryItems="SummaryData"
+            :ICitems="ICData"
+            :StatementItems="StatementData"
+            :CEOItems="CEOData"
+            :BoardItems="BoardData"
+            :NewBoardItems="NewBoardData"
+            :WageItems="WageData"
+          >
+          </AssemblyTables>
+          <!-- ******************** TABLE COMPONENT ********************* -->
+        </div>
+      </transition-group>
+    </v-card>
+    <!-- </div> -->
   </div>
 </template>
 <script>

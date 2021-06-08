@@ -19,16 +19,16 @@
                 <span class="spandata"> {{ lastUpdated }}</span>
               </h6>
               <v-btn icon :href="this.subheaders.websiteUrl" target="_blank">
-                <v-icon>mdi-web</v-icon>
+                <v-icon color="#188dc9">mdi-web</v-icon>
               </v-btn>
               <v-btn icon :href="this.subheaders.facebookUrl" target="_blank">
-                <v-icon>mdi-facebook</v-icon>
+                <v-icon color="#3b5998">mdi-facebook</v-icon>
               </v-btn>
               <v-btn icon :href="this.subheaders.twitterUrl" target="_blank">
-                <v-icon>mdi-twitter</v-icon>
+                <v-icon color="#00acee">mdi-twitter</v-icon>
               </v-btn>
               <v-btn icon :href="this.subheaders.githubUrl" target="_blank">
-                <v-icon>mdi-git</v-icon>
+                <v-icon color="#e94e31">mdi-git</v-icon>
               </v-btn>
             </div>
             <div class="col-xxl-4 col-lg-4 col-md-12 ">
@@ -367,6 +367,9 @@ export default {
 };
 </script>
 <style scoped>
+.web-icon{
+  color:black
+}
 .cellItem {
   direction: ltr;
   text-align: right;

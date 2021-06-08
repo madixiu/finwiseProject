@@ -54,7 +54,7 @@
             v-bind:class="[
               item.Change > 0 ? 'tickerTapeChangeGreen' : 'tickerTapeChangeRed'
             ]"
-            >mdi-chevron-{{ item.Change > 0 ? "up" : "down" }}</v-icon
+            >mdi-menu-{{ item.Change > 0 ? "up" : "down" }}</v-icon
           >
         </div>
       </div>

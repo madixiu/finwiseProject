@@ -2,10 +2,10 @@ import Vue from "vue";
 // import store from "../store";
 
 // let vm = this
-let URI = "wss://finwise.ir";
-// let URI = "ws://localhost";
+let URI = "wss://www.finwise.ir";
+// let URI = "ws://localhost:8000";
 
-// let URI = "wss://171.22.25.73";
+// let URI = "ws://171.22.25.73";
 
 const WsService = {
   init() {
@@ -17,15 +17,15 @@ const WsService = {
       // let highestDemand = new WebSocket("ws://" + URI + "/ws/HighestDemands");
 
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      let highestVolume = new WebSocket(URI + "/ws/HighestVolume");
-      let marketWatch = new WebSocket(URI + "/ws/marketwatch");
-      let Optoins = new WebSocket(URI + "/ws/options");
-      let marketMap = new WebSocket(URI + "/ws/marketmap");
-      let LiveTickerData = new WebSocket(URI + "/ws/liveTickerData");
-      let Sandoq = new WebSocket(URI + "/ws/funds");
+      // let highestVolume = new WebSocket(URI + "/ws/HighestVolume");
+      // let marketWatch = new WebSocket(URI + "/ws/marketwatch");
+      // let Optoins = new WebSocket(URI + "/ws/options");
+      // let marketMap = new WebSocket(URI + "/ws/marketmap");
+      // let LiveTickerData = new WebSocket(URI + "/ws/liveTickerData");
+      // let Sandoq = new WebSocket(URI + "/ws/funds");
       let Oraq = new WebSocket(URI + "/ws/oraq");
-      let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
-      let Crypto = new WebSocket(URI + "/ws/Crypto");
+      // let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
+      // let Crypto = new WebSocket(URI + "/ws/Crypto");
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
       // Vue.prototype.$socketMostViewed = MostViewed;
@@ -36,15 +36,15 @@ const WsService = {
 
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-      Vue.prototype.$socketMarketHighestTValues = highestVolume;
-      Vue.prototype.$socketMarketWatch = marketWatch;
-      Vue.prototype.$socketMarketMap = marketMap;
-      Vue.prototype.$socketLiveTickerData = LiveTickerData;
-      Vue.prototype.$socketOptions = Optoins;
-      Vue.prototype.$socketSandoq = Sandoq;
+      // Vue.prototype.$socketMarketHighestTValues = highestVolume;
+    //   Vue.prototype.$socketMarketWatch = marketWatch;
+    //   Vue.prototype.$socketMarketMap = marketMap;
+    //   Vue.prototype.$socketLiveTickerData = LiveTickerData;
+    //   Vue.prototype.$socketOptions = Optoins;
+    //   Vue.prototype.$socketSandoq = Sandoq;
       Vue.prototype.$socketOraq = Oraq;
-      Vue.prototype.$socketCrypto = Crypto;
-      Vue.prototype.$socketTaqadom = HaghTaghadom;
+    //   Vue.prototype.$socketCrypto = Crypto;
+    //   Vue.prototype.$socketTaqadom = HaghTaghadom;
     } catch (error) {
       console.error("error in websocket:" + error);
     }

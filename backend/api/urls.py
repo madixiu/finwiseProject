@@ -37,8 +37,8 @@ urlpatterns = [
    path("LatestIC",getLastestIC),
    path("LatestICDone/<identifier>/",getLastestICDone),
    path("Indices/HistoricCap/",getHistoricCap),
-   path("Indices/Impact/",getIndicesImpact),
-   path("Indices/HH/",getIndicesHH),
+   path("Indices/Impact",getIndicesImpact),
+   path("Indices/HH",getIndicesHH),
    path("IndsutriesPage",getAllIndustriesData),
 
    path("Dashboard",getAllDashboard),

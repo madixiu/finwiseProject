@@ -2,21 +2,77 @@
   <!--begin::Mixed Widget 14-->
   <!-- <div class="card card-custom card-stretch gutter-b"> -->
   <div class="col-12" style="padding-right:0px;padding-top:0px">
-    <v-card width="100%">
+    <v-card width="100%" shaped>
       <!--begin::Header-->
       <!-- <div class="card-header border-0 pt-2"> -->
       <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
         بیشترین ارزش معاملات
       </h3> -->
-      <v-card-title>
+      <v-toolbar dense>
+        <v-toolbar-title>
+          ربات تحلیلگر تکنیکال
+        </v-toolbar-title>
+        <template v-slot:extension>
+          <v-tabs v-model="selectedAttribute" fixed-tabs>
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab>
+              <v-icon color="#1AA47C" small>mdi-trending-up</v-icon>
+
+              <span style="font-weight:600">بهترین</span>
+            </v-tab>
+
+            <v-tab>
+              <v-icon color="#9E2A2B" small>mdi-trending-down</v-icon>
+
+              <span style="font-weight:600">بدترین</span>
+            </v-tab>
+          </v-tabs>
+        </template>
+      </v-toolbar>
+      <v-tabs-items v-model="selectedAttribute">
+        <v-tab-item
+          v-for="itemR in markets"
+          :key="itemR.key"
+          :value="itemR.key"
+        >
+          <div class="FinancialStrength" v-if="loading">
+            <b-spinner small></b-spinner>
+            در حال بارگزاری
+          </div>
+
+          <v-data-table
+            dense
+            v-if="loading == false"
+            :headers="mvheaders"
+            :items="filteredItems"
+            :hide-default-footer="true"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            class="elevation-1 FinancialStrength"
+            :items-per-page="10"
+          >
+            <template v-slot:[`item.ticker`]="{ item }">
+              <v-chip small label :to="linkcreated(item)">{{
+                item.ticker
+              }}</v-chip>
+            </template>
+            <template v-slot:[`item.sum`]="{ item }">
+              <div style="direction:ltr;text-align:right">
+                <span class="cellItem">{{ item.sum }}</span>
+              </div>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+      </v-tabs-items>
+      <!-- <v-card-title>
         ربات تحلیلگر تکنیکال
       </v-card-title>
-      <v-divider class="mt-0"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider> -->
       <!-- </div> -->
       <!--end::Header-->
       <!--begin::Body-->
-      <div class="card-body d-flex flex-column">
-        <v-tabs>
+      <!-- <div class="mt-2 pb-4">
+        <v-tabs centered slider-color="yellow">
           <v-tab
             v-for="item in markets"
             :key="item.key"
@@ -55,7 +111,7 @@
             </v-data-table>
           </v-tab-item>
         </v-tabs>
-      </div>
+      </div> -->
       <!--end::Body-->
     </v-card>
   </div>
@@ -68,20 +124,19 @@ export default {
   props: { inputDataTechnical: Array },
   data() {
     return {
-      search: "",
       sortBy: "Value",
       sortDesc: true,
       selectedMarket: 1,
       loading: true,
       DataItems: [],
       markets: [
-        { key: 1, value: "بهترین", shorthanded: "بهترین" },
-        { key: 2, value: "بدترین", shorthanded: "بدترین" }
+        { key: 0, value: "بهترین", shorthanded: "بهترین" },
+        { key: 1, value: "بدترین", shorthanded: "بدترین" }
       ],
       // WebsocketRequest: true,
       lowestValues: [],
       highestValues: [],
-      selectedAttribute: 1,
+      selectedAttribute: 0,
       mvheaders: [
         { text: "نماد", value: "ticker" },
         { text: "امتیاز", value: "sum" }
@@ -90,7 +145,7 @@ export default {
   },
   computed: {
     filteredItems() {
-      if (this.selectedAttribute == 1) {
+      if (this.selectedAttribute == 0) {
         return this.highestValues;
       } else {
         return this.lowestValues;
@@ -101,38 +156,9 @@ export default {
     linkcreated(item) {
       return { name: "TickerOverall", params: { id: item.firm } };
     },
-    numberWithCommas(x) {
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
-    GetFiltered(selectedItem) {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
-      this.selectedAttribute = selectedItem;
-      // console.log(this.selectedAttribute)
-    },
+    // GetFiltered(selectedItem) {
+    //   this.selectedAttribute = selectedItem;
+    // },
     loadData() {
       if (
         !(
@@ -141,7 +167,6 @@ export default {
         )
       ) {
         this.loading = false;
-        // console.log(this.inputDataTechnical);
         this.highestValues = this.inputDataTechnical[0];
         this.lowestValues = this.inputDataTechnical[1];
       }

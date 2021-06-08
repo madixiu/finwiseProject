@@ -2,6 +2,7 @@
 import requests
 import json
 from .util.Convereter_trunc import truncater
+from .util.unixToUTCunix import timeToUnix
 # import time
 def Top5MostViewed():
     head = {'Accept-Profile':'marketwatch'}
@@ -129,26 +130,24 @@ def AllIndicesImpact():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_IndicesImpactOnIndex',headers=head )
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        js = json.loads(resp.text)
+        js = sorted(js, key=lambda x: x['IMPACT'], reverse = True)
+        return (js)
     else:
         return("noData")    
 def AllIndicesHH():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_Industries_HH',headers=head )
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        js = json.loads(resp.text)
+        js = sorted(js, key=lambda x: x['sum'], reverse = True)
+        return (js)
     else:
         return("noData")    
 
 
-
-# ****************************************************************************************************************                 
+# ****************************************************************************************************************
+# *********************************************INDUSTRY DETAIL*****************************************************                 
 def getIndicesDetails(identifier):
     head = {'Accept-Profile':'indices'}
     head2 = {'Accept-Profile':'technical'}
@@ -170,7 +169,11 @@ def getIndicesDetails(identifier):
 
     if ShakhesResp.status_code == 200:
         ShakhesJS = json.loads(ShakhesResp.text)
-        return ([result,ShakhesJS])
+        ShakhesJS = ShakhesDataModifier(ShakhesJS)
+        # result.append({"Tepix":ShakhesJS})
+        result["Tepix"] = ShakhesJS
+
+        return result
         # return(json.loads(resp.text))
     else:
         return("NoData")  
@@ -179,9 +182,23 @@ def alterData(input):
     input = sorted(input, key=lambda x : x['ticker'], reverse=False)
     # for index,item in enumerate(input):
     for item in input:
-        if item["close"] and item["yesterday"] !=None:
+        if item["close"] == None:
+            item["close"] = 0
+        if item["yesterday"] == None:
+            item["yesterday"] = 0
+
+        if item["close"] and item["yesterday"] !=0:
             item["lastPercent"] = truncater(((item["close"] - item["yesterday"])/item["close"]) * 100)
-            item["HH"] = (item["VolumeBuy_Haghighi"] - item["VolumeSell_Haghighi"]) * item["close"]
+        else:
+            item["lastPercent"] = 0
+        
+        if item["VolumeBuy_Haghighi"] == None:
+            item["VolumeBuy_Haghighi"] = 0
+        if item["VolumeSell_Haghighi"] == None:
+            item["VolumeSell_Haghighi"] = 0
+
+        item["HH"] = (item["VolumeBuy_Haghighi"] - item["VolumeSell_Haghighi"]) * item["close"]
+    
     return input
     
 def AddTechnicalData(input,extraInput):
@@ -193,44 +210,66 @@ def AddTechnicalData(input,extraInput):
     return input
 
 def DataModifier(input):
+    
     result = {}
-    temp = []
-    temp2 = []
-    temp3 = []
-    temp4 = []
-    temp5 = []
+    Impact = []
+    marketCap = []
+    HH = []
+    technical = []
+    table = []
     ImpactSum = 0
     HHSum = 0
     for item in input:
+        if item["last"] == None:
+            item["last"] = 0
+        if item["marketcap"] == None:
+            item["marketcap"] = 0
         if item["Impact"] == None:
             item["Impact"] = 0
         if item["signal"] == "NaN":
             item["signal"] = 0
-        temp.append({"ticker":item["ticker"],"Impact":item["Impact"]})
-        temp2.append({"ticker":item["ticker"],"marketcap":item["marketcap"]})
-        temp3.append({"ticker":item["ticker"],"HH":item["HH"]})
-        temp4.append({"ticker":item["ticker"],"signal":item["signal"]})
-        temp5.append({"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"],"marketcap":item["marketcap"]})
+
+
+        Impact.append({"ticker":item["ticker"],"Impact":item["Impact"]})
+        marketCap.append({"ticker":item["ticker"],"marketcap":item["marketcap"]})
+        HH.append({"ticker":item["ticker"],"HH":item["HH"]})
+        technical.append({"ticker":item["ticker"],"signal":item["signal"]})
+        table.append({"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"],"marketcap":item["marketcap"]})
         ImpactSum += item["Impact"]
         HHSum += item["HH"]
 
-    temp = sorted(temp, key=lambda x : x['Impact'], reverse=True)
-    temp2 = sorted(temp2, key=lambda x : x['marketcap'], reverse=True)
-    temp3 = sorted(temp3, key=lambda x : x['HH'], reverse=True)
-    temp4 = sorted(temp4, key=lambda x : x['signal'], reverse=True)
-    temp5 = sorted(temp5, key=lambda x : x['marketcap'], reverse=True)
+    Impact = sorted(Impact, key=lambda x : x['Impact'], reverse=True)
+    marketCap = sorted(marketCap, key=lambda x : x['marketcap'], reverse=True)
+    HH = sorted(HH, key=lambda x : x['HH'], reverse=True)
+    technical = sorted(technical, key=lambda x : x['signal'], reverse=True)
+    table = sorted(table, key=lambda x : x['lastPercent'], reverse=True)
 
 
-    result["Impact"] = {"ImpactData" : temp, "Sum":ImpactSum}
-    result["marketCap"] = {"marketCapData" : temp2}
-    result["HH"] = {"HHData":temp3, "Sum":HHSum}
-    result["Technical"] = {"TechnicalData":temp4}
-    result["Table"] = {"TableData":temp5}
+    result["Impact"] = {"ImpactData" : Impact, "Sum":ImpactSum}
+    result["marketCap"] = {"marketCapData" : marketCap}
+    result["HH"] = {"HHData":HH, "Sum":HHSum}
+    result["Technical"] = {"TechnicalData":technical}
+    result["Table"] = {"TableData":table}
     return result
 
 
+def ShakhesDataModifier(input):
+    export = []
+    RaWdata = []
+    apexData = []
+    
+    input = input [0:15]
+    for item in input:
+        time = item['HourMinute']
+        hour = int(time[0:2])
+        minute = int(time[3:5])
+        UTCtimeUNIX = timeToUnix(hour,minute)
+        RaWdata.append({"HourMinute":item["HourMinute"],"Value":item["Value"],"unix":UTCtimeUNIX})
+        apexData.append([UTCtimeUNIX,item["Value"]])
+    export = {'CorrectName':item['CorrectName'],'RaWdata': RaWdata,"apexData":apexData}
+    return export
 
-
+# ****************************************************************************************************************
 # ****************************************************************************************************************
 def TradeValueHH():
     head = {'Accept-Profile':'marketwatch'}

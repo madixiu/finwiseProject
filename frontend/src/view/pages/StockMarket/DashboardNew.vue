@@ -57,7 +57,6 @@ export default {
   },
   data() {
     return {
-      dataFetched: false,
       highestTvalueData: [],
       AssetTradeValue: [],
       TodayTepix: [],

@@ -113,15 +113,17 @@ export default {
           );
       });
     },
+    // shows selected searched item (set to nothing)
+    // eslint-disable-next-line no-unused-vars
     getResultValue(result) {
-      return result.ticker;
+      return "";
     },
     //----------------------------------
     handleSubmit(result) {
-      if (result.TypeID == 1 || result.TypeID == 25)
+      if (result.TypeID == 1 || result.TypeID == 25) {
         // this.$router.push({ name: "TickerOverall", params: { id: result.ID } });
         this.$router.push({ path: `/ticker/Overview/Overall/${result.ID}` });
-      else {
+      } else {
         if (result.TypeID == 1000)
           this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
         else {

@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-custom ">
+  <div>
     <!-- <v-skeleton-loader
       type=" table-heading,table-row@12"
       v-if="loading"

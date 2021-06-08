@@ -9,11 +9,57 @@
     <!-- table -->
     <div class="row mr-1 ml-1">
       <v-card width="100%">
+        <!-- <v-toolbar dense>
+          <v-col></v-col>
+          <v-spacer></v-spacer>
+          <v-col cols="1">
+            <span>بازار</span>
+          </v-col>
+          <v-col cols="2">
+            <b-form-select
+              class=""
+              label="بازار"
+              v-model="tableMarketSelected"
+              :options="tableMarketFilters"
+              @input="test"
+            ></b-form-select>
+          </v-col>
+          <v-col cols="1">
+            <span>صنعت</span>
+          </v-col>
+          <v-col cols="6" class="">
+            <v-select
+              style="height: 30px !important;font: size 0.8em;"
+              v-model="valuesss"
+              :items="itemsss"
+              label="صنعت"
+              multiple
+              outlined
+              dense
+              clearable
+              deletable-chips
+              chips
+            >
+              <template v-slot:selection="{ item, index }">
+                <v-chip v-if="index === 0" color="#1867c0" label outlined small>
+                  <span>{{ item }}</span>
+                </v-chip>
+                <span
+                  v-if="index === 1"
+                  class="grey--text text-caption"
+                  style="font-family:'Vazir-Medium-FD'"
+                >
+                  (+{{ valuesss.length - 1 }} صنعت دیگر)
+                </span>
+              </template>
+            </v-select>
+          </v-col>
+        </v-toolbar> -->
         <div id="marketwatchFilterRow1" class="row">
           <div
-            class="col-xxl-1 col-lg-1 col-md-6 col-sm-12 mr-1 mt-2 dropdown-rtl"
+            class="col-xxl-1 col-lg-1 col-md-6 col-sm-12 mr-1 mt-1 dropdown-rtl"
           >
-            <span>بازار</span>
+            <span style="font-size:0.9em">بازار</span>
             <b-form-select
               label="بازار"
               v-model="tableMarketSelected"
@@ -381,6 +427,8 @@ export default {
   components: {},
   data() {
     return {
+      itemsss: ["foo", "bar", "fizz", "buzz", "fizzbuzz", "foobar"],
+      valuesss: [],
       height: "370px",
       filterOn: ["ticker"],
       isBusy: true,
@@ -780,6 +828,7 @@ export default {
     async MarketWatchFilterListReq() {
       await this.axios.get("/api/marketwatchfilterlists").then(response => {
         this.tableMarketIndustryFilters = response.data;
+        this.itemsss = response.data;
       });
     },
     MarketWatchFilterPost() {
