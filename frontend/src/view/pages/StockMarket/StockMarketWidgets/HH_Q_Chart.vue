@@ -33,6 +33,9 @@ export default {
       jsonData: [],
       jsonData2: [],
       loading: true,
+      fontsizeOf: 1,
+      datasizeOf: 10,
+      shortenNames: false,
       highestValues: [],
       highestVolumes: [],
       highestImpcats: [],
@@ -65,8 +68,9 @@ export default {
     }
   },
   mounted() {
-    this.renderData1();
     this.initrender();
+    this.renderData1();
+    // this.initrender();
     if (this.isRealValue(this.highestValues)) {
       this.renderChart1();
     }
@@ -108,9 +112,9 @@ export default {
       if (!(this.inputDataHH === undefined || this.inputDataHH.length == 0)) {
         this.jsonData = [...this.inputDataHH];
         this.jsonData.sort((a, b) => b.netHaghighi - a.netHaghighi);
-        this.highestValues = this.jsonData.slice(0, 10);
+        this.highestValues = this.jsonData.slice(0, this.datasizeOf);
         this.jsonData.sort((a, b) => a.netHaghighi - b.netHaghighi);
-        this.highestVolumes = this.jsonData.slice(0, 10);
+        this.highestVolumes = this.jsonData.slice(0, this.datasizeOf);
         // console.log("HH");
         // console.log(this.highestValues);
         // console.log(this.highestVolumes);
@@ -118,12 +122,12 @@ export default {
       if (!(this.inputDataQ === undefined || this.inputDataQ.length == 0)) {
         this.jsonData2 = [...this.inputDataQ[1]];
         this.jsonData2.sort((a, b) => b.Value - a.Value);
-        this.highestImpcats = this.jsonData2.slice(0, 10);
+        this.highestImpcats = this.jsonData2.slice(0, this.datasizeOf);
         // console.log("Demands");
         // console.log(this.highestImpcats);
         this.jsonData3 = [...this.inputDataQ[0]];
         this.jsonData3.sort((a, b) => b.Value - a.Value);
-        this.lowestImpcats = this.jsonData3.slice(0, 10);
+        this.lowestImpcats = this.jsonData3.slice(0, this.datasizeOf);
         // console.log("Supplies");
         // console.log(this.lowestImpcats);
       }
@@ -132,6 +136,7 @@ export default {
       if (document.getElementById("ChartContainer_HH_svg")) {
         d3.selectAll("#ChartContainer_HH_svg").remove();
       }
+
       this.width =
         0.85 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
       this.height = (this.width * 8) / 16;
@@ -156,7 +161,59 @@ export default {
             this.margin.bottom}`
         )
         .attr("preserveAspectRatio", "xMidYMid meet");
-      // eslint-disable-next-line no-unused-vars
+      if (parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 1000) {
+        this.fontsizeOf = 1.1;
+        this.datasizeOf = 10;
+        this.shortenNames = false;
+      }
+      if (
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 800 &&
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 1000
+      ) {
+        this.fontsizeOf = 1;
+        this.datasizeOf = 8;
+        this.shortenNames = true;
+      }
+      if (
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 600 &&
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 800
+      ) {
+        this.fontsizeOf = 1;
+        this.datasizeOf = 5;
+        this.shortenNames = true;
+      }
+      if (
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 400 &&
+        parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 600
+      ) {
+        this.fontsizeOf = 1;
+        this.width =
+          0.7 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
+        this.height = (this.width * 16) / 16;
+        this.margin.top = this.height * 0.08;
+        this.margin.bottom = this.height * 0.05;
+        this.margin.right =
+          parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.15;
+        this.margin.left =
+          parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.15;
+        this.datasizeOf = 5;
+        this.shortenNames = true;
+      }
+      if (parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 400) {
+        // console.log("3");
+        this.fontsizeOf = 0.8;
+        this.width =
+          0.7 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
+        this.height = (this.width * 16) / 16;
+        this.margin.top = this.height * 0.08;
+        this.margin.bottom = this.height * 0.05;
+        this.margin.right =
+          parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.15;
+        this.margin.left =
+          parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.15;
+        this.datasizeOf = 5;
+        this.shortenNames = true;
+      }
     },
     renderChart1() {
       if (document.getElementById("ChartContainer_HH_svg")) {
@@ -175,7 +232,11 @@ export default {
             this.margin.top +
             this.margin.bottom}`
         )
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style(
+          "background",
+          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -184,22 +245,22 @@ export default {
           `translate(${this.margin.left}, ${this.margin.top})`
         );
       // eslint-disable-next-line no-unused-vars
-      svg
-        .append("text")
-        .attr("class", "source")
-        .attr("x", this.width / 2 + this.margin.right)
-        .attr("y", this.height * 0.1)
-        .attr("text-anchor", "start")
-        .text("Source: FinWise")
-        .style("font-weight", "700")
-        .style("font-family", "'Tlwg Mono', sans-serif")
-        .style("font-size", "10px")
-        .style("opacity", "0.3");
+      // svg
+      //   .append("text")
+      //   .attr("class", "source")
+      //   .attr("x", this.width / 2 + this.margin.right)
+      //   .attr("y", this.height * 0.1)
+      //   .attr("text-anchor", "start")
+      //   .text("Source: FinWise")
+      //   .style("font-weight", "700")
+      //   .style("font-family", "'Tlwg Mono', sans-serif")
+      //   .style("font-size", "10px")
+      //   .style("opacity", "0.3");
       if (this.SortBy1 == "HH") {
         const xLeft = d3
           .scaleBand()
           .domain(this.highestValues.map(x => x.ticker))
-          .range([0, (this.width - this.margin.right) / 2])
+          .range([0, this.width / 2])
           .padding(0.15);
 
         const yLeft = d3
@@ -233,13 +294,13 @@ export default {
           //   0,
           //   Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
           // ])
-          .range([this.height - this.margin.bottom, this.margin.top])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         // eslint-disable-next-line no-unused-vars
         const xRight = d3
           .scaleBand()
           .domain(this.highestVolumes.map(x => x.ticker))
-          .range([this.width, (this.width - this.margin.right) / 2])
+          .range([this.width, this.width / 2])
           .padding(0.15);
 
         // eslint-disable-next-line no-unused-vars
@@ -271,7 +332,7 @@ export default {
                 ) * 1.2
               )
           ])
-          .range([this.height - this.margin.bottom, this.margin.top])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
         var mycolor = d3
@@ -295,11 +356,19 @@ export default {
             if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
-                "  " +
-                "میلیارد ریال"
-              );
+              if (this.shortenNames) {
+                return (
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                  "  " +
+                  "B Rial"
+                );
+              } else {
+                return (
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                  "  " +
+                  "میلیارد ریال"
+                );
+              }
             }
           })
           .tickSizeInner(-this.width / 2 + this.margin.left / 2);
@@ -309,7 +378,8 @@ export default {
           .style("text-anchor", "start")
           .attr("transform", `translate(0,0)`)
           // .attr("dx", "-8em")
-          .style("font-size", `${this.width / 1000}em`)
+          // .style("font-size", `${this.width / 1000}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Dirooz FD")
           .style("font-weight", "800");
         aXisY2Axe
@@ -330,11 +400,19 @@ export default {
             if (d >= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
-                "  " +
-                "میلیارد ریال"
-              );
+              if (this.shortenNames) {
+                return (
+                  "B Rial" +
+                  " " +
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0))
+                );
+              } else {
+                return (
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                  "  " +
+                  "میلیارد ریال"
+                );
+              }
             }
           })
           .tickSizeInner(-this.width / 2 - this.margin.right / 2);
@@ -346,7 +424,8 @@ export default {
         aXisY1Axe
           .selectAll("text")
           .style("text-anchor", "end")
-          .style("font-size", `${this.width / 1000}em`)
+          // .style("font-size", `${this.width / 1000}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Dirooz FD")
           .style("font-weight", "800");
         aXisY1Axe
@@ -368,7 +447,8 @@ export default {
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#70747a")
-          .style("font-size", `${this.width / 950}em`)
+          // .style("font-size", `${this.width / 950}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xLeft(d.ticker) + xLeft.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft(d["netHaghighi"]) - 0.05 * this.height;
@@ -389,7 +469,8 @@ export default {
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#70747a")
-          .style("font-size", `${this.width / 950}em`)
+          // .style("font-size", `${this.width / 950}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xRight(d.ticker) + xRight.bandwidth() * 0.5)
           .attr("y", d => {
             return yRight(d["netHaghighi"]) - 0.05 * this.height;
@@ -410,62 +491,48 @@ export default {
           // eslint-disable-next-line no-unused-vars
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight(0))
-          .attr("y2", `${this.margin.top}`)
+          .attr("y2", `0`)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width - this.margin.right) / 2},0)`
-          );
+          .attr("transform", `translate(${this.width / 2},0)`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width - this.margin.right - this.margin.left) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width - this.margin.right) / 2 + 20},${
-              this.margin.top
-            })`
-          );
+          .attr("transform", `translate(${this.width / 2},${0})`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width - this.margin.right - this.margin.left) / 2}`
-          )
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(20,${this.margin.top})`);
+          .attr("x2", `${this.width / 2}`)
+          .attr("y1", 0);
+        // eslint-disable-next-line no-unused-vars
+        // .attr("transform", `translate(0,${this.margin.top})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr("x", (this.width - this.margin.right) / 6 + this.margin.left)
+          .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size", "1em")
+          // .style("font-size", "1em")
+          .style("font-size", `${this.fontsizeOf}em`)
+
           .text("بیشترین ورود حقیقی");
 
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr(
-            "x",
-            ((this.width - this.margin.right) * 4) / 6 + this.margin.left
-          )
+          .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size", "1em")
+          // .style("font-size", "1em")
+          .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین خروج حقیقی");
 
         // eslint-disable-next-line no-unused-vars
@@ -620,7 +687,7 @@ export default {
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
-          .range([0, (this.width - this.margin.right) / 2])
+          .range([0, this.width / 2])
           .padding(0.15);
 
         const yLeft_2 = d3
@@ -650,13 +717,13 @@ export default {
               ) * 1.2
             )
           ])
-          .range([this.height - this.margin.bottom, this.margin.top])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         // eslint-disable-next-line no-unused-vars
         const xRight_2 = d3
           .scaleBand()
           .domain(this.lowestImpcats.map(x => x.ticker))
-          .range([this.width, (this.width - this.margin.right) / 2])
+          .range([this.width, this.width / 2])
           .padding(0.15);
 
         // eslint-disable-next-line no-unused-vars
@@ -687,7 +754,7 @@ export default {
               ) * 1.2
             )
           ])
-          .range([this.height - this.margin.bottom, this.margin.top])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
         var mycolor_2 = d3
@@ -705,11 +772,19 @@ export default {
             if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
-                "  " +
-                "میلیارد ریال"
-              );
+              if (this.shortenNames) {
+                return (
+                  "B Rial" +
+                  " " +
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0))
+                );
+              } else {
+                return (
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                  "  " +
+                  "میلیارد ریال"
+                );
+              }
             }
           })
           .tickSizeInner(-this.width / 2 + this.margin.left / 2);
@@ -717,7 +792,8 @@ export default {
         aXisY2Axe_2
           .selectAll("text")
           .style("text-anchor", "start")
-          .style("font-size", `${this.width / 1000}em`)
+          // .style("font-size", `${this.width / 1000}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Dirooz FD")
           .style("font-weight", "800");
         aXisY2Axe_2
@@ -740,11 +816,19 @@ export default {
             if (d <= 0) {
               return d;
             } else {
-              return (
-                this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
-                "  " +
-                "میلیارد ریال"
-              );
+              if (this.shortenNames) {
+                return (
+                  "B Rial" +
+                  " " +
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0))
+                );
+              } else {
+                return (
+                  this.numberWithCommas(this.roundTo(d / 1000000000, 0)) +
+                  "  " +
+                  "میلیارد ریال"
+                );
+              }
             }
           })
           .tickSizeInner(-this.width / 2 - this.margin.right / 2);
@@ -756,7 +840,8 @@ export default {
         aXisY1Axe_2
           .selectAll("text")
           .style("text-anchor", "end")
-          .style("font-size", `${this.width / 1000}em`)
+          // .style("font-size", `${this.width / 1000}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Dirooz FD")
           .style("font-weight", "800");
         aXisY1Axe_2
@@ -779,7 +864,8 @@ export default {
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#70747a")
-          .style("font-size", `${this.width / 950}em`)
+          // .style("font-size", `${this.width / 950}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xLeft_2(d.ticker) + xLeft_2.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft_2(d["Value"]) - 0.05 * this.height;
@@ -800,7 +886,8 @@ export default {
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#70747a")
-          .style("font-size", `${this.width / 950}em`)
+          // .style("font-size", `${this.width / 950}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xRight_2(d.ticker) + xRight_2.bandwidth() * 0.5)
           .attr("y", d => {
             return yRight_2(d["Value"]) - 0.05 * this.height;
@@ -821,62 +908,45 @@ export default {
           // eslint-disable-next-line no-unused-vars
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight_2(0))
-          .attr("y2", `${this.margin.top}`)
+          .attr("y2", `${0}`)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width - this.margin.right) / 2},0)`
-          );
+          .attr("transform", `translate(${this.width / 2},0)`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width - this.margin.right - this.margin.left) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width - this.margin.right) / 2 + 20},${
-              this.margin.top
-            })`
-          );
+          .attr("transform", `translate(${this.width / 2},${0})`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width - this.margin.right - this.margin.left) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(20,${this.margin.top})`);
+          .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr("x", (this.width - this.margin.right) / 6 + this.margin.left)
+          .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size", "1em")
+          .style("font-size",`${this.fontsizeOf}em`)
           .text("بیشترین تقاضا ");
 
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr(
-            "x",
-            ((this.width - this.margin.right) * 4) / 6 + this.margin.left
-          )
+          .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size", "1em")
+          .style("font-size",`${this.fontsizeOf}em`)
           .text("بیشترین عرضه ");
 
         // eslint-disable-next-line no-unused-vars
@@ -1007,7 +1077,11 @@ export default {
             return mycolor_2(d.Value);
           })
           .style("opacity", "80%");
+        
       }
+      window.addEventListener("resize", this.initrender);
+      window.addEventListener("resize", this.renderData1);
+      window.addEventListener("resize", this.renderChart1);
     }
   }
 };

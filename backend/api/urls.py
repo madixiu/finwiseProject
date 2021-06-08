@@ -114,5 +114,6 @@ urlpatterns = [
    path("Funds",getFunds),
    path("CryptoMarket",getCrypto),
    ####Commodity
-   path("Commodities/main",getCommoditiesBasic),
+   path("Commodities/IR",getCommoditiesBasic),
+   path("Commodities/Investing",getCommoditiesBasicInvesting),
 ]

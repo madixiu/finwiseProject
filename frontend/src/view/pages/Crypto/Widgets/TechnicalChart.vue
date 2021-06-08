@@ -159,7 +159,8 @@ export default {
         .append("svg")
         .attr("id", "Chartcontainer_index_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style('background','url(../media/logos/fadedfinwise.png) no-repeat center ')
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -500,17 +501,35 @@ export default {
           "بهترین و بدترین های تکنیکال بازار در تحلیل " + `${this.updatedAt}`
         )
         .style("font-size", `${this.width / 1000}em`);
-      svg
+       svg
         .append("text")
-        .attr("class", "source")
-        .attr("x", this.width - this.margin.left)
-        .attr("y", this.height * 0.9)
-        .attr("text-anchor", "start")
-        .text("Source: FinWise")
-        .style("font-weight", "700")
-        .style("font-family", "'Tlwg Mono', sans-serif")
-        .style("font-size", "10px")
-        .style("opacity", "0.4");
+       
+        .attr("class", "title")
+        .attr("x",this.margin.left)
+
+        .attr("y", this.height*0.5)
+        .attr("text-anchor", "middle")
+        .text(
+          "تمامی محاسبات بر حسب معاملات با USDT در بایننس انجام شده است" 
+        )
+        .style("font-size", `${this.width / 1000}em`) .attr("transform", function() {
+          var me = this;
+          var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
+          var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
+
+          return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
+        })
+      // svg
+      //   .append("text")
+      //   .attr("class", "source")
+      //   .attr("x", this.width - this.margin.left)
+      //   .attr("y", this.height * 0.9)
+      //   .attr("text-anchor", "start")
+      //   .text("Source: FinWise")
+      //   .style("font-weight", "700")
+      //   .style("font-family", "'Tlwg Mono', sans-serif")
+      //   .style("font-size", "10px")
+      //   .style("opacity", "0.4");
     }
   }
 };
@@ -618,4 +637,5 @@ export default {
   top: 50%;
   left: 100%;
 }
+
 </style>

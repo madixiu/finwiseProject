@@ -1,33 +1,35 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <v-card height="420">
+  <div class="card card-custom card-stretch gutter-b" id="parentDiv">
+    <v-card >
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
       <div v-show="this.$store.getters.isAuthenticated">
         <div class="row">
-          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
-            <span class="rtl_centerd">خرید </span>
+          <div
+            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
+            style="direction: rtl;text-align:center"
+          >
+            <span>خرید </span>
 
             <br />
             <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
           </div>
-          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
-            <span class="rtl_centerd">خنثی </span>
+          <div
+            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
+            style="direction: rtl;text-align:center"
+          >
+            <span>خنثی </span>
             <br />
 
             <span class="chiptext" style="color:#414554">{{ neutral }} </span>
           </div>
-          <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-12">
-            <span class="rtl_centerd">فروش </span>
+          <div
+            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
+            style="direction: rtl;text-align:center"
+          >
+            <span>فروش </span>
             <br />
             <span class="chiptext" style="color:#f63538">{{ negative }}</span>
-          </div>
-        </div>
-        <div class="row" v-show="loading">
-          <div class="col-6 offset-3">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
           </div>
         </div>
         <div class="row">
@@ -36,14 +38,17 @@
           </div>
         </div>
       </div>
-      <div class="lockedTechnical" v-show="!this.$store.getters.isAuthenticated">
+      <div
+        class="lockedTechnical"
+        v-show="!this.$store.getters.isAuthenticated"
+      >
         <div class="row lockedTechnical">
           <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
         </div>
         <div class="row lockedTechnical">
           <v-btn
             color="#607d8b"
-            class="ma-2"
+            class="ma-2 mt-1"
             elevation="5"
             style="margin: auto;"
             @click="onClick"
@@ -130,7 +135,8 @@ export default {
       if (document.getElementsByTagName("svg")) {
         d3.selectAll("svg").remove();
       }
-      this.width = parseInt(d3.select("#TechnicalGauge").style("width"), 10);
+      this.width = parseInt(d3.select("#parentDiv").style("width"), 10);
+      console.log(this.width)
       this.height = (this.width * 9) / 16;
       this.margin.top = this.height * 0.5;
       this.margin.bottom = 0;
@@ -143,7 +149,7 @@ export default {
         .select(parent)
         .append("svg")
         .attr("id", "chartContainer")
-        .attr("viewBox", `0 0 ${this.width},${this.height}`)
+        .attr("viewBox", `0 0 ${this.width} ${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
       // eslint-disable-next-line no-unused-vars
     },
@@ -390,11 +396,14 @@ export default {
     }
   },
   mounted() {
-    this.populateData();
-    this.initrender();
+    if (!this.$store.getters.isAuthenticated) {
+      this.populateData();
+      this.initrender();
+    }
   },
   watch: {
     Indicators() {
+      this.initrender();
       this.populateData();
       if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
         this.renderChart();
@@ -429,7 +438,6 @@ export default {
 .rtl_centerd {
   font-size: 1em;
   direction: rtl;
-  text-align: center;
 }
 .ltr_aligned {
   direction: ltr !important;

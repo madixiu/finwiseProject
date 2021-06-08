@@ -38,9 +38,7 @@
                     <span
                       dir="ltr"
                       class="spandata"
-                      v-bind:class="[
-                        this.close > this.open ? 'greenItem' : 'redItem'
-                      ]"
+                      v-bind:class="[this.close > this.open ? 'greenItem': this.close == this.open ? 'blackItem': this.close < this.open ? 'redItem':'']"
                     >
                       %{{ setclosingperc.toString() }}
                     </span>
@@ -50,7 +48,7 @@
                       left
                       small
                       v-bind:class="[
-                        this.close >= this.open ? 'greenItem' : 'redItem'
+                        [this.close > this.open ? 'greenItem': this.close == this.open ? 'blackItem': this.close < this.open ? 'redItem':'']
                       ]"
                       >mdi-chevron-{{
                         this.close >= this.open ? "up" : "down"
@@ -63,15 +61,15 @@
                     <span
                       dir="ltr"
                       class="spandata"
-                      v-bind:class="[
-                        last > open ? 'greenItem' : 'redItem ltr_aligned'
+                       v-bind:class="[
+                        [this.last > this.open ? 'greenItem': this.close == this.last ? 'blackItem': this.last < this.open ? 'redItem':'']
                       ]"
                       >% {{ setlastperc }}</span
                     >)
                     <v-icon
                       left
-                      v-bind:class="[
-                        this.last >= this.open ? 'greenItem' : 'redItem'
+                        v-bind:class="[
+                        [this.last > this.open ? 'greenItem': this.last == this.open ? 'blackItem': this.last < this.open ? 'redItem':'']
                       ]"
                       small
                       >mdi-chevron-{{
@@ -355,10 +353,10 @@
                   <h5 class="titleHeaders-smallest ">
                     میانگین حجم معاملات ۳ ماهه :
                     <br /><br />
-                    <span class="spandata" v-if="!isNaN(this.avgval3month)">
+                    <span class="spandata" v-if="!isNaN(this.avgvol3month)">
                       {{
                         numberWithCommas(
-                          roundTo(this.avgval3month / 1000000000, 2)
+                          roundTo(this.avgvol3month / 1000000000, 2)
                         )
                       }}
                       میلیون</span

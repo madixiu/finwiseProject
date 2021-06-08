@@ -180,6 +180,7 @@ export default {
       IFBMarketCapTotal: 0,
       latestTradeValueIFB: 0,
       indexData: [],
+      fontsizeOf: 1,
       min: 0,
       max: 10,
       number: 3,
@@ -246,15 +247,16 @@ export default {
       if (document.getElementById("Chartcontainer_index_svg")) {
         d3.selectAll("#Chartcontainer_index_svg").remove();
       }
+
       this.width =
         0.85 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
       this.height = (this.width * 8) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.075;
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
       this.margin.left =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.075;
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.1;
       this.offsetY = this.margin.top;
       var parent = document.getElementById("Chartcontainer_index");
       // eslint-disable-next-line no-unused-vars
@@ -270,7 +272,62 @@ export default {
             this.margin.bottom}`
         )
         .attr("preserveAspectRatio", "xMidYMid meet");
-      // eslint-disable-next-line no-unused-vars
+      if (
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 800
+      ) {
+        console.log("8");
+        this.fontsizeOf = 1.3;
+      }
+      if (
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 600 &&
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 800
+      ) {
+        console.log("6");
+        this.fontsizeOf = 1.2;
+        this.width =
+          0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+        this.height = (this.width * 16) / 16;
+        this.margin.top = this.height * 0.08;
+        this.margin.bottom = this.height * 0.05;
+        this.margin.right =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) *
+          0.05;
+        this.margin.left =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.2;
+      }
+      if (
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 400 &&
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 600
+      ) {
+        console.log("4");
+        this.fontsizeOf = 1.2;
+        this.width =
+          0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+        this.height = (this.width * 16) / 16;
+        this.margin.top = this.height * 0.08;
+        this.margin.bottom = this.height * 0.05;
+        this.margin.right =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) *
+          0.05;
+        this.margin.left =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.2;
+      }
+      if (
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 400
+      ) {
+        console.log("3");
+        this.fontsizeOf = 1.2;
+        this.width =
+          0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+        this.height = (this.width * 16) / 16;
+        this.margin.top = this.height * 0.08;
+        this.margin.bottom = this.height * 0.05;
+        this.margin.right =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) *
+          0.05;
+        this.margin.left =
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.2;
+      }
     },
     renderData() {
       if (
@@ -334,7 +391,11 @@ export default {
             this.margin.top +
             this.margin.bottom}`
         )
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style(
+          "background",
+          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -380,7 +441,8 @@ export default {
       let xAxisAxe = chart.append("g").call(xAxis);
       xAxisAxe
         .selectAll("text")
-        .style("font-size", `${this.width / 700}em`)
+        // .style("font-size", `${this.width / 700}em`)
+        .style("font-size", `${this.fontsizeOf}em`)
         .style("font-family", "Dirooz FD")
         .style("font-weight", "800");
       var yAxis = g =>
@@ -397,7 +459,8 @@ export default {
         .selectAll("text")
         .style("text-anchor", "start")
         // .attr("transform", `translate(${-this.margin.left},0)`)
-        .style("font-size", `${this.width / 700}em`)
+        // .style("font-size", `${this.width / 700}em`)
+        .style("font-size", `${this.fontsizeOf}em`)
         .style("font-family", "Dirooz FD")
         .style("font-weight", "800");
       d3.selectAll("g.yAxis g.tick")
@@ -496,7 +559,8 @@ export default {
               .attr("x", 0)
               .attr("y", (d, i) => `${i * 1.1}em`)
               .style("font-weight", (_, i) => (i ? null : "bold"))
-              .style("font-size", "14px")
+              // .style("font-size", "14px")
+              .style("font-size", `${this.fontsizeOf}em`)
               .style("font-family", "Vazir-Medium-FD")
               .text(d => d.split("-")[0])
           )
@@ -505,8 +569,9 @@ export default {
         //eslint-disable-next-line no-unused-vars
         const { x, y, width: w, height: h } = text.node().getBBox();
         text
-          .attr("transform", `translate(${that.margin.left + w / 10},${-h})`)
-          .style("font-family", "Dirooz FD");
+          .attr("transform", `translate(${w},${-h})`)
+          .style("font-family", "Dirooz FD")
+          .style("font-size", `${this.fontsizeOf*0.7}em`)
         const pathnew = g
           .selectAll("pathnew")
           .data([null])
@@ -607,17 +672,8 @@ export default {
         .attr("y", 40)
         .attr("text-anchor", "middle")
         .text("شاخص کل");
-      svg
-        .append("text")
-        .attr("class", "source")
-        .attr("x", this.width - this.margin.left)
-        .attr("y", this.height * 0.9)
-        .attr("text-anchor", "start")
-        .text("Source: FinWise")
-        .style("font-weight", "700")
-        .style("font-family", "'Tlwg Mono', sans-serif")
-        .style("font-size", "10px")
-        .style("opacity", "0.3");
+      window.addEventListener("resize", this.initrender);
+      window.addEventListener("resize", this.renderChart);
     }
   }
 };

@@ -318,4 +318,6 @@ def getAllTradesValue(self):
 
 ######### Commodity
 def getCommoditiesBasic(self):
-    return JsonResponse(getbasicCommodity(),safe=False) 
+    return JsonResponse(getbasicCommodityIR(),safe=False) 
+def getCommoditiesBasicInvesting(self):
+    return JsonResponse(getbasicInvesting(),safe=False) 

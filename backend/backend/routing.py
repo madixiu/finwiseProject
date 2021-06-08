@@ -26,6 +26,8 @@ application = ProtocolTypeRouter({
                     re_path(r"^ws/HighestSupplies",getHighestSupplies .as_asgi()),
                     re_path(r"^ws/HighestDemands",getHighestDemand .as_asgi()),
                     re_path(r"^ws/Crypto",getCrypto .as_asgi()),                    
+                    re_path(r"^ws/IRCommodities",getIRCommodities .as_asgi()),                    
+                    re_path(r"^ws/InvCommodities",getInvestingCommodities .as_asgi()),    
 
                 ]
             )

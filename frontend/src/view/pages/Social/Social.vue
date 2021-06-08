@@ -10,7 +10,7 @@
               href="https://curator.io"
               target="_blank"
               class="crt-logo crt-tag"
-              >Powered by Curator.io</a
+              ></a
             >
           </div>
         </v-card>
@@ -26,7 +26,7 @@
               href="https://curator.io"
               target="_blank"
               class="crt-logo crt-tag"
-              >Powered by Curator.io</a
+              ></a
             >
           </div>
         </v-card>

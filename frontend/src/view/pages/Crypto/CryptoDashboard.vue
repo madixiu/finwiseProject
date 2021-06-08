@@ -4,14 +4,12 @@
       <div class="row">
         <TechnicalCharts
           :inpuDataTechnical="TechnicalData"
-          class="mb-4"
         ></TechnicalCharts>
+        <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
       </div>
     </div>
     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
-      <div class="row">
-        <CorrMatrix :inpuDataCorr="CorrData" class="mb-4"></CorrMatrix>
-      </div>
+      <div class="row"></div>
     </div>
   </div>
 </template>
@@ -76,11 +74,10 @@ export default {
           // setTimeout(this.getHighestQ(), 1000);
           else console.error(error);
         });
-    }
-    ,
+    },
     async getCorrelationM() {
       await this.axios
-      .get("/api/CryptoHistoricCorr")
+        .get("/api/CryptoHistoricCorr")
         .then(getHighestQResp => {
           this.ResponeseTimeout.getCorrData = false;
           this.CorrData = getHighestQResp.data;
