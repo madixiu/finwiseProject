@@ -26,6 +26,10 @@ const WsService = {
       let Oraq = new WebSocket(URI + "/ws/oraq");
       // let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
       // let Crypto = new WebSocket(URI + "/ws/Crypto");
+      // let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
+      // let Crypto = new WebSocket(URI + "/ws/Crypto");
+      // let IRCommodities = new WebSocket(URI + "/ws/IRCommodities");
+      // let InvCommodities = new WebSocket(URI + "/ws/InvCommodities");
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
       // Vue.prototype.$socketMostViewed = MostViewed;
@@ -37,14 +41,18 @@ const WsService = {
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
       // Vue.prototype.$socketMarketHighestTValues = highestVolume;
-    //   Vue.prototype.$socketMarketWatch = marketWatch;
-    //   Vue.prototype.$socketMarketMap = marketMap;
-    //   Vue.prototype.$socketLiveTickerData = LiveTickerData;
-    //   Vue.prototype.$socketOptions = Optoins;
-    //   Vue.prototype.$socketSandoq = Sandoq;
+      //   Vue.prototype.$socketMarketWatch = marketWatch;
+      //   Vue.prototype.$socketMarketMap = marketMap;
+      //   Vue.prototype.$socketLiveTickerData = LiveTickerData;
+      //   Vue.prototype.$socketOptions = Optoins;
+      //   Vue.prototype.$socketSandoq = Sandoq;
       Vue.prototype.$socketOraq = Oraq;
-    //   Vue.prototype.$socketCrypto = Crypto;
-    //   Vue.prototype.$socketTaqadom = HaghTaghadom;
+      //   Vue.prototype.$socketCrypto = Crypto;
+      //   Vue.prototype.$socketTaqadom = HaghTaghadom;
+      // Vue.prototype.$socketCrypto = Crypto;
+      // Vue.prototype.$socketTaqadom = HaghTaghadom;
+      // Vue.prototype.$socketIRCommodities = IRCommodities;
+      // Vue.prototype.$socketInvCommodities = InvCommodities;
     } catch (error) {
       console.error("error in websocket:" + error);
     }

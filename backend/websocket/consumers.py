@@ -13,6 +13,7 @@ from requestcall.getOptions import optionRequest
 from requestcall.getMarketWatch2 import getMarketWatchRequest,getFilteredData
 from requestcall.treeMapData import getMapData
 from requestcall.getTseData import *
+from requestcall.getCommodities import *
 from requestcall.getOragh_HaghTaghadom_FundsData import *
 
 
@@ -359,6 +360,41 @@ class getCrypto(AsyncWebsocketConsumer):
         print(data)
         if data.get("request") == "get":
             text_data = json.dumps(getCryptoMarketData());
+            
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()         
+
+class getIRCommodities(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        print(data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getbasicCommodityIR());
+            
+            await self.send(text_data)
+            return
+        if data.get("request") == "halt":
+            return
+    async def disconnect(self, code):
+        self.close()
+        raise StopConsumer()         
+class getInvestingCommodities(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        print(data)
+        if data.get("request") == "get":
+            text_data = json.dumps(getbasicInvesting());
             
             await self.send(text_data)
             return

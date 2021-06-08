@@ -28,9 +28,15 @@
               <span
                 class="spandata ltr_aligned mr-1"
                 v-bind:class="[
-                  LiveDataItems.last > LiveDataItems.yesterday
-                    ? 'greenItem ltr_aligned'
-                    : 'redItem ltr_aligned'
+                  [
+                    LiveDataItems.last > LiveDataItems.yesterday
+                      ? 'greenItem ltr_aligned'
+                      : LiveDataItems.last == LiveDataItems.yesterday
+                      ? 'blackItem ltr_aligned'
+                      : LiveDataItems.last < LiveDataItems.yesterday
+                      ? 'redItem ltr_aligned'
+                      : ''
+                  ]
                 ]"
                 >%{{
                   Math.round(
@@ -55,11 +61,17 @@
             قیمت پایانی <br />
             <div style="direction:ltr">
               <span
-                class="spandata ltr_aligned mr-1"
+                class="spandata ltr_aligned"
                 v-bind:class="[
-                  LiveDataItems.close > LiveDataItems.yesterday
-                    ? 'greenItem ltr_aligned'
-                    : 'redItem ltr_aligned'
+                  [
+                    LiveDataItems.close > LiveDataItems.yesterday
+                      ? 'greenItem ltr_aligned'
+                      : LiveDataItems.close == LiveDataItems.yesterday
+                      ? 'blackItem ltr_aligned'
+                      : LiveDataItems.close < LiveDataItems.yesterday
+                      ? 'redItem ltr_aligned'
+                      : ''
+                  ]
                 ]"
                 >%{{
                   Math.round(

@@ -17,6 +17,7 @@ const CryptoDashboard = () => import("@/view/pages/Crypto/CryptoDashboard.vue");
 const CryptoSinglePage = () => import("@/view/pages/Crypto/CryptoSingle.vue");
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const AI = () => import("@/view/pages/AI/AI.vue");
+const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
 const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
@@ -363,6 +364,11 @@ export default new Router({
           path: "/AI",
           name: "ai",
           component: AI
+        },
+        {
+          path: "/Commodities",
+          name: "commodities",
+          component: Commodities
         },
         // added route for robot!
         {

@@ -102,6 +102,9 @@ export default {
       if (window.screen.height < 1080) this.LowRes = true;
       else this.LowRes = false;
     }
+  },
+  watch: {
+    TickerData() {}
   }
 };
 </script>

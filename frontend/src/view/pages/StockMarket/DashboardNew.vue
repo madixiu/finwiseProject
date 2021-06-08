@@ -94,7 +94,12 @@ export default {
       getTechnicalData: true
     };
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
+
     this.loadData();
+    // eslint-disable-next-line no-unused-vars
+    let interval = setInterval(() => {
+      this.loadData();
+    }, 300000);
 
     // this.make_requests_handler();
   },
@@ -292,3 +297,10 @@ export default {
   }
 };
 </script>
+<style>
+.rtl_centerd {
+  font-size: 1em;
+  direction: rtl;
+  text-align: center;
+}
+</style>

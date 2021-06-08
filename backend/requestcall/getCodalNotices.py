@@ -68,7 +68,7 @@ def StatusChanges(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'marketwatch'}
-        resp = requests.get('http://185.231.115.223:3000/View_StatusChange?ID=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.231.115.223:3000/View_StatusChange?ID=eq.'+str(identifier)+'&limit=7',headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)

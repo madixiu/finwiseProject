@@ -10,6 +10,7 @@ from requestcall.getTickerData import *
 from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFilterLists,getFilteredData
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
+from requestcall.getCommodities import *
 from requestcall.getCryptoData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
@@ -313,3 +314,10 @@ def getAllTradesValue(self):
 
 # def TechnicalIndicatorAll():
 #     return JsonResponse(getTechnicalIndicatorsAll(), safe=False)
+
+
+######### Commodity
+def getCommoditiesBasic(self):
+    return JsonResponse(getbasicCommodityIR(),safe=False) 
+def getCommoditiesBasicInvesting(self):
+    return JsonResponse(getbasicInvesting(),safe=False) 

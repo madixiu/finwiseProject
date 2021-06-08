@@ -60,6 +60,11 @@ export default {
   mounted() {
     this.getTickerTapeData();
     this.RouteCheck();
+    // eslint-disable-next-line no-unused-vars
+    let interval = setInterval(() => {
+      this.getTickerTapeData();
+    }, 60000);
+
   },
   methods: {
     RouteCheck() {

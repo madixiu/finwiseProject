@@ -127,5 +127,6 @@ export default {
 }
 .customAlert {
   font-family: "Dirooz FD" !important;
+  font-size:0.9em
 }
 </style>

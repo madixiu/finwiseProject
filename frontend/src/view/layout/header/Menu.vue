@@ -129,7 +129,25 @@
         </a>
       </li>
     </router-link>
-    <router-link to="/AI" v-slot="{ href, navigate, isActive, isExactActive }">
+    <router-link
+      to="/Commodities"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <span class="menu-text">نرخ های جهانی</span>
+        </a>
+      </li>
+    </router-link>
+    <!-- <router-link to="/AI" v-slot="{ href, navigate, isActive, isExactActive }">
       <li
         aria-haspopup="true"
         data-menu-toggle="hover"
@@ -143,7 +161,7 @@
           <span class="menu-text">AI</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
     <!-- <router-link
       to="/kala"
       v-slot="{ href, navigate, isActive, isExactActive }"

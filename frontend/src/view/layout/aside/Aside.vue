@@ -104,8 +104,8 @@ export default {
         "subset",
         "TechnicalMoreInfo"
       ],
-      crypto: ["CryptoMarketWatch", "CryptoDashboard"],
       AsideState1: true,
+      crypto: ["CryptoMarketWatch", "CryptoDashboard"],
       AsideState2: false,
       AsideState3: false,
       AsideState4: false

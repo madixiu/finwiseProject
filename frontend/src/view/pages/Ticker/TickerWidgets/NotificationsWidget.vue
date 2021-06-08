@@ -23,7 +23,7 @@
       >
         <template v-slot:[`item.HtmlUrl`]="{ item }">
           <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`">گزارش </a>
+            <a v-bind:href="`http://codal.ir${item.HtmlUrl}` " target=_blank>گزارش </a>
           </v-chip>
         </template>
         <template v-slot:[`item.AttachmentUrl`]="{ item }">
@@ -32,16 +32,16 @@
             small
             :disabled="item.AttachmentUrl == '' ? true : false"
           >
-            <a v-bind:href="`http://codal.ir${item.AttachmentUrl}`">فایل </a>
+            <a v-bind:href="`http://codal.ir${item.AttachmentUrl}`" target=_blank>فایل </a>
           </v-chip>
         </template>
         <template v-slot:[`item.ExcelUrl`]="{ item }">
-          <v-chip label small :disabled="item.ExcelUrl == '' ? true : false">
-            <a v-bind:href="`${item.ExcelUrl}%`">اکسل </a>
+          <v-chip label small :disabled="item.ExcelUrl == '' ? true : false" target=_blank>
+            <a v-bind:href="`${item.ExcelUrl}`">اکسل </a>
           </v-chip>
         </template>
         <template v-slot:[`item.PdfUrl`]="{ item }">
-          <v-chip label small :disabled="item.PdfUrl == '' ? true : false">
+          <v-chip label small :disabled="item.PdfUrl == '' ? true : false" target=_blank>
             <a v-bind:href="`http://codal.ir/${item.PdfUrl}`">پی دی اف </a>
           </v-chip>
         </template>

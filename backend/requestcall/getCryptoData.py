@@ -61,7 +61,7 @@ def getCryptoCorrelation():
 def getSingleCryptoTechnical(firm):
      ct=0
      while ct<3:
-        resp = requests.get('http://162.55.15.105:3000/View_Crypto_Indicator?coin=eq.'+str(firm))
+        resp = requests.get('http://162.55.15.105:3000/View_Crypto_Indicator?coin1=eq.'+str(firm))
         if resp.status_code == 200:
             return (json.loads(resp.text))
             # return(json.loads(resp.text))

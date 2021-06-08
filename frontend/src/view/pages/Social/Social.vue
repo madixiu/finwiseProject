@@ -18,8 +18,7 @@
               href="https://curator.io"
               target="_blank"
               class="crt-logo crt-tag"
-              >Powered by Curator.io</a
-            >
+            ></a>
           </div>
         </v-card>
       </div>
@@ -40,8 +39,7 @@
               href="https://curator.io"
               target="_blank"
               class="crt-logo crt-tag"
-              >Powered by Curator.io</a
-            >
+            ></a>
           </div>
         </v-card>
       </div>
@@ -62,17 +60,43 @@
             allowfullscreen="true"
           >
           </iframe>
+          <!-- <v-card-title>Twitch</v-card-title>
+          <v-divider class="mt-0 mb-0"></v-divider> -->
+          <VueTwitchPlayer
+            :channel="channel"
+            width="100%"
+            height="500px"
+          ></VueTwitchPlayer>
         </v-card>
       </div>
     </div>
   </div>
 </template>
-
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
 <script>
+// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+// import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
+import VueTwitchPlayer from "vue-twitch-player";
 export default {
+  components: {
+    VueTwitchPlayer
+  },
   name: "SocialMedia",
+  data() {
+    return {
+      channel: "finwiselive"
+    };
+  },
   created() {
     document.title = "Finwise - شبکه های اجتماعی";
+    ascpetedHeight = ((1366 * 16) / 9) * 0.5;
+    // new Twitch.Embed("twitch-embed", {
+    //   width: 854,
+    //   height: 480,
+    //   channel: "finwiselive",
+    //   // Only needed if this page is going to be embedded on other websites
+    //   parent: ["https://finwise.ir"]
+    // });
   },
   mounted() {
     (function() {

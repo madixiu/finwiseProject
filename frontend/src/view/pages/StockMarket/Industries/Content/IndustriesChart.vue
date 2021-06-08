@@ -217,7 +217,8 @@ export default {
         .append("svg")
         .attr("id", "IndustriesChart_SVG")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style('background','url(../../media/logos/fadedfinwise.png) no-repeat center ')
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -426,21 +427,21 @@ export default {
 
       window.addEventListener("resize", this.renderChart);
       this.loading = false;
-      svg
-        .append("text")
-        .attr("class", "source")
-        .attr("x", this.width / 2 + this.margin.right)
-        .attr("y", this.height * 0.1)
-        .attr("text-anchor", "start")
-        .text("Source: FinWise")
-        .style("font-weight", "700")
-        .style("font-family", "'Tlwg Mono', sans-serif")
-        .style("font-size", "10px")
-        .style("opacity", "0.3");
+      // svg
+      //   .append("text")
+      //   .attr("class", "source")
+      //   .attr("x", this.width / 2 + this.margin.right)
+      //   .attr("y", this.height * 0.1)
+      //   .attr("text-anchor", "start")
+      //   .text("Source: FinWise")
+      //   .style("font-weight", "700")
+      //   .style("font-family", "'Tlwg Mono', sans-serif")
+      //   .style("font-size", "10px")
+      //   .style("opacity", "0.3");
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", this.margin.left)
+        .attr("x", this.margin.left*1.3)
         .attr("y", this.height * 0.1)
         .attr("text-anchor", "start")
         .text("بازدهی")
@@ -450,9 +451,9 @@ export default {
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", this.margin.left)
+        .attr("x", this.margin.left*1.5)
         .attr("y", this.height * 0.8)
-        .attr("text-anchor", "start")
+        .attr("text-anchor", "middle")
         .text("ارزش بازار روز")
         .style("font-weight", "700")
         .style("font-family", "Vazir")

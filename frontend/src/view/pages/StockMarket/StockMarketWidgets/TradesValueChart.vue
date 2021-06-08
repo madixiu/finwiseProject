@@ -117,7 +117,8 @@ export default {
         .append("svg")
         .attr("id", "chartContainer_TradeValue_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        
       // eslint-disable-next-line no-unused-vars
     },
     numberWithCommas(x) {
@@ -282,7 +283,8 @@ export default {
         .append("svg")
         .attr("id", "chartContainer_TradeValue_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet");
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style('background','url(../../media/logos/fadedfinwise.png) no-repeat center ')
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
