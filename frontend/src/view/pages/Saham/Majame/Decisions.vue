@@ -71,6 +71,11 @@
                 row.value
               }}</b>
             </template>
+            <template #cell(Ticker)="row">
+              <router-link :to="linkcreated(row)">
+                {{ row.value }}
+              </router-link>
+            </template>
 
             <template #cell(HtmlUrl)="row">
               <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
@@ -206,6 +211,9 @@ export default {
     // this.totalRows = this.items.length;
   },
   methods: {
+    linkcreated(row){
+      return { name: "TickerOverall", params: { id: row.item.StockID } };
+    },
     loadData() {
       // this.ListReq().then(response => {
       //   this.OptionTableReq();

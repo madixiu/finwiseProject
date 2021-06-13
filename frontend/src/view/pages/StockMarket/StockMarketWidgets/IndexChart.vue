@@ -251,7 +251,7 @@ export default {
 
       this.width =
         0.85 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
-      this.height = (this.width * 8) / 16;
+      this.height = (this.width * 7) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
@@ -284,10 +284,10 @@ export default {
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 800
       ) {
         // console.log("6");
-        this.fontsizeOf = 1.2;
+        this.fontsizeOf = 1.1;
         this.width =
           0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
-        this.height = (this.width * 16) / 16;
+        this.height = (this.width * 10) / 16;
         this.margin.top = this.height * 0.08;
         this.margin.bottom = this.height * 0.05;
         this.margin.right =
@@ -422,10 +422,10 @@ export default {
         .domain([
           d3.min(this.indexData, function(d) {
             return d.value;
-          }),
+          })*0.9999,
           d3.max(this.indexData, function(d) {
             return d.value;
-          })
+          })*1.0001
         ])
         .nice()
         .range([this.height - this.margin.bottom, this.margin.top]);

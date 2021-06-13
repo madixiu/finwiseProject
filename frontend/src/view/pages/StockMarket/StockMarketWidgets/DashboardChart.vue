@@ -269,7 +269,7 @@ export default {
         const yLeft = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
-          .range([this.height - this.margin.bottom,0])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         // eslint-disable-next-line no-unused-vars
         const xRight = d3
@@ -296,7 +296,7 @@ export default {
         //////////////
         let aXisY2 = d3
           .axisLeft(yLeft)
-        .tickFormat(d => {
+          .tickFormat(d => {
             if (d <= 0) {
               return d;
             } else {
@@ -315,7 +315,7 @@ export default {
               }
             }
           })
-          .tickSizeInner(-this.width / 2 );
+          .tickSizeInner(-this.width / 2);
         let aXisY2Axe = chart.append("g").call(aXisY2);
         aXisY2Axe
           .selectAll("text")
@@ -351,7 +351,7 @@ export default {
               );
             }
           })
-          .tickSizeInner(-this.width / 2 );
+          .tickSizeInner(-this.width / 2);
         var aXisY1Axe = chart
           .append("g")
           .call(aXisY1)
@@ -389,7 +389,19 @@ export default {
           .attr("y", d => {
             return yLeft(d["Value"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -411,7 +423,19 @@ export default {
           .attr("y", d => {
             return yRight(d["Vol"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -607,7 +631,7 @@ export default {
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
-          .range([0, (this.width) / 2])
+          .range([0, this.width / 2])
           .padding(0.15);
 
         const yLeft_2 = d3
@@ -643,7 +667,7 @@ export default {
         const xRight_2 = d3
           .scaleBand()
           .domain(this.lowestImpcats.map(x => x.ticker))
-          .range([this.width, (this.width) / 2])
+          .range([this.width, this.width / 2])
           .padding(0.15);
 
         // eslint-disable-next-line no-unused-vars
@@ -675,7 +699,7 @@ export default {
                 ) * 1.2
               )
           ])
-          .range([this.height - this.margin.bottom,0])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
         var mycolor_2 = d3
@@ -789,7 +813,14 @@ export default {
           .attr("y", d => {
             return yLeft_2(d["Impact"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(
+            d =>
+              '<a href="/ticker/Overview/Overall/' +
+              d.ID +
+              '">' +
+              d.ticker +
+              "</a>"
+          )
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -811,7 +842,14 @@ export default {
           .attr("y", d => {
             return yRight_2(d["Impact"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(
+            d =>
+              '<a href="/ticker/Overview/Overall/' +
+              d.ID +
+              '">' +
+              d.ticker +
+              "</a>"
+          )
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -829,45 +867,31 @@ export default {
           .attr("x2", xRight_2(0))
           .attr("y2", `${0}`)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width) / 2},0)`
-          );
+          .attr("transform", `translate(${this.width / 2},0)`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width ) / 2 },${
-              0
-            })`
-          );
+          .attr("transform", `translate(${this.width / 2},${0})`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr("x", (this.width *0.25))
+          .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
@@ -877,7 +901,7 @@ export default {
         chart
           .append("text")
           .attr("class", "Chart1title")
-         .attr("x", (this.width *0.75))
+          .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
