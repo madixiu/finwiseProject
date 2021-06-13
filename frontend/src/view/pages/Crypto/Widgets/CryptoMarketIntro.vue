@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div>
     <v-card>
       <v-toolbar dense>
-        <v-toolbar-title>رمز ارزها</v-toolbar-title>
+        <v-toolbar-title>دیده بان رمزارز های اصلی</v-toolbar-title>
       </v-toolbar>
       <div class="right_aligned">
         <v-row class="mt-1 pr-2">
@@ -28,7 +29,7 @@
               </v-col>
             </v-row>
             <v-row
-              v-for="item in tableData"
+              v-for="item in InputIntroMW"
               :key="item.fullName"
               no-gutters
               class="pb-2"
@@ -37,15 +38,17 @@
               <v-col>{{ item.fullName }} </v-col>
               <v-col>
                 {{ numberWithCommas(roundTo(item.RialPrice / 10000000, 4)) }}
+                
               </v-col>
               <v-col>
-                {{ numberWithCommas(roundTo(item.price, 3)) }}
+                {{ numberWithCommas(roundTo(item.price, 3)) }} 
               </v-col>
               <v-col>
-                {{ numberWithCommas(roundTo(item.volume / 1000000, 3)) }}
+                {{ numberWithCommas(roundTo(item.volume / 1000000, 3)) }} 
               </v-col>
               <v-col>
                 {{ numberWithCommas(roundTo(item.marketCap / 1000000, 3)) }}
+                
               </v-col>
             </v-row>
           </v-col>
@@ -54,27 +57,28 @@
     </v-card>
   </div>
 </template>
+
 <script>
+// eslint-disable-next-line no-unused-vars
 export default {
-  name: "Crypto",
-  components: {},
+  name: "IntroCryptoMW",
+  props: { InputIntroMW: Array },
   data() {
     return {
-      WebsocketRequest: true,
-      tableData: null
+      loading: true,
+      jsonData: {}
     };
   },
-  created() {
-    document.title = "Finwise - دیده بان رمز ارز";
+  watch: {
+    InputIntroMW() {
+      // this.renderData();
+    }
   },
-
+  // In the beginning...
   mounted() {
-    this.loadData();
-    // eslint-disable-next-line no-unused-vars
-    let interval = setInterval(() => {
-      this.loadData();
-    }, 10000);
+    // this.renderData();
   },
+  computed: {},
   methods: {
     numberWithCommas(x) {
       if (x == "-") {
@@ -105,18 +109,31 @@ export default {
       }
       return n;
     },
-    async loadData() {
-      await this.axios
-        .get("/api/Crypto/MarketwatchAll/")
-        .then(response => {
-          let data = response.data;
-          this.tableData = data;
-        })
-        .catch(error => {
-          this.isBusy = false;
-          console.error(error);
-        });
+    isRealValue(obj) {
+      return obj && obj !== "null" && obj !== "undefined";
     }
+    // renderData() {
+    //   if (!(this.inpuDataCorr === undefined || this.inpuDataCorr.length == 0)) {
+    //     let data = [...this.inpuDataCorr];
+    //     let that = this;
+    //     this.updatedAt = data[0].englishDate;
+    //     let json_data = JSON.parse(data[0].corrMatrix);
+    //     var result = [];
+    //     var labels = [];
+    //     for (var i in json_data) {
+    //       let dictionary = json_data[i];
+    //       var values = Object.keys(dictionary).map(function(key) {
+    //         return that.roundTo(dictionary[key], 2);
+    //       });
+    //       result.push(values);
+    //     }
+    //     this.ChartData2 = result;
+    //     for (var j in json_data) {
+    //       labels.push(j);
+    //     }
+    //     this.ChartLabels2 = labels;
+    //   }
+    // }
   }
 };
 </script>

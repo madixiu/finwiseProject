@@ -143,7 +143,7 @@ export default {
     initrender() {
       this.width =
         0.85 * parseInt(d3.select("#ChartContainer_Status").style("width"), 10);
-      this.height = (this.width * 8) / 16;
+      this.height = (this.width * 6) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
@@ -405,7 +405,19 @@ export default {
           .attr("y", d => {
             return yLeft(d["Value"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -427,7 +439,19 @@ export default {
           .attr("y", d => {
             return yRight(d["Vol"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -805,7 +829,14 @@ export default {
           .attr("y", d => {
             return yLeft_2(d["Impact"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(
+            d =>
+              '<a href="/ticker/Overview/Overall/' +
+              d.ID +
+              '">' +
+              d.ticker +
+              "</a>"
+          )
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -827,7 +858,14 @@ export default {
           .attr("y", d => {
             return yRight_2(d["Impact"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(
+            d =>
+              '<a href="/ticker/Overview/Overall/' +
+              d.ID +
+              '">' +
+              d.ticker +
+              "</a>"
+          )
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -874,7 +912,7 @@ export default {
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("بیشترین ");
+          .text("بهترین ");
 
         chart
           .append("text")
@@ -884,7 +922,7 @@ export default {
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("کمترین ");
+          .text("بدترین ");
 
         // eslint-disable-next-line no-unused-vars
         const tooltip = d3

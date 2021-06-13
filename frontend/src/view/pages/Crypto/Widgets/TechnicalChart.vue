@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <!-- <div class="card card-custom"> -->
-  <div class="row col-xxl-12 col-lg-12 col-md-12 col-sm-12 row">
-    <v-card width="100%">
-      <v-card-title> بررسی تکنیکال رمز ارزها </v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
+  <div>
+    <v-card>
+      <v-toolbar dense>
+        <v-toolbar-title>بررسی تکنیکال رمز ارزها</v-toolbar-title>
+      </v-toolbar>
       <div id="Chartcontainer_index"></div>
     </v-card>
   </div>
@@ -160,7 +160,10 @@ export default {
         .attr("id", "Chartcontainer_index_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .style('background','url(../media/logos/fadedfinwise.png) no-repeat center ')
+        .style(
+          "background",
+          "url(../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -492,7 +495,7 @@ export default {
       //   svg.on("touchend mouseleave", () => tooltip.call(callout2, null));
       svg
         .append("text")
-        .attr("class", "title")
+        // .attr("class", "title")
         .attr("x", this.width / 2)
 
         .attr("y", this.margin.top)
@@ -500,25 +503,26 @@ export default {
         .text(
           "بهترین و بدترین های تکنیکال بازار در تحلیل " + `${this.updatedAt}`
         )
-        .style("font-size", `${this.width / 1000}em`);
-       svg
+        .style("font-size", `${this.width / 900}em`);
+      svg
         .append("text")
-       
-        .attr("class", "title")
-        .attr("x",this.margin.left)
 
-        .attr("y", this.height*0.5)
+        // .attr("class", "title")
+        .attr("x", this.margin.left)
+
+        .attr("y", this.height * 0.5)
         .attr("text-anchor", "middle")
-        .text(
-          "تمامی محاسبات بر حسب معاملات با USDT در بایننس انجام شده است" 
-        )
-        .style("font-size", `${this.width / 1000}em`) .attr("transform", function() {
+        .text("تمامی محاسبات بر حسب معاملات با USDT در بایننس انجام شده است")
+        // .style("font-family", 'Vazir-Medium-FD')
+        .style("font-size", `${this.width / 900}em`)
+        
+        .attr("transform", function() {
           var me = this;
           var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
           var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
 
           return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
-        })
+        });
       // svg
       //   .append("text")
       //   .attr("class", "source")
@@ -637,5 +641,4 @@ export default {
   top: 50%;
   left: 100%;
 }
-
 </style>

@@ -157,7 +157,7 @@ export default {
 
       this.width =
         0.85 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
-      this.height = (this.width * 8) / 16;
+      this.height = (this.width * 6) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
@@ -471,7 +471,19 @@ export default {
           .attr("y", d => {
             return yLeft(d["netHaghighi"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "سهم بورس" || d.Type=="سهم فرابورس") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -493,7 +505,19 @@ export default {
           .attr("y", d => {
             return yRight(d["netHaghighi"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "سهم بورس" || d.Type=="سهم فرابورس") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -888,7 +912,19 @@ export default {
           .attr("y", d => {
             return yLeft_2(d["Value"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
@@ -910,7 +946,19 @@ export default {
           .attr("y", d => {
             return yRight_2(d["Value"]) - 0.05 * this.height;
           })
-          .text(d => d.ticker)
+          .html(d => {
+            if (d.Type == "stock") {
+              return (
+                '<a href="/ticker/Overview/Overall/' +
+                d.ID +
+                '">' +
+                d.ticker +
+                "</a>"
+              );
+            } else {
+              return d.ticker;
+            }
+          })
           .attr("transform", function() {
             var me = this;
             var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate

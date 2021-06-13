@@ -1,10 +1,6 @@
 <template>
   <div>
     <div class="row" style="padding-top:5px">
-      <div class="col-12">
-        <IndustryChart :inputData="this.IndustryData"></IndustryChart>
-      </div>
-
       <div
         class="col-xxl-3 col-md-3 col-sm-6 col-xs-12"
         style="padding-left:0px;padding-top:0px"
@@ -73,6 +69,12 @@
           />
         </v-card>
       </div>
+    </div>
+    <div class="row">
+            <div class="col-12">
+        <IndustryChart :inputData="this.IndustryData"></IndustryChart>
+      </div>
+
     </div>
   </div>
 </template>

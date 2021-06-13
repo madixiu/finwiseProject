@@ -174,17 +174,12 @@
         </v-card>
       </div>
 
-      <!-- EXTRA STUFF ************************************************************************* -->
-      <div class="col-12">
+      <!-- <div class="col-12">
         <div class="row">
-          <!-- custom card1 -->
-
-          <!-- custom card2 -->
 
           <div
             class="px-sm-2 pb-2 pb-sm-6 px-xs-0 col-sm-4 col-md-4 col-lg-4 col-12"
           >
-            <!-- <div class="filterBox"> -->
             <v-card round elevation="15">
               <v-toolbar dense flat>
                 <v-toolbar-title v-if="card2Key">تلاطم</v-toolbar-title>
@@ -255,7 +250,7 @@
             </v-card>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

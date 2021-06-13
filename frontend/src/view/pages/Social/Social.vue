@@ -53,13 +53,13 @@
           </v-toolbar>
           <!-- <v-card-title>Twitch</v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider> -->
-          <iframe
+          <!-- <iframe
             src="https://player.twitch.tv/finwiselive&parent=https://finwise.ir"
             height="400"
             width="100%"
             allowfullscreen="true"
           >
-          </iframe>
+          </iframe> -->
           <!-- <v-card-title>Twitch</v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider> -->
           <VueTwitchPlayer

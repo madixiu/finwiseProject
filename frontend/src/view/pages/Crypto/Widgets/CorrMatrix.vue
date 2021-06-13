@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 <template>
-  <div class="row col-xxl-12 col-lg-12 col-md-12 col-sm-12 row">
-    <v-card width="100%">
-      <v-card-title> بررسی همبستگی رمزارزهای اصلی</v-card-title>
-      <v-divider class="mt-0 mb-0"></v-divider>
+    <div>
+    <v-card class="mt-2">
+      <v-toolbar dense>
+        <v-toolbar-title>بررسی همبستگی رمزارزهای اصلی</v-toolbar-title>
+      </v-toolbar>
       <div id="Chartcontainer2_index"></div>
     </v-card>
   </div>
@@ -349,7 +350,7 @@ export default {
       window.addEventListener("resize", this.renderChart);
       svg
         .append("text")
-        .attr("class", "title")
+        // .attr("class", "title")
         .attr("x", this.width / 2)
         .attr("y", this.margin.top / 2)
         .attr("text-anchor", "middle")
