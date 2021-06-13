@@ -422,10 +422,10 @@ export default {
         .domain([
           d3.min(this.indexData, function(d) {
             return d.value;
-          })*0.9999,
+          }) * 0.9999,
           d3.max(this.indexData, function(d) {
             return d.value;
-          })*1.0001
+          }) * 1.0001
         ])
         .nice()
         .range([this.height - this.margin.bottom, this.margin.top]);

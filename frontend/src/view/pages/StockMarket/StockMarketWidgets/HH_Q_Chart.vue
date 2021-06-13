@@ -472,7 +472,7 @@ export default {
             return yLeft(d["netHaghighi"]) - 0.05 * this.height;
           })
           .html(d => {
-            if (d.Type == "سهم بورس" || d.Type=="سهم فرابورس") {
+            if (d.Type == "سهم بورس" || d.Type == "سهم فرابورس") {
               return (
                 '<a href="/ticker/Overview/Overall/' +
                 d.ID +
@@ -506,7 +506,7 @@ export default {
             return yRight(d["netHaghighi"]) - 0.05 * this.height;
           })
           .html(d => {
-            if (d.Type == "سهم بورس" || d.Type=="سهم فرابورس") {
+            if (d.Type == "سهم بورس" || d.Type == "سهم فرابورس") {
               return (
                 '<a href="/ticker/Overview/Overall/' +
                 d.ID +

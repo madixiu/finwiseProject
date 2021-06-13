@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-nav">
-      <router-link
+    <router-link
       :to="`/Crypto`"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >

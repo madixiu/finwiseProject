@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <v-card>
@@ -38,17 +37,15 @@
               <v-col>{{ item.fullName }} </v-col>
               <v-col>
                 {{ numberWithCommas(roundTo(item.RialPrice / 10000000, 4)) }}
-                
               </v-col>
               <v-col>
-                {{ numberWithCommas(roundTo(item.price, 3)) }} 
+                {{ numberWithCommas(roundTo(item.price, 3)) }}
               </v-col>
               <v-col>
-                {{ numberWithCommas(roundTo(item.volume / 1000000, 3)) }} 
+                {{ numberWithCommas(roundTo(item.volume / 1000000, 3)) }}
               </v-col>
               <v-col>
                 {{ numberWithCommas(roundTo(item.marketCap / 1000000, 3)) }}
-                
               </v-col>
             </v-row>
           </v-col>

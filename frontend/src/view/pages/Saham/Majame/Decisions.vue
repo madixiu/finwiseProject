@@ -211,7 +211,7 @@ export default {
     // this.totalRows = this.items.length;
   },
   methods: {
-    linkcreated(row){
+    linkcreated(row) {
       return { name: "TickerOverall", params: { id: row.item.StockID } };
     },
     loadData() {

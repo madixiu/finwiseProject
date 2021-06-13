@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div
     class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
@@ -117,8 +116,8 @@ export default {
         .append("svg")
         .attr("id", "chartContainer_TradeValue_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet")
-        
+        .attr("preserveAspectRatio", "xMidYMid meet");
+
       // eslint-disable-next-line no-unused-vars
     },
     numberWithCommas(x) {
@@ -268,7 +267,7 @@ export default {
           ? this.inputDataTV[3][1]["TradeValue"]
           : 0;
         this.jsonData.Total2 = this.jsonData.Tepix + this.jsonData.IFB;
-      } 
+      }
     },
     renderChart() {
       if (document.getElementById("chartContainer_TradeValue_svg")) {
@@ -284,7 +283,10 @@ export default {
         .attr("id", "chartContainer_TradeValue_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .style('background','url(../../media/logos/fadedfinwise.png) no-repeat center ')
+        .style(
+          "background",
+          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")

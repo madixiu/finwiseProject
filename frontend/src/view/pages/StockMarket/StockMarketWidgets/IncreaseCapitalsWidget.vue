@@ -19,7 +19,7 @@
         v-if="loading == false"
         :headers="headers"
         :items="DataItems2"
-        :items-per-page=13
+        :items-per-page="13"
         class="elevation-1 FinancialStrength"
       >
         <template v-slot:[`item.IncreasePercent`]="{ item }">
@@ -51,8 +51,8 @@ export default {
       headers: [
         {
           text: "سهم",
-          value: "ticker"
-          ,sortable:false
+          value: "ticker",
+          sortable: false
         },
         {
           text: "زمان انتشار",
@@ -60,8 +60,8 @@ export default {
         },
         {
           text: "نوع اطلاعیه",
-          value: "Title"
-          ,sortable:false
+          value: "Title",
+          sortable: false
         },
         {
           text: "درصد افزایش سرمایه",
@@ -69,13 +69,13 @@ export default {
         },
         {
           text: "محل افزایش سرمایه",
-          value: "CapitalChangeType"
-          ,sortable:false
+          value: "CapitalChangeType",
+          sortable: false
         },
         {
           text: "لینک فایلها",
-          value: "AttachmentUrl"
-          ,sortable:false
+          value: "AttachmentUrl",
+          sortable: false
         }
       ],
       DataItems2: []

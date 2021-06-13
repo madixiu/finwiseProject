@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <v-card>
@@ -515,7 +514,7 @@ export default {
         .text("تمامی محاسبات بر حسب معاملات با USDT در بایننس انجام شده است")
         // .style("font-family", 'Vazir-Medium-FD')
         .style("font-size", `${this.width / 900}em`)
-        
+
         .attr("transform", function() {
           var me = this;
           var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate

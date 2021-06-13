@@ -71,10 +71,9 @@
       </div>
     </div>
     <div class="row">
-            <div class="col-12">
+      <div class="col-12">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div>
-
     </div>
   </div>
 </template>

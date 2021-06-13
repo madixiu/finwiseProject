@@ -52,7 +52,9 @@
             :items-per-page="10"
           >
             <template v-slot:[`item.ticker`]="{ item }">
-              <router-link :to="linkcreated(item)">{{ item.ticker }}</router-link>
+              <router-link :to="linkcreated(item)">{{
+                item.ticker
+              }}</router-link>
             </template>
             <template v-slot:[`item.sum`]="{ item }">
               <div style="direction:ltr;text-align:right">
@@ -136,8 +138,8 @@ export default {
       highestValues: [],
       selectedAttribute: 0,
       mvheaders: [
-        { text: "نماد", value: "ticker",sortable:false,align:'center'},
-        { text: "امتیاز", value: "sum" ,sortable:false,align:'center'}
+        { text: "نماد", value: "ticker", sortable: false, align: "center" },
+        { text: "امتیاز", value: "sum", sortable: false, align: "center" }
       ]
     };
   },

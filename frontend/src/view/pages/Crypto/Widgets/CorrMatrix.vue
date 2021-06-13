@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 <template>
-    <div>
+  <div>
     <v-card class="mt-2">
       <v-toolbar dense>
         <v-toolbar-title>بررسی همبستگی رمزارزهای اصلی</v-toolbar-title>
@@ -150,7 +150,10 @@ export default {
         .attr("id", "Chartcontainer2_index_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .style('background','url(../media/logos/fadedfinwise.png) no-repeat center ');
+        .style(
+          "background",
+          "url(../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
