@@ -2,26 +2,26 @@
 
 export const AG_GRID_LOCALE_FA = {
   // Set Filter
-  selectAll: "(Select All)",
-  selectAllSearchResults: "(Select All Search Results)",
-  searchOoo: "Search...",
-  blanks: "(Blanks)",
+  selectAll: "(انتخاب همه)",
+  selectAllSearchResults: "(انتخاب همه نتایج جستجو)",
+  searchOoo: "جستجو...",
+  blanks: "(خالی)",
   noMatches: "بدون نتیجه",
 
   // Number Filter & Text Filter
-  filterOoo: "Filter...",
+  filterOoo: "فیلتر...",
   equals: "برابر",
-  notEqual: "Not equal",
+  notEqual: "نابرابر",
   empty: "انتخاب کنید",
 
   // Number Filter
-  lessThan: "Less than",
-  greaterThan: "Greater than",
-  lessThanOrEqual: "Less than or equal",
-  greaterThanOrEqual: "Greater than or equal",
-  inRange: "In range",
-  inRangeStart: "به",
-  inRangeEnd: "از",
+  lessThan: "کمتر از",
+  greaterThan: "بیشتر",
+  lessThanOrEqual: "کمتر یا مساوی",
+  greaterThanOrEqual: "بیشتر یا مساوی",
+  inRange: "بازه",
+  inRangeStart: "از",
+  inRangeEnd: "تا",
 
   // Text Filter
   contains: "شامل",
@@ -37,20 +37,20 @@ export const AG_GRID_LOCALE_FA = {
   orCondition: "یا",
 
   // Filter Buttons
-  applyFilter: "Apply",
-  resetFilter: "Reset",
-  clearFilter: "Clear",
-  cancelFilter: "Cancel",
+  applyFilter: "اعمال",
+  resetFilter: "بازنشانی",
+  clearFilter: "پاک",
+  cancelFilter: "لغو",
 
   // Filter Titles
-  textFilter: "Text Filter",
-  numberFilter: "Number Filter",
+  textFilter: "فیلتر متنی",
+  numberFilter: "فیلتر عددی",
   dateFilter: "Date Filter",
-  setFilter: "Set Filter",
+  setFilter: "اعمال فیلتر",
 
   // Side Bar
   columns: "ستون ها",
-  filters: "Filters",
+  filters: "فیلترها",
 
   // columns tool panel
   pivotMode: "Pivot Mode",
@@ -65,15 +65,15 @@ export const AG_GRID_LOCALE_FA = {
   group: "Group",
 
   // Other
-  loadingOoo: "Loading...",
-  noRowsToShow: "No Rows To Show",
+  loadingOoo: "در حال بارگزاری...",
+  noRowsToShow: "اطلاعات موجود نیست",
   enabled: "فعال",
 
   // Menu
-  pinColumn: "Pin Column",
-  pinLeft: "Pin Left",
-  pinRight: "Pin Right",
-  noPin: "No Pin",
+  pinColumn: "پین ستون",
+  pinLeft: "پین به چپ",
+  pinRight: "پین به راست",
+  noPin: "بدون پین",
   valueAggregation: "Value Aggregation",
   autosizeThiscolumn: "Autosize This Column",
   autosizeAllColumns: "Autosize All Columns",

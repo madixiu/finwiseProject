@@ -5,7 +5,21 @@
       v-if="loading"
     ></v-skeleton-loader> -->
   <v-card>
-    <v-card-title
+    <v-toolbar dense>
+      <v-toolbar-title>نمودار وضعیت بازار</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-radio-group
+        class="mt-5"
+        row
+        v-model="SortBy1"
+        mandatory
+        @change="renderChart1()"
+      >
+        <v-radio label="بیشترین ورود و خروج حقیقی" value="HH"></v-radio>
+        <v-radio label="بیشترین عرضه تقاضای لحظه ای" value="DS"></v-radio>
+      </v-radio-group>
+    </v-toolbar>
+    <!-- <v-card-title
       >نمودار وضعیت بازار -
       <b-form-group class="pt-3">
         <b-form-radio-group
@@ -15,8 +29,12 @@
           :options="options1"
           name="radio-inline_q"
         ></b-form-radio-group> </b-form-group
-    ></v-card-title>
-    <v-divider class="mt-0"></v-divider>
+        
+    >
+  
+    
+    </v-card-title>
+    <v-divider class="mt-0"></v-divider> -->
     <div id="ChartContainer_HH"></div>
     <!--end::Header-->
   </v-card>
@@ -937,7 +955,7 @@ export default {
           .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size",`${this.fontsizeOf}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین تقاضا ");
 
         chart
@@ -946,7 +964,7 @@ export default {
           .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          .style("font-size",`${this.fontsizeOf}em`)
+          .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین عرضه ");
 
         // eslint-disable-next-line no-unused-vars
@@ -1077,7 +1095,6 @@ export default {
             return mycolor_2(d.Value);
           })
           .style("opacity", "80%");
-        
       }
       window.addEventListener("resize", this.initrender);
       window.addEventListener("resize", this.renderData1);

@@ -1,4 +1,5 @@
 from django.http import HttpResponse,JsonResponse
+from django.views.decorators.cache import cache_control
 import json
 import requests
 from rest_framework.parsers import JSONParser 
@@ -187,6 +188,7 @@ def getMarketWatchFilterOptions(request):
 ############### MARKET WATCH ###############
 
 @csrf_exempt
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getMarketWatch(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
@@ -317,7 +319,10 @@ def getAllTradesValue(self):
 
 
 ######### Commodity
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasic(self):
     return JsonResponse(getbasicCommodityIR(),safe=False) 
+
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasicInvesting(self):
     return JsonResponse(getbasicInvesting(),safe=False) 

@@ -219,6 +219,8 @@ def DataModifier(input):
     table = []
     ImpactSum = 0
     HHSum = 0
+    # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     for item in input:
         if item["last"] == None:
             item["last"] = 0
@@ -229,12 +231,11 @@ def DataModifier(input):
         if item["signal"] == "NaN":
             item["signal"] = 0
 
-
-        Impact.append({"ticker":item["ticker"],"Impact":item["Impact"]})
-        marketCap.append({"ticker":item["ticker"],"marketcap":item["marketcap"]})
-        HH.append({"ticker":item["ticker"],"HH":item["HH"]})
-        technical.append({"ticker":item["ticker"],"signal":item["signal"]})
-        table.append({"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"],"marketcap":item["marketcap"]})
+        Impact.append({"id":item["firm"],"ticker":item["ticker"],"Impact":item["Impact"]})
+        marketCap.append({"id":item["firm"],"ticker":item["ticker"],"marketcap":item["marketcap"]})
+        HH.append({"id":item["firm"],"ticker":item["ticker"],"HH":item["HH"]})
+        technical.append({"id":item["firm"],"ticker":item["ticker"],"signal":item["signal"]})
+        table.append({"id":item["firm"],"ticker":item["ticker"],"last":item["last"],"lastPercent":item["lastPercent"],"marketcap":item["marketcap"]})
         ImpactSum += item["Impact"]
         HHSum += item["HH"]
 
@@ -242,7 +243,7 @@ def DataModifier(input):
     marketCap = sorted(marketCap, key=lambda x : x['marketcap'], reverse=True)
     HH = sorted(HH, key=lambda x : x['HH'], reverse=True)
     technical = sorted(technical, key=lambda x : x['signal'], reverse=True)
-    table = sorted(table, key=lambda x : x['lastPercent'], reverse=True)
+    table = sorted(table, key=lambda x : x['marketcap'], reverse=True)
 
 
     result["Impact"] = {"ImpactData" : Impact, "Sum":ImpactSum}

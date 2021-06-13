@@ -99,7 +99,8 @@ export default {
         "Funds",
         "profile",
         "SocialMedia",
-        "ai"
+        "ai",
+        "commodities"
       ]
     };
   },

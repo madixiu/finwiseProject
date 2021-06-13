@@ -22,12 +22,14 @@ LicenseManager.setLicenseKey(
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-material.css";
+
 // Adding GOOGLE ANALYTICS
-import VueGtag from "vue-gtag";
-Vue.use(VueGtag, {
-  config: { id: "G-YGH92K65WQ" }
-});
-import LoadScript from 'vue-plugin-load-script';
+// import VueGtag from "vue-gtag";
+// Vue.use(VueGtag, {
+//   config: { id: "G-YGH92K65WQ" }
+// });
+import LoadScript from "vue-plugin-load-script";
 
 Vue.use(LoadScript);
 // apollo imports for graphql
@@ -52,8 +54,8 @@ Vue.use(PersianCalendar);
 // HTTP connection to the API graphql/apollo
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: "https://finwise.ir/graphql"
-  // uri: "http://localhost:8000/graphql"
+  // uri: "https://finwise.ir/graphql"
+  uri: "http://localhost:8000/graphql"
 });
 const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {

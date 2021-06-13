@@ -5,7 +5,7 @@
       <ChartVol
         :inputDataStatus="highestTvalueData"
         :inputDataImpact="ImpactsData"
-        class="mb-4"
+        class="pb-2 pt-1"
       ></ChartVol>
       <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
     </div>

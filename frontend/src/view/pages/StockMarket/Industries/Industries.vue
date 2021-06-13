@@ -32,8 +32,10 @@
           />
         </v-card>
       </div>
-      <div class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
-      style="padding-right:10px;padding-top:0px">
+      <div
+        class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
+        style="padding-right:10px;padding-top:0px"
+      >
         <v-card v-if="Barseries.length">
           <v-toolbar dense>
             <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
@@ -59,7 +61,7 @@
           />
         </v-card>
         <v-card class="mt-3" v-if="EffectOnIndexSeries.length">
-           <v-toolbar dense>
+          <v-toolbar dense>
             <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
           </v-toolbar>
           <ApexChart
@@ -532,9 +534,23 @@ export default {
           fontFamily: "Vazir-Medium-FD",
           position: "bottom"
         },
-        colors: ["#EF476F", "#E09F3E", "#5F2663"
-        , "#118AB2", "#073B4C","#73BB6F","#068292","#50A3AB","#B50D45","#5ACCB7"],
+        colors: [
+          "#EF476F",
+          "#E09F3E",
+          "#5F2663",
+          "#118AB2",
+          "#073B4C",
+          "#73BB6F",
+          "#068292",
+          "#50A3AB",
+          "#B50D45",
+          "#5ACCB7"
+        ],
         labels: [],
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
+        },
         responsive: [
           {
             breakpoint: 480,
@@ -545,99 +561,34 @@ export default {
             }
           }
         ],
-        EffectOnIndexOptions: {
-          chart: {
-            type: "bar",
-            height: 100,
-            fontFamily: "Vazir-Medium-FD",
-            // stacked: true,
-            toolbar: {
-              show: false
-            }
-          },
-          tooltip: {
-            custom: function({ series, seriesIndex, dataPointIndex, w }) {
-              return (
-                '<div class="arrow_box">' +
-                "<span>" +
-                w.globals.labels[dataPointIndex] +
-                ": " +
-                series[seriesIndex][dataPointIndex] +
-                "</span>" +
-                "</div>"
-              );
-            }
-          },
-          labels: [],
-          // colors: ["#16f222", "#FF4560"],
-          colors: [
-            function({ value }) {
-              if (value > 0) {
-                return "#00ad13";
-              } else {
-                return "#dc0600";
-              }
-            }
-          ],
-          plotOptions: {
-            bar: {
-              horizontal: false,
-              barHeight: "100%",
-              startingShape: "flat"
-              // endingShape: "rounded"
-            }
-          },
-          dataLabels: {
-            enabled: false
-          },
+        tooltip: {
+          // eslint-disable-next-line no-unused-vars
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let backgroundColor = w.config.colors[seriesIndex];
+            let n = series[seriesIndex];
+            // let val = ""
+            if (n != undefined) {
+              //   let parts = n.toString().split(".");
+              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              //  val = parts.join(".");
+              let val = (n / 1000000000).toLocaleString();
+              return `<div class="ApexTooltip">
+            <div class="topDivTooltip" style=background-color:${backgroundColor}> 
+              <span style=color:#fff>
+              ${w.globals.labels[seriesIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
+              <span style=color:#000;font-size:0.8em>${val}</span>
 
-          grid: {
-            xaxis: {
-              lines: {
-                show: false
-              }
-            }
-          },
-          stroke: {
-            width: 1,
-            colors: ["#3e3e4e"]
-          },
-          yaxis: {
-            // min: -5,
-            // max: 5,
-            title: {
-              text: "میلیارد ریال"
-            }
-          },
-          // tooltip: {
-          //   shared: false,
-          //   followCursor: true,
-          //   intersect: false,
-          //   fillSeriesColor: true,
+            
 
-          //   x: {
-          //     formatter: function(val) {
-          //       return val;
-          //     }
-          //   },
-          //   y: {
-          //     title: {
-          //       formatter: seriesName => seriesName
-          //     }
-          //     // formatter: function(value) {
-          //     //   return value;
-          //     // }
-          //   }
-          // },
-          // title: {
-          //   text: "Mauritius population pyramid 2011"
-          // },
-          xaxis: {
-            categories: [],
-            labels: {
-              // formatter: function(val) {
-              //   return Math.abs(Math.round(val)) + "%";
-              // }
+              </div>
+              </div>
+            `;
+            } else {
+              return null;
             }
           }
         }
@@ -886,6 +837,7 @@ export default {
   align-content: center;
   padding-right: 22px;
   padding-left: 22px;
+  direction: ltr;
 }
 .apexcharts-legend-text,
 .apexcharts-text,

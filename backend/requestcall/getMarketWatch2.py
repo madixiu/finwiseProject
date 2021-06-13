@@ -9,7 +9,7 @@ def getMarketWatchRequest(name,industry):
     if resp.status_code == 200:
         if resp.text:
             js = json.loads(resp.text)
-            additionalDataMarketWatch(js)
+            js = additionalDataMarketWatch(js)
             if (name != None or industry != None):
                 filtered = getFilteredData(name,industry,js)
                 return filtered
@@ -20,7 +20,7 @@ def getMarketWatchRequest():
     if resp.status_code == 200:
         if resp.text:
             js = json.loads(resp.text)
-            additionalDataMarketWatch(js)
+            js = additionalDataMarketWatch(js)
             return js
 
 
@@ -43,6 +43,7 @@ def additionalDataMarketWatch(input):
             item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
+    return sorted(input, key=lambda x: x['ticker'],reverse=False)
 
 
 def getFilteredData(marketName,marketIndustry):

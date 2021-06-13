@@ -5,18 +5,34 @@
       v-if="loading"
     ></v-skeleton-loader> -->
     <v-card>
-      <v-card-title
-        >نمودار وضعیت بازار -
+      <!-- <v-card-title
+        >نمودار وضعیت بازار
         <b-form-group class="pt-3">
           <b-form-radio-group
-            :click="this.renderChart()"
+            :click="renderChart()"
             v-model="SortBy"
             value="VolumeVal"
             :options="options"
             name="radio-inline_status"
-          ></b-form-radio-group> </b-form-group
-      ></v-card-title>
-      <v-divider class="mt-0"></v-divider>
+          ></b-form-radio-group>
+        </b-form-group>
+        
+      </v-card-title> -->
+      <v-toolbar dense>
+        <v-toolbar-title>نمودار وضعیت بازار</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-radio-group
+          class="mt-5"
+          row
+          v-model="SortBy"
+          mandatory
+          @change="renderChart()"
+        >
+          <v-radio label="ارزش و حجم معاملات" value="VolumeVal"></v-radio>
+          <v-radio label="تاثیر بر شاخص" value="Impact"></v-radio>
+        </v-radio-group>
+      </v-toolbar>
+      <!-- <v-divider class="mt-0"></v-divider> -->
       <div id="ChartContainer_Status"></div>
       <!--end::Header-->
     </v-card>
@@ -269,7 +285,7 @@ export default {
         const yLeft = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
-          .range([this.height - this.margin.bottom,0])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         // eslint-disable-next-line no-unused-vars
         const xRight = d3
@@ -296,7 +312,7 @@ export default {
         //////////////
         let aXisY2 = d3
           .axisLeft(yLeft)
-        .tickFormat(d => {
+          .tickFormat(d => {
             if (d <= 0) {
               return d;
             } else {
@@ -315,7 +331,7 @@ export default {
               }
             }
           })
-          .tickSizeInner(-this.width / 2 );
+          .tickSizeInner(-this.width / 2);
         let aXisY2Axe = chart.append("g").call(aXisY2);
         aXisY2Axe
           .selectAll("text")
@@ -351,7 +367,7 @@ export default {
               );
             }
           })
-          .tickSizeInner(-this.width / 2 );
+          .tickSizeInner(-this.width / 2);
         var aXisY1Axe = chart
           .append("g")
           .call(aXisY1)
@@ -607,7 +623,7 @@ export default {
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
-          .range([0, (this.width) / 2])
+          .range([0, this.width / 2])
           .padding(0.15);
 
         const yLeft_2 = d3
@@ -643,7 +659,7 @@ export default {
         const xRight_2 = d3
           .scaleBand()
           .domain(this.lowestImpcats.map(x => x.ticker))
-          .range([this.width, (this.width) / 2])
+          .range([this.width, this.width / 2])
           .padding(0.15);
 
         // eslint-disable-next-line no-unused-vars
@@ -675,7 +691,7 @@ export default {
                 ) * 1.2
               )
           ])
-          .range([this.height - this.margin.bottom,0])
+          .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
         var mycolor_2 = d3
@@ -829,45 +845,31 @@ export default {
           .attr("x2", xRight_2(0))
           .attr("y2", `${0}`)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width) / 2},0)`
-          );
+          .attr("transform", `translate(${this.width / 2},0)`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
-          .attr(
-            "transform",
-            `translate(${(this.width ) / 2 },${
-              0
-            })`
-          );
+          .attr("transform", `translate(${this.width / 2},${0})`);
         chart
           .append("line")
           .style("stroke", "steelblue")
           .attr("x1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("y1", 0)
-          .attr(
-            "x2",
-            `${(this.width) / 2}`
-          )
+          .attr("x2", `${this.width / 2}`)
           .attr("y1", 0)
           // eslint-disable-next-line no-unused-vars
           .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
-          .attr("x", (this.width *0.25))
+          .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
@@ -877,7 +879,7 @@ export default {
         chart
           .append("text")
           .attr("class", "Chart1title")
-         .attr("x", (this.width *0.75))
+          .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
@@ -1007,7 +1009,34 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.v-input--selection-controls__ripple {
+  height: 16px !important;
+  width: 16px !important;
+  left: -3px !important;
+  top: calc(50% - 15px) !important;
+}
+.v-icon.v-icon {
+  font-size: 18px !important;
+}
+.v-application--is-rtl .v-input--selection-controls__input {
+  margin-left: 1px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0rem;
+}
+.v-label {
+  font-size: 0.8em !important;
+}
+.theme--light.v-label {
+  color: #000 !important;
+}
+/* .v-messages {
+    min-height: 0px !;
+    min-width: 0px;
+} */
 .axis path,
 .axis line {
   fill: none;

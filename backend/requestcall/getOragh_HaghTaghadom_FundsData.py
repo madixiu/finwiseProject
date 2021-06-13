@@ -10,7 +10,7 @@ def getOraghData():
     resp = requests.get('http://185.231.115.223:3000/View_Watch_Bonds',headers = head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        additionalData(js)
+        js = additionalData(js)
         return js
     else:
         return ("noData")
@@ -28,7 +28,7 @@ def getFundsData():
     resp = requests.get('http://185.231.115.223:3000/View_Watch_ETF')
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        additionalData(js)
+        js = additionalData(js)
         return js
     else:
         return ("noData")
@@ -43,6 +43,8 @@ def additionalData(data):
             item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
+    data = sorted(data, key=lambda x : x["ticker"],reverse=False)
+    return data
 
 def TaghadomDataFix(data):
     for item in data:

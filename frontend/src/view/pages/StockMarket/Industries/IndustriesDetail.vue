@@ -19,7 +19,9 @@
             :fields="headerstock"
           >
             <template #cell(ticker)="data">
-              <b class="shakhes-table-cell">{{ data.value }}</b>
+              <b class="shakhes-table-cell-ticker" @click="tickerClick(data)">{{
+                data.value
+              }}</b>
             </template>
             <template #cell(last)="data">
               <b class="shakhes-table-cell">{{
@@ -179,9 +181,15 @@ export default {
   },
   data() {
     return {
+      // IDs
+      IndustriesID: [],
+      HHID: [],
+      ImpactID: [],
+
       TableData: [],
       sumImpact: 0,
       sumHH: 0,
+
       headerstock: [
         {
           label: "نماد",
@@ -221,7 +229,7 @@ export default {
           radar: {
             size: 100,
             polygons: {
-              strokeColors: "#e9e9e9",
+              strokeColors: "#073b4c",
               fill: {
                 colors: ["#f8f8f8", "#fff"]
               }
@@ -237,7 +245,7 @@ export default {
         // },
         tooltip: {
           followCursor: true,
-          // intersect: false,
+          intersect: true,
           //   fillSeriesColor: true,
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let n = series[seriesIndex][dataPointIndex];
@@ -379,7 +387,18 @@ export default {
         chart: {
           width: 380,
           type: "pie",
-          fontFamily: "Vazir-Medium-FD"
+          fontFamily: "Vazir-Medium-FD",
+          events: {
+            // legendClick: function(chartContext, seriesIndex, config) {
+            // },
+            dataPointSelection: (event, chartContext, config) => {
+              this.ChartClick(
+                "Industries",
+                chartContext,
+                config.dataPointIndex
+              );
+            }
+          }
         },
         // colors: ["#011627", "#E09F3E", "#9E2A2B"
         // , "#1AA47C", "#003049","#0E5D52","#540B0E","#069E97","#068292"
@@ -399,7 +418,42 @@ export default {
               }
             }
           }
-        ]
+        ],
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
+        },
+        tooltip: {
+          // eslint-disable-next-line no-unused-vars
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let backgroundColor = w.config.colors[seriesIndex];
+            let n = series[seriesIndex];
+            // let val = ""
+            if (n != undefined) {
+              //   let parts = n.toString().split(".");
+              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              //  val = parts.join(".");
+              let val = (n / 1000000000).toLocaleString();
+              return `<div class="ApexTooltip">
+            <div class="topDivTooltip" style=background-color:${backgroundColor}> 
+              <span style=color:#fff>
+              ${w.globals.labels[seriesIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
+              <span style=color:#000;font-size:0.8em>${val}</span>
+
+            
+
+              </div>
+              </div>
+            `;
+            } else {
+              return null;
+            }
+          }
+        }
       },
 
       ImpactSeries: [],
@@ -409,6 +463,11 @@ export default {
           height: 100,
           toolbar: {
             show: false
+          },
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              this.ChartClick("Impact", chartContext, config.dataPointIndex);
+            }
           }
         },
         labels: [],
@@ -474,7 +533,7 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span class="${Class}">%${n}</span>
+              <span class="${Class}">${n}</span>
             
 
               </div>
@@ -508,6 +567,11 @@ export default {
           // stacked: true,
           toolbar: {
             show: false
+          },
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              this.ChartClick("HH", chartContext, config.dataPointIndex);
+            }
           }
         },
         labels: [],
@@ -544,6 +608,11 @@ export default {
           colors: ["#3e3e4e"]
         },
         yaxis: {
+          labels: {
+            formatter: function(value) {
+              return (value / 1000000000).toLocaleString();
+            }
+          },
           // min: -5,
           // max: 5,
           title: {
@@ -591,6 +660,23 @@ export default {
     this.loadData();
   },
   methods: {
+    ChartClick(ChartType, context, seriesIndex) {
+      if (ChartType == "Impact")
+        this.$router.push({
+          path: `/ticker/Overview/Overall/${this.ImpactID[seriesIndex]}`
+        });
+      else if (ChartType == "HH")
+        this.$router.push({
+          path: `/ticker/Overview/Overall/${this.HHID[seriesIndex]}`
+        });
+      else if (ChartType == "Industries")
+        this.$router.push({
+          path: `/ticker/Overview/Overall/${this.IndustriesID[seriesIndex]}`
+        });
+    },
+    tickerClick(data) {
+      this.$router.push({ path: `/ticker/Overview/Overall/${data.item.id}` });
+    },
     fixer(input) {
       return this.truncate(input / 1000000000, 2);
     },
@@ -620,6 +706,10 @@ export default {
           ];
 
           for (let i = 0; i < data.Impact.ImpactData.length; i++) {
+            this.IndustriesID.push(data.marketCap.marketCapData[i].id);
+            this.HHID.push(data.HH.HHData[i].id);
+            this.ImpactID.push(data.Impact.ImpactData[i].id);
+
             IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
             impactList.push(data.Impact.ImpactData[i].Impact);
             HHseries.push(data.HH.HHData[i].HH);
@@ -691,6 +781,14 @@ export default {
   font-weight: 500;
 }
 
+.shakhes-table-cell-ticker {
+  cursor: pointer;
+  vertical-align: middle !important;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1;
+  font-weight: 400;
+}
 .shakhes-table-cell {
   vertical-align: middle !important;
   text-align: center;
