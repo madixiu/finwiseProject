@@ -127,7 +127,7 @@ export default {
     initrender() {
       this.width =
         0.85 * parseInt(d3.select("#ChartContainer_Status").style("width"), 10);
-      this.height = (this.width * 8) / 16;
+      this.height = (this.width * 6) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
@@ -872,7 +872,7 @@ export default {
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("بیشترین ");
+          .text("بهترین ");
 
         chart
           .append("text")
@@ -882,7 +882,7 @@ export default {
           .attr("text-anchor", "middle")
           // .style("font-size", "1em")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("کمترین ");
+          .text("بدترین ");
 
         // eslint-disable-next-line no-unused-vars
         const tooltip = d3

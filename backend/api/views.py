@@ -129,6 +129,10 @@ def getCryptoCorr(self):
     return JsonResponse(getCryptoCorrelation(),safe=False)
 def getIndicatorsCrypto(self,identifier):
     return JsonResponse(getSingleCryptoTechnical(identifier),safe=False)
+def getCyptoMWIntro(self):
+    return JsonResponse(getBCMarketWatch(),safe=False)
+def getCyptoMWAll(self):
+    return JsonResponse(getBCMarketWatchAll(),safe=False)
 def getBasicCrypto(self,identifier):
     return JsonResponse(getBasicCryptoData(identifier),safe=False)
 def getCryptoLive(self,identifier):

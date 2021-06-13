@@ -14,7 +14,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-list"></i>
+          <i class="menu-icon flaticon2-grids"></i>
           <span class="menu-text">داشبورد </span>
         </a>
       </li>

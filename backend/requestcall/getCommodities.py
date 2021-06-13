@@ -44,10 +44,12 @@ def getbasicInvesting():
         if resp.status_code == 200:
             DX=pd.DataFrame(json.loads(resp.text))
             DX['persianDate']=DX['persianDate'].apply(lambda x:str(x).replace('.000000',''))
+            DX['changeperc']=DX['changeperc'].apply(lambda x: float(str(x).replace('%','').replace('+','')))
             DX2=DX[DX['Type']=='Metal']
             DX3=DX[DX['Type']=='Energy']
             DX4=DX[DX['Type']=='Currencies']
-            return {1:json.loads(DX2.to_json(orient='records')),2:json.loads(DX3.to_json(orient='records')),3:json.loads(DX4.to_json(orient='records'))}
+            DX5=DX[DX['Type']=='Indices']
+            return {1:json.loads(DX2.to_json(orient='records')),2:json.loads(DX3.to_json(orient='records')),3:json.loads(DX4.to_json(orient='records')),4:json.loads(DX5.to_json(orient='records'))}
         else:
             time.sleep(2)
             ct=ct+1

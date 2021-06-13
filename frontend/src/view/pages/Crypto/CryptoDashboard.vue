@@ -1,15 +1,13 @@
 <template>
   <div class="row" style="padding-top:5px">
     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
-      <div class="row">
-        <TechnicalCharts
-          :inpuDataTechnical="TechnicalData"
-        ></TechnicalCharts>
-        <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
-      </div>
+      <CryptoIntroMW :InputIntroMW="IntroMW"></CryptoIntroMW>
     </div>
     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
-      <div class="row"></div>
+      <div>
+        <TechnicalCharts :inpuDataTechnical="TechnicalData"></TechnicalCharts>
+        <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
+      </div>
     </div>
   </div>
 </template>
@@ -18,20 +16,24 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import TechnicalCharts from "@/view/pages/Crypto/Widgets/TechnicalChart.vue";
 import CorrMatrix from "@/view/pages/Crypto/Widgets/CorrMatrix.vue";
+import CryptoIntroMW from "@/view/pages/Crypto/Widgets/CryptoMarketIntro.vue";
 export default {
   name: "CryptoDashboard",
   components: {
     TechnicalCharts,
-    CorrMatrix
+    CorrMatrix,
+    CryptoIntroMW
   },
   data() {
     return {
       dataFetched: false,
       TechnicalData: [],
       CorrData: [],
+      IntroMW: [],
       ResponeseTimeout: {
         getTechnicalData: true,
-        getCorrData: true
+        getCorrData: true,
+        getIntroData: true
       }
     };
   },
@@ -42,11 +44,15 @@ export default {
     // this.test();
     this.ResponeseTimeout = {
       getTechnicalData: true,
-      getCorrData: true
+      getCorrData: true,
+      getIntroData: true
     };
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "داشبورد رمز ارز" }]);
     this.loadData();
-
+    // eslint-disable-next-line no-unused-vars
+    let interval = setInterval(() => {
+      this.getIntroMW();
+    }, 10000);
     // this.make_requests_handler();
   },
   methods: {
@@ -54,7 +60,10 @@ export default {
       // eslint-disable-next-line no-unused-vars
       this.getTechnical().then(resp0 => {
         // eslint-disable-next-line no-unused-vars
-        this.getCorrelationM().then(resp1 => {});
+        this.getCorrelationM().then(resp1 => {
+          // eslint-disable-next-line no-unused-vars
+          this.getIntroMW().then(resp2 => {});
+        });
         // eslint-disable-next-line no-unused-vars
         // this.getTradesAll().then(resp1 => {
         // eslint-disable-next-line no-unused-vars
@@ -85,6 +94,20 @@ export default {
         .catch(error => {
           if (error.code == "ECONNABORTED")
             this.ResponeseTimeout.getCorrData = true;
+          // setTimeout(this.getHighestQ(), 1000);
+          else console.error(error);
+        });
+    },
+    async getIntroMW() {
+      await this.axios
+        .get("/api/Crypto/Marketwatch/")
+        .then(getIntro => {
+          this.ResponeseTimeout.getIntroData = false;
+          this.IntroMW = getIntro.data;
+        })
+        .catch(error => {
+          if (error.code == "ECONNABORTED")
+            this.ResponeseTimeout.getIntroData = true;
           // setTimeout(this.getHighestQ(), 1000);
           else console.error(error);
         });

@@ -268,7 +268,7 @@ export default {
           ? this.inputDataTV[3][1]["TradeValue"]
           : 0;
         this.jsonData.Total2 = this.jsonData.Tepix + this.jsonData.IFB;
-      }
+      } 
     },
     renderChart() {
       if (document.getElementById("chartContainer_TradeValue_svg")) {

@@ -276,14 +276,14 @@ export default {
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 800
       ) {
-        // console.log("8");
+        console.log("8");
         this.fontsizeOf = 1.3;
       }
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 600 &&
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 800
       ) {
-        // console.log("6");
+        console.log("6");
         this.fontsizeOf = 1.2;
         this.width =
           0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
@@ -300,7 +300,7 @@ export default {
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 400 &&
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 600
       ) {
-        // console.log("4");
+        console.log("4");
         this.fontsizeOf = 1.2;
         this.width =
           0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
@@ -316,7 +316,7 @@ export default {
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 400
       ) {
-        // console.log("3");
+        console.log("3");
         this.fontsizeOf = 1.2;
         this.width =
           0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
@@ -355,18 +355,11 @@ export default {
             return d;
           }
         });
-        let Uniques = [];
         data = data.filter(function(d) {
-          if (
-            d.date.getHours() > 8 &&
-            d.Market == 1 &&
-            !Uniques.includes(d.Index)
-          ) {
-            Uniques.push(d.Index);
+          if (d.date.getHours() > 8 && d.Market == 1) {
             return d;
           }
         });
-        // console.log(data);
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
         this.latestIndex = lastItem["Index"];
@@ -579,7 +572,7 @@ export default {
         text
           .attr("transform", `translate(${w},${-h})`)
           .style("font-family", "Dirooz FD")
-          .style("font-size", `${this.fontsizeOf * 0.7}em`);
+          .style("font-size", `${this.fontsizeOf*0.7}em`)
         const pathnew = g
           .selectAll("pathnew")
           .data([null])

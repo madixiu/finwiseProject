@@ -91,7 +91,7 @@
               </a>
             </li>
           </router-link>
-          <router-link
+          <!-- <router-link
             :to="`/ticker/Overview/HH/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -109,7 +109,7 @@
                 <span class="menu-text">حقیقی - حقوقی</span>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
           <router-link
             :to="`/ticker/Overview/Board/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"

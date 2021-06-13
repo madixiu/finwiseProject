@@ -139,7 +139,7 @@ export default {
 
       this.width =
         0.85 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
-      this.height = (this.width * 8) / 16;
+      this.height = (this.width * 6) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =

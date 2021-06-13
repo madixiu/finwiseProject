@@ -638,8 +638,9 @@ export default {
           this.HHoptions.xaxis.categories = HHNames;
           this.ImpactOptions.xaxis.categories = ImpactNames;
           this.TechnicalOptions.xaxis.categories = technicalNames;
-
+          // console.log(data.Table.TableData)
           this.TableData = data.Table.TableData;
+          this.TableData.sort((a, b) => b.marketcap - a.marketcap);
           this.HHseries = [{ data: HHseries }];
           this.ImpactSeries = [{ data: impactList }];
           this.TechnicalSeries = [{ data: technicalList }];

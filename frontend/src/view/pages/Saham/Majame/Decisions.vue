@@ -130,7 +130,7 @@ export default {
       subTitle: "",
       totalRows: 1,
       currentPage: 1,
-      perPage: 15,
+      perPage: 25,
       isBusy: false,
       headersListData: [
         {
