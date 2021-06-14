@@ -330,3 +330,9 @@ def getCommoditiesBasic(self):
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasicInvesting(self):
     return JsonResponse(getbasicInvesting(),safe=False) 
+
+def getCommoditiesPetro(self):
+    return JsonResponse(getPetroCommodity(),safe=False)
+
+def getCommoditiesMB(self):
+    return JsonResponse(getMBcommodity(),safe=False)

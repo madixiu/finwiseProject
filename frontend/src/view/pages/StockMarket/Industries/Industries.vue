@@ -3,7 +3,7 @@
     <div class="row" style="padding-top:5px">
       <div
         class="col-xxl-3 col-md-3 col-sm-6 col-xs-12"
-        style="padding-left:0px;padding-top:0px"
+        style="padding-left:0px"
       >
         <v-card shaped>
           <v-toolbar dense>
@@ -30,7 +30,7 @@
       </div>
       <div
         class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
-        style="padding-right:10px;padding-top:0px"
+        style="padding-right:10px"
       >
         <v-card v-if="Barseries.length">
           <v-toolbar dense>

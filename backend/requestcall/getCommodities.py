@@ -54,3 +54,41 @@ def getbasicInvesting():
             time.sleep(2)
             ct=ct+1
     return ("noData")
+
+def getPetroCommodity():
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'commodity'}
+        resp = requests.get('http://162.55.15.105:3000/View_Live_Petro',headers=head)
+        if resp.status_code == 200:
+            js = json.loads(resp.text)
+            for item in js:
+                if item["price"] == "NaN":
+                    item["price"] = "-"
+
+
+            return js
+        else:
+            time.sleep(2)
+            ct=ct+1
+    return ("noData")
+
+
+def getMBcommodity():
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'commodity'}
+        resp = requests.get('http://162.55.15.105:3000/View_MB_Live',headers=head)
+
+        if resp.status_code == 200:
+            js = json.loads(resp.text)
+            for item in js:
+                year = item["persianDate"][:4]
+                month = item["persianDate"][4:6]
+                day = item["persianDate"][6:8]
+                item["persianDate"] = year+ '-'+month+'-'+day
+            return js   
+        else:
+            time.sleep(2)
+            ct=ct+1
+    return ("noData")

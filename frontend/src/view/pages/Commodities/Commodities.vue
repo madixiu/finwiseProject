@@ -323,8 +323,8 @@
           </v-row>
         </v-tab-item>
         <v-tab-item>
-          <v-row nogutters class="pb-2 pt-1 ">
-            <v-col class="mr-2 ml-2">
+          <v-row no-gutters class="pb-2 pt-1 ">
+            <v-col class="mr-2 ml-1">
               <v-card>
                 <v-toolbar dense color="#3d405b">
                   <v-toolbar-title>فلزات</v-toolbar-title>
@@ -344,28 +344,51 @@
                 </v-card-text>
               </v-card>
             </v-col>
+            <v-col class="mr-1 ml-2">
+              <v-card>
+                <v-toolbar dense color="#5D2A42">
+                  <v-toolbar-title>متال بولتن</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <ag-grid-vue
+                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    class="ag-theme-material"
+                    :localeText="localeText"
+                    :defaultColDef="defaultColDef"
+                    :columnDefs="MBHeader"
+                    :enableRtl="true"
+                    :gridOptions="MBGridOptions"
+                    @grid-ready="onMBGridReady"
+                    :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
+                  ></ag-grid-vue>
+                </v-card-text>
+              </v-card>
+            </v-col>
           </v-row>
         </v-tab-item>
-        <v-tab-item
-          ><v-card class="mx-auto" max-width="344">
-            <v-card-text>
-              <div>Word of the Day4</div>
-              <p class="display-1 text--primary">
-                be•nev•o•lent
-              </p>
-              <p>adjective</p>
-              <div class="text--primary">
-                well meaning and kindly.<br />
-                "a benevolent smile"
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn text color="deep-purple accent-4">
-                Learn More
-              </v-btn>
-            </v-card-actions>
-          </v-card></v-tab-item
-        >
+        <v-tab-item>
+          <v-row class="pb-2 pt-1">
+            <v-col class="mr-2 ml-2"
+              ><v-card>
+                <v-toolbar dense color="#023e8a">
+                  <v-toolbar-title>پتروشیمی</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <ag-grid-vue
+                    style="width: 100%; height: 250px; font-family: 'Vazir-Light-FD'"
+                    class="ag-theme-material"
+                    :localeText="localeText"
+                    :defaultColDef="defaultColDef"
+                    :columnDefs="PetroHeader"
+                    :enableRtl="true"
+                    :gridOptions="PetroGridOptions"
+                    @grid-ready="onPetroGridReady"
+                    :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
+                  ></ag-grid-vue>
+                </v-card-text> </v-card
+            ></v-col>
+          </v-row>
+        </v-tab-item>
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="mr-2 ml-2"
@@ -447,6 +470,13 @@ export default {
       MetalHeader: [],
       MetalDataFetch: false,
       //******
+      // METAL ****
+      MBGridApi: null,
+      MBDefaultColDef: null,
+      MBGridOptions: null,
+      MBHeader: [],
+      MBDataFetch: false,
+      //******
 
       // ENERGY ****
       EnergyGridApi: null,
@@ -483,6 +513,13 @@ export default {
       IndicesHeader: [],
       IndicesDataFetch: false,
       //******
+      // PETRO ****
+      PetroGridApi: null,
+      PetroDefaultColDef: null,
+      PetroGridOptions: null,
+      PetroHeader: [],
+      PetroDataFetch: false,
+      //******
       localeText: null,
       asyncTransactionWaitMillis: 4000,
 
@@ -497,7 +534,9 @@ export default {
       forex1: [],
       currencies: [],
       gold: [],
-      indices: []
+      indices: [],
+      petro: [],
+      MB: []
     };
   },
   watch: {
@@ -590,6 +629,24 @@ export default {
         this.IndicesGridApi.setRowData(newValue);
         this.IndicesDataFetch = true;
       }
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
+    petro(newValue, oldValue) {
+      if (oldValue.length == 0 && newValue.length != 0) {
+        // this.MetalGridApi = this.MetalGridOptions.api;
+        this.PetroGridApi.setRowData(newValue);
+        this.PetroDataFetch = true;
+      }
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
+    MB(newValue, oldValue) {
+      if (oldValue.length == 0 && newValue.length != 0) {
+        // this.MetalGridApi = this.MetalGridOptions.api;
+        this.MBGridApi.setRowData(newValue);
+        this.MBDataFetch = true;
+      }
     }
     // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
@@ -644,6 +701,18 @@ export default {
       getRowNodeId: data => data.id
     };
     this.IndicesGridOptions = {
+      asyncTransactionWaitMillis: 4000,
+      headerHeight: 20,
+      rowHeight: 30,
+      getRowNodeId: data => data.id
+    };
+    this.PetroGridOptions = {
+      asyncTransactionWaitMillis: 4000,
+      headerHeight: 20,
+      rowHeight: 30,
+      getRowNodeId: data => data.id
+    };
+    this.MBGridOptions = {
       asyncTransactionWaitMillis: 4000,
       headerHeight: 20,
       rowHeight: 30,
@@ -1009,10 +1078,70 @@ export default {
         field: "persianDate"
       }
     ];
+    this.PetroHeader = [
+      {
+        headerName: "",
+        sortable: false,
+
+        field: "persianName"
+      },
+      {
+        headerName: "دسته",
+        sortable: true,
+        field: "persianCategory"
+      },
+      {
+        headerName: "لوکیشن",
+        sortable: true,
+        field: "location"
+      },
+      {
+        headerName: "قیمت",
+        sortable: true,
+        field: "price",
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+          // return `<div><span>${params.value.toLocaleString()}</span> <span>ریال</span></div>`;
+        }
+      },
+      {
+        headerName: "تاریخ",
+        sortable: false,
+        field: "persianDate"
+      }
+    ];
+    this.MBHeader = [
+      {
+        headerName: "",
+        sortable: false,
+
+        field: "persianName"
+      },
+      {
+        headerName: "لوکیشن",
+        sortable: true,
+        field: "location"
+      },
+      {
+        headerName: "قیمت",
+        sortable: true,
+        field: "price",
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+          // return `<div><span>${params.value.toLocaleString()}</span> <span>ریال</span></div>`;
+        }
+      },
+      {
+        headerName: "تاریخ",
+        sortable: false,
+        field: "persianDate"
+      }
+    ];
   },
   mounted() {
     this.loadData();
-    this.loadData2();
+    // this.loadIRData();
+    // this.loadInvestingData();
 
     this.apiLiveData();
 
@@ -1031,6 +1160,14 @@ export default {
     // };
   },
   methods: {
+    onMBGridReady(params) {
+      this.MBGridApi = params.api;
+      params.api.setRowData(this.MB);
+    },
+    onPetroGridReady(params) {
+      this.PetroGridApi = params.api;
+      params.api.setRowData(this.petro);
+    },
     onIndicesGridReady(params) {
       this.IndicesGridApi = params.api;
       params.api.setRowData(this.indices);
@@ -1072,14 +1209,14 @@ export default {
       return parts.join(".");
     },
 
-    async loadData() {
+    async loadIRData() {
       this.isBusy = true;
       await this.axios
         .get("/api/Commodities/IR")
-        .then(response => {
+        .then(responseIR => {
           this.isBusy = false;
 
-          let data = response.data;
+          let data = responseIR.data;
           if (data != "noData") {
             this.dollargold = data[1];
             this.gold = data[2];
@@ -1093,7 +1230,7 @@ export default {
           console.error(error);
         });
     },
-    async loadData2() {
+    async loadInvestingData() {
       this.isBusy = true;
       await this.axios
         .get("/api/Commodities/Investing")
@@ -1113,13 +1250,45 @@ export default {
           console.error(error);
         });
     },
+    async loadPetroData() {
+      await this.axios
+        .get("/api/Commodities/Petro")
+        .then(PetroResponse => {
+          this.petro = PetroResponse.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async loadMBData() {
+      await this.axios
+        .get("/api/Commodities/MB")
+        .then(MBResponse => {
+          this.MB = MBResponse.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    loadData() {
+      // eslint-disable-next-line no-unused-vars
+      this.loadIRData().then(resp0 => {
+        // eslint-disable-next-line no-unused-vars
+        this.loadInvestingData().then(resp1 => {
+          // eslint-disable-next-line no-unused-vars
+          this.loadPetroData().then(resp2 => {
+            this.loadMBData();
+          });
+        });
+      });
+    },
     apiLiveData() {
       let interval = setInterval(() => {
         if (!this.WebsocketRequest) {
           clearInterval(interval);
           return;
         }
-        this.loadData2();
+        this.loadInvestingData();
       }, 10000);
     },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
