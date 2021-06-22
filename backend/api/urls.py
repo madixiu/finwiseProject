@@ -66,6 +66,8 @@ urlpatterns = [
    path("Monthly/Construction/Ongoing/<identifier>/",getMonthlyConstOngoing),
    path("Monthly/Construction/Sold/<identifier>/",getMonthlyConstSold),
    path("Monthly/Production/<identifier>/",getMonthlyProduction),
+   path("Monthly/ProductionAnalysis1/<identifier>/",getMonthlyProductionAnalysis1),
+   
    path("Monthly/Service/<identifier>/",getMonthlyServices),
    path("Monthly/Leasing/Cost/<identifier>/",getMonthlyLeasingCost),
    path("Monthly/Leasing/Delegated/<identifier>/",getMonthlyLeasingDelegated),

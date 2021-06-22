@@ -197,6 +197,7 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
+      this.loading = false;
     },
     gettabs() {
       var lookup = {};
@@ -214,6 +215,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -224,6 +226,7 @@ export default {
           itemTwo["value"] = name.split("/")[0];
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result2.push(itemTwo);
           counter += 1;
         }
@@ -247,6 +250,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -278,9 +282,6 @@ export default {
       this.selectedMonth = this.todates[0].value;
       // this.selectedYear = this.todatesyears[0].value;
     }
-  },
-  mounted() {
-    this.populateData();
   },
   watch: {
     notices() {

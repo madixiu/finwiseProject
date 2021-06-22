@@ -55,7 +55,7 @@
               <div class="card-header border-0">
                 <h4 class="card-title cellItem FinancialStrength">
                   صورت جریان وجوه نقدی دوره {{ itemR.period }} ماه منتهی به
-                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}
+                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}- {{itemR.reportStatus}}
                 </h4>
               </div>
               <div class="row">
@@ -223,6 +223,8 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
+
+      this.loading=false
     },
     gettabs() {
       var lookup = {};
@@ -240,6 +242,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -250,6 +253,7 @@ export default {
           itemTwo["value"] = name.split("/")[0];
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result2.push(itemTwo);
           counter += 1;
         }
@@ -273,6 +277,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -306,7 +311,7 @@ export default {
     }
   },
   mounted() {
-    this.populateData();
+    // this.populateData();
   },
   watch: {
     notices() {

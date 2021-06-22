@@ -56,7 +56,7 @@
               <div class="card-header border-0">
                 <h3 class="card-title font-weight-bolder FinancialStrength">
                   ترازنامه دوره {{ itemR.period }} ماه منتهی به
-                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}
+                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }} - {{itemR.reportStatus}}
                 </h3>
               </div>
               <div class="row">
@@ -110,6 +110,53 @@
                   </div>
                 </div>
                 <div class="col-xxl-6">
+                   <div class="card-body d-flex flex-column">
+                    <div class="card-header border-0">
+                      <h4
+                        class="card-title font-weight-bolder FinancialStrength"
+                      >
+                        حقوق صاحبان سهام
+                      </h4>
+                    </div>
+                    <v-data-table
+                      :headers="headersfacility"
+                      :items="filteredItems3"
+                      class="elevation-1 FinancialStrength"
+                      :header-props="{ sortIcon: null }"
+                      :disable-sort="true"
+                      hide-default-footer
+                      disable-pagination
+                    >
+                      <template v-slot:[`item.toDate`]="{ item }">
+                        <span class="cellItem">{{ item.toDate }} </span>
+                      </template>
+                      <template v-slot:[`item.Translated`]="{ item }">
+                        <span class="cellItem">{{ item.Translated }} </span>
+                      </template>
+                      <template v-slot:[`item.lastYear`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.lastYear > 0
+                              ? 'ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.lastYear) }}
+                        </span>
+                      </template>
+                      <template v-slot:[`item.thisPeriod`]="{ item }">
+                        <span
+                          class="cellItem"
+                          v-bind:class="[
+                            item.thisPeriod > 0
+                              ? 'ltr_aligned'
+                              : 'redItem ltr_aligned'
+                          ]"
+                          >{{ numberWithCommas(item.thisPeriod) }}
+                        </span>
+                      </template>
+                    </v-data-table>
+                  </div>
                   <div class="card-body d-flex flex-column">
                     <div class="card-header border-0">
                       <h4
@@ -157,53 +204,7 @@
                       </template>
                     </v-data-table>
                   </div>
-                  <div class="card-body d-flex flex-column">
-                    <div class="card-header border-0">
-                      <h4
-                        class="card-title font-weight-bolder FinancialStrength"
-                      >
-                        حقوق صاحبان سهام
-                      </h4>
-                    </div>
-                    <v-data-table
-                      :headers="headersfacility"
-                      :items="filteredItems3"
-                      class="elevation-1 FinancialStrength"
-                      :header-props="{ sortIcon: null }"
-                      :disable-sort="true"
-                      hide-default-footer
-                      disable-pagination
-                    >
-                      <template v-slot:[`item.toDate`]="{ item }">
-                        <span class="cellItem">{{ item.toDate }} </span>
-                      </template>
-                      <template v-slot:[`item.Translated`]="{ item }">
-                        <span class="cellItem">{{ item.Translated }} </span>
-                      </template>
-                      <template v-slot:[`item.lastYear`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.lastYear > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.lastYear) }}
-                        </span>
-                      </template>
-                      <template v-slot:[`item.thisPeriod`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.thisPeriod > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.thisPeriod) }}
-                        </span>
-                      </template>
-                    </v-data-table>
-                  </div>
+                 
                 </div>
               </div>
             </v-tab-item>
@@ -311,6 +312,7 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
+      this.loading=false
     },
     gettabs() {
       var lookup = {};
@@ -328,6 +330,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -338,6 +341,7 @@ export default {
           itemTwo["value"] = name.split("/")[0];
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result2.push(itemTwo);
           counter += 1;
         }
@@ -361,6 +365,7 @@ export default {
           itemOne["value"] = name;
           itemOne["period"] = item.period;
           itemOne["fiscalYear"] = item.fiscalYear;
+          itemOne["reportStatus"] = item.reportStatus;
           result.push(itemOne);
           counter += 1;
         }
@@ -392,9 +397,6 @@ export default {
       this.selectedMonth = this.todates[0].value;
       // this.selectedYear = this.todatesyears[0].value;
     }
-  },
-  mounted() {
-    this.populateData();
   },
   watch: {
     notices() {

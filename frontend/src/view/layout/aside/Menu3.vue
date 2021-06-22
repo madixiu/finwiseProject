@@ -274,6 +274,62 @@
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
       v-bind:class="{
+        'menu-item-active': hasActiveChildren('/Monthly')
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon2-website"></i>
+        <span class="menu-text">ماهیانه</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+        <ul class="menu-subnav">
+          <!-- <router-link
+            :to="`/ticker/MonthlyAnalysis/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">تحلیل ماهیانه</span>
+              </a>
+            </li>
+          </router-link> -->
+          <router-link
+            :to="`/ticker/Monthly/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">'گزارشات خام ماهیانه</span>
+              </a>
+            </li> </router-link
+          >‍
+        </ul>
+      </div>
+    </li>
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
         'menu-item-active': hasActiveChildren('/Sheets')
       }"
     >
@@ -284,6 +340,25 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
+          <!-- <router-link
+            :to="`/ticker/StatementAnalysis/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">تحلیل صورت ها</span>
+            </a>
+            </li>
+          </router-link> -->
           <router-link
             :to="`/ticker/Sheets/BalanceSheet/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -344,25 +419,7 @@
         </ul>
       </div>
     </li>
-    <router-link
-      :to="`/ticker/Monthly/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-medical-records"></i>
-          <span class="menu-text">ماهیانه</span>
-        </a>
-      </li> </router-link
-    >‍
+
     <!-- <router-link
       :to="`/ticker/sahmrobot/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"

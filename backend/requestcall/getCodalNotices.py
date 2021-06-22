@@ -182,8 +182,48 @@ def monthlyProduction(identifier):
             ct=ct+1
         
     return ("noData")
-
-
+def monthlyPAnalysis1(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'monthly'}
+        resp = requests.get('http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier),headers=head)
+        if resp.status_code == 200:
+            DF= pd.DataFrame(json.loads(resp.text))
+            DF.loc[DF['category'].isnull(),'category']='Domestic_Sale'
+            DF=DF[DF['name']!='تخفیفات']
+            DX=DF.groupby(by=['name','toDate']).sum()
+            DX2=DX[['totalProductionPeriod','modification_SalesAmount']].reset_index()
+            DX4=pd.DataFrame()
+            for t in DX2.name.unique():
+                Temp=DX2[DX2['name']==t]
+                Temp=Temp.sort_values(by=['toDate'])
+                Temp['Shifted']=Temp['modification_SalesAmount'].shift(-1)
+                Temp.fillna(0,inplace=True)
+                DX4=DX4.append(Temp)
+            DX4['Sale']=DX4['totalProductionPeriod']+DX4['Shifted']
+            DX4=DX4[['name','toDate','Sale']]
+            DX4.sort_values(by=['toDate'],ascending=False,inplace=True)
+            DY=DF.groupby(by=['category','toDate']).sum()
+            DY2=DY[['totalProductionPeriod','modification_SalesAmount']].reset_index()
+            DY2=DY2[(DY2['category']!='Refund') & (DY2['category']!='Discount')]
+            DY4=pd.DataFrame()
+            for t in DY2.category.unique():
+                Temp=DY2[DY2['category']==t]
+                Temp=Temp.sort_values(by=['toDate'])
+                Temp['Shifted']=Temp['modification_SalesAmount'].shift(-1)
+                Temp.fillna(0,inplace=True)
+                DY4=DY4.append(Temp)
+            DY4['Sale']=DY4['totalProductionPeriod']+DY4['Shifted']
+            DY4=DY4[['category','toDate','Sale']]    
+            DY4.replace('Export_Sale','فروش صادراتی',inplace=True)
+            DY4.replace('Domestic_Sale','فروش داخلی',inplace=True)
+            DY4.replace('Service_revenue','درآمد خدمات',inplace=True)
+            return {'1':json.loads(DX4.to_json(orient='records')),'2':json.loads(DY4.to_json(orient='records'))}
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+   
 
 def monthly_leasing_cost(identifier):
     ct=0
@@ -307,7 +347,6 @@ def getBalanceSheetFirm(identifier):
         else:
             time.sleep(2)
             ct=ct+1
-        
     return ("noData") 
 def getIncomeStatementFirm(identifier):
     ct=0

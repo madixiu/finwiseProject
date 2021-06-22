@@ -92,6 +92,8 @@ export default {
         "IncomeStatement",
         "CashFlow",
         "Monthly",
+        "MonthlyAnalysis",
+        "StatementAnalysis",
         "sahmRobot",
         "TickerRatio",
         "TickerIndustry",

@@ -351,14 +351,15 @@ export default {
         });
         // eslint-disable-next-line no-unused-vars
         var data2 = data.filter(function(d) {
-          if (d.date.getHours() > 8 && d.Market == 2) {
+          if (d.date.getHours() >= 8 && d.Market == 2) {
             return d;
           }
         });
         let Uniques = [];
         data = data.filter(function(d) {
           if (
-            d.date.getHours() > 8 &&
+            d.date.getHours() >= 8 &&
+            d.date.getHours() <= 13 &&
             d.Market == 1 &&
             !Uniques.includes(d.Index)
           ) {
