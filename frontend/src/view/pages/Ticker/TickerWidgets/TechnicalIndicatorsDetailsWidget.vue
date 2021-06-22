@@ -1,94 +1,108 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        بررسی اندیکاتورها
-      </h3>
-    </div>
-    <div class="card-body d-flex flex-column">
+  <div>
+    <v-card :height="mainCardHeight">
+      <!--begin::Header-->
+      <v-toolbar dense>
+        <v-toolbar-title>بررسی اندیکاتورها</v-toolbar-title>
+      </v-toolbar>
       <div class="row">
-        <div class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12">
-          <div
+        <div
+          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+          style="padding-left:0px;padding-right:20px"
+        >
+          <!-- <div
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          >
-            <v-card id="ParentCard" :height="cardheight">
-              <v-card-title id="ParentCardTitle">
-                <span> مجموع </span><br />
-              </v-card-title>
-              <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
-              <div id="ChartGeneral"></div>
-            </v-card>
-          </div>
+          > -->
+          <v-card id="ParentCard" :height="cardheight">
+            <v-card-title id="ParentCardTitle">
+              <span> مجموع </span><br />
+            </v-card-title>
+            <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
+            <div id="ChartGeneral"></div>
+          </v-card>
+          <!-- </div> -->
         </div>
-        <div class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12">
-          <div
+        <div
+          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+          style="padding-left:0px;padding-right:5px"
+        >
+          <!-- <div
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          >
-            <v-card :height="cardheight">
-              <v-card-title> <span> Moving Average </span><br /> </v-card-title>
-              <v-divider class="mt-0 mb-0"></v-divider>
-              <div id="ChartGeneral2"></div>
-            </v-card>
-          </div>
+          > -->
+          <v-card :height="cardheight">
+            <v-card-title> <span> Moving Average </span><br /> </v-card-title>
+            <v-divider class="mt-0 mb-0"></v-divider>
+            <div id="ChartGeneral2"></div>
+          </v-card>
+          <!-- </div> -->
         </div>
-        <div class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12">
-          <div
+        <div
+          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+          style="padding-left:0px;padding-right:5px"
+        >
+          <!-- <div
             class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          >
-            <v-card :height="cardheight">
-              <v-card-title> <span> Indicators </span><br /> </v-card-title>
-              <v-divider class="mt-0 mb-0"></v-divider>
-              <div id="ChartGeneral3"></div>
-            </v-card>
-          </div>
+          > -->
+          <v-card :height="cardheight">
+            <v-card-title> <span> Indicators </span><br /> </v-card-title>
+            <v-divider class="mt-0 mb-0"></v-divider>
+            <div id="ChartGeneral3"></div>
+          </v-card>
+          <!-- </div> -->
         </div>
-        <div class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12">
-          <div
+        <div
+          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+          style="padding-left:20px;padding-right:5px"
+        >
+          <!-- <div
             class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          >
-            <v-card :height="cardheight">
-              <v-card-title>
-                <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
-                <h6>
-                  آخرین بروزرسانی :
+          > -->
+          <v-card :height="cardheight" width="100%">
+            <v-card-title>
+              <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
+              <h6>
+                آخرین بروزرسانی :
+              </h6>
+            </v-card-title>
+            <v-card-subtitle>
+              <span class="cellItem">{{
+                this.lastUpdate.substring(0, 4) +
+                  "/" +
+                  this.lastUpdate.substring(4, 6) +
+                  "/" +
+                  this.lastUpdate.substring(6, 8)
+              }}</span>
+            </v-card-subtitle>
+            <v-divider class="mt-0 "></v-divider>
+            <v-data-table
+              :headers="headers"
+              :height="`${cardheight}px`"
+              disable-pagination
+              :items="DataItems2"
+              dense
+              disable-sort
+              :hide-default-footer="true"
 
-                  <span class="cellItem">{{
-                    this.lastUpdate.substring(0, 4) +
-                      "/" +
-                      this.lastUpdate.substring(4, 6) +
-                      "/" +
-                      this.lastUpdate.substring(6, 8)
-                  }}</span>
-                </h6>
-              </v-card-title>
-              <v-divider class="mt-0 "></v-divider>
-              <v-data-table
-                :headers="headers"
-                :items="DataItems2"
-                dense
-                disable-sort
-                :items-per-page="10"
-                class="elevation-1 FinancialStrength"
-              >
-                <template v-slot:[`item.title`]="{ item }">
-                  <v-chip small label>
-                    <span>{{ item.title }} </span></v-chip
-                  >
-                </template>
-                <template v-slot:[`item.Value`]="{ item }">
-                  <span class="cellItem">{{
-                    numberWithCommas(roundTo(item.Value, 2))
-                  }}</span>
-                </template>
-              </v-data-table>
-            </v-card>
-          </div>
+              class="elevation-1 FinancialStrength"
+            >
+              <template v-slot:[`item.title`]="{ item }">
+                <v-chip small label>
+                  <span>{{ item.title }} </span></v-chip
+                >
+              </template>
+              <template v-slot:[`item.Value`]="{ item }">
+                <span class="cellItem">{{
+                  numberWithCommas(roundTo(item.Value, 2))
+                }}</span>
+              </template>
+            </v-data-table>
+          </v-card>
+          <!-- </div> -->
         </div>
       </div>
-    </div>
-    <!--end::Body-->
+      <!--end::Body-->
+    </v-card>
   </div>
   <!--end::Mixed Widget 14-->
 </template>
@@ -157,7 +171,7 @@ export default {
         }
       ],
       lastUpdate: "",
-      cardheight: 0,
+      // cardheight: 0,
       sum: 0,
       neutral: 0,
       positive: 0,
@@ -172,6 +186,28 @@ export default {
       negativeIndic: 0,
       DataItems2: []
     };
+  },
+  computed: {
+    mainCardHeight() {
+
+    return (window.innerHeight - 135).toString() + "px";
+    },
+    cardheight() {
+      if (screen.height * 2 > screen.width) {
+        // console.log(screen.height * 0.5)
+        return Math.max(300, screen.height * 0.35);
+      } else {
+        if (screen.height * 1.5 > screen.width) {
+          return Math.max(400, screen.height * 0.4);
+        } else {
+          if (screen.height > screen.width) {
+            return Math.max(400, screen.height * 0.55);
+          }
+          // console.log(screen.width * 0.5)
+          else return Math.max(400, screen.height * 0.7);
+        }
+      }
+    }
   },
   methods: {
     numberWithCommas(x) {
@@ -1209,7 +1245,7 @@ export default {
     }
   },
   created() {
-    this.cardheight = this.heightCalc();
+    // this.cardheight = this.heightCalc();
   },
   mounted() {
     this.initrender();

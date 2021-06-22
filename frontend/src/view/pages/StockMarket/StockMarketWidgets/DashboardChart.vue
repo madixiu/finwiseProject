@@ -28,8 +28,16 @@
           mandatory
           @change="renderChart()"
         >
-          <v-radio label="ارزش و حجم معاملات" value="VolumeVal"></v-radio>
-          <v-radio label="تاثیر بر شاخص" value="Impact"></v-radio>
+          <v-radio
+            class="radioBTN"
+            label="ارزش و حجم معاملات"
+            value="VolumeVal"
+          ></v-radio>
+          <v-radio
+            class="radioBTN"
+            label="تاثیر بر شاخص"
+            value="Impact"
+          ></v-radio>
         </v-radio-group>
       </v-toolbar>
       <!-- <v-divider class="mt-0"></v-divider> -->
@@ -1047,28 +1055,28 @@ export default {
 };
 </script>
 
-<style>
-.v-input--selection-controls__ripple {
+<style scoped>
+.radioBTN /deep/ .v-input--selection-controls__ripple {
   height: 16px !important;
   width: 16px !important;
   left: -3px !important;
   top: calc(50% - 15px) !important;
 }
-.v-icon.v-icon {
+.radioBTN /deep/ .v-icon.v-icon {
   font-size: 18px !important;
 }
-.v-application--is-rtl .v-input--selection-controls__input {
+.radioBTN /deep/ .v-application--is-rtl .v-input--selection-controls__input {
   margin-left: 1px;
 }
 
-label {
+.radioBTN /deep/ label {
   display: inline-block;
   margin-bottom: 0rem;
 }
-.v-label {
+.radioBTN /deep/ .v-label {
   font-size: 0.8em !important;
 }
-.theme--light.v-label {
+.radioBTN /deep/ .theme--light.v-label {
   color: #000 !important;
 }
 /* .v-messages {

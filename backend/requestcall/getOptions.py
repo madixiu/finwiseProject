@@ -38,8 +38,10 @@ def optionRequest():
 
 def cleanOutput(option):
     # keys = option[0].keys()
+    id = 1
     for item in option:
-  
+        item["id"] = id
+        id +=1
         if isinstance(item['FinalPayment'], float):
             item['FinalPayment'] = truncater(item['FinalPayment'])
 
@@ -60,7 +62,9 @@ def cleanOutput(option):
 
         if isinstance(item['DifferenceToLast'], float):
             item['DifferenceToLast'] = truncater(item['DifferenceToLast'])
-
+        
+    option = sorted(option, key=lambda x : x['DifferenceToAverage'], reverse=True)
+    
         # converting English numbers to Persian Numbers // disable for now
         # for i in keys:
         #     item[i] = converter(item[i])

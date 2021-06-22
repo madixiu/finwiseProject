@@ -3,12 +3,55 @@
     <v-sheet elevation="6">
       <v-tabs background-color="#f0efeb" color="deep-purple accent-4" centered>
         <v-tab>نگاه کلی</v-tab>
-        <v-tab>طلا و ارز</v-tab>
-        <v-tab>شاخص های جهانی</v-tab>
-        <v-tab>فلزات اساسی</v-tab>
-        <v-tab>پتروشیمی</v-tab>
-        <v-tab>پالایشی</v-tab>
-        <v-tab>فارکس</v-tab>
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >طلا و ارز
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >شاخص های جهانی
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >فلزات اساسی
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >پتروشیمی
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >پالایشی
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
+
+        <v-tab :disabled="premiumAccountLock">
+          <span
+            >فارکس
+            <v-icon v-if="premiumAccountLock" size="15px" color="#4682B4"
+              >mdi-lock</v-icon
+            >
+          </span>
+        </v-tab>
 
         <v-tab-item>
           <v-row no-gutters class="pb-2 mt-1">
@@ -524,7 +567,11 @@ export default {
       asyncTransactionWaitMillis: 4000,
 
       modules: AllModules,
+      premiumAccountLock: true,
+      premiumPlusAccountLock: true,
       WebsocketRequest: true,
+      role: 0,
+      BasicAccount: false,
       isBusy: true,
       tableData: null,
       tableData2: null,
@@ -652,6 +699,19 @@ export default {
   },
   created() {
     document.title = "Finwise - بازار جهانی";
+
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    let user = this.$store.getters.currentUser;
+    this.role = user.role;
+    if (this.role == 2) this.premiumAccountLock = false;
+    if (this.role > 2) {
+      this.premiumAccountLock = false;
+      this.premiumPlusAccountLock = false;
+    }
+    console.log(user.role);
+
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     (this.localeText = AG_GRID_LOCALE_FA),
       (this.defaultColDef = {
         flex: 1,
@@ -725,7 +785,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+        cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.ID, request: "IR" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: " قیمت(ریال)",
@@ -747,7 +821,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+        cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.id, request: "IN" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: " قیمت(دلار)",
@@ -820,7 +908,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+            cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.id, request: "IN" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: " قیمت(دلار)",
@@ -893,7 +995,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+                 cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.id, request: "IN" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: " قیمت(دلار)",
@@ -966,7 +1082,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+                 cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.ID, request: "IR" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: "قیمت",
@@ -988,7 +1118,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+                 cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.ID, request: "IR" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: "قیمت",
@@ -1010,7 +1154,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+                 cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.id, request: "IN" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: " قیمت(دلار)",
@@ -1083,7 +1241,21 @@ export default {
         headerName: "",
         sortable: false,
 
-        field: "persianName"
+        field: "persianName",
+            cellRenderer: params => {
+          const route = {
+            name: "CommoditiesDetail",
+            params: { id: params.data.id, request: "PL" }
+          };
+          const link = document.createElement("a");
+          link.href = this.$router.resolve(route).href;
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.$router.push(route);
+          });
+          return link;
+        }
       },
       {
         headerName: "دسته",

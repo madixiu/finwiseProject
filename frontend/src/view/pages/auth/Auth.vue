@@ -22,12 +22,15 @@
             class="d-flex flex-row-fluid flex-column justify-content-center align-items-center"
           >
             <!--begin: Aside header -->
-            <a href="#" class="flex-column-auto">
-              <img
-                src="media/logos/logo-letter-1.png"
-                style="max-height:80px"
-              />
-            </a>
+            <router-link to="/" v-slot="{ href, navigate }">
+              <a :href="href" class="flex-column-auto" @click="navigate">
+                <img
+                  src="media/logos/logo-letter-1.png"
+                  style="max-height:80px"
+                />
+              </a>
+            </router-link>
+
             <!--end: Aside header -->
             <!--begin: Aside content -->
             <div

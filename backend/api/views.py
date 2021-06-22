@@ -1,7 +1,13 @@
 from django.http import HttpResponse,JsonResponse
 from django.views.decorators.cache import cache_control
-import json
-import requests
+from users.models import CustomUser
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes,authentication_classes
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from graphql_jwt.decorators import login_required
+from graphql_jwt.utils import jwt_decode
+
 from rest_framework.parsers import JSONParser 
 # from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
@@ -142,10 +148,30 @@ def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
 ############### OPTOIN ###############
+# @permission_classes([IsAuthenticated,])
+# @login_required
+# @permission_classes([IsAuthenticated])
+# @permission_classes(IsAuthenticated, )
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
+def getOptions(request):
+    tokenA = request.META.get('HTTP_AUTHORIZATION')[7:]
+    try:
+        payload = jwt_decode(tokenA)
+        username = payload["username"]
+        user = CustomUser.objects.get(username = username)
+        # print(user)
+        # role = user.role
+        if user.role >= 2:
+            return JsonResponse(optionRequest(),safe=False)
+        else:
+            return JsonResponse("AccessDenied")
+        # return JsonResponse(role,safe=False)
+    except:
+        return JsonResponse("notAuthorized",safe=False)
 
-def getOptions(self):
-    return JsonResponse(optionRequest(),safe=False)
 
+    # return JsonResponse(optionRequest(),safe=False)
 def getOptionAssets(self):
     return JsonResponse(OptionAssetVolatility(),safe=False)
 ############### OPTOIN ###############
@@ -336,3 +362,11 @@ def getCommoditiesPetro(self):
 
 def getCommoditiesMB(self):
     return JsonResponse(getMBcommodity(),safe=False)
+
+def getCommoditiesDetailIR(self,identifier):
+    return JsonResponse(getHistoricIR(identifier),safe=False)
+
+def getCommoditiesDetailInvesting(self,identifier):
+    return JsonResponse(getHistoricInvesting(identifier),safe=False)
+def getCommoditiesDetailPlats(self,identifier):
+    return JsonResponse(getHistoricPlats(identifier),safe=False)    

@@ -15,8 +15,16 @@
         mandatory
         @change="renderChart1()"
       >
-        <v-radio label="بیشترین ورود و خروج حقیقی" value="HH"></v-radio>
-        <v-radio label="بیشترین عرضه تقاضای لحظه ای" value="DS"></v-radio>
+        <v-radio
+          class="radioBTN"
+          label="بیشترین ورود و خروج حقیقی"
+          value="HH"
+        ></v-radio>
+        <v-radio
+          class="radioBTN"
+          label="بیشترین عرضه تقاضای لحظه ای"
+          value="DS"
+        ></v-radio>
       </v-radio-group>
     </v-toolbar>
     <!-- <v-card-title
@@ -1153,6 +1161,30 @@ export default {
 </script>
 
 <style scoped>
+.radioBTN /deep/ .v-input--selection-controls__ripple {
+  height: 16px !important;
+  width: 16px !important;
+  left: -3px !important;
+  top: calc(50% - 15px) !important;
+}
+.radioBTN /deep/ .v-icon.v-icon {
+  font-size: 18px !important;
+}
+.radioBTN /deep/ .v-application--is-rtl .v-input--selection-controls__input {
+  margin-left: 1px;
+}
+
+.radioBTN /deep/ label {
+  display: inline-block;
+  margin-bottom: 0rem;
+}
+.radioBTN /deep/ .v-label {
+  font-size: 0.8em !important;
+}
+.radioBTN /deep/ .theme--light.v-label {
+  color: #000 !important;
+}
+
 .axis path,
 .axis line {
   fill: none;

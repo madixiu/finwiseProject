@@ -1,5 +1,5 @@
 <template>
-  <div id="testtt" ref="testtt">
+  <div>
     <div class="row">
       <div class="col-xxl-6 col-lg-6 mt-1" style="padding-left:5px">
         <v-card height="343">

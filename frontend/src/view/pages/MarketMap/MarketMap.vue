@@ -1,11 +1,13 @@
 <template>
-  <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%">
-    <treemap
-      :inputData="map"
-      :inputWidth="width"
-      :inputHeight="height"
-      v-if="dataFetched"
-    ></treemap>
+  <div class="row" id="MapRoot">
+    <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%">
+      <treemap
+        :inputData="map"
+        :inputWidth="width"
+        :inputHeight="height"
+        v-if="dataFetched"
+      ></treemap>
+    </div>
   </div>
 </template>
 <script>
@@ -37,12 +39,16 @@ export default {
     // this.height = (window.innerHeight - headerHeight);
   },
   mounted() {
-    // let headerHeight = document.getElementById("kt_header").clientHeight
+    let headerWidth = document.getElementById("MapRoot").clientWidth;
     // console.log(headerHeight);
-    let chartDiv = document.getElementsByClassName("container-fluid");
+    // let chartDiv = document.getElementsByClassName("container-fluid");
 
     this.height = (window.screen.height * 73) / 100;
-    this.width = (chartDiv[0].clientWidth * 98) / 100;
+
+    // this.width = (chartDiv[0].clientWidth * 98) / 100;
+    // this.width = (chartDiv[0].clientWidth * 98) / 100;
+    this.width = headerWidth;
+
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
     this.loadData();

@@ -91,20 +91,18 @@ export default {
   },
   mounted() {
     this.loadData();
-    console.log(this.$store.getters.breadcrumbs);
-    console.log(this.$store.getters.pageTitle);
-    this.liveChecker();
-    this.$socketLiveTickerData.onmessage = data => {
-      // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
-      // this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) {
-        this.subheaders = JSON.parse(data.data)[0][0];
-        this.livedata = JSON.parse(data.data)[0];
-        this.hhdata = JSON.parse(data.data)[1];
-      }
 
-      // this.loading = false;
-    };
+    this.liveChecker();
+    // this.$socketLiveTickerData.onmessage = data => {
+ 
+    //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) {
+    //     this.subheaders = JSON.parse(data.data)[0][0];
+    //     this.livedata = JSON.parse(data.data)[0];
+    //     this.hhdata = JSON.parse(data.data)[1];
+    //   }
+
+    //   // this.loading = false;
+    // };
   },
   watch: {
     "$route.params": {

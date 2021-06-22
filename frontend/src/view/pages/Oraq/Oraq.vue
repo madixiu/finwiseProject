@@ -709,12 +709,12 @@ export default {
   mounted() {
     this.loadData();
     this.height = this.getHeight();
-    this.$socketOraq.onmessage = data => {
-      // this.tableData = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        // this.$store.dispatch("setSahm", JSON.parse(data.data));
-        this.tableData = JSON.parse(data.data);
-    };
+    // this.$socketOraq.onmessage = data => {
+    //   // this.tableData = JSON.parse(data.data);
+    //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+    //     // this.$store.dispatch("setSahm", JSON.parse(data.data));
+    //     this.tableData = JSON.parse(data.data);
+    // };
   },
   methods: {
     onQuickFilterChanged(event) {
@@ -722,13 +722,11 @@ export default {
     },
     gridColumnsChanged() {
       if (this.allColumnIds.length) {
-        console.log("chaange");
         this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
       }
       // this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
     },
     onReady(params) {
-      console.log("onReady");
       let allColumnIds = [];
       // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;

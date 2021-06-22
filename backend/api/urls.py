@@ -120,5 +120,9 @@ urlpatterns = [
    path("Commodities/IR",getCommoditiesBasic),
    path("Commodities/Investing",getCommoditiesBasicInvesting),
    path("Commodities/Petro",getCommoditiesPetro),
-   path("Commodities/MB",getCommoditiesMB)
+   path("Commodities/MB",getCommoditiesMB),
+   path("CommoditiesDetail/IR/<identifier>",getCommoditiesDetailIR),
+   path("CommoditiesDetail/IN/<identifier>",getCommoditiesDetailInvesting),
+   path("CommoditiesDetail/PL/<identifier>",getCommoditiesDetailPlats)
+
 ]

@@ -1,6 +1,6 @@
 import requests
 import json
-from .util.Convereter_trunc import truncater
+from requestcall.util.Convereter_trunc import truncater
 def getMapData():
     resp = requests.get("http://185.231.115.223:3000/View_TreeMapInitial")
     if resp.status_code == 200:
@@ -14,24 +14,30 @@ def getMapData():
             if not item["industry"] in industryList:
                 industryList.append(item["industry"])
         for item in js:
-            if (item["industry"] == temp):
-                TempMarketCap+=item["MarketCap"]
-                child.append({"id":item["ID"], "name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
-                if item["industry"] == industryList[-1] and item == js[-1]:
-                    final.append({"name": temp, "children": child})
+            if item["industry"] == temp:
+                if item["MarketCap"] != None:
+
+                    TempMarketCap+=item["MarketCap"]
+                    child.append({"id":item["ID"], "name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
+                    if item["industry"] == industryList[-1] and item == js[-1]:
+                        final.append({"name": temp, "children": child})
 
             elif item["industry"] != temp and item["industry"] != industryList[-1]:
-                final.append({"name": temp, "children": child })
-                TempMarketCap = item["MarketCap"]
-                temp = item["industry"]
-                child=[]
-                child.append({"id":item["ID"],"name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
+                if item["MarketCap"] != None:
+
+                    final.append({"name": temp, "children": child })
+                    TempMarketCap = item["MarketCap"]
+                    temp = item["industry"]
+                    child=[]
+                    child.append({"id":item["ID"],"name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
             elif item["industry"] != temp and item["industry"] == industryList[-1]:
-                final.append({"name": temp, "children": child })
-                TempMarketCap = item["MarketCap"]   
-                temp = item["industry"]
-                child=[]
-                child.append({"id":item["ID"],"name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
+                if item["MarketCap"] != None:
+
+                    final.append({"name": temp, "children": child })
+                    TempMarketCap = item["MarketCap"]   
+                    temp = item["industry"]
+                    child=[]
+                    child.append({"id":item["ID"],"name": item["ticker"],"close":item["p"],"change":truncater(item["cp"]),"value": item["MarketCap"],"tickerFull": item["tickerFull"]})
 
         mapDataObj = {"name":"نقشه بازار", "children":final}
         # print(mapDataObj)

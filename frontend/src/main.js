@@ -132,6 +132,43 @@ Vue.use(VueCryptojs);
 
 // ticker tape component
 Vue.component("marquee-text", MarqueeText);
+
+//router Account rules
+router.beforeEach((to, from, next) => {
+  let user = store.getters.currentUser;
+  console.log(user);
+  if (
+    (to.name == "Industries" ||
+      to.name == "IndustriesDetail" ||
+      to.name == "Taghadom" ||
+      to.name == "TickerAssemblyDPSAndIC") &&
+    Object.keys(user).length === 0
+  )
+    next({ name: "login" });
+  if (
+    (to.name == "AssemblyIC" || to.name == "TechnicalMoreInfo") &&
+    (user.role < 2 || Object.keys(user).length === 0)
+  )
+    next({ name: "login" });
+  if (
+    (to.name == "Option" ||
+      to.name == "commodities" ||
+      to.name == "Monthly" ||
+      to.name == "BalanceSheet" ||
+      to.name == "IncomeStatement" ||
+      to.name == "CashFlow" ||
+      to.name == "AdjustedPrices") &&
+    (user.role < 3 || Object.keys(user).length === 0)
+  )
+    next({ name: "login" });
+
+  if (
+    to.name == "CommoditiesDetail" &&
+    (user.role < 4 || Object.keys(user).length === 0)
+  )
+    next({ name: "login" });
+  else next();
+});
 // router.beforeEach((to, from, next) => {
 // reset config to initial state
 // store.dispatch(RESET_LAYOUT_CONFIG);

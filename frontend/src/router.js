@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+// import store from "@/core/services/store";
 
 const Layout = () => import("@/view/layout/Layout");
 const StockMarketParent = () =>
@@ -18,6 +19,8 @@ const CryptoSinglePage = () => import("@/view/pages/Crypto/CryptoSingle.vue");
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const AI = () => import("@/view/pages/AI/AI.vue");
 const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
+const CommoditiesDetail = () =>
+  import("@/view/pages/Commodities/CommoditiesDetail");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
 const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
@@ -279,7 +282,6 @@ export default new Router({
             },
             {
               path: "Sheets/BalanceSheet/:id",
-              // name: "Sheets",
               name: "BalanceSheet",
               component: BalanceSheet
             },
@@ -369,6 +371,12 @@ export default new Router({
           path: "/Commodities",
           name: "commodities",
           component: Commodities
+        },
+        {
+          path: "/CommoditiesDetail/:id",
+          name: "CommoditiesDetail",
+          component: CommoditiesDetail,
+          props: true
         },
         // added route for robot!
         {
@@ -476,7 +484,8 @@ export default new Router({
   ],
   // eslint-disable-next-line no-unused-vars
   scrollBehavior(to, from, savedPosition) {
-    if (to.name == "IndustriesDetail" || to.name == "TickerOverall")
+    if (to.name == "IndustriesDetail" || to.name == "TickerOverall") {
       return { x: 0, y: 0 };
+    }
   }
 });
