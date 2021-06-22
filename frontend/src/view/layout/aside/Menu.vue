@@ -280,7 +280,7 @@
       </li>
     </router-link>
     <router-link
-      :to="!OptionLock ? '/StockMarket/Option' : '#'"
+      to="/StockMarket/Option"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
       <li
@@ -297,9 +297,9 @@
 
           <span class="menu-text"
             >آپشن
-            <v-icon v-if="OptionLock" size="15px" color="#4682B4"
+            <!-- <v-icon v-if="OptionLock" size="15px" color="#4682B4"
               >mdi-lock-outline</v-icon
-            >
+            > -->
           </span>
         </a>
       </li>

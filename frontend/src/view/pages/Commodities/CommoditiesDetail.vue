@@ -560,7 +560,11 @@ export default {
     },
     async loadDataIR() {
       await this.axios
-        .get("/api/CommoditiesDetail/IR/" + this.$route.params.id)
+        .get("/api/CommoditiesDetail/IR/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(IRresponse => {
           this.RawData = IRresponse.data;
           // let series = [];
@@ -590,7 +594,11 @@ export default {
     },
     async loadDataIN() {
       await this.axios
-        .get("/api/CommoditiesDetail/IN/" + this.$route.params.id)
+        .get("/api/CommoditiesDetail/IN/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(IRresponse => {
           this.RawData = IRresponse.data;
           // let series = [];
@@ -620,7 +628,11 @@ export default {
     },
     async loadDataPL() {
       await this.axios
-        .get("/api/CommoditiesDetail/PL/" + this.$route.params.id)
+        .get("/api/CommoditiesDetail/PL/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(IRresponse => {
           this.RawData = IRresponse.data;
           // let series = [];

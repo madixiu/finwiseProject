@@ -60,7 +60,11 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get("api/Statement/BalanceSheet/" + this.$route.params.id + "/")
+        .get("api/Statement/BalanceSheet/" + this.$route.params.id + "/", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(response2 => {
           this.notice = response2.data;
         })

@@ -909,7 +909,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-            cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.id, request: "IN" }
@@ -996,7 +996,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-                 cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.id, request: "IN" }
@@ -1083,7 +1083,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-                 cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.ID, request: "IR" }
@@ -1119,7 +1119,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-                 cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.ID, request: "IR" }
@@ -1155,7 +1155,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-                 cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.id, request: "IN" }
@@ -1242,7 +1242,7 @@ export default {
         sortable: false,
 
         field: "persianName",
-            cellRenderer: params => {
+        cellRenderer: params => {
           const route = {
             name: "CommoditiesDetail",
             params: { id: params.data.id, request: "PL" }
@@ -1384,7 +1384,11 @@ export default {
     async loadIRData() {
       this.isBusy = true;
       await this.axios
-        .get("/api/Commodities/IR")
+        .get("/api/Commodities/IR", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(responseIR => {
           this.isBusy = false;
 
@@ -1405,7 +1409,11 @@ export default {
     async loadInvestingData() {
       this.isBusy = true;
       await this.axios
-        .get("/api/Commodities/Investing")
+        .get("/api/Commodities/Investing", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(response => {
           this.isBusy = false;
 
@@ -1424,7 +1432,11 @@ export default {
     },
     async loadPetroData() {
       await this.axios
-        .get("/api/Commodities/Petro")
+        .get("/api/Commodities/Petro", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(PetroResponse => {
           this.petro = PetroResponse.data;
         })
@@ -1434,7 +1446,11 @@ export default {
     },
     async loadMBData() {
       await this.axios
-        .get("/api/Commodities/MB")
+        .get("/api/Commodities/MB", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(MBResponse => {
           this.MB = MBResponse.data;
         })
