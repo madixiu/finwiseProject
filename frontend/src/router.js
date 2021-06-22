@@ -56,6 +56,8 @@ const CashFlow = () => import("@/view/pages/Ticker/Sheets/CashFlow.vue");
 const TechnicalMoreInfo = () =>
   import("@/view/pages/Ticker/TechnicalIndicatorsMoreInfo.vue");
 const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
+const MonthlyAnalysis = () => import("@/view/pages/Ticker/MonthlyAnalysis.vue");
+const StatementAnalysis = () => import("@/view/pages/Ticker/StatementAnalysis.vue");
 const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
 const Relations = () => import("@/view/pages/Ticker/Relations.vue");
 const Industry = () => import("@/view/pages/Ticker/Industry.vue");
@@ -299,6 +301,16 @@ export default new Router({
               path: "Monthly/:id",
               name: "Monthly",
               component: Monthly
+            },
+            {
+              path: "MonthlyAnalysis/:id",
+              name: "MonthlyAnalysis",
+              component: MonthlyAnalysis
+            },
+            {
+              path: "StatementAnalysis/:id",
+              name: "StatementAnalysis",
+              component: StatementAnalysis
             },
             {
               path: "sahmRobot/:id",

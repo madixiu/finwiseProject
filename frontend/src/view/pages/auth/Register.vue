@@ -385,7 +385,7 @@ export default {
       const username = this.$v.form.username.$model;
       const email = this.$v.form.email.$model;
       const password = this.$v.form.password.$model;
-      const password2 = this.$v.form.password2.$$model;
+      const password2 = this.$v.form.password2.$model;
       const firstname = this.$v.form.firstname.$model;
       const lastname = this.$v.form.lastname.$model;
       const phonenumber = this.$v.form.phonenumber.$model;

@@ -590,6 +590,9 @@ export default {
   props: ["statistics", "hh", "liveData"],
   data() {
     return {
+      DataItems3: [],
+      DataItems2: [],
+      DataItems: [],
       loading: true,
       priceOverViewSeries: [
         {
@@ -727,66 +730,88 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.statistics;
-      Object.keys(this.DataItems2).forEach(key => {
-        let val = this.DataItems2[key]; // value of the current key
-        if (val.Item == "Avg Value 3 month") {
-          this.avgval3month = val.value;
-        }
-        if (val.Item == "Avg Value 12 month") {
-          this.avgval12month = val.value;
-        }
-        if (val.Item == "Rank _ value 3 month") {
-          this.rankval3month = val.value;
-        }
-        if (val.Item == "Rank_value 12 month") {
-          this.rankval12month = val.value;
-        }
-        if (val.Item == "Avg Volume 3 month") {
-          this.avgvol3month = val.value;
-        }
-        if (val.Item == "Avg Volume 12 month") {
-          this.avgvol12month = val.value;
-        }
-        if (val.Item == "Rank Volume 3 month") {
-          this.rankvol3month = val.value;
-        }
-        if (val.Item == "Rank Volume 12 month") {
-          this.rankvol12month = val.value;
-        }
-        if (val.Item == "Avg Count 3 month") {
-          this.avgcount3month = val.value;
-        }
-        if (val.Item == "Avg Count 12 month") {
-          this.avgcount12month = val.value;
-        }
-        if (val.Item == "Rank Count 3 month") {
-          this.rankcount3month = val.value;
-        }
-        if (val.Item == "Rank Count 12 month") {
-          this.rankcount12month = val.value;
-        }
-        if (val.Item == "Value Last Day") {
-          this.yesterdaytvalue = val.value;
-        }
-        if (val.Item == "Volume last Day") {
-          this.yesterdaytvolume = val.value;
-        }
-        if (val.Item == "Count Last Day") {
-          this.yesterdaytcount = val.value;
-        }
-        if (val.Item == "Market Cap Last Day") {
-          this.marketcapyesterday = val.value;
-        }
-        if (val.Item == "Market Cap Rank Last Day") {
-          this.marketcapyesterdayrank = val.value;
-        }
-        if (val.Item == "Open Days Count in 3 months") {
-          this.opendayscount3month = val.value;
-        }
-        if (val.Item == "Open Days Count in 12 month") {
-          this.opendayscount12month = val.value;
-        }
-      });
+      if (this.DataItems2.length != 0) {
+        Object.keys(this.DataItems2).forEach(key => {
+          let val = this.DataItems2[key]; // value of the current key
+          if (val.Item == "Avg Value 3 month") {
+            this.avgval3month = val.value;
+          }
+          if (val.Item == "Avg Value 12 month") {
+            this.avgval12month = val.value;
+          }
+          if (val.Item == "Rank _ value 3 month") {
+            this.rankval3month = val.value;
+          }
+          if (val.Item == "Rank_value 12 month") {
+            this.rankval12month = val.value;
+          }
+          if (val.Item == "Avg Volume 3 month") {
+            this.avgvol3month = val.value;
+          }
+          if (val.Item == "Avg Volume 12 month") {
+            this.avgvol12month = val.value;
+          }
+          if (val.Item == "Rank Volume 3 month") {
+            this.rankvol3month = val.value;
+          }
+          if (val.Item == "Rank Volume 12 month") {
+            this.rankvol12month = val.value;
+          }
+          if (val.Item == "Avg Count 3 month") {
+            this.avgcount3month = val.value;
+          }
+          if (val.Item == "Avg Count 12 month") {
+            this.avgcount12month = val.value;
+          }
+          if (val.Item == "Rank Count 3 month") {
+            this.rankcount3month = val.value;
+          }
+          if (val.Item == "Rank Count 12 month") {
+            this.rankcount12month = val.value;
+          }
+          if (val.Item == "Value Last Day") {
+            this.yesterdaytvalue = val.value;
+          }
+          if (val.Item == "Volume last Day") {
+            this.yesterdaytvolume = val.value;
+          }
+          if (val.Item == "Count Last Day") {
+            this.yesterdaytcount = val.value;
+          }
+          if (val.Item == "Market Cap Last Day") {
+            this.marketcapyesterday = val.value;
+          }
+          if (val.Item == "Market Cap Rank Last Day") {
+            this.marketcapyesterdayrank = val.value;
+          }
+          if (val.Item == "Open Days Count in 3 months") {
+            this.opendayscount3month = val.value;
+          }
+          if (val.Item == "Open Days Count in 12 month") {
+            this.opendayscount12month = val.value;
+          }
+        });
+      } else {
+        this.avgval3month = "-";
+        this.avgval12month = "-";
+        this.rankval3month = "-";
+        this.rankval12month = "-";
+        this.avgvol3month = "-";
+        this.avgvol12month = "-";
+        this.rankvol3month = "-";
+        this.rankvol12month = "-";
+        this.avgcount3month = "-";
+        this.avgcount12month = "-";
+        this.rankcount3month = "-";
+        this.rankcount12month = "-";
+        this.yesterdaytvalue = "-";
+        this.yesterdaytvolume = "-";
+        this.yesterdaytcount = "-";
+        this.marketcapyesterday = "-";
+        this.marketcapyesterdayrank = "-";
+        this.opendayscount3month = "-";
+        this.opendayscount12month = "-";
+      }
     },
     populateData2() {
       this.DataItems3 = this.hh;
@@ -799,6 +824,15 @@ export default {
         this.countsellerHoghughi = this.DataItems3[0]["CountSell_Hoghughi"];
         this.volumesellerHaghighi = this.DataItems3[0]["VolumeSell_Haghighi"];
         this.volumesellerHoghughi = this.DataItems3[0]["VolumeSell_Hoghughi"];
+      } else {
+        this.countbuyerHaghighi = "-";
+        this.countbuyerHoghughi = "-";
+        this.volumebuyerHaghighi = "-";
+        this.volumebuyerHoghughi = "-";
+        this.countsellerHaghighi = "-";
+        this.countsellerHoghughi = "-";
+        this.volumesellerHaghighi = "-";
+        this.volumesellerHoghughi = "-";
       }
     },
     populateData3() {
@@ -824,6 +858,26 @@ export default {
         this.shenavar = this.DataItems3[0]["Shenavari"];
         this.mabna = this.DataItems3[0]["Mabna"];
         this.status = this.DataItems3[0]["Status"];
+      } else {
+        this.tickerfull = "-";
+        this.tradeVolume = "-";
+        this.tradevalue = "-";
+        this.tradecount = "-";
+        this.marketcap = "-";
+
+        this.low = "-";
+        this.first = "-";
+        this.last = "-";
+        this.close = "-";
+        this.market = "-";
+        this.high = "-";
+        this.open = "-";
+        this.Nemad = "-";
+        this.eps = "-";
+        this.sharecount = "-";
+        this.shenavar = "-";
+        this.mabna = "-";
+        this.status = "-";
       }
     },
     // set FinancialStrength percent

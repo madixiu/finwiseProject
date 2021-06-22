@@ -87,6 +87,8 @@ def getMonthlyConstOngoing(self,identifier):
     return JsonResponse(monthlyConstOngoing(identifier),safe=False)  
 def getMonthlyProduction(self,identifier):
     return JsonResponse(monthlyProduction(identifier),safe=False)
+def getMonthlyProductionAnalysis1(self,identifier):
+    return JsonResponse(monthlyPAnalysis1(identifier),safe=False)    
 def getMonthlyServices(self,identifier):
     return JsonResponse(monthlyService(identifier),safe=False)
 def getMonthlyLeasingCost(self,identifier):
