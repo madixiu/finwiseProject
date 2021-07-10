@@ -27,7 +27,7 @@
             :chartOptions="PiechartOptions"
           />
         </v-card>
-        <v-card v-if="Barseries.length" class="mt-3" shaped>
+        <v-card v-if="Barseries.length == 0" class="mt-3" shaped>
           <v-toolbar dense>
             <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
           </v-toolbar>
@@ -45,7 +45,7 @@
         style="padding-right:10px"
       >
         
-        <v-card v-if="HHseries.length">
+        <v-card v-if="HHseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
           </v-toolbar>

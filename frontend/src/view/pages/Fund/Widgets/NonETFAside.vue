@@ -5,7 +5,7 @@
       v-if="loading"
     ></v-skeleton-loader>
     <v-card height="500">
-      AAAAAA
+      
     </v-card>
   </div>
 

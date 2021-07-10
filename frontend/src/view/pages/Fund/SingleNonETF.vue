@@ -1,47 +1,36 @@
 <template>
   <div>
     <!--begin::Dashboard-->
-    <div class="row mt-2">
+    <div class="row">
       <div class="col-xxl-12 col-lg-12 col-md-12">
         <v-card>
-          <div class="row">
+          <div class="d-flex flex-row">
             <div class="col-xxl-4 col-lg-4 col-md-12 rtl_centerd ">
-              <img width="20%" />
-              <!-- v-bind:src="logourl" -->
-              <h2>
-                <!-- {{ this.subheaders.original_symbol }} -->
-              </h2>
-              <h2>
-                <!-- {{ this.subheaders.name }} -->
-              </h2>
-
               <h4>
-                رتبه ارزش بازار :
+                عنوان صندوق :
                 <span class="spandata">
-                  <!-- {{ cryptolive.marketCapRank }} -->
+                  {{ this.metadata.FundTitle }}
                 </span>
               </h4>
               <h6>
                 آخرین به روز رسانی :
-                <span class="spandata"> {{ lastUpdated }}</span>
+                <span class="spandata"> {{ this.metadata.LastNavDate }}</span>
               </h6>
-              <v-btn icon :href="this.subheaders.websiteUrl" target="_blank">
+              <v-btn icon :href="this.metadata.webSite" target="_blank">
                 <v-icon color="#188dc9">mdi-web</v-icon>
               </v-btn>
             </div>
             <div class="col-xxl-4 col-lg-4 col-md-12 ">
               <h4 class="titleHeaders ">
-                قیمت :
-                <v-icon small>mdi-currency-usd</v-icon>
+                جمع خالص دارایی ها :
                 <span class="spandata">
-                  <!-- {{ this.roundTo(cryptolive.price, 7) }} -->
+                  {{
+                    numberWithCommas(
+                      roundTo(metadata.NetAssetValue / 10000000000, 2)
+                    )
+                  }}
+                  میلیارد تومان
                 </span>
-                (
-                <span dir="ltr" class="spandata">
-                  <!-- v-bind:class="[this.cryptolive.change > 0 ? 'greenItem' : 'redItem']" -->
-                  <!-- %{{ this.cryptolive.change }} -->
-                </span>
-                )
 
                 <v-icon left small>
                   <!-- v-bind:class="[this.close >= this.open ? 'greenItem' : 'redItem']" -->
@@ -49,59 +38,49 @@
                 </v-icon>
               </h4>
               <h4 class="titleHeaders ">
-                قیمت بر حسب بیتکوین :
+                قیمت صدور:
                 <span class="spandata">
-                  <!-- {{ this.roundTo(cryptolive.priceBtc, 7) }} بیت کوین -->
+                  {{ numberWithCommas(metadata.SubscriptionNav) }}
                 </span>
               </h4>
               <h4 class="titleHeaders ">
-                ارزش بازار :
-                <v-icon small>mdi-currency-usd</v-icon>
+                قیمت ابطال:
                 <span class="spandata">
-                  <!-- {{numberWithCommas(this.roundTo(cryptolive.marketCap / 1000000, 2))}} -->
-                  میلیون
+                  {{ numberWithCommas(metadata.RedemptionNav) }}
                 </span>
               </h4>
               <h4 class="titleHeaders ">
-                ارزش بازار بر حسب بیتکوین‌ :
+                وضعیت صندوق:
                 <span class="spandata">
-                  <!-- {{this.roundTo(cryptolive.marketCapBtc / 1000000, 2)}} -->
-                  میلیون بیتکوین</span
-                >
+                  {{ this.metadata.Status }}
+                </span>
               </h4>
-
-            
             </div>
             <div class="col-xxl-4 col-lg-4 col-md-12 ">
               <h4 class="titleHeaders ">
-                قیمت شروع دیروز :
-                <v-icon small>mdi-currency-usd</v-icon>
+                تعداد واحد:
                 <span class="spandata">
-                  <!-- {{ numberWithCommas(cryptolive.yesterdayData.open) }} -->
+                  {{ numberWithCommas(metadata.TotalUnit) }}
                 </span>
               </h4>
               <h4 class="titleHeaders ">
-                قیمت پایانی دیروز :
-                <v-icon small>mdi-currency-usd</v-icon>
+                شروع فعالیت:
                 <span class="spandata">
-                  <!-- {{ numberWithCommas(cryptolive.yesterdayData.close) }} -->
+                  {{ metadata.ActivityStartDate }}
                 </span>
               </h4>
               <h4 class="titleHeaders ">
-                پایین ترین قیمت دیروز:
-                <v-icon small>mdi-currency-usd</v-icon>
+                اندازه:
                 <span class="spandata">
-                  <!-- {{ numberWithCommas(cryptolive.yesterdayData.close) }} -->
+                  {{ metadata.Size }}
                 </span>
               </h4>
               <h4 class="titleHeaders ">
-                تغییرات قیمت دیروز:
-                <v-icon small>mdi-currency-usd</v-icon>
+                نوع:
                 <span class="spandata">
-                  <!-- {{numberWithCommas(this.roundTo(cryptolive.yesterdayData.change, 2))}} -->
+                  {{ metadata.Type }}
                 </span>
               </h4>
-             
             </div>
           </div>
         </v-card>
@@ -111,6 +90,7 @@
           :meta="metadata"
           :industry="industrydata"
           :assettype="assettypedata"
+          :historicNav="historicNavData"
         ></liveWidget>
       </div>
       <div class="col-xxl-3 col-lg-3 col-md-12">
@@ -144,6 +124,7 @@ export default {
       metadata: [],
       industrydata: [],
       assettypedata: [],
+      historicNavData:[],
       cryptolive: [],
       lastUpdated: ""
     };
@@ -161,12 +142,12 @@ export default {
     "$route.params": {
       handler(newValue, oldValue) {
         if (newValue != oldValue) {
-          //   this.loadData();
-
+          this.loadData();
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
         }
       },
       immediate: true
+      //   this.loadData()
     }
   },
   methods: {
@@ -208,7 +189,13 @@ export default {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(responx => {
         // eslint-disable-next-line no-unused-vars
-        // this.getLivePrices().then(reposonseY => {});
+        this.getTwo().then(reposonseY => {
+          // eslint-disable-next-line no-unused-vars
+          this.getThree().then(reposonseN => {
+              // eslint-disable-next-line no-unused-vars
+              this.getFour().then(reposonseF => {})
+          });
+        });
       });
       // });
     },
@@ -239,17 +226,37 @@ export default {
           console.error(error);
         });
     },
-    // async getLivePrices() {
-    //   await this.axios
-    //     .get("/api/CryptoSingleLive/" + this.subheaders.original_symbol + "/")
-    //     .then(response1 => {
-    //       this.cryptolive = response1.data;
-    //       this.lastUpdated = new Date();
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
+    async getTwo() {
+      await this.axios
+        .get("/api/Funds/FundsIndustry/" + this.$route.params.id + "/")
+        .then(response1 => {
+          this.industrydata = response1.data;
+          //   console.log("🚀 ~ file: SingleNonETF.vue ~ line 226 ~ getTwo ~ this.industrydata", this.industrydata)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getThree() {
+      await this.axios
+        .get("/api/Funds/FundsAsset/" + this.$route.params.id + "/")
+        .then(response1 => {
+          this.assettypedata = response1.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getFour() {
+      await this.axios
+        .get("/api/Funds/FundsHistoricNAV/" + this.$route.params.id + "/")
+        .then(response1 => {
+          this.historicNavData = response1.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },
