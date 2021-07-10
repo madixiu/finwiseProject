@@ -238,7 +238,7 @@ export default {
     document.title = "Finwise - رمز ارز";
   },
   mounted() {
-    this.loadData();
+    // this.loadData();
     // setInterval(() => {
     //     // this.getLivePrices()
     // }, 5000);
@@ -291,16 +291,16 @@ export default {
       }
       return n;
     },
-    loadData() {
-      // eslint-disable-next-line no-unused-vars
-      // this.getAllowed().then(response => {
-      // eslint-disable-next-line no-unused-vars
-      this.getOne().then(responx => {
-        // eslint-disable-next-line no-unused-vars
-        this.getLivePrices().then(reposonseY => {});
-      });
-      // });
-    },
+    // loadData() {
+    //   // eslint-disable-next-line no-unused-vars
+    //   // this.getAllowed().then(response => {
+    //   // eslint-disable-next-line no-unused-vars
+    //   this.getOne().then(responx => {
+    //     // eslint-disable-next-line no-unused-vars
+    //     this.getLivePrices().then(reposonseY => {});
+    //   });
+    //   // });
+    // },
     // async getAllowed() {
     //   await this.axios
     //     .get("/api/tickerallnames")
@@ -312,32 +312,32 @@ export default {
     //     });
     // },
 
-    async getOne() {
-      await this.axios
-        .get("/api/CryptoSingleBasic/" + this.$route.params.id + "/")
-        .then(response1 => {
-          this.subheaders = response1.data[0];
-          this.logourl = this.subheaders.logoUrl;
-          this.$store.dispatch(ADD_BREADCRUMB, [
-            { title: this.subheaders.name }
-          ]);
-          document.title = "Finwise - " + this.subheaders.original_symbol;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
-    async getLivePrices() {
-      await this.axios
-        .get("/api/CryptoSingleLive/" + this.subheaders.original_symbol + "/")
-        .then(response1 => {
-          this.cryptolive = response1.data;
-          this.lastUpdated = new Date();
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
+    // async getOne() {
+    //   await this.axios
+    //     .get("/api/CryptoSingleBasic/" + this.$route.params.id + "/")
+    //     .then(response1 => {
+    //       this.subheaders = response1.data[0];
+    //       this.logourl = this.subheaders.logoUrl;
+    //       this.$store.dispatch(ADD_BREADCRUMB, [
+    //         { title: this.subheaders.name }
+    //       ]);
+    //       document.title = "Finwise - " + this.subheaders.original_symbol;
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // },
+    // async getLivePrices() {
+    //   await this.axios
+    //     .get("/api/CryptoSingleLive/" + this.subheaders.original_symbol + "/")
+    //     .then(response1 => {
+    //       this.cryptolive = response1.data;
+    //       this.lastUpdated = new Date();
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // },
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },

@@ -348,11 +348,40 @@ def getBalanceSheetFirm(identifier):
             time.sleep(2)
             ct=ct+1
     return ("noData") 
+def getBalanceSheetAggregatedFirm(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://130.185.74.40:3000/rpc/bsallaggregated?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+    return ("noData")     
 def getIncomeStatementFirm(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
         resp = requests.get('http://130.185.74.40:3000/rpc/isall?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")     
+def getIncomeStatementFirmAggrregated(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://130.185.74.40:3000/rpc/isallaggregated?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -574,7 +603,7 @@ def get_IC_Assembly_Stock(firm):
      ct=0
      while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_N73?StockID=eq.1'+str(firm),headers=head)
+        resp = requests.get('http://130.185.74.40:3000/View_IC_N73?StockID=eq.'+str(firm),headers=head)
         if resp.status_code == 200:
             DF2=pd.read_json(resp.text)
             if not DF2.empty:

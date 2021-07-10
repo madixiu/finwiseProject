@@ -2,7 +2,7 @@
   <div class="card card-custom card-stretch gutter-b">
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
-        بررسی ترازنامه
+        بررسی صورت سود و زیان
         <b-spinner
           class="titleHeaders"
           type="grow"
@@ -27,8 +27,8 @@
             <v-col sm="6" md="4" lg="1">
               <v-select
                 label="دوره ترازنامه"
-                :items="BSCHART_Period"
-                v-model="BSCHART_Period_Selected"
+                :items="ISCHART_Period"
+                v-model="ISCHART_Period_Selected"
                 filled
                 dense
                 @input="GetFiltered"
@@ -36,9 +36,9 @@
             </v-col>
             <v-col sm="6" md="4" lg="1">
               <v-select
-                :items="BSCHART_Aggregated"
+                :items="ISCHART_Aggregated"
                 filled
-                v-model="BSCHART_Aggregated_Selected"
+                v-model="ISCHART_Aggregated_Selected"
                 label="تلفیقی"
                 dense
                 @input="GetFiltered"
@@ -47,9 +47,9 @@
 
             <v-col sm="6" md="4" lg="2"
               ><v-select
-                :items="BSCHART_Length"
+                :items="ISCHART_Length"
                 filled
-                v-model="BSCHART_Length_Selected"
+                v-model="ISCHART_Length_Selected"
                 label="بازه نمودار "
                 dense
                 @input="GetFiltered"
@@ -64,8 +64,8 @@
                 filled
                 multiple
                 small-chips
-                :items="BSCHART_Items"
-                v-model="BSCHART_Items_Selected"
+                :items="ISCHART_Items"
+                v-model="ISCHART_Items_Selected"
                 label="آیتم"
                 hint="آیتم های مورد نظر برای نمایش در چارت را انتخاب کنید"
                 persistent-hint
@@ -73,8 +73,8 @@
               ></v-autocomplete>
 
               <!-- <v-select
-                :items="BSCHART_Items"
-                v-model="BSCHART_Items_Selected"
+                :items="ISCHART_Items"
+                v-model="ISCHART_Items_Selected"
                 label="آیتم"
                 multiple
                 chips
@@ -94,7 +94,7 @@
           />
         </v-card>
       </div>
-      <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
+      <!-- <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card shaped class="mt-2">
           <v-toolbar dense>
             <v-toolbar-title>تفکیک گروه های ترازنامه</v-toolbar-title>
@@ -104,8 +104,8 @@
             <v-col sm="6" md="6" lg="3">
               <v-select
                 label="دوره ترازنامه"
-                :items="BSCHART2_Period"
-                v-model="BSCHART2_Period_Selected"
+                :items="ISCHART2_Period"
+                v-model="ISCHART2_Period_Selected"
                 filled
                 dense
                 @input="GetFiltered2"
@@ -113,9 +113,9 @@
             </v-col>
             <v-col sm="6" md="6" lg="3">
               <v-select
-                :items="BSCHART2_Aggregated"
+                :items="ISCHART2_Aggregated"
                 filled
-                v-model="BSCHART2_Aggregated_Selected"
+                v-model="ISCHART2_Aggregated_Selected"
                 label="تلفیقی"
                 dense
                 @input="GetFiltered2"
@@ -124,9 +124,9 @@
 
             <v-col sm="6" md="6" lg="3"
               ><v-select
-                :items="BSCHART2_Length"
+                :items="ISCHART2_Length"
                 filled
-                v-model="BSCHART2_Length_Selected"
+                v-model="ISCHART2_Length_Selected"
                 label="بازه نمودار "
                 dense
                 @input="GetFiltered2"
@@ -136,8 +136,8 @@
               <v-autocomplete
                 dense
                 filled
-                :items="BSCHART2_Items"
-                v-model="BSCHART2_Items_Selected"
+                :items="ISCHART2_Items"
+                v-model="ISCHART2_Items_Selected"
                 label="دسته بندی"
                 hint="دسته ی مورد نظر برای نمایش در چارت را انتخاب کنید"
                 persistent-hint
@@ -154,7 +154,7 @@
             :chartOptions="Chart2options"
           />
         </v-card>
-      </div>
+      </div> -->
     </div>
     <div
       class="card-body d-flex flex-column"
@@ -170,8 +170,8 @@
 import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
 export default {
-  name: "StatementAnalysisWidget",
-  props: ["BSAGG", "BS"],
+  name: "IncomeStatementAnalysisWidget",
+  props: ["ISAGG", "IS"],
   components: {
     ApexChart
   },
@@ -180,100 +180,60 @@ export default {
       ApexChartcomponentKey: 0,
       ApexChartcomponentKey2: 0,
       Chart1options: {
-        series: [],
         chart: {
-          type: "bar",
-          fontFamily: "Vazir-Medium-FD",
-          // background: '../../../../media/logos/fadedfinwise.png',
-          stacked: false,
+          height: 350,
+          type: "line",
+          dropShadow: {
+            enabled: true,
+            color: "#000",
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2
+          },
           toolbar: {
             show: false
-          },
-          zoom: {
-            enabled: true
           }
         },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              legend: {
-                position: "bottom",
-                offsetX: -10,
-                offsetY: 0
-              }
-            }
-          }
-        ],
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            borderRadius: 10
-          }
-        },
-        noData: {
-          text: "برای پارامترهای انتخابی داده ای وجود ندارد",
-          align: "center",
-          verticalAlign: "middle",
-          offsetX: 0,
-          offsetY: 0,
-          style: {
-            fontSize: "18px",
-            fontFamily: "Vazir-Medium-FD"
-          }
-        },
-        xaxis: {
-          // type: "datetime",
-          categories: []
-        },
+        colors: ["#77B6EA", "#545454"],
         dataLabels: {
-          enabled: false,
-          formatter: function(x) {
-            if (x === null) {
-              return "-";
-            }
-            if (x == 0) {
-              return "-";
-            }
-            if (x == "") {
-              return "-";
-            }
-            let parts = x.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return parts.join(".");
+          enabled: true
+        },
+        stroke: {
+          curve: "smooth"
+        },
+        grid: {
+          borderColor: "#e7e7e7",
+          row: {
+            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            opacity: 0.5
           }
         },
-        yaxis: {
-          title: {
-            text: "میلیون ریال",
-            fontFamily: "Vazir-Medium-FD"
+        markers: {
+          size: 1
+        },
+        xaxis: {},
+        yaxis: [
+          {
+            title: {
+              text: "مبلغ (میلیون ریال)"
+            }
           },
-          labels: {
-            fontFamily: "Vazir-Medium-FD",
-            formatter: function(x) {
-              if (x === null || x === undefined) {
-                return "-";
-              }
-              if (x == 0) {
-                return "-";
-              }
-              if (x == "") {
-                return "-";
-              }
-              let parts = x.toString().split(".");
-              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              return parts.join(".");
+          {
+            seriesName: "هر سهم",
+            opposite: true,
+            title: {
+              text: "هر سهم (ریال)"
             }
           }
-        },
-        legend: {
-          position: "right",
-          offsetY: 40,
-          fontFamily: "Vazir-Medium-FD"
-        },
-        fill: {
-          opacity: 1
-        }
+        ]
+        // legend: {
+        //   position: 'top',
+        //   horizontalAlign: 'right',
+        //   floating: true,
+        //   offsetY: -25,
+        //   offsetX: -5
+        // }
       },
       Chart2options: {
         series: [],
@@ -375,39 +335,29 @@ export default {
       empty: false,
       todates: [],
       todatesyears: [],
-      BalanceSheetAgg: [],
-      BalanceSheet: [],
+      IncomeAgg: [],
+      Income: [],
       Chart1Data: [],
       Chart1Categories: [],
       Chart2Data: [],
       Chart2Categories: [],
-      BSCHART_Period: ["۳ ماهه", "۶ ماهه", "۹ ماهه", "۱۲ ماهه"],
-      BSCHART_Period_Selected: "۱۲ ماهه",
-      BSCHART_Aggregated: ["بدون تلفیق"],
-      BSCHART_Aggregated_Selected: "بدون تلفیق",
-      BSCHART_Length: [
-        "۳ دوره اخیر",
-        "۵ دوره اخیر",
-        "۱۰ دوره اخیر",
-        "از ابتدا"
-      ],
-      BSCHART_Length_Selected: "۳ دوره اخیر",
-      BSCHART_Items: [],
-      BSCHART_Items_Selected: [],
+      ISCHART_Period: ["۳ ماهه", "۶ ماهه", "۹ ماهه", "۱۲ ماهه"],
+      ISCHART_Period_Selected: "۱۲ ماهه",
+      ISCHART_Aggregated: ["بدون تلفیق"],
+      ISCHART_Aggregated_Selected: "بدون تلفیق",
+      ISCHART_Length: ["۵ دوره اخیر", "۱۰ دوره اخیر", "از ابتدا"],
+      ISCHART_Length_Selected: "۵ دوره اخیر",
+      ISCHART_Items: [],
+      ISCHART_Items_Selected: [],
       ////second One
-      BSCHART2_Period: ["۳ ماهه", "۶ ماهه", "۹ ماهه", "۱۲ ماهه"],
-      BSCHART2_Period_Selected: "۱۲ ماهه",
-      BSCHART2_Aggregated: ["بدون تلفیق"],
-      BSCHART2_Aggregated_Selected: "بدون تلفیق",
-      BSCHART2_Length: [
-        "۳ دوره اخیر",
-        "۵ دوره اخیر",
-        "۱۰ دوره اخیر",
-        "از ابتدا"
-      ],
-      BSCHART2_Length_Selected: "۳ دوره اخیر",
-      BSCHART2_Items: ["دارایی", "حقوق صاحبان سهام", "بدهی"],
-      BSCHART2_Items_Selected: "دارایی"
+      ISCHART2_Period: ["۳ ماهه", "۶ ماهه", "۹ ماهه", "۱۲ ماهه"],
+      ISCHART2_Period_Selected: "۱۲ ماهه",
+      ISCHART2_Aggregated: ["بدون تلفیق"],
+      ISCHART2_Aggregated_Selected: "بدون تلفیق",
+      ISCHART2_Length: ["۵ دوره اخیر", "۱۰ دوره اخیر", "از ابتدا"],
+      ISCHART2_Length_Selected: "۵ دوره اخیر",
+      ISCHART2_Items: ["دارایی", "حقوق صاحبان سهام", "بدهی"],
+      ISCHART2_Items_Selected: "دارایی"
     };
   },
   computed: {
@@ -470,63 +420,66 @@ export default {
       return "";
     },
     populateData() {
-      this.BalanceSheetAgg = this.BSAGG;
-      if (!(this.BalanceSheetAgg.length === 0)) {
-        this.BSCHART_Aggregated.push("تلفیقی");
-        this.BSCHART2_Aggregated.push("تلفیقی");
+      this.IncomeAgg = this.ISAGG;
+      if (!(this.IncomeAgg.length === 0)) {
+        this.ISCHART_Aggregated.push("تلفیقی");
+        this.ISCHART2_Aggregated.push("تلفیقی");
       }
 
-      this.BalanceSheet = this.BS;
-      if (!(this.BalanceSheet.length === 0)) {
-        this.BalanceSheet.filter(d => {
-          if (!this.BSCHART_Items.includes(d.Translated)) {
+      this.Income = this.IS;
+      if (!(this.Income.length === 0)) {
+        this.Income.filter(d => {
+          if (!this.ISCHART_Items.includes(d.Translated)) {
             if (!(d.Translated === null)) {
-              this.BSCHART_Items.push(d.Translated);
+              this.ISCHART_Items.push(d.Translated);
             }
           }
         });
-        this.BSCHART_Items.sort((a, b) => b - a);
-        if (this.BSCHART_Items.includes("جمع حقوق صاحبان سهام")) {
-          this.BSCHART_Items_Selected.push("جمع حقوق صاحبان سهام");
+        this.ISCHART_Items.sort((a, b) => b - a);
+        if (this.ISCHART_Items.includes("درآمدهای عملیاتی")) {
+          this.ISCHART_Items_Selected.push("درآمدهای عملیاتی");
+        } else {
+          if (this.ISCHART_Items.includes("جمع درآمدهای عملیاتی")) {
+            this.ISCHART_Items_Selected.push("جمع درآمدهای عملیاتی");
+          }
         }
-        if (this.BSCHART_Items.includes("جمع بدهی‌ها")) {
-          this.BSCHART_Items_Selected.push("جمع بدهی‌ها");
+        if (this.ISCHART_Items.includes("سود زیان خالص هر سهم ریال")) {
+          this.ISCHART_Items_Selected.push("سود زیان خالص هر سهم ریال");
         }
 
-        if (this.BSCHART_Items.includes("جمع دارایی‌ها")) {
-          this.BSCHART_Items_Selected.push("جمع دارایی‌ها");
-        }
+        // if (this.ISCHART_Items.includes("جمع دارایی‌ها")) {
+        //   this.ISCHART_Items_Selected.push("جمع دارایی‌ها");
+        // }
       }
-      // console.log(this.DataItems2);
     },
     GetFiltered() {
-      // console.log(this.BSCHART_Items_Selected);
+      console.log(this.ISCHART_Items_Selected);
       // eslint-disable-next-line no-unused-vars
       let tempData = [];
-      if (this.BSCHART_Aggregated_Selected == "تلفیقی") {
-        tempData = this.BalanceSheetAgg;
+      if (this.ISCHART_Aggregated_Selected == "تلفیقی") {
+        tempData = this.IncomeAgg;
       } else {
-        tempData = this.BalanceSheet;
+        tempData = this.Income;
       }
       // eslint-disable-next-line no-unused-vars
       let x = [];
       x = tempData.filter(d => {
-        if (this.BSCHART_Period_Selected == "۱۲ ماهه") {
+        if (this.ISCHART_Period_Selected == "۱۲ ماهه") {
           if (d.period == 12) {
             return d;
           }
         }
-        if (this.BSCHART_Period_Selected == "۹ ماهه") {
+        if (this.ISCHART_Period_Selected == "۹ ماهه") {
           if (d.period == 9) {
             return d;
           }
         }
-        if (this.BSCHART_Period_Selected == "۶ ماهه") {
+        if (this.ISCHART_Period_Selected == "۶ ماهه") {
           if (d.period == 6) {
             return d;
           }
         }
-        if (this.BSCHART_Period_Selected == "۳ ماهه") {
+        if (this.ISCHART_Period_Selected == "۳ ماهه") {
           if (d.period == 3) {
             return d;
           }
@@ -540,25 +493,26 @@ export default {
         }
       });
       let A = [];
-      if (this.BSCHART_Length_Selected == "۳ دوره اخیر") {
+      if (this.ISCHART_Length_Selected == "۳ دوره اخیر") {
         A = uq.slice(0, 3);
       }
-      if (this.BSCHART_Length_Selected == "۵ دوره اخیر") {
+      if (this.ISCHART_Length_Selected == "۵ دوره اخیر") {
         A = uq.slice(0, 5);
       }
-      if (this.BSCHART_Length_Selected == "۱۰ دوره اخیر") {
+      if (this.ISCHART_Length_Selected == "۱۰ دوره اخیر") {
         A = uq.slice(0, 10);
       }
-      if (this.BSCHART_Length_Selected == "از ابتدا") {
+      if (this.ISCHART_Length_Selected == "از ابتدا") {
         A = uq.slice(0, 1000);
       }
       // eslint-disable-next-line no-unused-vars
       let filtered = [];
       x.filter(d => {
         if (
-          this.BSCHART_Items_Selected.includes(d.Translated) &&
+          this.ISCHART_Items_Selected.includes(d.Translated) &&
           A.includes(d.toDate)
         ) {
+          console.log(d.Translated);
           filtered.push(d);
         }
       });
@@ -584,6 +538,7 @@ export default {
         k["Value"] = item.thisPeriod;
         ShowData.push(k);
       });
+      console.log(uniqeItems);
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
@@ -604,39 +559,37 @@ export default {
         });
         FinalData.push(temp);
       }
-
-      // console.log(FinalData);
       this.Chart1options.series = FinalData;
       this.ApexChartcomponentKey = this.ApexChartcomponentKey + 1;
     },
     GetFiltered2() {
-      // console.log(this.BSCHART_Items_Selected);
+      // console.log(this.ISCHART_Items_Selected);
       // eslint-disable-next-line no-unused-vars
       let tempData = [];
-      if (this.BSCHART2_Aggregated_Selected == "تلفیقی") {
-        tempData = this.BalanceSheetAgg;
+      if (this.ISCHART2_Aggregated_Selected == "تلفیقی") {
+        tempData = this.IncomeAgg;
       } else {
-        tempData = this.BalanceSheet;
+        tempData = this.IncomeAgg;
       }
       // eslint-disable-next-line no-unused-vars
       let x = [];
       x = tempData.filter(d => {
-        if (this.BSCHART2_Period_Selected == "۱۲ ماهه") {
+        if (this.ISCHART2_Period_Selected == "۱۲ ماهه") {
           if (d.period == 12) {
             return d;
           }
         }
-        if (this.BSCHART2_Period_Selected == "۹ ماهه") {
+        if (this.ISCHART2_Period_Selected == "۹ ماهه") {
           if (d.period == 9) {
             return d;
           }
         }
-        if (this.BSCHART2_Period_Selected == "۶ ماهه") {
+        if (this.ISCHART2_Period_Selected == "۶ ماهه") {
           if (d.period == 6) {
             return d;
           }
         }
-        if (this.BSCHART2_Period_Selected == "۳ ماهه") {
+        if (this.ISCHART2_Period_Selected == "۳ ماهه") {
           if (d.period == 3) {
             return d;
           }
@@ -651,26 +604,26 @@ export default {
       });
       // eslint-disable-next-line no-unused-vars
       let A = [];
-      if (this.BSCHART2_Length_Selected == "۳ دوره اخیر") {
+      if (this.ISCHART2_Length_Selected == "۳ دوره اخیر") {
         A = uq.slice(0, 3);
       }
-      if (this.BSCHART2_Length_Selected == "۵ دوره اخیر") {
+      if (this.ISCHART2_Length_Selected == "۵ دوره اخیر") {
         A = uq.slice(0, 5);
       }
-      if (this.BSCHART2_Length_Selected == "۱۰ دوره اخیر") {
+      if (this.ISCHART2_Length_Selected == "۱۰ دوره اخیر") {
         A = uq.slice(0, 10);
       }
-      if (this.BSCHART2_Length_Selected == "از ابتدا") {
+      if (this.ISCHART2_Length_Selected == "از ابتدا") {
         A = uq.slice(0, 1000);
       }
       let tempkey = null;
-      if (this.BSCHART2_Items_Selected == "بدهی") {
+      if (this.ISCHART2_Items_Selected == "بدهی") {
         tempkey = "Liability";
       }
-      if (this.BSCHART2_Items_Selected == "حقوق صاحبان سهام") {
+      if (this.ISCHART2_Items_Selected == "حقوق صاحبان سهام") {
         tempkey = "Equity";
       }
-      if (this.BSCHART2_Items_Selected == "دارایی") {
+      if (this.ISCHART2_Items_Selected == "دارایی") {
         tempkey = "Asset";
       }
       // eslint-disable-next-line no-unused-vars
@@ -731,13 +684,13 @@ export default {
   },
   mounted() {},
   watch: {
-    BSAGG() {
+    ISAGG() {
       this.populateData();
       this.GetFiltered();
       this.GetFiltered2();
       this.loading = false;
     },
-    BS() {
+    IS() {
       this.populateData();
       this.GetFiltered();
       this.GetFiltered2();

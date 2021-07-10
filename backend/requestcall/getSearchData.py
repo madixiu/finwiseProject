@@ -8,3 +8,4 @@ def SearchData():
         return (json.loads('['+resp.text[1:-1]+', \n '+resp2.text[1:-1]+']'))
     else:
         return ("noData")
+        []

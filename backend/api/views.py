@@ -18,6 +18,7 @@ from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFil
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
 from requestcall.getCommodities import *
+from requestcall.getFundsData import *
 from requestcall.getCryptoData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
@@ -287,30 +288,61 @@ def getShareHolders(request,identifier):
             return JsonResponse("AccessDenied",safe=False)
     except:
         return JsonResponse("notAuthorized",safe=False)
-@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
 def getBalanceSheetAll(request,identifier):
-    try:
-        payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
-        username=payload['username']
-        user=CustomUser.objects.get(username=username)
-        if user.role>=3:
-            return JsonResponse(getBalanceSheetFirm(identifier),safe=False)
-        else:
-            return JsonResponse("AccessDenied",safe=False)
-    except:
-        return JsonResponse("notAuthorized",safe=False)
-@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=3:
+    #         return JsonResponse(getBalanceSheetFirm(identifier),safe=False)
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+    return JsonResponse(getBalanceSheetFirm(identifier),safe=False)
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+def getBalanceSheetAllAggregated(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=3:
+    #         return JsonResponse(getBalanceSheetAggregatedFirm(identifier),safe=False)
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+    return JsonResponse(getBalanceSheetAggregatedFirm(identifier),safe=False)
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
 def getIncomeStatementAll(request,identifier):
-    try:
-        payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
-        username=payload['username']
-        user=CustomUser.objects.get(username=username)
-        if user.role>=3:
-            return JsonResponse(getIncomeStatementFirm(identifier),safe=False)
-        else:
-            return JsonResponse("AccessDenied",safe=False)
-    except:
-        return JsonResponse("notAuthorized",safe=False)
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=3:
+    #         return JsonResponse(getIncomeStatementFirm(identifier),safe=False)
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+    return JsonResponse(getIncomeStatementFirm(identifier),safe=False)
+
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+def getIncomeStatementAllAggregated(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=3:
+    #         return JsonResponse(getIncomeStatementFirm(identifier),safe=False)
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+    return JsonResponse(getIncomeStatementFirmAggrregated(identifier),safe=False)
+
+        
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCFAll(request,identifier):
     try:
@@ -649,3 +681,54 @@ def getCommoditiesDetailPlats(request,identifier):
     except:
         return JsonResponse("notAuthorized",safe=False)
     
+
+
+##########
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+def getFundsMeta(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=4:
+            return JsonResponse(getFundsMetaData(identifier),safe=False)    
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)    
+def getFundsAssetComp(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=4:
+            return JsonResponse(getFundsAssetComposition(identifier),safe=False)    
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)            
+def getFundsIndustryComp(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=4:
+            return JsonResponse(getFundsIndustryComposition(identifier),safe=False)    
+    #     else:
+    #         return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)            
+def getFundsHistoricalNav(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=4:
+            return JsonResponse(getFundsHistoricalNavData(identifier),safe=False)    
+        # else:
+        #     return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)

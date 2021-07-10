@@ -130,7 +130,11 @@ export default {
           if (result.TypeID == 2000) {
             this.$router.push({ path: `/CryptoSingle/${result.ID}` });
           } else {
-            alert(`You selected ${result.ID} which is oraq and not created`);
+            if (result.TypeID == 3000) {
+              this.$router.push({ path: `/SingleNonETF/${result.ID}` });
+            } else {
+              alert(`You selected ${result.ID} which is oraq and not created`);
+            }
           }
         }
       }
