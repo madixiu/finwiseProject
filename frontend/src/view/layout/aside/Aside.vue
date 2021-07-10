@@ -94,6 +94,7 @@ export default {
         "Monthly",
         "MonthlyAnalysis",
         "StatementAnalysis",
+        "IncomeStatementAnalysis",
         "sahmRobot",
         "TickerRatio",
         "TickerIndustry",

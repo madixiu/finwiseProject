@@ -7,10 +7,10 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <StatementAnalysisWidget
-          :BS="Bal"
-          :BSAGG="BalAg"
-        ></StatementAnalysisWidget>
+        <IncomeStatementAnalysisWidget
+          :IS="IncS"
+          :ISAGG="IncAG"
+        ></IncomeStatementAnalysisWidget>
       </div>
     </div>
   </div>
@@ -20,19 +20,19 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import StatementAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/StatementAnalysisWidget.vue";
+import IncomeStatementAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/IncomeStatementAnalysisWidget.vue";
 // import axios from "axios";
 export default {
-  name: "StatementAnalysis",
+  name: "IncomeStatementAnalysis",
   components: {
     SubHeaderWidget,
-    StatementAnalysisWidget
+    IncomeStatementAnalysisWidget
   },
   data() {
     return {
       subheaders: [],
-      Bal: [],
-      BalAg: [],
+      IncS: [],
+      IncAG: [],
     };
   },
   created() {
@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "تحلیل ترازنامه" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "تحلیل صورت سود و زیان" }]);
   },
   watch: {
     subheaders() {
@@ -61,9 +61,9 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get("api/Statement/BalanceSheetAggregated/" + this.$route.params.id + "/")
+        .get("api/Statement/IncomeStatementAggregated/" + this.$route.params.id + "/")
         .then(response3 => {
-          this.BalAg = response3.data;
+          this.IncAG = response3.data;
         })
         .catch(error => {
           console.error(error);
@@ -71,9 +71,9 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get("api/Statement/BalanceSheet/" + this.$route.params.id + "/")
+        .get("api/Statement/IncomeStatement/" + this.$route.params.id + "/")
         .then(response4 => {
-          this.Bal = response4.data;
+          this.IncS = response4.data;
         })
         .catch(error => {
           console.error(error);

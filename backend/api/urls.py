@@ -77,7 +77,9 @@ urlpatterns = [
    path("Monthly/Investment/Portfolio/<identifier>/",getMonthlyInvestment_Portfo),
    path("Monthly/Investment/Summary/<identifier>/",getMonthlyInvestment_Summary),
    path("Statement/BalanceSheet/<identifier>/",getBalanceSheetAll),
+   path("Statement/BalanceSheetAggregated/<identifier>/",getBalanceSheetAllAggregated),
    path("Statement/IncomeStatement/<identifier>/",getIncomeStatementAll),
+   path("Statement/IncomeStatementAggregated/<identifier>/",getIncomeStatementAllAggregated),
    path("Statement/CashFlow/<identifier>/",getCFAll),
 ############
    ###Crypto
@@ -125,6 +127,12 @@ urlpatterns = [
    path("Commodities/MB",getCommoditiesMB),
    path("CommoditiesDetail/IR/<identifier>",getCommoditiesDetailIR),
    path("CommoditiesDetail/IN/<identifier>",getCommoditiesDetailInvesting),
-   path("CommoditiesDetail/PL/<identifier>",getCommoditiesDetailPlats)
+   path("CommoditiesDetail/PL/<identifier>",getCommoditiesDetailPlats),
+   
+   ####funds
+   path("Funds/FundsMeta/<identifier>/",getFundsMeta),
+   path("Funds/FundsIndustry/<identifier>/",getFundsIndustryComp),
+   path("Funds/FundsAsset/<identifier>/",getFundsAssetComp),
+   path("Funds/FundsHistoricNAV/<identifier>/",getFundsHistoricalNav),
 
 ]

@@ -31,12 +31,7 @@
             :chartOptions="PiechartOptions"
           />
         </v-card>
-      </div>
-      <div
-        class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
-        style="padding-right:10px"
-      >
-        <v-card :loading="Barseries.length == 0">
+        <v-card v-if="Barseries.length == 0" class="mt-3" shaped>
           <v-toolbar dense>
             <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
           </v-toolbar>
@@ -54,7 +49,12 @@
             :chartOptions="BarchartOptions"
           />
         </v-card>
-        <v-card class="mt-3" :loading="HHseries.length == 0">
+      </div>
+      <div
+        class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
+        style="padding-right:10px"
+      >
+        <v-card v-if="HHseries.length">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
           </v-toolbar>

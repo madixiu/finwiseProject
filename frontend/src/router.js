@@ -61,6 +61,7 @@ const TechnicalMoreInfo = () =>
 const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
 const MonthlyAnalysis = () => import("@/view/pages/Ticker/MonthlyAnalysis.vue");
 const StatementAnalysis = () => import("@/view/pages/Ticker/StatementAnalysis.vue");
+const IncomeStatementAnalysis = () => import("@/view/pages/Ticker/IncomeStatementAnalysis.vue");
 const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
 const Relations = () => import("@/view/pages/Ticker/Relations.vue");
 // const Industry = () => import("@/view/pages/Ticker/Industry.vue");
@@ -78,6 +79,8 @@ const Verify = () => import("@/view/pages/auth/Verify");
 const passwordReset = () => import("@/view/pages/auth/PasswordReset");
 const Profile = () => import("@/view/pages/auth/Profile");
 const ERROR = () => import("@/view/pages/error/Error-1.vue");
+///
+const SingleNonETF = () => import("@/view/pages/Fund/SingleNonETF.vue");
 
 Vue.use(Router);
 
@@ -315,6 +318,11 @@ export default new Router({
               component: StatementAnalysis
             },
             {
+              path: "IncomeStatementAnalysis/:id",
+              name: "IncomeStatementAnalysis",
+              component: IncomeStatementAnalysis
+            },
+            {
               path: "sahmRobot/:id",
               name: "sahmRobot",
               component: SahmRobot
@@ -412,6 +420,11 @@ export default new Router({
           path: "/CryptoSingle/:id",
           name: "CryptoSingle",
           component: CryptoSinglePage
+        },
+        {
+          path: "/SingleNonETF/:id",
+          name: "SingleNonETF",
+          component: SingleNonETF
         },
         {
           path: "/SocialMedia",

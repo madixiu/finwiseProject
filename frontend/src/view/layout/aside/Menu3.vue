@@ -284,7 +284,7 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <!-- <router-link
+          <router-link
             :to="`/ticker/MonthlyAnalysis/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -302,7 +302,7 @@
                 <span class="menu-text">تحلیل ماهیانه</span>
               </a>
             </li>
-          </router-link> -->
+          </router-link>
           <router-link
             :to="`/ticker/Monthly/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -340,7 +340,7 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <!-- <router-link
+          <router-link
             :to="`/ticker/StatementAnalysis/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -355,10 +355,10 @@
             >
               <a :href="href" class="menu-link" @click="navigate">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">تحلیل صورت ها</span>
-            </a>
+                <span class="menu-text">تحلیل ترازنامه </span>
+              </a>
             </li>
-          </router-link> -->
+          </router-link>
           <router-link
             :to="`/ticker/Sheets/BalanceSheet/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -375,6 +375,25 @@
               <a :href="href" class="menu-link" @click="navigate">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                 <span class="menu-text">ترازنامه</span>
+              </a>
+            </li>
+          </router-link>
+          <router-link
+            :to="`/ticker/IncomeStatementAnalysis/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">تحلیل صورت سود و زیان </span>
               </a>
             </li>
           </router-link>
@@ -397,6 +416,7 @@
               </a>
             </li>
           </router-link>
+          
           <router-link
             :to="`/ticker/Sheets/CashFlow/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"

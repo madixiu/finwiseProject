@@ -92,7 +92,7 @@ export default {
       subheaderDisplay: false,
       TickerTapeDisplay: false,
       TickerTapeRoutes: ["Dashboard", "Industries"],
-      BreadCrumbRoutes: ["TickerOverall", "IndustriesDetail", "CryptoSingle"],
+      BreadCrumbRoutes: ["TickerOverall", "IndustriesDetail", "CryptoSingle","SingleNonETF"],
       NonAsideRoutes: [
         "marketmap",
         "marketwatch",
@@ -104,6 +104,7 @@ export default {
         "SocialMedia",
         "ai",
         "commodities"
+        ,"SingleNonETF"
       ]
     };
   },
