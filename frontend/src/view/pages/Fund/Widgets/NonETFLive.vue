@@ -16,7 +16,7 @@
           اطلاعات معامله
           <v-icon left small>mdi-shopping</v-icon>
         </v-tab>
-        <v-tab  class="FinancialStrength">
+        <v-tab class="FinancialStrength">
           چارت
           <v-icon left small>mdi-poll</v-icon>
         </v-tab>
@@ -45,7 +45,7 @@
           <v-icon left small>mdi-chart-line</v-icon>
         </v-tab>
         <v-tab-item>
-          <v-card height="450" flat>
+          <!-- <v-card height="450" flat>
             <v-card-text>
               <div class="row">
                 <div
@@ -185,23 +185,9 @@
                     >
                   </h5>
                 </div>
-                <!-- <div
-                  class="col-xl-3 col-lg-3 col-md-6 col-sm-12 FinancialStrength"
-                > -->
-                <!-- here -->
-                <!-- <h5 class="titleHeaders-smaller ">چارت</h5> -->
-                <!-- <ApexChart
-                    type="area"
-                    height="100%"
-                    width="100%"
-                    :series="priceOverViewSeries"
-                    :chartOptions="priceOverViewchartOptions"
-                  >
-                  </ApexChart> -->
-                <!-- </div> -->
               </div>
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
@@ -225,12 +211,24 @@
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <ApexChart
+              type="pie"
+              width="100%"
+              height="180%"
+              :series="AssetTypePie"
+              :chartOptions="AssetTypeValueOptions"
+            />
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <ApexChart
+              type="pie"
+              width="100%"
+              height="180%"
+              :series="IndustryPie"
+              :chartOptions="IndustriesValueOptions"
+            />
           </v-card>
         </v-tab-item>
         <v-tab-item>
@@ -251,14 +249,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import ApexChart from "@/view/content/charts/ApexChart";
+import ApexChart from "@/view/content/charts/ApexChart";
 
 export default {
   name: "NonETFMainWidget",
   components: {
-    // ApexChart
+    ApexChart
   },
-  props: ["meta", "industry", "assettype"],
+  props: ["meta", "industry", "assettype", "historicNav"],
   data() {
     return {
       loading: false,
@@ -282,75 +280,154 @@ export default {
         stroke: {
           width: 2,
           curve: "smooth"
+        }
+      },
+      IndustryPie: [],
+      IndustriesValueOptions: {
+        chart: {
+          width: 380,
+          type: "pie",
+          fontFamily: "Vazir-Medium-FD",
+          events: {
+            // legendClick: function(chartContext, seriesIndex, config) {
+            // },
+            dataPointSelection: (event, chartContext, config) => {
+              this.ChartClick(
+                "Industries",
+                chartContext,
+                config.dataPointIndex
+              );
+            }
+          }
         },
-        xaxis: {
-          type: "datetime",
-          categories: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z"
-          ]
+        // colors: ["#011627", "#E09F3E", "#9E2A2B"
+        // , "#1AA47C", "#003049","#0E5D52","#540B0E","#069E97","#068292"
+        // ,"#05668D"],
+        colors: ["#EF476F", "#E09F3E", "#06D6A0", "#118AB2", "#073B4C"],
+        labels: [],
+        legend: {
+          show: true,
+          position: "right"
+        },
+        responsive: [
+          {
+            breakpoint: 380,
+            options: {
+              chart: {
+                width: 200
+              }
+            }
+          }
+        ],
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
         },
         tooltip: {
-          x: {
-            format: "dd/MM/yy HH:mm"
+          // eslint-disable-next-line no-unused-vars
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let backgroundColor = w.config.colors[seriesIndex];
+            let n = series[seriesIndex];
+            // let val = ""
+            if (n != undefined) {
+              //   let parts = n.toString().split(".");
+              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              //  val = parts.join(".");
+              let val = (n / 1000000000).toLocaleString();
+              return `<div class="ApexTooltip">
+            <div class="topDivTooltip" style=background-color:${backgroundColor}> 
+              <span style=color:#fff>
+              ${w.globals.labels[seriesIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
+              <span style=color:#000;font-size:0.8em>${val}</span>
+
+            
+
+              </div>
+              </div>
+            `;
+            } else {
+              return null;
+            }
           }
         }
       },
-      search: "",
-      Nemad: "",
-      tickerfull: "",
-      subindustry: "",
-      market: "",
-      tablo: "",
-      close: "",
-      open: "",
-      first: "",
-      last: "",
-      high: "",
-      low: "",
-      tradeVolume: "",
-      tradevalue: "",
-      tradecount: "",
-      marketcap: "",
-      min: "",
-      max: "",
-      avgval3month: "-",
-      avgval12month: "-",
-      rankval3month: "-",
-      rankval12month: "-",
-      avgvol3month: "-",
-      avgvol12month: "-",
-      rankvol3month: "-",
-      rankvol12month: "-",
-      avgcount3month: "-",
-      avgcount12month: "-",
-      rankcount3month: "-",
-      rankcount12month: "-",
-      marketcapyesterday: "-",
-      marketcapyesterdayrank: "-",
-      yesterdaytvalue: "-",
-      yesterdaytvolume: "-",
-      yesterdaytcount: "-",
-      opendayscount3month: "-",
-      opendayscount12month: "-",
-      countbuyerHaghighi: "-",
-      countbuyerHoghughi: "-",
-      volumebuyerHaghighi: "-",
-      volumebuyerHoghughi: "-",
-      countsellerHaghighi: "-",
-      countsellerHoghughi: "-",
-      volumesellerHaghighi: "-",
-      volumesellerHoghughi: "-",
-      eps: "",
-      sharecount: "",
-      mabna: "",
-      shenavar: "",
-      status: ""
+      AssetTypePie: [],
+      AssetTypeValueOptions: {
+        chart: {
+          width: 380,
+          type: "pie",
+          fontFamily: "Vazir-Medium-FD",
+          events: {
+            // legendClick: function(chartContext, seriesIndex, config) {
+            // },
+            dataPointSelection: (event, chartContext, config) => {
+              this.ChartClick(
+                "Industries",
+                chartContext,
+                config.dataPointIndex
+              );
+            }
+          }
+        },
+        // colors: ["#011627", "#E09F3E", "#9E2A2B"
+        // , "#1AA47C", "#003049","#0E5D52","#540B0E","#069E97","#068292"
+        // ,"#05668D"],
+        colors: ["#EF476F", "#E09F3E", "#06D6A0", "#118AB2", "#073B4C"],
+        labels: [],
+        legend: {
+          show: true,
+          position: "right"
+        },
+        responsive: [
+          {
+            breakpoint: 380,
+            options: {
+              chart: {
+                width: 200
+              }
+            }
+          }
+        ],
+        stroke: {
+          width: 1,
+          colors: ["#3e3e4e"]
+        },
+        tooltip: {
+          // eslint-disable-next-line no-unused-vars
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let backgroundColor = w.config.colors[seriesIndex];
+            let n = series[seriesIndex];
+            // let val = ""
+            if (n != undefined) {
+              //   let parts = n.toString().split(".");
+              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              //  val = parts.join(".");
+              let val = (n / 1000000000).toLocaleString();
+              return `<div class="ApexTooltip">
+            <div class="topDivTooltip" style=background-color:${backgroundColor}> 
+              <span style=color:#fff>
+              ${w.globals.labels[seriesIndex]}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
+              <span style=color:#000;font-size:0.8em>${val}</span>
+
+            
+
+              </div>
+              </div>
+            `;
+            } else {
+              return null;
+            }
+          }
+        }
+      }
     };
   },
   computed: {
@@ -364,9 +441,9 @@ export default {
   },
   methods: {
     numberWithCommas(x) {
-      if (x == "-") {
-        return x;
-      }
+      // if (x == "-") {
+      //   return x;
+      // }
       let parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
@@ -375,9 +452,9 @@ export default {
     //   this.DataItems = this.mostviewed;
     // },
     roundTo(n, digits) {
-      if (n == "-") {
-        return n;
-      }
+      // if (n == "-") {
+      //   return n;
+      // }
 
       let negative = false;
       if (digits === undefined) {
@@ -399,59 +476,50 @@ export default {
       this.DataItems1 = this.meta;
     },
     populateData2() {
-      this.DataItems2 = this.industry;
-      // if (this.DataItems3.length != 0) {
-      //   this.countbuyerHaghighi = this.DataItems3[0]["CountBuy_Haghighi"];
-      //   this.countbuyerHoghughi = this.DataItems3[0]["CountBuy_Hoguhgi"];
-      //   this.volumebuyerHaghighi = this.DataItems3[0]["VolumeBuy_Haghighi"];
-      //   this.volumebuyerHoghughi = this.DataItems3[0]["VolumeBuy_Hoghughi"];
-      //   this.countsellerHaghighi = this.DataItems3[0]["CountSell_Haghighi"];
-      //   this.countsellerHoghughi = this.DataItems3[0]["CountSell_Hoghughi"];
-      //   this.volumesellerHaghighi = this.DataItems3[0]["VolumeSell_Haghighi"];
-      //   this.volumesellerHoghughi = this.DataItems3[0]["VolumeSell_Hoghughi"];
-      // }
+      let temp1 = [];
+      let temp2 = [];
+
+      this.industry.filter(item => {
+        temp1.push(item.Title);
+        temp2.push(item.ratio);
+      });
+      this.IndustryPie = temp2;
+      this.IndustriesValueOptions.labels = temp1;
     },
     populateData3() {
-      this.DataItems3 = this.assettype;
-      // if (this.DataItems3.length != 0) {
-      //   this.tickerfull = this.DataItems3[0]["name"];
-      //   this.tradeVolume = this.DataItems3[0]["TradeVolume"];
-      //   this.tradevalue = this.DataItems3[0]["TradeValue"];
-      //   this.tradecount = this.DataItems3[0]["TradeCount"];
-      //   this.marketcap =
-      //     this.DataItems3[0]["close"] * this.DataItems3[0]["ShareCount"];
-
-      //   this.low = this.DataItems3[0]["low"];
-      //   this.first = this.DataItems3[0]["first"];
-      //   this.last = this.DataItems3[0]["last"];
-      //   this.close = this.DataItems3[0]["close"];
-      //   this.market = this.DataItems3[0]["market"];
-      //   this.high = this.DataItems3[0]["high"];
-      //   this.open = this.DataItems3[0]["yesterday"];
-      //   this.Nemad = this.DataItems3[0]["ticker"];
-      //   this.eps = this.DataItems3[0]["EPS"];
-      //   this.sharecount = this.DataItems3[0]["ShareCount"];
-      //   this.shenavar = this.DataItems3[0]["Shenavari"];
-      //   this.mabna = this.DataItems3[0]["Mabna"];
-      //   this.status = this.DataItems3[0]["Status"];
-      // }
+      let temp1 = [];
+      let temp2 = [];
+      this.assettype.filter(item => {
+        temp1.push(item.item);
+        temp2.push(item.perc);
+      });
+      this.AssetTypePie = temp2;
+      this.AssetTypeValueOptions.labels = temp1;
+    },
+    populateData4() {
+      console.log(this.historicNav);
     }
   },
   mounted() {
     this.populateData();
-    // this.populateData2();
-    // this.populateData3();
+    this.populateData2();
+    this.populateData3();
+    this.populateData4();
   },
   watch: {
     meta() {
       this.populateData();
     },
     industry() {
-      // this.populateData2();
+      this.populateData2();
     },
     assettype() {
-      this.loading = false;
-      // this.populateData3();
+      // this.loading = false;
+      this.populateData3();
+    },
+    historicNav() {
+      // this.loading = false;
+      this.populateData4();
     }
   }
 };
@@ -467,7 +535,7 @@ export default {
   direction: rtl;
   text-align: right;
   font-size: 1em;
-  
+
   letter-spacing: 0px;
 }
 /* .v-tab {

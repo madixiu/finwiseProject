@@ -5,7 +5,7 @@
         class="col-xxl-3 col-md-3 col-sm-6 col-xs-12"
         style="padding-left:0px"
       >
-        <v-card shaped :loading="Pieseries.length == 0">
+        <v-card :loading="Pieseries.length == 0" shaped>
           <v-toolbar dense>
             <v-toolbar-title>ارزش بازار صنایع</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -31,7 +31,7 @@
             :chartOptions="PiechartOptions"
           />
         </v-card>
-        <v-card v-if="Barseries.length == 0" class="mt-3" shaped>
+        <v-card :loading="Barseries.length == 0" class="mt-3" shaped>
           <v-toolbar dense>
             <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
           </v-toolbar>
@@ -54,17 +54,18 @@
         class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
         style="padding-right:10px"
       >
-        <v-card v-if="HHseries.length">
+        
+        <v-card :loading="HHseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
           </v-toolbar>
           <v-skeleton-loader
-            v-if="!HHseries.length"
+            v-if="HHseries.length == 0"
             v-bind="attrs"
             type="card"
           ></v-skeleton-loader>
           <ApexChart
-            v-if="HHseries.length"
+            v-if="HHseries.length != 0"
             type="bar"
             width="100%"
             height="200%"
