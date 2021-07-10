@@ -572,7 +572,7 @@ export default {
         text
           .attr("transform", `translate(${w},${-h})`)
           .style("font-family", "Dirooz FD")
-          .style("font-size", `${this.fontsizeOf*0.7}em`)
+          .style("font-size", `${this.fontsizeOf * 0.7}em`);
         const pathnew = g
           .selectAll("pathnew")
           .data([null])

@@ -387,7 +387,8 @@ export default {
         //? console.log("6");
         this.fontsizeOf = 1.1;
         this.width =
-          0.87 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+          0.87 *
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
         this.height = (this.width * 10) / 16;
         this.margin.top = this.height * 0.08;
         this.margin.bottom = this.height * 0.05;
@@ -404,7 +405,8 @@ export default {
         //? console.log("4");
         this.fontsizeOf = 1.2;
         this.width =
-          0.87 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+          0.87 *
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
         this.height = (this.width * 16) / 16;
         this.margin.top = this.height * 0.08;
         this.margin.bottom = this.height * 0.05;

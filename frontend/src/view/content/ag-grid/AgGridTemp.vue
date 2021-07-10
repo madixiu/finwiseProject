@@ -62,7 +62,7 @@ export default {
         flex: 1,
         cellClass: "align-center",
         resizable: true,
-        filter:true,
+        filter: true,
 
         // minWidth: 50,
 
@@ -166,6 +166,5 @@ export default {
   /* background-color: red !important; */
   display: flex;
   align-items: center !important;
-  
 }
 </style>

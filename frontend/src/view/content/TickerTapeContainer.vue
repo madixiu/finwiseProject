@@ -60,7 +60,6 @@ export default {
   mounted() {
     this.getTickerTapeData();
     this.RouteCheck();
-
   },
   methods: {
     RouteCheck() {
