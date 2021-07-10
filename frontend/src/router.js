@@ -60,8 +60,10 @@ const TechnicalMoreInfo = () =>
   import("@/view/pages/Ticker/TechnicalIndicatorsMoreInfo.vue");
 const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
 const MonthlyAnalysis = () => import("@/view/pages/Ticker/MonthlyAnalysis.vue");
-const StatementAnalysis = () => import("@/view/pages/Ticker/StatementAnalysis.vue");
-const IncomeStatementAnalysis = () => import("@/view/pages/Ticker/IncomeStatementAnalysis.vue");
+const StatementAnalysis = () =>
+  import("@/view/pages/Ticker/StatementAnalysis.vue");
+const IncomeStatementAnalysis = () =>
+  import("@/view/pages/Ticker/IncomeStatementAnalysis.vue");
 const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
 const Relations = () => import("@/view/pages/Ticker/Relations.vue");
 // const Industry = () => import("@/view/pages/Ticker/Industry.vue");

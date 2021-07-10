@@ -124,7 +124,7 @@ export default {
       metadata: [],
       industrydata: [],
       assettypedata: [],
-      historicNavData:[],
+      historicNavData: [],
       cryptolive: [],
       lastUpdated: ""
     };
@@ -192,8 +192,8 @@ export default {
         this.getTwo().then(reposonseY => {
           // eslint-disable-next-line no-unused-vars
           this.getThree().then(reposonseN => {
-              // eslint-disable-next-line no-unused-vars
-              this.getFour().then(reposonseF => {})
+            // eslint-disable-next-line no-unused-vars
+            this.getFour().then(reposonseF => {});
           });
         });
       });
