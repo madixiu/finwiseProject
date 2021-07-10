@@ -3,6 +3,7 @@
     "synthwave84.disableGlow": true,
     "colorize.languages": [
         "javascript",
+        "vue"
         // ...
       ]
 }
