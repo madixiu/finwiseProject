@@ -114,18 +114,15 @@ export default {
     // }, 5000);
     // this.$socketMarketWatch.send(JSON.stringify({ request: "get" }));
     // this.liveChecker();
-    this.$socketMarketWatch.onmessage = data => {
-      // this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
-        this.rows = JSON.parse(data.data);
-    };
+    // this.$socketMarketWatch.onmessage = data => {
+    //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+    //     this.rows = JSON.parse(data.data);
+    // };
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   methods: {
     // eslint-disable-next-line no-unused-vars
     onReady(params) {
-      console.log("onReady");
       let allColumnIds = [];
       // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
@@ -134,7 +131,6 @@ export default {
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
       });
-      console.log(allColumnIds);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       this.allColumnIds = allColumnIds;
@@ -144,7 +140,6 @@ export default {
     },
     gridColumnsChanged() {
       if (this.allColumnIds.length) {
-        console.log("chaange");
         this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
       }
       // this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);

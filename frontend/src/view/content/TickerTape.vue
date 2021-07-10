@@ -12,7 +12,7 @@
       @mouseenter="paused = !paused"
       @mouseleave="paused = false"
     >
-      <div v-for="item in this.TickerData" :key="item.ticker" class=" mr-4">
+      <div v-for="item in TickerData" :key="item.ticker" class=" mr-4">
         <div
           class="mr-2"
           v-bind:class="[
@@ -29,22 +29,6 @@
           <span v-if="TickerType" class="tickerTapeClose">
             {{ item.close }}
           </span>
-          <!-- <v-chip
-            label
-            v-bind:class="[item.Change >= 0 ? 'greenItem' : 'redItem']"
-            @click="clickMarquee(item)"
-            ></v-chip
-          > -->
-          <!-- <div style="direction:ltr">
-            
-          </div> -->
-          <!-- <span
-            dir="ltr"
-            :class="[
-              item.Change >= 0 ? 'tickerTapeChangeGreen' : 'tickerTapeChangeRed'
-            ]"
-            >%{{ item.Change }}</span
-          > -->
           <span dir="ltr" :class="checkSign(item.Change)">{{
             ChangeValue(item.Change)
           }}</span>
@@ -153,11 +137,4 @@ export default {
   background-color: green !important;
   font-family: "Vazir-Medium-FD" !important;
 } */
-.v-chip.v-size--default {
-  font-size: 0.8em;
-  height: 1.8em;
-  direction: ltr;
-  padding-right: 0.8em;
-  padding-left: 0.8em;
-}
 </style>

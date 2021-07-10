@@ -1,35 +1,24 @@
 <template>
-  <!-- <ErrorMine></ErrorMine> -->
   <div>
-    <!-- table -->
     <div class="row mr-1 ml-1">
       <v-card width="100%">
         <div id="FundsFilterRow2" class="row pb-1 pt-1">
-          <div class="col-xxl-3 col-lg-3  col-md-8 col-sm-12 mr-1">
+          <div class="col-xxl-2 col-lg-2  col-md-8 col-sm-12 mr-1">
             <b-input-group size="sm">
+              <b-input-group-prepend is-text>
+                <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
+                <b-icon v-else icon="search"></b-icon> -->
+                <b-icon icon="search"></b-icon>
+              </b-input-group-prepend>
               <b-form-input
                 v-model="Tablefilter"
                 type="search"
                 id="filterInput"
-                placeholder="فیلتر"
+                placeholder="جستجو"
                 @keyup="onQuickFilterChanged"
               ></b-form-input>
-              <b-input-group-append>
-                <b-button v-if="Tablefilter.length" @click="Tablefilter = ''"
-                  >پاک کردن</b-button
-                >
-              </b-input-group-append>
             </b-input-group>
           </div>
-          <!-- <div class="col-xxl-4 col-lg-4 col-md-8 col-sm-12 mt-1">
-            <b-form-group>
-              <b-form-checkbox-group
-                v-model="selectedHeaderOptions"
-                :options="HeaderOptions"
-                @change="TriggerFilteredHeader"
-              ></b-form-checkbox-group>
-            </b-form-group>
-          </div> -->
         </div>
         <ag-grid-vue
           :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
@@ -46,130 +35,6 @@
           :localeText="localeText"
         >
         </ag-grid-vue>
-        <div></div>
-        <!-- <b-table
-          thClass="Funds-table-head"
-          class="Funds-table"
-          tbody-tr-class="Funds-table-row"
-          striped
-          :busy.sync="isBusy"
-          :sticky-header="height"
-          dense
-          :filter="Tablefilter"
-          :filter-included-fields="filterOn"
-          :sort-desc.sync="sortDesc"
-          :sort-by.sync="sortBy"
-          sort-direction="desc"
-          sort-icon-left
-          bordered
-          no-border-collapse
-          outlined
-          small
-          hover
-          responsive
-          :items="tableData"
-          :fields="HD"
-          @filtered="onFiltered"
-        >
-          <template #table-busy>
-            <div class="text-center text-danger my-2">
-              <b-spinner class="align-middle mr-2"></b-spinner>
-              <strong>شکیبا باشید</strong>
-            </div>
-          </template>
-          <template #cell(ticker)="data">
-            <b class="Funds-table-cell-bold" @click="tickerClick(data)">{{
-              data.value
-            }}</b>
-          </template>
-          <template #cell(TradeCount)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(TradeVolume)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(TradeValue)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(yesterday)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(last)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(close)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(first)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(low)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(high)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(MinRange)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(MaxRange)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(EPS)="data">
-            <b v-if="data.value == 'NaN'" class="Funds-table-cell">
-              {{ "-" }}</b
-            >
-            <b v-else class="Funds-table-cell">
-              {{ data.value.toLocaleString() }}</b
-            >
-          </template>
-          <template #cell(CountBuy_Haghighi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(CountBuy_Hoguhgi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(VolumeBuy_Haghighi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(VolumeBuy_Hoghughi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(CountSell_Haghighi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(CountSell_Hoghughi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(VolumeSell_Haghighi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(VolumeSell_Hoghughi)="data">
-            <b class="Funds-table-cell">{{ data.value.toLocaleString() }}</b>
-          </template>
-          <template #cell(closePercent)="data">
-            <b v-if="data.value > 0" class="Funds-table-cell-green"
-              >{{ data.value }}%</b
-            >
-            <b v-if="data.value < 0" class="Funds-table-cell-red"
-              >{{ data.value }}%</b
-            >
-            <b v-if="data.value == 0" class="Funds-table-cell"
-              >{{ data.value }}%</b
-            >
-          </template>
-          <template #cell(lastPercent)="data">
-            <b v-if="data.value > 0" class="Funds-table-cell-green"
-              >{{ data.value }}%</b
-            >
-            <b v-if="data.value < 0" class="Funds-table-cell-red"
-              >{{ data.value }}%</b
-            >
-            <b v-if="data.value == 0" class="Funds-table-cell"
-              >{{ data.value }}%</b
-            >
-          </template>
-        </b-table> -->
       </v-card>
     </div>
   </div>
@@ -185,7 +50,7 @@ export default {
   },
   data() {
     return {
-      // AGgrid
+      // * AGgrid base data
       modules: AllModules,
       gridApi: null,
       defaultColDef: null,
@@ -196,8 +61,7 @@ export default {
       gridColumnApi: null,
       localeText: null,
       dataFetch: false,
-
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      // * %%%%%%%%%%%%%%%
 
       height: "470px",
       WebsocketRequest: false,
@@ -206,156 +70,8 @@ export default {
       filterOn: ["ticker"],
       tableData: null,
       sortBy: "ticker",
-      selectedHeaderOptions: [],
-      HeaderOptions: [
-        { text: "قیمت دیروز", value: "yesterday" },
-        { text: "اطلاعات حقیقی/حقوقی", value: "HH" }
-      ],
       Tablefilter: "",
       TypeSearch: "",
-      FundsTableHeader: [
-        {
-          label: "نماد",
-          key: "ticker",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "بازار",
-          key: "marketName",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد معاملات",
-          key: "TradeCount",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم معاملات",
-          key: "TradeVolume",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "ارزش معاملات",
-          key: "TradeValue",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "قیمت دیروز",
-          key: "yesterday",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "آخرین قیمت",
-          key: "last",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "درصد آخرین قیمت",
-          key: "lastPercent",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "قیمت پایانی",
-          key: "close",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "درصد قیمت پایانی",
-          key: "closePercent",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        // { label: "نام", key: "name" },
-        // { label: "صنعت", key: "industry" },
-        // { label: "آخرین بروز رسانی", key: "updatedAt" },
-        // {
-        //   label: "کف مجاز قیمت",
-        //   key: "MinRange",
-        //   thClass: "Funds-table-head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "سقف مجاز قیمت",
-        //   key: "MaxRange",
-        //   thClass: "Funds-table-head"
-        // },
-        // // { label: "EPS", key: "EPS", thClass: "Funds-table-head" },
-        // {
-        //   label: "بالاترین قیمت",
-        //   key: "high",
-        //   thClass: "Funds-table-head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "کمترین قیمت",
-        //   key: "low",
-        //   thClass: "Funds-table-head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "اولین قیمت",
-        //   key: "first",
-        //   thClass: "Funds-table-head",
-        //   sortable: true
-        // },
-        {
-          label: "تعداد خرید حقیقی",
-          key: "CountBuy_Haghighi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد خرید حقوقی",
-          key: "CountBuy_Hoguhgi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقیقی",
-          key: "VolumeBuy_Haghighi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقوقی",
-          key: "VolumeBuy_Hoghughi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقیقی",
-          key: "CountSell_Haghighi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقوقی",
-          key: "CountSell_Hoghughi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقیقی",
-          key: "VolumeSell_Haghighi",
-          thClass: "Funds-table-head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقوقی",
-          key: "VolumeSell_Hoghughi",
-          thClass: "Funds-table-head",
-          sortable: true
-        }
-      ]
     };
   },
   watch: {
@@ -381,7 +97,7 @@ export default {
 
       // headerHeight: 20,
       rowHeight: 22,
-      getRowNodeId: data => data.id
+      getRowNodeId: data => data.ticker
     };
     this.defaultColDef = {
       flex: 1,
@@ -441,6 +157,15 @@ export default {
         maxWidth: 100,
         pinned: "right",
         rowDrag: true,
+        cellRenderer: params => {
+          const link = document.createElement("a");
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.tickerClick(params.data);
+          });
+          return link;
+        },
         cellStyle: {
           direction: "rtl",
           display: "inline-block"
@@ -506,16 +231,6 @@ export default {
         headerName: "درصد آخرین قیمت",
         field: "lastPercent",
         filter: "agNumberColumnFilter",
-
-        // cellStyle: {
-        //   display: "flex",
-        // color: "green",
-        //   "justify-content": "center",
-        //   "border-left-color": "#e2e2e2",
-
-        //   "align-items": "center",
-        //   direction: "ltr"
-        // },
         cellStyle: params => {
           if (params.value > 0) {
             //mark police cells as red
@@ -718,31 +433,27 @@ export default {
     this.loadData();
     this.height = this.getHeight();
     this.liveChecker();
-    this.$socketSandoq.onmessage = data => {
-      // this.tableData = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        // this.$store.dispatch("setSahm", JSON.parse(data.data));
-        this.tableData = JSON.parse(data.data);
-    };
-  },
-  computed: {
-    HD() {
-      return this.TriggerFilteredHeader();
-    }
+    // this.$socketSandoq.onmessage = data => {
+    //   // this.tableData = JSON.parse(data.data);
+    //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+    //     // this.$store.dispatch("setSahm", JSON.parse(data.data));
+    //     this.tableData = JSON.parse(data.data);
+    // };
   },
   methods: {
-    // AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    //? AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%
     onQuickFilterChanged(event) {
       this.gridOptions.api.setQuickFilter(event.target.value);
     },
     gridColumnsChanged() {
       if (this.allColumnIds.length) {
-        console.log("chaange");
         this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
       }
     },
+    tickerClick(data) {
+      this.$router.push({ path: `/ticker/Overview/Overall/${data.ID}` });
+    },
     onReady(params) {
-      console.log("onReady");
       let allColumnIds = [];
       // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
@@ -751,14 +462,13 @@ export default {
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
       });
-      console.log(allColumnIds);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     getHeight() {
       return (window.innerHeight - 100).toString() + "px";
     },
@@ -779,41 +489,7 @@ export default {
           console.error(error);
         });
     },
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
-    },
-    TriggerFilteredHeader() {
-      let header = JSON.parse(JSON.stringify(this.FundsTableHeader));
-      let options = this.selectedHeaderOptions;
-      let SwCase = 0;
-      if (options.length == 0) SwCase = 0;
-      else if (options.length == 1) {
-        if (options[0] == "yesterday") SwCase = 1;
-        else if (options[0] == "HH") SwCase = 2;
-      } else if (options.length == 2) SwCase = 3;
 
-      switch (SwCase) {
-        case 0:
-          header.splice(5, 1);
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-        case 1:
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-        case 2:
-          header.splice(5, 1);
-          break;
-        case 3:
-          break;
-        default:
-          header.splice(5, 1);
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-      }
-      return header;
-    },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
       let interval = setInterval(() => {

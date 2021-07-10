@@ -2,8 +2,13 @@
   <div class="row mr-1  ml-1" height="100%">
     <v-card width="100%">
       <b-row>
-        <b-col cols="3" class="my-1 mr-1">
+        <b-col cols="2" class="my-1 mr-1">
           <b-input-group size="sm">
+            <b-input-group-prepend is-text>
+              <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
+                <b-icon v-else icon="search"></b-icon> -->
+              <b-icon icon="search"></b-icon>
+            </b-input-group-prepend>
             <b-form-input
               v-model="Tablefilter"
               type="search"
@@ -170,7 +175,7 @@ export default {
   },
   data() {
     return {
-      // AGgrid
+      // * AGgrid base data
       modules: AllModules,
       gridApi: null,
       defaultColDef: null,
@@ -182,7 +187,7 @@ export default {
       localeText: null,
       dataFetch: false,
 
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      // * %%%%%%%%%%%%%%%
       WebsocketRequest: false,
       height: "470px",
       filterOn: ["ticker"],
@@ -715,10 +720,10 @@ export default {
   mounted() {
     this.loadData();
     this.height = this.getHeight();
-    this.$socketTaqadom.onmessage = data => {
-      if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
-        this.tableData = JSON.parse(data.data);
-    };
+    // this.$socketTaqadom.onmessage = data => {
+    //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length)
+    //     this.tableData = JSON.parse(data.data);
+    // };
   },
   methods: {
     // AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -727,12 +732,10 @@ export default {
     },
     gridColumnsChanged() {
       if (this.allColumnIds.length) {
-        console.log("chaange");
         this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
       }
     },
     onReady(params) {
-      console.log("onReady");
       let allColumnIds = [];
       // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
@@ -741,14 +744,13 @@ export default {
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
       });
-      console.log(allColumnIds);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     async loadData() {
       this.isBusy = true;
 

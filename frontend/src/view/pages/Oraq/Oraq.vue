@@ -2,20 +2,20 @@
   <div class="row mr-1  ml-1">
     <v-card width="100%">
       <b-row>
-        <b-col cols="3" class="my-1 mr-1">
+        <b-col cols="2" class="my-1 mr-1">
           <b-input-group size="sm">
+            <b-input-group-prepend is-text>
+              <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
+                <b-icon v-else icon="search"></b-icon> -->
+              <b-icon icon="search"></b-icon>
+            </b-input-group-prepend>
             <b-form-input
               v-model="Tablefilter"
               type="search"
               id="filterInput"
-              placeholder="فیلتر"
+              placeholder="جستجو"
               @keyup="onQuickFilterChanged"
             ></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!Tablefilter" @click="Tablefilter = ''"
-                >پاک کردن</b-button
-              >
-            </b-input-group-append>
           </b-input-group>
         </b-col>
         <!-- <b-col lg="4" xxl="4" class="mt-2">
@@ -170,7 +170,7 @@ export default {
   },
   data() {
     return {
-      // AGgrid
+      // * AGgrid base data
       modules: AllModules,
       gridApi: null,
       defaultColDef: null,
@@ -184,7 +184,7 @@ export default {
       asyncTransactionWaitMillis: 4000,
       interval: null,
 
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      // * %%%%%%%%%%%%%%%
       WebsocketRequest: false,
       height: "470px",
       sortDesc: false,
@@ -735,16 +735,16 @@ export default {
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
       });
-      console.log(allColumnIds);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       // this.gridColumnApi.autoSizeColumns(["market"], false);
+      this.gridApi.api.sizeColumnsToFit();
 
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -886,7 +886,7 @@ export default {
   display: flex;
   align-items: center !important;
 }
-/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 */
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 .oraq_table_head {
   vertical-align: middle !important;

@@ -1,66 +1,112 @@
 <template>
   <div class="treemap">
-    <!-- <div
-      id="tooltip"
+    <!--//? *************  TOOLTIP PLACEMENT ************************* -->
+    <div
+      id="tooltipTreeMap"
+      class="tooltipTreeMap"
+      :style="tooltipPosition"
       v-if="tooltip && selectedNode.depth == 0"
-      class="tooltip"
-      :style="{ left: pageX + 'px', top: pageY + 'px' }"
     >
-      <span style="font-size:0.8rem">
-        {{ tooltipHeaderName }}
-      </span>
-      <hr />
-      <div style="direction:rtl">
-        <p style="font-size:0.7rem;direction:rtl">
-          <span> {{ tooltipListOfChilds[0].name }}</span>
-          <span style="font-size:0.7rem">{{
-            tooltipListOfChilds[0].change
-          }}</span>
-        </p>
-      </div>
-    </div> -->
-    <!-- The SVG structure is explicitly defined in the template with attributes derived from component data -->
-    <svg :height="height" style="margin-left: 0px;" :width="width">
+      <v-row class="tooltipTreeMapHeader">
+        <v-chip label outlined color="#003049" x-small>
+          <span style="font-size: 0.8rem">
+            {{ tooltipHeaderName }}
+          </span>
+        </v-chip>
+      </v-row>
+      <v-row
+        class="tooltipTreeMapRow"
+        :style="`font-size: 0.7rem; direction: rtl;`"
+      >
+        <v-card
+          width="100%"
+          height="100%"
+          class="tooltipTreeMapRow"
+          color="#e9c46a"
+          style="padding-top:5px;padding-bottom:5px"
+        >
+          <v-row style="margin-right:0px;margin-left:0px">
+            <v-col class="flex-item">
+              <span style="font-size: 1.3em"> {{ tooltipChild.name }}</span>
+            </v-col>
+            <v-col class="flex-item">
+              <span style="font-size: 1.3em">
+                {{ tooltipChild.close.toLocaleString() }}</span
+              >
+            </v-col>
+            <v-col
+              class="flex-item"
+              :style="tooltipChild.change < 0 ? 'color:red' : 'color:green'"
+            >
+              <span style="font-size: 1.3em" dir="ltr">
+                {{ tooltipChild.change }}%</span
+              >
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-row>
+      <v-row
+        style="font-size: 0.7rem; direction: rtl"
+        v-for="item in tooltipListOfChilds"
+        :key="item.name"
+        class="tooltipTreeMapRow"
+      >
+        <v-card width="100%" class="tooltipTreeMapRow">
+          <v-row style="margin-right:0px;margin-left:0px">
+            <v-col class="flex-item">
+              <span style="font-size: 1.3em"> {{ item.name }}</span>
+            </v-col>
+            <v-col class="flex-item">
+              <span style="font-size: 1.3em">{{
+                item.close.toLocaleString()
+              }}</span>
+            </v-col>
+            <v-col
+              class="flex-item"
+              :style="item.change < 0 ? 'color:red' : 'color:green'"
+            >
+              <span style="font-size: 1.3em" dir="ltr">{{ item.change }}%</span>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-row>
+    </div>
+    <!--//? *************  TOOLTIP PLACEMENT ************************* -->
+    <v-toolbar class="TreeMapToolbar" style="height:30px">
+      <v-toolbar-title style="height:30px"
+        ><span style="font-size:0.8em">
+          {{ selectedNode.data.name }}
+        </span></v-toolbar-title
+      >
+      <v-spacer></v-spacer>
+      <!-- <v-btn x-small @click="BackButton"   outlined
+      color="indigo">بازگشت</v-btn> -->
+      <v-icon v-if="selectedNode.depth != 0" @click="BackButton" color="indigo"
+        >mdi-arrow-left-circle</v-icon
+      >
+    </v-toolbar>
+    <!--//? The SVG structure is explicitly defined in the template with attributes derived from component data -->
+    <svg
+      style="margin-left: 0px;margin-top:-31px"
+      :height="height"
+      :width="width"
+    >
       <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
         <!-- The top most element, representing the previous node -->
-        <g class="grandparent">
+        <!-- <g class="grandparent">
           <rect
             :height="20"
             :width="width - 2"
             :y="margin.top * -1 + 14"
             v-on:click="selectNode"
             :id="parentId"
-          ></rect>
-          <!-- <g class="parentTitleBox"
-          v-for="(child in rootNode)"
-          ></g> -->
-          <!-- <svg width="15pt" height="15pt" viewBox="0 0 15 15" version="1.1">
-            <g id="surface1">
-              <path
-                style=" stroke:none;fill-rule:nonzero;fill:rgb(15.294118%,23.137255%,47.843137%);fill-opacity:1;"
-                d="M 15 7.5 C 15 11.640625 11.640625 15 7.5 15 C 3.359375 15 0 11.640625 0 7.5 C 0 3.359375 3.359375 0 7.5 0 C 11.640625 0 15 3.359375 15 7.5 Z M 15 7.5 "
-              />
-              <path
-                style=" stroke:none;fill-rule:nonzero;fill:rgb(7.058824%,6.666667%,28.627451%);fill-opacity:1;"
-                d="M 4.597656 8.480469 L 10.496094 14.378906 C 12.769531 13.386719 14.460938 11.296875 14.890625 8.777344 L 9.269531 3.152344 Z M 4.597656 8.480469 "
-              />
-              <path
-                style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,67.843137%,61.960784%);fill-opacity:1;"
-                d="M 6.394531 7.222656 L 9.242188 4.375 C 9.585938 4.03125 9.585938 3.46875 9.242188 3.125 C 8.898438 2.78125 8.335938 2.78125 7.992188 3.125 L 4.242188 6.875 C 3.898438 7.21875 3.898438 7.78125 4.242188 8.125 L 7.992188 11.875 C 8.335938 12.21875 8.898438 12.21875 9.242188 11.875 C 9.585938 11.53125 9.585938
-                 10.96875 9.242188 10.625 L 6.394531 7.777344 C 6.242188 7.625 6.242188 7.375 6.394531 7.222656 Z M 6.394531 7.222656 "
-              />
-              <path
-                style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,38.431373%,38.431373%);fill-opacity:1;"
-                d="M 9.242188 10.625 L 6.394531 7.777344 C 6.320312 7.703125 6.285156 7.609375 6.28125 7.515625 L 3.984375 7.515625 C 3.988281 7.738281 4.074219 7.957031 4.242188 8.125 L 7.992188 11.875 C 8.335938 12.21875 8.898438 12.21875 9.242188 11.875 C 9.585938 11.53125 9.585938 10.96875 9.242188 10.625 Z M 9.242188 10.625 "
-              />
-            </g>
-          </svg> -->
+          ></rect> -->
 
-          <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
-          <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
+        <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
+        <!-- <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
             {{ selectedNode.data.name }}
           </text>
-        </g>
+        </g> -->
         <!-- We can use Vue transitions too! -->
         <transition-group
           name="fade"
@@ -69,7 +115,7 @@
           class="depth"
           v-if="selectedNode"
         >
-          <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
+          <!--//? Generate each of the visible squares at a given zoom level (the current selected node) -->
           <g
             class="children"
             v-for="children in selectedNode._children"
@@ -116,12 +162,13 @@
               </text>
             </g>
 
-            <!-- Generate the children squares (only visible on hover of a square) -->
+            <!-- //?Generate the children squares (only visible on hover of a square) -->
             <g
               v-for="child in children._children"
               :key="'c_' + child.id"
               class="childG"
               direction="ltr"
+              @mousemove="mouse_moveChild(child, $event)"
             >
               <rect
                 v-on:click="selectNode"
@@ -171,7 +218,7 @@
               <!-- ticker TEXT ********************************* -->
             </g>
 
-            <!-- HEADER SQUARES WITH NAMES ***************************** -->
+            <!--//? HEADER SQUARES WITH NAMES ***************************** -->
             <g v-if="selectedNode.depth == 0">
               <rect
                 v-on:click="selectNode"
@@ -202,44 +249,22 @@
                 {{ children.data.name }}
               </text>
             </g>
-            <!-- HEADER SQUARES WITH NAMES ***************************** -->
+            <!--//? HEADER SQUARES WITH NAMES ***************************** -->
 
-            <!-- The visible square text element with the title and value of the child node -->
+            <!--//? The visible square text element with the title and value of the child node -->
           </g>
         </transition-group>
       </g>
     </svg>
-    <!-- ************* SVG TOOLTIP PLACEMENT ************************* -->
-
-    <!-- <svg v-if="tooltip && selectedNode.depth == 0"
-    :height="height"
-          :width="width"
-    >
-
-      <g id="tooltip"  
-          class="tooltip">
-          <rect
-          :x="pageX"
-          :y="pageY"
-          height="200"
-          width="100"
-          style="fill:black">
-          </rect>
-              <text style="font-size:0.8rem;fill:black" :x="pageX"
-          :y="pageY">
-              {{tooltipHeaderName}}
-          </text>
-          </g>
-    </svg> -->
   </div>
 </template>
 
 <script>
 import { scaleLinear, scaleOrdinal, scaleQuantize } from "d3-scale";
-// import {json} from 'd3-request'
+//// import {json} from 'd3-request'
 import { hierarchy, treemap } from "d3-hierarchy";
-// To be explicit about which methods are from D3 let's wrap them around an object
-// Is there a better way to do this?
+//? To be explicit about which methods are from D3 let's wrap them around an object
+//? Is there a better way to do this?
 let d3 = {
   scaleLinear: scaleLinear,
   scaleOrdinal: scaleOrdinal,
@@ -249,12 +274,11 @@ let d3 = {
   hierarchy: hierarchy,
   treemap: treemap
 };
-// import data from "@/components/data/map2.json";
-// import mapData from "./data/map2.json";
+//// import data from "@/components/data/map2.json";
+//// import mapData from "./data/map2.json";
 export default {
-  // name: "treemap",
+  name: "treemap",
   props: { inputData: Object, inputWidth: Number, inputHeight: Number },
-  // the component's data
   data() {
     return {
       jsonData: {
@@ -288,6 +312,7 @@ export default {
           }
         ]
       },
+      tooltipChild: null,
       pageX: null,
       MainScaleNode: null,
       pageY: null,
@@ -305,7 +330,7 @@ export default {
       height: 550,
       selected: null,
       colors: [
-        "fill:#f63538", // 0 lightest Red
+        "fill:#f63538", //? 0 lightest Red
         "fill:#eb363a", // 1
         "fill:#e0373c", // 2
         "fill:#c9393f", // 3
@@ -313,9 +338,9 @@ export default {
         "fill:#9c3d46", // 5
         "fill:#86374a", // 6
         "fill:#6f414d", // 7
-        "fill:#584351", // 8 darkest Red
-        "fill:#414554", // 9 Black
-        "fill:#404e55", // 10 darkest Green
+        "fill:#584351", //? 8 darkest Red
+        "fill:#414554", //? 9 Black
+        "fill:#404e55", //? 10 darkest Green
         "fill:#3f5655", // 11
         "fill:#3d6756", // 12
         "fill:#398957", // 13
@@ -323,18 +348,16 @@ export default {
         "fill:#35ab59", // 15
         "fill:#33bc5a", // 16
         "fill:#32c45a", // 17
-        "fill:#30cc5a" // 18 lightes Green
+        "fill:#30cc5a" //? 18 lightes Green
       ]
     };
   },
-  // You can do whatever when the selected node changes
+  //? You can do whatever when the selected node changes
   watch: {
-    // eslint-disable-next-line no-unused-vars
-
     selectedNode(newData, oldData) {
-      // console.log("The selected node changed...");
-      // console.log(newData.data);
-      // console.log(oldData.depth);
+      //// console.log("The selected node changed...");
+      //// console.log(newData.data);
+      //// console.log(oldData.depth);
       if (newData.depth == 1) {
         // this.initialize()
         this.accumulate(this.rootNode, this);
@@ -345,23 +368,19 @@ export default {
         this.treemap(this.rootNode);
       }
 
-      // console.log(newData.y0,newData.x0,newData.y1,newData.x1);
+      //// console.log(newData.y0,newData.x0,newData.y1,newData.x1);
     }
   },
   created() {
-    // this.loadData();
     this.width = this.inputWidth;
     this.height = this.inputHeight;
     this.jsonData = this.inputData;
 
-    // this.jsonData = null;
+    //// this.jsonData = null;
   },
   // In the beginning...
   mounted() {
-    // var that = this;
-    // console.log(this.getColor(-1));
-
-    // An array with colors (can probably be replaced by a vuejs method)
+    //? An array with colors (can probably be replaced by a vuejs method)
     // that.color = d3.scaleOrdinal(d3.schemeCategory20)
     // that.color = d3.scaleOrdinal().range(['#5EAFC6', '#FE9922', '#93c464', '#75739F'])
     // loads the data and calls the initialization methods
@@ -369,17 +388,46 @@ export default {
     // function (error, data) {
     //   if (error) console.log(error)
     // that.jsonData = this.data;
-    // console.log(this.jsonData);
+    //// console.log(this.jsonData);
     this.initialize();
     this.accumulate(this.rootNode, this);
     this.treemap(this.rootNode);
-    // console.log(that.InnerScaleTreemap(that.rootNode));
+    //// console.log(that.InnerScaleTreemap(that.rootNode));
     // that.MainScaleNode = that.InnerScaleTreemap(that.rootNode)
     // }
     // )
   },
-  // The reactive computed variables that fire rerenders
+  //? The reactive computed variables that fire rerenders
   computed: {
+    tooltipPosition() {
+      if (this.pageX > this.width / 2) {
+        if (this.pageY > this.height / 2) {
+          let res = {
+            right: this.width - this.pageX + 10 + "px",
+            bottom: this.height - this.pageY + 70 + "px"
+          };
+          return res;
+        } else {
+          let res = {
+            right: this.width - this.pageX + "px",
+            top: this.pageY + "px"
+          };
+          return res;
+        }
+      } else {
+        if (this.pageY > this.height * (2 / 3)) {
+          let res = {
+            left: this.pageX + 10 + "px",
+            bottom: this.height - this.pageY + 70 + "px"
+          };
+          return res;
+        }
+        return {
+          left: this.pageX + "px",
+          top: this.pageY + "px"
+        };
+      }
+    },
     myColor() {
       return d3
         .scaleLinear()
@@ -404,7 +452,7 @@ export default {
           .range(["#f63538", "#584351"])
       );
     },
-    // The grandparent id
+    //? The grandparent id
     parentId() {
       if (
         this.selectedNode.parent === undefined ||
@@ -415,16 +463,16 @@ export default {
         return this.selectedNode.parent.id;
       }
     },
-    // Returns the x position within the current domain
-    // Maybe it can be replaced by a vuejs method
+    //? Returns the x position within the current domain
+    //? Maybe it can be replaced by a vuejs method
     x() {
       return d3
         .scaleLinear()
         .domain([0, this.width])
         .range([0, this.width]);
     },
-    // Returns the y position within the current domain
-    // Maybe it can be replaced by a vuejs method
+    //? Returns the y position within the current domain
+    //? Maybe it can be replaced by a vuejs method
     y() {
       return d3
         .scaleLinear()
@@ -444,7 +492,7 @@ export default {
         .domain([0, this.height - this.margin.top - this.margin.bottom])
         .range([0, this.height - this.margin.top - this.margin.bottom]);
     },
-    // The D3 function that recursively subdivides an area into rectangles
+    //? The D3 function that recursively subdivides an area into rectangles
     treemap() {
       return (
         d3
@@ -460,6 +508,21 @@ export default {
       );
     },
 
+    // InnerScaleTreemap() {
+    //   console.log("INNNER");
+    //   return (
+    //     d3
+    //       .treemap()
+    //       .size([this.width, this.height])
+    //       .round(false)
+    //       .paddingBottom(15)
+    //       .paddingTop(10)
+    //   );
+    //   // return treemap(input)
+
+    //   // return this.MainScaleNode;
+    //   // this.MainScaleNode = null;
+    // },
     // The current selected node
     selectedNode() {
       let node = null;
@@ -476,22 +539,22 @@ export default {
         node = this.rootNode;
       }
 
-      // Recalculates the y and x domains
+      //? Recalculates the y and x domains
       this.x.domain([node.x0, node.x0 + (node.x1 - node.x0)]);
       this.y.domain([node.y0, node.y0 + (node.y1 - node.y0)]);
 
       /*
-      **** IMPORTANT *****
-      SUPRISINGLY it works the way we want by this LOG line!!!
-      have to figure out a way to get rid  of this!!!!!
+      ! **** IMPORTANT *****
+      ! SUPRISINGLY it works the way we want by this LOG line!!!
+      ! have to figure out a way to get rid  of this!!!!!
       */
-      console.log(this.MainScaleNode);
+      console.clear(this.MainScaleNode);
       // this.MainScaleNode
       return node;
     }
   },
   methods: {
-    // Called once, to create the hierarchical data representation
+    //? Called once, to create the hierarchical data representation
     initialize() {
       let that = this;
 
@@ -511,8 +574,8 @@ export default {
         that.rootNode.depth = 0;
       }
     },
-    // Calculates the accumulated value (sum of children values) of a node - its weight,
-    // represented afterwards in the area of its square
+    //? Calculates the accumulated value (sum of children values) of a node - its weight,
+    //? represented afterwards in the area of its square
     accumulate(d, context) {
       d._children = d.children;
 
@@ -525,7 +588,7 @@ export default {
         return d.value;
       }
     },
-    // Helper method - gets a node by its id attribute
+    //? Helper method - gets a node by its id attribute
     getNodeById(node, id, context) {
       if (node.id === id) {
         return node;
@@ -538,15 +601,16 @@ export default {
         }
       }
     },
-    // When a user clicks a square, changes the selected data attribute
-    // which fires the computed selectedNode, which in turn finds the Node by the id of the square clicked
-    // and the template reflects the changes
+    //? When a user clicks a square, changes the selected data attribute
+    //? which fires the computed selectedNode, which in turn finds the Node by the id of the square clicked
+    //? and the template reflects the changes
     selectNode(event) {
-      // console.log(event.target.id);
-      // console.log(event.target);
+      //// console.log(event.target.id);
+      //// console.log(event.target);
+      //// console.log(event.target.id);
       this.selected = event.target.id;
 
-      // this.accumulate(this.selected,this)
+      //// this.accumulate(this.selected,this)
     },
     XText(x0, x1) {
       return (x1 - x0) / 2 + x0;
@@ -570,28 +634,54 @@ export default {
         .domain([0, input])
         .range([0, this.height]);
     },
+    // eslint-disable-next-line no-unused-vars
     mouse_move(key, eve) {
-      // let tool = document.getElementById("tooltip")
-      this.tooltip = true;
-      this.tooltipHeaderName = key.data.name;
-      this.tooltipListOfChilds = key.data.children;
-      this.pageX = eve.pageX;
-      this.pageY = eve.pageY;
-      // console.log(key.data.name);
-      // let t = eve.target.id.split(".");
-      // console.log("MM ", t[t.length - 1]);
-      // console.log(this.tooltipHeaderName,this.tooltipListOfChilds);
-      // console.log(eve);
+      return;
+      // if (key.data.children != undefined) {
+      //   this.tooltipHeaderName = key.data.name;
+      //   let children = key.data.children;
+      //   this.pageX = eve.pageX;
+      //   this.pageY = eve.pageY;
+      //   children.sort((a, b) => b.value - a.value);
+
+      //   this.tooltipListOfChilds = children.slice(0, 15);
+
+      //   this.tooltip = true;
+
+      // }
+    },
+    mouse_moveChild(key, eve) {
+      if (key.data != undefined) {
+        this.tooltipChild = key.data;
+        this.tooltipHeaderName = key.parent.data.name;
+        let children = key.parent.data.children;
+        this.pageX = eve.pageX;
+        this.pageY = eve.pageY;
+        children = children.filter(function(el) {
+          return el.name != key.data.name;
+        });
+        children.sort((a, b) => b.value - a.value);
+        this.tooltipListOfChilds = children.slice(0, 15);
+
+        // console.log(eve, key.data);
+        this.tooltip = true;
+      }
+    },
+    BackButton() {
+      ////console.log("back button clicked");
+      this.selected = "نقشه بازار";
     },
     InnerScaleTreemap(input) {
       let t = d3
         .treemap()
         .size([this.width, this.height])
-        .round(false)
-        .paddingBottom(15);
-
+        .round(false);
+      // .paddingRight(1)
+      // .paddingLeft(1);
+      // .paddingBottom(1);
       // return treemap(input)
       this.MainScaleNode = t(input);
+      return this.MainScaleNode;
       // return this.MainScaleNode;
       // this.MainScaleNode = null;
     },
@@ -788,27 +878,30 @@ rect {
   opacity: 0;
 }
 .children:hover rect.child {
-  stroke: #ffd614;
+  stroke: #f5cc00;
   stroke-width: 2px;
 }
 .children:hover rect.parentSquare {
-  stroke: #ffd614;
-  fill: #ffd614 !important;
+  stroke: #f5cc00;
+  fill: #f5cc00 !important;
   stroke-width: 2px;
 }
 .children:hover rect.littleSquare {
-  stroke: #ffd614;
-  fill: #ffd614 !important;
+  stroke: #f5cc00;
+  fill: #f5cc00 !important;
   stroke-width: 2px;
 }
 .children:hover text.parentSquareText {
   fill: black !important;
 }
-#tooltip {
+/* .tooltipTreeMapHeader {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+div#tooltipTreeMap {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 120px;
+  width: 220px;
   height: auto;
   padding: 5px;
   background-color: white;
@@ -819,5 +912,113 @@ rect {
   -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
   pointer-events: none;
+}
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.flex-items {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+} */
+div#tooltipTreeMap {
+  position: absolute;
+  /* top: 20px; */
+  /* right: 0px; */
+  width: auto;
+  height: auto;
+  padding: 15px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-left: 20px;
+  margin-top: 20px;
+  z-index: 1000;
+  background-color: #f4f1de;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+.flex-container {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  /* flex-flow: row nowrap; */
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.flex-item {
+  /* background-color:brown; */
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  /* border:1px solid;
+  border-color:crimson; */
+  /* flex-grow: 0; */
+  /* flex-shrink: ; */
+  /* flex-basis: auto; */
+  /* align-self: auto; */
+  order: 0;
+}
+.flex-item2 {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tooltipTreeMapHeader {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /* margin-bottom: 2px; */
+  width: 100%;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+.tooltipTreeMapRow {
+  width: 100%;
+  padding-top: 2px;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  padding-right: 0px;
+  /* margin-bottom:1px; */
+
+  /* border:1px solid; */
+  /* border-color:crimson; */
+}
+.tooltipTreeMapRow2 {
+  width: 100%;
+  /* height: 120px; */
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  padding-right: 0px;
+  /* margin-bottom:1px; */
+
+  /* border:1px solid; */
+  /* border-color:crimson; */
+}
+/* .TreeMapToolbar /deep/ .v-sheet.theme--light.v-toolbar.v-toolbar--dense {
+  height: 30px !important;
+} */
+.TreeMapToolbar /deep/ .v-toolbar__content {
+  height: 30px !important;
 }
 </style>

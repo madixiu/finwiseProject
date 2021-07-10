@@ -1,15 +1,12 @@
 <template>
-  <div class="One">
-    <div id="chart">
-      <apexchart
-        :type="type"
-        :width="width"
-        :height="height"
-        :options="chartOptions"
-        :series="series"
-      ></apexchart>
-    </div>
-    <!-- </v-card> -->
+  <div id="ApexChartTemplate">
+    <apexchart
+      :type="type"
+      :width="width"
+      :height="height"
+      :options="chartOptions"
+      :series="series"
+    ></apexchart>
   </div>
 </template>
 <script>
@@ -27,7 +24,7 @@ export default {
 };
 </script>
 <style scoped>
-#chart {
+#ApexChartTemplate {
   direction: ltr;
 }
 </style>

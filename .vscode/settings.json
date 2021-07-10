@@ -1,4 +1,8 @@
 {
     "python.pythonPath": "/home/mahdi/Desktop/finwise/venv/bin/python",
-    "synthwave84.disableGlow": true
+    "synthwave84.disableGlow": true,
+    "colorize.languages": [
+        "javascript",
+        // ...
+      ]
 }

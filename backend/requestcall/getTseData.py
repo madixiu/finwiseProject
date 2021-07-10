@@ -206,7 +206,10 @@ def AddTechnicalData(input,extraInput):
     extraInput = sorted(extraInput, key=lambda x : x['ticker'], reverse=False)
     for index in range(len(input)):
         if extraInput:
-            input[index]["signal"] = extraInput[index]["signal"]
+            if index >= len(extraInput):
+                input[index]["signal"] = 0
+            else:
+                input[index]["signal"] = extraInput[index]["signal"]
     return input
 
 def DataModifier(input):

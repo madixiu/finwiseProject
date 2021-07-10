@@ -2,10 +2,15 @@
   <div>
     <div class="row">
       <div class="col-xxl-6 col-lg-6 mt-1" style="padding-left:5px">
-        <v-card height="343">
+        <v-card height="343" :loading="!(TableData.length > 0)">
           <v-toolbar dense>
             <v-toolbar-title>شرکتهای موجود در شاخص</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <b-table
             thClass="shakhes-table-head"
             class="shakhes-table"
@@ -43,11 +48,17 @@
         </v-card>
       </div>
       <div class="col-xxl-6 col-lg-6 mt-1" style="padding-right:5px">
-        <v-card height="343">
+        <v-card height="343" :loading="loading">
           <v-toolbar dense>
             <v-toolbar-title>شاخص صنعت</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            :key="key"
             v-if="Shakhes.length"
             type="area"
             width="100%"
@@ -58,11 +69,17 @@
         </v-card>
       </div>
       <div class="col-xxl-6 col-lg-6" style="padding-left:5px; padding-top:0px">
-        <v-card height="343">
+        <v-card height="343" :loading="loading">
           <v-toolbar dense>
             <v-toolbar-title>ارزش شرکت ها</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            :key="key"
             v-if="IndustriesValue.length"
             type="pie"
             width="100%"
@@ -76,11 +93,17 @@
         class="col-xxl-6 col-lg-6"
         style="padding-right:5px; padding-top:0px"
       >
-        <v-card height="343">
+        <v-card height="343" :loading="loading">
           <v-toolbar dense>
             <v-toolbar-title>تکنیکال</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            :key="key"
             v-if="TechnicalSeries.length"
             type="radar"
             width="100%"
@@ -94,11 +117,17 @@
         class="col-xxl-6 col-md-6 "
         style="padding-left:5px; padding-top:0px"
       >
-        <v-card>
+        <v-card :loading="loading">
           <v-toolbar dense>
             <v-toolbar-title>تاثیر در شاخص</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            :key="key"
             v-if="ImpactSeries.length"
             type="bar"
             width="100%"
@@ -132,10 +161,15 @@
         class="col-xxl-6 col-md-6 "
         style="padding-right:5px; padding-top:0px"
       >
-        <v-card>
+        <v-card :loading="loading">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="loading"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
             v-if="HHseries.length"
             type="bar"
@@ -181,6 +215,17 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      key: 1,
+      //? v-skeleton config
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+      },
+
+      //? default route id for checking change in ID
+      DefaultRouteID: null,
       // IDs
       IndustriesID: [],
       HHID: [],
@@ -295,7 +340,6 @@ export default {
       Shakhes: [
         {
           name: "",
-          // data: this.generateDayWiseTimeSeries(0, 30)
           data: null
         }
       ],
@@ -360,7 +404,7 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span>${n}</span>
+              <span style='font-size:0.8em'>${n}</span>
             
 
               </div>
@@ -389,8 +433,6 @@ export default {
           type: "pie",
           fontFamily: "Vazir-Medium-FD",
           events: {
-            // legendClick: function(chartContext, seriesIndex, config) {
-            // },
             dataPointSelection: (event, chartContext, config) => {
               this.ChartClick(
                 "Industries",
@@ -435,7 +477,7 @@ export default {
               //  val = parts.join(".");
               let val = (n / 1000000000).toLocaleString();
               return `<div class="ApexTooltip">
-            <div class="topDivTooltip" style=background-color:${backgroundColor}> 
+              <div class="topDivTooltip" style=background-color:${backgroundColor}> 
               <span style=color:#fff>
               ${w.globals.labels[seriesIndex]}
               </span>
@@ -465,6 +507,13 @@ export default {
             show: false
           },
           events: {
+            legendClick: function(event, chartContext, config) {
+              this.ChartClick(
+                "Industries",
+                chartContext,
+                config.dataPointIndex
+              );
+            },
             dataPointSelection: (event, chartContext, config) => {
               this.ChartClick("Impact", chartContext, config.dataPointIndex);
             }
@@ -635,6 +684,7 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
+              <span style=color:#000;font-size:0.8em class=mr-1>ریال</span>
               <span class="${Class}">${n.toLocaleString()}</span>
             
 
@@ -646,10 +696,25 @@ export default {
 
         xaxis: {
           categories: [],
-          labels: {}
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
+          }
         }
       }
     };
+  },
+  watch: {
+    $route() {
+      if (this.DefaultRouteID != null)
+        if (this.DefaultRouteID != this.$route.params.id) {
+          this.loading = true;
+          this.ResetData();
+          this.key += 1;
+          this.loadData();
+        }
+    }
   },
   created() {
     document.title = "Finwise - صنایع";
@@ -684,12 +749,38 @@ export default {
       var re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
       return num.toString().match(re)[0];
     },
+    ResetData() {
+      this.IndustriesID = [];
+      this.HHID = [];
+      this.ImpactID = [];
+      this.sumImpact = 0;
+      this.sumHH = 0;
+      this.Shakhes = [
+        {
+          name: "",
+          data: null
+        }
+      ];
+      this.HHoptions.labels = null;
+      this.ImpactOptions.labels = null;
+      this.IndustriesValueOptions.labels = null;
+      this.HHoptions.xaxis.categories = null;
+      this.ImpactOptions.xaxis.categories = null;
+      this.TechnicalOptions.xaxis.categories = null;
+      // this.TableData = data.Table.TableData;
+      this.HHseries = [];
+      this.ImpactSeries = [];
+      this.TechnicalSeries = [];
+      this.IndustriesValue = [];
+    },
     async loadData() {
       await this.axios
         .get("/api/IndexDetails/" + this.$route.params.id)
-        .then(responsex => {
-          let data = responsex.data;
+        .then(industryDetailResponse => {
+          //? setting the route id
+          this.DefaultRouteID = this.$route.params.id;
 
+          let data = industryDetailResponse.data;
           let IndustriesList = [];
           let technicalList = [];
           let technicalNames = [];
@@ -728,7 +819,6 @@ export default {
           this.HHoptions.xaxis.categories = HHNames;
           this.ImpactOptions.xaxis.categories = ImpactNames;
           this.TechnicalOptions.xaxis.categories = technicalNames;
-          // console.log(data.Table.TableData)
           this.TableData = data.Table.TableData;
           this.HHseries = [{ data: HHseries }];
           this.ImpactSeries = [{ data: impactList }];
@@ -752,6 +842,12 @@ export default {
             this.HHoptions.yaxis.min = HHseries[HHseries.length - 1];
             this.HHoptions.yaxis.max = Math.abs(HHseries[HHseries.length - 1]);
           }
+          if (HHseries.length > 30) {
+            this.HHoptions.xaxis.labels.style.fontSize = "0.65em";
+            this.HHoptions.xaxis.labels.rotate = -90;
+          }
+
+          this.loading = false;
         })
         .catch(error => {
           console.error(error);
@@ -852,12 +948,14 @@ export default {
   border-color: #bdbdbd;
   border-radius: 8px;
   display: flex;
+  /* cursor: pointer; */
   /* flex-wrap: nowrap; */
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   align-content: center;
 }
+
 .topDivTooltip {
   background-color: #d7d7d7;
   display: flex;
@@ -869,6 +967,7 @@ export default {
 }
 .bottomDivTooltip {
   background-color: #eaeaea;
+  direction: ltr;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -878,8 +977,10 @@ export default {
 }
 .redSpan {
   color: red;
+  font-size: 0.8em;
 }
 .greenSpan {
   color: green;
+  font-size: 0.8em;
 }
 </style>

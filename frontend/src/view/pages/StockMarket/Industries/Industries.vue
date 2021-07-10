@@ -5,7 +5,7 @@
         class="col-xxl-3 col-md-3 col-sm-6 col-xs-12"
         style="padding-left:0px"
       >
-        <v-card shaped>
+        <v-card shaped :loading="Pieseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>ارزش بازار صنایع</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -16,7 +16,11 @@
           </v-toolbar>
           <!-- <v-card-title>ارزش بازار صنایع</v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider> -->
-
+          <v-skeleton-loader
+            v-if="!Pieseries.length"
+            v-bind="attrs"
+            type="card-avatar, article, actions"
+          ></v-skeleton-loader>
           <ApexChart
             :key="ApexChartcomponentKey"
             v-if="Pieseries.length"
@@ -32,11 +36,17 @@
         class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
         style="padding-right:10px"
       >
-        <v-card v-if="Barseries.length">
+        <v-card :loading="Barseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="!Barseries.length"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            v-if="Barseries.length"
             type="bar"
             height="200%"
             width="100%"
@@ -44,11 +54,17 @@
             :chartOptions="BarchartOptions"
           />
         </v-card>
-        <v-card class="mt-3" v-if="HHseries.length">
+        <v-card class="mt-3" :loading="HHseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="!HHseries.length"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            v-if="HHseries.length"
             type="bar"
             width="100%"
             height="200%"
@@ -56,11 +72,17 @@
             :chartOptions="HHoptions"
           />
         </v-card>
-        <v-card class="mt-3" v-if="EffectOnIndexSeries.length">
+        <v-card class="mt-3" :loading="EffectOnIndexSeries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
           </v-toolbar>
+          <v-skeleton-loader
+            v-if="!EffectOnIndexSeries.length"
+            v-bind="attrs"
+            type="card"
+          ></v-skeleton-loader>
           <ApexChart
+            v-if="EffectOnIndexSeries.length"
             type="bar"
             width="100%"
             height="200%"
@@ -92,6 +114,11 @@ export default {
   },
   data() {
     return {
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+      },
       ApexChartcomponentKey: 0,
       PieChartData: null,
       PieChartkey: 0,
@@ -120,22 +147,7 @@ export default {
           intersect: false,
           fillSeriesColor: true,
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            let n = series[seriesIndex][dataPointIndex] / 1000000000;
-            let negative = false;
-            let digits = 0;
-            if (n < 0) {
-              negative = true;
-              n = n * -1;
-            }
-            let multiplicator = Math.pow(10, digits);
-            n = parseFloat((n * multiplicator).toFixed(11));
-            n = (Math.round(n) / multiplicator).toFixed(digits);
-            if (negative) {
-              n = (n * -1).toFixed(digits);
-            }
-            let parts = n.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            let val = parts.join(".");
+            let val = series[seriesIndex][dataPointIndex];
             let Class = null;
             if (parseFloat(val) < 0) Class = "redSpan";
             else if (parseFloat(val) > 0) Class = "greenSpan";
@@ -147,7 +159,8 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span class="${Class}">${val}</span>
+              <span style=color:#000;font-size:0.8em class=mr-1>ریال</span>
+              <span style='font-size:0.8em' class="${Class}">${val.toLocaleString()}</span>
             
 
               </div>
@@ -498,7 +511,9 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span>${val}</span>
+              <span style=color:#000;font-size:0.8em class=mr-1>ریال</span>
+
+              <span style=color:#000;font-size:0.8em>${val}</span>
             
 
               </div>
@@ -554,7 +569,7 @@ export default {
         },
         responsive: [
           {
-            breakpoint: 480,
+            breakpoint: 400,
             options: {
               chart: {
                 width: 200
@@ -607,9 +622,9 @@ export default {
       this.ApexChartcomponentKey += 1;
     },
     PieChartBackButton() {
-      console.log(this.PieChartData);
+      // console.log(this.PieChartData);
       let data = JSON.parse(JSON.stringify(this.PieChartData));
-      console.log(data);
+      // console.log(data);
 
       let marketCaps = data.TopIndustries.marketCap;
       let persianNames = data.TopIndustries.persianName;
@@ -624,10 +639,6 @@ export default {
       else return "blackSpan";
     },
     pieChartClick(context, seriesIndex) {
-      // this.PiechartOptions.labels = persianNames;
-
-      // console.log(founded[0].indexID);
-
       if (seriesIndex == 9 && this.PieChartkey == 0) {
         let data = JSON.parse(JSON.stringify(this.PieChartData));
 
@@ -637,13 +648,6 @@ export default {
         this.forceUpdate();
       } else if (seriesIndex != 9 && this.PieChartkey == 0) {
         // let name = context.w.globals.labels[seriesIndex];
-        // let dataClicked = this.PieChartData.TopIndustries.filter(e => {
-        //   return e.persianName == name;
-        // });
-        // this.$router.push({
-        //   name: "IndustriesDetail",
-        //   params: { id: dataClicked[0].indexID }
-        // });
         this.$router.push({
           name: "IndustriesDetail",
           params: { id: this.PieChartData.TopIndustries.indexID[seriesIndex] }

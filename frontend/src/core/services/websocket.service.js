@@ -15,38 +15,34 @@ const WsService = {
       // let HighestValue = new WebSocket("ws://" + URI + "/ws/HighestValues");
       // let highestSupply = new WebSocket("ws://" + URI + "/ws/HighestSupplies");
       // let highestDemand = new WebSocket("ws://" + URI + "/ws/HighestDemands");
-
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       // let highestVolume = new WebSocket(URI + "/ws/HighestVolume");
       // let marketWatch = new WebSocket(URI + "/ws/marketwatch");
       // let Optoins = new WebSocket(URI + "/ws/options");
       // let marketMap = new WebSocket(URI + "/ws/marketmap");
       // let LiveTickerData = new WebSocket(URI + "/ws/liveTickerData");
       // let Sandoq = new WebSocket(URI + "/ws/funds");
-      let Oraq = new WebSocket(URI + "/ws/oraq");
+      // let Oraq = new WebSocket(URI + "/ws/oraq");
       // let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
       // let Crypto = new WebSocket(URI + "/ws/Crypto");
       // let HaghTaghadom = new WebSocket(URI + "/ws/taghadom");
       // let Crypto = new WebSocket(URI + "/ws/Crypto");
       // let IRCommodities = new WebSocket(URI + "/ws/IRCommodities");
       // let InvCommodities = new WebSocket(URI + "/ws/InvCommodities");
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+      // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       // Vue.prototype.$socketMostViewed = MostViewed;
       // Vue.prototype.$socketImpactOnIndex = ImpactOnIndex;
       // Vue.prototype.$socketMarketHighestDemands = highestDemand;
       // Vue.prototype.$socketMarketHighestSupplies = highestSupply;
       // Vue.prototype.$socketMarketHighestTVolumes = HighestValue;
-
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+      // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       // Vue.prototype.$socketMarketHighestTValues = highestVolume;
       //   Vue.prototype.$socketMarketWatch = marketWatch;
       //   Vue.prototype.$socketMarketMap = marketMap;
       //   Vue.prototype.$socketLiveTickerData = LiveTickerData;
       //   Vue.prototype.$socketOptions = Optoins;
       //   Vue.prototype.$socketSandoq = Sandoq;
-      Vue.prototype.$socketOraq = Oraq;
+      // Vue.prototype.$socketOraq = Oraq;
       //   Vue.prototype.$socketCrypto = Crypto;
       //   Vue.prototype.$socketTaqadom = HaghTaghadom;
       // Vue.prototype.$socketCrypto = Crypto;

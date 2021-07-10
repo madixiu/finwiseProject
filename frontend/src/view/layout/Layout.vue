@@ -47,6 +47,7 @@
           </div>
         </div>
         <!-- <KTFooter></KTFooter> -->
+        <NewsContainer v-if="$route.name == 'Dashboard'"></NewsContainer>
       </div>
     </div>
     <!-- <KTStickyToolbar v-if="toolbarDisplay"></KTStickyToolbar> -->
@@ -70,6 +71,7 @@ import {
   REMOVE_BODY_CLASSNAME
 } from "@/core/services/store/htmlclass.module.js";
 import TickerTapeContainer from "@/view/content/TickerTapeContainer.vue";
+import NewsContainer from "@/view/content/NewsContainer.vue";
 export default {
   name: "Layout",
   components: {
@@ -81,7 +83,8 @@ export default {
     // KTStickyToolbar,
     KTScrollTop,
     Loader,
-    TickerTapeContainer
+    TickerTapeContainer,
+    NewsContainer
   },
   data() {
     return {

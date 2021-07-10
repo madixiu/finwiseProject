@@ -1,8 +1,17 @@
 <template>
-  <div class="row">
+  <v-row>
     <div class="col-xxl-12 col-lg-12 " v-if="ICitems.length">
-      <v-card>
-        <v-card-title>افزایش سرمایه</v-card-title>
+      <v-card elevation="14" style="margin-top:5px">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >افزایش سرمایه</v-toolbar-title
+          >
+        </v-toolbar>
         <b-table
           class="ticker-assembly-table"
           thClass="ICheader"
@@ -19,188 +28,264 @@
       </v-card>
     </div>
 
-    <div class="col-4">
+    <div class="col-4" style="padding-left:5px;padding-right:20px">
       <!-- Chief Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="ChiefItems.length">
-        <v-card>
-          <v-card-title>هیئت رییسه</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="ChiefItems"
-            :fields="stepThreeItemsTableHeaders.ChiefHeaders"
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="ChiefItems.length"> -->
+      <v-card elevation="14" style="margin-top:5px" v-if="ChiefItems.length">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >هیئت رییسه</v-toolbar-title
           >
-            <template #cell(Position)="data">
-              <b v-if="data.value == 'Cheif'" class="ticker-assembly-table-cell"
-                >رییس مجمع</b
-              >
-              <b
-                v-if="
-                  data.value == 'Supervisor1' || data.value == 'Supervisor2'
-                "
-                class="ticker-assembly-table-cell"
-                >ناظر مجمع</b
-              >
-              <b
-                v-if="data.value == 'Secretary'"
-                class="ticker-assembly-table-cell"
-                >منشی مجمع</b
-              >
-            </template>
-          </b-table>
-        </v-card>
-      </div>
+        </v-toolbar>
+        <!-- <v-card-title>هیئت رییسه</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="ChiefItems"
+          :fields="stepThreeItemsTableHeaders.ChiefHeaders"
+        >
+          <template #cell(Position)="data">
+            <b v-if="data.value == 'Cheif'" class="ticker-assembly-table-cell"
+              >رییس مجمع</b
+            >
+            <b
+              v-if="data.value == 'Supervisor1' || data.value == 'Supervisor2'"
+              class="ticker-assembly-table-cell"
+              >ناظر مجمع</b
+            >
+            <b
+              v-if="data.value == 'Secretary'"
+              class="ticker-assembly-table-cell"
+              >منشی مجمع</b
+            >
+          </template>
+        </b-table>
+      </v-card>
+      <!-- </div> -->
 
       <!-- CEO Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="CEOItems.length">
-        <v-card>
-          <v-card-title>مدیر عامل</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="CEOItems"
-            :fields="stepThreeItemsTableHeaders.CEOheaders"
-          ></b-table>
-        </v-card>
-      </div>
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="CEOItems.length"> -->
+      <v-card elevation="14" style="margin-top:5px" v-if="CEOItems.length">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >مدیر عامل</v-toolbar-title
+          >
+        </v-toolbar>
+        <!-- <v-card-title>مدیر عامل</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="CEOItems"
+          :fields="stepThreeItemsTableHeaders.CEOheaders"
+        ></b-table>
+      </v-card>
+      <!-- </div> -->
 
       <!-- NewBoard Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="NewBoardItems.length">
-        <v-card>
-          <v-card-title>هیئت مدیره جدید</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="NewBoardItems"
-            :fields="stepThreeItemsTableHeaders.NewBoardHeaders"
-          ></b-table>
-        </v-card>
-      </div>
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="NewBoardItems.length"> -->
+      <v-card elevation="14" style="margin-top:5px" v-if="NewBoardItems.length">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >هیئت مدیره جدید</v-toolbar-title
+          >
+        </v-toolbar>
+        <!-- <v-card-title>هیئت مدیره جدید</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="NewBoardItems"
+          :fields="stepThreeItemsTableHeaders.NewBoardHeaders"
+        ></b-table>
+      </v-card>
+      <!-- </div> -->
 
       <!-- Wage Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="WageItems.length">
-        <v-card>
-          <v-card-title>حقوق و مزایای هیئت مدیره</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="WageItems"
-            :fields="stepThreeItemsTableHeaders.WageHeaders"
-          ></b-table>
-        </v-card>
-      </div>
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="WageItems.length"> -->
+      <v-card elevation="14" style="margin-top:5px" v-if="WageItems.length">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >حقوق و مزایای هیئت مدیره</v-toolbar-title
+          >
+        </v-toolbar>
+        <!-- <v-card-title>حقوق و مزایای هیئت مدیره</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="WageItems"
+          :fields="stepThreeItemsTableHeaders.WageHeaders"
+        ></b-table>
+      </v-card>
+      <!-- </div> -->
     </div>
-    <div class="col-4">
+    <div class="col-4" style="padding-right:0px;padding-left:0px;">
       <!-- Shareholders Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="ShareholdersItems.length">
-        <v-card>
-          <v-card-title>حاضرین</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="ShareholdersItems"
-            :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="ShareholdersItems.length"> -->
+      <v-card
+        elevation="14"
+        style="margin-top:5px"
+        v-if="ShareholdersItems.length"
+      >
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >حاضرین</v-toolbar-title
           >
-            <template #cell(ShareCount)="data">
-              <span class="ticker-assembly-table-cell-number">{{
-                parseInt(data.value).toLocaleString()
-              }}</span>
-            </template>
-            <template #cell(OwnerPercentage)="data">
-              <b class="ticker-assembly-table-cell-number">{{ data.value }}</b>
-            </template>
-          </b-table>
-        </v-card>
-      </div>
+        </v-toolbar>
+        <!-- <v-card-title>حاضرین</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="ShareholdersItems"
+          :fields="stepThreeItemsTableHeaders.ShareholdersHeaders"
+        >
+          <template #cell(ShareCount)="data">
+            <span class="ticker-assembly-table-cell-number">{{
+              parseInt(data.value).toLocaleString()
+            }}</span>
+          </template>
+          <template #cell(OwnerPercentage)="data">
+            <b class="ticker-assembly-table-cell-number">{{ data.value }}</b>
+          </template>
+        </b-table>
+      </v-card>
+      <!-- </div> -->
 
       <!-- Board Table -->
 
-      <div class="col-xxl-12 col-lg-12 " v-if="BoardItems.length">
-        <v-card>
-          <v-card-title>هیئت مدیره</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="BoardItems"
-            :fields="stepThreeItemsTableHeaders.BoardHeaders"
-          ></b-table>
-        </v-card>
-      </div>
+      <!-- <div class="col-xxl-12 col-lg-12 " v-if="BoardItems.length"> -->
+      <v-card elevation="14" style="margin-top:5px" v-if="BoardItems.length">
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >هیئت مدیره</v-toolbar-title
+          >
+        </v-toolbar>
+        <!-- <v-card-title>هیئت مدیره</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="BoardItems"
+          :fields="stepThreeItemsTableHeaders.BoardHeaders"
+        ></b-table>
+      </v-card>
     </div>
-    <div class="col-4">
+    <!-- </div> -->
+    <div class="col-4" style="padding-right:5px;padding-left:20px">
       <!-- IC table  -->
 
       <!-- Statement Table -->
-      <div class="col-xxl-12 col-lg-12 " v-if="StatementItems.length">
-        <v-card>
-          <v-card-title>صورت مصوب</v-card-title>
-          <b-table
-            class="ticker-assembly-table"
-            thClass="ticker-assembly-table-head"
-            tbody-tr-class="ticker-assembly-table-row"
-            striped
-            bordered
-            outlined
-            small
-            hover
-            fixed
-            :items="StatementItems"
-            :fields="stepThreeItemsTableHeaders.StatementHeaders"
+      <!-- <div class="col-xxl-12 col-lg-12" v-if="StatementItems.length"> -->
+      <v-card
+        elevation="14"
+        style="margin-top:5px"
+        v-if="StatementItems.length"
+      >
+        <v-toolbar
+          dense
+          color="#f4f1de"
+          class="AssemblyTablesTableToolbars"
+          style="height:30px"
+        >
+          <v-toolbar-title style="height:30px;font-size:0.9em"
+            >صورت مصوب</v-toolbar-title
           >
-            <template #cell(Value)="data">
-              <b class="ticker-assembly-table-cell-number">{{
-                parseInt(data.value).toLocaleString()
-              }}</b>
-            </template>
-          </b-table>
-        </v-card>
-      </div>
+        </v-toolbar>
+        <!-- <v-card-title>صورت مصوب</v-card-title> -->
+        <b-table
+          class="ticker-assembly-table"
+          thClass="ticker-assembly-table-head"
+          tbody-tr-class="ticker-assembly-table-row"
+          striped
+          bordered
+          outlined
+          small
+          hover
+          fixed
+          :items="StatementItems"
+          :fields="stepThreeItemsTableHeaders.StatementHeaders"
+        >
+          <template #cell(Value)="data">
+            <b class="ticker-assembly-table-cell-number">{{
+              parseInt(data.value).toLocaleString()
+            }}</b>
+          </template>
+        </b-table>
+      </v-card>
+      <!-- </div> -->
     </div>
     <!-- Summary Table -->
 
     <!-- <div class="col-xxl-12 col-lg-12" v-if="SummaryItems.length">
-                    <v-card>
+                    <v-card elevation="14" style="margin-top:5px">
                       <v-card-title>خلاصه مجمع</v-card-title>
                       <b-table
                         class="ticker-assembly-table"
@@ -215,7 +300,8 @@
                       ></b-table>
                     </v-card>
                   </div> -->
-  </div>
+    <!-- </div> -->
+  </v-row>
 </template>
 <script>
 export default {
@@ -455,7 +541,6 @@ export default {
   font-size: 0.8rem;
   font-weight: 500;
   text-align: center;
-
 }
 
 /* .ticker-assembly-table-increaseCapital {
@@ -472,7 +557,6 @@ export default {
   direction: ltr;
   vertical-align: middle !important;
   text-align: center;
-
 }
 .ticker-assembly-table-cell {
   text-align: center;
@@ -498,5 +582,8 @@ export default {
   font-size: 0.8em !important;
   font-weight: 300;
   text-align: center;
+}
+.AssemblyTablesTableToolbars /deep/ .v-toolbar__content {
+  height: 30px !important;
 }
 </style>

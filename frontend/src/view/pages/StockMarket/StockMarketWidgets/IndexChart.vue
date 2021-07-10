@@ -1,157 +1,259 @@
-/* eslint-disable no-unused-vars */
 <template>
-  <!-- <div class="card card-custom"> -->
   <div>
-    <v-card>
+    <v-card :loading="!inputDataIndex.length">
       <v-toolbar dense>
         <v-toolbar-title>شاخص کل</v-toolbar-title>
       </v-toolbar>
-      <!-- <v-card-title>شاخص کل</v-card-title> -->
-      <!-- <v-divider class="mt-0 mb-0"></v-divider> -->
-      <div class="row">
+      <v-skeleton-loader
+        v-if="!inputDataIndex.length"
+        v-bind="attrs"
+        type="card"
+      ></v-skeleton-loader>
+      <!-- // ! fix cols in small devices optimize all childs with flex -->
+      <div class="d-flex" v-show="inputDataIndex.length != 0">
+        <div
+          class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 d-flex"
+          style="padding-left:0px;flex-direction:column;justify-content:center"
+        >
+          <div class="d-flex flex-column" style="width:100%">
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-between"
+                style="
+                  padding-bottom: 15px;
+                  padding-top: 15px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">
+                    شاخص کل :
+                  </span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span>
+                    {{ roundTo(latestIndex, 0).toLocaleString() }}
+                  </span>
+                  <div class="d-flex flex-row">
+                    <v-col class="flex-item pt-0 pb-0 pl-0 pr-2">
+                      <span
+                        dir="ltr"
+                        v-bind:class="[
+                          lastestIndexChange > 0
+                            ? 'greenItem cellItem '
+                            : 'redItem cellItem'
+                        ]"
+                      >
+                        {{
+                          parseFloat(
+                            roundTo(lastestIndexChange, 0)
+                          ).toLocaleString()
+                        }}</span
+                      >
+                    </v-col>
+                    <v-col class="flex-item pt-0 pb-0 pr-0 pl-0">
+                      <span>
+                        <v-icon
+                          v-bind:class="[
+                            lastestIndexChange > 0 ? 'greenItem' : 'redItem'
+                          ]"
+                          >mdi-chevron-{{
+                            lastestIndexChange > 0 ? "up" : "down "
+                          }}</v-icon
+                        ></span
+                      >
+                    </v-col>
+                  </div>
+                </v-col>
+              </div>
+              <!-- here -->
+            </v-card>
+
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-between"
+                style="
+                  padding-bottom: 15px;
+                  padding-top: 15px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">
+                    شاخص هم وزن :
+                  </span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem ">{{
+                    roundTo(latestSW, 0).toLocaleString()
+                  }}</span>
+                  <div class="d-flex flex-row">
+                    <v-col class="flex-item pt-0 pb-0 pl-0 pr-2">
+                      <span
+                        dir="ltr"
+                        v-bind:class="[
+                          lastestSWChange > 0
+                            ? 'greenItem cellItem '
+                            : 'redItem cellItem'
+                        ]"
+                      >
+                        {{ roundTo(lastestSWChange, 0).toLocaleString() }}</span
+                      >
+                    </v-col>
+                    <v-col class="flex-item pt-0 pb-0 pr-0 pl-0">
+                      <span>
+                        <v-icon
+                          v-bind:class="[
+                            lastestSWChange > 0 ? 'greenItem' : 'redItem'
+                          ]"
+                          >mdi-chevron-{{
+                            lastestSWChange > 0 ? "up" : "down "
+                          }}</v-icon
+                        ></span
+                      >
+                    </v-col>
+                  </div>
+                </v-col>
+              </div>
+            </v-card>
+
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-between"
+                style="
+                  padding-bottom: 15px;
+                  padding-top: 15px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">
+                    شاخص فرابورس:
+                  </span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem ">{{
+                    roundTo(IFBlatestIndex, 0).toLocaleString()
+                  }}</span>
+                  <div class="d-flex flex-row">
+                    <v-col class="flex-item pt-0 pb-0 pl-0 pr-2">
+                      <span
+                        dir="ltr"
+                        v-bind:class="[
+                          IFBLatestChange > 0
+                            ? 'greenItem cellItem '
+                            : 'redItem cellItem'
+                        ]"
+                      >
+                        {{ roundTo(IFBLatestChange, 0) }}</span
+                      >
+                    </v-col>
+                    <v-col class="flex-item pt-0 pb-0 pr-0 pl-0">
+                      <span>
+                        <v-icon
+                          v-bind:class="[
+                            IFBLatestChange > 0 ? 'greenItem' : 'redItem'
+                          ]"
+                          >mdi-chevron-{{
+                            IFBLatestChange > 0 ? "up" : "down "
+                          }}</v-icon
+                        ></span
+                      >
+                    </v-col>
+                  </div>
+                </v-col>
+              </div>
+            </v-card>
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-around align-items-baseline"
+                style="
+                  padding-bottom: 10px;
+                  padding-top: 10px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">
+                    ارزش بازار بورس :
+                  </span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem2 pl-2"
+                    >{{
+                      roundTo(MarketCapTotal / 1000000000, 0).toLocaleString()
+                    }}
+                  </span>
+                  <span class="cellItem2">میلیارد ریال</span>
+                </v-col>
+              </div>
+            </v-card>
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-around align-items-baseline"
+                style="
+                  padding-bottom: 10px;
+                  padding-top: 10px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">ارزش بازار فرابورس :</span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem2 pl-2"
+                    >{{
+                      roundTo(
+                        IFBMarketCapTotal / 1000000000,
+                        0
+                      ).toLocaleString()
+                    }}
+                  </span>
+                  <span class="cellItem2">میلیارد ریال</span>
+                </v-col>
+              </div>
+            </v-card>
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-around align-items-baseline"
+                style="
+                  padding-bottom: 10px;
+                  padding-top: 10px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">
+                    ارزش معاملات بورس :
+                  </span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem2 pl-2"
+                    >{{
+                      roundTo(latestTradeValue / 1000000000, 0).toLocaleString()
+                    }}
+                  </span>
+                  <span class="cellItem2">میلیارد ریال</span>
+                </v-col>
+              </div>
+            </v-card>
+            <v-card elevation="3" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-around align-items-baseline"
+                style="
+                  padding-bottom: 10px;
+                  padding-top: 10px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">ارزش معاملات فرابورس :</span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem2 pl-2"
+                    >{{
+                      roundTo(
+                        latestTradeValueIFB / 1000000000,
+                        0
+                      ).toLocaleString()
+                    }}
+                  </span>
+                  <span class="cellItem2">میلیارد ریال</span>
+                </v-col>
+              </div>
+            </v-card>
+          </div>
+        </div>
         <div
           id="Chartcontainer_index"
           class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
         ></div>
-        <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12">
-          <v-card-title>
-            <span class="cellHeader">
-              شاخص کل :
-            </span>
-            <span
-              v-bind:class="[
-                this.lastestIndexChange > 0 ? 'cellItem pl-2' : 'cellItem pl-2'
-              ]"
-            >
-              {{ numberWithCommas(roundTo(this.latestIndex), 0) }} </span
-            ><span
-              v-bind:class="[
-                this.lastestIndexChange > 0
-                  ? 'greenItem cellItem '
-                  : 'redItem cellItem'
-              ]"
-            >
-              {{ numberWithCommas(roundTo(this.lastestIndexChange), 0) }}</span
-            >
-            <span>
-              <v-icon
-                v-bind:class="[
-                  this.lastestIndexChange > 0 ? 'greenItem' : 'redItem'
-                ]"
-                >mdi-chevron-{{
-                  this.lastestIndexChange > 0 ? "up" : "down "
-                }}</v-icon
-              ></span
-            >
-          </v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">
-              شاخص هم وزن :
-            </span>
-            <span class="cellItem pl-2">{{
-              numberWithCommas(roundTo(this.latestSW), 0)
-            }}</span>
-            <span
-              v-bind:class="[
-                this.lastestSWChange > 0
-                  ? 'greenItem cellItem '
-                  : 'redItem cellItem'
-              ]"
-            >
-              {{ numberWithCommas(roundTo(this.lastestSWChange), 0) }}</span
-            >
-            <span>
-              <v-icon
-                v-bind:class="[
-                  this.lastestSWChange > 0 ? 'greenItem' : 'redItem'
-                ]"
-                >mdi-chevron-{{
-                  this.lastestSWChange > 0 ? "up" : "down "
-                }}</v-icon
-              ></span
-            >
-          </v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">
-              شاخص فرابورس:
-            </span>
-            <span class="cellItem pl-2">{{
-              numberWithCommas(roundTo(this.IFBlatestIndex), 0)
-            }}</span>
-            <span
-              v-bind:class="[
-                this.IFBLatestChange > 0
-                  ? 'greenItem cellItem '
-                  : 'redItem cellItem'
-              ]"
-            >
-              {{ numberWithCommas(roundTo(this.IFBLatestChange), 0) }}</span
-            >
-            <span>
-              <v-icon
-                v-bind:class="[
-                  this.IFBLatestChange > 0 ? 'greenItem' : 'redItem'
-                ]"
-                >mdi-chevron-{{
-                  this.IFBLatestChange > 0 ? "up" : "down "
-                }}</v-icon
-              ></span
-            >
-          </v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">
-              ارزش بازار بورس :
-            </span>
-            <span class="cellItem2 pl-2"
-              >{{
-                numberWithCommas(roundTo(this.MarketCapTotal / 1000000000), 0)
-              }}
-              میلیارد ریال</span
-            ></v-card-title
-          >
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">ارزش بازار فرابورس :</span>
-            <span class="cellItem2 pl-2"
-              >{{
-                numberWithCommas(
-                  roundTo(this.IFBMarketCapTotal / 1000000000),
-                  0
-                )
-              }}
-              میلیارد ریال</span
-            ></v-card-title
-          >
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">
-              ارزش معاملات بورس :
-            </span>
-            <span class="cellItem2 pl-2"
-              >{{
-                numberWithCommas(roundTo(this.latestTradeValue / 1000000000, 0))
-              }}
-              میلیارد ریال</span
-            ></v-card-title
-          >
-          <v-divider class="mt-0 mb-0"></v-divider>
-          <v-card-title>
-            <span class="cellHeader">ارزش معاملات فرابورس :</span>
-            <span class="cellItem2 pl-2"
-              >{{
-                numberWithCommas(
-                  roundTo(this.latestTradeValueIFB / 1000000000),
-                  0
-                )
-              }}
-              میلیارد ریال</span
-            ></v-card-title
-          >
-          <v-divider class="mt-0 mb-0"></v-divider>
-        </div>
       </div>
       <!--end::Header-->
     </v-card>
@@ -161,14 +263,18 @@
 
 <script>
 import * as d3 from "d3";
-
-// eslint-disable-next-line no-unused-vars
+// //import  roundTo  from "@/assets/js/utils.js";
 export default {
   name: "IndexChart",
   props: { inputDataIndex: Array },
   data() {
     return {
-      loading: true,
+      //// loading: true,
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+      },
       jsonData: {},
       latestIndex: 0,
       lastestIndexChange: 0,
@@ -196,6 +302,9 @@ export default {
   },
   watch: {
     inputDataIndex() {
+      // if (oldValue.length != 0 && newValue.length !=0){
+
+      // }
       this.renderData();
       if (this.isRealValue(this.indexData)) {
         this.renderChart();
@@ -212,14 +321,6 @@ export default {
   },
   computed: {},
   methods: {
-    numberWithCommas(x) {
-      if (x == "-") {
-        return x;
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
     roundTo(n, digits) {
       if (n == "-") {
         return n;
@@ -239,7 +340,7 @@ export default {
       if (negative) {
         n = (n * -1).toFixed(digits);
       }
-      return n;
+      return parseFloat(n);
     },
     isRealValue(obj) {
       return obj && obj !== "null" && obj !== "undefined";
@@ -250,14 +351,14 @@ export default {
       }
 
       this.width =
-        0.85 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+        0.9 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
       this.height = (this.width * 7) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.03;
       this.margin.left =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.1;
+        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.07;
       this.offsetY = this.margin.top;
       var parent = document.getElementById("Chartcontainer_index");
       // eslint-disable-next-line no-unused-vars
@@ -276,47 +377,47 @@ export default {
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 800
       ) {
-        // console.log("8");
+        //? console.log("8");
         this.fontsizeOf = 1.3;
       }
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 600 &&
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 800
       ) {
-        // console.log("6");
+        //? console.log("6");
         this.fontsizeOf = 1.1;
         this.width =
-          0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+          0.87 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
         this.height = (this.width * 10) / 16;
         this.margin.top = this.height * 0.08;
         this.margin.bottom = this.height * 0.05;
         this.margin.right =
           parseInt(d3.select("#Chartcontainer_index").style("width"), 10) *
-          0.05;
+          0.03;
         this.margin.left =
-          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.2;
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.1;
       }
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) > 400 &&
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 600
       ) {
-        // console.log("4");
+        //? console.log("4");
         this.fontsizeOf = 1.2;
         this.width =
-          0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
+          0.87 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
         this.height = (this.width * 16) / 16;
         this.margin.top = this.height * 0.08;
         this.margin.bottom = this.height * 0.05;
         this.margin.right =
           parseInt(d3.select("#Chartcontainer_index").style("width"), 10) *
-          0.05;
+          0.03;
         this.margin.left =
-          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.2;
+          parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.1;
       }
       if (
         parseInt(d3.select("#Chartcontainer_index").style("width"), 10) < 400
       ) {
-        // console.log("3");
+        //? console.log("3");
         this.fontsizeOf = 1.2;
         this.width =
           0.7 * parseInt(d3.select("#Chartcontainer_index").style("width"), 10);
@@ -367,7 +468,7 @@ export default {
             return d;
           }
         });
-        // console.log(data);
+        //? console.log(data);
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
         this.latestIndex = lastItem["Index"];
@@ -689,6 +790,17 @@ export default {
 </script>
 
 <style scoped>
+.flex-item {
+  /* background-color:brown; */
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  order: 0;
+}
 .cellHeader {
   /* direction: ltr; */
   text-align: right;
@@ -700,21 +812,22 @@ export default {
   text-align: right;
   font-family: "Vazir-Medium-FD";
   /* font-weight: 700; */
-  font-size: 0.9em;
+  font-size: 1em;
 }
 .cellItem2 {
   font-family: "Vazir-Medium-FD";
-  font-weight: 600;
-  font-size: 0.7em;
+  /* font-weight: 600; */
+  direction: ltr;
+  font-size: 0.8em;
 }
 .redItem {
   color: red !important;
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: "Vazir-Medium-FD" !important;
 }
 .greenItem {
   color: green !important;
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: "Vazir-Medium-FD" !important;
 }
 .Chart1title * {

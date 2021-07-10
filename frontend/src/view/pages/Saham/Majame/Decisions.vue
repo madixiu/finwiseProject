@@ -1,14 +1,10 @@
 <template>
   <div>
-    <!-- <div class="col-12"> -->
     <!-- User Interface controls -->
-    <v-card>
+    <v-card :loading="!dataFetch && !cardKey">
       <v-toolbar dense>
         <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
         <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
-
-        <!-- <v-card-title v-if="cardKey">لیست مجامع</v-card-title> -->
-        <!-- <v-card-title v-if="!cardKey">{{ AssemblyName }}</v-card-title> -->
         <v-card-subtitle style="textalign:right" v-if="!cardKey">
           <span> {{ subTitle }}</span>
         </v-card-subtitle>
@@ -20,90 +16,38 @@
       </v-toolbar>
       <transition-group name="slide-fade" tag="div">
         <div v-show="cardKey" key="1">
-          <b-col lg="4" class="my-1">
-            <b-input-group size="sm">
-              <b-form-input
-                id="filter-input"
-                v-model="filter"
-                type="search"
-                placeholder="جستجو"
-              ></b-form-input>
-
-              <b-input-group-append>
-                <b-button :disabled="!filter" @click="filter = ''"
-                  >پاک کردن</b-button
-                >
-              </b-input-group-append>
-            </b-input-group>
-          </b-col>
-
-          <!-- Main table element -->
-          <b-table
-            thClass="Descision-table-head"
-            class="Descision-table"
-            tbody-tr-class="Descision-table-row"
-            striped
-            :items="ListData"
-            :fields="headersListData"
-            :current-page="currentPage"
-            :per-page="perPage"
-            :filter="filter"
-            :filter-debounce="1200"
-            :busy.sync="isBusy"
-            :no-provider-paging="true"
-            no-border-collapse
-            dense
-            bordered
-            outlined
-            small
-            hover
-            responsive
-            @filtered="onFiltered"
+          <ag-grid-vue
+            :style="
+              `width: 100%; height:  ${height}px; font-family: Vazir-Medium-FD`
+            "
+            class="ag-theme-balham AssemblyListTable"
+            :localeText="localeText"
+            :defaultColDef="defaultColDef"
+            :columnDefs="DecisionTableHeader"
+            :enableRtl="true"
+            :gridOptions="gridOptions"
+            :allowContextMenuWithControlKey="false"
+            @grid-ready="onReady"
+          ></ag-grid-vue>
+          <div
+            id="AssemblyTablePaginationContainer"
+            style="
+              display: flex;
+              justify-content: center;width:100%"
           >
-            <template #table-busy>
-              <div class="text-center text-danger my-2">
-                <b-spinner class="align-middle mr-2"></b-spinner>
-                <strong>شکیبا باشید</strong>
-              </div>
-            </template>
-            <template #cell(title)="row">
-              <b class="AssemblyTitle" @click="titleClick(row)">{{
-                row.value
-              }}</b>
-            </template>
-            <template #cell(Ticker)="row">
-              <router-link :to="linkcreated(row)">
-                {{ row.value }}
-              </router-link>
-            </template>
-
-            <template #cell(HtmlUrl)="row">
-              <!-- <b-button size="sm" @click="info(row.item)" class="mr-1">
-              لینک
-            </b-button> -->
-              <v-icon
-                size="15px"
-                color="#4682B4"
-                @click="info(row.item)"
-                class="mr-1"
-                >mdi-link-variant</v-icon
-              >
-            </template>
-          </b-table>
-          <b-col sm="7" md="6" class="my-1">
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalRows"
-              :per-page="perPage"
-              align="fill"
-              size="sm"
-              class="my-0 paginationClass"
-            ></b-pagination>
-          </b-col>
+            <div class="col-6">
+              <v-pagination
+                v-model="tablePaginationNumber"
+                :length="tablePaginationLength"
+                :total-visible="10"
+              ></v-pagination>
+            </div>
+          </div>
         </div>
         <div v-if="!cardKey" key="2" class="mt-2">
           <!-- ******************** TABLE COMPONENT ********************* -->
           <AssemblyTables
+            v-if="dataFetch"
             :ShareholdersItems="ShareholdersData"
             :ChiefItems="ChiefData"
             :SummaryItems="SummaryData"
@@ -123,45 +67,39 @@
   </div>
 </template>
 <script>
-// import Wizard from "@/view/pages/Saham/Majame/content/Wizard";
+import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+import { AgGridVue } from "ag-grid-vue";
 import AssemblyTables from "@/view/pages/Ticker/AssemblyWidget/content/AssemblyTables.vue";
 export default {
   name: "Decisions",
-  components: { AssemblyTables },
+  components: { AssemblyTables, AgGridVue },
   data() {
     return {
+      // * AGgrid base data
+      modules: AllModules,
+      gridApi: null,
+      defaultColDef: null,
+      gridOptions: null,
+      DecisionTableHeader: [],
+      sideBar: null,
+      allColumnIds: [],
+      gridColumnApi: null,
+      localeText: null,
+      loading: true,
+      dataFetch: false,
+      tableData: [],
+      height: 400,
+      tablePaginationLength: 10,
+      tablePaginationNumber: 1,
+      // * %%%%%%%%%%%%%%%
       cardKey: true,
       AssemblyName: "",
       subTitle: "",
       totalRows: 1,
       currentPage: 1,
-      perPage: 25,
+      perPage: 15,
       isBusy: false,
-      headersListData: [
-        {
-          label: "تاریخ انتشار",
-          key: "PublishTime",
-          thClass: "Descision-table-head"
-        },
-        {
-          label: "سهم",
-          key: "Ticker",
-          width: "100",
-          thClass: "Descision-table-head"
-        },
-        {
-          label: "عنوان",
-          key: "title",
-          width: "100",
-          thClass: "Descision-table-head"
-        },
-        {
-          label: "لینک کدال",
-          key: "HtmlUrl",
-          width: "100",
-          thClass: "Descision-table-head"
-        }
-      ],
       ListData: null,
       filter: null,
       // test DATA BELOW *******************************************
@@ -180,18 +118,29 @@ export default {
       NewBoardData: [],
       WageData: []
       // filterOn: []
-      // infoModal: {
-      //   id: "info-modal",
-      //   title: "",
-      //   content: ","
-      // }
     };
   },
-  watch: {},
+  watch: {
+    tablePaginationNumber(newValue, oldValue) {
+      if (oldValue + 1 == newValue) {
+        this.gridApi.paginationGoToNextPage();
+      } else if (oldValue == newValue + 1) {
+        this.gridApi.paginationGoToPreviousPage();
+      } else {
+        this.gridApi.paginationGoToPage(newValue - 1);
+      }
+    },
+    tableData(newValue, oldValue) {
+      if (oldValue.length == 0 && newValue.length != 0) {
+        this.gridApi.setRowData(newValue);
+
+        this.tablePaginationLength = this.gridApi.paginationGetTotalPages();
+        this.gridOptions.api.hideOverlay();
+        // this.dataFetch = true;
+      }
+    }
+  },
   computed: {
-    // search() {
-    //   this.isBusy = true;
-    // },
     sortOptions() {
       // Create an options list from our fields
       return this.fields
@@ -203,36 +152,144 @@ export default {
   },
   created() {
     document.title = "Finwise - تصمیمات مجامع";
+
+    // GRID LOCALE FILE LOAD
+    this.localeText = AG_GRID_LOCALE_FA;
+    // GRID OPTIONS
+    this.gridOptions = {
+      headerHeight: 30,
+      rowHeight: 25,
+      // enables pagination in the grid
+      pagination: true,
+
+      // sets 10 rows per page (default is 100)
+      paginationPageSize: 10,
+      paginationAutoPageSize: true,
+      suppressPaginationPanel: true,
+      // getRowNodeId: data => data.ID
+      floatingFilter: true,
+      resizable: true,
+      suppressContextMenu: true
+      // overlayLoadingTemplate:
+      //   '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
+      // domLayout: 'autoHeight'
+    };
+
+    this.defaultColDef = {
+      flex: 1,
+      // sortable: true,
+      paginationAutoPageSize: true,
+      suppressMenu: true,
+      enablePivot: false,
+      cellStyle: {
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        direction: "ltr"
+      }
+    };
+    this.DecisionTableHeader = [
+      {
+        headerName: "تاریخ انتشار",
+        field: "PublishTime",
+        maxWidth: 200,
+        filter: "agSetColumnFilter",
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        }
+      },
+      {
+        headerName: "سهم",
+        field: "Ticker",
+        maxWidth: 170,
+        filter: "agSetColumnFilter",
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        cellStyle: {
+          color: "#067BDA",
+          "font-weight": "500"
+        },
+        cellRenderer: params => {
+          const link = document.createElement("a");
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.tickerClick(params.data);
+          });
+          return link;
+        }
+      },
+      {
+        headerName: "عنوان",
+        field: "title",
+        cellStyle: {
+          color: "#067BDA",
+          "font-weight": "500"
+        },
+        cellRenderer: params => {
+          const link = document.createElement("a");
+          link.innerText = params.value;
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            this.titleClick(params.data);
+          });
+          return link;
+        }
+      },
+      {
+        headerName: "لینک کدال",
+        field: "HtmlUrl",
+        maxWidth: 100,
+        cellRenderer: function(params) {
+          const div = document.createElement("div");
+          const html = `<button type="button" class="v-icon notranslate mr-1 v-icon--link mdi mdi-link-variant theme--light" style="font-size: 15px; color: rgb(70, 130, 180); caret-color: rgb(70, 130, 180);"></button>`;
+          div.innerHTML = html;
+          div.addEventListener("click", () => {
+            window.open("https://codal.ir" + params.value, "_blank");
+          });
+          return div;
+        }
+      }
+    ];
   },
   mounted() {
+    this.height = this.getHeight();
     this.loadData();
-
-    // Set the initial number of items temporary
-    // this.totalRows = this.items.length;
   },
   methods: {
-    linkcreated(row) {
-      return { name: "TickerOverall", params: { id: row.item.StockID } };
+    getHeight() {
+      return (
+        window.innerHeight -
+        115 -
+        document.getElementById("AssemblyTablePaginationContainer").offsetHeight
+      );
     },
-    loadData() {
-      // this.ListReq().then(response => {
-      //   this.OptionTableReq();
-      // });
-      this.ListReq();
+    onReady(params) {
+      let allColumnIds = [];
+      // this.gridOptions.api.closeToolPanel();
+      this.gridColumnApi = this.gridOptions.columnApi;
+      this.gridApi = params.api;
+      // show 'loading' overlay
+      this.gridOptions.api.showLoadingOverlay();
+      this.gridColumnApi.getAllColumns().forEach(function(column) {
+        allColumnIds.push(column.colId);
+      });
+      this.allColumnIds = allColumnIds;
+      if (this.tableData != null) {
+        params.api.setRowData(this.tableData);
+        this.gridOptions.api.hideOverlay();
+      }
     },
-    // async ListReq() {
-    //   try {
-    //     this.isBusy = true;
-    //     let response = await this.axios.get("/api/MainAssemblyDataList");
-    //     this.isBusy = false;
-    //     this.totalRows = response.data.length;
-    //     return response.data;
-    //   } catch (error) {
-    //     this.isBusy = false;
-    //     return [];
-    //   }
-    // },
-    async ListReq() {
+    tickerClick(item) {
+      // console.log(item);
+      this.$router.push({
+        name: "TickerOverall",
+        params: { id: item.StockID }
+      });
+    },
+
+    async loadData() {
       this.isBusy = true;
 
       await this.axios
@@ -240,7 +297,9 @@ export default {
         .then(response => {
           this.isBusy = false;
           this.totalRows = response.data.length;
-          this.ListData = response.data;
+          // this.ListData = response.data;
+          this.tableData = response.data;
+          this.tablePaginationLength = response.data.length;
         })
         .catch(error => {
           this.isBusy = false;
@@ -270,6 +329,7 @@ export default {
             this.NewBoardData = data[5];
             this.WageData = data[6];
             this.SummaryData = data[7];
+            this.dataFetch = true;
           } else if (type == "Extra") {
             this.StatementData = [];
             this.CEOData = [];
@@ -280,6 +340,7 @@ export default {
             this.ChiefData = data[1];
             this.ShareholdersData = data[2];
             this.SummaryData = data[3];
+            this.dataFetch = true;
           } else if (type == "GeneralExtra") {
             this.ICData = [];
             this.StatementData = data[0];
@@ -290,6 +351,7 @@ export default {
             this.NewBoardData = data[5];
             this.WageData = data[6];
             this.SummaryData = data[7];
+            this.dataFetch = true;
           }
         })
         .catch(error => {
@@ -297,31 +359,88 @@ export default {
         });
     },
     titleClick(item) {
-      this.TablesReq(item.item.ID, item.item.Type);
+      this.dataFetch = false;
+      this.TablesReq(item.ID, item.Type);
       // console.log(item.item);
-      this.subTitle = item.item.title;
-      this.AssemblyName = item.item.Ticker;
+      this.subTitle = item.title;
+      this.AssemblyName = item.Ticker;
       this.cardKey = false;
     },
     info(item) {
-      // this.infoModal.title = `Row index: ${index}`;
-      // this.infoModal.content = JSON.stringify(item, null, 2);
-      // this.$root.$emit("bv::show::modal", this.infoModal.id, button);
       window.open("https://codal.ir" + item.HtmlUrl, "_blank");
-    },
-    // resetInfoModal() {
-    //   this.infoModal.title = "";
-    //   this.infoModal.content = "";
-    // },
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
     }
+    // onFiltered(filteredItems) {
+    //   // Trigger pagination to update the number of buttons/pages due to filtering
+    //   this.totalRows = filteredItems.length;
+    //   this.currentPage = 1;
+    // }
   }
 };
 </script>
-<style>
+<style scoped>
+/* ag Grid */
+.AssemblyListTable /deep/ .ag-theme-balham .ag-header {
+  background-color: var(--ag-header-background-color, #fff) !important;
+
+  /* border-top: solid 1px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-top-color: #bdc3c7;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-radius: 10px 10px 0px 0px !important; */
+}
+.AssemblyListTable /deep/ .ag-header-cell {
+  /* background-color: rgb(153, 153, 153); */
+  background-color: var(--ag-foreground-color, #f5f5f5);
+  /* color: #fff; */
+  color: var(--ag-background-color, #000);
+  outline-color: #000 !important;
+  /* %%%%%%%%%%%%%%%%%%%% */
+  /* border-top: solid 1px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-top-color: #bdc3c7;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-radius: 10px 10px 0px 0px !important; */
+}
+.AssemblyListTable /deep/ .ag-header-row-column {
+  border-top: solid 1px;
+  outline-color: #000 !important;
+  /* background-color: #4682b4; */
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--ag-border-color, #4a525a);
+  border-top-color: #4a525a;
+  border-top-color: var(--ag-border-color, #4a525a);
+  border-radius: 30px 30px 0px 0px !important;
+}
+.AssemblyListTable /deep/ .ag-theme-balham .ag-rtl .ag-cell {
+  font-family: "Vazir-Medium-FD";
+  font-size: 0.9em;
+  overflow: hidden;
+}
+/* header */
+.AssemblyListTable /deep/ .ag-header-cell-label {
+  color: black;
+  font-size: 1em;
+  font-weight: 300;
+  align-items: center;
+  text-align: center;
+  margin-right: 2px !important;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.AssemblyListTable /deep/ .ag-grid-row-class {
+  /* background-color: red !important; */
+  display: flex;
+  align-items: center !important;
+}
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-fade-enter-active {
@@ -335,7 +454,7 @@ export default {
   transform: translateX(10px);
   opacity: 0;
 }
-.AssemblyTitle {
+/* .AssemblyTitle {
   color: #4682b4;
   cursor: pointer;
 }
@@ -351,8 +470,5 @@ export default {
 .Descision-table-row {
   direction: ltr;
   vertical-align: middle !important;
-}
-.paginationClass {
-  font-family: "Vazir-Medium-FD" !important;
-}
+} */
 </style>

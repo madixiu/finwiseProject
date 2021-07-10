@@ -571,10 +571,7 @@ export default {
       premiumPlusAccountLock: true,
       WebsocketRequest: true,
       role: 0,
-      BasicAccount: false,
       isBusy: true,
-      tableData: null,
-      tableData2: null,
       dollargold: [],
       energy1: [],
       metal1: [],
@@ -652,7 +649,7 @@ export default {
           }
         }
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Gold & Currency %%%%%%%%%%%%%
     gold(newValue, oldValue) {
       if (oldValue.length == 0 && newValue.length != 0) {
@@ -668,7 +665,7 @@ export default {
         this.CurrenciesDataFetch = true;
       }
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Indices %%%%%%%%%%%%%%%%%%%%%
     indices(newValue, oldValue) {
       if (oldValue.length == 0 && newValue.length != 0) {
@@ -677,7 +674,7 @@ export default {
         this.IndicesDataFetch = true;
       }
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     petro(newValue, oldValue) {
       if (oldValue.length == 0 && newValue.length != 0) {
@@ -686,7 +683,7 @@ export default {
         this.PetroDataFetch = true;
       }
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     MB(newValue, oldValue) {
       if (oldValue.length == 0 && newValue.length != 0) {
@@ -695,12 +692,12 @@ export default {
         this.MBDataFetch = true;
       }
     }
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   created() {
     document.title = "Finwise - بازار جهانی";
 
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     let user = this.$store.getters.currentUser;
     this.role = user.role;
     if (this.role == 2) this.premiumAccountLock = false;
@@ -708,9 +705,8 @@ export default {
       this.premiumAccountLock = false;
       this.premiumPlusAccountLock = false;
     }
-    console.log(user.role);
 
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     (this.localeText = AG_GRID_LOCALE_FA),
       (this.defaultColDef = {
@@ -718,6 +714,7 @@ export default {
         minWidth: 100,
         // sortable: true,
         // headerHeight: 12,
+        suppressMenu: true,
         enablePivot: false,
         cellStyle: {
           display: "flex",
@@ -1362,14 +1359,14 @@ export default {
     },
     onMetalGridReady(params) {
       this.MetalGridApi = params.api;
-      console.log("metal:", this.metal1);
+      // console.log("metal:", this.metal1);
       params.api.setRowData(this.metal1);
     },
     onGridReady(params) {
       this.gridApi = params.api;
       // if (this.dollargold != null)
-      console.log(params.api);
-      console.log(this.dollargold);
+      // console.log(params.api);
+      // console.log(this.dollargold);
       params.api.setRowData(this.dollargold);
     },
     numberWithCommas(x) {

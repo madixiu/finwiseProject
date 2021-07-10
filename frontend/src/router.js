@@ -63,7 +63,7 @@ const MonthlyAnalysis = () => import("@/view/pages/Ticker/MonthlyAnalysis.vue");
 const StatementAnalysis = () => import("@/view/pages/Ticker/StatementAnalysis.vue");
 const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
 const Relations = () => import("@/view/pages/Ticker/Relations.vue");
-const Industry = () => import("@/view/pages/Ticker/Industry.vue");
+// const Industry = () => import("@/view/pages/Ticker/Industry.vue");
 const AssemblyCalendar = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyCalendar.vue");
 const AssemblyAll = () =>
@@ -324,11 +324,11 @@ export default new Router({
               name: "TickerRatio",
               component: Relations
             },
-            {
-              path: "TickerIndustry/:id",
-              name: "TickerIndustry",
-              component: Industry
-            },
+            // {
+            //   path: "TickerIndustry/:id",
+            //   name: "TickerIndustry",
+            //   component: Industry
+            // },
             // {
             //   path: "TickerAssembly/TickerAssemblyCalendar:id",
             //   name: "TickerAssembly",

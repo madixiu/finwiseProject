@@ -2,6 +2,7 @@
 import requests
 import json
 # from .util.Convereter_trunc import truncater, converter
+import uuid
 import time
 import pandas as pd
 def get_true_value(x):
@@ -459,9 +460,11 @@ def getNews():
         head = {'Accept-Profile':'news'}
         resp = requests.get('http://130.185.74.40:3000/LatestNews',headers=head)
         if resp.status_code == 200:
-    
+            js = json.loads(resp.text)
+            for item in js:
+                item['id'] = uuid.uuid4()
             # return(resp.text)
-            return (json.loads(resp.text))
+            return (js)
         # return(json.loads(resp.text))
         else:
             time.sleep(2)

@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      // AGgrid
+      // * AGgrid base data
       modules: AllModules,
       gridApi: null,
       defaultColDef: null,
@@ -125,7 +125,7 @@ export default {
       interval: null,
       tableData: null,
 
-      // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      // * %%%%%%%%%%%%%%%
       RawData: null,
       series: [],
       ChartData: {},
@@ -549,7 +549,6 @@ export default {
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
       });
-      console.log(allColumnIds);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       // this.gridColumnApi.autoSizeColumns(["market"], false);

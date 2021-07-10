@@ -57,7 +57,7 @@
               }}</router-link>
             </template>
             <template v-slot:[`item.sum`]="{ item }">
-              <div style="direction:ltr;text-align:right">
+              <div style="direction:ltr">
                 <span class="cellItem">{{ item.sum }}</span>
               </div>
             </template>
@@ -263,8 +263,8 @@ export default {
   font-size: 0.9em;
   text-align: right;
 }
-.cellItem {
-  font-family: "Dirooz FD";
-  font-weight: 700;
-}
+/* .cellItem { */
+/* font-family: "Dirooz FD"; */
+/* font-weight: 700; */
+/* } */
 </style>

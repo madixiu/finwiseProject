@@ -13,7 +13,7 @@
       <div class="row">
         <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
         <Technical :inputDataTechnical="TechnicalData"></Technical>
-        <NewsW :inputDataNews="News"></NewsW>
+        <!-- //// <NewsW :inputDataNews="News"></NewsW> -->
       </div>
     </div>
     <!-- <div class="col-xxl-3 col-lg-3"> -->
@@ -42,7 +42,7 @@ import ChartHH from "@/view/pages/StockMarket/StockMarketWidgets/HH_Q_Chart.vue"
 import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
 // import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
 import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
-import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
+// import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
 export default {
   name: "Dashboard",
   components: {
@@ -51,7 +51,7 @@ export default {
     ChartTradeValue,
     // // IndicesText,
     IndexChart,
-    NewsW,
+    // //NewsW,
     Technical
     // HighestSupply
   },
@@ -75,14 +75,23 @@ export default {
         getHHData: true,
         getHighestQ: true,
         getTechnicalData: true
-      }
+      },
+      WebsocketRequest: false,
+      interval: null
     };
+  },
+  watch: {
+    $route() {
+      if (this.$route.name != "Dashboard") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    }
   },
   created() {
     document.title = "FinWise - سهام";
   },
   mounted() {
-    // this.test();
     this.ResponeseTimeout = {
       getImpacts: true,
       TradesValue: true,
@@ -96,12 +105,14 @@ export default {
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
 
     this.loadData();
-    // eslint-disable-next-line no-unused-vars
-    let interval = setInterval(() => {
-      this.loadData();
-    }, 300000);
+    this.liveChecker();
+    // TODO
+    // change the interval
 
-    // this.make_requests_handler();
+    // eslint-disable-next-line no-unused-vars
+    // let interval = setInterval(() => {
+    //   this.loadData();
+    // }, 300000);
   },
   methods: {
     loadData() {
@@ -113,10 +124,10 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getTechnicalData().then(resp2 => {
             // this.getNews();
+            this.loadData2();
             // eslint-disable-next-line no-unused-vars
-            this.getNews().then(resp3 => {
-              this.loadData2();
-            });
+            // this.getNews().then(resp3 => {
+            // });
           });
         });
       });
@@ -130,15 +141,6 @@ export default {
           this.getHighestQ().then(resp6 => {
             // eslint-disable-next-line no-unused-vars
             this.getTradesValue();
-            //   let TimeoutList = Object.values(this.ResponeseTimeout);
-            //   for (let item of TimeoutList) {
-            //     if (item == true) {
-            //       setTimeout(() => {
-            //         this.loadData();
-            //       }, 5000);
-            //     }
-            //   }
-            // });
           });
         });
       });
@@ -269,6 +271,40 @@ export default {
           else console.error(error);
         });
     },
+
+    //? %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      this.interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(this.interval._id);
+          return;
+        }
+        // let barier = {
+        //   request: "get",
+        //   data: {
+        //     marketName: this.tableMarketSelected,
+        //     marketIndustry: this.tableMarketIndustrySelected
+        //   }
+        // };
+        // this.$socketMarketWatch.send(JSON.stringify(barier));
+        this.loadData();
+      }, 60000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
+    },
+    //? %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     setActiveTab1(event) {
       this.tabIndex = this.setActiveTab(event);
     },
@@ -294,6 +330,18 @@ export default {
       // set clicked tab index to bootstrap tab
       return parseInt(event.target.getAttribute("data-tab"));
     }
+  },
+  beforeDestroy() {
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
+  },
+  destroyed() {
+    // let barier = { request: "halt" };
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
   }
 };
 </script>

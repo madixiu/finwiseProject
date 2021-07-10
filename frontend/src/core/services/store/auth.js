@@ -1,4 +1,6 @@
 import JwtService from "@/core/services/jwt.service";
+import { REFRESH_ACCESS_TOKEN } from "@/graphql/mutations.js";
+
 export const VERIFY_AUTH = "verifyAuth";
 export const VERIFY = "verifyAccessToken";
 export const LOGIN = "login";
@@ -10,6 +12,8 @@ export const SET_AUTH = "setUser";
 export const SET_ERROR = "setError";
 export const SET_ACCTOKEN = "setAccessToken";
 export const RENEW_TOKEN = "RenewAccessToken";
+export const AUTO_RENEW_TOKEN = "AutoRenewAccessToken";
+
 export const SET_USER_ID = "setUserID";
 export const SET_AUTH_NOT_VERIFIED = "setUserNotVerified";
 
@@ -71,6 +75,37 @@ export default {
     },
     SET_ERROR: ({ commit }, payload) => {
       commit(SET_ERROR, payload);
+    },
+    AutoRenewAccessToken: ({ commit }) => {
+      this.$apollo
+        .mutate({
+          mutation: REFRESH_ACCESS_TOKEN,
+          variables: {
+            refreshToken: this.CryptoJS.AES.decrypt(
+              JwtService.getToken(),
+              "key"
+            ).toString(this.CryptoJS.enc.Utf8)
+          }
+        })
+        .then(data => {
+          // console.log(data);
+          let LoginData = data.data.refreshToken;
+          // console.log(LoginData);
+          if (!data.data.errors) {
+            // console.log(LoginData.success);
+            if (LoginData.success) {
+              // store new acc token to vuex
+
+              // this.$store.dispatch("RenewAccessToken", LoginData.token);
+              commit(SET_ACCTOKEN, LoginData.token);
+            } else {
+              this.$store.dispatch("LOGOUT");
+            }
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     RenewAccessToken: ({ commit }, payload) => {
       commit(SET_ACCTOKEN, payload);

@@ -136,7 +136,6 @@ export default {
         d3.selectAll("svg").remove();
       }
       this.width = parseInt(d3.select("#parentDiv").style("width"), 10);
-      console.log(this.width)
       this.height = (this.width * 9) / 16;
       this.margin.top = this.height * 0.5;
       this.margin.bottom = 0;

@@ -171,17 +171,11 @@ export default {
   mounted() {
     this.$socketMarketHighestSupplies.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
-    this.$socketMarketHighestSupplies.onmessage = data => {
-      // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
-      this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" && !!this.DataItems.length)
-        this.loading = false;
-    };
-    // watch: {
-    //   mostviewed() {
-    //     this.populateData();
-    //   }
-    // }
+    // this.$socketMarketHighestSupplies.onmessage = data => {
+    //   this.DataItems = JSON.parse(data.data);
+    //   if (JSON.parse(data.data) != "noData" && !!this.DataItems.length)
+    //     this.loading = false;
+    // };
   },
   destroyed() {
     let barier = { request: "halt" };

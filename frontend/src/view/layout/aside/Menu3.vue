@@ -318,7 +318,7 @@
             >
               <a :href="href" class="menu-link" @click="navigate">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">'گزارشات خام ماهیانه</span>
+                <span class="menu-text">گزارشات خام ماهیانه</span>
               </a>
             </li> </router-link
           >‍
@@ -438,8 +438,8 @@
           <span class="menu-text">ربات</span>
         </a>
       </li> 
-    </router-link -->
-    >‍
+    </router-link 
+    >‍-->
     <!-- <router-link
       :to="`/ticker/TickerRatio/${$route.params.id}/`"
       v-slot="{ href, navigate, isActive, isExactActive }"
@@ -590,8 +590,8 @@
           <span class="menu-text">سرمایه پذیر</span>
         </a>
       </li> 
-    </router-link -->
-    >‍
+    </router-link 
+    >‍-->
   </ul>
 </template>
 

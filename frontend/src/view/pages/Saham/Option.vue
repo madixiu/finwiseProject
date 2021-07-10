@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div>
     <div class="row mr-1 ml-1">
@@ -7,7 +8,7 @@
           <div class="col-xxl-2 col-lg-2 col-md-6 col-sm-12 mr-1">
             <b-input-group size="sm">
               <b-input-group-prepend is-text>
-                <!-- <b-icon v-if="filter" icon="x-circle" @click="filter=''"></b-icon>
+                <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
                 <b-icon v-else icon="search"></b-icon> -->
                 <b-icon icon="search"></b-icon>
               </b-input-group-prepend>
@@ -15,7 +16,7 @@
                 v-model="filter"
                 type="search"
                 id="filterInput"
-                placeholder="فیلتر"
+                placeholder="جستجو"
                 @keyup="onQuickFilterChanged"
               ></b-form-input>
               <!-- <b-input-group-append>
@@ -292,7 +293,7 @@ export default {
   },
 
   data: () => ({
-    // AGgrid
+    // * AGgrid base data
     modules: AllModules,
     gridApi: null,
     defaultColDef: null,
@@ -305,7 +306,7 @@ export default {
     dataFetch: false,
     tableData: null,
 
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%
     WebsocketRequest: false,
     isBusy: true,
     filterOn: ["Nemad", "UnderLying"],
@@ -865,8 +866,10 @@ export default {
   },
   methods: {
     // AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // eslint-disable-next-line no-unused-vars
     onQuickFilterChanged(event) {
-      this.gridOptions.api.setQuickFilter(event.target.value);
+      // this.gridOptions.api.setQuickFilter(event.target.value);
+      this.gridOptions.api.setQuickFilter(this.filter);
     },
     gridColumnsChanged() {
       if (this.allColumnIds.length) {
@@ -888,7 +891,7 @@ export default {
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);
     },
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     loadData() {
       // eslint-disable-next-line no-unused-vars
       // this.OptionAssetReq().then(response => {
@@ -925,9 +928,12 @@ export default {
         .then(response => {
           let data = response.data;
           this.isBusy = false;
-          if (data != "noData") {
+          if (data != "noData" && data != "AccessDenied") {
             this.tableData = data;
-            this.$store.dispatch("setSahm", data);
+            // this.$store.dispatch("setSahm", data);
+          } else if (data == "AccessDenied") {
+            this.$store.dispatch("AutoRenewAccessToken");
+            this.OptionTableReq();
           }
         })
         .catch(error => {

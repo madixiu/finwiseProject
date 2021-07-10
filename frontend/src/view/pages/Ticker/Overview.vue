@@ -94,7 +94,7 @@ export default {
 
     this.liveChecker();
     // this.$socketLiveTickerData.onmessage = data => {
- 
+
     //   if (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) {
     //     this.subheaders = JSON.parse(data.data)[0][0];
     //     this.livedata = JSON.parse(data.data)[0];
@@ -194,8 +194,8 @@ export default {
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.subheaders.ticker }
           ]);
-          console.log(this.$store.getters.breadcrumbs);
-          console.log(this.$store.getters.pageTitle);
+          // console.log(this.$store.getters.breadcrumbs);
+          // console.log(this.$store.getters.pageTitle);
         })
         .catch(error => {
           console.error(error);
@@ -241,7 +241,7 @@ export default {
       let date = new Date();
       if (date.getHours() > 8 && date.getHours() < 14) {
         this.WebsocketRequest = true;
-        this.liveData();
+        // this.liveData();
       } else {
         this.WebsocketRequest = false;
       }

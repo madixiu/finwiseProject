@@ -136,7 +136,6 @@ Vue.component("marquee-text", MarqueeText);
 //router Account rules
 router.beforeEach((to, from, next) => {
   let user = store.getters.currentUser;
-  console.log(user);
   if (
     (to.name == "Industries" ||
       to.name == "IndustriesDetail" ||

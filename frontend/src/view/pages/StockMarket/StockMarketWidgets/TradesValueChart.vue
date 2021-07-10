@@ -3,11 +3,6 @@
     class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
     style="padding-right:0px"
   >
-    <!-- <div
-    class="card card-custom card-stretch gutter-b col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-  > -->
-    <v-skeleton-loader type="card" v-show="loading"></v-skeleton-loader>
-
     <v-card :loading="loading" shaped>
       <v-toolbar dense class="elevation-2">
         <v-toolbar-title>
@@ -25,21 +20,11 @@
           </span>
         </v-toolbar-title>
       </v-toolbar>
-      <!-- <v-card-title
-        >ارزش معاملات
-        <span class="cellItemTradesValueChart mr-2">
-          {{
-            this.numberWithCommas(
-              this.roundTo(
-                (this.jsonData.Tepix + this.jsonData.IFB) / 1000000000,
-                0
-              )
-            )
-          }}
-          میلیارد ریال
-        </span></v-card-title
-      >
-      <v-divider class="mt-0"></v-divider> -->
+      <v-skeleton-loader
+        type="card"
+        v-show="loading"
+        v-bind="attrs"
+      ></v-skeleton-loader>
       <div id="ChartContainer_TradeValue"></div>
     </v-card>
   </div>
@@ -74,9 +59,9 @@ export default {
   watch: {
     inputDataTV() {
       if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
-        this.loading = false;
         this.renderData();
         this.renderChart();
+        this.loading = false;
       }
     }
   },
@@ -85,9 +70,9 @@ export default {
     this.initrender();
 
     if (!(this.inputDataTV === undefined || this.inputDataTV.length == 0)) {
-      this.loading = false;
       this.renderData();
       this.renderChart();
+      this.loading = false;
     }
   },
   computed: {},

@@ -29,6 +29,20 @@ from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
 from requestcall.getOragh_HaghTaghadom_FundsData import getOraghData,getHaghTaghadomData,getFundsData,getCryptoMarketData
 from requestcall.getTVData import TVtickerData
 
+
+
+def CheckRole(token,role):
+    try:
+        payload = jwt_decode(token=token)
+        username = payload["username"]
+        user = CustomUser.objects.get(username = username)
+      
+        if user.role >= role:
+            return "ok"
+        else:
+            return "AccessDenied"
+    except:
+        return "notAuthorized"
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
 def getSubHeader(self,identifier):
@@ -78,6 +92,7 @@ def getAllDashboard(self):
 ######TSE
 def getTop5MostViewed(self):
     return JsonResponse(Top5MostViewed(),safe=False)    
+
 
 ###MonthlyBeginsHere
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
@@ -362,17 +377,23 @@ def getIndexMarketCap(self):
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getOptions(request):
     tokenA = request.META.get('HTTP_AUTHORIZATION')[7:]
-    try:
-        payload = jwt_decode(tokenA)
-        username = payload["username"]
-        user = CustomUser.objects.get(username = username)
+    if CheckRole(tokenA,2) == "ok":
+        return JsonResponse(optionRequest(),safe=False)
+    else:
+        return JsonResponse(CheckRole(tokenA,2),safe=False)
+
+
+    # try:
+    #     payload = jwt_decode(tokenA)
+    #     username = payload["username"]
+    #     user = CustomUser.objects.get(username = username)
       
-        if user.role >= 2:
-            return JsonResponse(optionRequest(),safe=False)
-        else:
-            return JsonResponse("AccessDenied")
-    except:
-        return JsonResponse("notAuthorized",safe=False)
+    #     if user.role >= 2:
+    #         return JsonResponse(optionRequest(),safe=False)
+    #     else:
+    #         return JsonResponse("AccessDenied")
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
 
 
     # return JsonResponse(optionRequest(),safe=False)
@@ -508,10 +529,11 @@ def getTradingViewData(self,limits,url,todate):
 ###################################################
 ############### DASHBOARD #########################
 
-
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getImpactOnIndex(self):
     return JsonResponse(ImpactOnIndex(),safe=False)
 
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
 
@@ -531,20 +553,27 @@ def getIFBTEPIX(self):
 def getLatestNews(self):
         return JsonResponse(getNews(),safe=False)
 
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getHHMarket(self):
     return JsonResponse(getMarketHH(),safe=False)
 
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getHighestSupplies(self):
     return JsonResponse(highestSupplies(),safe=False)
+
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getHighestDemands(self):
     return JsonResponse(highestDemands(),safe=False)
 
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getHighestQ(self):
     return JsonResponse([highestSupplies(),highestDemands()],safe=False)
 
-
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getTodayTepix(self):
-    return JsonResponse(getLastActiveDayTepix(),safe=False)                        
+    return JsonResponse(getLastActiveDayTepix(),safe=False)
+
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
 def getAllTradesValue(self):
     return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)
 

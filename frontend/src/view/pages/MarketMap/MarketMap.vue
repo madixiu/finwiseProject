@@ -1,12 +1,21 @@
 <template>
-  <div class="row" id="MapRoot">
-    <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%">
+  <div>
+    <div
+      class="row"
+      id="MapRoot"
+      style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
+    >
+      <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
+      <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
+
       <treemap
+        :key="mapKey"
         :inputData="map"
         :inputWidth="width"
         :inputHeight="height"
-        v-if="dataFetched"
+        v-if="dataFetched && width != null"
       ></treemap>
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -21,6 +30,7 @@ export default {
   },
   data() {
     return {
+      mapKey: 0,
       dataFetched: false,
       map: null,
       width: null,
@@ -31,6 +41,7 @@ export default {
 
   created() {
     document.title = "Finwise - نقشه بازار";
+
     // let chartDiv = document.getElementsByClassName("container-fluid");
     // console.log(chartDiv);
     // // this.height = (chartDiv[1].clientHeight);
@@ -38,16 +49,19 @@ export default {
     //  let headerHeight = document.getElementById("kt_header").clientHeight
     // this.height = (window.innerHeight - headerHeight);
   },
+
   mounted() {
     let headerWidth = document.getElementById("MapRoot").clientWidth;
     // console.log(headerHeight);
     // let chartDiv = document.getElementsByClassName("container-fluid");
-
     this.height = (window.screen.height * 73) / 100;
+    this.height = window.innerHeight - 50;
 
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     this.width = headerWidth;
+    this.width = window.innerWidth - 10;
+    // console.log(this.width);
 
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
@@ -57,16 +71,15 @@ export default {
 
     // this.$socketMarketMap.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
-    this.$socketMarketMap.onmessage = data => {
-      // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
-      if (
-        (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) &&
-        this.dataFetched == true
-      )
-        this.map = JSON.parse(data.data);
+    // this.$socketMarketMap.onmessage = data => {
+    //   // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
+    //   if (
+    //     (JSON.parse(data.data) != "noData" || !!JSON.parse(data.data).length) &&
+    //     this.dataFetched == true
+    //   )
+    //     this.map = JSON.parse(data.data);
 
-      // this.loading = false;
-    };
+    // };
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   methods: {
@@ -88,6 +101,9 @@ export default {
           console.error(error);
         });
     },
+    forceUpdate() {
+      this.mapKey += 1;
+    },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
       let interval = setInterval(() => {
@@ -103,7 +119,7 @@ export default {
       let date = new Date();
       if (date.getHours() > 8 && date.getHours() < 15) {
         this.WebsocketRequest = true;
-        this.liveData();
+        // this.liveData();
       } else {
         this.WebsocketRequest = false;
       }

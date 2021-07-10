@@ -133,12 +133,12 @@ export default {
   mounted() {
     this.$socketImpactOnIndex.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
-    this.$socketImpactOnIndex.onmessage = data => {
-      // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
-      this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" || !!this.DataItems.length)
-        this.loading = false;
-    };
+    // this.$socketImpactOnIndex.onmessage = data => {
+    //   // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
+    //   this.DataItems = JSON.parse(data.data);
+    //   if (JSON.parse(data.data) != "noData" || !!this.DataItems.length)
+    //     this.loading = false;
+    // };
   },
   destroyed() {
     let barier = { request: "halt" };

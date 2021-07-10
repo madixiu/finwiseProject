@@ -44,6 +44,10 @@ export default {
   watch: {
     $route() {
       this.RouteCheck();
+      if (this.$route.name != "Dashboard" || this.$route.name != "Industries") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
     }
   },
   data() {
@@ -53,17 +57,9 @@ export default {
       Ticker: true
     };
   },
-  //   props: {
-  //     breadcrumbs: Array,Vazir
-  //     title: String
-  //   },
   mounted() {
     this.getTickerTapeData();
     this.RouteCheck();
-    // eslint-disable-next-line no-unused-vars
-    let interval = setInterval(() => {
-      this.getTickerTapeData();
-    }, 60000);
 
   },
   methods: {
@@ -84,7 +80,41 @@ export default {
         .catch(error => {
           console.error(error);
         });
+    },
+
+    //? %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      this.interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(this.interval._id);
+          return;
+        }
+        // let barier = {
+        //   request: "get",
+        //   data: {
+        //     marketName: this.tableMarketSelected,
+        //     marketIndustry: this.tableMarketIndustrySelected
+        //   }
+        // };
+        // this.$socketMarketWatch.send(JSON.stringify(barier));
+        this.getTickerTapeData();
+      }, 60000);
+    },
+    liveChecker() {
+      let date = new Date();
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 14 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
+        this.WebsocketRequest = true;
+        this.liveData();
+      } else {
+        this.WebsocketRequest = false;
+      }
     }
+    //? %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   computed: {
     ...mapGetters(["layoutConfig"]),
@@ -112,6 +142,18 @@ export default {
       }
       return classes.join(" ");
     }
+  },
+  beforeDestroy() {
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
+  },
+  destroyed() {
+    // let barier = { request: "halt" };
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
   }
 };
 </script>

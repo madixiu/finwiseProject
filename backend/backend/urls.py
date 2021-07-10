@@ -19,6 +19,9 @@ from django.views.decorators.csrf import csrf_exempt
 # from graphql_jwt.decorators import jwt_cookie
 from graphene_django.views import GraphQLView
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+    
 urlpatterns = [
     # path('', include('accounts.urls')),
     # path('api/posts/', include('posts.urls')),
@@ -26,5 +29,6 @@ urlpatterns = [
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("user/",include('users.urls')),
     path('admin/', admin.site.urls),
+    path('sentry-debug/', trigger_error),
 
 ]
