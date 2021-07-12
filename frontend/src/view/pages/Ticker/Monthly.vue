@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12" style="padding-bottom:5px;padding-top:5px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
@@ -24,7 +23,6 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import MonthlyWidget from "@/view/pages/Ticker/TickerWidgets/MonthlyWidget.vue";
-// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
