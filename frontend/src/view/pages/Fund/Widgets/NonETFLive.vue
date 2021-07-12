@@ -12,18 +12,18 @@
           نگاه کلی
           <v-icon left small>mdi-poll</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           اطلاعات معامله
           <v-icon left small>mdi-shopping</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           چارت
           <v-icon left small>mdi-poll</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           اخبار
           <v-icon left small>mdi-newspaper</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           تاریخچه
           <v-icon left small>mdi-chart-line</v-icon>
@@ -36,16 +36,16 @@
           صنایع سرمایه گذاری شده
           <v-icon left small>mdi-chart-line</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           بازدهی صندوق
           <v-icon left small>mdi-chart-line</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           اطلاعات صندوق
           <v-icon left small>mdi-chart-line</v-icon>
         </v-tab>
         <v-tab-item>
-          <!-- <v-card height="450" flat>
+          <v-card height="450" flat>
             <v-card-text>
               <div class="row">
                 <div
@@ -54,65 +54,32 @@
                   <h5 class="subheaderTitles">اطلاعات قیمت</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    قیمت پایانی :
-                    <span class="spandata">{{ this.close }} ریال</span> (
-                    <span
-                      dir="ltr"
-                      class="spandata"
-                      v-bind:class="[
-                        this.close > this.open ? 'greenItem' : 'redItem'
-                      ]"
-                    >
-                      %{{ setclosingperc.toString() }}
-                    </span>
-                    )
-
-                    <v-icon
-                      left
-                      small
-                      v-bind:class="[
-                        this.close >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      >mdi-chevron-{{
-                        this.close >= this.open ? "up" : "down"
-                      }}</v-icon
-                    >
+                    قیمت صدور لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveSub)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    قیمت آخرین معامله :
-                    <span class="spandata">{{ this.last }} ریال</span> (
-                    <span
-                      dir="ltr"
-                      class="spandata"
-                      v-bind:class="[
-                        last > open ? 'greenItem' : 'redItem ltr_aligned'
-                      ]"
-                      >% {{ setlastperc }}</span
-                    >)
-                    <v-icon
-                      left
-                      v-bind:class="[
-                        this.last >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      small
-                      >mdi-chevron-{{
-                        this.last >= this.open ? "up" : "down"
-                      }}</v-icon
-                    >
+                    قیمت ابطال لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveRed)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    اولین قیمت :
-                    <span class="spandata">{{ this.first }} ریال</span>
+                    قیمت آماری لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveStat)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    ارزش بازار :
-                    <span class="spandata" v-if="!isNaN(this.marketcap)"
+                    جمع دارایی لحظه ای:
+                    <span class="spandata"
                       >{{
                         numberWithCommas(
-                          roundTo(this.marketcap / 1000000000, 2)
+                          roundTo(LiveDataBox.LiveNavAm / 10000000000, 2)
                         )
                       }}
-                      میلیارد ریال</span
+                      میلیارد تومان</span
                     >
                   </h5>
                 </div>
@@ -120,37 +87,19 @@
                 <div
                   class="col-xl-4 col-lg-5 col-md-6 col-sm-12 FinancialStrength"
                 >
-                  <h5 class="subheaderTitles">مشخصات</h5>
+                  <h5 class="subheaderTitles">نوع سرمایه گذاران</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    وضعیت:
-                    <span class="spandata">{{ this.status }}</span>
+                    درصد صاحبان واحد حقیقی:
+                    <span class="spandata">{{
+                      roundTo(LiveDataBox.RetailPerc, 2)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    EPS (منبع TSE):
-                    <span class="spandata" dir="ltr">{{ this.eps }}</span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    تعداد سهام:
-                    <span class="spandata" dir="ltr">
-                      {{
-                        numberWithCommas(
-                          roundTo(this.sharecount / 1000000000, 2)
-                        )
-                      }}
-                      میلیارد
-                    </span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    درصد شناوری :
-                    <span class="spandata">{{ this.shenavar }}</span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    حجم مبنا :
-                    <span class="spandata">
-                      {{ numberWithCommas(roundTo(this.mabna / 1000000, 2)) }}
-                      میلیون سهم</span
-                    >
+                    درصد صاحبان واحد حقوقی:
+                    <span class="spandata">{{
+                      roundTo(LiveDataBox.InstituePerc, 2)
+                    }}</span>
                   </h5>
                 </div>
                 <div
@@ -159,54 +108,81 @@
                   <h5 class="subheaderTitles">معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد معاملات :
-                    <span class="spandata">
-                      {{ numberWithCommas(this.tradecount) }}
-                    </span>
+                    تعداد کل واحدها:
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.TotalUnit)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم معاملات :
-                    <span class="spandata" v-if="!isNaN(this.tradeVolume)"
-                      >{{
-                        numberWithCommas(roundTo(this.tradeVolume / 1000000, 2))
-                      }}
-                      میلیون</span
-                    >
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    ارزش معاملات :
-                    <span class="spandata" v-if="!isNaN(this.tradevalue)"
-                      >{{
-                        numberWithCommas(
-                          roundTo(this.tradevalue / 1000000000, 2)
-                        )
-                      }}
-                      میلیارد ریال</span
-                    >
+                    تعداد کل واحدهای واگذار شده:
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.TotalSold)
+                    }}</span>
                   </h5>
                 </div>
               </div>
             </v-card-text>
-          </v-card> -->
+          </v-card>
         </v-tab-item>
+
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <v-card-text>
+              <v-radio-group
+                v-model="TimeFrameNAV"
+                row
+                dense
+                @change="GetFiltered"
+              >
+                <v-radio label="یک هفته اخیر" value="1W"></v-radio>
+                <v-radio label="یک ماه اخیر" value="1M"></v-radio>
+                <v-radio label="از ابتدای سال" value="YTD"></v-radio>
+                <v-radio label="یک سال اخیر" value="1Y"></v-radio>
+                <v-radio label="از ابتدا" value="All"></v-radio>
+              </v-radio-group>
+              <hr />
+              <div class="d-flex flex-row">
+                <div class="col-lg-6 col-md-12 col-xs-12">
+                  <ApexChart
+                    type="area"
+                    width="100%"
+                    height="140%"
+                    :key="NavChartKey"
+                    :series="NavChart.series"
+                    :chartOptions="NavChartOptions"
+                  />
+                </div>
+                <div class="col-lg-6 col-md-12 col-xs-12">
+                  <ApexChart
+                    type="area"
+                    width="100%"
+                    height="140%"
+                    :key="NavChartKey2"
+                    :series="NavChart2.series"
+                    :chartOptions="NavChartOptions2"
+                  />
+                </div>
+              </div>
+            </v-card-text>
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <ag-grid-vue
+              :style="`width: 100%;  font-family: Vazir-Medium-FD`"
+              class="ag-theme-balham"
+              :columnDefs="FundsHeader"
+              :defaultColDef="defaultColDef"
+              rowSelection="multiple"
+              :cacheQuickFilter="true"
+              :sideBar="sideBar"
+              :enableRtl="true"
+              :gridOptions="gridOptions"
+              @grid-ready="onReady"
+              @gridColumnsChanged="gridColumnsChanged"
+              :localeText="localeText"
+            >
+            </ag-grid-vue>
           </v-card>
         </v-tab-item>
         <v-tab-item>
@@ -233,12 +209,77 @@
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <v-card-text>
+              <div class="row">
+                <div
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات افراد</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    عنوان صندوق:
+                    <span class="spandata">{{ meta.FundTitle }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    مدیر صندوق:
+                    <span class="spandata">{{ meta.Manager }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    مدیر سرمایه گذاری:
+                    <span class="spandata">{{
+                      meta.InvestmentManagerName
+                    }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    حسابرس:
+                    <span class="spandata">{{ meta.AuditorName }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    متولی:
+                    <span class="spandata">{{ meta.CustodianName }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    ضامن نقد شوندگی:
+                    <span class="spandata">{{
+                      meta.LiquidityGuaranteeName
+                    }}</span>
+                  </h5>
+                </div>
+
+                <div
+                  class="col-xl-4 col-lg-5 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">تاریخچه</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    شروع فعالیت:
+                    <span class="spandata">{{ meta.ActivityStartDate }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    تاریخ آخرین آمار اعلامی:
+                    <span class="spandata">{{ meta.LastNavDate }}</span>
+                  </h5>
+                </div>
+                <div
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">سایر</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    نوع صندوق:
+                    <span class="spandata">{{ meta.Type }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    اندازه
+                    <span class="spandata">{{ meta.Size }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    وضعیت
+                    <span class="spandata">{{ meta.Status }}</span>
+                  </h5>
+                </div>
+              </div>
+            </v-card-text>
           </v-card>
         </v-tab-item>
       </v-tabs>
@@ -250,15 +291,30 @@
 <script>
 import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
-
+import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+import { AgGridVue } from "ag-grid-vue";
 export default {
   name: "NonETFMainWidget",
   components: {
-    ApexChart
+    ApexChart,
+    AgGridVue
   },
-  props: ["meta", "industry", "assettype", "historicNav"],
+  props: ["meta", "industry", "assettype", "historicNav", "liveNav"],
   data() {
     return {
+      // * AGgrid base data
+      modules: AllModules,
+      gridApi: null,
+      defaultColDef: null,
+      gridOptions: null,
+      FundsHeader: [],
+      sideBar: null,
+      allColumnIds: [],
+      gridColumnApi: null,
+      localeText: null,
+      dataFetch: false,
+      // * %%%%%%%%%%%%%%%
       loading: false,
       priceOverViewSeries: [
         {
@@ -309,9 +365,20 @@ export default {
           show: true,
           position: "right"
         },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
         responsive: [
           {
-            breakpoint: 380,
+            kpoint: 380,
             options: {
               chart: {
                 width: 200
@@ -378,6 +445,17 @@ export default {
         // ,"#05668D"],
         colors: ["#EF476F", "#E09F3E", "#06D6A0", "#118AB2", "#073B4C"],
         labels: [],
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
         legend: {
           show: true,
           position: "right"
@@ -427,34 +505,412 @@ export default {
             }
           }
         }
+      },
+      NavChartKey: 0,
+      NavChartKey2: 0,
+      TimeFrameNAV: "1W",
+      NavChart: {
+        series: []
+      },
+      NavChartOptions: {
+        chart: {
+          id: "area-datetime",
+          type: "area",
+          toolbar: {
+            show: false
+          },
+          height: 350
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+          style: "hollow"
+        },
+        xaxis: {
+          // type: "datetime",
+          // min: new Date("01 Mar 2012").getTime(),
+          tickAmount: 6,
+          labels: {
+            formatter: function(value, timestamp) {
+              return new Date(timestamp).toLocaleDateString("fa-IR");
+            }
+          }
+        },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
+        tooltip: {
+          x: {
+            show: true
+            // format: "dd MM yyyy",
+            // formatter: function(value, timestamp) {
+            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
+            // },
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.5,
+            opacityTo: 0.7,
+            stops: [0, 100]
+          }
+        }
+      },
+      NavChart2: {
+        series: []
+      },
+      NavChartOptions2: {
+        chart: {
+          id: "area-datetime2",
+          type: "area",
+          toolbar: {
+            show: false
+          },
+          height: 350
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+          style: "hollow"
+        },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
+        xaxis: {
+          // type: "datetime",
+          // min: new Date("01 Mar 2012").getTime(),
+          tickAmount: 6,
+          labels: {
+            formatter: function(value, timestamp) {
+              return new Date(timestamp).toLocaleDateString("fa-IR");
+            }
+          }
+        },
+        tooltip: {
+          x: {
+            show: true
+            // format: "dd MM yyyy",
+            // ,
+            // formatter: function(value, timestamp) {
+            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
+            // },
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.5,
+            opacityTo: 0.7,
+            stops: [0, 100]
+          }
+        }
+      },
+      LiveDataBox: {
+        LiveSub: "",
+        LiveRed: "",
+        LiveStat: "",
+        RetailPerc: "",
+        InstituePerc: "",
+        TotalUnit: "",
+        TotalSold: "",
+        LiveNavAm: ""
       }
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
-    setclosingperc: function() {
-      return Math.round((this.close / this.open - 1) * 100 * 100) / 100;
-    },
-    setlastperc: function() {
-      return Math.round((this.last / this.open - 1) * 100 * 100) / 100;
-    }
+    ...mapGetters(["layoutConfig"])
+  },
+  created() {
+    // GRID LOCALE FILE LOAD
+    this.localeText = AG_GRID_LOCALE_FA;
+
+    // GRID OPTIONS
+    this.gridOptions = {
+      suppressColumnVirtualisation: true,
+      rowDragManaged: true,
+      animateRows: true,
+      rowClass: "ag-grid-row-class",
+
+      // headerHeight: 20,
+      rowHeight: 22,
+      getRowNodeId: data => data.persianDate
+    };
+    this.defaultColDef = {
+      flex: 1,
+      minWidth: 100,
+      filter: true,
+      // sortable: true,
+      // headerHeight: 12,
+      enablePivot: false,
+      suppressMenu: true,
+      cellStyle: {
+        display: "flex",
+        "justify-content": "center",
+        "border-left-color": "#e2e2e2",
+        "align-items": "center",
+        direction: "ltr"
+      }
+    };
+    // AG Sidebar
+    this.sideBar = {
+      toolPanels: [
+        {
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressSideButtons: false,
+            suppressColumnFilter: false,
+            suppressColumnSelectAll: false,
+            suppressColumnExpandAll: false
+          }
+        },
+
+        {
+          id: "filters",
+          labelDefault: "Filters",
+          labelKey: "filters",
+          iconKey: "filter",
+          toolPanel: "agFiltersToolPanel"
+        }
+      ],
+      defaultToolPanel: ""
+    };
+
+    this.FundsHeader = [
+      {
+        headerName: "تاریخ شمسی",
+        field: "persianDate",
+
+        sortable: true,
+        pinned: "right",
+        rowDrag: true,
+        cellStyle: {
+          direction: "rtl",
+          display: "inline-block"
+          // // "justify-content": "center",
+          // "align-items": "center !important",
+          // "height": "100%"
+        }
+      },
+      {
+        headerName: "تاریخ قمری",
+        field: "englishDate",
+        sortable: true
+      },
+      {
+        headerName: "قیمت صدور",
+        field: "purchasePrice",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت ابطال",
+        field: "redeptionPrice",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت آماری",
+        field: "statisticalValue",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "مجموع دارایی ها",
+        field: "total_net_asset_value_with_sell_commission",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      }
+    ];
   },
   methods: {
+    GetFiltered() {
+      if (!(this.historicNav === undefined || this.historicNav.length == 0)) {
+        // eslint-disable-next-line no-unused-vars
+        let tempData = [];
+        let today = new Date();
+        let lastweek = new Date();
+        lastweek.setDate(lastweek.getDate() - 7);
+        let lastMonth = new Date();
+        lastMonth.setDate(lastMonth.getDate() - 31);
+        let lastYear = new Date();
+        lastYear.setDate(lastYear.getDate() - 365);
+        let pYear = "1400";
+        if (this.historicNav[0].persianDate.includes("/")) {
+          pYear = this.historicNav[0].persianDate.split("/")[0];
+        } else {
+          pYear = this.historicNav[0].persianDate.split("-")[0];
+        }
+        let filtered = [];
+        let filtered2 = [];
+        let filtered3 = [];
+        let filtered4 = [];
+        if (this.TimeFrameNAV == "1W") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastweek && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+
+        if (this.TimeFrameNAV == "1M") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastMonth && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "YTD") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (
+              (d.persianDate.includes("-") &&
+                d.persianDate.split("-")[0] == pYear) ||
+              (d.persianDate.includes("/") &&
+                d.persianDate.split("/")[0] == pYear)
+            ) {
+              // console.log(d.persianDate.split("/")[0]);
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "1Y") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastYear && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "All") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            filtered.push([D.getTime(), d.purchasePrice]);
+            filtered2.push([D.getTime(), d.redeptionPrice]);
+            filtered3.push([D.getTime(), d.statisticalValue]);
+            filtered4.push([
+              D.getTime(),
+              d.total_net_asset_value_with_sell_commission
+            ]);
+          });
+        }
+        // console.log(filtered4)
+        this.NavChart.series = [];
+        this.NavChart2.series = [];
+        this.NavChart.series.push({ name: "قیمت صدور", data: filtered });
+        this.NavChart.series.push({ name: "قیمت ابطال", data: filtered2 });
+        this.NavChart.series.push({ name: "قیمت آماری", data: filtered3 });
+        this.NavChart2.series.push({
+          name: "جمع خالص دارایی",
+          data: filtered4
+        });
+        this.NavChartKey = this.NavChartKey + 1;
+        this.NavChartKey2 = this.NavChartKey2 + 1;
+      }
+    },
     numberWithCommas(x) {
-      // if (x == "-") {
-      //   return x;
-      // }
+      if (x == "-" || x == "") {
+        return x;
+      }
       let parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
     roundTo(n, digits) {
-      // if (n == "-") {
-      //   return n;
-      // }
+      if (n == "-" || n == "") {
+        return n;
+      }
+      if (n == "-" || n == "اطلاعات وجود ندارد") {
+        return "اطلاعات وجود ندارد";
+      }
 
       let negative = false;
       if (digits === undefined) {
@@ -473,7 +929,13 @@ export default {
       return n;
     },
     populateData() {
-      this.DataItems1 = this.meta;
+      if (!(this.meta === undefined || this.meta.length == 0)) {
+        for (const [key, value] of Object.entries(this.meta)) {
+          if (String(value).includes("Element")) {
+            this.meta[key] = "اطلاعات وجود ندارد";
+          }
+        }
+      }
     },
     populateData2() {
       let temp1 = [];
@@ -496,15 +958,125 @@ export default {
       this.AssetTypePie = temp2;
       this.AssetTypeValueOptions.labels = temp1;
     },
-    populateData4() {
-      console.log(this.historicNav);
+    populateData5() {
+      if (!(this.liveNav === undefined || this.liveNav.length == 0)) {
+        //      LiveDataBox: {
+        //   : "",
+        //   LiveNavAm:""
+        // }
+        if (this.liveNav[0].SubscriptionUnit != null) {
+          this.LiveDataBox.TotalSold = this.liveNav[0].SubscriptionUnit;
+        } else {
+          this.LiveDataBox.TotalSold = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].InstitutionalInvestorUnitPercent != null) {
+          this.LiveDataBox.InstituePerc = this.liveNav[0].InstitutionalInvestorUnitPercent;
+        } else {
+          this.LiveDataBox.InstituePerc = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].RetailInvestorUnitsPercent != null) {
+          this.LiveDataBox.RetailPerc = this.liveNav[0].RetailInvestorUnitsPercent;
+        } else {
+          this.LiveDataBox.RetailPerc = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].SubscriptionNAV != null) {
+          this.LiveDataBox.LiveSub = this.liveNav[0].SubscriptionNAV;
+        } else {
+          if (
+            this.liveNav[0].purchasePrice != null &&
+            this.liveNav[0].purchasePrice != 0
+          ) {
+            this.LiveDataBox.LiveSub = this.liveNav[0].purchasePrice;
+          } else {
+            this.LiveDataBox.LiveSub = "اطلاعات وجود ندارد";
+          }
+        }
+
+        if (this.liveNav[0].RedemptionNAV != null) {
+          this.LiveDataBox.LiveRed = this.liveNav[0].RedemptionNAV;
+        } else {
+          if (
+            this.liveNav[0].redeptionPrice != null &&
+            this.liveNav[0].redeptionPrice != 0
+          ) {
+            this.LiveDataBox.LiveRed = this.liveNav[0].redeptionPrice;
+          } else {
+            this.LiveDataBox.LiveRed = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].StaticalNAV != null) {
+          this.LiveDataBox.LiveStat = this.liveNav[0].StaticalNAV;
+        } else {
+          if (
+            this.liveNav[0].statisticalValue != null &&
+            this.liveNav[0].statisticalValue != 0
+          ) {
+            this.LiveDataBox.LiveStat = this.liveNav[0].statisticalValue;
+          } else {
+            this.LiveDataBox.LiveStat = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].TotalUnit != null) {
+          this.LiveDataBox.TotalUnit = this.liveNav[0].TotalUnit;
+        } else {
+          if (
+            this.liveNav[0].total_unit_count != null &&
+            this.liveNav[0].total_unit_count != 0
+          ) {
+            this.LiveDataBox.TotalUnit = this.liveNav[0].total_unit_count;
+          } else {
+            this.LiveDataBox.TotalUnit = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].NetAssetValue != null) {
+          this.LiveDataBox.LiveNavAm = this.liveNav[0].NetAssetValue;
+        } else {
+          if (
+            this.liveNav[0].total_net_asset_value_with_sell_commission !=
+              null &&
+            this.liveNav[0].total_net_asset_value_with_sell_commission != 0
+          ) {
+            this.LiveDataBox.LiveNavAm = this.liveNav[0].total_net_asset_value_with_sell_commission;
+          } else {
+            this.LiveDataBox.LiveNavAm = "اطلاعات وجود ندارد";
+          }
+        }
+      }
+    },
+    //? AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%
+    onQuickFilterChanged(event) {
+      this.gridOptions.api.setQuickFilter(event.target.value);
+    },
+    gridColumnsChanged() {
+      if (this.allColumnIds.length) {
+        this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
+      }
+    },
+    tickerClick(data) {
+      this.$router.push({ path: `/ticker/Overview/Overall/${data.ID}` });
+    },
+    onReady(params) {
+      let allColumnIds = [];
+      // this.gridOptions.api.closeToolPanel();
+      this.gridColumnApi = this.gridOptions.columnApi;
+      this.gridApi = params.api;
+
+      this.gridColumnApi.getAllColumns().forEach(function(column) {
+        allColumnIds.push(column.colId);
+      });
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      this.allColumnIds = allColumnIds;
+      this.gridApi = params.api;
+      if (this.historicNav != null) params.api.setRowData(this.historicNav);
     }
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   mounted() {
-    this.populateData();
-    this.populateData2();
-    this.populateData3();
-    this.populateData4();
+    // this.populateData();
+    // this.populateData2();
+    // this.populateData3();
+    this.GetFiltered();
   },
   watch: {
     meta() {
@@ -517,9 +1089,15 @@ export default {
       // this.loading = false;
       this.populateData3();
     },
-    historicNav() {
-      // this.loading = false;
-      this.populateData4();
+    historicNav(newValue, oldValue) {
+      if (oldValue == null && newValue.length != 0) {
+        this.gridApi.setRowData(newValue);
+        this.dataFetch = true;
+      }
+      this.GetFiltered();
+    },
+    liveNav() {
+      this.populateData5();
     }
   }
 };
@@ -535,6 +1113,14 @@ export default {
   direction: rtl;
   text-align: right;
   font-size: 1em;
+
+  letter-spacing: 0px;
+}
+
+.v-radio > .v-label {
+  direction: rtl;
+  text-align: right;
+  font-size: 0.8em;
 
   letter-spacing: 0px;
 }
