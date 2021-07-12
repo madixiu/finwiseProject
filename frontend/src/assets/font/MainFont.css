@@ -1,28 +1,27 @@
 @font-face {
-    font-family: "Vazir";
-    src: url("Vazir.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-  font-family: "Dirooz FD";
-  src: url("Dirooz-FD.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
   font-family: "Vazir-Medium-FD";
-  src: url("Vazir-Medium-FD.ttf") format("truetype");
+  src: url("Vazir-Medium-FD.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Vazir-Light-FD";
-  src: url("Vazir-Light-FD.ttf") format("truetype");
+  src: url("Vazir-Light-FD.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
-
+@font-face {
+  font-family: "IRANSansXFaNum-Bold";
+  src: url("IRANSansXFaNum-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "IRANSansXFaNum-Regular";
+  src: url("IRANSansXFaNum-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 * {
     font-family: "Vazir-Medium-FD";
 }

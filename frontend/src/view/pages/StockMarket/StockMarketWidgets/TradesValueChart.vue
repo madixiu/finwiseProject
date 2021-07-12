@@ -929,7 +929,7 @@ export default {
 <style>
 .Chart1title * {
   font-size: 1.2em;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
 }
 .dot {
   height: 25px;
@@ -998,7 +998,7 @@ export default {
   left: 100%;
 }
 .cellItemTradesValueChart {
-  font-family: "Vazir-Light-FD";
+  font-family: "IRANSansXFaNum-Regular";
   color: rgb(82, 82, 82);
   font-weight: 600;
   font-size: 0.8em;

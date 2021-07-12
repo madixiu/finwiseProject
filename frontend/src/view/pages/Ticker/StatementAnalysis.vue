@@ -32,7 +32,7 @@ export default {
     return {
       subheaders: [],
       Bal: [],
-      BalAg: [],
+      BalAg: []
     };
   },
   created() {
@@ -54,14 +54,15 @@ export default {
         // eslint-disable-next-line no-unused-vars
         this.getTwo().then(responsey => {
           // eslint-disable-next-line no-unused-vars
-          this.getThree().then(responsex => {
-          });
+          this.getThree().then(responsex => {});
         });
       });
     },
     async getTwo() {
       await this.axios
-        .get("api/Statement/BalanceSheetAggregated/" + this.$route.params.id + "/")
+        .get(
+          "api/Statement/BalanceSheetAggregated/" + this.$route.params.id + "/"
+        )
         .then(response3 => {
           this.BalAg = response3.data;
         })

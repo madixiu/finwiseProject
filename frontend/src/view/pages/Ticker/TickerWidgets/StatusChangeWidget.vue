@@ -126,7 +126,7 @@ export default {
   margin-left: 50%;
 }
 .customAlert {
-  font-family: "Dirooz FD" !important;
-  font-size:0.9em
+  font-family: "Vazir-Light-FD" !important;
+  font-size: 0.9em;
 }
 </style>

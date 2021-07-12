@@ -7,7 +7,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-         <MonthlyAnalysisWidget
+        <MonthlyAnalysisWidget
           :notices="notice"
           :deposits="deposits"
           :typeOf="typeofReport"
@@ -155,8 +155,8 @@ export default {
       await this.axios
         .get("/api/Monthly/ProductionAnalysis1/" + this.$route.params.id + "/")
         .then(response2 => {
-          this.notice = response2.data['1'];
-          this.deposits=response2.data['2']
+          this.notice = response2.data["1"];
+          this.deposits = response2.data["2"];
         })
         .catch(error => {
           console.error(error);

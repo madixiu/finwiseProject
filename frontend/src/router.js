@@ -5,8 +5,7 @@ import Router from "vue-router";
 const Layout = () => import("@/view/layout/Layout");
 const StockMarketParent = () =>
   import("@/view/pages/StockMarket/StockMarketParent.vue");
-// const Dashboard = () => import("@/view/pages/StockMarket/Dashboard.vue");
-const DashboardNew = () => import("@/view/pages/StockMarket/DashboardNew.vue");
+const Dashboard = () => import("@/view/pages/StockMarket/Dashboard.vue");
 const Industries = () =>
   import("@/view/pages/StockMarket/Industries/Industries.vue");
 const IndustriesDetail = () =>
@@ -17,12 +16,11 @@ const CryptoTechnicalSingle = () =>
 const CryptoDashboard = () => import("@/view/pages/Crypto/CryptoDashboard.vue");
 const CryptoSinglePage = () => import("@/view/pages/Crypto/CryptoSingle.vue");
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
-const AI = () => import("@/view/pages/AI/AI.vue");
 const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
 const CommoditiesDetail = () =>
   import("@/view/pages/Commodities/CommoditiesDetail");
 const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
-const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
+// const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
 const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
 const Tools = () => import("@/view/pages/Saham/Technical/Tools.vue");
 const Data = () => import("@/view/pages/Saham/Technical/TradingView.vue");
@@ -45,7 +43,7 @@ const AdminNotice = () => import("@/view/pages/Ticker/Administration.vue");
 const CodalNotifications = () =>
   import("@/view/pages/Ticker/CodalNotifications.vue");
 const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
-const HH = () => import("@/view/pages/Ticker/HH.vue");
+// const HH = () => import("@/view/pages/Ticker/HH.vue");
 const Board = () => import("@/view/pages/Ticker/Board.vue");
 const ShareHolders = () => import("@/view/pages/Ticker/ShareHolders.vue");
 const AdjustedPrices = () => import("@/view/pages/Ticker/AdjustedPrices.vue");
@@ -64,17 +62,12 @@ const StatementAnalysis = () =>
   import("@/view/pages/Ticker/StatementAnalysis.vue");
 const IncomeStatementAnalysis = () =>
   import("@/view/pages/Ticker/IncomeStatementAnalysis.vue");
-const SahmRobot = () => import("@/view/pages/Ticker/SahmRobot.vue");
-const Relations = () => import("@/view/pages/Ticker/Relations.vue");
-// const Industry = () => import("@/view/pages/Ticker/Industry.vue");
 const AssemblyCalendar = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyCalendar.vue");
 const AssemblyAll = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyAll.vue");
 const AssemblyDPS = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyDPS.vue");
-const Subset = () => import("@/view/pages/Ticker/Subset.vue");
-const Robot = () => import("@/view/pages/Robot/Robot.vue");
 const Login = () => import("@/view/pages/auth/Login");
 const Register = () => import("@/view/pages/auth/Register");
 const Verify = () => import("@/view/pages/auth/Verify");
@@ -106,7 +99,7 @@ export default new Router({
             {
               path: "Dashboard",
               name: "Dashboard",
-              component: DashboardNew
+              component: Dashboard
             },
             // {
             //   path: "Market/MarketWatch",
@@ -128,11 +121,11 @@ export default new Router({
               name: "Screener",
               component: Qarbal
             },
-            {
-              path: "Fundamental",
-              name: "Fundamental",
-              component: Bonyad
-            },
+            // {
+            //   path: "Fundamental",
+            //   name: "Fundamental",
+            //   component: Bonyad
+            // },
             {
               path: "Technical/Dashboard",
               name: "TechnicalDashboard",
@@ -198,11 +191,6 @@ export default new Router({
           name: "Funds",
           component: Sandoq
         },
-        // {
-        //   path: "/builder",
-        //   name: "builder",
-        //   component: () => import("@/view/pages/Builder.vue")
-        // },
         {
           path: "/marketmap",
           name: "marketmap",
@@ -257,11 +245,11 @@ export default new Router({
               name: "TechnicalMoreInfo",
               component: TechnicalMoreInfo
             },
-            {
-              path: "Overview/HH/:id",
-              name: "HH",
-              component: HH
-            },
+            // {
+            //   path: "Overview/HH/:id",
+            //   name: "HH",
+            //   component: HH
+            // },
             {
               path: "Overview/Board/:id",
               name: "Board",
@@ -324,16 +312,6 @@ export default new Router({
               name: "IncomeStatementAnalysis",
               component: IncomeStatementAnalysis
             },
-            {
-              path: "sahmRobot/:id",
-              name: "sahmRobot",
-              component: SahmRobot
-            },
-            {
-              path: "TickerRatio/:id",
-              name: "TickerRatio",
-              component: Relations
-            },
             // {
             //   path: "TickerIndustry/:id",
             //   name: "TickerIndustry",
@@ -359,35 +337,18 @@ export default new Router({
               path: "TickerAssembly/DPSAndIC/:id",
               name: "TickerAssemblyDPSAndIC",
               component: AssemblyDPS
-            },
+            }
             // {
             //   path: "TickerAssembly/IC/:id",
             //   name: "TickerAssemblyIC",
             //   component: AssemblyIncreaseCapital
             // },
-            {
-              path: "subset/:id",
-              name: "subset",
-              component: Subset
-            }
           ]
         },
         {
           name: "profile",
           path: "/profile",
           component: Profile
-        },
-        // added route for robot!
-        {
-          path: "/robot",
-          name: "robot",
-          component: Robot
-        },
-        // added route for robot!
-        {
-          path: "/AI",
-          name: "ai",
-          component: AI
         },
         {
           path: "/Commodities",
@@ -511,7 +472,11 @@ export default new Router({
   ],
   // eslint-disable-next-line no-unused-vars
   scrollBehavior(to, from, savedPosition) {
-    if (to.name == "IndustriesDetail" || to.name == "TickerOverall") {
+    if (
+      to.name == "IndustriesDetail" ||
+      to.name == "TickerOverall" ||
+      to.name == "Industries"
+    ) {
       return { x: 0, y: 0 };
     }
   }

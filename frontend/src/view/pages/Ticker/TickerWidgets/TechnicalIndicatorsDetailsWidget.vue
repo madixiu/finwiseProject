@@ -83,7 +83,6 @@
               dense
               disable-sort
               :hide-default-footer="true"
-
               class="elevation-1 FinancialStrength"
             >
               <template v-slot:[`item.title`]="{ item }">
@@ -189,8 +188,7 @@ export default {
   },
   computed: {
     mainCardHeight() {
-
-    return (window.innerHeight - 135).toString() + "px";
+      return (window.innerHeight - 135).toString() + "px";
     },
     cardheight() {
       if (screen.height * 2 > screen.width) {

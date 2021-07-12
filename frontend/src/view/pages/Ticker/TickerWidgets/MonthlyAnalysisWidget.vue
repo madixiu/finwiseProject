@@ -536,7 +536,7 @@ export default {
 </script>
 <style scoped>
 .cellItem {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
 }
 .FinancialStrength {
   direction: rtl;
@@ -570,11 +570,11 @@ export default {
   text-align: right;
 }
 .itemFilters {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
   font-weight: 700;
   font-size: 1em;
 }
 table.v-table tbody td {
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Light-FD" !important;
 }
 </style>

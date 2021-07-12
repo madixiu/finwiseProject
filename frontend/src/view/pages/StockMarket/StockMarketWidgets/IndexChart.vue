@@ -1,17 +1,18 @@
 <template>
   <div>
-    <v-card :loading="!inputDataIndex.length">
+    <v-card :loading="!indexData.length">
       <v-toolbar dense>
         <v-toolbar-title>شاخص کل</v-toolbar-title>
       </v-toolbar>
       <v-skeleton-loader
-        v-if="!inputDataIndex.length"
+        v-if="indexData.length == 0"
         v-bind="attrs"
         type="card"
       ></v-skeleton-loader>
       <!-- // ! fix cols in small devices optimize all childs with flex -->
-      <div class="d-flex" v-show="inputDataIndex.length != 0">
+      <div class="d-flex">
         <div
+          v-if="indexData.length != 0"
           class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 d-flex"
           style="padding-left:0px;flex-direction:column;justify-content:center"
         >
@@ -251,6 +252,7 @@
           </div>
         </div>
         <div
+        
           id="Chartcontainer_index"
           class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
         ></div>
@@ -302,14 +304,19 @@ export default {
   },
   watch: {
     inputDataIndex() {
-      // if (oldValue.length != 0 && newValue.length !=0){
-
-      // }
       this.renderData();
       if (this.isRealValue(this.indexData)) {
         this.renderChart();
       }
     }
+    // indexData(newValue, oldValue) {
+    //   if (oldValue.length == 0 && newValue != 0) {
+    //     this.initrender();
+    //    if (this.isRealValue(this.indexData)) {
+    //     this.renderChart();
+    //   }
+    //   }
+    // }
   },
   // In the beginning...
   mounted() {
@@ -547,7 +554,7 @@ export default {
               .ticks(this.width / 80)
               .tickSizeOuter(0)
           )
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("stroke-opacity", ".1");
 
       let xAxisAxe = chart.append("g").call(xAxis);
@@ -555,7 +562,7 @@ export default {
         .selectAll("text")
         // .style("font-size", `${this.width / 700}em`)
         .style("font-size", `${this.fontsizeOf}em`)
-        .style("font-family", "Dirooz FD")
+        .style("font-family", "Vazir-Light-FD")
         .style("font-weight", "800");
       var yAxis = g =>
         g
@@ -565,7 +572,7 @@ export default {
           .duration(1000)
           .call(d3.axisLeft(yScale))
           .style("stroke-opacity", ".1")
-          .style("font-family", "Dirooz FD");
+          .style("font-family", "Vazir-Light-FD");
       let yAxisAxe = chart.append("g").call(yAxis);
       yAxisAxe
         .selectAll("text")
@@ -573,7 +580,7 @@ export default {
         // .attr("transform", `translate(${-this.margin.left},0)`)
         // .style("font-size", `${this.width / 700}em`)
         .style("font-size", `${this.fontsizeOf}em`)
-        .style("font-family", "Dirooz FD")
+        .style("font-family", "Vazir-Light-FD")
         .style("font-weight", "800");
       d3.selectAll("g.yAxis g.tick")
         .append("line")
@@ -673,7 +680,7 @@ export default {
               .style("font-weight", (_, i) => (i ? null : "bold"))
               // .style("font-size", "14px")
               .style("font-size", `${this.fontsizeOf}em`)
-              .style("font-family", "Vazir-Medium-FD")
+              .style("font-family", "Vazir-Light-FD")
               .text(d => d.split("-")[0])
           )
           .style("fill", "black");
@@ -682,14 +689,14 @@ export default {
         const { x, y, width: w, height: h } = text.node().getBBox();
         text
           .attr("transform", `translate(${w},${-h})`)
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf * 0.7}em`);
         const pathnew = g
           .selectAll("pathnew")
           .data([null])
           .join("path")
           .attr("fill", "#001170")
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("stroke", "black")
           .style("stroke-dasharray", "3,3")
           .style("Opacity", "0.8");
@@ -721,11 +728,11 @@ export default {
               .attr("x", 0)
               .attr("y", (d, i) => `${i * 1.1}em`)
               .style("font-weight", (_, i) => (i ? null : "bold"))
-              .style("font-family", "Dirooz FD")
+              .style("font-family", "Vazir-Light-FD")
               .text(d => d.split("-")[1].split(" ")[0])
           )
           .style("fill", "white")
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", "11px")
           .style("Opacity", "1 ");
         // eslint-disable-next-line no-unused-vars
@@ -798,7 +805,7 @@ export default {
   flex-direction: row;
   flex-grow: 1;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 0px;
   padding-bottom: 0px;
   order: 0;
@@ -834,7 +841,7 @@ export default {
 }
 .Chart1title * {
   font-size: 1.2em;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
 }
 
 .dot {
@@ -845,7 +852,7 @@ export default {
   display: inline-block;
 }
 .d3-tip {
-  font-family: "Vazir-Medium-FD";
+  font-family: "Vazir-Light-FD";
   line-height: 1.4;
   z-index: 300;
   padding: 20px;

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
       <div class="col-xxl-12">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
@@ -17,7 +16,6 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import BoardCeoWidget from "@/view/pages/Ticker/TickerWidgets/BoardCeoWidget.vue";
-// import axios from "axios";
 export default {
   name: "BoardView",
   components: {

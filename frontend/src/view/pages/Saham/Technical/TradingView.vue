@@ -174,7 +174,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .chart-page {
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Medium-FD" !important;
 }
 .TVChartContainer {
   height: calc(90vh);

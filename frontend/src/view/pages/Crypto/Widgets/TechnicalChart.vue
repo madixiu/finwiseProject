@@ -212,18 +212,18 @@ export default {
                 this.height * -1 + this.margin.bottom + this.margin.top * 2
               )
           )
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Medium-FD")
           .style("stroke-opacity", ".1");
 
       let xAxisAxe = chart.append("g").call(xAxis);
       xAxisAxe
         .selectAll("text")
         .style("font-size", `${this.width / 1000}em`)
-        .style("font-family", "Dirooz FD")
+        .style("font-family", "Vazir-Medium-FD")
         .style("font-size", `1.4em`)
         .style("font-weight", "800")
         .style("text-anchor", "end")
-        .style("font-family", "Dirooz FD");
+        .style("font-family", "Vazir-Medium-FD");
       var yAxis = g =>
         g
           .attr("class", "yAxis")
@@ -232,7 +232,7 @@ export default {
           .duration(1000)
           .call(d3.axisLeft(yScale))
           .style("stroke-opacity", ".1")
-          .style("font-family", "Dirooz FD");
+          .style("font-family", "Vazir-Medium-FD");
       let yAxisAxe = chart.append("g").call(yAxis);
       yAxisAxe
         .selectAll("text")
@@ -240,7 +240,7 @@ export default {
         .attr("transform", `translate(${0},${4})`)
         .style("font-size", `1.3em`)
         .style("font-weight", "800")
-        .style("font-family", "Dirooz FD");
+        .style("font-family", "Vazir-Medium-FD");
 
       var mycolor = d3
         .scaleLinear()
@@ -398,13 +398,13 @@ export default {
       //     const { x, y, width: w, height: h } = text.node().getBBox();
       //     text
       //       .attr("transform", `translate(${that.margin.left + w / 10},${-h})`)
-      //       .style("font-family", "Dirooz FD");
+      //       .style("font-family", "Vazir-Medium-FD");
       //     const pathnew = g
       //       .selectAll("pathnew")
       //       .data([null])
       //       .join("path")
       //       .attr("fill", "#001170")
-      //       .style("font-family", "Dirooz FD")
+      //       .style("font-family", "Vazir-Medium-FD")
       //       .style("stroke", "black")
       //       .style("stroke-dasharray", "3,3")
       //       .style("Opacity", "0.8");
@@ -436,11 +436,11 @@ export default {
       //           .attr("x", 0)
       //           .attr("y", (d, i) => `${i * 1.1}em`)
       //           .style("font-weight", (_, i) => (i ? null : "bold"))
-      //           .style("font-family", "Dirooz FD")
+      //           .style("font-family", "Vazir-Medium-FD")
       //           .text(d => d.split("-")[1].split(" ")[0])
       //       )
       //       .style("fill", "white")
-      //       .style("font-family", "Dirooz FD")
+      //       .style("font-family", "Vazir-Medium-FD")
       //       .style("font-size", "11px")
       //       .style("Opacity", "1 ");
       //     // eslint-disable-next-line no-unused-vars
@@ -569,7 +569,7 @@ export default {
 }
 .Chart1title * {
   font-size: 1.2em;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 
 .dot {

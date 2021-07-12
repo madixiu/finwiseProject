@@ -57,13 +57,6 @@ export default {
     loadData() {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(response => {
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
         // eslint-disable-next-line no-unused-vars
         this.getType().then(response => {
           if (this.typeofReport == "bank") {

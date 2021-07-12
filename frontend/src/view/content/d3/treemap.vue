@@ -438,7 +438,7 @@ export default {
       return (
         d3
           .scaleLinear()
-          .domain([0.05, 6])
+          .domain([0.05, 5])
           // .range(["#404e55", "#3f5655", "#3d6756", "#398957", "#379a58", "#35ab59", "#33bc5a", "#32c45a", "#30cc5a"]);
           .range(["#404e55", "#30cc5a"])
       );
@@ -447,7 +447,7 @@ export default {
       return (
         d3
           .scaleLinear()
-          .domain([-2, -0.05])
+          .domain([-5, -0.05])
           // .range(["#f63538", "#eb363a","#e0373c", "#c9393f", "#b33b43", "#9c3d46", "#86374a", "#6f414d", "#584351"]);
           .range(["#f63538", "#584351"])
       );
@@ -740,14 +740,14 @@ export default {
         // console.log(val);
         // console.log("black");
         color = "fill:#414554"; // color 0
-      } else if (0.05 <= val && val <= 6) {
+      } else if (0.05 <= val && val <= 5) {
         // console.log("pos");
         color = "fill:" + this.positiveColor(val);
-      } else if (-2 <= val && val <= -0.05) {
+      } else if (-5 <= val && val <= -0.05) {
         // console.log("neg");
         color = "fill:" + this.negativeColor(val);
-      } else if (val > 6) color = "fill:#30cc5a";
-      else if (val < -2) color = "fill:#f63538";
+      } else if (val > 5) color = "fill:#30cc5a";
+      else if (val < -5) color = "fill:#f63538";
 
       return color;
     }

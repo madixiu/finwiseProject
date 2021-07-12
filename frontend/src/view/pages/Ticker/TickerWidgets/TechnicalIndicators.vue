@@ -1,6 +1,6 @@
 <template>
   <div class="card card-custom card-stretch gutter-b" id="parentDiv">
-    <v-card >
+    <v-card>
       <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider>
       <div v-show="this.$store.getters.isAuthenticated">

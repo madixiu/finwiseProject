@@ -21,7 +21,6 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import IncomeStatementAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/IncomeStatementAnalysisWidget.vue";
-// import axios from "axios";
 export default {
   name: "IncomeStatementAnalysis",
   components: {
@@ -32,7 +31,7 @@ export default {
     return {
       subheaders: [],
       IncS: [],
-      IncAG: [],
+      IncAG: []
     };
   },
   created() {
@@ -54,14 +53,17 @@ export default {
         // eslint-disable-next-line no-unused-vars
         this.getTwo().then(responsey => {
           // eslint-disable-next-line no-unused-vars
-          this.getThree().then(responsex => {
-          });
+          this.getThree();
         });
       });
     },
     async getTwo() {
       await this.axios
-        .get("api/Statement/IncomeStatementAggregated/" + this.$route.params.id + "/")
+        .get(
+          "api/Statement/IncomeStatementAggregated/" +
+            this.$route.params.id +
+            "/"
+        )
         .then(response3 => {
           this.IncAG = response3.data;
         })

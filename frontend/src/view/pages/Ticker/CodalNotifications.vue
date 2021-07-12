@@ -17,7 +17,6 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
-// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -35,7 +34,6 @@ export default {
     document.title = "Finwise - کدال";
   },
   mounted() {
-    // this.loadData2();
     this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعیه های کدال" }]);
   },
@@ -48,16 +46,9 @@ export default {
     loadData() {
       // eslint-disable-next-line no-unused-vars
       this.getAllowed().then(response => {
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
         // eslint-disable-next-line no-unused-vars
         this.getOne().then(response2 => {
-          this.getTwo().then(function() {});
+          this.getTwo();
         });
       });
     },

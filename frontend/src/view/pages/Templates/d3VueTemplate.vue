@@ -321,6 +321,6 @@ export default {
   margin-left: 50%;
 }
 .customAlert {
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Light-FD" !important;
 }
 </style>

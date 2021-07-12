@@ -910,7 +910,7 @@ export default {
   color: red;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
-  /* font-family: "Dirooz FD"; */
+  /* font-family: "Vazir-Medium-FD"; */
 }
 .shakhes-table-row {
   direction: ltr;

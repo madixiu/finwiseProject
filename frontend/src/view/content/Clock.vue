@@ -91,7 +91,7 @@ export default {
 </script>
 <style scoped>
 #clock {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
   /* color: #ffffff; */
   /* position: relative; */
   /* left: 5%;

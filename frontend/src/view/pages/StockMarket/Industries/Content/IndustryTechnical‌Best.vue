@@ -98,6 +98,6 @@ export default {
 .FinancialStrength td{
   direction: rtl;
   text-align: right;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 </style>

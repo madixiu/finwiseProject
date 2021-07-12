@@ -1,41 +1,29 @@
 <template>
-  <div style="padding-top:15px">
-    <div class="row mb-1" v-if="!loading">
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <v-card outlined height="100%">
-          <v-list-item two-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">
-                نماد
-              </div>
-              <v-list-item-title class="">
-                {{ LiveDataItems.ticker }}
-              </v-list-item-title>
-              <!-- <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              > -->
-            </v-list-item-content>
-          </v-list-item>
-          <!-- <div class="text-center">
+  <div style="padding-top:5px">
+    <v-row
+      no-gutters
+      class="d-flex flex-row justify-content-between"
+      v-if="!loading"
+      style="flex-wrap: nowrap"
+    >
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             نماد
-            <br />
-          </div> -->
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
+            <span>
+              {{ LiveDataItems.ticker }}
+            </span>
+          </v-col>
         </v-card>
-        <!-- {{ LiveDataItems.ticker }} -->
-      </div>
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            نام شرکت
-          </v-chip>
-          {{ LiveDataItems.name }} -->
-        <div class="text-center">
-          آخرین قیمت <br />
-          <div style="direction:ltr">
+      </v-col>
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
+            آخرین قیمت
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
             <span
               class="spandata ltr_aligned mr-1"
               v-bind:class="[
@@ -56,19 +44,15 @@
               }}</span
             >
             <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            تابلو
-          </v-chip>
-          {{ LiveDataItems.board }} -->
-        <div class="text-center">
-          قیمت پایانی <br />
-          <div style="direction:ltr">
+          </v-col>
+        </v-card>
+      </v-col>
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
+            قیمت پایانی
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
             <span
               class="spandata ltr_aligned"
               v-bind:class="[
@@ -93,59 +77,51 @@
             <span style="direction:ltr">{{
               numberWithCommas(LiveDataItems.close)
             }}</span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            صنعت
-          </v-chip>
-          {{ LiveDataItems.subIndustry }} -->
-        <div class="text-center">
-          ارزش معاملات <br /><span class="text-center">{{
-            numberWithCommas(roundTo(LiveDataItems.TradeValue / 1000000000, 2))
-          }}</span>
-          میلیارد ریال
-        </div>
-      </div>
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            بازار
-          </v-chip>
-          {{ LiveDataItems.market }} -->
-        <div class="text-center">
-          حجم معاملات <br /><span class="text-center"
-            >{{
-              numberWithCommas(roundTo(LiveDataItems.TradeVolume / 1000000, 2))
-            }}
-          </span>
-          میلیون
-        </div>
-      </div>
+          </v-col>
+        </v-card>
+      </v-col>
 
-      <div
-        class="col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4 FinancialStrength "
-      >
-        <!-- <v-chip class="ma-2" color="#1A237E" text-color="#FAFAFA">
-            گروه
-          </v-chip>
-          {{ LiveDataItems.parentIndustry }} -->
-        <div class="text-center">وضعیت <br />{{ LiveDataItems.Status }}</div>
-      </div>
-    </div>
-    <!-- </v-card> -->
-    <!--begin::Header-->
-    <!-- <div class="card-header border-0 pt-2">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        {{ this.Nemad }}<span class="small mr-5">{{ this.tickerfull }}</span>
-      </h3>
-    </div> -->
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
+            ارزش معاملات
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
+            <span>{{
+              numberWithCommas(
+                roundTo(LiveDataItems.TradeValue / 1000000000, 2)
+              )
+            }}</span>
+            <span>میلیارد ریال</span>
+          </v-col>
+        </v-card>
+      </v-col>
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
+            حجم معاملات
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
+            <span>{{
+              numberWithCommas(roundTo(LiveDataItems.TradeVolume / 1000000, 2))
+            }}</span>
+            <span>میلیون</span>
+          </v-col>
+        </v-card>
+      </v-col>
+
+      <v-col cols="2" class="flex-grow-1 flex-shrink-0 pr-1">
+        <v-card height="100%" elevation="5">
+          <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
+            وضعیت
+          </v-col>
+          <v-col cols="12" style="padding-bottom:5px">
+            {{ LiveDataItems.Status }}
+          </v-col>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
@@ -246,6 +222,26 @@ export default {
 };
 </script>
 <style scoped>
+.CardHeaderTitle {
+  direction: ltr;
+  align-items: right;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  padding-bottom: 0px;
+  padding-top: 5px;
+  font-family: "Vazir-Light-FD";
+  font-weight: 500;
+  /* font-family: "IRANSansXFaNum-Regular"; */
+}
+.flex-item {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  order: 0;
+}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

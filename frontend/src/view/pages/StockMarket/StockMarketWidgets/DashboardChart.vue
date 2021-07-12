@@ -348,7 +348,7 @@ export default {
           // .attr("dx", "-8em")
           // .style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
         aXisY2Axe
           .selectAll(".tick line")
@@ -386,7 +386,7 @@ export default {
           .style("text-anchor", "end")
           // .style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
         aXisY1Axe
           .selectAll(".tick line")
@@ -406,7 +406,10 @@ export default {
           .append("text")
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
-          .attr("fill", "#70747a")
+          //! GRAY text
+          // .attr("fill", "#70747a")
+          .attr("fill", "#000")
+
           // .style("font-size", `${this.width / 950}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xLeft(d.ticker) + xLeft.bandwidth() * 0.5)
@@ -440,7 +443,10 @@ export default {
           .append("text")
           .attr("class", "yAxis-label")
           .attr("text-anchor", "middle")
-          .attr("fill", "#70747a")
+          //! GRAY TEXT
+          // .attr("fill", "#70747a")
+          .attr("fill", "#000")
+
           // .style("font-size", `${this.width / 950}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xRight(d.ticker) + xRight.bandwidth() * 0.5)
@@ -775,7 +781,7 @@ export default {
           // .attr("dx", "-8em")
           // .style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
         aXisY2Axe_2
           .selectAll(".tick line")
@@ -810,7 +816,7 @@ export default {
           .style("text-anchor", "end")
           .style("font-size", `${this.fontsizeOf}em`)
           // .style("font-size", `${this.width / 1000}em`)
-          .style("font-family", "Dirooz FD")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
         aXisY1Axe_2
           .selectAll(".tick line")
@@ -1094,10 +1100,10 @@ export default {
 }
 .Chart1title * {
   font-size: 1.2em;
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Light-FD";
 }
 .cellItem {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
 }
 .dot {
   height: 25px;
@@ -1107,7 +1113,7 @@ export default {
   display: inline-block;
 }
 .d3-tip {
-  font-family: "Vazir-Medium-FD";
+  font-family: "Vazir-Light-FD";
   line-height: 1.4;
   z-index: 300;
   padding: 20px;

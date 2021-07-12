@@ -119,7 +119,7 @@ export default {
 </script>
 <style scoped>
 .cellItem {
-  font-family: "Dirooz FD";
+  font-family: "Vazir-Medium-FD";
   font-weight: 600;
 }
 .FinancialStrength {

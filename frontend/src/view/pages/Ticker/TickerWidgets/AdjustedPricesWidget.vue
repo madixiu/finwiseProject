@@ -198,7 +198,7 @@ export default {
 .FinancialStrength {
   direction: rtl;
   text-align: right;
-  font-family: "Dirooz FD" !important;
+  font-family: "Vazir-Light-FD" !important;
   font-size: 1.1em;
 }
 .rtl_centerd {

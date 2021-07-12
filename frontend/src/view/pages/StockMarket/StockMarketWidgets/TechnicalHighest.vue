@@ -264,7 +264,7 @@ export default {
   text-align: right;
 }
 /* .cellItem { */
-/* font-family: "Dirooz FD"; */
+/* font-family: "Vazir-Light-FD"; */
 /* font-weight: 700; */
 /* } */
 </style>
