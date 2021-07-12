@@ -85,7 +85,7 @@
           </div>
         </v-card>
       </div>
-      <div class="col-xxl-9 col-lg-9 col-md-12">
+      <div class="col-xxl-12 col-lg-12 col-md-12">
         <liveWidget
           :meta="metadata"
           :industry="industrydata"
@@ -93,9 +93,9 @@
           :historicNav="historicNavData"
         ></liveWidget>
       </div>
-      <div class="col-xxl-3 col-lg-3 col-md-12">
+      <!-- <div class="col-xxl-3 col-lg-3 col-md-12">
         <asideWidget></asideWidget>
-      </div>
+      </div> -->
     </div>
     <!--end::Dashboard-->
   </div>
@@ -105,14 +105,14 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import liveWidget from "@/view/pages/Fund/Widgets/NonETFLive.vue";
-import asideWidget from "@/view/pages/Fund/Widgets/NonETFAside.vue";
+// import asideWidget from "@/view/pages/Fund/Widgets/NonETFAside.vue";
 // import SubHeaderWidget from "@/view/pages/Crypto/Widgets/CryptoSubHeader.vue";
 
 export default {
   name: "SingleNonETF",
   components: {
-    liveWidget,
-    asideWidget
+    liveWidget
+    // asideWidget
     // SubHeaderWidget
   },
   data() {
@@ -152,18 +152,15 @@ export default {
   },
   methods: {
     numberWithCommas(x) {
-      if (x == "-") {
-        return x;
+      if (x == "-" || x === undefined) {
+        return "-";
       }
       let parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
     roundTo(n, digits) {
-      if (n == "-") {
+      if (n == "-" || n === undefined) {
         return n;
       }
 
@@ -199,24 +196,14 @@ export default {
       });
       // });
     },
-    // async getAllowed() {
-    //   await this.axios
-    //     .get("/api/tickerallnames")
-    //     .then(response3 => {
-    //       this.allowed = response3.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
 
     async getOne() {
+      this.metadata = [];
       await this.axios
         .get("/api/Funds/FundsMeta/" + this.$route.params.id + "/")
         .then(response1 => {
           this.metadata = response1.data[0];
-          //   console.log("🚀 ~ file: SingleNonETF.vue ~ line 283 ~ getOne ~ metadata", this.metadata)
-
+          this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.metadata.FundTitle }
           ]);
@@ -227,6 +214,8 @@ export default {
         });
     },
     async getTwo() {
+      this.industrydata = [];
+
       await this.axios
         .get("/api/Funds/FundsIndustry/" + this.$route.params.id + "/")
         .then(response1 => {
@@ -238,6 +227,8 @@ export default {
         });
     },
     async getThree() {
+      this.assettypedata = [];
+
       await this.axios
         .get("/api/Funds/FundsAsset/" + this.$route.params.id + "/")
         .then(response1 => {
@@ -248,6 +239,7 @@ export default {
         });
     },
     async getFour() {
+      this.historicNavData = [];
       await this.axios
         .get("/api/Funds/FundsHistoricNAV/" + this.$route.params.id + "/")
         .then(response1 => {

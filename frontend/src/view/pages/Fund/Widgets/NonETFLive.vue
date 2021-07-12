@@ -12,18 +12,18 @@
           نگاه کلی
           <v-icon left small>mdi-poll</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           اطلاعات معامله
           <v-icon left small>mdi-shopping</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           چارت
           <v-icon left small>mdi-poll</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           اخبار
           <v-icon left small>mdi-newspaper</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           تاریخچه
           <v-icon left small>mdi-chart-line</v-icon>
@@ -36,10 +36,10 @@
           صنایع سرمایه گذاری شده
           <v-icon left small>mdi-chart-line</v-icon>
         </v-tab>
-        <v-tab class="FinancialStrength">
+        <!-- <v-tab class="FinancialStrength">
           بازدهی صندوق
           <v-icon left small>mdi-chart-line</v-icon>
-        </v-tab>
+        </v-tab> -->
         <v-tab class="FinancialStrength">
           اطلاعات صندوق
           <v-icon left small>mdi-chart-line</v-icon>
@@ -189,24 +189,75 @@
             </v-card-text>
           </v-card> -->
         </v-tab-item>
+
         <v-tab-item>
+          <v-card height="450" flat>
+            <v-card-text>
+              <v-radio-group
+                v-model="TimeFrameNAV"
+                row
+                dense
+                @change="GetFiltered"
+              >
+                <v-radio label="یک هفته اخیر" value="1W"></v-radio>
+                <v-radio label="یک ماه اخیر" value="1M"></v-radio>
+                <v-radio label="از ابتدای سال" value="YTD"></v-radio>
+                <v-radio label="یک سال اخیر" value="1Y"></v-radio>
+                <v-radio label="از ابتدا" value="All"></v-radio>
+              </v-radio-group>
+              <hr />
+              <div class="d-flex flex-row">
+                <div class="col-lg-6 col-md-12 col-xs-12">
+                  <ApexChart
+                    type="area"
+                    width="100%"
+                    height="140%"
+                    :key="NavChartKey"
+                    :series="NavChart.series"
+                    :chartOptions="NavChartOptions"
+                  />
+                </div>
+                <div class="col-lg-6 col-md-12 col-xs-12">
+                  <ApexChart
+                    type="area"
+                    width="100%"
+                    height="140%"
+                    :key="NavChartKey2"
+                    :series="NavChart2.series"
+                    :chartOptions="NavChartOptions2"
+                  />
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <!-- <v-tab-item>
           <v-card height="450" flat>
             <v-card-text> </v-card-text>
           </v-card>
-        </v-tab-item>
-        <v-tab-item>
+        </v-tab-item> -->
+        <!-- <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <v-card-text>NEWS</v-card-text>
           </v-card>
-        </v-tab-item>
+        </v-tab-item> -->
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <ag-grid-vue
+              :style="`width: 100%;  font-family: Vazir-Medium-FD`"
+              class="ag-theme-balham"
+              :columnDefs="FundsHeader"
+              :defaultColDef="defaultColDef"
+              rowSelection="multiple"
+              :cacheQuickFilter="true"
+              :sideBar="sideBar"
+              :enableRtl="true"
+              :gridOptions="gridOptions"
+              @grid-ready="onReady"
+              @gridColumnsChanged="gridColumnsChanged"
+              :localeText="localeText"
+            >
+            </ag-grid-vue>
           </v-card>
         </v-tab-item>
         <v-tab-item>
@@ -236,11 +287,11 @@
             <v-card-text> </v-card-text>
           </v-card>
         </v-tab-item>
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-card height="450" flat>
             <v-card-text> </v-card-text>
           </v-card>
-        </v-tab-item>
+        </v-tab-item> -->
       </v-tabs>
     </v-card>
   </div>
@@ -250,15 +301,30 @@
 <script>
 import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
-
+import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+import { AgGridVue } from "ag-grid-vue";
 export default {
   name: "NonETFMainWidget",
   components: {
-    ApexChart
+    ApexChart,
+    AgGridVue
   },
   props: ["meta", "industry", "assettype", "historicNav"],
   data() {
     return {
+      // * AGgrid base data
+      modules: AllModules,
+      gridApi: null,
+      defaultColDef: null,
+      gridOptions: null,
+      FundsHeader: [],
+      sideBar: null,
+      allColumnIds: [],
+      gridColumnApi: null,
+      localeText: null,
+      dataFetch: false,
+      // * %%%%%%%%%%%%%%%
       loading: false,
       priceOverViewSeries: [
         {
@@ -309,9 +375,20 @@ export default {
           show: true,
           position: "right"
         },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
         responsive: [
           {
-            breakpoint: 380,
+            kpoint: 380,
             options: {
               chart: {
                 width: 200
@@ -378,6 +455,17 @@ export default {
         // ,"#05668D"],
         colors: ["#EF476F", "#E09F3E", "#06D6A0", "#118AB2", "#073B4C"],
         labels: [],
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
         legend: {
           show: true,
           position: "right"
@@ -427,19 +515,387 @@ export default {
             }
           }
         }
+      },
+      NavChartKey: 0,
+      NavChartKey2: 0,
+      TimeFrameNAV: "1W",
+      NavChart: {
+        series: []
+      },
+      NavChartOptions: {
+        chart: {
+          id: "area-datetime",
+          type: "area",
+          toolbar: {
+            show: false
+          },
+          height: 350
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+          style: "hollow"
+        },
+        xaxis: {
+          // type: "datetime",
+          // min: new Date("01 Mar 2012").getTime(),
+          tickAmount: 6,
+          labels: {
+            formatter: function(value, timestamp) {
+              return new Date(timestamp).toLocaleDateString("fa-IR");
+            }
+          }
+        },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
+        tooltip: {
+          x: {
+            show: true
+            // format: "dd MM yyyy",
+            // formatter: function(value, timestamp) {
+            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
+            // },
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.5,
+            opacityTo: 0.7,
+            stops: [0, 100]
+          }
+        }
+      },
+      NavChart2: {
+        series: []
+      },
+      NavChartOptions2: {
+        chart: {
+          id: "area-datetime2",
+          type: "area",
+          toolbar: {
+            show: false
+          },
+          height: 350
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+          style: "hollow"
+        },
+        noData: {
+          text: "No Data",
+          align: "center",
+          verticalAlign: "middle",
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "18px",
+            fontFamily: "Vazir-Medium-FD"
+          }
+        },
+        xaxis: {
+          // type: "datetime",
+          // min: new Date("01 Mar 2012").getTime(),
+          tickAmount: 6,
+          labels: {
+            formatter: function(value, timestamp) {
+              return new Date(timestamp).toLocaleDateString("fa-IR");
+            }
+          }
+        },
+        tooltip: {
+          x: {
+            show: true
+            // format: "dd MM yyyy",
+            // ,
+            // formatter: function(value, timestamp) {
+            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
+            // },
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.5,
+            opacityTo: 0.7,
+            stops: [0, 100]
+          }
+        }
       }
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
-    setclosingperc: function() {
-      return Math.round((this.close / this.open - 1) * 100 * 100) / 100;
-    },
-    setlastperc: function() {
-      return Math.round((this.last / this.open - 1) * 100 * 100) / 100;
-    }
+    ...mapGetters(["layoutConfig"])
+  },
+  created() {
+    // GRID LOCALE FILE LOAD
+    this.localeText = AG_GRID_LOCALE_FA;
+
+    // GRID OPTIONS
+    this.gridOptions = {
+      suppressColumnVirtualisation: true,
+      rowDragManaged: true,
+      animateRows: true,
+      rowClass: "ag-grid-row-class",
+
+      // headerHeight: 20,
+      rowHeight: 22,
+      getRowNodeId: data => data.persianDate
+    };
+    this.defaultColDef = {
+      flex: 1,
+      minWidth: 100,
+      filter: true,
+      // sortable: true,
+      // headerHeight: 12,
+      enablePivot: false,
+      suppressMenu: true,
+      cellStyle: {
+        display: "flex",
+        "justify-content": "center",
+        "border-left-color": "#e2e2e2",
+        "align-items": "center",
+        direction: "ltr"
+      }
+    };
+    // AG Sidebar
+    this.sideBar = {
+      toolPanels: [
+        {
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressSideButtons: false,
+            suppressColumnFilter: false,
+            suppressColumnSelectAll: false,
+            suppressColumnExpandAll: false
+          }
+        },
+
+        {
+          id: "filters",
+          labelDefault: "Filters",
+          labelKey: "filters",
+          iconKey: "filter",
+          toolPanel: "agFiltersToolPanel"
+        }
+      ],
+      defaultToolPanel: ""
+    };
+
+    this.FundsHeader = [
+      {
+        headerName: "تاریخ شمسی",
+        field: "persianDate",
+
+        sortable: true,
+        pinned: "right",
+        rowDrag: true,
+        cellStyle: {
+          direction: "rtl",
+          display: "inline-block"
+          // // "justify-content": "center",
+          // "align-items": "center !important",
+          // "height": "100%"
+        }
+      },
+      {
+        headerName: "تاریخ قمری",
+        field: "englishDate",
+        sortable: true
+      },
+      {
+        headerName: "قیمت صدور",
+        field: "purchasePrice",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت ابطال",
+        field: "redeptionPrice",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت آماری",
+        field: "statisticalValue",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "مجموع دارایی ها",
+        field: "total_net_asset_value_with_sell_commission",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      }
+    ];
   },
   methods: {
+    GetFiltered() {
+      if (!(this.historicNav === undefined || this.historicNav.length == 0)) {
+        // eslint-disable-next-line no-unused-vars
+        let tempData = [];
+        let today = new Date();
+        let lastweek = new Date();
+        lastweek.setDate(lastweek.getDate() - 7);
+        let lastMonth = new Date();
+        lastMonth.setDate(lastMonth.getDate() - 31);
+        let lastYear = new Date();
+        lastYear.setDate(lastYear.getDate() - 365);
+        let pYear = "1400";
+        if (this.historicNav[0].persianDate.includes("/")) {
+          pYear = this.historicNav[0].persianDate.split("/")[0];
+        } else {
+          pYear = this.historicNav[0].persianDate.split("-")[0];
+        }
+        let filtered = [];
+        let filtered2 = [];
+        let filtered3 = [];
+        let filtered4 = [];
+        if (this.TimeFrameNAV == "1W") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastweek && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+
+        if (this.TimeFrameNAV == "1M") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastMonth && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "YTD") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (
+              (d.persianDate.includes("-") &&
+                d.persianDate.split("-")[0] == pYear) ||
+              (d.persianDate.includes("/") &&
+                d.persianDate.split("/")[0] == pYear)
+            ) {
+              // console.log(d.persianDate.split("/")[0]);
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "1Y") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            if (D >= lastYear && D <= today) {
+              filtered.push([D.getTime(), d.purchasePrice]);
+              filtered2.push([D.getTime(), d.redeptionPrice]);
+              filtered3.push([D.getTime(), d.statisticalValue]);
+              filtered4.push([
+                D.getTime(),
+                d.total_net_asset_value_with_sell_commission
+              ]);
+            }
+          });
+        }
+        if (this.TimeFrameNAV == "All") {
+          this.historicNav.filter(d => {
+            let D = new Date(
+              d.englishDate.split("-")[0],
+              d.englishDate.split("-")[1],
+              d.englishDate.split("-")[2]
+            );
+            filtered.push([D.getTime(), d.purchasePrice]);
+            filtered2.push([D.getTime(), d.redeptionPrice]);
+            filtered3.push([D.getTime(), d.statisticalValue]);
+            filtered4.push([
+              D.getTime(),
+              d.total_net_asset_value_with_sell_commission
+            ]);
+          });
+        }
+        // console.log(filtered4)
+        this.NavChart.series = [];
+        this.NavChart2.series = [];
+        this.NavChart.series.push({ name: "قیمت صدور", data: filtered });
+        this.NavChart.series.push({ name: "قیمت ابطال", data: filtered2 });
+        this.NavChart.series.push({ name: "قیمت آماری", data: filtered3 });
+        this.NavChart2.series.push({
+          name: "جمع خالص دارایی",
+          data: filtered4
+        });
+        this.NavChartKey = this.NavChartKey + 1;
+        this.NavChartKey2 = this.NavChartKey2 + 1;
+      }
+    },
     numberWithCommas(x) {
       // if (x == "-") {
       //   return x;
@@ -474,6 +930,7 @@ export default {
     },
     populateData() {
       this.DataItems1 = this.meta;
+      console.log(this.meta);
     },
     populateData2() {
       let temp1 = [];
@@ -496,15 +953,41 @@ export default {
       this.AssetTypePie = temp2;
       this.AssetTypeValueOptions.labels = temp1;
     },
-    populateData4() {
-      console.log(this.historicNav);
+
+    //? AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%
+    onQuickFilterChanged(event) {
+      this.gridOptions.api.setQuickFilter(event.target.value);
+    },
+    gridColumnsChanged() {
+      if (this.allColumnIds.length) {
+        this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
+      }
+    },
+    tickerClick(data) {
+      this.$router.push({ path: `/ticker/Overview/Overall/${data.ID}` });
+    },
+    onReady(params) {
+      let allColumnIds = [];
+      // this.gridOptions.api.closeToolPanel();
+      this.gridColumnApi = this.gridOptions.columnApi;
+      this.gridApi = params.api;
+
+      this.gridColumnApi.getAllColumns().forEach(function(column) {
+        allColumnIds.push(column.colId);
+      });
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      this.allColumnIds = allColumnIds;
+      this.gridApi = params.api;
+      if (this.historicNav != null) params.api.setRowData(this.historicNav);
     }
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   mounted() {
     this.populateData();
     this.populateData2();
     this.populateData3();
-    this.populateData4();
+    this.GetFiltered();
   },
   watch: {
     meta() {
@@ -517,9 +1000,12 @@ export default {
       // this.loading = false;
       this.populateData3();
     },
-    historicNav() {
-      // this.loading = false;
-      this.populateData4();
+    historicNav(newValue, oldValue) {
+      if (oldValue == null && newValue.length != 0) {
+        this.gridApi.setRowData(newValue);
+        this.dataFetch = true;
+      }
+      this.GetFiltered();
     }
   }
 };
@@ -535,6 +1021,14 @@ export default {
   direction: rtl;
   text-align: right;
   font-size: 1em;
+
+  letter-spacing: 0px;
+}
+
+.v-radio > .v-label {
+  direction: rtl;
+  text-align: right;
+  font-size: 0.8em;
 
   letter-spacing: 0px;
 }
