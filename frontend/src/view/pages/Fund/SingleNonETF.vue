@@ -79,7 +79,7 @@
                 نوع:
                 <span class="spandata">
                   {{ metadata.Type }}
-                </span> 
+                </span>
               </h4>
             </div>
           </div>
