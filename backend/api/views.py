@@ -761,3 +761,17 @@ def getFundsHistoricalNav(request,identifier):
         #     return JsonResponse("AccessDenied",safe=False)
     # except:
     #     return JsonResponse("notAuthorized",safe=False)
+
+def getFundsLiveNAV(request,identifier):
+    # try:
+    #     payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+    #     username=payload['username']
+    #     user=CustomUser.objects.get(username=username)
+    #     if user.role>=4:
+            return JsonResponse(getFundsLive(identifier),safe=False)    
+        # else:
+        #     return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)
+
+    

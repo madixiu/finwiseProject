@@ -134,5 +134,6 @@ urlpatterns = [
    path("Funds/FundsIndustry/<identifier>/",getFundsIndustryComp),
    path("Funds/FundsAsset/<identifier>/",getFundsAssetComp),
    path("Funds/FundsHistoricNAV/<identifier>/",getFundsHistoricalNav),
+   path("Funds/FundsLive/<identifier>/",getFundsLiveNAV),
 
 ]

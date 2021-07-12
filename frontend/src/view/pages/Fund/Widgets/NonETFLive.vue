@@ -45,7 +45,7 @@
           <v-icon left small>mdi-chart-line</v-icon>
         </v-tab>
         <v-tab-item>
-          <!-- <v-card height="450" flat>
+          <v-card height="450" flat>
             <v-card-text>
               <div class="row">
                 <div
@@ -54,65 +54,32 @@
                   <h5 class="subheaderTitles">اطلاعات قیمت</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    قیمت پایانی :
-                    <span class="spandata">{{ this.close }} ریال</span> (
-                    <span
-                      dir="ltr"
-                      class="spandata"
-                      v-bind:class="[
-                        this.close > this.open ? 'greenItem' : 'redItem'
-                      ]"
-                    >
-                      %{{ setclosingperc.toString() }}
-                    </span>
-                    )
-
-                    <v-icon
-                      left
-                      small
-                      v-bind:class="[
-                        this.close >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      >mdi-chevron-{{
-                        this.close >= this.open ? "up" : "down"
-                      }}</v-icon
-                    >
+                    قیمت صدور لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveSub)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    قیمت آخرین معامله :
-                    <span class="spandata">{{ this.last }} ریال</span> (
-                    <span
-                      dir="ltr"
-                      class="spandata"
-                      v-bind:class="[
-                        last > open ? 'greenItem' : 'redItem ltr_aligned'
-                      ]"
-                      >% {{ setlastperc }}</span
-                    >)
-                    <v-icon
-                      left
-                      v-bind:class="[
-                        this.last >= this.open ? 'greenItem' : 'redItem'
-                      ]"
-                      small
-                      >mdi-chevron-{{
-                        this.last >= this.open ? "up" : "down"
-                      }}</v-icon
-                    >
+                    قیمت ابطال لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveRed)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    اولین قیمت :
-                    <span class="spandata">{{ this.first }} ریال</span>
+                    قیمت آماری لحظه ای :
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.LiveStat)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    ارزش بازار :
-                    <span class="spandata" v-if="!isNaN(this.marketcap)"
+                    جمع دارایی لحظه ای:
+                    <span class="spandata"
                       >{{
                         numberWithCommas(
-                          roundTo(this.marketcap / 1000000000, 2)
+                          roundTo(LiveDataBox.LiveNavAm / 10000000000, 2)
                         )
                       }}
-                      میلیارد ریال</span
+                      میلیارد تومان</span
                     >
                   </h5>
                 </div>
@@ -120,37 +87,19 @@
                 <div
                   class="col-xl-4 col-lg-5 col-md-6 col-sm-12 FinancialStrength"
                 >
-                  <h5 class="subheaderTitles">مشخصات</h5>
+                  <h5 class="subheaderTitles">نوع سرمایه گذاران</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    وضعیت:
-                    <span class="spandata">{{ this.status }}</span>
+                    درصد صاحبان واحد حقیقی:
+                    <span class="spandata">{{
+                      roundTo(LiveDataBox.RetailPerc, 2)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    EPS (منبع TSE):
-                    <span class="spandata" dir="ltr">{{ this.eps }}</span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    تعداد سهام:
-                    <span class="spandata" dir="ltr">
-                      {{
-                        numberWithCommas(
-                          roundTo(this.sharecount / 1000000000, 2)
-                        )
-                      }}
-                      میلیارد
-                    </span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    درصد شناوری :
-                    <span class="spandata">{{ this.shenavar }}</span>
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    حجم مبنا :
-                    <span class="spandata">
-                      {{ numberWithCommas(roundTo(this.mabna / 1000000, 2)) }}
-                      میلیون سهم</span
-                    >
+                    درصد صاحبان واحد حقوقی:
+                    <span class="spandata">{{
+                      roundTo(LiveDataBox.InstituePerc, 2)
+                    }}</span>
                   </h5>
                 </div>
                 <div
@@ -159,35 +108,21 @@
                   <h5 class="subheaderTitles">معاملات</h5>
                   <hr />
                   <h5 class="titleHeaders-smaller ">
-                    تعداد معاملات :
-                    <span class="spandata">
-                      {{ numberWithCommas(this.tradecount) }}
-                    </span>
+                    تعداد کل واحدها:
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.TotalUnit)
+                    }}</span>
                   </h5>
                   <h5 class="titleHeaders-smaller ">
-                    حجم معاملات :
-                    <span class="spandata" v-if="!isNaN(this.tradeVolume)"
-                      >{{
-                        numberWithCommas(roundTo(this.tradeVolume / 1000000, 2))
-                      }}
-                      میلیون</span
-                    >
-                  </h5>
-                  <h5 class="titleHeaders-smaller ">
-                    ارزش معاملات :
-                    <span class="spandata" v-if="!isNaN(this.tradevalue)"
-                      >{{
-                        numberWithCommas(
-                          roundTo(this.tradevalue / 1000000000, 2)
-                        )
-                      }}
-                      میلیارد ریال</span
-                    >
+                    تعداد کل واحدهای واگذار شده:
+                    <span class="spandata">{{
+                      numberWithCommas(LiveDataBox.TotalSold)
+                    }}</span>
                   </h5>
                 </div>
               </div>
             </v-card-text>
-          </v-card> -->
+          </v-card>
         </v-tab-item>
 
         <v-tab-item>
@@ -231,16 +166,6 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
-        <!-- <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item> -->
-        <!-- <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text>NEWS</v-card-text>
-          </v-card>
-        </v-tab-item> -->
         <v-tab-item>
           <v-card height="450" flat>
             <ag-grid-vue
@@ -284,14 +209,79 @@
         </v-tab-item>
         <v-tab-item>
           <v-card height="450" flat>
-            <v-card-text> </v-card-text>
+            <v-card-text>
+              <div class="row">
+                <div
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">اطلاعات افراد</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    عنوان صندوق:
+                    <span class="spandata">{{ meta.FundTitle }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    مدیر صندوق:
+                    <span class="spandata">{{ meta.Manager }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    مدیر سرمایه گذاری:
+                    <span class="spandata">{{
+                      meta.InvestmentManagerName
+                    }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    حسابرس:
+                    <span class="spandata">{{ meta.AuditorName }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    متولی:
+                    <span class="spandata">{{ meta.CustodianName }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    ضامن نقد شوندگی:
+                    <span class="spandata">{{
+                      meta.LiquidityGuaranteeName
+                    }}</span>
+                  </h5>
+                </div>
+
+                <div
+                  class="col-xl-4 col-lg-5 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">تاریخچه</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    شروع فعالیت:
+                    <span class="spandata">{{ meta.ActivityStartDate }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    تاریخ آخرین آمار اعلامی:
+                    <span class="spandata">{{ meta.LastNavDate }}</span>
+                  </h5>
+                </div>
+                <div
+                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 FinancialStrength"
+                >
+                  <h5 class="subheaderTitles">سایر</h5>
+                  <hr />
+                  <h5 class="titleHeaders-smaller ">
+                    نوع صندوق:
+                    <span class="spandata">{{ meta.Type }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    اندازه
+                    <span class="spandata">{{ meta.Size }}</span>
+                  </h5>
+                  <h5 class="titleHeaders-smaller ">
+                    وضعیت
+                    <span class="spandata">{{ meta.Status }}</span>
+                  </h5>
+                </div>
+              </div>
+            </v-card-text>
           </v-card>
         </v-tab-item>
-        <!-- <v-tab-item>
-          <v-card height="450" flat>
-            <v-card-text> </v-card-text>
-          </v-card>
-        </v-tab-item> -->
       </v-tabs>
     </v-card>
   </div>
@@ -310,7 +300,7 @@ export default {
     ApexChart,
     AgGridVue
   },
-  props: ["meta", "industry", "assettype", "historicNav"],
+  props: ["meta", "industry", "assettype", "historicNav", "liveNav"],
   data() {
     return {
       // * AGgrid base data
@@ -637,6 +627,16 @@ export default {
             stops: [0, 100]
           }
         }
+      },
+      LiveDataBox: {
+        LiveSub: "",
+        LiveRed: "",
+        LiveStat: "",
+        RetailPerc: "",
+        InstituePerc: "",
+        TotalUnit: "",
+        TotalSold: "",
+        LiveNavAm: ""
       }
     };
   },
@@ -897,20 +897,20 @@ export default {
       }
     },
     numberWithCommas(x) {
-      // if (x == "-") {
-      //   return x;
-      // }
+      if (x == "-" || x == "") {
+        return x;
+      }
       let parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join(".");
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
     roundTo(n, digits) {
-      // if (n == "-") {
-      //   return n;
-      // }
+      if (n == "-" || n == "") {
+        return n;
+      }
+      if (n == "-" || n == "اطلاعات وجود ندارد") {
+        return "اطلاعات وجود ندارد";
+      }
 
       let negative = false;
       if (digits === undefined) {
@@ -929,8 +929,13 @@ export default {
       return n;
     },
     populateData() {
-      this.DataItems1 = this.meta;
-      console.log(this.meta);
+      if (!(this.meta === undefined || this.meta.length == 0)) {
+        for (const [key, value] of Object.entries(this.meta)) {
+          if (String(value).includes("Element")) {
+            this.meta[key] = "اطلاعات وجود ندارد";
+          }
+        }
+      }
     },
     populateData2() {
       let temp1 = [];
@@ -953,7 +958,91 @@ export default {
       this.AssetTypePie = temp2;
       this.AssetTypeValueOptions.labels = temp1;
     },
+    populateData5() {
+      if (!(this.liveNav === undefined || this.liveNav.length == 0)) {
+        //      LiveDataBox: {
+        //   : "",
+        //   LiveNavAm:""
+        // }
+        if (this.liveNav[0].SubscriptionUnit != null) {
+          this.LiveDataBox.TotalSold = this.liveNav[0].SubscriptionUnit;
+        } else {
+          this.LiveDataBox.TotalSold = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].InstitutionalInvestorUnitPercent != null) {
+          this.LiveDataBox.InstituePerc = this.liveNav[0].InstitutionalInvestorUnitPercent;
+        } else {
+          this.LiveDataBox.InstituePerc = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].RetailInvestorUnitsPercent != null) {
+          this.LiveDataBox.RetailPerc = this.liveNav[0].RetailInvestorUnitsPercent;
+        } else {
+          this.LiveDataBox.RetailPerc = "اطلاعات وجود ندارد";
+        }
+        if (this.liveNav[0].SubscriptionNAV != null) {
+          this.LiveDataBox.LiveSub = this.liveNav[0].SubscriptionNAV;
+        } else {
+          if (
+            this.liveNav[0].purchasePrice != null &&
+            this.liveNav[0].purchasePrice != 0
+          ) {
+            this.LiveDataBox.LiveSub = this.liveNav[0].purchasePrice;
+          } else {
+            this.LiveDataBox.LiveSub = "اطلاعات وجود ندارد";
+          }
+        }
 
+        if (this.liveNav[0].RedemptionNAV != null) {
+          this.LiveDataBox.LiveRed = this.liveNav[0].RedemptionNAV;
+        } else {
+          if (
+            this.liveNav[0].redeptionPrice != null &&
+            this.liveNav[0].redeptionPrice != 0
+          ) {
+            this.LiveDataBox.LiveRed = this.liveNav[0].redeptionPrice;
+          } else {
+            this.LiveDataBox.LiveRed = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].StaticalNAV != null) {
+          this.LiveDataBox.LiveStat = this.liveNav[0].StaticalNAV;
+        } else {
+          if (
+            this.liveNav[0].statisticalValue != null &&
+            this.liveNav[0].statisticalValue != 0
+          ) {
+            this.LiveDataBox.LiveStat = this.liveNav[0].statisticalValue;
+          } else {
+            this.LiveDataBox.LiveStat = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].TotalUnit != null) {
+          this.LiveDataBox.TotalUnit = this.liveNav[0].TotalUnit;
+        } else {
+          if (
+            this.liveNav[0].total_unit_count != null &&
+            this.liveNav[0].total_unit_count != 0
+          ) {
+            this.LiveDataBox.TotalUnit = this.liveNav[0].total_unit_count;
+          } else {
+            this.LiveDataBox.TotalUnit = "اطلاعات وجود ندارد";
+          }
+        }
+        if (this.liveNav[0].NetAssetValue != null) {
+          this.LiveDataBox.LiveNavAm = this.liveNav[0].NetAssetValue;
+        } else {
+          if (
+            this.liveNav[0].total_net_asset_value_with_sell_commission !=
+              null &&
+            this.liveNav[0].total_net_asset_value_with_sell_commission != 0
+          ) {
+            this.LiveDataBox.LiveNavAm = this.liveNav[0].total_net_asset_value_with_sell_commission;
+          } else {
+            this.LiveDataBox.LiveNavAm = "اطلاعات وجود ندارد";
+          }
+        }
+      }
+    },
     //? AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%
     onQuickFilterChanged(event) {
       this.gridOptions.api.setQuickFilter(event.target.value);
@@ -984,9 +1073,9 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   mounted() {
-    this.populateData();
-    this.populateData2();
-    this.populateData3();
+    // this.populateData();
+    // this.populateData2();
+    // this.populateData3();
     this.GetFiltered();
   },
   watch: {
@@ -1006,6 +1095,9 @@ export default {
         this.dataFetch = true;
       }
       this.GetFiltered();
+    },
+    liveNav() {
+      this.populateData5();
     }
   }
 };

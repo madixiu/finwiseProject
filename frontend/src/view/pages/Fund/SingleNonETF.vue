@@ -16,7 +16,8 @@
                 آخرین به روز رسانی :
                 <span class="spandata"> {{ this.metadata.LastNavDate }}</span>
               </h6>
-              <v-btn icon :href="this.metadata.webSite" target="_blank">
+              <v-btn icon @click=ClickFundLink>
+                
                 <v-icon color="#188dc9">mdi-web</v-icon>
               </v-btn>
             </div>
@@ -91,6 +92,7 @@
           :industry="industrydata"
           :assettype="assettypedata"
           :historicNav="historicNavData"
+          :liveNav="LiveNavData"
         ></liveWidget>
       </div>
       <!-- <div class="col-xxl-3 col-lg-3 col-md-12">
@@ -125,6 +127,7 @@ export default {
       industrydata: [],
       assettypedata: [],
       historicNavData: [],
+      LiveNavData: [],
       cryptolive: [],
       lastUpdated: ""
     };
@@ -151,6 +154,16 @@ export default {
     }
   },
   methods: {
+    ClickFundLink(){
+      if(!(String(this.metadata.webSite).includes('http'))){
+        
+        window.open('http://'+this.metadata.webSite, "_blank")
+      }
+      else{
+        window.open(this.metadata.webSite, "_blank")
+      }
+      
+    },
     numberWithCommas(x) {
       if (x == "-" || x === undefined) {
         return "-";
@@ -190,7 +203,11 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getThree().then(reposonseN => {
             // eslint-disable-next-line no-unused-vars
-            this.getFour().then(reposonseF => {});
+            this.getFour().then(reposonseF => {
+
+            // eslint-disable-next-line no-unused-vars
+              this.getFive().then(reposonseF1 => {});
+            });
           });
         });
       });
@@ -244,6 +261,17 @@ export default {
         .get("/api/Funds/FundsHistoricNAV/" + this.$route.params.id + "/")
         .then(response1 => {
           this.historicNavData = response1.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getFive() {
+      this.LiveNavData = [];
+      await this.axios
+        .get("/api/Funds/FundsLive/" + this.$route.params.id + "/")
+        .then(response1 => {
+          this.LiveNavData = response1.data;
         })
         .catch(error => {
           console.error(error);
