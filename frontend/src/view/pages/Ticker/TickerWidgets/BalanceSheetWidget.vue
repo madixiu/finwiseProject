@@ -56,7 +56,8 @@
               <div class="card-header border-0">
                 <h3 class="card-title font-weight-bolder FinancialStrength">
                   ترازنامه دوره {{ itemR.period }} ماه منتهی به
-                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }} - {{itemR.reportStatus}}
+                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }} -
+                  {{ itemR.reportStatus }}
                 </h3>
               </div>
               <div class="row">
@@ -110,7 +111,7 @@
                   </div>
                 </div>
                 <div class="col-xxl-6">
-                   <div class="card-body d-flex flex-column">
+                  <div class="card-body d-flex flex-column">
                     <div class="card-header border-0">
                       <h4
                         class="card-title font-weight-bolder FinancialStrength"
@@ -204,7 +205,6 @@
                       </template>
                     </v-data-table>
                   </div>
-                 
                 </div>
               </div>
             </v-tab-item>
@@ -312,7 +312,7 @@ export default {
     },
     populateData() {
       this.DataItems2 = this.notices;
-      this.loading=false
+      this.loading = false;
     },
     gettabs() {
       var lookup = {};

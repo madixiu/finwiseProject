@@ -71,7 +71,7 @@ export default {
       tableData: null,
       sortBy: "ticker",
       Tablefilter: "",
-      TypeSearch: "",
+      TypeSearch: ""
     };
   },
   watch: {
@@ -497,8 +497,8 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketSandoq.send(JSON.stringify(barier));
+        // let barier = { request: "get" };
+        // this.$socketSandoq.send(JSON.stringify(barier));
       }, 3000);
     },
     liveChecker() {
@@ -510,7 +510,7 @@ export default {
         date.getDay() != 4
       ) {
         this.WebsocketRequest = true;
-        this.liveData();
+        // this.liveData();
       } else {
         this.WebsocketRequest = false;
       }
@@ -518,8 +518,8 @@ export default {
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketSandoq.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketSandoq.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

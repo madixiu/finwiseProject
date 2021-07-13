@@ -1,6 +1,6 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <div>
     <v-skeleton-loader
       type=" table-heading, table-thead, table-tbody"
       v-if="loading"
@@ -134,11 +134,31 @@
                 dense
                 @change="GetFiltered"
               >
-                <v-radio label="یک هفته اخیر" value="1W"></v-radio>
-                <v-radio label="یک ماه اخیر" value="1M"></v-radio>
-                <v-radio label="از ابتدای سال" value="YTD"></v-radio>
-                <v-radio label="یک سال اخیر" value="1Y"></v-radio>
-                <v-radio label="از ابتدا" value="All"></v-radio>
+                <v-radio
+                  class="radioBTN"
+                  label="یک هفته اخیر"
+                  value="1W"
+                ></v-radio>
+                <v-radio
+                  class="radioBTN"
+                  label="یک ماه اخیر"
+                  value="1M"
+                ></v-radio>
+                <v-radio
+                  class="radioBTN"
+                  label="از ابتدای سال"
+                  value="YTD"
+                ></v-radio>
+                <v-radio
+                  class="radioBTN"
+                  label="یک سال اخیر"
+                  value="1Y"
+                ></v-radio>
+                <v-radio
+                  class="radioBTN"
+                  label="از ابتدا"
+                  value="All"
+                ></v-radio>
               </v-radio-group>
               <hr />
               <div class="d-flex flex-row">
@@ -169,11 +189,10 @@
         <v-tab-item>
           <v-card height="450" flat>
             <ag-grid-vue
-              :style="`width: 100%;  font-family: Vazir-Medium-FD`"
+              :style="`width: 100%;height:560px;  font-family: Vazir-Medium-FD`"
               class="ag-theme-balham"
               :columnDefs="FundsHeader"
               :defaultColDef="defaultColDef"
-              rowSelection="multiple"
               :cacheQuickFilter="true"
               :sideBar="sideBar"
               :enableRtl="true"
@@ -190,7 +209,7 @@
             <ApexChart
               type="pie"
               width="100%"
-              height="180%"
+              height="200%"
               :series="AssetTypePie"
               :chartOptions="AssetTypeValueOptions"
             />
@@ -289,7 +308,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
 import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
 import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
@@ -400,7 +418,7 @@ export default {
               //   let parts = n.toString().split(".");
               // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               //  val = parts.join(".");
-              let val = (n / 1000000000).toLocaleString();
+  
               return `<div class="ApexTooltip">
             <div class="topDivTooltip" style=background-color:${backgroundColor}> 
               <span style=color:#fff>
@@ -408,8 +426,7 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
-              <span style=color:#000;font-size:0.8em>${val}</span>
+              <span style=color:#000;font-size:0.8em>${n}</span>
 
             
 
@@ -479,12 +496,13 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let backgroundColor = w.config.colors[seriesIndex];
             let n = series[seriesIndex];
+            console.log(series);
             // let val = ""
             if (n != undefined) {
               //   let parts = n.toString().split(".");
               // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               //  val = parts.join(".");
-              let val = (n / 1000000000).toLocaleString();
+              
               return `<div class="ApexTooltip">
             <div class="topDivTooltip" style=background-color:${backgroundColor}> 
               <span style=color:#fff>
@@ -492,8 +510,7 @@ export default {
               </span>
               </div>
               <div class="bottomDivTooltip">
-              <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
-              <span style=color:#000;font-size:0.8em>${val}</span>
+              <span style=color:#000;font-size:0.8em>${n}</span>
 
             
 
@@ -531,6 +548,16 @@ export default {
         xaxis: {
           // type: "datetime",
           // min: new Date("01 Mar 2012").getTime(),
+          tooltip: {
+            // eslint-disable-next-line no-unused-vars
+            formatter: function(value, timestamp) {
+              return new Date(
+                timestamp.w.globals.seriesX[timestamp.seriesIndex][
+                  timestamp.dataPointIndex
+                ]
+              ).toLocaleDateString("fa-IR");
+            }
+          },
           tickAmount: 6,
           labels: {
             formatter: function(value, timestamp) {
@@ -538,8 +565,14 @@ export default {
             }
           }
         },
+        yaxis:{
+          title:{
+            text: "ریال"
+
+          }
+        },
         noData: {
-          text: "No Data",
+          text: "بدون داده",
           align: "center",
           verticalAlign: "middle",
           offsetX: 0,
@@ -550,12 +583,59 @@ export default {
           }
         },
         tooltip: {
-          x: {
-            show: true
-            // format: "dd MM yyyy",
-            // formatter: function(value, timestamp) {
-            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
-            // },
+          // x: {
+          //   show: true
+          // }
+          // eslint-disable-next-line no-unused-vars
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            // let n = series[seriesIndex][dataPointIndex];
+            // console.log(w);
+            let date = new Date(
+              w.globals.seriesX[seriesIndex][dataPointIndex]
+            ).toLocaleDateString("fa-IR");
+            console.log(w);
+
+            return `<div class="ApexTooltip">
+            <div class="topDivTooltip"> 
+              <span>
+              ${date}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span class='apexcharts-tooltip-marker' style='background-color: ${w.globals.colors[0]}'></span>
+
+              <span style='font-size:0.8em'>${w.globals.seriesNames[0]}: </span>
+              
+              <span style='font-size:0.8em'>${series[0][dataPointIndex]}</span>
+            
+
+              </div>
+              <div class="bottomDivTooltip">
+              <span class='apexcharts-tooltip-marker' style='background-color: ${w.globals.colors[1]}'></span>
+
+              <span style='font-size:0.8em'>${w.globals.seriesNames[1]}: </span>
+
+              <span style='font-size:0.8em'>${series[1][dataPointIndex]}</span>
+            
+
+              </div>
+              <div class="bottomDivTooltip">
+              <span class='apexcharts-tooltip-marker' style='background-color: ${w.globals.colors[2]}'></span>
+              <span style='font-size:0.8em'>${w.globals.seriesNames[2]}: </span>
+
+              <span style='font-size:0.8em'>${series[2][dataPointIndex]}</span>
+            
+
+              </div>
+              </div>
+            `;
+            // let backgroundColor = w.config.colors[seriesIndex];
+            // console.log(backgroundColor);
+            // date
+            // console.log(w.globals.seriesX[]);
+            // console.log(seriesIndex);
+            // console.log(series);
+            // console.log(dataPointIndex);
           }
         },
         fill: {
@@ -588,7 +668,7 @@ export default {
           style: "hollow"
         },
         noData: {
-          text: "No Data",
+          text: "بدون داده",
           align: "center",
           verticalAlign: "middle",
           offsetX: 0,
@@ -598,7 +678,30 @@ export default {
             fontFamily: "Vazir-Medium-FD"
           }
         },
+        yaxis: {
+          title: {
+            // text: "میلیارد ریال",
+            text: "لایر درایلیم",
+            style: {
+              cssClass: "apexcharts-yaxis-title"
+            }
+          },
+          labels: {
+            formatter: function(val) {
+              return val / 1000000000;
+            }
+          },
+        },
         xaxis: {
+          tooltip: {
+            formatter: function(value, timestamp) {
+              return new Date(
+                timestamp.w.globals.seriesX[timestamp.seriesIndex][
+                  timestamp.dataPointIndex
+                ]
+              ).toLocaleDateString("fa-IR");
+            }
+          },
           // type: "datetime",
           // min: new Date("01 Mar 2012").getTime(),
           tickAmount: 6,
@@ -609,13 +712,32 @@ export default {
           }
         },
         tooltip: {
-          x: {
-            show: true
-            // format: "dd MM yyyy",
-            // ,
-            // formatter: function(value, timestamp) {
-            //   return new Date(timestamp).toLocaleDateString("fa-IR").format("dd MM")
-            // },
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            // let n = series[seriesIndex][dataPointIndex];
+            // console.log(w);
+            let date = new Date(
+              w.globals.seriesX[seriesIndex][dataPointIndex]
+            ).toLocaleDateString("fa-IR");
+            console.log(w);
+
+            return `<div class="ApexTooltip">
+            <div class="topDivTooltip"> 
+              <span>
+              ${date}
+              </span>
+              </div>
+              <div class="bottomDivTooltip">
+              <span class='apexcharts-tooltip-marker' style='background-color: ${w.globals.colors[0]}'></span>
+
+              <span style='font-size:0.8em'>${w.globals.seriesNames[0]}: </span>
+              
+              <span style='font-size:0.8em'>${series[0][dataPointIndex]}</span>
+            
+
+              </div>
+      
+              </div>
+            `;
           }
         },
         fill: {
@@ -640,9 +762,6 @@ export default {
       }
     };
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-  },
   created() {
     // GRID LOCALE FILE LOAD
     this.localeText = AG_GRID_LOCALE_FA;
@@ -655,8 +774,8 @@ export default {
       rowClass: "ag-grid-row-class",
 
       // headerHeight: 20,
-      rowHeight: 22,
-      getRowNodeId: data => data.persianDate
+      rowHeight: 22
+      // getRowNodeId: data => data.persianDate
     };
     this.defaultColDef = {
       flex: 1,
@@ -723,7 +842,7 @@ export default {
         }
       },
       {
-        headerName: "تاریخ قمری",
+        headerName: "تاریخ میلادی",
         field: "englishDate",
         sortable: true
       },
@@ -837,7 +956,6 @@ export default {
               (d.persianDate.includes("/") &&
                 d.persianDate.split("/")[0] == pYear)
             ) {
-              // console.log(d.persianDate.split("/")[0]);
               filtered.push([D.getTime(), d.purchasePrice]);
               filtered2.push([D.getTime(), d.redeptionPrice]);
               filtered3.push([D.getTime(), d.statisticalValue]);
@@ -882,7 +1000,7 @@ export default {
             ]);
           });
         }
-        // console.log(filtered4)
+        console.log(filtered4);
         this.NavChart.series = [];
         this.NavChart2.series = [];
         this.NavChart.series.push({ name: "قیمت صدور", data: filtered });
@@ -892,8 +1010,8 @@ export default {
           name: "جمع خالص دارایی",
           data: filtered4
         });
-        this.NavChartKey = this.NavChartKey + 1;
-        this.NavChartKey2 = this.NavChartKey2 + 1;
+        this.NavChartKey += 1;
+        this.NavChartKey2 += 1;
       }
     },
     numberWithCommas(x) {
@@ -1103,6 +1221,35 @@ export default {
 };
 </script>
 <style scoped>
+/* Radio Button classes */
+.radioBTN /deep/ .v-input--selection-controls__ripple {
+  height: 16px !important;
+  width: 16px !important;
+  left: -3px !important;
+  top: calc(50% - 15px) !important;
+}
+.radioBTN /deep/ .v-icon.v-icon {
+  font-size: 18px !important;
+}
+.radioBTN /deep/ .v-application--is-rtl .v-input--selection-controls__input {
+  margin-left: 1px;
+}
+
+.radioBTN /deep/ label {
+  display: inline-block;
+  margin-bottom: 0rem;
+}
+.radioBTN /deep/ .v-label {
+  font-size: 0.8em !important;
+  font-family: "Vazir-Light-FD";
+}
+.radioBTN /deep/ .theme--light.v-label {
+  color: #000 !important;
+}
+/************* Radio Button classes ************/
+.apexcharts-yaxis-title{
+  direction: rtl !important;
+}
 .subheaderTitles {
   font-size: 1.1em;
   font-weight: 900;

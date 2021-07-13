@@ -2,7 +2,10 @@
   <div>
     <div class="row">
       <div class="col-xxl-12">
-        <SubHeaderWidget :tickerdata="subheaders" style="padding-bottom:5px;padding-top:5px"></SubHeaderWidget>
+        <SubHeaderWidget
+          :tickerdata="subheaders"
+          style="padding-bottom:5px;padding-top:5px"
+        ></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
         <BoardCeoWidget :notices="notice" :deposits="deposit"></BoardCeoWidget>

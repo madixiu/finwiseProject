@@ -845,10 +845,4 @@ export default {
   padding-left: 22px;
   direction: ltr;
 }
-.apexcharts-legend-text,
-.apexcharts-text,
-.apexcharts-title-text,
-.apexcharts-tooltip {
-  font-family: "Vazir-Medium-FD" !important;
-}
 </style>

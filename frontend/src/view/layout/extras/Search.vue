@@ -133,7 +133,9 @@ export default {
             if (result.TypeID == 3000 || result.TypeID == 3100) {
               this.$router.push({ path: `/SingleNonETF/${result.ID}` });
             } else {
-              alert(`You selected ${result.ID} which is oraq and not created`);
+              alert(
+                `You selected ${result.TypeID} which is oraq and not created`
+              );
             }
           }
         }

@@ -55,7 +55,8 @@
               <div class="card-header border-0">
                 <h4 class="card-title cellItem FinancialStrength">
                   صورت جریان وجوه نقدی دوره {{ itemR.period }} ماه منتهی به
-                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}- {{itemR.reportStatus}}
+                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }}-
+                  {{ itemR.reportStatus }}
                 </h4>
               </div>
               <div class="row">
@@ -224,7 +225,7 @@ export default {
     populateData() {
       this.DataItems2 = this.notices;
 
-      this.loading=false
+      this.loading = false;
     },
     gettabs() {
       var lookup = {};

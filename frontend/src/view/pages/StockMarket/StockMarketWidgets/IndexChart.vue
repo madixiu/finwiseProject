@@ -252,7 +252,6 @@
           </div>
         </div>
         <div
-        
           id="Chartcontainer_index"
           class="col-xxl-8 col-lg-8 col-md-12 col-sm-12"
         ></div>

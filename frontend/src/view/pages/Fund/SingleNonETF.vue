@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--begin::Dashboard-->
-    <div class="row">
-      <div class="col-xxl-12 col-lg-12 col-md-12">
+    <div class="row" style="padding-top:5px">
+      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-bottom:5px">
         <v-card>
           <div class="d-flex flex-row">
             <div class="col-xxl-4 col-lg-4 col-md-12 rtl_centerd ">
@@ -14,10 +14,9 @@
               </h4>
               <h6>
                 آخرین به روز رسانی :
-                <span class="spandata"> {{ this.metadata.LastNavDate }}</span>
+                <span class="spandata"> {{ metadata.LastNavDate }}</span>
               </h6>
-              <v-btn icon @click=ClickFundLink>
-                
+              <v-btn icon @click="ClickFundLink">
                 <v-icon color="#188dc9">mdi-web</v-icon>
               </v-btn>
             </div>
@@ -53,7 +52,7 @@
               <h4 class="titleHeaders ">
                 وضعیت صندوق:
                 <span class="spandata">
-                  {{ this.metadata.Status }}
+                  {{ metadata.Status }}
                 </span>
               </h4>
             </div>
@@ -86,7 +85,7 @@
           </div>
         </v-card>
       </div>
-      <div class="col-xxl-12 col-lg-12 col-md-12">
+      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <liveWidget
           :meta="metadata"
           :industry="industrydata"
@@ -154,15 +153,12 @@ export default {
     }
   },
   methods: {
-    ClickFundLink(){
-      if(!(String(this.metadata.webSite).includes('http'))){
-        
-        window.open('http://'+this.metadata.webSite, "_blank")
+    ClickFundLink() {
+      if (!String(this.metadata.webSite).includes("http")) {
+        window.open("http://" + this.metadata.webSite, "_blank");
+      } else {
+        window.open(this.metadata.webSite, "_blank");
       }
-      else{
-        window.open(this.metadata.webSite, "_blank")
-      }
-      
     },
     numberWithCommas(x) {
       if (x == "-" || x === undefined) {
@@ -204,8 +200,7 @@ export default {
           this.getThree().then(reposonseN => {
             // eslint-disable-next-line no-unused-vars
             this.getFour().then(reposonseF => {
-
-            // eslint-disable-next-line no-unused-vars
+              // eslint-disable-next-line no-unused-vars
               this.getFive().then(reposonseF1 => {});
             });
           });

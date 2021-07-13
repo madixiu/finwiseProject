@@ -2,11 +2,11 @@ import Vue from "vue";
 import VueApexCharts from "vue-apexcharts";
 
 Vue.use(VueApexCharts);
-window.Apex.chart = { fontFamily: "Vazir" };
+window.Apex.chart = { fontFamily: "Vazir-Medium-FD" };
 window.Apex.xaxis = {
   labels: {
     style: {
-      fontFamily: "Vazir",
+      fontFamily: "Vazir-Medium-FD",
       fontSize: "0.9em"
     }
   }
