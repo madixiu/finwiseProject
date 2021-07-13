@@ -486,7 +486,6 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let backgroundColor = w.config.colors[seriesIndex];
             let n = series[seriesIndex];
-            console.log(series);
             // let val = ""
             if (n != undefined) {
               //   let parts = n.toString().split(".");
@@ -577,7 +576,6 @@ export default {
             let date = new Date(
               w.globals.seriesX[seriesIndex][dataPointIndex]
             ).toLocaleDateString("fa-IR");
-            console.log(w);
 
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
@@ -691,7 +689,6 @@ export default {
             let date = new Date(
               w.globals.seriesX[seriesIndex][dataPointIndex]
             ).toLocaleDateString("fa-IR");
-            console.log(w);
 
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
@@ -973,7 +970,6 @@ export default {
             ]);
           });
         }
-        console.log(filtered4);
         this.NavChart.series = [];
         this.NavChart2.series = [];
         this.NavChart.series.push({ name: "قیمت صدور", data: filtered });

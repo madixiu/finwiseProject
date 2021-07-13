@@ -706,7 +706,7 @@ export default {
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
-      console.log(ShowData);
+      // console.log(ShowData);
       let FinalData = [];
       // let c = 0;
       for (let j in uniqeItems) {
@@ -724,7 +724,7 @@ export default {
         FinalData.push(temp);
       }
 
-      console.log(FinalData);
+      // console.log(FinalData);
       this.Chart2options.series = FinalData;
       this.ApexChartcomponentKey2 = this.ApexChartcomponentKey2 + 1;
     }

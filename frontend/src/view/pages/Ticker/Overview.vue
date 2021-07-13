@@ -166,7 +166,6 @@ export default {
         });
     },
     async getOne() {
-      console.log("REQ");
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {

@@ -453,7 +453,7 @@ export default {
       }
     },
     GetFiltered() {
-      console.log(this.ISCHART_Items_Selected);
+      // console.log(this.ISCHART_Items_Selected);
       // eslint-disable-next-line no-unused-vars
       let tempData = [];
       if (this.ISCHART_Aggregated_Selected == "تلفیقی") {
@@ -512,7 +512,7 @@ export default {
           this.ISCHART_Items_Selected.includes(d.Translated) &&
           A.includes(d.toDate)
         ) {
-          console.log(d.Translated);
+          // console.log(d.Translated);
           filtered.push(d);
         }
       });
@@ -538,7 +538,7 @@ export default {
         k["Value"] = item.thisPeriod;
         ShowData.push(k);
       });
-      console.log(uniqeItems);
+      // console.log(uniqeItems);
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
@@ -659,7 +659,7 @@ export default {
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
-      console.log(ShowData);
+      // console.log(ShowData);
       let FinalData = [];
       // let c = 0;
       for (let j in uniqeItems) {
@@ -677,7 +677,7 @@ export default {
         FinalData.push(temp);
       }
 
-      console.log(FinalData);
+      // console.log(FinalData);
       this.Chart2options.series = FinalData;
       this.ApexChartcomponentKey2 = this.ApexChartcomponentKey2 + 1;
     }
