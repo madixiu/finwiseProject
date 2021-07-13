@@ -363,8 +363,6 @@ export default {
           type: "pie",
           fontFamily: "Vazir-Medium-FD",
           events: {
-            // legendClick: function(chartContext, seriesIndex, config) {
-            // },
             dataPointSelection: (event, chartContext, config) => {
               this.ChartClick(
                 "Industries",
@@ -413,12 +411,7 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let backgroundColor = w.config.colors[seriesIndex];
             let n = series[seriesIndex];
-            // let val = ""
             if (n != undefined) {
-              //   let parts = n.toString().split(".");
-              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              //  val = parts.join(".");
-  
               return `<div class="ApexTooltip">
             <div class="topDivTooltip" style=background-color:${backgroundColor}> 
               <span style=color:#fff>
@@ -427,9 +420,6 @@ export default {
               </div>
               <div class="bottomDivTooltip">
               <span style=color:#000;font-size:0.8em>${n}</span>
-
-            
-
               </div>
               </div>
             `;
@@ -502,7 +492,7 @@ export default {
               //   let parts = n.toString().split(".");
               // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               //  val = parts.join(".");
-              
+
               return `<div class="ApexTooltip">
             <div class="topDivTooltip" style=background-color:${backgroundColor}> 
               <span style=color:#fff>
@@ -565,10 +555,9 @@ export default {
             }
           }
         },
-        yaxis:{
-          title:{
+        yaxis: {
+          title: {
             text: "ریال"
-
           }
         },
         noData: {
@@ -583,13 +572,8 @@ export default {
           }
         },
         tooltip: {
-          // x: {
-          //   show: true
-          // }
           // eslint-disable-next-line no-unused-vars
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            // let n = series[seriesIndex][dataPointIndex];
-            // console.log(w);
             let date = new Date(
               w.globals.seriesX[seriesIndex][dataPointIndex]
             ).toLocaleDateString("fa-IR");
@@ -629,13 +613,6 @@ export default {
               </div>
               </div>
             `;
-            // let backgroundColor = w.config.colors[seriesIndex];
-            // console.log(backgroundColor);
-            // date
-            // console.log(w.globals.seriesX[]);
-            // console.log(seriesIndex);
-            // console.log(series);
-            // console.log(dataPointIndex);
           }
         },
         fill: {
@@ -690,7 +667,7 @@ export default {
             formatter: function(val) {
               return val / 1000000000;
             }
-          },
+          }
         },
         xaxis: {
           tooltip: {
@@ -702,8 +679,6 @@ export default {
               ).toLocaleDateString("fa-IR");
             }
           },
-          // type: "datetime",
-          // min: new Date("01 Mar 2012").getTime(),
           tickAmount: 6,
           labels: {
             formatter: function(value, timestamp) {
@@ -713,8 +688,6 @@ export default {
         },
         tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            // let n = series[seriesIndex][dataPointIndex];
-            // console.log(w);
             let date = new Date(
               w.globals.seriesX[seriesIndex][dataPointIndex]
             ).toLocaleDateString("fa-IR");
@@ -1191,9 +1164,6 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   mounted() {
-    // this.populateData();
-    // this.populateData2();
-    // this.populateData3();
     this.GetFiltered();
   },
   watch: {
@@ -1247,7 +1217,7 @@ export default {
   color: #000 !important;
 }
 /************* Radio Button classes ************/
-.apexcharts-yaxis-title{
+.apexcharts-yaxis-title {
   direction: rtl !important;
 }
 .subheaderTitles {

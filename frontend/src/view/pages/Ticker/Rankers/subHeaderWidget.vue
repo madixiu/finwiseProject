@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top:5px">
+  <div style="padding-top:0px">
     <v-row
       no-gutters
       class="d-flex flex-row justify-content-between"
@@ -11,7 +11,7 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             نماد
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
+          <v-col cols="12" style="padding-bottom:5px;padding-left:5px">
             <span>
               {{ LiveDataItems.ticker }}
             </span>
@@ -23,27 +23,32 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             آخرین قیمت
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
-            <span
-              class="spandata ltr_aligned mr-1"
-              v-bind:class="[
-                [
-                  LiveDataItems.last > LiveDataItems.yesterday
-                    ? 'greenItem ltr_aligned'
-                    : LiveDataItems.last == LiveDataItems.yesterday
-                    ? 'blackItem ltr_aligned'
-                    : LiveDataItems.last < LiveDataItems.yesterday
-                    ? 'redItem ltr_aligned'
-                    : ''
-                ]
-              ]"
-              >%{{
-                Math.round(
-                  (LiveDataItems.last / LiveDataItems.yesterday - 1) * 100 * 100
-                ) / 100
-              }}</span
-            >
-            <span>{{ numberWithCommas(LiveDataItems.last) }} </span>
+          <v-col
+            cols="12"
+            class="d-flex justify-end"
+            style="padding-bottom:5px;padding-left:5px"
+          >
+            <div class="d-flex mr-2">
+              <span>{{ closePrice }} </span>
+            </div>
+            <div class="d-flex">
+              <span
+                dir="ltr"
+                class="spandata"
+                v-bind:class="[
+                  [
+                    LiveDataItems.last > LiveDataItems.yesterday
+                      ? 'greenItem'
+                      : LiveDataItems.last == LiveDataItems.yesterday
+                      ? 'blackItem'
+                      : LiveDataItems.last < LiveDataItems.yesterday
+                      ? 'redItem'
+                      : ''
+                  ]
+                ]"
+                >%{{ closePercent }}</span
+              >
+            </div>
           </v-col>
         </v-card>
       </v-col>
@@ -52,31 +57,32 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             قیمت پایانی
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
-            <span
-              class="spandata ltr_aligned"
-              v-bind:class="[
-                [
-                  LiveDataItems.close > LiveDataItems.yesterday
-                    ? 'greenItem ltr_aligned'
-                    : LiveDataItems.close == LiveDataItems.yesterday
-                    ? 'blackItem ltr_aligned'
-                    : LiveDataItems.close < LiveDataItems.yesterday
-                    ? 'redItem ltr_aligned'
-                    : ''
-                ]
-              ]"
-              >%{{
-                Math.round(
-                  (LiveDataItems.close / LiveDataItems.yesterday - 1) *
-                    100 *
-                    100
-                ) / 100
-              }}</span
-            >
-            <span style="direction:ltr">{{
-              numberWithCommas(LiveDataItems.close)
-            }}</span>
+          <v-col
+            cols="12"
+            class="d-flex justify-end"
+            style="padding-bottom:5px;padding-left:5px"
+          >
+            <div class="d-flex mr-2">
+              <span style="direction:ltr">{{ finalPrice }}</span>
+            </div>
+            <div class="d-flex">
+              <span
+                dir="ltr"
+                class="spandata"
+                v-bind:class="[
+                  [
+                    LiveDataItems.close > LiveDataItems.yesterday
+                      ? 'greenItem'
+                      : LiveDataItems.close == LiveDataItems.yesterday
+                      ? 'blackItem'
+                      : LiveDataItems.close < LiveDataItems.yesterday
+                      ? 'redItem'
+                      : ''
+                  ]
+                ]"
+                >%{{ finalPercent }}</span
+              >
+            </div>
           </v-col>
         </v-card>
       </v-col>
@@ -86,13 +92,17 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             ارزش معاملات
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
-            <span>{{
-              numberWithCommas(
-                roundTo(LiveDataItems.TradeValue / 1000000000, 2)
-              )
-            }}</span>
-            <span>میلیارد ریال</span>
+          <v-col
+            class="d-flex justify-end"
+            cols="12"
+            style="padding-bottom:5px;padding-left:5px"
+          >
+            <div class="d-flex mr-2">
+              <span>{{ Value }}</span>
+            </div>
+            <div class="d-flex align-center">
+              <span style="font-size:0.8em">میلیارد ریال</span>
+            </div>
           </v-col>
         </v-card>
       </v-col>
@@ -101,11 +111,17 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             حجم معاملات
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
-            <span>{{
-              numberWithCommas(roundTo(LiveDataItems.TradeVolume / 1000000, 2))
-            }}</span>
-            <span>میلیون</span>
+          <v-col
+            class="d-flex justify-end"
+            cols="12"
+            style="padding-bottom:5px;padding-left:5px"
+          >
+            <div class="d-flex mr-2">
+              <span>{{ Volume }}</span>
+            </div>
+            <div class="d-flex align-center">
+              <span style="font-size:0.8em">میلیون</span>
+            </div>
           </v-col>
         </v-card>
       </v-col>
@@ -115,8 +131,10 @@
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             وضعیت
           </v-col>
-          <v-col cols="12" style="padding-bottom:5px">
-            {{ LiveDataItems.Status }}
+          <v-col cols="12" style="padding-bottom:5px;padding-left:5px">
+            <v-chip x-small outlined :color="StatusColor">
+              {{ LiveDataItems.Status }}
+            </v-chip>
           </v-col>
         </v-card>
       </v-col>
@@ -125,8 +143,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-// import axios from "axios";
 export default {
   name: "SubHeaderWidget",
   props: ["tickerdata"],
@@ -138,7 +154,54 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"])
+    closePercent() {
+      return (
+        Math.round(
+          (this.LiveDataItems.last / this.LiveDataItems.yesterday - 1) *
+            100 *
+            100
+        ) / 100
+      );
+    },
+    closePrice() {
+      if (this.LiveDataItems.last != undefined)
+        return this.LiveDataItems.last.toLocaleString();
+      else return "-";
+    },
+    finalPrice() {
+      if (this.LiveDataItems.close != undefined)
+        return this.LiveDataItems.close.toLocaleString();
+      else return "-";
+    },
+    finalPercent() {
+      return (
+        Math.round(
+          (this.LiveDataItems.close / this.LiveDataItems.yesterday - 1) *
+            100 *
+            100
+        ) / 100
+      );
+    },
+    Volume() {
+      if (this.LiveDataItems.TradeVolume != undefined)
+        return this.roundTo(
+          this.LiveDataItems.TradeVolume / 1000000,
+          2
+        ).toLocaleString();
+      else return "-";
+    },
+    Value() {
+      if (this.LiveDataItems.TradeValue != undefined)
+        return this.roundTo(
+          this.LiveDataItems.TradeValue / 1000000000,
+          2
+        ).toLocaleString();
+      else return "-";
+    },
+    StatusColor() {
+      if (this.LiveDataItems.Status == "مجاز") return "#014f86";
+      else return "black";
+    }
   },
   methods: {
     LivepopulateData() {
@@ -172,23 +235,6 @@ export default {
       }
       this.loading = false;
     },
-    numberWithCommas(x) {
-      if (isNaN(x)) {
-        return "";
-      }
-      if (x == "-") {
-        return x;
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    setlastperc: function() {
-      return;
-    },
-    // LivepopulateData() {
-    //   this.LiveDataItems = this.mostviewed;
-    // },
     roundTo(n, digits) {
       if (n == "-") {
         return n;
@@ -208,7 +254,7 @@ export default {
       if (negative) {
         n = (n * -1).toFixed(digits);
       }
-      return n;
+      return parseFloat(n);
     }
   },
   mounted() {
@@ -234,49 +280,15 @@ export default {
   font-weight: 500;
   /* font-family: "IRANSansXFaNum-Regular"; */
 }
-.flex-item {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  order: 0;
-}
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-  font-size: 1em;
-  font-family: "Vazir-Medium-FD";
-}
-.text-center * {
-  font-family: "Vazir-Medium-FD";
-  font-size: 1em;
-}
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left !important;
-}
-.valign * {
-  vertical-align: middle;
-}
 .redItem {
   color: #ef5350 !important;
 }
+
 .greenItem {
-  color: #088a2f93 !important;
+  /* color: #088a2f93 !important; */
+  color: green;
 }
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
+.blackItem {
+  color: black;
 }
 </style>

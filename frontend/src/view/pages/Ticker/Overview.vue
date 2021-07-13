@@ -2,10 +2,13 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-bottom:0px">
+      <div
+        class="col-xxl-12 col-lg-12 col-md-12"
+        style="padding-top:15px;padding-bottom:5px"
+      >
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
-      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:5px">
+      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <liveWidget
           :statistics="stats"
           :hh="hhdata"
@@ -90,6 +93,8 @@ export default {
     document.title = "Finwise - سهم";
   },
   mounted() {
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+
     this.loadData();
 
     this.liveChecker();
@@ -107,18 +112,17 @@ export default {
   watch: {
     "$route.params": {
       handler(newValue, oldValue) {
-        if (newValue != oldValue) {
-          this.loadData();
+        if (newValue != oldValue && oldValue != undefined) {
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+          this.loadData();
         }
       },
       immediate: true
     }
   },
   methods: {
+
     loadData() {
-      // eslint-disable-next-line no-unused-vars
-      // this.getAllowed().then(response => {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(responx => {
         // eslint-disable-next-line no-unused-vars
@@ -130,18 +134,7 @@ export default {
           });
         });
       });
-      // });
     },
-    // async getAllowed() {
-    //   await this.axios
-    //     .get("/api/tickerallnames")
-    //     .then(response3 => {
-    //       this.allowed = response3.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
     async getHH() {
       await this.axios
         .get("/api/LiveHHTicker/" + this.$route.params.id + "/")
@@ -152,16 +145,6 @@ export default {
           console.error(error);
         });
     },
-    // async getLiveData() {
-    //   await this.axios
-    //     .get("/api/LiveTicker/" + this.$route.params.id + "/")
-    //     .then(response3 => {
-    //       this.livedata = response3.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
     async getTwo() {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
@@ -183,49 +166,45 @@ export default {
         });
     },
     async getOne() {
+      console.log("REQ");
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(response1 => {
           this.subheaders = response1.data[0];
-
           this.livedata = response1.data;
-          // this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
-
           this.$store.dispatch(ADD_BREADCRUMB, [
             { title: this.subheaders.ticker }
           ]);
-          // console.log(this.$store.getters.breadcrumbs);
-          // console.log(this.$store.getters.pageTitle);
         })
         .catch(error => {
           console.error(error);
         });
     },
-    setActiveTab1(event) {
-      this.tabIndex = this.setActiveTab(event);
-    },
-    setActiveTab2(event) {
-      this.tabIndex2 = this.setActiveTab(event);
-    },
-    /**
-     * Set current active on click
-     * @param event
-     */
-    setActiveTab(event) {
-      // get all tab links
-      const tab = event.target.closest('[role="tablist"]');
-      const links = tab.querySelectorAll(".nav-link");
-      // remove active tab links
-      for (let i = 0; i < links.length; i++) {
-        links[i].classList.remove("active");
-      }
+    // setActiveTab1(event) {
+    //   this.tabIndex = this.setActiveTab(event);
+    // },
+    // setActiveTab2(event) {
+    //   this.tabIndex2 = this.setActiveTab(event);
+    // },
+    // /**
+    //  * Set current active on click
+    //  * @param event
+    //  */
+    // setActiveTab(event) {
+    //   // get all tab links
+    //   const tab = event.target.closest('[role="tablist"]');
+    //   const links = tab.querySelectorAll(".nav-link");
+    //   // remove active tab links
+    //   for (let i = 0; i < links.length; i++) {
+    //     links[i].classList.remove("active");
+    //   }
 
-      // set current active tab
-      event.target.classList.add("active");
+    //   // set current active tab
+    //   event.target.classList.add("active");
 
-      // set clicked tab index to bootstrap tab
-      return parseInt(event.target.getAttribute("data-tab"));
-    },
+    //   // set clicked tab index to bootstrap tab
+    //   return parseInt(event.target.getAttribute("data-tab"));
+    // },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
       let interval = setInterval(() => {
@@ -233,8 +212,8 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get", id: this.$route.params.id };
-        this.$socketLiveTickerData.send(JSON.stringify(barier));
+        // let barier = { request: "get", id: this.$route.params.id };
+        // this.$socketLiveTickerData.send(JSON.stringify(barier));
       }, 3000);
     },
     liveChecker() {
@@ -249,8 +228,8 @@ export default {
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketLiveTickerData.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketLiveTickerData.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

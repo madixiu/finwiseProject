@@ -4,16 +4,13 @@
       type=" table-heading, table-thead, table-tbody"
       v-if="loading"
     ></v-skeleton-loader>
-    <v-card height="500">
-      
-    </v-card>
+    <v-card height="500"> </v-card>
   </div>
 
   <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 // import ApexChart from "@/view/content/charts/ApexChart";
 
 export default {
@@ -118,7 +115,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     setclosingperc: function() {
       return Math.round((this.close / this.open - 1) * 100 * 100) / 100;
     },
@@ -158,7 +154,7 @@ export default {
         n = (n * -1).toFixed(digits);
       }
       return n;
-    },
+    }
     // populateData() {
     //   this.DataItems2 = this.statistics;
     //   Object.keys(this.DataItems2).forEach(key => {
@@ -261,8 +257,6 @@ export default {
     //   }
     // },
     // set FinancialStrength percent
-
-
   },
   mounted() {
     // this.populateData();
@@ -272,14 +266,14 @@ export default {
   },
   watch: {
     statistics() {
-    //   this.populateData();
+      //   this.populateData();
     },
     hh() {
-    //   this.populateData2();
+      //   this.populateData2();
     },
     liveData() {
       this.loading = false;
-    //   this.populateData3();
+      //   this.populateData3();
     }
   }
 };

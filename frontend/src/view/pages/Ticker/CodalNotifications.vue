@@ -2,10 +2,10 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12" style="padding-bottom:0px;padding-top:0px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
-      <div class="col-xxl-12">
+      <div class="col-xxl-12" style="padding-top:5px">
         <NotificationsWidget :notices="notice"></NotificationsWidget>
       </div>
     </div>

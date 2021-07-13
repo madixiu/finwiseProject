@@ -2,7 +2,7 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12" style="padding-bottom:5px;padding-top:0px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">

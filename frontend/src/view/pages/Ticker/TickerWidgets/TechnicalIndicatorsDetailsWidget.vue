@@ -11,9 +11,7 @@
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:0px;padding-right:20px"
         >
-          <!-- <div
-            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
+
           <v-card id="ParentCard" :height="cardheight">
             <v-card-title id="ParentCardTitle">
               <span> مجموع </span><br />
@@ -21,15 +19,12 @@
             <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
             <div id="ChartGeneral"></div>
           </v-card>
-          <!-- </div> -->
         </div>
         <div
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:0px;padding-right:5px"
         >
-          <!-- <div
-            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
+
           <v-card :height="cardheight">
             <v-card-title> <span> Moving Average </span><br /> </v-card-title>
             <v-divider class="mt-0 mb-0"></v-divider>
@@ -41,23 +36,17 @@
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:0px;padding-right:5px"
         >
-          <!-- <div
-            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
           <v-card :height="cardheight">
             <v-card-title> <span> Indicators </span><br /> </v-card-title>
             <v-divider class="mt-0 mb-0"></v-divider>
             <div id="ChartGeneral3"></div>
           </v-card>
-          <!-- </div> -->
         </div>
         <div
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:20px;padding-right:5px"
         >
-          <!-- <div
-            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
+
           <v-card :height="cardheight" width="100%">
             <v-card-title>
               <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>

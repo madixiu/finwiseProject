@@ -1,6 +1,6 @@
 <template>
   <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <div>
     <v-skeleton-loader
       type=" table-heading, table-thead, table-tbody"
       v-if="loading"

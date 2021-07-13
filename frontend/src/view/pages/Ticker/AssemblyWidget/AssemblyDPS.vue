@@ -2,7 +2,7 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12" style="padding-bottom:5px;padding-top:0px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-6">
@@ -21,7 +21,6 @@ import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import DPSWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyDPSWidget.vue";
 import ICWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyICwidget.vue";
-// import axios from "axios";
 export default {
   name: "Notifications",
   components: {
@@ -38,7 +37,6 @@ export default {
     };
   },
   mounted() {
-    // this.loadData2();
     this.loadData();
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "سود نقدی " }]);
   },
@@ -46,33 +44,14 @@ export default {
     subheaders() {
       this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
     }
-    // allowed() {
-    //   var flag = false;
-    //   for (var i = 0; i < this.allowed.length; i++) {
-    //     var obj = this.allowed[i];
-    //     if (obj.ID == this.$route.params.id) {
-    //       flag = true;
-    //     }
-    //   }
-    //   if (!flag) {
-    //     this.$router.push({ name: "wizard" });
-    //   }
-    // }
   },
   methods: {
     loadData() {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(response => {
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
         // eslint-disable-next-line no-unused-vars
         this.getThree().then(response2 => {
-          this.getTwo().then(function() {});
+          this.getTwo();
         });
       });
     },
