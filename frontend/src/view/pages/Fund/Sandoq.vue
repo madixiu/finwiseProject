@@ -67,9 +67,9 @@ export default {
       WebsocketRequest: false,
       isBusy: true,
       sortDesc: false,
-      filterOn: ["ticker"],
+      filterOn: ["name"],
       tableData: null,
-      sortBy: "ticker",
+      sortBy: "name",
       Tablefilter: "",
       TypeSearch: ""
     };
@@ -97,7 +97,7 @@ export default {
 
       // headerHeight: 20,
       rowHeight: 22,
-      getRowNodeId: data => data.ticker
+      getRowNodeId: data => data.ID
     };
     this.defaultColDef = {
       flex: 1,
@@ -150,11 +150,11 @@ export default {
 
     this.FundsHeader = [
       {
-        headerName: "نماد",
-        field: "ticker",
+        headerName: "نام",
+        field: "name",
 
         sortable: true,
-        maxWidth: 100,
+        // maxWidth: 100,
         pinned: "right",
         rowDrag: true,
         cellRenderer: params => {
@@ -175,13 +175,23 @@ export default {
         }
       },
       {
-        headerName: "بازار",
-        field: "marketName",
+        headerName: "بورسی",
+        field: "ETF",
         sortable: true
       },
       {
-        headerName: "تعداد معاملات",
-        field: "TradeCount",
+        headerName: "اندازه صندوق",
+        field: "Size",
+        sortable: true
+      },
+      {
+        headerName: "نوع صندوق",
+        field: "Type",
+        sortable: true
+      },
+      {
+        headerName: "قیمت صدور",
+        field: "SubscriptionNav",
         filter: "agNumberColumnFilter",
         sortable: true,
         cellRenderer: function(params) {
@@ -189,244 +199,79 @@ export default {
         }
       },
       {
-        headerName: "حجم معاملات",
-        field: "TradeVolume",
-        filter: "agNumberColumnFilter",
-
-        sortable: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "ارزش معاملات",
-        field: "TradeValue",
+        headerName: "قیمت ابطال",
+        field: "SubscriptionNav",
         filter: "agNumberColumnFilter",
         sortable: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
       },
-      {
-        headerName: "قیمت دیروز",
-        field: "yesterday",
+       {
+        headerName: "قیمت آماری",
+        field: "StaticalNav",
         filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "مجموع دارایی خالص",
+        field: "NetAssetValue",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toString().toLocaleString();
+        }
+      },
+       {
+        headerName: "تعداد واحد صندوق",
+        field: "TotalUnit",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "متولی",
+        field: "CustodianName",
         sortable: true,
         hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
       },
       {
-        headerName: "آخرین قیمت",
-        field: "last",
-        filter: "agNumberColumnFilter",
-        sortable: true,
-
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "درصد آخرین قیمت",
-        field: "lastPercent",
-        filter: "agNumberColumnFilter",
-        cellStyle: params => {
-          if (params.value > 0) {
-            //mark police cells as red
-            return {
-              display: "flex",
-              color: "green",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-          } else if (params.value < 0) {
-            return {
-              display: "flex",
-              color: "red",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-          } else
-            return {
-              display: "flex",
-              color: "black",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-        },
-        sortable: true,
-        cellRenderer: function(params) {
-          let Class = "";
-          let percent = params.value;
-          if (percent > 0) Class = "greenCell";
-          else if (percent < 0) {
-            Class = "redCell";
-            percent = "(" + Math.abs(percent) + ")";
-          }
-          return `<span class="${Class}"><span class="${Class}" style="font-size:0.9em">%</span>${percent}</span>`;
-        }
-      },
-      {
-        headerName: "قیمت پایانی",
-        field: "close",
-        filter: "agNumberColumnFilter",
-        sortable: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "درصد قیمت پایانی",
-        filter: "agNumberColumnFilter",
-        field: "closePercent",
-        sortable: true,
-        cellStyle: params => {
-          if (params.value > 0) {
-            //mark police cells as red
-            return {
-              display: "flex",
-              color: "green",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-          } else if (params.value < 0) {
-            return {
-              display: "flex",
-              color: "red",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-          } else
-            return {
-              display: "flex",
-              color: "black",
-              "justify-content": "center",
-              "border-left-color": "#e2e2e2",
-
-              "align-items": "center",
-              direction: "ltr"
-            };
-        },
-        cellRenderer: function(params) {
-          let Class = "";
-          let percent = params.value;
-          if (percent > 0) Class = "greenCell";
-          else if (percent < 0) {
-            Class = "redCell";
-            percent = "(" + Math.abs(percent) + ")";
-          }
-          return `<span class="${Class}">%${percent}</span>`;
-        }
-      },
-      {
-        headerName: "تعداد خرید حقیقی",
-        field: "CountBuy_Haghighi",
-        filter: "agNumberColumnFilter",
+        headerName: "مدیر صندوق",
+        field: "ManagerName",
         sortable: true,
         hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
       },
       {
-        headerName: "تعداد خرید حقوقی",
-        field: "CountBuy_Hoguhgi",
-        filter: "agNumberColumnFilter",
-
-        cellStyle: {
-          display: "flex",
-          "justify-content": "center",
-          "border-left-color": "#e2e2e2",
-
-          "align-items": "center"
-        },
+        headerName: "ضامن نقد شوندگی",
+        field: "LiquidityGuaranteeName",
         sortable: true,
         hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
+      },
+       {
+        headerName: "مدیر صندوق",
+        field: "ManagerName",
+        sortable: true,
+        hide: true,
       },
       {
-        headerName: "حجم خرید حقیقی",
-        field: "VolumeBuy_Haghighi",
-        filter: "agNumberColumnFilter",
-
+        headerName: "مدیر سرمایه گذاری",
+        field: "InvestmentManagerName",
         sortable: true,
         hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
       },
-      {
-        headerName: "حجم خرید حقوقی",
-        field: "VolumeBuy_Hoghughi",
-        filter: "agNumberColumnFilter",
-
+        {
+        headerName: "تاریخ شروع به کار",
+        field: "ActivityStartDate",
         sortable: true,
         hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
       },
-      {
-        headerName: "تعداد فروش حقیقی",
-        field: "CountSell_Haghighi",
-        filter: "agNumberColumnFilter",
-
-        sortable: true,
-        hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "تعداد فروش حقوقی",
-        field: "CountSell_Hoghughi",
-        filter: "agNumberColumnFilter",
-
-        sortable: true,
-        hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "حجم فروش حقیقی",
-        field: "VolumeSell_Haghighi",
-        filter: "agNumberColumnFilter",
-
-        sortable: true,
-        hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "حجم فروش حقوقی",
-        field: "VolumeSell_Hoghughi",
-        filter: "agNumberColumnFilter",
-        sortable: true,
-        hide: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      }
+      
     ];
   },
   mounted() {
@@ -451,7 +296,7 @@ export default {
       }
     },
     tickerClick(data) {
-      this.$router.push({ path: `/ticker/Overview/Overall/${data.ID}` });
+      this.$router.push({ path: `/SingleNonETF/${data.ID}` });
     },
     onReady(params) {
       let allColumnIds = [];
@@ -477,7 +322,7 @@ export default {
 
       await this.axios
 
-        .get("/api/Funds")
+        .get("/api/FundsAll")
         .then(response => {
           this.isBusy = false;
 

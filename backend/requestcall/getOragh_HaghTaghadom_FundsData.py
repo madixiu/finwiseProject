@@ -32,6 +32,26 @@ def getFundsData():
         return js
     else:
         return ("noData")
+def clearElem(x):
+    x=str(x)
+    if 'Element' not in str(x):
+        return x
+    else:
+        return "-"
+def getFundsAllData():
+    head = {'Accept-Profile':'funds'}
+    resp = requests.get('http://185.231.115.223:3000/View_FundsMeta',headers=head)
+    if resp.status_code == 200:
+        DX=pd.DataFrame(json.loads(resp.text))
+        for i in DX.columns:
+            if i not in ['ID','RedemptionNav','SubscriptionNav','StaticalNav','NetAssetValue','TotalUnit','HaghighShareHolders_Count','HaghighShareHolders_perc','HoghughiShareHolders_Count','HoghughiShareHolders_perc']:
+                DX[i]=DX[i].apply(clearElem)
+        return (json.loads(DX.to_json(orient='records')))
+        # js = json.loads(resp.text)
+        # js = additionalData(js)
+        return js
+    else:
+        return ("noData")        
 
 def additionalData(data):
     for item in data:

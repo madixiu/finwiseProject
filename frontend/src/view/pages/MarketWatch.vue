@@ -77,7 +77,6 @@ export default {
       tableMarketIndustryFilters: [],
       WebsocketRequest: false,
       selectedHeaderOptions: [],
-
       Tablefilter: "",
       // tableData: [],
       TypeSearch: "",

@@ -118,6 +118,7 @@ urlpatterns = [
    path("HaghTaghadom",getHaghTaghadom),
    path("Oragh",getOragh),
    path("Funds",getFunds),
+   path("FundsAll",getNewFunds),
    path("CryptoMarket",getCrypto),
 
    ####Commodity
