@@ -1,231 +1,418 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        سابقه قیمت
-      </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column">
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="جستجوی تاریخ"
-        single-line
-        hide-details
-        :search="search"
-        class="mt-0 pt-0"
-      ></v-text-field>
-      <v-data-table
-        :headers="headers"
-        :items="DataItems2"
-        class="elevation-1 FinancialStrength"
-        dense
-        :options.sync="options"
-        :search="search"
+  <div class="mt-2">
+    <v-card width="100%">
+      <ag-grid-vue
+        :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
+        class="ag-theme-balham"
+        :columnDefs="AdjustedHeader"
+        :defaultColDef="defaultColDef"
+        rowSelection="multiple"
+        :cacheQuickFilter="true"
+        :sideBar="sideBar"
+        :enableRtl="true"
+        :gridOptions="gridOptions"
+        @grid-ready="onReady"
+        @gridColumnsChanged="gridColumnsChanged"
+        :localeText="localeText"
       >
-        <template v-slot:[`item.persiandate`]="{ item }">
-          <span class="FinancialStrength"
-            >{{
-              item.persiandate.substring(0, 4) +
-                "/" +
-                item.persiandate.substring(4, 6) +
-                "/" +
-                item.persiandate.substring(6, 8)
-            }}
-          </span>
-        </template>
-        <template v-slot:[`item.high`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(item.high) }}
-          </span>
-        </template>
-        <template v-slot:[`item.low`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(item.low) }}
-          </span>
-        </template>
-        <template v-slot:[`item.closing`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(item.closing) }}
-          </span>
-        </template>
-        <template v-slot:[`item.adjustedclosing`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(roundTo(item.adjustedclosing, 0)) }}
-          </span>
-        </template>
-        <template v-slot:[`item.last`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(item.last) }}
-          </span>
-        </template>
-        <template v-slot:[`item.first`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(item.first) }}
-          </span>
-        </template>
-        <template v-slot:[`item.value`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(roundTo(item.value / 1000000000, 2)) }} میلیارد
-            ریال</span
-          >
-        </template>
-        <template v-slot:[`item.volume`]="{ item }">
-          <span class="FinancialStrength"
-            >{{ numberWithCommas(roundTo(item.volume / 1000000, 2)) }} میلیون
-            سهم
-          </span>
-        </template>
-      </v-data-table>
-    </div>
-    <!--end::Body-->
+      </ag-grid-vue>
+    </v-card>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+import { AgGridVue } from "ag-grid-vue";
 export default {
   name: "adjustedWidget",
-  props: ["adjusted"],
+  components: {
+    AgGridVue
+  },
+  props: {
+    adjusted: {
+      type: Array,
+      default: null
+    }
+  },
   data() {
     return {
-      search: "",
-      options: {
-        itemsPerPage: 20
-      },
-      headers: [
+      // * AGgrid base data
+      modules: AllModules,
+      gridApi: null,
+      defaultColDef: null,
+      gridOptions: null,
+      AdjustedHeader: [],
+      sideBar: null,
+      allColumnIds: [],
+      gridColumnApi: null,
+      localeText: null,
+      dataFetch: false,
+      // * %%%%%%%%%%%%%%%
+
+      height: "470px",
+      WebsocketRequest: false,
+      isBusy: true,
+      sortDesc: false,
+      filterOn: ["persiandate"],
+      tableData: null,
+      sortBy: "persiandate",
+      Tablefilter: "",
+      TypeSearch: ""
+    };
+  },
+  created() {
+    document.title = "Finwise - قیمت تعدیلی";
+
+    // GRID LOCALE FILE LOAD
+    this.localeText = AG_GRID_LOCALE_FA;
+
+    // GRID OPTIONS
+    this.gridOptions = {
+      suppressColumnVirtualisation: true,
+      rowDragManaged: true,
+      animateRows: true,
+      rowClass: "ag-grid-row-class",
+
+      // headerHeight: 20,
+      rowHeight: 22,
+      getRowNodeId: data => data.persiandate
+    };
+    this.defaultColDef = {
+      flex: 1,
+      minWidth: 100,
+      filter: true,
+      // sortable: true,
+      // headerHeight: 12,
+      enablePivot: false,
+      suppressMenu: true,
+      cellStyle: {
+        display: "flex",
+        "justify-content": "center",
+        "border-left-color": "#e2e2e2",
+        "align-items": "center",
+        direction: "ltr"
+      }
+    };
+
+    // AG Sidebar
+    this.sideBar = {
+      toolPanels: [
         {
-          text: "تاریخ شمسی",
-          value: "persiandate"
-        },
-        {
-          text: "قیمت پایانی",
-          value: "closing",
-          filterable: false
-        },
-        {
-          text: "قیمت تعدیلی",
-          value: "adjustedclosing",
-          filterable: false
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressSideButtons: false,
+            suppressColumnFilter: false,
+            suppressColumnSelectAll: false,
+            suppressColumnExpandAll: false
+          }
         },
 
         {
-          text: "آخرین قیمت",
-          value: "last",
-          filterable: false
-        },
-        {
-          text: " اولین قیمت",
-          value: "first",
-          filterable: false
-        },
-        {
-          text: "بالاترین قیمت",
-          value: "high",
-          filterable: false
-        },
-        {
-          text: "پایین ترین قیمت",
-          value: "low",
-          filterable: false
-        },
-        {
-          text: "ارزش معاملات",
-          value: "value",
-          filterable: false
-        },
-        {
-          text: "حجم معاملات",
-          value: "volume",
-          filterable: false
+          id: "filters",
+          labelDefault: "Filters",
+          labelKey: "filters",
+          iconKey: "filter",
+          toolPanel: "agFiltersToolPanel"
         }
       ],
-      DataItems2: []
+      defaultToolPanel: ""
     };
+
+    this.AdjustedHeader = [
+      {
+        headerName: "تاریخ شمسی",
+        field: "persiandate",
+        sortable: true,
+        maxWidth: 130,
+        pinned: "right",
+        rowDrag: true,
+        cellRenderer: params => {
+          let A = params.value;
+
+          return A.substring(0, 4)+'/'+A.substring(4, 6)+'/'+A.substring(6,8);
+        },
+        cellStyle: {
+          direction: "rtl",
+          display: "inline-block"
+          // // "justify-content": "center",
+          // "align-items": "center !important",
+          // "height": "100%"
+        }
+      },
+      {
+        headerName: "تاریخ میلادی",
+        field: "engdate",
+        sortable: true,
+        hide: true
+      },
+      {
+        headerName: "پایین ترین قیمت",
+        field: "low",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "بالاترین قیمت",
+        field: "high",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت پایانی",
+        field: "closing",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "اولین قیمت",
+        field: "first",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "آخرین قیمت",
+        field: "last",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "قیمت دیروز",
+        field: "yesterday",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "بالاترین-تعدیلی",
+        field: "adjustedhigh",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "پایین ترین-تعدیلی",
+        field: "adjustedlow",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "پایانی -تعدیلی",
+        field: "adjustedclosing",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "آخرین - تعدیلی",
+        field: "adjustedlast",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "اولین - تعدیلی",
+        field: "adjustedfirst",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "حجم معاملات",
+        field: "volume",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "ارزش معاملات",
+        field: "value",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "تعداد معاملات",
+        field: "count",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      }
+    ];
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
+  watch: {
+    adjusted( ) {
+      // console.log("🚀 ~ file: AdjustedPricesWidget.vue ~ line 306 ~ adjusted ~ this.adjusted", this.adjusted)
+        this.gridApi.setRowData(this.adjusted);
+        this.dataFetch = true;
+    }
   },
   methods: {
-    populateData() {
-      this.DataItems2 = this.adjusted;
+    //? AG GRID METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%
+    onQuickFilterChanged(event) {
+      this.gridOptions.api.setQuickFilter(event.target.value);
     },
-    numberWithCommas(x) {
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
+    gridColumnsChanged() {
+      if (this.allColumnIds.length) {
+        this.gridColumnApi.autoSizeColumns(this.allColumnIds, false);
+      }
     },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
+    onReady(params) {
+      let allColumnIds = [];
+      // this.gridOptions.api.closeToolPanel();
+      this.gridColumnApi = this.gridOptions.columnApi;
+      this.gridApi = params.api;
+
+      this.gridColumnApi.getAllColumns().forEach(function(column) {
+        allColumnIds.push(column.colId);
+      });
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      this.allColumnIds = allColumnIds;
+      this.gridApi = params.api;
+      if (this.adjusted != null) params.api.setRowData(this.adjusted);
     },
-    filterItems(items, search, filter) {
-      items.filter(r => filter((r.persiandate = search)));
+    // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    getHeight() {
+      return (window.innerHeight - 200).toString() + "px";
     }
   },
   mounted() {
-    this.populateData();
-  },
-  watch: {
-    adjusted() {
-      this.populateData();
-    }
+    this.height = this.getHeight();
   }
 };
 </script>
 <style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-  font-family: "Vazir-Light-FD" !important;
-  font-size: 1.1em;
+.ag-theme-balham .ag-header {
+  background-color: #f5f7f7;
+  background-color: var(--ag-header-background-color, #f5f7f7);
+  border-top: solid 1px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-top-color: #bdc3c7;
+  border-top-color: var(--ag-border-color, #bdc3c7);
+  border-radius: 10px 10px 0px 0px;
 }
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
+
+.ag-theme-balham .ag-rtl .ag-cell {
+  font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
-  text-align: right;
+  overflow: hidden;
+}
+/* header */
+.ag-header-cell-label {
+  color: black;
+  font-size: 1em;
+  font-weight: 300;
+  align-items: center;
+  text-align: center;
+  margin-right: 2px !important;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.ag-grid-row-class {
+  /* background-color: red !important; */
+  display: flex;
+  align-items: center !important;
+}
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
+
+.Funds-table-head {
+  /* background-color: #e01313; */
+  vertical-align: middle !important;
+  font-size: 1.1em !important;
+  font-weight: 600 !important ;
+}
+.Funds-table {
+  vertical-align: middle !important;
+  text-align: center !important;
+  font-size: 0.8em !important;
+  line-height: 1 !important;
+  font-family: "Vazir-Medium-FD";
+}
+.Funds-table-row:hover {
+  background-color: #999999 !important;
+}
+.Funds-table-cell {
+  text-align: center;
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 400;
+  vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
+}
+.Funds-table-cell-green {
+  text-align: center;
+  font-size: 1em;
+  line-height: 1;
+  color: green;
+  font-weight: 400;
+  vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
+}
+.Funds-table-cell-red {
+  text-align: center;
+  font-size: 1em;
+  line-height: 1;
+  color: red;
+  font-weight: 400;
+  font-family: "Vazir-Medium-FD";
+  vertical-align: middle !important;
+}
+.Funds-table-cell-bold {
+  text-align: center;
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 600;
+  vertical-align: middle !important;
+  font-family: "Vazir-Medium-FD";
+}
+.Funds-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
 }
 </style>

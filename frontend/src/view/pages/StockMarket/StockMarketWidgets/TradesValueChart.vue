@@ -25,6 +25,256 @@
         v-show="loading"
         v-bind="attrs"
       ></v-skeleton-loader>
+      <div
+        id="tooltipAll"
+        class="tooltipTradeChartValue"
+        :style="tooltipPosition"
+        v-if="tooltip1"
+      >
+        <v-row
+          style="font-size: 0.7rem; direction: rtl"
+          class="tooltipTreeMapRow"
+        >
+          <v-card width="100%" class="tooltipTreeMapRow">
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em">کل</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(roundTo(jsonData.Total / 1000000000000, 2))
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>میلیارد ریال</span></v-col>
+            </v-row>
+          </v-card>
+        </v-row>
+      </div>
+      <div
+        id="tooltipBourseFaraBourse"
+        class="tooltipTradeChartValue"
+        :style="tooltipPosition"
+        v-if="tooltip2"
+      >
+        <v-row
+          style="font-size: 0.7rem; direction: rtl"
+          class="tooltipTreeMapRow"
+        >
+          <v-card width="100%" class="tooltipTreeMapRow">
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> فرابورس</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo((jsonData.IFB * 100) / jsonData.Total2, 2)
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> بورس</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo((jsonData.Tepix * 100) / jsonData.Total2, 2)
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+          </v-card>
+        </v-row>
+      </div>
+      <div
+        id="tooltipHH"
+        class="tooltipTradeChartValue"
+        :style="tooltipPosition"
+        v-if="tooltip3"
+      >
+        <v-row
+          style="font-size: 0.7rem; direction: rtl"
+          class="tooltipTreeMapRow"
+        >
+          <v-card width="100%" class="tooltipTreeMapRow">
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> حقوقی</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{ numberWithCommas(roundTo(jsonData.Hoghughi, 2)) }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> حقیقی</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{ numberWithCommas(roundTo(jsonData.Haghighi, 2)) }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+          </v-card>
+        </v-row>
+      </div>
+      <div
+        id="tooltipBlock"
+        class="tooltipTradeChartValue"
+        :style="tooltipPosition"
+        v-if="tooltip4"
+      >
+        <v-row
+          style="font-size: 0.7rem; direction: rtl"
+          class="tooltipTreeMapRow"
+        >
+          <v-card width="100%" class="tooltipTreeMapRow">
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> عادی</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    roundTo(100 - (jsonData.Blocks * 100) / jsonData.Total, 2)
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> بلوکی</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo((jsonData.Blocks / jsonData.Total) * 100, 2)
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+          </v-card>
+        </v-row>
+      </div>
+      <div
+        id="tooltipAssetType"
+        class="tooltipTradeChartValue"
+        :style="tooltipPosition"
+        v-if="tooltip5"
+      >
+        <v-row
+          style="font-size: 0.7rem; direction: rtl"
+          class="tooltipTreeMapRow"
+        >
+          <v-card width="100%" class="tooltipTreeMapRow">
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> سهام</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo(
+                        ((jsonData.StockBlock + jsonData.Stock) * 100) /
+                          jsonData.Total,
+                        2
+                      )
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  > صندوق های بورسی</span
+                >
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo(
+                        ((jsonData.ETF + jsonData.ETFBlock) * 100) /
+                          jsonData.Total,
+                        2
+                      )
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"> اوراق</span>
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo(
+                        ((jsonData.BondBlock + jsonData.Bond) * 100) /
+                          jsonData.Total,
+                        2
+                      )
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+            <v-row style="margin-right:0px;margin-left:0px">
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  > سایر دارایی ها</span
+                >
+              </v-col>
+              <v-col class="flex-item">
+                <span style="font-size: 1.3em"
+                  >{{
+                    numberWithCommas(
+                      roundTo(
+                        (1 -
+                          (jsonData.Bond +
+                            jsonData.BondBlock +
+                            jsonData.ETF +
+                            jsonData.ETFBlock +
+                            jsonData.StockBlock +
+                            jsonData.Stock) /
+                            jsonData.Total) *
+                          100,
+                        2
+                      )
+                    )
+                  }}
+                </span>
+              </v-col>
+              <v-col class="flex-item"><span>درصد</span></v-col>
+            </v-row>
+          </v-card>
+        </v-row>
+      </div>
       <div id="ChartContainer_TradeValue"></div>
     </v-card>
   </div>
@@ -38,9 +288,21 @@ export default {
   props: { inputDataTV: Array },
   data() {
     return {
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+      },
       loading: true,
+      tooltip1: false,
+      tooltip2: false,
+      tooltip3: false,
+      tooltip4: false,
+      tooltip5: false,
       highestValues: [],
       highestVolumes: [],
+      pageX: null,
+      pageY: null,
       jsonData: {},
       min: 0,
       max: 10,
@@ -75,7 +337,37 @@ export default {
       this.loading = false;
     }
   },
-  computed: {},
+  computed: {
+    tooltipPosition() {
+      if (this.pageX > this.width / 2) {
+        if (this.pageY > this.height / 2) {
+          let res = {
+            right: this.width - this.pageX + 10 + "px",
+            bottom: this.height - this.pageY + 70 + "px"
+          };
+          return res;
+        } else {
+          let res = {
+            right: this.width - this.pageX + "px",
+            top: this.pageY + "px"
+          };
+          return res;
+        }
+      } else {
+        if (this.pageY > this.height * (2 / 3)) {
+          let res = {
+            left: this.pageX + 10 + "px",
+            bottom: this.height - this.pageY + 70 + "px"
+          };
+          return res;
+        }
+        return {
+          left: this.pageX + "px",
+          top: this.pageY + "px"
+        };
+      }
+    }
+  },
   methods: {
     isRealValue(obj) {
       return obj && obj !== "null" && obj !== "undefined";
@@ -280,12 +572,12 @@ export default {
           `translate(${this.margin.left}, ${this.margin.top})`
         );
 
-      const tooltip = d3
-        .select(parent)
-        .append("div")
-        .attr("class", "d3-tip")
-        .style("position", "absolute")
-        .style("visibility", "hidden");
+      // const tooltip = d3
+      //   .select(parent)
+      //   .append("div")
+      //   .attr("class", "d3-tip")
+      //   .style("position", "absolute")
+      //   .style("visibility", "hidden");
 
       chart
         .append("g")
@@ -305,30 +597,19 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", BoxWidth)
         .attr("fill", "#845EC2")
-        .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5);
-          tooltip
-            .text(
-              "کل ارزش معاملات:" +
-                that.numberWithCommas(
-                  that.roundTo(that.jsonData.Total / 1000000000000, 2)
-                ) +
-                "هزار میلیارد ریال"
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", that.margin.top + "px");
+        .on("mousemove touchstart", event => {
+          that.tooltip1 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip1 = false;
+          // d3.select(this)
+          //   .transition()
+          //   .duration(200)
+          //   .style("opacity", 1);
+          // tooltip.style("visibility", "hidden");
         });
 
       let c1 = chart
@@ -339,39 +620,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#4B4453")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              (BoxWidth * that.jsonData.IFB) / that.jsonData.Total2
-            );
-          tooltip
-            .text(
-              "ارزش معاملات فرابورس:" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    (that.jsonData.IFB * 100) / that.jsonData.Total2,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", that.margin.top * 2 + "px");
+          that.tooltip2 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip2 = false;
         });
 
       c1.transition()
@@ -390,38 +642,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#00C0A3")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              (BoxWidth * that.jsonData.Tepix) / that.jsonData.Total2
-            );
-          tooltip
-            .text(
-              "ارزش معاملات بورس:" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    (that.jsonData.Tepix * 100) / that.jsonData.Total2,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 2 * that.margin.top + "px");
+          that.tooltip2 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip2 = false;
         });
       c2.transition()
         .duration(1000)
@@ -454,31 +678,10 @@ export default {
         .style("fill", "#00896F")
 
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr("width", (BoxWidth * that.jsonData.Hoghughi) / 100);
-          tooltip
-            .text(
-              "ارزش معاملات حقوقی:" +
-                that.numberWithCommas(that.roundTo(that.jsonData.Hoghughi, 2)) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 3 * that.margin.top + "px");
+          that.tooltip3 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip3 = false;
         });
       c3.transition()
         .duration(1000)
@@ -492,30 +695,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#B0A8B9")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr("width", (BoxWidth * that.jsonData.Haghighi) / 100);
-          tooltip
-            .text(
-              "ارزش معاملات حقیقی:" +
-                that.numberWithCommas(that.roundTo(that.jsonData.Haghighi, 2)) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 3 * that.margin.top + "px");
+          that.tooltip3 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip3 = false;
         });
       c4.transition()
         .duration(1000)
@@ -542,39 +725,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#4B4453")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth * (that.jsonData.Blocks / that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات بلوکی:" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    (that.jsonData.Blocks / that.jsonData.Total) * 100,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip4 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip4 = false;
         });
       c5.transition()
         .duration(1000)
@@ -592,39 +746,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#00896F")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth * (1 - that.jsonData.Blocks / that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات عادی:" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    100 - (that.jsonData.Blocks * 100) / that.jsonData.Total,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip4 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip4 = false;
         });
       c6.transition()
         .duration(1000)
@@ -654,42 +779,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#B0A8B9")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth *
-                ((that.jsonData.StockBlock + that.jsonData.Stock) /
-                  that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات سهام:" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    ((that.jsonData.StockBlock + that.jsonData.Stock) * 100) /
-                      that.jsonData.Total,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip5 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip5 = false;
         });
       c7.transition()
         .duration(1000)
@@ -715,42 +808,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#00896F")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth *
-                ((that.jsonData.ETF + that.jsonData.ETFBlock) /
-                  that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات صندوق های قابل معامله :" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    ((that.jsonData.ETF + that.jsonData.ETFBlock) * 100) /
-                      that.jsonData.Total,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip5 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip5 = false;
         });
       c10
         .transition()
@@ -778,42 +839,10 @@ export default {
         .attr("width", 0)
         .attr("fill", "#4B4453")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth *
-                ((that.jsonData.Bond + that.jsonData.BondBlock) /
-                  that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات اوراق :" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    ((that.jsonData.BondBlock + that.jsonData.Bond) * 100) /
-                      that.jsonData.Total,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip5 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip5 = false;
         });
       c8.transition()
         .duration(1000)
@@ -856,55 +885,10 @@ export default {
         .attr("width", 0)
         .style("fill", "#00896F")
         .on("mouseenter touchstart", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 0.5)
-            .transition()
-            .duration(1000)
-            .ease(d3.easePolyOut)
-            .attr(
-              "width",
-              BoxWidth *
-                (1 -
-                  (that.jsonData.Bond +
-                    that.jsonData.BondBlock +
-                    that.jsonData.ETF +
-                    that.jsonData.ETFBlock +
-                    that.jsonData.StockBlock +
-                    that.jsonData.Stock) /
-                    that.jsonData.Total)
-            );
-          tooltip
-            .text(
-              "ارزش معاملات غیره :" +
-                that.numberWithCommas(
-                  that.roundTo(
-                    (1 -
-                      (that.jsonData.Bond +
-                        that.jsonData.BondBlock +
-                        that.jsonData.ETF +
-                        that.jsonData.ETFBlock +
-                        that.jsonData.StockBlock +
-                        that.jsonData.Stock) /
-                        that.jsonData.Total) *
-                      100,
-                    2
-                  )
-                ) +
-                "درصد "
-            )
-            .attr("class", "d3-tip")
-            .style("visibility", "visible")
-            .style("left", that.margin.left + "px")
-            .style("top", 4 * that.margin.top + "px");
+          that.tooltip5 = true;
         })
         .on("mouseleave touchend", function() {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style("opacity", 1);
-          tooltip.style("visibility", "hidden");
+          that.tooltip5 = false;
         });
       c9.transition()
         .duration(1000)
@@ -926,81 +910,52 @@ export default {
 };
 </script>
 
-<style>
-.Chart1title * {
-  font-size: 1.2em;
-  font-family: "Vazir-Light-FD";
-}
-.dot {
-  height: 25px;
-  width: 25px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-}
-.d3-tip {
-  font-family: "Vazir-Medium-FD";
-  line-height: 1.4;
-  z-index: 300;
-  padding: 20px;
-  pointer-events: none !important;
-  color: #203d5d;
-  box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1),
-    0 4px 80px -8px rgba(0, 20, 60, 0.2);
-  background-color: #fff;
-  border-radius: 4px;
-  opacity: 80%;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgb(139, 129, 129);
+<style scoped>
+div.tooltipTradeChartValue {
   position: absolute;
+  /* top: 20px; */
+  /* right: 0px; */
+  width: auto;
+  height: auto;
+  padding: 15px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-left: 20px;
+  margin-top: 20px;
+  z-index: 1000;
+  background-color: #f4f1de;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
+.tooltipTreeMapRow {
+  width: 100%;
+  padding-top: 2px;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  padding-right: 0px;
+  /* margin-bottom:1px; */
 
-/* Northward tooltips */
-.d3-tip.n:after {
-  content: "▼";
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-  text-align: center;
+  /* border:1px solid; */
+  /* border-color:crimson; */
 }
-
-/* Eastward tooltips */
-.d3-tip.e:after {
-  content: "◀";
-  margin: -4px 0 0 0;
-  top: 50%;
-  left: -8px;
-}
-
-/* Southward tooltips */
-.d3-tip.s:after {
-  content: "▲";
-  margin: 0 0 1px 0;
-  top: -8px;
-  left: 0;
-  text-align: center;
-}
-
-/* Westward tooltips */
-.d3-tip.w:after {
-  content: "▶";
-  margin: -4px 0 0 -1px;
-  top: 50%;
-  left: 100%;
-}
-.cellItemTradesValueChart {
-  font-family: "IRANSansXFaNum-Regular";
-  color: rgb(82, 82, 82);
-  font-weight: 600;
-  font-size: 0.8em;
+.flex-item {
+  /* background-color:brown; */
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  /* border:1px solid;
+  border-color:crimson; */
+  /* flex-grow: 0; */
+  /* flex-shrink: ; */
+  /* flex-basis: auto; */
+  /* align-self: auto; */
+  order: 0;
 }
 </style>

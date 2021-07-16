@@ -7,7 +7,7 @@
           class="titleHeaders"
           type="grow"
           small
-          v-if="loading"
+          
         ></b-spinner>
       </h3>
     </div>

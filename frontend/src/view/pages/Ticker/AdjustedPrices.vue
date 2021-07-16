@@ -49,9 +49,10 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get("/api/AdjustedPrices/" + this.$route.params.id + "/")
+        .get("/api/AdjustedPricesCodal/" + this.$route.params.id + "/")
         .then(responsePrice => {
           this.adjustedprices = responsePrice.data;
+          
         })
         .catch(error => {
           console.error(error);

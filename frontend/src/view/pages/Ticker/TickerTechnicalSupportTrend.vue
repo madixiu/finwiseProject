@@ -6,7 +6,7 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
-        <TechnicalWidget :notices="notice"></TechnicalWidget>
+        <SupportTrendWidget :notices="notice"></SupportTrendWidget>
       </div>
     </div>
   </div>
@@ -16,13 +16,14 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
-import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicatorsDetailsWidget.vue";
+import SupportTrendWidget from "@/view/pages/Ticker/TickerWidgets/SupportTrendWidget.vue";
+
 // import axios from "axios";
 export default {
-  name: "TechnicalSupportTrend",
+  name: "Notifications",
   components: {
     SubHeaderWidget,
-    TechnicalWidget
+    SupportTrendWidget
   },
   data() {
     return {
@@ -37,7 +38,7 @@ export default {
   mounted() {
     // this.loadData2();
     this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "بررسی اندیکاتورها" }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "بررسی ترند" }]);
   },
   watch: {
     subheaders() {
@@ -74,7 +75,7 @@ export default {
     async getTwo() {
       await this.axios
         .get(
-          "/api/Ticker/TechnicalIndicatorSingle/" + this.$route.params.id + "/"
+          "/api/Ticker/TechnicalTrends/" + this.$route.params.id + "/"
         )
         .then(response2 => {
           this.notice = response2.data;

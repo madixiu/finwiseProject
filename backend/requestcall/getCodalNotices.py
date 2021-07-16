@@ -467,6 +467,21 @@ def AdjustedPrices(identifier):
             ct=ct+1
         
     return ("noData")    
+def AdjustedPricesBasedOnCodal(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'public'}
+        resp = requests.get('http://185.231.115.223:3000/rpc/adjustedpricestyp3?a='+str(identifier),headers=head)
+        if resp.status_code == 200:
+    
+            # return(resp.text)
+            return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return ("noData")      
 def HHhistory(identifier):
     ct=0
     while ct<3:

@@ -264,7 +264,28 @@
                 <span class="menu-text">بررسی اندیکاتور ها</span>
               </a>
             </li>
-          </router-link>
+            
+          <!-- </router-link>
+          <router-link
+            :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active'
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">بررسی حمایت و مقاومت</span>
+              </a>
+            </li>
+            
+          </router-link> -->
         </ul>
       </div>
     </li>
