@@ -112,29 +112,19 @@ export default {
 }
 .tickerTapeChange {
   font-family: "Vazir-Medium-FD" !important;
-  color: white;
+  color: white !important;
   /* font-size: 1.1em; */
 }
 .tickerTapeChangeGreen {
   font-family: "Vazir-Medium-FD" !important;
-  color: #2cd85d;
+  color: #2cd85d !important;
 }
 .tickerTapeChangeRed {
   font-family: "Vazir-Medium-FD" !important;
-  color: rgb(255, 25, 25);
+  color: rgb(255, 25, 25) !important;
 }
 .tickerTapeChangeWhite {
   font-family: "Vazir-Medium-FD" !important;
-  color: white;
+  color: white !important;
 }
-/* .redItem {
-  color: aliceblue;
-  background-color: red !important;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.greenItem {
-  color: aliceblue;
-  background-color: green !important;
-  font-family: "Vazir-Medium-FD" !important;
-} */
 </style>

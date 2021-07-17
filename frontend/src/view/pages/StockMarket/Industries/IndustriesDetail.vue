@@ -206,8 +206,10 @@
 </template>
 <script>
 import ApexChart from "@/view/content/charts/ApexChart";
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import {
+  SET_BREADCRUMB,
+  SET_BREADCRUMB_TITLE
+} from "@/core/services/store/breadcrumbs.module";
 
 export default {
   components: {
@@ -453,7 +455,7 @@ export default {
         },
         responsive: [
           {
-            breakpoint: 380,
+            breakpoint: 400,
             options: {
               chart: {
                 width: 200
@@ -718,12 +720,13 @@ export default {
   },
   created() {
     document.title = "Finwise - صنایع";
+    this.$store.dispatch(SET_BREADCRUMB_TITLE, "");
+
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه صنعت" }]);
-  },
-  computed: {},
-  mounted() {
     this.loadData();
   },
+  computed: {},
+  mounted() {},
   methods: {
     ChartClick(ChartType, context, seriesIndex) {
       if (ChartType == "Impact")
@@ -789,9 +792,8 @@ export default {
           let ImpactNames = [];
           let HHNames = [];
           let IndustriesListNames = [];
-          this.$store.dispatch(ADD_BREADCRUMB, [
-            { title: data.Tepix.CorrectName }
-          ]);
+
+          this.$store.dispatch(SET_BREADCRUMB_TITLE, data.Tepix.CorrectName);
           this.Shakhes = [
             { name: data.Tepix.CorrectName, data: data.Tepix.apexData }
           ];

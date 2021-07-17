@@ -38,6 +38,11 @@ export default {
   props: { inputDataTV: Array },
   data() {
     return {
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+      },
       loading: true,
       highestValues: [],
       highestVolumes: [],
@@ -304,7 +309,7 @@ export default {
         .attr("y", this.margin.top)
         .attr("height", BoxHeight)
         .attr("width", BoxWidth)
-        .attr("fill", "#845EC2")
+        .attr("fill", "#003049")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()
@@ -337,7 +342,7 @@ export default {
         .attr("y", BoxHeight + this.margin.top + this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#4B4453")
+        .style("fill", "#0081a7")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()
@@ -388,7 +393,7 @@ export default {
         .attr("y", BoxHeight + this.margin.top + this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#00C0A3")
+        .style("fill", "#00afb9")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()
@@ -451,7 +456,7 @@ export default {
         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#00896F")
+        .style("fill", "#b56576")
 
         .on("mouseenter touchstart", function() {
           d3.select(this)
@@ -490,7 +495,7 @@ export default {
         .attr("y", 2 * BoxHeight + this.margin.top + 2 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#B0A8B9")
+        .style("fill", "#6d597a")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()
@@ -540,7 +545,7 @@ export default {
         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#4B4453")
+        .style("fill", "#e09f3e")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()
@@ -590,7 +595,7 @@ export default {
         .attr("y", 3 * BoxHeight + this.margin.top + 3 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#00896F")
+        .style("fill", "#577590")
         .on("mouseenter touchstart", function() {
           d3.select(this)
             .transition()

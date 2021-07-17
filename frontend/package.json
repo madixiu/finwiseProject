@@ -13,6 +13,8 @@
         "@babel/polyfill": "^7.12.1",
         "@fortawesome/fontawesome-free": "^5.13.0",
         "@mdi/font": "^3.9.97",
+        "@sentry/tracing": "^6.9.0",
+        "@sentry/vue": "^6.9.0",
         "@trevoreyre/autocomplete-vue": "^2.2.0",
         "add": "^2.0.6",
         "ag-grid-community": "^25.2.1",

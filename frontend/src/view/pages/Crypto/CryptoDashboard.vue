@@ -11,7 +11,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import TechnicalCharts from "@/view/pages/Crypto/Widgets/TechnicalChart.vue";
@@ -50,9 +49,9 @@ export default {
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "داشبورد رمز ارز" }]);
     this.loadData();
     // eslint-disable-next-line no-unused-vars
-    let interval = setInterval(() => {
-      this.getIntroMW();
-    }, 10000);
+    // let interval = setInterval(() => {
+    //   this.getIntroMW();
+    // }, 10000);
     // this.make_requests_handler();
   },
   methods: {
@@ -112,32 +111,6 @@ export default {
           else console.error(error);
         });
     }
-  },
-
-  setActiveTab1(event) {
-    this.tabIndex = this.setActiveTab(event);
-  },
-  setActiveTab2(event) {
-    this.tabIndex2 = this.setActiveTab(event);
-  },
-  /**
-   * Set current active on click
-   * @param event
-   */
-  setActiveTab(event) {
-    // get all tab links
-    const tab = event.target.closest('[role="tablist"]');
-    const links = tab.querySelectorAll(".nav-link");
-    // remove active tab links
-    for (let i = 0; i < links.length; i++) {
-      links[i].classList.remove("active");
-    }
-
-    // set current active tab
-    event.target.classList.add("active");
-
-    // set clicked tab index to bootstrap tab
-    return parseInt(event.target.getAttribute("data-tab"));
   }
 };
 </script>

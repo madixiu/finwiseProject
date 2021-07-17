@@ -17,23 +17,13 @@
 @import "assets/plugins/keenthemes-icons/font/ki.css";
 @import "assets/font/MainFont.css";
 
-// Main demo style scss
+// Main style scss
 // @import "assets/sass/style.vue";
 
 // Check documentation for RTL css
 // Update HTML with RTL attribute at public/index.html
 // @import "assets/css/style.vue.rtl";
 @import "assets/css/MainCSS.min.css";
-
-// @import "assets/css/Unminified.style.vue.rtl";
-
-// @font-face {
-//   font-family: "Vazir";
-//   src: local("Vazir.ttf "), url("assets/font/Vazir.ttf") format("truetype");
-// }
-/* * {
-  font-family: "Vazir";
-} */
 </style>
 
 <script>
@@ -43,9 +33,18 @@ import { GET_USER } from "@/graphql/queries";
 import JwtService from "@/core/services/jwt.service";
 export default {
   name: "Finwise",
+  watch: {
+    $route: {
+      handler(newValue, oldValue) {
+        if (newValue != oldValue && oldValue != undefined) {
+          this.checkRole();
+        }
+      },
+      immediate: true
+    }
+  },
   created() {
-    this.loadData();
-    //****************NEW CODE ***********************************/
+    //****************CheckStorage ***********************************/
     if (JwtService.getToken()) {
       let refreshToken = this.CryptoJS.AES.decrypt(
         JwtService.getToken(),
@@ -53,57 +52,47 @@ export default {
       ).toString(this.CryptoJS.enc.Utf8);
       this.getAccessTokenAndUser(refreshToken);
     }
-    // ***************OLD CODE************************************/
-    // if (
-    //   this.$route.name !== "login" &&
-    //   !this.$store.getters.isAuthenticated &&
-    //   !JwtService.getToken()
-    // ) {
-    //   // next({ name: "login" });
-    //   this.$router.push({ name: "login" });
-    //   // this.$router.push({ name: "verify" });
-    // } else if (JwtService.getToken() && !this.$store.getters.isAuthenticated) {
-    //   console.log(!!this.$store.getters.currentUser.length);
-    //   let hasUser = !!this.$store.getters.currentUser.length;
-    //   if (hasUser) {
-    //     // var LoginData;
-    //     this.verifyAccessToken(this.$store.getters.currentUserAccessToken);
-    //   } else if (this.$store.isAuthenticated) {
-    //     this.$router.push({ path: "/" });
-    //     // return;
-    //     // this.$router.beforeEach((to, from, next) => {
-    //     //   // reset config to initial state
-    //     //   // store.dispatch(RESET_LAYOUT_CONFIG);
-    //     //   next();
-    //     //   // router.push({ name: "dashboard" });
-    //     //   // Scroll page to top on every route change
-    //     //   setTimeout(() => {
-    //     //     window.scrollTo(0, 0);
-    //     //   }, 100);
-    //     // });
-    //   } else if (!hasUser) {
-    //     let refreshToken = this.CryptoJS.AES.decrypt(
-    //       JwtService.getToken(),
-    //       "key"
-    //     ).toString(this.CryptoJS.enc.Utf8);
-    //     console.log(refreshToken);
-    //     this.getAccessTokenAndUser(refreshToken);
-    //     // let token = this.$store.getters.currentUserAccessToken;
-    //     // this.getQueryUser();
-    //     console.log(this.$store.getters.currentUserAccessToken);
-    //   }
-    //   // else {
-    //   //   this.$router.push({ name: "login" });
-    //   //   return;
-    //   // }
-    // }
-    /**
-     * this is to override the layout config using saved data from localStorage
-     * remove this to use config only from static json (@/core/config/layout.config.json)
-     */
-    // this.$store.dispatch(OVERRIDE_LAYOUT_CONFIG);
+
+    // ***************************************************************/
+    this.loadData();
   },
   methods: {
+    checkRole() {
+      this.$router.beforeEach((to, from, next) => {
+        let user = this.$store.getters.currentUser;
+        if (
+          (to.name == "Industries" ||
+            to.name == "IndustriesDetail" ||
+            to.name == "Taghadom" ||
+            to.name == "TickerAssemblyDPSAndIC") &&
+          Object.keys(user).length === 0
+        )
+          next({ name: "login" });
+        if (
+          (to.name == "AssemblyIC" || to.name == "TechnicalMoreInfo") &&
+          (user.role < 2 || Object.keys(user).length === 0)
+        )
+          next({ name: "login" });
+        if (
+          (to.name == "Option" ||
+            to.name == "commodities" ||
+            to.name == "Monthly" ||
+            to.name == "BalanceSheet" ||
+            to.name == "IncomeStatement" ||
+            to.name == "CashFlow" ||
+            to.name == "AdjustedPrices") &&
+          (user.role < 3 || Object.keys(user).length === 0)
+        )
+          next({ name: "login" });
+
+        if (
+          to.name == "CommoditiesDetail" &&
+          (user.role < 4 || Object.keys(user).length === 0)
+        )
+          next({ name: "login" });
+        else next();
+      });
+    },
     loadData() {
       this.axios
         .get("/api/MainSearchBar")
@@ -117,7 +106,6 @@ export default {
         });
     },
     getQueryUser(UserName) {
-      // let token = this.$store.getters.currentUserAccessToken;
       this.$apollo
         .query({
           query: GET_USER,
@@ -129,13 +117,9 @@ export default {
           }
         })
         .then(data => {
-          // console.log("query");
-          // console.log(data);
-          // console.log(data.data.me);
           this.$store.dispatch("LOGIN", data.data.users.edges[0].node);
+          this.checkRole();
           this.LockCheck();
-
-          // this.$router.push({ path: "/" });
         });
     },
     verifyAccessToken(AccessToken) {
@@ -165,8 +149,6 @@ export default {
         });
     },
     getAccessTokenAndUser(RefreshToken) {
-      // console.log(RefreshToken);
-      // console.log("we are in");
       this.$apollo
         .mutate({
           mutation: REFRESH_ACCESS_TOKEN,
@@ -216,8 +198,5 @@ export default {
     //   }
     // }
   }
-  // updated() {
-  //  console.log(this.$route.path)
-  // }
 };
 </script>

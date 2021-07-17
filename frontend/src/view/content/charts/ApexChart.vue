@@ -30,8 +30,7 @@ export default {
 .apexcharts-legend-text,
 .apexcharts-text,
 .apexcharts-title-text,
-.apexcharts-tooltip
-.apexcharts-tooltip-text-value {
+.apexcharts-tooltip .apexcharts-tooltip-text-value {
   font-family: "Vazir-Medium-FD" !important;
 }
 .ApexTooltip {
@@ -41,13 +40,11 @@ export default {
   border-color: #bdbdbd;
   border-radius: 8px;
   display: flex;
-  /* cursor: pointer; */
   /* flex-wrap: nowrap; */
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   align-content: center;
-  z-index: 10;
 }
 .topDivTooltip {
   background-color: #d7d7d7;
@@ -60,12 +57,21 @@ export default {
 }
 .bottomDivTooltip {
   background-color: #eaeaea;
-  direction: rtl;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   padding-right: 22px;
   padding-left: 22px;
+  direction: ltr;
+}
+.industryApexChartTooltipRedSpan {
+  color: red;
+}
+.industryApexChartTooltipGreenSpan {
+  color: green;
+}
+.industryApexChartTooltipBlackSpan {
+  color: black;
 }
 </style>

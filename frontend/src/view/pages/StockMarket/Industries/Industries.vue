@@ -54,7 +54,6 @@
         class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
         style="padding-right:10px"
       >
-        
         <v-card :loading="HHseries.length == 0">
           <v-toolbar dense>
             <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
@@ -150,8 +149,8 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let val = series[seriesIndex][dataPointIndex];
             let Class = null;
-            if (parseFloat(val) < 0) Class = "redSpan";
-            else if (parseFloat(val) > 0) Class = "greenSpan";
+            if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
+            else if (parseFloat(val) > 0) Class = "industryApexChartTooltipGreenSpan";
 
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
@@ -296,8 +295,8 @@ export default {
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             let val = parts.join(".");
             let Class = null;
-            if (parseFloat(val) < 0) Class = "redSpan";
-            else if (parseFloat(val) > 0) Class = "greenSpan";
+            if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
+            else if (parseFloat(val) > 0) Class = "industryApexChartTooltipGreenSpan";
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
               <span>
@@ -614,9 +613,9 @@ export default {
   },
   created() {
     document.title = "Finwise - صنایع";
+    this.loadData();
   },
   mounted() {
-    this.loadData();
   },
   methods: {
     forceUpdate() {
@@ -635,9 +634,9 @@ export default {
       this.forceUpdate();
     },
     checkSign(change) {
-      if (change > 0) return "greenSpan";
-      else if (change < 0) return "redSpan";
-      else return "blackSpan";
+      if (change > 0) return "industryApexChartTooltipGreenSpan";
+      else if (change < 0) return "industryApexChartTooltipRedSpan";
+      else return "industryApexChartTooltipBlackSpan";
     },
     pieChartClick(context, seriesIndex) {
       if (seriesIndex == 9 && this.PieChartkey == 0) {
@@ -806,43 +805,4 @@ export default {
   }
 };
 </script>
-<style>
-.redSpan {
-  color: red;
-}
-.greenSpan {
-  color: green;
-}
-.ApexTooltip {
-  /* background-color: blueviolet; */
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bdbdbd;
-  border-radius: 8px;
-  display: flex;
-  /* flex-wrap: nowrap; */
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  align-content: center;
-}
-.topDivTooltip {
-  background-color: #d7d7d7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  padding-right: 22px;
-  padding-left: 22px;
-}
-.bottomDivTooltip {
-  background-color: #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  padding-right: 22px;
-  padding-left: 22px;
-  direction: ltr;
-}
-</style>
+<style scoped></style>

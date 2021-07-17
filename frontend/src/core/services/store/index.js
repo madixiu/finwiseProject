@@ -5,8 +5,9 @@ import Vuex from "vuex";
 import htmlClass from "./htmlclass.module";
 import config from "./config.module";
 import breadcrumbs from "./breadcrumbs.module";
-import option from "./option.module";
-import marketwatch from "./marketwatch.module";
+import liveTickerDataModule from "./liveTickerData.module";
+// import option from "./option.module";
+// import marketwatch from "./marketwatch.module";
 import auth from "./auth";
 import search from "./search.module";
 import profile from "./profile.module";
@@ -18,10 +19,11 @@ export default new Vuex.Store({
     auth,
     htmlClass,
     config,
-    breadcrumbs,
-    option,
-    marketwatch,
     search,
+    breadcrumbs,
+    liveTickerDataModule,
+    // option,
+    // marketwatch,
     profile
   }
 });

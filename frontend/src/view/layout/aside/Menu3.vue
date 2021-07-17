@@ -416,7 +416,7 @@
               </a>
             </li>
           </router-link>
-          
+
           <router-link
             :to="`/ticker/Sheets/CashFlow/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"

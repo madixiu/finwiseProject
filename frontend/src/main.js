@@ -60,8 +60,6 @@ const httpLink = new HttpLink({
 const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {
     var token = store.getters.currentUserAccessToken;
-    // console.log(store.getters.currentUserAccessToken);
-    // console.log(`JWT ${token}`);
   }
 
   // return the headers to the context so httpLink can read them
@@ -104,7 +102,7 @@ window.PerfectScrollbar = PerfectScrollbar;
 import ClipboardJS from "clipboard";
 window.ClipboardJS = ClipboardJS;
 
-// Vue 3rd party plugins
+// Vue 3rd party pluginsu
 // import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";
 import "@/core/plugins/portal-vue";
@@ -133,41 +131,57 @@ Vue.use(VueCryptojs);
 // ticker tape component
 Vue.component("marquee-text", MarqueeText);
 
-//router Account rules
-router.beforeEach((to, from, next) => {
-  let user = store.getters.currentUser;
-  if (
-    (to.name == "Industries" ||
-      to.name == "IndustriesDetail" ||
-      to.name == "Taghadom" ||
-      to.name == "TickerAssemblyDPSAndIC") &&
-    Object.keys(user).length === 0
-  )
-    next({ name: "login" });
-  if (
-    (to.name == "AssemblyIC" || to.name == "TechnicalMoreInfo") &&
-    (user.role < 2 || Object.keys(user).length === 0)
-  )
-    next({ name: "login" });
-  if (
-    (to.name == "Option" ||
-      to.name == "commodities" ||
-      to.name == "Monthly" ||
-      to.name == "BalanceSheet" ||
-      to.name == "IncomeStatement" ||
-      to.name == "CashFlow" ||
-      to.name == "AdjustedPrices") &&
-    (user.role < 3 || Object.keys(user).length === 0)
-  )
-    next({ name: "login" });
+// //? SENTRY SDK
+// import * as Sentry from "@sentry/vue";
+// import { Integrations } from "@sentry/tracing";
 
-  if (
-    to.name == "CommoditiesDetail" &&
-    (user.role < 4 || Object.keys(user).length === 0)
-  )
-    next({ name: "login" });
-  else next();
-});
+// Sentry.init({
+//   Vue,
+//   dsn:
+//     "https://cddff09ed1bc44179d651acd6b0e4973@o880789.ingest.sentry.io/5868804",
+//   integrations: [new Integrations.BrowserTracing()],
+
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0
+// });
+
+//router Account rules
+// router.beforeEach((to, from, next) => {
+//   let user = store.getters.currentUser;
+//   if (
+//     (to.name == "Industries" ||
+//       to.name == "IndustriesDetail" ||
+//       to.name == "Taghadom" ||
+//       to.name == "TickerAssemblyDPSAndIC") &&
+//     Object.keys(user).length === 0
+//   )
+//     next({ name: "login" });
+//   if (
+//     (to.name == "AssemblyIC" || to.name == "TechnicalMoreInfo") &&
+//     (user.role < 2 || Object.keys(user).length === 0)
+//   )
+//     next({ name: "login" });
+//   if (
+//     (to.name == "Option" ||
+//       to.name == "commodities" ||
+//       to.name == "Monthly" ||
+//       to.name == "BalanceSheet" ||
+//       to.name == "IncomeStatement" ||
+//       to.name == "CashFlow" ||
+//       to.name == "AdjustedPrices") &&
+//     (user.role < 3 || Object.keys(user).length === 0)
+//   )
+//     next({ name: "login" });
+
+//   if (
+//     to.name == "CommoditiesDetail" &&
+//     (user.role < 4 || Object.keys(user).length === 0)
+//   )
+//     next({ name: "login" });
+//   else next();
+// });
 // router.beforeEach((to, from, next) => {
 // reset config to initial state
 // store.dispatch(RESET_LAYOUT_CONFIG);

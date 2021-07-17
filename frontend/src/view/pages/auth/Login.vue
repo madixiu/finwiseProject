@@ -171,8 +171,17 @@ import JwtService from "@/core/services/jwt.service";
 export default {
   mixins: [validationMixin],
   name: "login",
+  // eslint-disable-next-line no-unused-vars
+  beforeRouteEnter: (to, from, next) => {
+    console.log(to, from);
+    next(vm => {
+      vm.NextRoutePath = from.path;
+    });
+    // next();
+  },
   data() {
     return {
+      NextRoutePath: "",
       buttonLoading: false,
       verified: true,
       ErrorMsgflag: false,
@@ -182,7 +191,6 @@ export default {
         "مشخصات وارد شده صحیح نمی باشد",
         "اکانت شما تایید نشده است"
       ],
-      // Remove this dummy login info
       form: {
         // email: "",
         phonenumber: "",
@@ -276,11 +284,8 @@ export default {
         })
         .then(data => {
           let LoginData = data.data.tokenAuth;
-          // console.log(LoginData);
           if (LoginData.success == true) {
             this.ErrorMsgflag = false;
-            // console.log(LoginData.token);
-            // console.log(LoginData.refreshToken);
             let encryptedRefreshToken = this.encryption(
               LoginData.refreshToken,
               "key"
@@ -294,7 +299,7 @@ export default {
             this.$store.dispatch("LOGIN", user);
             this.$store.dispatch("RenewAccessToken", LoginData.token);
 
-            this.LockCheck();
+            // this.LockCheck();
 
             // if (user.verified == true) {
             //   console.log("verified");
@@ -340,14 +345,11 @@ export default {
         // go to which page after successfully login
         // .then(() => this.$router.push({ name: "dashboard" }));
         if (this.$store.getters.isAuthenticated)
-          this.$router.push({ name: "Dashboard" });
+          this.$router.push({ path: this.NextRoutePath });
+
+        // this.$router.push({ name: "Dashboard" });
         // if (this.verified == false) this.$router.push({ name: "verify" });
         this.buttonLoading = false;
-        // submitButton.classList.remove(
-        //   "spinner",
-        //   "spinner-light",
-        //   "spinner-right"
-        // );
       }, 2000);
     }
   },
@@ -364,6 +366,15 @@ export default {
     // },
     ...mapGetters(["errors"])
   }
+
+  // mounted() {
+  //   this.$router.beforeEnter((to, from, next) => {
+  //     // next(vm => {
+  //     //   vm.prevRoute = from;
+  //     // });
+  //     console.log(to, from, next);
+  //   });
+  // }
 };
 </script>
 <style scoped>

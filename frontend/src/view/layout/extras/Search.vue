@@ -127,16 +127,17 @@ export default {
         if (result.TypeID == 1000)
           this.$router.push({ path: `/StockMarket/Industries/${result.ID}` });
         else {
-          if (result.TypeID == 2000) {
-            this.$router.push({ path: `/CryptoSingle/${result.ID}` });
+          // if (result.TypeID == 2000) {
+          //   this.$router.push({ path: `/CryptoSingle/${result.ID}` });
+          // }
+          // else {
+          if (result.TypeID == 3000 || result.TypeID == 3100) {
+            this.$router.push({ path: `/SingleNonETF/${result.ID}` });
           } else {
-            if (result.TypeID == 3000 || result.TypeID == 3100) {
-              this.$router.push({ path: `/SingleNonETF/${result.ID}` });
-            } else {
-              alert(
-                `You selected ${result.TypeID} which is oraq and not created`
-              );
-            }
+            alert(
+              `You selected ${result.TypeID} which is oraq and not created`
+            );
+            // }
           }
         }
       }

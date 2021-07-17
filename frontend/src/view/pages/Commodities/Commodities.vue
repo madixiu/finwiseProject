@@ -1306,9 +1306,9 @@ export default {
         field: "persianDate"
       }
     ];
+    this.loadData();
   },
   mounted() {
-    this.loadData();
     // this.loadIRData();
     // this.loadInvestingData();
 

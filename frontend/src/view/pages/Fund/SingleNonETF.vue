@@ -2,7 +2,7 @@
   <div>
     <!--begin::Dashboard-->
     <div class="row" style="padding-top:5px">
-      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-bottom:5px">
+      <div class="col-xxl-12 col-lg-12 col-md-12 pb-1">
         <v-card>
           <div class="d-flex flex-row">
             <div class="col-xxl-4 col-lg-4 col-md-12 rtl_centerd ">
@@ -103,8 +103,10 @@
 </template>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import {
+  SET_BREADCRUMB,
+  SET_BREADCRUMB_TITLE
+} from "@/core/services/store/breadcrumbs.module";
 import liveWidget from "@/view/pages/Fund/Widgets/NonETFLive.vue";
 // import asideWidget from "@/view/pages/Fund/Widgets/NonETFAside.vue";
 // import SubHeaderWidget from "@/view/pages/Crypto/Widgets/CryptoSubHeader.vue";
@@ -121,7 +123,6 @@ export default {
       search: "",
       logourl: "",
       subheaders: {},
-      // allowed: [],
       metadata: [],
       industrydata: [],
       assettypedata: [],
@@ -133,23 +134,20 @@ export default {
   },
   created() {
     document.title = "Finwise - صندوق غیر بورسی";
-  },
-  mounted() {
+    this.$store.dispatch(SET_BREADCRUMB_TITLE, "");
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
+
     this.loadData();
-    // setInterval(() => {
-    //     // this.getLivePrices()
-    // }, 5000);
   },
+  mounted() {},
   watch: {
     "$route.params": {
       handler(newValue, oldValue) {
         if (newValue != oldValue) {
           this.loadData();
-          this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
         }
       },
       immediate: true
-      //   this.loadData()
     }
   },
   methods: {
@@ -191,8 +189,6 @@ export default {
     },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      // this.getAllowed().then(response => {
-      // eslint-disable-next-line no-unused-vars
       this.getOne().then(responx => {
         // eslint-disable-next-line no-unused-vars
         this.getTwo().then(reposonseY => {
@@ -201,12 +197,11 @@ export default {
             // eslint-disable-next-line no-unused-vars
             this.getFour().then(reposonseF => {
               // eslint-disable-next-line no-unused-vars
-              this.getFive().then(reposonseF1 => {});
+              this.getFive();
             });
           });
         });
       });
-      // });
     },
 
     async getOne() {
@@ -215,10 +210,8 @@ export default {
         .get("/api/Funds/FundsMeta/" + this.$route.params.id + "/")
         .then(response1 => {
           this.metadata = response1.data[0];
-          this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
-          this.$store.dispatch(ADD_BREADCRUMB, [
-            { title: this.metadata.FundTitle }
-          ]);
+          // this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
+          this.$store.dispatch(SET_BREADCRUMB_TITLE, this.metadata.FundTitle);
           document.title = "Finwise - " + this.metadata.FundTitle;
         })
         .catch(error => {
@@ -232,7 +225,6 @@ export default {
         .get("/api/Funds/FundsIndustry/" + this.$route.params.id + "/")
         .then(response1 => {
           this.industrydata = response1.data;
-          //   console.log("🚀 ~ file: SingleNonETF.vue ~ line 226 ~ getTwo ~ this.industrydata", this.industrydata)
         })
         .catch(error => {
           console.error(error);

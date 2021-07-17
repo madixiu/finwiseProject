@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12" style="padding-bottom:5px;padding-top:0px">
+      <div class="col-xxl-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
@@ -20,13 +18,15 @@
 </template>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import {
+  SET_BREADCRUMB,
+  ADD_BREADCRUMB,
+  SET_BREADCRUMB_TITLE
+} from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import MonthlyAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/MonthlyAnalysisWidget.vue";
-// import axios from "axios";
 export default {
-  name: "Notifications",
+  name: "MonthlyAnalysis",
   components: {
     SubHeaderWidget,
     MonthlyAnalysisWidget
@@ -43,63 +43,77 @@ export default {
   },
   created() {
     document.title = "Finwise - گزارش ماهیانه";
-  },
-  mounted() {
-    this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "گزارش های خام ماهیانه" }]);
-  },
-  watch: {
-    subheaders() {
-      this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "ماهیانه" }]);
+    this.$store.dispatch(ADD_BREADCRUMB, [{ title: "تحلیل ماهیانه" }]);
+    if (this.$store.getters.getLiveTickerData != null) {
+      this.subheaders = this.$store.getters.getLiveTickerData;
+      this.loadData();
+    } else {
+      // eslint-disable-next-line no-unused-vars
+      this.getLiveTickerData().then(Response => {
+        this.loadData();
+      });
     }
   },
+  mounted() {
+    // this.loadData();
+  },
+  watch: {
+    // subheaders() {
+    //   this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+    // }
+  },
   methods: {
+    async getLiveTickerData() {
+      await this.axios
+        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .then(LiveTickerResponse => {
+          this.subheaders = LiveTickerResponse.data[0];
+          this.$store.dispatch("SetLiveTickerData", this.subheaders);
+          this.$store.dispatch("SetLiveTickerID", this.subheaders.ID);
+          this.$store.dispatch(SET_BREADCRUMB_TITLE, this.subheaders.ticker);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getOne().then(response => {
-        //add this to package.json in developement
-        //         "eslintConfig": {
-        //     "rules": {
-        //       "no-console": "off",
-        //       "no-unused-vars": "off"
-        //     }
-        // },
-        // eslint-disable-next-line no-unused-vars
-        this.getType().then(response => {
-          if (this.typeofReport == "bank") {
-            // eslint-disable-next-line no-unused-vars
-            this.getTwo().then(response => {
-              this.getThree();
+      this.getType().then(response => {
+        if (this.typeofReport == "bank") {
+          // eslint-disable-next-line no-unused-vars
+          this.getTwo().then(response => {
+            this.getThree();
+          });
+        }
+        if (this.typeofReport == "leasing") {
+          // eslint-disable-next-line no-unused-vars
+          this.getleasingCost().then(response => {
+            this.getleasingrevenue().then(function() {
+              this.getleasingdelegated();
             });
-          }
-          if (this.typeofReport == "leasing") {
-            // eslint-disable-next-line no-unused-vars
-            this.getleasingCost().then(response => {
-              this.getleasingrevenue().then(function() {
-                this.getleasingdelegated().then(function() {});
-              });
-            });
-          }
-          if (this.typeofReport == "production") {
-            this.getProduction();
-          }
-          if (this.typeofReport == "service") {
-            this.getService();
-          }
-          if (this.typeofReport == "insurance") {
-            this.getInsurance();
-          }
-          if (this.typeofReport == "investment") {
-            this.loadInvest();
-          }
-          if (this.typeofReport == "construction") {
-            // eslint-disable-next-line no-unused-vars
-            this.getConstructionSold().then(response => {
-              this.getConstructionOngoing();
-            });
-          }
-        });
+          });
+        }
+        if (this.typeofReport == "production") {
+          this.getProduction();
+        }
+        if (this.typeofReport == "service") {
+          this.getService();
+        }
+        if (this.typeofReport == "insurance") {
+          this.getInsurance();
+        }
+        if (this.typeofReport == "investment") {
+          this.loadInvest();
+        }
+        if (this.typeofReport == "construction") {
+          // eslint-disable-next-line no-unused-vars
+          this.getConstructionSold().then(response => {
+            this.getConstructionOngoing();
+          });
+        }
       });
+      // });
     },
     async getleasingCost() {
       await this.axios
@@ -184,9 +198,12 @@ export default {
     },
     async getType() {
       await this.axios
-        .get("/api/Monthly/Type/" + this.$route.params.id + "/")
+        .get("/api/Monthly/Type/" + this.$route.params.id + "/", {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+          }
+        })
         .then(response2 => {
-          //typeofReport
           var items = response2.data;
           for (var item, i = 0; (item = items[i++]); ) {
             if (item.value == true) {
@@ -274,7 +291,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getPortfo().then(response => {
             // eslint-disable-next-line no-unused-vars
-            this.getSummary().then(response => {});
+            this.getSummary();
           });
         });
       });

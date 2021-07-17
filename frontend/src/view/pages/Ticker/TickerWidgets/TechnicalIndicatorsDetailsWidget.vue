@@ -11,7 +11,6 @@
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:0px;padding-right:20px"
         >
-
           <v-card id="ParentCard" :height="cardheight">
             <v-card-title id="ParentCardTitle">
               <span> مجموع </span><br />
@@ -24,7 +23,6 @@
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:0px;padding-right:5px"
         >
-
           <v-card :height="cardheight">
             <v-card-title> <span> Moving Average </span><br /> </v-card-title>
             <v-divider class="mt-0 mb-0"></v-divider>
@@ -46,7 +44,6 @@
           class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
           style="padding-left:20px;padding-right:5px"
         >
-
           <v-card :height="cardheight" width="100%">
             <v-card-title>
               <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>

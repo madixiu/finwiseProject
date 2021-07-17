@@ -9,18 +9,34 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="d-flex align-items-center flex-wrap mr-1">
-        <h5 class="text-light my-2 mr-2">
+        <li class="breadcrumb-item">
+          <!-- <v-icon @click="ClickHome()">flaticon2-architecture-and-city </v-icon> -->
+          <!-- <router-link :to="'/'" class="subheader-breadcrumbs-home"> -->
+          <i
+            class="flaticon2-architecture-and-city text-light icon-1x subheader-breadcrumbs-home"
+            style="cursor:pointer"
+            @click="ClickHome()"
+          ></i>
+          <!-- </router-link> -->
+        </li>
+        <v-icon x-small color="#fff" class="my-2 mr-1">mdi-chevron-left</v-icon>
+        <v-chip
+          class="my-2 mr-1"
+          label
+          small
+          outlined
+          dark
+          @click="ClickTitle()"
+        >
           {{ title }}
-        </h5>
+        </v-chip>
+        <!-- <span class="text-light my-2 mr-2">
+          {{ title }}
+        </span> -->
+        <v-icon x-small color="#fff" class="my-2 mr-1">mdi-chevron-left</v-icon>
         <ul
           class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2"
         >
-          <li class="breadcrumb-item">
-            <router-link :to="'/'" class="subheader-breadcrumbs-home">
-              <i class="flaticon2-shelter text-light icon-1x"></i>
-            </router-link>
-          </li>
-
           <template v-for="(breadcrumb, i) in breadcrumbs">
             <li class="breadcrumb-item" :key="`${i}-${breadcrumb.id}`">
               <router-link
@@ -31,7 +47,12 @@
               >
                 {{ breadcrumb.title }}
               </router-link>
-              <span class="text-light" :key="i" v-if="!breadcrumb.route">
+              <span
+                class="text-light"
+                style="font-size:0.9em;font-family:'Vazir-Light-FD'"
+                :key="i"
+                v-if="!breadcrumb.route"
+              >
                 {{ breadcrumb.title }}
               </span>
             </li>
@@ -77,8 +98,53 @@ export default {
     breadcrumbs: Array,
     title: String
   },
+  data() {
+    return {
+      TickerRouteList: [
+        "Administration",
+        "Notifications",
+        "StatusChange",
+        "Board",
+        "shareholders",
+        "AdjustedPrices",
+        "TechnicalMoreInfo",
+        "MonthlyAnalysis",
+        "Monthly",
+        "StatementAnalysis",
+        "BalanceSheet",
+        "IncomeStatementAnalysis",
+        "IncomeStatement",
+        "CashFlow",
+        "TickerAssemblyReport",
+        "TickerAssemblyDPSAndIC"
+      ]
+    };
+  },
+  methods: {
+    ClickTitle() {
+      if (this.TickerRouteList.includes(this.$route.name))
+        this.$router.push({
+          path: `/ticker/Overview/Overall/${this.getLiveTickerID}`
+        });
+    },
+    ClickHome() {
+      if (this.TickerRouteList.includes(this.$route.name))
+        this.$router.push({
+          name: "Dashboard"
+        });
+      else if (this.$route.name == "IndustriesDetail") {
+        this.$router.push({
+          name: "Industries"
+        });
+      } else if (this.$route.name == "SingleNonETF") {
+        this.$router.push({
+          name: "Funds"
+        });
+      }
+    }
+  },
   computed: {
-    ...mapGetters(["layoutConfig"]),
+    ...mapGetters(["layoutConfig", "getLiveTickerID"]),
     quickActionIcon() {
       return process.env.BASE_URL + "media/svg/icons/Files/File-plus.svg";
     },

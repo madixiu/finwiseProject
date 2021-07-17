@@ -367,8 +367,8 @@ export default {
 };
 </script>
 <style scoped>
-.web-icon{
-  color:black
+.web-icon {
+  color: rgb(185, 171, 171);
 }
 .cellItem {
   direction: ltr;

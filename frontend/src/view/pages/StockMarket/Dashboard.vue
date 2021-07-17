@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import MostViewedWidget from "@/view/pages/StockMarket/StockMarketWidgets/MostViewed.vue";
 import Technical from "@/view/pages/StockMarket/StockMarketWidgets/TechnicalHighest.vue";
 import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
@@ -90,6 +90,7 @@ export default {
   },
   created() {
     document.title = "FinWise - سهام";
+    this.loadData();
   },
   mounted() {
     this.ResponeseTimeout = {
@@ -102,9 +103,8 @@ export default {
       getHighestQ: true,
       getTechnicalData: true
     };
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
+    // this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
 
-    this.loadData();
     this.liveChecker();
     // TODO
     // change the interval

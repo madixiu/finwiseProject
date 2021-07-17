@@ -738,7 +738,7 @@ export default {
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       // this.gridColumnApi.autoSizeColumns(["market"], false);
-      this.gridApi.api.sizeColumnsToFit();
+      params.api.sizeColumnsToFit();
 
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;

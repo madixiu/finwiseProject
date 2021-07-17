@@ -6,8 +6,8 @@
         <span>صنایع</span>
       </v-card-title> -->
       <v-toolbar dense id="ParentCardTitle">
-            <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
-          </v-toolbar>
+        <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
+      </v-toolbar>
       <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">
         <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-11">
@@ -218,7 +218,10 @@ export default {
         .attr("id", "IndustriesChart_SVG")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .style('background','url(../../media/logos/fadedfinwise.png) no-repeat center ')
+        .style(
+          "background",
+          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+        );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
@@ -441,7 +444,7 @@ export default {
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", this.margin.left*1.3)
+        .attr("x", this.margin.left * 1.3)
         .attr("y", this.height * 0.1)
         .attr("text-anchor", "start")
         .text("بازدهی")
@@ -451,7 +454,7 @@ export default {
       chart
         .append("text")
         .attr("class", "source")
-        .attr("x", this.margin.left*1.5)
+        .attr("x", this.margin.left * 1.5)
         .attr("y", this.height * 0.8)
         .attr("text-anchor", "middle")
         .text("ارزش بازار روز")

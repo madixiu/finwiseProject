@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
-      <div class="col-xxl-12" style="padding-bottom:5px;padding-top:0px">
+      <div class="col-xxl-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12">
@@ -15,10 +14,12 @@
     </div>
   </div>
 </template>
-
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import {
+  SET_BREADCRUMB,
+  SET_BREADCRUMB_TITLE,
+  ADD_BREADCRUMB
+} from "@/core/services/store/breadcrumbs.module";
 import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
 import IncomeStatementAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/IncomeStatementAnalysisWidget.vue";
 export default {
@@ -36,14 +37,16 @@ export default {
   },
   created() {
     document.title = "Finwise - تحلیل صورتهای مالی";
-  },
-  mounted() {
-    this.loadData();
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "تحلیل صورت سود و زیان" }]);
-  },
-  watch: {
-    subheaders() {
-      this.$store.dispatch(ADD_BREADCRUMB, [{ title: this.subheaders.ticker }]);
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "صورت ها" }]);
+    this.$store.dispatch(ADD_BREADCRUMB, [{ title: "تحلیل صورت سود و زیان" }]);
+    if (this.$store.getters.getLiveTickerData != null) {
+      this.subheaders = this.$store.getters.getLiveTickerData;
+      this.loadData();
+    } else {
+      // eslint-disable-next-line no-unused-vars
+      this.getLiveTickerData().then(Response => {
+        this.loadData();
+      });
     }
   },
   methods: {
@@ -81,11 +84,14 @@ export default {
           console.error(error);
         });
     },
-    async getOne() {
+    async getLiveTickerData() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
-        .then(response1 => {
-          this.subheaders = response1.data[0];
+        .then(LiveTickerResponse => {
+          this.subheaders = LiveTickerResponse.data[0];
+          this.$store.dispatch("SetLiveTickerData", this.subheaders);
+          this.$store.dispatch("SetLiveTickerID", this.subheaders.ID);
+          this.$store.dispatch(SET_BREADCRUMB_TITLE, this.subheaders.ticker);
         })
         .catch(error => {
           console.error(error);

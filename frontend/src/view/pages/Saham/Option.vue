@@ -282,7 +282,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
 import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
 import { AgGridVue } from "ag-grid-vue";
@@ -460,10 +459,6 @@ export default {
       }
     ]
   }),
-
-  computed: {
-    ...mapGetters(["getSahm"])
-  },
   watch: {
     tableData(newValue, oldValue) {
       if (oldValue == null && newValue.length != 0) {

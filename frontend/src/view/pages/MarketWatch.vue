@@ -523,10 +523,10 @@ export default {
         }
       }
     ];
+    this.loadData();
   },
   mounted() {
     this.height = this.getHeight();
-    this.loadData();
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     // this.$socketMarketWatch.send(JSON.stringify({ request: "get" }));
@@ -559,7 +559,7 @@ export default {
       });
       // this.gridColumnApi.autoSizeColumns(allColumnIds, true);
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-      // this.gridApi.api.sizeColumnsToFit();
+      // params.api.sizeColumnsToFit();
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);

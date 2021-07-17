@@ -4,10 +4,12 @@ export const APPEND_BREADCRUM = "appendBreadcrumb";
 // mutation types
 export const SET_BREADCRUMB = "setBreadcrumb";
 export const ADD_BREADCRUMB = "addBreadcrumb";
+export const SET_BREADCRUMB_TITLE = "setBreadcrumbTitle";
 
 export default {
   state: {
-    breadcrumbs: []
+    breadcrumbs: [],
+    title: ""
   },
   getters: {
     /**
@@ -25,13 +27,22 @@ export default {
      * @returns {*}
      */
     pageTitle(state) {
-      let last = state.breadcrumbs[state.breadcrumbs.length - 1];
-      if (last && last.title) {
-        return last.title;
-      }
+      return state.title;
+      // let last = state.breadcrumbs[state.breadcrumbs.length - 1];
+      // if (last && last.title) {
+      //   return last.title;
+      // }
     }
   },
   actions: {
+    /**
+     *
+     * @param  state
+     * @param payload
+     */
+    [SET_BREADCRUMB_TITLE](state, payload) {
+      state.commit(SET_BREADCRUMB_TITLE, payload);
+    },
     /**
      * Set the breadcrumbs list
      * @param state
@@ -60,6 +71,9 @@ export default {
     },
     [SET_BREADCRUMB](state, payload) {
       state.breadcrumbs = payload;
+    },
+    [SET_BREADCRUMB_TITLE](state, payload) {
+      state.title = payload;
     }
   }
 };

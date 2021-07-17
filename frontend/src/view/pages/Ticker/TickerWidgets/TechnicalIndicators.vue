@@ -250,7 +250,7 @@ export default {
       _data.push(endAngle);
       var arc = d3
         .arc()
-        .innerRadius(radius - radius / 20)
+        .innerRadius(radius - radius / 3)
         .outerRadius(radius)
         .startAngle(function(d) {
           return d;

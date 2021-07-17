@@ -1,11 +1,7 @@
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
-      <div
-        class="col-xxl-12 col-lg-12 col-md-12"
-        style="padding-top:15px;padding-bottom:5px"
-      >
+      <div class="col-xxl-12 col-lg-12 col-md-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
@@ -49,8 +45,12 @@
 </template>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import {
+  SET_BREADCRUMB,
+  ADD_BREADCRUMB,
+  SET_BREADCRUMB_TITLE
+} from "@/core/services/store/breadcrumbs.module";
+// import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
 import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
 import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
@@ -91,12 +91,11 @@ export default {
   },
   created() {
     document.title = "Finwise - سهم";
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات سهم" }]);
+    this.$store.dispatch(ADD_BREADCRUMB, [{ title: "خلاصه سهم" }]);
   },
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
-
     this.loadData();
-
     this.liveChecker();
     // this.$socketLiveTickerData.onmessage = data => {
 
@@ -113,7 +112,8 @@ export default {
     "$route.params": {
       handler(newValue, oldValue) {
         if (newValue != oldValue && oldValue != undefined) {
-          this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+          this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات سهم" }]);
+          this.$store.dispatch(ADD_BREADCRUMB, [{ title: "خلاصه سهم" }]);
           this.loadData();
         }
       },
@@ -121,7 +121,6 @@ export default {
     }
   },
   methods: {
-
     loadData() {
       // eslint-disable-next-line no-unused-vars
       this.getOne().then(responx => {
@@ -168,42 +167,17 @@ export default {
     async getOne() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
-        .then(response1 => {
-          this.subheaders = response1.data[0];
-          this.livedata = response1.data;
-          this.$store.dispatch(ADD_BREADCRUMB, [
-            { title: this.subheaders.ticker }
-          ]);
+        .then(LiveTickerResponse => {
+          this.subheaders = LiveTickerResponse.data[0];
+          this.livedata = LiveTickerResponse.data;
+          this.$store.dispatch("SetLiveTickerData", this.subheaders);
+          this.$store.dispatch("SetLiveTickerID", this.subheaders.ID);
+          this.$store.dispatch(SET_BREADCRUMB_TITLE, this.subheaders.ticker);
         })
         .catch(error => {
           console.error(error);
         });
     },
-    // setActiveTab1(event) {
-    //   this.tabIndex = this.setActiveTab(event);
-    // },
-    // setActiveTab2(event) {
-    //   this.tabIndex2 = this.setActiveTab(event);
-    // },
-    // /**
-    //  * Set current active on click
-    //  * @param event
-    //  */
-    // setActiveTab(event) {
-    //   // get all tab links
-    //   const tab = event.target.closest('[role="tablist"]');
-    //   const links = tab.querySelectorAll(".nav-link");
-    //   // remove active tab links
-    //   for (let i = 0; i < links.length; i++) {
-    //     links[i].classList.remove("active");
-    //   }
-
-    //   // set current active tab
-    //   event.target.classList.add("active");
-
-    //   // set clicked tab index to bootstrap tab
-    //   return parseInt(event.target.getAttribute("data-tab"));
-    // },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
       let interval = setInterval(() => {

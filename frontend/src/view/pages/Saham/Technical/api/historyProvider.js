@@ -68,11 +68,7 @@ export default {
     //     }
     //   });
     return rp({
-      //   url: `${api_root}${url}`,
-      // url: `http://185.231.115.223:3000/View_TV_Daily?`,
-      // url: `http://185.231.115.223:3000/rpc/ViewTVDaily?`,
       url: `https://finwise.ir/api/TVData/${qs.limits}/${qs.url}/${qs.todate}`
-      // qs
     }).then(data => {
       if (data.Response && data.Response === "Error") {
         return [];

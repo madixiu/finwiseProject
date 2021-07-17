@@ -88,15 +88,10 @@ export default {
           }
         })
         .then(data => {
-          // console.log(data);
           let LoginData = data.data.refreshToken;
-          // console.log(LoginData);
           if (!data.data.errors) {
-            // console.log(LoginData.success);
             if (LoginData.success) {
               // store new acc token to vuex
-
-              // this.$store.dispatch("RenewAccessToken", LoginData.token);
               commit(SET_ACCTOKEN, LoginData.token);
             } else {
               this.$store.dispatch("LOGOUT");
