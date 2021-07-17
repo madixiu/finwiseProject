@@ -14,7 +14,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon-coins"></i>
+          <i class="menu-icon flaticon2-analytics-2"></i>
           <span class="menu-text">بازار</span>
         </a>
       </li>
@@ -189,7 +189,7 @@
       }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon-clock-2"></i>
+        <i class="menu-icon flaticon2-group"></i>
         <span class="menu-text">مجامع</span>
         <i class="menu-arrow"></i>
       </a>

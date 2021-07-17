@@ -166,7 +166,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-list"></i>
+          <i class="menu-icon flaticon-list-3"></i>
           <span class="menu-text">سابقه-قیمت تعدیلی</span>
         </a>
       </li>
@@ -278,7 +278,7 @@
       }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon2-website"></i>
+        <i class="menu-icon flaticon-event-calendar-symbol"></i>
         <span class="menu-text">ماهیانه</span>
         <i class="menu-arrow"></i>
       </a>
@@ -334,7 +334,7 @@
       }"
     >
       <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon2-website"></i>
+        <i class="menu-icon flaticon-doc"></i>
         <span class="menu-text">صورت ها</span>
         <i class="menu-arrow"></i>
       </a>
