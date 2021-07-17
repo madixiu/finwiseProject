@@ -56,6 +56,8 @@ const IncomeStatement = () =>
 const CashFlow = () => import("@/view/pages/Ticker/Sheets/CashFlow.vue");
 const TechnicalMoreInfo = () =>
   import("@/view/pages/Ticker/TechnicalIndicatorsMoreInfo.vue");
+const TechnicalSupportTrend = () =>
+  import("@/view/pages/Ticker/TickerTechnicalSupportTrend.vue");
 const Monthly = () => import("@/view/pages/Ticker/Monthly.vue");
 const MonthlyAnalysis = () => import("@/view/pages/Ticker/MonthlyAnalysis.vue");
 const StatementAnalysis = () =>
@@ -274,6 +276,11 @@ export default new Router({
               path: "TickerTechnical/:id",
               name: "TickerTechnical",
               component: TickerTechnical
+            },
+            {
+              path: "TickerTechnicalTrend/:id",
+              name: "TickerTechnicalTrend",
+              component: TechnicalSupportTrend
             },
             {
               path: "Sheets/BalanceSheet/:id",

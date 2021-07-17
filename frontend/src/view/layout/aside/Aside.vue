@@ -88,6 +88,7 @@ export default {
         "AdjustedPrices",
         "TickerFundamental",
         "TickerTechnical",
+        "TickerTechnicalTrend",
         "BalanceSheet",
         "IncomeStatement",
         "CashFlow",

@@ -3,12 +3,7 @@
     <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         گزارش ماهیانه
-        <b-spinner
-          class="titleHeaders"
-          type="grow"
-          small
-          v-if="loading"
-        ></b-spinner>
+        <b-spinner class="titleHeaders" type="grow" small></b-spinner>
       </h3>
     </div>
     <!--end::Header-->

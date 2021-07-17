@@ -8,6 +8,10 @@
         class="pb-2 pt-1"
       ></ChartVol>
       <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
+      <ChartIndustires
+        :inpuDataIndustryHH="IndustryHHData"
+        :inputDataIndustryImpact="IndustryImpact"
+      ></ChartIndustires>
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div class="row">
@@ -40,6 +44,7 @@ import Technical from "@/view/pages/StockMarket/StockMarketWidgets/TechnicalHigh
 import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
 import ChartHH from "@/view/pages/StockMarket/StockMarketWidgets/HH_Q_Chart.vue";
 import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
+import ChartIndustires from "@/view/pages/StockMarket/StockMarketWidgets/IndustryChartsForDashboard.vue";
 // import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
 import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
 //// import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
@@ -49,6 +54,7 @@ export default {
     ChartVol,
     ChartHH,
     ChartTradeValue,
+    ChartIndustires,
     // // IndicesText,
     IndexChart,
     // //NewsW,
@@ -62,6 +68,8 @@ export default {
       TodayTepix: [],
       News: [],
       ImpactsData: [],
+      IndustryHHData: [],
+      IndustryImpact: [],
       HHData: [],
       QData: [],
       mostviewed: [],
@@ -74,7 +82,9 @@ export default {
         getTepixToday: true,
         getHHData: true,
         getHighestQ: true,
-        getTechnicalData: true
+        getTechnicalData: true,
+        getIndustryImpact: true,
+        getIndustryHH: true
       },
       WebsocketRequest: false,
       interval: null
@@ -101,7 +111,9 @@ export default {
       getTepixToday: true,
       getHHData: true,
       getHighestQ: true,
-      getTechnicalData: true
+      getTechnicalData: true,
+      getIndustryImpact: true,
+      getIndustryHH: true
     };
     // this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
 
@@ -140,7 +152,12 @@ export default {
           // eslint-disable-next-line no-unused-vars
           this.getHighestQ().then(resp6 => {
             // eslint-disable-next-line no-unused-vars
-            this.getTradesValue();
+            this.getTradesValue().then(resp7 => {
+              // eslint-disable-next-line no-unused-vars
+              this.getIndustryImpacts().then(resp8 => {
+                this.getIndustryHH();
+              });
+            });
           });
         });
       });
@@ -159,6 +176,43 @@ export default {
           // else console.error(error);
           if (error.code == "ECONNABORTED") {
             this.ResponeseTimeout.getImpacts = true;
+            // return false
+          } else console.error(error);
+        });
+    },
+
+    async getIndustryImpacts() {
+      await this.axios
+        .get("/api/Indices/Impact")
+        .then(getIndustryImpact => {
+          this.ResponeseTimeout.getIndustryImpact = false;
+
+          this.IndustryImpact = getIndustryImpact.data;
+          return true;
+        })
+        .catch(error => {
+          // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
+          // else console.error(error);
+          if (error.code == "ECONNABORTED") {
+            this.ResponeseTimeout.getIndustryImpact = true;
+            // return false
+          } else console.error(error);
+        });
+    },
+    async getIndustryHH() {
+      // console.log('Req')
+      await this.axios
+        .get("/api/Indices/HH")
+        .then(getIndustryHHData => {
+          this.ResponeseTimeout.getIndustryHH = false;
+          this.IndustryHHData = getIndustryHHData.data;
+          return true;
+        })
+        .catch(error => {
+          // if (error.code == "ECONNABORTED") setTimeout(this.getImpacts(), 1000);
+          // else console.error(error);
+          if (error.code == "ECONNABORTED") {
+            this.ResponeseTimeout.getIndustryHH = true;
             // return false
           } else console.error(error);
         });

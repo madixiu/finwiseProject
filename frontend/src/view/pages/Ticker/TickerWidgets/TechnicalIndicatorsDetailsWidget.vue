@@ -1,95 +1,107 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div>
-    <v-card :height="mainCardHeight">
-      <!--begin::Header-->
-      <v-toolbar dense>
-        <v-toolbar-title>بررسی اندیکاتورها</v-toolbar-title>
-      </v-toolbar>
-      <div class="row">
-        <div
-          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
-          style="padding-left:0px;padding-right:20px"
+  <div class="row">
+    <div
+      class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+      style="padding-left:0px;padding-right:20px"
+    >
+      <!-- <div
+            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+          > -->
+      <v-card id="ParentCard" :height="cardheight">
+        <v-toolbar dense>
+          <v-toolbar-title id="ParentCardTitle">مجموع</v-toolbar-title>
+        </v-toolbar>
+        <!-- <v-card-title id="ParentCardTitle">
+          <span>  </span><br />
+        </v-card-title> -->
+        <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
+        <div id="ChartGeneral"></div>
+      </v-card>
+      <!-- </div> -->
+    </div>
+    <div
+      class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1 d-flex"
+      style="padding-left:0px;padding-right:5px"
+    >
+      <!-- <div
+            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
+          > -->
+      <v-card :height="cardheight" style="width:100%">
+        <v-toolbar dense>
+          <v-toolbar-title>Moving Average</v-toolbar-title>
+        </v-toolbar>
+        <!-- <v-card-title> <span>  </span><br /> </v-card-title> -->
+        <v-divider class="mt-0 mb-0"></v-divider>
+        <div class="" id="ChartGeneral2"></div>
+      </v-card>
+      <!-- </div> -->
+    </div>
+    <div
+      class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+      style="padding-left:0px;padding-right:5px"
+    >
+      <!-- <div
+            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
+          > -->
+      <v-card :height="cardheight">
+        <v-toolbar dense>
+          <v-toolbar-title>Indicators</v-toolbar-title>
+        </v-toolbar>
+        <!-- <v-card-title> <span> Indicators </span><br /> </v-card-title> -->
+        <v-divider class="mt-0 mb-0"></v-divider>
+        <div id="ChartGeneral3"></div>
+      </v-card>
+      <!-- </div> -->
+    </div>
+    <div
+      class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
+      style="padding-left:20px;padding-right:5px"
+    >
+      <!-- <div
+            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
+          > -->
+      <v-card :height="cardheight" width="100%">
+        <v-card-title>
+          <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
+          <h6>
+            آخرین بروزرسانی :
+          </h6>
+        </v-card-title>
+        <v-card-subtitle>
+          <span class="cellItem">{{
+            this.lastUpdate.substring(0, 4) +
+              "/" +
+              this.lastUpdate.substring(4, 6) +
+              "/" +
+              this.lastUpdate.substring(6, 8)
+          }}</span>
+        </v-card-subtitle>
+        <v-divider class="mt-0 "></v-divider>
+        <v-data-table
+          :headers="headers"
+          :height="`${cardheight}px`"
+          disable-pagination
+          :items="DataItems2"
+          dense
+          disable-sort
+          :hide-default-footer="true"
+          class="elevation-1 FinancialStrength"
         >
-          <v-card id="ParentCard" :height="cardheight">
-            <v-card-title id="ParentCardTitle">
-              <span> مجموع </span><br />
-            </v-card-title>
-            <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
-            <div id="ChartGeneral"></div>
-          </v-card>
-        </div>
-        <div
-          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
-          style="padding-left:0px;padding-right:5px"
-        >
-          <v-card :height="cardheight">
-            <v-card-title> <span> Moving Average </span><br /> </v-card-title>
-            <v-divider class="mt-0 mb-0"></v-divider>
-            <div id="ChartGeneral2"></div>
-          </v-card>
-          <!-- </div> -->
-        </div>
-        <div
-          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
-          style="padding-left:0px;padding-right:5px"
-        >
-          <v-card :height="cardheight">
-            <v-card-title> <span> Indicators </span><br /> </v-card-title>
-            <v-divider class="mt-0 mb-0"></v-divider>
-            <div id="ChartGeneral3"></div>
-          </v-card>
-        </div>
-        <div
-          class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
-          style="padding-left:20px;padding-right:5px"
-        >
-          <v-card :height="cardheight" width="100%">
-            <v-card-title>
-              <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
-              <h6>
-                آخرین بروزرسانی :
-              </h6>
-            </v-card-title>
-            <v-card-subtitle>
-              <span class="cellItem">{{
-                this.lastUpdate.substring(0, 4) +
-                  "/" +
-                  this.lastUpdate.substring(4, 6) +
-                  "/" +
-                  this.lastUpdate.substring(6, 8)
-              }}</span>
-            </v-card-subtitle>
-            <v-divider class="mt-0 "></v-divider>
-            <v-data-table
-              :headers="headers"
-              :height="`${cardheight}px`"
-              disable-pagination
-              :items="DataItems2"
-              dense
-              disable-sort
-              :hide-default-footer="true"
-              class="elevation-1 FinancialStrength"
+          <template v-slot:[`item.title`]="{ item }">
+            <v-chip small label>
+              <span>{{ item.title }} </span></v-chip
             >
-              <template v-slot:[`item.title`]="{ item }">
-                <v-chip small label>
-                  <span>{{ item.title }} </span></v-chip
-                >
-              </template>
-              <template v-slot:[`item.Value`]="{ item }">
-                <span class="cellItem">{{
-                  numberWithCommas(roundTo(item.Value, 2))
-                }}</span>
-              </template>
-            </v-data-table>
-          </v-card>
-          <!-- </div> -->
-        </div>
-      </div>
-      <!--end::Body-->
-    </v-card>
+          </template>
+          <template v-slot:[`item.Value`]="{ item }">
+            <span class="cellItem">{{
+              numberWithCommas(roundTo(item.Value, 2))
+            }}</span>
+          </template>
+        </v-data-table>
+      </v-card>
+      <!-- </div> -->
+    </div>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
@@ -174,21 +186,21 @@ export default {
   },
   computed: {
     mainCardHeight() {
-      return (window.innerHeight - 135).toString() + "px";
+      return (window.innerHeight - 100).toString() + "px";
     },
     cardheight() {
       if (screen.height * 2 > screen.width) {
         // console.log(screen.height * 0.5)
-        return Math.max(300, screen.height * 0.35);
+        return Math.max(400, screen.height * 0.4);
       } else {
         if (screen.height * 1.5 > screen.width) {
-          return Math.max(400, screen.height * 0.4);
+          return Math.max(450, screen.height * 0.45);
         } else {
           if (screen.height > screen.width) {
-            return Math.max(400, screen.height * 0.55);
+            return Math.max(500, screen.height * 0.6);
           }
           // console.log(screen.width * 0.5)
-          else return Math.max(400, screen.height * 0.7);
+          else return Math.max(600, screen.height * 0.75);
         }
       }
     }
@@ -316,7 +328,7 @@ export default {
         parseInt(d3.select("#ParentCard").style("height"), 10) -
         parseInt(d3.select("#ParentDivider").style("height"), 10) -
         parseInt(d3.select("#ParentCardTitle").style("height"), 10);
-      this.margin.top = this.height * 0.15;
+      this.margin.top = this.height * 0.1;
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
@@ -337,7 +349,7 @@ export default {
         .append("svg")
         .attr(
           "transform",
-          `translate(${this.width * 0.3}, ${this.height * 0.3})`
+          `translate(${this.width * 0.15}, ${this.height * 0.15})`
         )
         .attr("width", this.width * 0.5)
         .attr("height", this.height * 0.5);
@@ -397,7 +409,7 @@ export default {
         .append("svg")
         .attr(
           "transform",
-          `translate(${this.width * 0.3}, ${this.height * 0.3})`
+          `translate(${this.width * 0.15}, ${this.height * 0.15})`
         )
         .attr("width", this.width * 0.5)
         .attr("height", this.height * 0.5);

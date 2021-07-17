@@ -150,7 +150,8 @@ export default {
             let val = series[seriesIndex][dataPointIndex];
             let Class = null;
             if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
-            else if (parseFloat(val) > 0) Class = "industryApexChartTooltipGreenSpan";
+            else if (parseFloat(val) > 0)
+              Class = "industryApexChartTooltipGreenSpan";
 
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
@@ -296,7 +297,8 @@ export default {
             let val = parts.join(".");
             let Class = null;
             if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
-            else if (parseFloat(val) > 0) Class = "industryApexChartTooltipGreenSpan";
+            else if (parseFloat(val) > 0)
+              Class = "industryApexChartTooltipGreenSpan";
             return `<div class="ApexTooltip">
             <div class="topDivTooltip"> 
               <span>
@@ -615,8 +617,6 @@ export default {
     document.title = "Finwise - صنایع";
     this.loadData();
   },
-  mounted() {
-  },
   methods: {
     forceUpdate() {
       this.ApexChartcomponentKey += 1;
@@ -658,11 +658,6 @@ export default {
           params: { id: this.PieChartData.OtherIndustries.indexID[seriesIndex] }
         });
       }
-      // this.Pieseries = marketCaps;
-      // this.$router.push({
-      //   name: "IndustriesDetail",
-      //   params: { id: seriesIndex }
-      // });
     },
     changeTimeFrame() {
       this.ReturnSeries = [
@@ -698,38 +693,6 @@ export default {
         persianNames.push("سایر");
         this.Pieseries = marketCaps;
         this.PiechartOptions.labels = persianNames;
-
-        // let persianNames = [];
-        // let marketCaps = [];
-        // let marketCapsOthers = [];
-        // let itemValue = [];
-        // for (let item of data.TopIndustries) {
-        //   persianNames.push(item.persianName);
-        //   marketCaps.push(item.marketCap);
-        //   itemValue.push({ name: item.persianName, value: item.TradeValue });
-        // }
-        // for (let item of data.Others.List) {
-        //   marketCapsOthers.push(item.marketCap);
-        //   this.persianNamesOthers.push(item.persianName);
-        // }
-        // marketCaps.push(data.Others.marketCapSum);
-        // persianNames.push("سایر");
-        // this.PiechartOptions.labels = persianNames;
-        // this.Pieseries = marketCaps;
-        // this.marketCapsOthers = marketCapsOthers;
-
-        // bar chart data fill MUST BE DONE IN BACKEND ** IMPORTANT **
-        // itemValue.sort(this.compareValues("value", "desc"));
-        // itemValue = itemValue.slice(0, 10);
-        // let names = [];
-        // let values = [];
-        // for (let item of itemValue) {
-        //   names.push(item.name);
-        //   values.push(item.value);
-        // }
-        // this.Barseries = [{ data: values }];
-        // this.BarchartOptions.xaxis.categories = names;
-        // console.log(this.Barseries);
       });
     },
     async getIndustries() {
@@ -750,7 +713,6 @@ export default {
           let HHseries2Labels = [];
           let HHseries2data = [];
           for (let i = 0; i < data.length; i++) {
-            // IndustriesList.push(data.marketCap.marketCapData[i].marketcap);
             HHseries2Labels.push(data[i]["CorrectName"]);
             HHseries2data.push(data[i]["sum"]);
           }

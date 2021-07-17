@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
       <div class="col-xxl-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
@@ -11,7 +10,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import {
   SET_BREADCRUMB,
@@ -28,7 +26,6 @@ export default {
   },
   data() {
     return {
-      allowed: [],
       subheaders: [],
       notice: []
     };
@@ -73,23 +70,6 @@ export default {
           console.error(error);
         });
     }
-    //// loadData() {
-    // ///eslint-disable-next-line no-unused-vars
-    // ///this.getOne().then(response2 => {
-    // ///  this.getTwo().then(function() {});
-    // ///});
-    // ///});
-    // ///},
-    // ///async getAllowed() {
-    // ///  await this.axios
-    // ///    .get("/api/tickerallnames")
-    // ///    .then(response3 => {
-    // ///      this.allowed = response3.data;
-    // ///    })
-    // ///    .catch(error => {
-    // ///      console.error(error);
-    // ///    });
-    // ///},
   }
 };
 </script>

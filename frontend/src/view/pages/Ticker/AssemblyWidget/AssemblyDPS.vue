@@ -45,7 +45,7 @@ export default {
     this.$store.dispatch(ADD_BREADCRUMB, [
       { title: "سود نقدی و افزایش سرمایه" }
     ]);
-     if (this.$store.getters.getLiveTickerData != null) {
+    if (this.$store.getters.getLiveTickerData != null) {
       this.subheaders = this.$store.getters.getLiveTickerData;
     } else {
       // eslint-disable-next-line no-unused-vars

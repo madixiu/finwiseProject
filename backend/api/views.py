@@ -20,6 +20,7 @@ from requestcall.getTseData import *
 from requestcall.getCommodities import *
 from requestcall.getFundsData import *
 from requestcall.getCryptoData import *
+from requestcall.getMisc import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData,IndustryTapeData
@@ -52,6 +53,9 @@ def getHHhistory(self,identifier):
     return JsonResponse(HHhistory(identifier),safe=False)
 def getAdjustedPriceHistory(self,identifier):
     return JsonResponse(AdjustedPrices(identifier),safe=False)
+def getAdjustedPriceHistoryCodal(self,identifier):
+    return JsonResponse(AdjustedPricesBasedOnCodal(identifier),safe=False)
+        
 def getCurrentBoard(self,identifier):
     return JsonResponse(getBoard(identifier),safe=False)
 def getCurrentCeo(self,identifier):
@@ -381,6 +385,8 @@ def getIndicatorsAll(self):
     return JsonResponse(getTechnicalIndicatorsAll(),safe=False)
 def getHistoricCap(self):
     return JsonResponse(getIndicesHistoric(),safe=False)
+def getTechnicalTrends(self,identifier):
+    return JsonResponse(TrendSuppData(identifier),safe=False)
 
 ######### crypto
 def getAllCryptoTechnical(self):

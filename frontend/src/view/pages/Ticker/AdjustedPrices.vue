@@ -58,7 +58,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/AdjustedPrices/" + this.$route.params.id + "/")
+        .get("/api/AdjustedPricesCodal/" + this.$route.params.id + "/")
         .then(responsePrice => {
           this.adjustedprices = responsePrice.data;
         })
