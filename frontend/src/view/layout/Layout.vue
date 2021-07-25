@@ -13,7 +13,11 @@
       <KTAside v-if="selectedRouteAside"></KTAside>
       <!-- end:: Aside Left -->
 
-      <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
+      <div
+        id="kt_wrapper"
+        class="d-flex flex-column flex-row-fluid wrapper"
+        style="background-color:#f5f8fa"
+      >
         <!-- begin:: Header -->
         <KTHeader></KTHeader>
         <!-- end:: Header -->

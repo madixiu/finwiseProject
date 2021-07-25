@@ -8,11 +8,15 @@
   >
     <div
       class="row"
-      style="background-color: #27273b;"
+      style="background-color: #fff;"
       @mouseenter="paused = !paused"
       @mouseleave="paused = false"
     >
-      <div v-for="item in TickerData" :key="item.ticker" class=" mr-4">
+      <div
+        v-for="item in TickerData"
+        :key="item.ticker"
+        class=" pr-2 pl-4 mr-4"
+      >
         <div
           class="mr-2"
           v-bind:class="[
@@ -27,7 +31,7 @@
             {{ item.ticker }}
           </span>
           <span v-if="TickerType" class="tickerTapeClose">
-            {{ item.close }}
+            {{ item.close.toLocaleString() }}
           </span>
           <span dir="ltr" :class="checkSign(item.Change)">{{
             ChangeValue(item.Change)
@@ -67,7 +71,7 @@ export default {
     checkSign(change) {
       if (change > 0) return "tickerTapeChangeGreen";
       else if (change < 0) return "tickerTapeChangeRed";
-      else return "tickerTapeChangeWhite";
+      else return "tickerTapeChangeZero";
     },
     ChangeValue(item) {
       if (item >= 0) return "%" + item;
@@ -98,33 +102,42 @@ export default {
   background-color: tickerTape;
 }
 .tickerTapeTicker {
-  color: aliceblue;
+  /* color: aliceblue;
+   */
+  font-size: 0.9em;
+  color: #354a54;
   font-family: "Vazir-Medium-FD" !important;
 }
 .tickerTapeTicker:hover {
   cursor: pointer;
-  color: yellow;
+  color: #e09f3e;
 }
 .tickerTapeClose {
-  color: aliceblue;
-  font-size: 0.8rem;
+  /* color: aliceblue; */
+  color: #6c7293;
+  font-size: 0.8em;
   font-family: "Vazir-Medium-FD" !important;
 }
 .tickerTapeChange {
   font-family: "Vazir-Medium-FD" !important;
-  color: white !important;
+  /* color: white !important; */
+  font-size: 0.8em;
+  color: #6c7293;
   /* font-size: 1.1em; */
 }
 .tickerTapeChangeGreen {
   font-family: "Vazir-Medium-FD" !important;
-  color: #2cd85d !important;
+  color: #0c8a30 !important;
+  font-size: 0.9em;
 }
 .tickerTapeChangeRed {
   font-family: "Vazir-Medium-FD" !important;
   color: rgb(255, 25, 25) !important;
+  font-size: 0.9em;
 }
-.tickerTapeChangeWhite {
+.tickerTapeChangeZero {
   font-family: "Vazir-Medium-FD" !important;
-  color: white !important;
+  color: #354a54 !important;
+  font-size: 0.9em;
 }
 </style>

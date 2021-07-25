@@ -71,7 +71,7 @@
         ]"
       >
         <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">اوراق با درامد ثابت</span>
+          <span class="menu-text">اوراق</span>
         </a>
       </li>
     </router-link>
@@ -129,7 +129,7 @@
         </a>
       </li>
     </router-link>
-    <router-link
+    <!-- <router-link
       to="/SocialMedia"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -146,7 +146,7 @@
           <span class="menu-text">شبکه اجتماعی</span>
         </a>
       </li>
-    </router-link>
+    </router-link> -->
     <!-- <router-link to="/AI" v-slot="{ href, navigate, isActive, isExactActive }">
       <li
         aria-haspopup="true"

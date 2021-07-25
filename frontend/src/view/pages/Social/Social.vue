@@ -3,16 +3,14 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-toolbar dense>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
             <v-icon dense class="mb-2 pl-1" color="#0E76A8"
               >mdi-linkedin</v-icon
             >
-            <v-toolbar-title>LinkedIn</v-toolbar-title>
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >LinkedIn</v-toolbar-title
+            >
           </v-toolbar>
-          <!-- <v-card-title>
-            <span>LinkedIn</span>
-            </v-card-title>
-          <v-divider class="mt-0 mb-0"></v-divider> -->
           <div id="curator-feed-new-feed-layout-linkedin" class="mt-2">
             <a
               href="https://curator.io"
@@ -26,11 +24,13 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-toolbar dense>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
             <i
               class="v-icon notranslate pl-1 v-icon--dense mdi mdi-instagram theme--light instagram-icon"
             ></i>
-            <v-toolbar-title>Instagram</v-toolbar-title>
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >Instagram</v-toolbar-title
+            >
           </v-toolbar>
           <!-- <v-card-title>Instagram</v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider> -->
@@ -47,9 +47,11 @@
     <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
       <div>
         <v-card>
-          <v-toolbar dense>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
             <v-icon dense class="pl-1" color="#593a92">mdi-twitch</v-icon>
-            <v-toolbar-title>Twitch</v-toolbar-title>
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >Twitch</v-toolbar-title
+            >
           </v-toolbar>
           <!-- <v-card-title>Twitch</v-card-title>
           <v-divider class="mt-0 mb-0"></v-divider> -->
@@ -74,8 +76,6 @@
 </template>
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
 <script>
-// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-// import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
 import VueTwitchPlayer from "vue-twitch-player";
 export default {
   components: {

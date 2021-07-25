@@ -2,9 +2,11 @@
   <div>
     <div class="row">
       <div class="col-xxl-6 col-lg-6 mt-1" style="padding-left:5px">
-        <v-card height="343" :loading="!(TableData.length > 0)">
-          <v-toolbar dense>
-            <v-toolbar-title>شرکتهای موجود در شاخص</v-toolbar-title>
+        <v-card rounded="lg" height="343" :loading="!(TableData.length > 0)">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >شرکتهای موجود در شاخص</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -48,9 +50,11 @@
         </v-card>
       </div>
       <div class="col-xxl-6 col-lg-6 mt-1" style="padding-right:5px">
-        <v-card height="343" :loading="loading">
-          <v-toolbar dense>
-            <v-toolbar-title>شاخص صنعت</v-toolbar-title>
+        <v-card rounded="lg" height="343" :loading="loading">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >شاخص صنعت</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -69,9 +73,11 @@
         </v-card>
       </div>
       <div class="col-xxl-6 col-lg-6" style="padding-left:5px; padding-top:0px">
-        <v-card height="343" :loading="loading">
-          <v-toolbar dense>
-            <v-toolbar-title>ارزش شرکت ها</v-toolbar-title>
+        <v-card rounded="lg" height="343" :loading="loading">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >ارزش شرکت ها</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -93,9 +99,11 @@
         class="col-xxl-6 col-lg-6"
         style="padding-right:5px; padding-top:0px"
       >
-        <v-card height="343" :loading="loading">
-          <v-toolbar dense>
-            <v-toolbar-title>تکنیکال</v-toolbar-title>
+        <v-card rounded="lg" height="343" :loading="loading">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >تکنیکال</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -117,9 +125,11 @@
         class="col-xxl-6 col-md-6 "
         style="padding-left:5px; padding-top:0px"
       >
-        <v-card :loading="loading">
-          <v-toolbar dense>
-            <v-toolbar-title>تاثیر در شاخص</v-toolbar-title>
+        <v-card rounded="lg" :loading="loading">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >تاثیر در شاخص</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -161,9 +171,11 @@
         class="col-xxl-6 col-md-6 "
         style="padding-right:5px; padding-top:0px"
       >
-        <v-card :loading="loading">
-          <v-toolbar dense>
-            <v-toolbar-title>ورود و خروج حقیقی</v-toolbar-title>
+        <v-card rounded="lg" :loading="loading">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >ورود و خروج حقیقی</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="loading"
@@ -474,9 +486,6 @@ export default {
             let n = series[seriesIndex];
             // let val = ""
             if (n != undefined) {
-              //   let parts = n.toString().split(".");
-              // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              //  val = parts.join(".");
               let val = (n / 1000000000).toLocaleString();
               return `<div class="ApexTooltip">
               <div class="topDivTooltip" style=background-color:${backgroundColor}> 
@@ -487,9 +496,6 @@ export default {
               <div class="bottomDivTooltip">
               <span style=color:#000;font-size:0.8em class=mr-1>میلیارد ریال</span>
               <span style=color:#000;font-size:0.8em>${val}</span>
-
-            
-
               </div>
               </div>
             `;
@@ -721,12 +727,11 @@ export default {
   created() {
     document.title = "Finwise - صنایع";
     this.$store.dispatch(SET_BREADCRUMB_TITLE, "");
-
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "خلاصه صنعت" }]);
     this.loadData();
   },
-  computed: {},
-  mounted() {},
+  //// computed: {},
+  //// mounted() {},
   methods: {
     ChartClick(ChartType, context, seriesIndex) {
       if (ChartType == "Impact")
@@ -957,7 +962,6 @@ export default {
   align-items: stretch;
   align-content: center;
 }
-
 .topDivTooltip {
   background-color: #d7d7d7;
   display: flex;

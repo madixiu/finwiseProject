@@ -265,7 +265,8 @@
               </a>
             </li>
           </router-link>
-          <!-- <router-link
+
+          <router-link
             :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -283,8 +284,7 @@
                 <span class="menu-text">بررسی حمایت و مقاومت</span>
               </a>
             </li>
-            
-          </router-link> -->
+          </router-link>
         </ul>
       </div>
     </li>

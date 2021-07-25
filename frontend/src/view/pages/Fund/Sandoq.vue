@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="row mr-1 ml-1">
-      <v-card width="100%">
+      <v-card rounded="lg" width="100%">
         <div id="FundsFilterRow2" class="row pb-1 pt-1">
           <div class="col-xxl-2 col-lg-2  col-md-8 col-sm-12 mr-1">
             <b-input-group size="sm">
               <b-input-group-prepend is-text>
-                <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
-                <b-icon v-else icon="search"></b-icon> -->
                 <b-icon icon="search"></b-icon>
               </b-input-group-prepend>
               <b-form-input
@@ -22,7 +20,7 @@
         </div>
         <ag-grid-vue
           :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
-          class="ag-theme-balham"
+          class="sandoqTable ag-theme-balham"
           :columnDefs="FundsHeader"
           :defaultColDef="defaultColDef"
           rowSelection="multiple"
@@ -62,16 +60,11 @@ export default {
       localeText: null,
       dataFetch: false,
       // * %%%%%%%%%%%%%%%
-
       height: "470px",
       WebsocketRequest: false,
       isBusy: true,
-      sortDesc: false,
-      filterOn: ["name"],
       tableData: null,
-      sortBy: "name",
-      Tablefilter: "",
-      TypeSearch: ""
+      Tablefilter: ""
     };
   },
   watch: {
@@ -207,7 +200,7 @@ export default {
           return params.value.toLocaleString();
         }
       },
-       {
+      {
         headerName: "قیمت آماری",
         field: "StaticalNav",
         filter: "agNumberColumnFilter",
@@ -225,12 +218,11 @@ export default {
           return params.value.toString().toLocaleString();
         }
       },
-       {
+      {
         headerName: "تعداد واحد صندوق",
         field: "TotalUnit",
         filter: "agNumberColumnFilter",
         sortable: true,
-        
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
@@ -239,39 +231,38 @@ export default {
         headerName: "متولی",
         field: "CustodianName",
         sortable: true,
-        hide: true,
+        hide: true
       },
       {
         headerName: "مدیر صندوق",
         field: "ManagerName",
         sortable: true,
-        hide: true,
+        hide: true
       },
       {
         headerName: "ضامن نقد شوندگی",
         field: "LiquidityGuaranteeName",
         sortable: true,
-        hide: true,
+        hide: true
       },
-       {
+      {
         headerName: "مدیر صندوق",
         field: "ManagerName",
         sortable: true,
-        hide: true,
+        hide: true
       },
       {
         headerName: "مدیر سرمایه گذاری",
         field: "InvestmentManagerName",
         sortable: true,
-        hide: true,
+        hide: true
       },
-        {
+      {
         headerName: "تاریخ شروع به کار",
         field: "ActivityStartDate",
         sortable: true,
-        hide: true,
-      },
-      
+        hide: true
+      }
     ];
   },
   mounted() {
@@ -369,9 +360,12 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* ag Grid */
-.ag-theme-balham .ag-header {
+.sandoqTable /deep/ .ag-root-wrapper {
+  border-radius: 10px 10px 0px 0px;
+}
+.sandoqTable /deep/ .ag-header {
   background-color: #f5f7f7;
   background-color: var(--ag-header-background-color, #f5f7f7);
   border-top: solid 1px;
@@ -383,13 +377,13 @@ export default {
   border-radius: 10px 10px 0px 0px;
 }
 
-.ag-theme-balham .ag-rtl .ag-cell {
+.sandoqTable /deep/ .ag-rtl .ag-cell {
   font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
   overflow: hidden;
 }
 /* header */
-.ag-header-cell-label {
+.sandoqTable /deep/ .ag-header-cell-label {
   color: black;
   font-size: 1em;
   font-weight: 300;
@@ -400,65 +394,10 @@ export default {
   justify-content: center;
   align-content: center;
 }
-.ag-grid-row-class {
+.sandoqTable /deep/ .ag-grid-row-class {
   /* background-color: red !important; */
   display: flex;
   align-items: center !important;
 }
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-
-.Funds-table-head {
-  /* background-color: #e01313; */
-  vertical-align: middle !important;
-  font-size: 1.1em !important;
-  font-weight: 600 !important ;
-}
-.Funds-table {
-  vertical-align: middle !important;
-  text-align: center !important;
-  font-size: 0.8em !important;
-  line-height: 1 !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-row:hover {
-  background-color: #999999 !important;
-}
-.Funds-table-cell {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 400;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-cell-green {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: green;
-  font-weight: 400;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-cell-red {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: red;
-  font-weight: 400;
-  font-family: "Vazir-Medium-FD";
-  vertical-align: middle !important;
-}
-.Funds-table-cell-bold {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 600;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-row {
-  direction: ltr;
-  vertical-align: middle !important;
-}
 </style>

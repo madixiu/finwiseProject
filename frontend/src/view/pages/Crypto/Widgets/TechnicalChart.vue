@@ -1,8 +1,10 @@
 <template>
   <div>
     <v-card>
-      <v-toolbar dense>
-        <v-toolbar-title>بررسی تکنیکال رمز ارزها</v-toolbar-title>
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >بررسی تکنیکال رمز ارزها</v-toolbar-title
+        >
       </v-toolbar>
       <div id="Chartcontainer_index"></div>
     </v-card>
@@ -12,8 +14,6 @@
 
 <script>
 import * as d3 from "d3";
-
-// eslint-disable-next-line no-unused-vars
 export default {
   name: "TechnicalCrypto",
   props: { inpuDataTechnical: Array },

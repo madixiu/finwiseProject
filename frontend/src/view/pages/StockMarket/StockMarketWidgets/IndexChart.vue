@@ -1,8 +1,14 @@
 <template>
   <div>
-    <v-card :loading="!indexData.length">
-      <v-toolbar dense>
-        <v-toolbar-title>شاخص کل</v-toolbar-title>
+    <v-card :loading="!indexData.length" rounded="lg">
+      <v-toolbar
+        dense
+        class="IndexChartToolbars elevation-2"
+        style="height:36px;"
+      >
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >شاخص کل</v-toolbar-title
+        >
       </v-toolbar>
       <v-skeleton-loader
         v-if="indexData.length == 0"
@@ -17,7 +23,7 @@
           style="padding-left:0px;flex-direction:column;justify-content:center"
         >
           <div class="d-flex flex-column" style="width:100%">
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-between"
                 style="
@@ -68,7 +74,7 @@
               <!-- here -->
             </v-card>
 
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-between"
                 style="
@@ -114,7 +120,7 @@
               </div>
             </v-card>
 
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-between"
                 style="
@@ -159,7 +165,7 @@
                 </v-col>
               </div>
             </v-card>
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-around align-items-baseline"
                 style="
@@ -181,7 +187,7 @@
                 </v-col>
               </div>
             </v-card>
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-around align-items-baseline"
                 style="
@@ -204,7 +210,7 @@
                 </v-col>
               </div>
             </v-card>
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-around align-items-baseline"
                 style="
@@ -226,7 +232,7 @@
                 </v-col>
               </div>
             </v-card>
-            <v-card elevation="3" style="margin-bottom:3px">
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
               <div
                 class="d-flex flex-row justify-content-around align-items-baseline"
                 style="
@@ -476,7 +482,6 @@ export default {
             return d;
           }
         });
-        //? console.log(data);
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
         this.latestIndex = lastItem["Index"];
@@ -798,6 +803,9 @@ export default {
 </script>
 
 <style scoped>
+.IndexChartToolbars /deep/ .v-toolbar__content {
+  height: 36px !important;
+}
 .flex-item {
   /* background-color:brown; */
   display: flex;

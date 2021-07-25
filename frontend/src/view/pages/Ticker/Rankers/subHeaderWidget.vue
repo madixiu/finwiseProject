@@ -7,7 +7,7 @@
       style="flex-wrap: nowrap"
     >
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             نماد
           </v-col>
@@ -19,7 +19,7 @@
         </v-card>
       </v-col>
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             آخرین قیمت
           </v-col>
@@ -53,7 +53,7 @@
         </v-card>
       </v-col>
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             قیمت پایانی
           </v-col>
@@ -88,7 +88,7 @@
       </v-col>
 
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             ارزش معاملات
           </v-col>
@@ -107,7 +107,7 @@
         </v-card>
       </v-col>
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pl-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             حجم معاملات
           </v-col>
@@ -127,7 +127,7 @@
       </v-col>
 
       <v-col cols="2" class="flex-grow-1 flex-shrink-0 pr-1">
-        <v-card height="100%" elevation="5">
+        <v-card rounded="lg" height="100%" elevation="5">
           <v-col cols="12" style="direction:ltr" class="CardHeaderTitle">
             وضعیت
           </v-col>

@@ -13,13 +13,6 @@
           >mdi-clock-outline</v-icon
         >
         <span class="time">{{ time }}</span>
-        <!-- <v-icon
-              size="15px"
-              color="#c50202"
-              @click="info(row.item)"
-              class="mr-1"
-              >mdi-circle-medium</v-icon
-            > -->
       </div>
     </div>
   </div>
@@ -98,12 +91,14 @@ export default {
   top: 30%; */
   /* transform: translate(-50%, -50%); */
   color: #daf6ff;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+  /* text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0); */
+  text-shadow: 0 0 20px #f4f5f9, 0 0 20px rgba(10, 175, 230, 0);
 }
 .time {
   font-family: "Vazir-Light-FD";
   letter-spacing: 0.03em;
-  color: rgb(255, 252, 247);
+  /* color: rgb(255, 252, 247); */
+  color: #6c7293;
   font-size: 0.9em;
   font-weight: 600;
   padding: 5px 0;
@@ -113,7 +108,8 @@ export default {
   letter-spacing: 0.04em;
   font-size: 0.9em;
   font-weight: 600;
-  color: rgb(255, 252, 247);
+  /* color: rgb(255, 252, 247); */
+  color: #6c7293;
   font-size: 0.8em;
 }
 .top {
@@ -123,27 +119,4 @@ export default {
   direction: ltr;
   display: flex;
 }
-/* .outer {
-  display: grid;
-  grid-template: 1fr / 1fr;0
-  place-items: center;
-  position: relative;
-} */
-/* .outer > * {
-  grid-column: 1 / 1;
-  grid-row: 1 / 1;
-} */
-/* .outer .top {
-  position: absolute;
-  z-index: 1;
-}
-.outer .below {
-  position: absolute;
-  z-index: 2;
-} */
-/* .text {
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  padding: 20px 0 0;
-} */
 </style>

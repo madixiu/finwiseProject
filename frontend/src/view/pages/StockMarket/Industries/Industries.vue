@@ -6,8 +6,10 @@
         style="padding-left:0px"
       >
         <v-card :loading="Pieseries.length == 0" shaped>
-          <v-toolbar dense>
-            <v-toolbar-title>ارزش بازار صنایع</v-toolbar-title>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >ارزش بازار صنایع</v-toolbar-title
+            >
             <v-spacer></v-spacer>
 
             <v-btn icon v-if="PieChartkey == 1" @click="PieChartBackButton">
@@ -32,8 +34,10 @@
           />
         </v-card>
         <v-card :loading="Barseries.length == 0" class="mt-3" shaped>
-          <v-toolbar dense>
-            <v-toolbar-title>صنایع با بیشترین ارزش معاملات</v-toolbar-title>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >صنایع با بیشترین ارزش معاملات</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="!Barseries.length"
@@ -43,7 +47,7 @@
           <ApexChart
             v-if="Barseries.length"
             type="bar"
-            height="200%"
+            height="180%"
             width="100%"
             :series="Barseries"
             :chartOptions="BarchartOptions"
@@ -54,41 +58,49 @@
         class="col-xxl-9 col-md-9 col-sm-12 col-xs-12"
         style="padding-right:10px"
       >
-        <v-card :loading="HHseries.length == 0">
-          <v-toolbar dense>
-            <v-toolbar-title>ورود و خروج حقیقی به صنایع</v-toolbar-title>
+        <!--//! Changed HH -->
+        <v-card rounded="lg" :loading="HHseries.length == 0">
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >ورود و خروج حقیقی به صنایع</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="HHseries.length == 0"
             v-bind="attrs"
             type="card"
           ></v-skeleton-loader>
-          <ApexChart
+          <HHChart
             v-if="HHseries.length != 0"
-            type="bar"
-            width="100%"
-            height="200%"
-            :series="HHseries"
-            :chartOptions="HHoptions"
-          />
+            :HHseries="HHseries"
+            :HHLabels="HHLabels"
+            :HHmax="HHmax"
+            :HHmin="HHmin"
+          ></HHChart>
         </v-card>
-        <v-card class="mt-3" :loading="EffectOnIndexSeries.length == 0">
-          <v-toolbar dense>
-            <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
+
+        <v-card
+          rounded="lg"
+          class="mt-3"
+          :loading="EffectOnIndexSeries.length == 0"
+        >
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >تاثیر صنایع در شاخص</v-toolbar-title
+            >
           </v-toolbar>
           <v-skeleton-loader
             v-if="!EffectOnIndexSeries.length"
             v-bind="attrs"
             type="card"
           ></v-skeleton-loader>
-          <ApexChart
-            v-if="EffectOnIndexSeries.length"
-            type="bar"
-            width="100%"
-            height="200%"
-            :series="EffectOnIndexSeries"
-            :chartOptions="EffectOnIndexOptions"
-          />
+          <EffectOnIndexChart
+            v-if="EffectOnIndexSeries.length != 0"
+            :EffectOnIndexSeries="EffectOnIndexSeries"
+            :EffectOnIndexLabels="EffectOnIndexLabels"
+            :EffectOnIndexmin="EffectOnIndexmin"
+            :EffectOnIndexmax="EffectOnIndexmax"
+          ></EffectOnIndexChart>
         </v-card>
       </div>
     </div>
@@ -100,6 +112,8 @@
   </div>
 </template>
 <script>
+import HHChart from "@/view/pages/StockMarket/Industries/Content/HHChart.vue";
+import EffectOnIndexChart from "@/view/pages/StockMarket/Industries/Content/EffectOnIndex.vue";
 import ApexChart from "@/view/content/charts/ApexChart";
 import IndustryChart from "@/view/pages/StockMarket/Industries/Content/IndustriesChart.vue";
 // import IndustryTechnicalBest from "@/view/pages/StockMarket/Industries/Content/IndustryTechnical‌Best";
@@ -108,6 +122,8 @@ export default {
   name: "Industries",
   components: {
     ApexChart,
+    HHChart,
+    EffectOnIndexChart,
     IndustryChart
     // IndustryTechnicalBest,
     // IndustryTechnicalWorse,
@@ -131,279 +147,15 @@ export default {
       PieseriesOthers: [],
       Barseries: [],
       HHseries: [],
-      HHoptions: {
-        chart: {
-          animations: { enabled: false },
-          type: "bar",
-          height: 100,
-          fontFamily: "Vazir-Medium-FD",
-          // stacked: true,
-          toolbar: {
-            show: false
-          }
-        },
-        tooltip: {
-          followCursor: true,
-          intersect: false,
-          fillSeriesColor: true,
-          custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            let val = series[seriesIndex][dataPointIndex];
-            let Class = null;
-            if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
-            else if (parseFloat(val) > 0)
-              Class = "industryApexChartTooltipGreenSpan";
+      HHLabels: [],
+      HHmax: null,
+      HHmin: null,
 
-            return `<div class="ApexTooltip">
-            <div class="topDivTooltip"> 
-              <span>
-              ${w.globals.labels[dataPointIndex]}
-              </span>
-              </div>
-              <div class="bottomDivTooltip">
-              <span style=color:#000;font-size:0.8em class=mr-1>ریال</span>
-              <span style='font-size:0.8em' class="${Class}">${val.toLocaleString()}</span>
-            
-
-              </div>
-              </div>
-            `;
-          }
-        },
-        labels: [],
-        // colors: ["#16f222", "#FF4560"],
-        colors: [
-          function({ value }) {
-            if (value > 0) {
-              return "#00ad13";
-            } else {
-              return "#dc0600";
-            }
-          }
-        ],
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            barHeight: "100%",
-            startingShape: "flat"
-            // endingShape: "rounded"
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-
-        grid: {
-          xaxis: {
-            lines: {
-              show: false
-            }
-          }
-        },
-        stroke: {
-          width: 1,
-          colors: ["#3e3e4e"]
-        },
-        yaxis: {
-          // min: -5,
-          // max: 5,
-          title: {
-            text: "میلیارد ریال"
-          },
-          labels: {
-            formatter: function(value) {
-              let n = value / 1000000000;
-              let negative = false;
-              let digits = 0;
-              if (n < 0) {
-                negative = true;
-                n = n * -1;
-              }
-              let multiplicator = Math.pow(10, digits);
-              n = parseFloat((n * multiplicator).toFixed(11));
-              n = (Math.round(n) / multiplicator).toFixed(digits);
-              if (negative) {
-                n = (n * -1).toFixed(digits);
-              }
-              let parts = n.toString().split(".");
-              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              return parts.join(".");
-            }
-          }
-        },
-        // tooltip: {
-        //   shared: false,
-        //   followCursor: true,
-        //   intersect: false,
-        //   fillSeriesColor: true,
-
-        //   x: {
-        //     formatter: function(val) {
-        //       return val;
-        //     }
-        //   },
-        //   y: {
-        //     title: {
-        //       formatter: seriesName => seriesName
-        //     }
-        //     // formatter: function(value) {
-        //     //   return value;
-        //     // }
-        //   }
-        // },
-        // title: {
-        //   text: "Mauritius population pyramid 2011"
-        // },
-        xaxis: {
-          categories: [],
-          labels: {
-            // formatter: function(val) {
-            //   return Math.abs(Math.round(val)) + "%";
-            // }
-          }
-        }
-      },
       EffectOnIndexSeries: [],
-      EffectOnIndexOptions: {
-        chart: {
-          animations: { enabled: false },
-          type: "bar",
-          height: 100,
-          fontFamily: "Vazir-Medium-FD",
-          // stacked: true,
-          toolbar: {
-            show: false
-          }
-        },
-        tooltip: {
-          followCursor: true,
-          intersect: false,
-          fillSeriesColor: true,
-          custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            let n = series[seriesIndex][dataPointIndex];
-            let negative = false;
-            let digits = 0;
-            if (n < 0) {
-              negative = true;
-              n = n * -1;
-            }
-            let multiplicator = Math.pow(10, digits);
-            n = parseFloat((n * multiplicator).toFixed(11));
-            n = (Math.round(n) / multiplicator).toFixed(digits);
-            if (negative) {
-              n = (n * -1).toFixed(digits);
-            }
-            let parts = n.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            let val = parts.join(".");
-            let Class = null;
-            if (parseFloat(val) < 0) Class = "industryApexChartTooltipRedSpan";
-            else if (parseFloat(val) > 0)
-              Class = "industryApexChartTooltipGreenSpan";
-            return `<div class="ApexTooltip">
-            <div class="topDivTooltip"> 
-              <span>
-              ${w.globals.labels[dataPointIndex]}
-              </span>
-              </div>
-              <div class="bottomDivTooltip">
-              <span class="${Class}">${val}</span>
-            
+      EffectOnIndexLabels: [],
+      EffectOnIndexmin: null,
+      EffectOnIndexmax: null,
 
-              </div>
-              </div>
-            `;
-          }
-        },
-        labels: [],
-        // colors: ["#16f222", "#FF4560"],
-        colors: [
-          function({ value }) {
-            if (value > 0) {
-              return "#00ad13";
-            } else {
-              return "#dc0600";
-            }
-          }
-        ],
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            barHeight: "100%",
-            startingShape: "flat"
-            // endingShape: "rounded"
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-
-        grid: {
-          xaxis: {
-            lines: {
-              show: false
-            }
-          }
-        },
-        stroke: {
-          width: 1,
-          colors: ["#3e3e4e"]
-        },
-        yaxis: {
-          // min: -5,
-          // max: 5,
-          labels: {
-            formatter: function(value) {
-              let n = value;
-              let negative = false;
-              let digits = 0;
-              if (n < 0) {
-                negative = true;
-                n = n * -1;
-              }
-              let multiplicator = Math.pow(10, digits);
-              n = parseFloat((n * multiplicator).toFixed(11));
-              n = (Math.round(n) / multiplicator).toFixed(digits);
-              if (negative) {
-                n = (n * -1).toFixed(digits);
-              }
-              let parts = n.toString().split(".");
-              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              return parts.join(".");
-            }
-          }
-        },
-        // tooltip: {
-        //   shared: false,
-        //   followCursor: true,
-        //   intersect: false,
-        //   fillSeriesColor: true,
-
-        //   x: {
-        //     formatter: function(val) {
-        //       return val;
-        //     }
-        //   },
-        //   y: {
-        //     title: {
-        //       formatter: seriesName => seriesName
-        //     }
-        //     // formatter: function(value) {
-        //     //   return value;
-        //     // }
-        //   }
-        // },
-        // title: {
-        //   text: "Mauritius population pyramid 2011"
-        // },
-        xaxis: {
-          categories: [],
-          labels: {
-            // formatter: function(val) {
-            //   return Math.abs(Math.round(val)) + "%";
-            // }
-          }
-        }
-      },
       BarchartOptions: {
         chart: {
           type: "bar",
@@ -421,7 +173,7 @@ export default {
         plotOptions: {
           bar: {
             horizontal: true,
-            barHeight: "80%",
+            barHeight: "70%",
             distributed: true
           }
         },
@@ -453,8 +205,11 @@ export default {
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return parts.join(".");
           },
-
+          // offsetX:10,
+          offsetY: 5,
+          textAnchor: "middle",
           style: {
+            fontSize: "0.8em",
             fontFamily: "Vazir-Medium-FD",
             colors: ["#fff"]
           }
@@ -667,12 +422,12 @@ export default {
     },
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getIndustries().then(resy => {
+      this.getPieChartData().then(resx => {
         // eslint-disable-next-line no-unused-vars
-        this.getPieChartData().then(resx => {
+        this.getHHDATA().then(resz => {
           // eslint-disable-next-line no-unused-vars
-          this.getHHDATA().then(resz => {
-            this.getImpactData();
+          this.getImpactData().then(resy => {
+            this.getIndustries();
           });
         });
       });
@@ -685,7 +440,7 @@ export default {
         this.BarchartOptions.xaxis.categories = data.BarChart.persianName;
         // *************************************
 
-        // PieChart Data injection**************
+        //? PieChart Data injection**************
         this.PieChartData = data.PieChart;
         let marketCaps = data.PieChart.TopIndustries.marketCap;
         marketCaps.push(data.PieChart.OtherIndustries.marketCapSum);
@@ -717,8 +472,26 @@ export default {
             HHseries2data.push(data[i]["sum"]);
           }
           this.HHseries = [{ data: HHseries2data }];
-          this.HHoptions.labels = HHseries2Labels;
-          this.HHoptions.xaxis.categories = HHseries2Labels;
+          //    // this.HHoptions.labels = HHseries2Labels;
+          //  // this.HHoptions.xaxis.categories = HHseries2Labels;
+          this.HHLabels = HHseries2Labels;
+
+          if (
+            HHseries2data[0] >=
+            Math.abs(HHseries2data[HHseries2data.length - 1])
+          ) {
+            //      // this.HHoptions.yaxis.min = HHseries2data[0] * -1;
+            //      // this.HHoptions.yaxis.max = HHseries2data[0];
+            this.HHmin = HHseries2data[0] * -1;
+            this.HHmax = HHseries2data[0];
+          } else {
+            //      // this.HHoptions.yaxis.min = HHseries2data[HHseries2data.length - 1];
+            //      // this.HHoptions.yaxis.max = Math.abs(
+            //      //   HHseries2data[HHseries2data.length - 1]
+            //      // );
+            this.HHmin = HHseries2data[HHseries2data.length - 1];
+            this.HHmax = Math.abs(HHseries2data[HHseries2data.length - 1]);
+          }
         })
         .catch(error => {
           console.error(error);
@@ -737,8 +510,30 @@ export default {
               Impactseries2data.push(data[i]["IMPACT"]);
             }
             this.EffectOnIndexSeries = [{ data: Impactseries2data }];
-            this.EffectOnIndexOptions.labels = Impactseries2Labels;
-            this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
+            this.EffectOnIndexLabels = Impactseries2Labels;
+            //// this.EffectOnIndexOptions.labels = Impactseries2Labels;
+            //// this.EffectOnIndexOptions.xaxis.categories = Impactseries2Labels;
+
+            if (
+              Impactseries2data[0] >=
+              Math.abs(Impactseries2data[Impactseries2data.length - 1])
+            ) {
+              //// this.EffectOnIndexOptions.yaxis.min = Impactseries2data[0] * -1;
+              //// this.EffectOnIndexOptions.yaxis.max = Impactseries2data[0];
+              this.EffectOnIndexmax = Impactseries2data[0];
+              this.EffectOnIndexmin = Impactseries2data[0] * -1;
+            } else {
+              //// this.EffectOnIndexOptions.yaxis.min =
+              ////   Impactseries2data[Impactseries2data.length - 1];
+              //// this.EffectOnIndexOptions.yaxis.max = Math.abs(
+              ////   Impactseries2data[Impactseries2data.length - 1]
+              //// );
+              this.EffectOnIndexmax = Math.abs(
+                Impactseries2data[Impactseries2data.length - 1]
+              );
+              this.EffectOnIndexmin =
+                Impactseries2data[Impactseries2data.length - 1];
+            }
           }
         })
         .catch(error => {

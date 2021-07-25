@@ -1,12 +1,13 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <v-card id="ParentCard" :height="cardheight">
       <!-- <v-card-title id="ParentCardTitle">
         <span>صنایع</span>
       </v-card-title> -->
-      <v-toolbar dense id="ParentCardTitle">
-        <v-toolbar-title>تاثیر صنایع در شاخص</v-toolbar-title>
+      <v-toolbar dense id="ParentCardTitle" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >تاثیر صنایع در شاخص</v-toolbar-title
+        >
       </v-toolbar>
       <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
       <div class="row">

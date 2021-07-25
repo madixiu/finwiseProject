@@ -14,18 +14,21 @@
           <!-- <router-link :to="'/'" class="subheader-breadcrumbs-home"> -->
           <i
             class="flaticon2-architecture-and-city text-light icon-1x subheader-breadcrumbs-home"
-            style="cursor:pointer"
+            style="cursor:pointer;color:#6c7293 !important;"
             @click="ClickHome()"
           ></i>
           <!-- </router-link> -->
         </li>
-        <v-icon x-small color="#fff" class="my-2 mr-1">mdi-chevron-left</v-icon>
+        <v-icon x-small color="#6c7293" class="my-2 mr-1"
+          >mdi-chevron-left</v-icon
+        >
         <v-chip
+          v-if="title.length"
           class="my-2 mr-1"
           label
           small
           outlined
-          dark
+          color="#6c7293"
           @click="ClickTitle()"
         >
           {{ title }}
@@ -33,23 +36,27 @@
         <!-- <span class="text-light my-2 mr-2">
           {{ title }}
         </span> -->
-        <v-icon x-small color="#fff" class="my-2 mr-1">mdi-chevron-left</v-icon>
+        <v-icon x-small color="#6c7293" class="my-2 mr-1"
+          >mdi-chevron-left</v-icon
+        >
         <ul
           class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2"
         >
           <template v-for="(breadcrumb, i) in breadcrumbs">
-            <li class="breadcrumb-item" :key="`${i}-${breadcrumb.id}`">
+            <li
+              class="breadcrumb-item"
+              :key="`${i}-${breadcrumb.id}`"
+              style="color:#6c7293"
+            >
               <router-link
                 v-if="breadcrumb.route"
                 :key="i"
                 :to="breadcrumb.route"
-                class="text-light"
               >
                 {{ breadcrumb.title }}
               </router-link>
               <span
-                class="text-light"
-                style="font-size:0.9em;font-family:'Vazir-Light-FD'"
+                style="font-size:0.9em;font-family:'Vazir-Light-FD' color:#6c7293"
                 :key="i"
                 v-if="!breadcrumb.route"
               >
@@ -128,7 +135,10 @@ export default {
         });
     },
     ClickHome() {
-      if (this.TickerRouteList.includes(this.$route.name))
+      if (
+        this.TickerRouteList.includes(this.$route.name) ||
+        this.$route.name == "TickerOverall"
+      )
         this.$router.push({
           name: "Dashboard"
         });

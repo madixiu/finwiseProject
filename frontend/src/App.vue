@@ -24,6 +24,10 @@
 // Update HTML with RTL attribute at public/index.html
 // @import "assets/css/style.vue.rtl";
 @import "assets/css/MainCSS.min.css";
+
+.v-toolbar__content {
+  height: 36px !important;
+}
 </style>
 
 <script>

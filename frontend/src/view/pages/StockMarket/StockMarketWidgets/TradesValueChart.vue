@@ -4,18 +4,15 @@
     style="padding-right:0px"
   >
     <v-card :loading="loading" shaped>
-      <v-toolbar dense class="elevation-2">
-        <v-toolbar-title>
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em">
           ارزش معاملات
-          <span class="cellItemTradesValueChart mr-2">
-            {{
-              this.numberWithCommas(
-                this.roundTo(
-                  (this.jsonData.Tepix + this.jsonData.IFB) / 1000000000,
-                  0
-                )
-              )
-            }}
+          <span
+            class="mr-2"
+            style="font-size:0.9em"
+            v-if="ToolbarHeaderData != 'NaN'"
+          >
+            {{ ToolbarHeaderData }}
             میلیارد ریال
           </span>
         </v-toolbar-title>
@@ -25,252 +22,238 @@
         v-show="loading"
         v-bind="attrs"
       ></v-skeleton-loader>
-      <div
-        id="tooltipAll"
-        class="tooltipTradeChartValue"
-        :style="tooltipPosition"
-        v-if="tooltip1"
-      >
-        <v-row
-          style="font-size: 0.7rem; direction: rtl"
-          class="tooltipTreeMapRow"
-        >
-          <v-card width="100%" class="tooltipTreeMapRow">
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em">کل</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(roundTo(jsonData.Total / 1000000000000, 2))
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>میلیارد ریال</span></v-col>
-            </v-row>
-          </v-card>
-        </v-row>
+      <!-- // ? TOOLTIP PLACEMENT ************************** -->
+      <div :style="tooltipPosition" v-if="tooltip1" class="D3TestTooltip">
+        <div class="D3TestTopDivTooltip" style="background-color:#003049">
+          <span style="color:#fff">
+            کل
+          </span>
+        </div>
+        <div class="D3TestBottomDivTooltip">
+          <span style="color:#000;font-size:0.8em" class="mr-1"
+            >میلیارد ریال</span
+          >
+          <span style="color:#000;font-size:0.8em">{{ TooltipDataAll }}</span>
+        </div>
       </div>
-      <div
-        id="tooltipBourseFaraBourse"
-        class="tooltipTradeChartValue"
-        :style="tooltipPosition"
-        v-if="tooltip2"
-      >
-        <v-row
-          style="font-size: 0.7rem; direction: rtl"
-          class="tooltipTreeMapRow"
-        >
-          <v-card width="100%" class="tooltipTreeMapRow">
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> فرابورس</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo((jsonData.IFB * 100) / jsonData.Total2, 2)
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> بورس</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo((jsonData.Tepix * 100) / jsonData.Total2, 2)
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-          </v-card>
-        </v-row>
+      <!-- //? BOURSE -->
+      <div :style="tooltipPosition" v-if="tooltip2" class="D3TestTooltip">
+        <div class="d-flex flex-row">
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#00aab4;border-radius:0px 8px 0px 0px"
+            >
+              <span style="color:#fff">
+                بورس
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 8px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataBourse }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#0081a7;border-radius:8px 0px 0px 0px"
+            >
+              <span style="color:#fff">
+                فرابورس
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 8px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataFaraBouese }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        id="tooltipHH"
-        class="tooltipTradeChartValue"
-        :style="tooltipPosition"
-        v-if="tooltip3"
-      >
-        <v-row
-          style="font-size: 0.7rem; direction: rtl"
-          class="tooltipTreeMapRow"
-        >
-          <v-card width="100%" class="tooltipTreeMapRow">
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> حقوقی</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{ numberWithCommas(roundTo(jsonData.Hoghughi, 2)) }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> حقیقی</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{ numberWithCommas(roundTo(jsonData.Haghighi, 2)) }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-          </v-card>
-        </v-row>
+
+      <!-- //? HH -->
+
+      <div :style="tooltipPosition" v-if="tooltip3" class="D3TestTooltip">
+        <div class="d-flex flew-row">
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#6c5879;border-radius:0px 8px 0px 0px"
+            >
+              <span style="color:#fff">
+                حقیقی
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 8px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataHaghighi }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#b56576; border-radius:8px 0px 0px 0px"
+            >
+              <span style="color:#fff">
+                حقوقی
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 8px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataHoghughi }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        id="tooltipBlock"
-        class="tooltipTradeChartValue"
-        :style="tooltipPosition"
-        v-if="tooltip4"
-      >
-        <v-row
-          style="font-size: 0.7rem; direction: rtl"
-          class="tooltipTreeMapRow"
-        >
-          <v-card width="100%" class="tooltipTreeMapRow">
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> عادی</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    roundTo(100 - (jsonData.Blocks * 100) / jsonData.Total, 2)
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> بلوکی</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo((jsonData.Blocks / jsonData.Total) * 100, 2)
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-          </v-card>
-        </v-row>
+
+      <!-- //? NORMBLOCK -->
+
+      <div :style="tooltipPosition" v-if="tooltip4" class="D3TestTooltip">
+        <div class="d-flex flew-row">
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#56738e;border-radius:0px 8px 0px 0px"
+            >
+              <span style="color:#fff">
+                عادی
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 8px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataNormal }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#e09f3e; border-radius:8px 0px 0px 0px"
+            >
+              <span style="color:#fff">
+                بلوکی
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 8px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataBlock }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        id="tooltipAssetType"
-        class="tooltipTradeChartValue"
-        :style="tooltipPosition"
-        v-if="tooltip5"
-      >
-        <v-row
-          style="font-size: 0.7rem; direction: rtl"
-          class="tooltipTreeMapRow"
-        >
-          <v-card width="100%" class="tooltipTreeMapRow">
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> سهام</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo(
-                        ((jsonData.StockBlock + jsonData.Stock) * 100) /
-                          jsonData.Total,
-                        2
-                      )
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> صندوق های بورسی</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo(
-                        ((jsonData.ETF + jsonData.ETFBlock) * 100) /
-                          jsonData.Total,
-                        2
-                      )
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> اوراق</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo(
-                        ((jsonData.BondBlock + jsonData.Bond) * 100) /
-                          jsonData.Total,
-                        2
-                      )
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-            <v-row style="margin-right:0px;margin-left:0px">
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"> سایر دارایی ها</span>
-              </v-col>
-              <v-col class="flex-item">
-                <span style="font-size: 1.3em"
-                  >{{
-                    numberWithCommas(
-                      roundTo(
-                        (1 -
-                          (jsonData.Bond +
-                            jsonData.BondBlock +
-                            jsonData.ETF +
-                            jsonData.ETFBlock +
-                            jsonData.StockBlock +
-                            jsonData.Stock) /
-                            jsonData.Total) *
-                          100,
-                        2
-                      )
-                    )
-                  }}
-                </span>
-              </v-col>
-              <v-col class="flex-item"><span>درصد</span></v-col>
-            </v-row>
-          </v-card>
-        </v-row>
+
+      <!-- //? LAST -->
+
+      <div :style="tooltipPosition" v-if="tooltip5" class="D3TestTooltip">
+        <div style="display:flex;flex-direction:row">
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#028090; border-radius:0px 8px 0px 0px"
+            >
+              <span style="color:#fff">
+                اوراق
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 8px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataOragh }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#7EC5AA; border-radius:0px 0px 0px 0px"
+            >
+              <span style="color:#fff">
+                سایر
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataOther }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#05668d; border-radius:0px 0px 0px 0px"
+            >
+              <span style="color:#fff;">
+                صندوق
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 0px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataSandogh }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="D3TestTopDivTooltip"
+              style="background-color:#02c39a;border-radius:8px 0px 0px 0px"
+            >
+              <span style="color:#fff">
+                سهام
+              </span>
+            </div>
+            <div
+              class="D3TestBottomDivTooltip"
+              style="border-radius:0px 0px 0px 8px"
+            >
+              <span style="color:#000;font-size:0.8em" class="mr-1">%</span>
+              <span style="color:#000;font-size:0.8em">
+                {{ TooltipDataSaham }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- // ? TOOLTIP PLACEMENT END************************** -->
+      <!-- //? CHART -->
       <div id="ChartContainer_TradeValue"></div>
     </v-card>
   </div>
@@ -334,12 +317,92 @@ export default {
     }
   },
   computed: {
+    TooltipDataAll() {
+      return this.numberWithCommas(
+        this.roundTo(this.jsonData.Total / 1000000000000, 2)
+      );
+    },
+    TooltipDataFaraBouese() {
+      return this.numberWithCommas(
+        this.roundTo((this.jsonData.IFB * 100) / this.jsonData.Total2, 2)
+      );
+    },
+    TooltipDataBourse() {
+      return this.numberWithCommas(
+        this.roundTo((this.jsonData.Tepix * 100) / this.jsonData.Total2, 2)
+      );
+    },
+    TooltipDataHoghughi() {
+      return this.numberWithCommas(this.roundTo(this.jsonData.Hoghughi, 2));
+    },
+    TooltipDataHaghighi() {
+      return this.numberWithCommas(this.roundTo(this.jsonData.Haghighi, 2));
+    },
+    TooltipDataNormal() {
+      return this.roundTo(
+        100 - (this.jsonData.Blocks * 100) / this.jsonData.Total,
+        2
+      );
+    },
+    TooltipDataBlock() {
+      return this.numberWithCommas(
+        this.roundTo((this.jsonData.Blocks / this.jsonData.Total) * 100, 2)
+      );
+    },
+    TooltipDataSaham() {
+      return this.numberWithCommas(
+        this.roundTo(
+          ((this.jsonData.StockBlock + this.jsonData.Stock) * 100) /
+            this.jsonData.Total,
+          2
+        )
+      );
+    },
+    TooltipDataSandogh() {
+      return this.numberWithCommas(
+        this.roundTo(
+          ((this.jsonData.ETF + this.jsonData.ETFBlock) * 100) /
+            this.jsonData.Total,
+          2
+        )
+      );
+    },
+    TooltipDataOragh() {
+      return this.numberWithCommas(
+        this.roundTo(
+          ((this.jsonData.BondBlock + this.jsonData.Bond) * 100) /
+            this.jsonData.Total,
+          2
+        )
+      );
+    },
+    TooltipDataOther() {
+      return this.numberWithCommas(
+        this.roundTo(
+          (1 -
+            (this.jsonData.Bond +
+              this.jsonData.BondBlock +
+              this.jsonData.ETF +
+              this.jsonData.ETFBlock +
+              this.jsonData.StockBlock +
+              this.jsonData.Stock) /
+              this.jsonData.Total) *
+            100,
+          2
+        )
+      );
+    },
+    ToolbarHeaderData() {
+      return this.numberWithCommas(
+        this.roundTo((this.jsonData.Tepix + this.jsonData.IFB) / 1000000000, 0)
+      );
+    },
     tooltipPosition() {
       if (this.pageX > this.width / 2) {
         if (this.pageY > this.height / 2) {
           let res = {
-            right: this.width - this.pageX + 10 + "px",
-            bottom: this.height - this.pageY + 70 + "px"
+            right: this.width - this.pageX + 0 + "px",
+            bottom: this.height - this.pageY + "px"
           };
           return res;
         } else {
@@ -353,12 +416,13 @@ export default {
         if (this.pageY > this.height * (2 / 3)) {
           let res = {
             left: this.pageX + 10 + "px",
-            bottom: this.height - this.pageY + 70 + "px"
+            bottom: this.height - this.pageY + "px"
           };
           return res;
         }
+
         return {
-          left: this.pageX + "px",
+          left: this.pageX + 30 + "px",
           top: this.pageY + "px"
         };
       }
@@ -615,8 +679,11 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#0081a7")
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", event => {
           that.tooltip2 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip2 = false;
@@ -637,8 +704,11 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#00afb9")
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", function() {
           that.tooltip2 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip2 = false;
@@ -673,8 +743,11 @@ export default {
         .attr("width", 0)
         .style("fill", "#b56576")
 
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", event => {
           that.tooltip3 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip3 = false;
@@ -690,8 +763,11 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#6d597a")
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", event => {
           that.tooltip3 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip3 = false;
@@ -720,8 +796,11 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#e09f3e")
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", event => {
           that.tooltip4 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip4 = false;
@@ -741,8 +820,11 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#577590")
-        .on("mouseenter touchstart", function() {
+        .on("mousemove touchstart", event => {
           that.tooltip4 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip4 = false;
@@ -767,15 +849,20 @@ export default {
         )
         .style("font-size", `${this.width / 500}em`);
 
+      //* last RECT HERE STARTS ***********************
+      //? saham
       let c7 = chart
         .append("rect")
         .attr("x", leftOffset * 1.5)
         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#B0A8B9")
-        .on("mouseenter touchstart", function() {
+        .style("fill", "#02c39a")
+        .on("mousemove touchstart", event => {
           that.tooltip5 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip5 = false;
@@ -789,7 +876,7 @@ export default {
             ((this.jsonData.StockBlock + this.jsonData.Stock) /
               this.jsonData.Total)
         );
-
+      //? sandogh
       let c10 = chart
         .append("rect")
         .attr(
@@ -802,9 +889,12 @@ export default {
         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#00896F")
-        .on("mouseenter touchstart", function() {
+        .style("fill", "#05668d")
+        .on("mousemove touchstart", event => {
           that.tooltip5 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip5 = false;
@@ -818,6 +908,7 @@ export default {
           BoxWidth *
             ((this.jsonData.ETF + this.jsonData.ETFBlock) / this.jsonData.Total)
         );
+      //? oraq
       let c8 = chart
         .append("rect")
         .attr(
@@ -833,9 +924,12 @@ export default {
         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .attr("fill", "#4B4453")
-        .on("mouseenter touchstart", function() {
+        .attr("fill", "#028090")
+        .on("mousemove touchstart", event => {
           that.tooltip5 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip5 = false;
@@ -879,9 +973,12 @@ export default {
         .attr("y", 4 * BoxHeight + this.margin.top + 4 * this.offsetY)
         .attr("height", BoxHeight)
         .attr("width", 0)
-        .style("fill", "#00896F")
-        .on("mouseenter touchstart", function() {
+        .style("fill", "#7EC5AA")
+        .on("mousemove touchstart", event => {
           that.tooltip5 = true;
+          let coordinates = d3.pointer(event);
+          that.pageX = coordinates[0];
+          that.pageY = coordinates[1];
         })
         .on("mouseleave touchend", function() {
           that.tooltip5 = false;
@@ -907,6 +1004,54 @@ export default {
 </script>
 
 <style scoped>
+.D3TestTooltip {
+  /* background-color: blueviolet; */
+  position: absolute;
+  /* top: 20px; */
+  /* right: 0px; */
+  width: auto;
+  height: auto;
+  /* padding: 15px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-left: 20px;
+  margin-top: 20px; */
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 8px;
+  display: flex;
+  /* cursor: pointer; */
+  /* flex-wrap: nowrap; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  z-index: 95;
+}
+.D3TestTopDivTooltip {
+  border-radius: 8px 8px 0px 0px;
+  background-color: #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.D3TestBottomDivTooltip {
+  border-radius: 0px 0px 8px 8px;
+
+  background-color: #eaeaea;
+  direction: ltr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+
 div.tooltipTradeChartValue {
   position: absolute;
   /* top: 20px; */

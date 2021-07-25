@@ -7,9 +7,13 @@
       <!-- <div
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
-      <v-card id="ParentCard" :height="cardheight">
-        <v-toolbar dense>
-          <v-toolbar-title id="ParentCardTitle">مجموع</v-toolbar-title>
+      <v-card rounded="lg" id="ParentCard" :height="cardheight">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title
+            style="height:20px;font-size:0.95em"
+            id="ParentCardTitle"
+            >مجموع</v-toolbar-title
+          >
         </v-toolbar>
         <!-- <v-card-title id="ParentCardTitle">
           <span>  </span><br />
@@ -26,9 +30,11 @@
       <!-- <div
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
-      <v-card :height="cardheight" style="width:100%">
-        <v-toolbar dense>
-          <v-toolbar-title>Moving Average</v-toolbar-title>
+      <v-card rounded="lg" :height="cardheight" style="width:100%">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >Moving Average</v-toolbar-title
+          >
         </v-toolbar>
         <!-- <v-card-title> <span>  </span><br /> </v-card-title> -->
         <v-divider class="mt-0 mb-0"></v-divider>
@@ -43,9 +49,11 @@
       <!-- <div
             class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
-      <v-card :height="cardheight">
-        <v-toolbar dense>
-          <v-toolbar-title>Indicators</v-toolbar-title>
+      <v-card rounded="lg" :height="cardheight">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >Indicators</v-toolbar-title
+          >
         </v-toolbar>
         <!-- <v-card-title> <span> Indicators </span><br /> </v-card-title> -->
         <v-divider class="mt-0 mb-0"></v-divider>
@@ -60,7 +68,7 @@
       <!-- <div
             class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
-      <v-card :height="cardheight" width="100%">
+      <v-card rounded="lg" :height="cardheight" width="100%">
         <v-card-title>
           <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
           <h6>

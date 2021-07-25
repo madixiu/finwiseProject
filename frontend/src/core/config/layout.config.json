@@ -74,7 +74,7 @@
     "self": {
       "display": true,
       "width": "fluid",
-      "theme": "dark",
+      "theme": "light",
       "fixed": {
         "desktop": true,
         "mobile": true
@@ -90,13 +90,13 @@
         "arrow": true,
         "toggle": "click",
         "submenu": {
-          "theme": "dark",
+          "theme": "light",
           "arrow": true
         }
       },
       "mobile": {
         "submenu": {
-          "theme": "dark",
+          "theme": "light",
           "accordion": true
         }
       }

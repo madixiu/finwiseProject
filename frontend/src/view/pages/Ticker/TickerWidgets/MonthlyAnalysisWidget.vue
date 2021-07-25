@@ -18,8 +18,10 @@
     <div class="row" style="padding-top:5px" v-if="type == 'production'">
       <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card shaped class="mt-2">
-          <v-toolbar dense>
-            <v-toolbar-title>روند تولید و فروش کل</v-toolbar-title>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >روند تولید و فروش کل</v-toolbar-title
+            >
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-row
@@ -46,8 +48,8 @@
           />
         </v-card>
         <v-card shaped class="mt-2">
-          <v-toolbar dense>
-            <v-toolbar-title
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
               >روند تولید و فروش به تفکیک صادراتی و داخلی</v-toolbar-title
             >
             <v-spacer></v-spacer>

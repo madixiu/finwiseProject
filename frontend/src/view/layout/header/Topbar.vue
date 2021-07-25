@@ -56,9 +56,11 @@
     <!-- Clock -->
     <Clock></Clock>
     <div class="topbar-item mr-2" v-if="!this.$store.getters.isAuthenticated">
-      <v-btn small color="#3d3e4e" dark @click="loginClick">
-        <v-icon dense class="" color="#4177a5">mdi-account-circle</v-icon>
-        ورود
+      <v-btn small color="#ebebeb" dark @click="loginClick">
+        <v-icon small class="pl-1 pr-0" color="#4177a5"
+          >mdi-account-circle</v-icon
+        >
+        <span style="color:#4177a5">ورود</span>
       </v-btn>
     </div>
     <!-- <Profile />\ -->

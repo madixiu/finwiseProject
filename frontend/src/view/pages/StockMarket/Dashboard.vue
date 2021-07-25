@@ -1,7 +1,7 @@
 <template>
-  <div class="row" style="padding-top:5px">
+  <div class="row pt-1">
     <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-12">
-      <IndexChart :inputDataIndex="TodayTepix" class="mb-4"></IndexChart>
+      <IndexChart :inputDataIndex="TodayTepix" class="pb-1"></IndexChart>
       <ChartVol
         :inputDataStatus="highestTvalueData"
         :inputDataImpact="ImpactsData"
@@ -9,6 +9,7 @@
       ></ChartVol>
       <ChartHH :inputDataHH="HHData" :inputDataQ="QData"></ChartHH>
       <ChartIndustires
+        class="pb-2"
         :inpuDataIndustryHH="IndustryHHData"
         :inputDataIndustryImpact="IndustryImpact"
       ></ChartIndustires>
@@ -17,7 +18,6 @@
       <div class="row">
         <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
         <Technical :inputDataTechnical="TechnicalData"></Technical>
-        <!-- //// <NewsW :inputDataNews="News"></NewsW> -->
       </div>
     </div>
     <!-- <div class="col-xxl-3 col-lg-3"> -->
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 // import MostViewedWidget from "@/view/pages/StockMarket/StockMarketWidgets/MostViewed.vue";
 import Technical from "@/view/pages/StockMarket/StockMarketWidgets/TechnicalHighest.vue";
 import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart.vue";
@@ -47,7 +46,6 @@ import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesV
 import ChartIndustires from "@/view/pages/StockMarket/StockMarketWidgets/IndustryChartsForDashboard.vue";
 // import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
 import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
-//// import NewsW from "@/view/pages/StockMarket/StockMarketWidgets/NewsWidget.vue";
 export default {
   name: "Dashboard",
   components: {
@@ -57,7 +55,6 @@ export default {
     ChartIndustires,
     // // IndicesText,
     IndexChart,
-    // //NewsW,
     Technical
     // HighestSupply
   },
@@ -115,16 +112,7 @@ export default {
       getIndustryImpact: true,
       getIndustryHH: true
     };
-    // this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
-
     this.liveChecker();
-    // TODO
-    // change the interval
-
-    // eslint-disable-next-line no-unused-vars
-    // let interval = setInterval(() => {
-    //   this.loadData();
-    // }, 300000);
   },
   methods: {
     loadData() {
@@ -342,7 +330,7 @@ export default {
         // };
         // this.$socketMarketWatch.send(JSON.stringify(barier));
         this.loadData();
-      }, 60000);
+      }, 120000);
     },
     liveChecker() {
       let date = new Date();
@@ -399,10 +387,3 @@ export default {
   }
 };
 </script>
-<style>
-.rtl_centerd {
-  font-size: 1em;
-  direction: rtl;
-  text-align: center;
-}
-</style>

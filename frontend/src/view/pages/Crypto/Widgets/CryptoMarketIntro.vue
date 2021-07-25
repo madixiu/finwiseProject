@@ -1,8 +1,10 @@
 <template>
   <div>
     <v-card>
-      <v-toolbar dense>
-        <v-toolbar-title>دیده بان رمزارز های اصلی</v-toolbar-title>
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >دیده بان رمزارز های اصلی</v-toolbar-title
+        >
       </v-toolbar>
       <div class="right_aligned">
         <v-row class="mt-1 pr-2">

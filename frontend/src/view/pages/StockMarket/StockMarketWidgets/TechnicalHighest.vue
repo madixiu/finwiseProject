@@ -8,27 +8,32 @@
       <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
         بیشترین ارزش معاملات
       </h3> -->
-      <v-toolbar dense>
-        <v-toolbar-title>
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em">
           ربات تحلیلگر تکنیکال
         </v-toolbar-title>
-        <template v-slot:extension>
-          <v-tabs v-model="selectedAttribute" fixed-tabs>
-            <v-tabs-slider></v-tabs-slider>
-            <v-tab>
-              <v-icon color="#1AA47C" small>mdi-trending-up</v-icon>
-
-              <span style="font-weight:600">بهترین</span>
-            </v-tab>
-
-            <v-tab>
-              <v-icon color="#9E2A2B" small>mdi-trending-down</v-icon>
-
-              <span style="font-weight:600">بدترین</span>
-            </v-tab>
-          </v-tabs>
-        </template>
+        <!-- <template v-slot:extension>
+        </template> -->
       </v-toolbar>
+      <v-tabs
+        v-model="selectedAttribute"
+        fixed-tabs
+        color="#4682B4"
+        class="mt-1"
+      >
+        <v-tabs-slider></v-tabs-slider>
+        <v-tab>
+          <v-icon color="#1AA47C" small>mdi-trending-up</v-icon>
+
+          <span style="font-weight:600">بهترین</span>
+        </v-tab>
+
+        <v-tab>
+          <v-icon color="#9E2A2B" small>mdi-trending-down</v-icon>
+
+          <span style="font-weight:600">بدترین</span>
+        </v-tab>
+      </v-tabs>
       <v-tabs-items v-model="selectedAttribute">
         <v-tab-item
           v-for="itemR in markets"

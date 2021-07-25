@@ -4,9 +4,11 @@
       type=" table-heading,table-row@12"
       v-if="loading"
     ></v-skeleton-loader> -->
-  <v-card>
-    <v-toolbar dense>
-      <v-toolbar-title>نمودار وضعیت بازار</v-toolbar-title>
+  <v-card rounded="lg">
+    <v-toolbar dense class="elevation-2" style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em"
+        >نمودار وضعیت بازار</v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <v-radio-group
         class="mt-5"
@@ -1170,8 +1172,11 @@ export default {
 .radioBTN /deep/ .v-icon.v-icon {
   font-size: 18px !important;
 }
-.radioBTN /deep/ .v-application--is-rtl .v-input--selection-controls__input {
-  margin-left: 1px;
+/* .radioBTN /deep/ .v-application--is-rtl /deep/ .v-input--selection-controls__input {
+  margin-left: 0px !important;
+} */
+.radioBTN /deep/ .v-input--selection-controls__input {
+  margin-left: 0px !important;
 }
 
 .radioBTN /deep/ label {
@@ -1183,6 +1188,8 @@ export default {
 }
 .radioBTN /deep/ .theme--light.v-label {
   color: #000 !important;
+  font-size: 0.7em !important;
+  font-family: "Vazir-Light-FD";
 }
 
 .axis path,

@@ -1,12 +1,10 @@
 <template>
   <div class="row mr-1  ml-1">
-    <v-card width="100%">
+    <v-card rounded="lg" width="100%">
       <b-row>
         <b-col cols="2" class="my-1 mr-1">
           <b-input-group size="sm">
             <b-input-group-prepend is-text>
-              <!-- <b-icon v-if="filter != ''" icon="x-circle" @click="filter=''"></b-icon>
-                <b-icon v-else icon="search"></b-icon> -->
               <b-icon icon="search"></b-icon>
             </b-input-group-prepend>
             <b-form-input
@@ -18,19 +16,10 @@
             ></b-form-input>
           </b-input-group>
         </b-col>
-        <!-- <b-col lg="4" xxl="4" class="mt-2">
-          <b-form-group>
-            <b-form-checkbox-group
-              v-model="selectedHeaderOptions"
-              :options="HeaderOptions"
-              @change="TriggerFilteredHeader"
-            ></b-form-checkbox-group>
-          </b-form-group>
-        </b-col> -->
       </b-row>
       <ag-grid-vue
         :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
-        class="ag-theme-balham"
+        class="oraqTable ag-theme-balham"
         :columnDefs="OraqHeader"
         :defaultColDef="defaultColDef"
         rowSelection="multiple"
@@ -44,118 +33,6 @@
         :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
       >
       </ag-grid-vue>
-      <!-- <b-table
-        v-bind:thClass="{
-          oraq_table_head: smallFontHeader,
-          oraq_table_head_small: smallFontHeader
-        }"
-        class="oraq-table"
-        tbody-tr-class="oraq-table-row"
-        striped
-        :sticky-header="height"
-        :busy.sync="isBusy"
-        :no-provider-paging="true"
-        :sort-desc.sync="sortDesc"
-        :sort-by.sync="sortBy"
-        sort-direction="desc"
-        sort-icon-left
-        dense
-        :filter="Tablefilter"
-        :filter-included-fields="filterOn"
-        :filter-debounce="100"
-        bordered
-        no-border-collapse
-        outlined
-        small
-        hover
-        responsive
-        :items="tableData"
-        :fields="HD"
-        @filtered="onFiltered"
-      >
-        <template #cell(ticker)="data">
-          <b class="oraq-table-cell-bold">{{ data.value }}</b>
-        </template>
-        <template #cell(TradeCount)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(TradeVolume)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(TradeValue)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(yesterday)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(last)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(close)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(first)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(low)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(high)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(MinRange)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(MaxRange)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(CountBuy_Haghighi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(CountBuy_Hoguhgi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(VolumeBuy_Haghighi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(VolumeBuy_Hoghughi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(CountSell_Haghighi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(CountSell_Hoghughi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(VolumeSell_Haghighi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(VolumeSell_Hoghughi)="data">
-          <b class="oraq-table-cell">{{ data.value.toLocaleString() }}</b>
-        </template>
-        <template #cell(closePercent)="data">
-          <b v-if="data.value > 0" class="oraq-table-cell-green"
-            >{{ data.value }}%</b
-          >
-          <b v-if="data.value < 0" class="oraq-table-cell-red"
-            >{{ data.value }}%</b
-          >
-          <b v-if="data.value == 0" class="oraq-table-cell"
-            >{{ data.value }}%</b
-          >
-        </template>
-        <template #cell(lastPercent)="data">
-          <b v-if="data.value > 0" class="oraq-table-cell-green"
-            >{{ data.value }}%</b
-          >
-          <b v-if="data.value < 0" class="oraq-table-cell-red"
-            >{{ data.value }}%</b
-          >
-          <b v-if="data.value == 0" class="oraq-table-cell"
-            >{{ data.value }}%</b
-          >
-        </template>
-      </b-table> -->
     </v-card>
   </div>
 </template>
@@ -183,168 +60,13 @@ export default {
       dataFetch: false,
       asyncTransactionWaitMillis: 4000,
       interval: null,
-
       // * %%%%%%%%%%%%%%%
       WebsocketRequest: false,
       height: "470px",
-      sortDesc: false,
-      filterOn: ["ticker"],
-      sortBy: "ticker",
-      selectedHeaderOptions: [],
-      HeaderOptions: [
-        { text: "قیمت دیروز", value: "yesterday" },
-        { text: "اطلاعات حقیقی/حقوقی", value: "HH" }
-      ],
-      smallFontHeader: false,
       isBusy: true,
       tableData: null,
-      Tablefilter: "",
-      OraqTableHeader: [
-        {
-          label: "نماد",
-          key: "ticker",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "بازار",
-          key: "market",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "تعداد معاملات",
-          key: "TradeCount",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "حجم معاملات",
-          key: "TradeVolume",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "ارزش معاملات",
-          key: "TradeValue",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "قیمت دیروز",
-          key: "yesterday",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "آخرین قیمت",
-          key: "last",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "درصد تغییر آخرین قیمت",
-          key: "lastPercent",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "قیمت پایانی",
-          key: "close",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "درصد تغییر قیمت پایانی",
-          key: "closePercent",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        // {
-        //   label: "کف مجاز قیمت",
-        //   key: "MinRange",
-        //   thClass: "oraq_table_head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "سقف مجاز قیمت",
-        //   key: "MaxRange",
-        //   thClass: "oraq_table_head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "بالاترین قیمت",
-        //   key: "high",
-        //   thClass: "oraq_table_head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "کمترین قیمت",
-        //   key: "low",
-        //   thClass: "oraq_table_head",
-        //   sortable: true
-        // },
-        // {
-        //   label: "اولین قیمت",
-        //   key: "first",
-        //   thClass: "oraq_table_head",
-        //   sortable: true
-        // },
-        {
-          label: "تعداد خرید حقیقی",
-          key: "CountBuy_Haghighi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "تعداد خرید حقوقی",
-          key: "CountBuy_Hoguhgi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقیقی",
-          key: "VolumeBuy_Haghighi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "حجم خرید حقوقی",
-          key: "VolumeBuy_Hoghughi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقیقی",
-          key: "CountSell_Haghighi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "تعداد فروش حقوقی",
-          key: "CountSell_Hoghughi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقیقی",
-          key: "VolumeSell_Haghighi",
-          thClass: "oraq_table_head",
-          sortable: true
-        },
-        {
-          label: "حجم فروش حقوقی",
-          key: "VolumeSell_Hoghughi",
-          thClass: "oraq_table_head",
-          sortable: true
-        }
-      ]
+      Tablefilter: ""
     };
-  },
-  computed: {
-    HD() {
-      return this.TriggerFilteredHeader();
-    }
   },
   watch: {
     $route() {
@@ -728,7 +450,6 @@ export default {
     },
     onReady(params) {
       let allColumnIds = [];
-      // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
       this.gridApi = params.api;
 
@@ -737,7 +458,6 @@ export default {
       });
       // this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
       // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-      // this.gridColumnApi.autoSizeColumns(["market"], false);
       params.api.sizeColumnsToFit();
 
       this.allColumnIds = allColumnIds;
@@ -764,49 +484,6 @@ export default {
           this.isBusy = false;
           console.error(error);
         });
-    },
-    TriggerFilteredHeader() {
-      let header = JSON.parse(JSON.stringify(this.OraqTableHeader));
-      let options = this.selectedHeaderOptions;
-      let SwCase = 0;
-      if (options.length == 0) {
-        this.smallFontHeader = false;
-        SwCase = 0;
-      } else if (options.length == 1) {
-        this.smallFontHeader = true;
-
-        if (options[0] == "yesterday") SwCase = 1;
-        else if (options[0] == "HH") {
-          this.smallFontHeader = true;
-          SwCase = 2;
-        }
-      } else if (options.length == 2) {
-        this.smallFontHeader = true;
-        SwCase = 3;
-      }
-      if (this.smallFontHeader == true)
-        for (let item of header) {
-          item.thClass = "oraq_table_head_small";
-        }
-      switch (SwCase) {
-        case 0:
-          header.splice(5, 1);
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-        case 1:
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-        case 2:
-          header.splice(5, 1);
-          break;
-        case 3:
-          break;
-        default:
-          header.splice(5, 1);
-          for (let i = 0; i < 8; i++) header.pop();
-          break;
-      }
-      return header;
     },
     getHeight() {
       return (window.innerHeight - 100).toString() + "px";
@@ -850,9 +527,12 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* ag Grid */
-.ag-theme-balham .ag-header {
+.oraqTable /deep/ .ag-root-wrapper {
+  border-radius: 10px 10px 0px 0px;
+}
+.oraqTable /deep/ .ag-header {
   background-color: #f5f7f7;
   background-color: var(--ag-header-background-color, #f5f7f7);
   border-top: solid 1px;
@@ -864,13 +544,13 @@ export default {
   border-radius: 10px 10px 0px 0px;
 }
 
-.ag-theme-balham .ag-rtl .ag-cell {
+.oraqTable /deep/ .ag-rtl .ag-cell {
   font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
   overflow: hidden;
 }
 /* header */
-.ag-header-cell-label {
+.oraqTable /deep/ .ag-header-cell-label {
   color: black;
   font-size: 1em;
   font-weight: 300;
@@ -881,66 +561,10 @@ export default {
   justify-content: center;
   align-content: center;
 }
-.ag-grid-row-class {
+.oraqTable /deep/ .ag-grid-row-class {
   /* background-color: red !important; */
   display: flex;
   align-items: center !important;
 }
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-.oraq_table_head {
-  vertical-align: middle !important;
-  font-size: 1.1em !important;
-  font-weight: 600 !important ;
-}
-.oraq_table_head_small {
-  vertical-align: middle !important;
-  font-size: 0.9em !important;
-  font-weight: 600 !important ;
-}
-.oraq-table {
-  vertical-align: middle !important;
-  text-align: center !important;
-  font-size: 0.8em !important;
-  line-height: 1 !important;
-}
-.oraq-table-row:hover {
-  background-color: #999999 !important;
-}
-.oraq-table-cell {
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 400;
-  font-family: "Vazir-Medium-FD";
-}
-.oraq-table-cell-green {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: green;
-  font-weight: 400;
-  font-family: "Vazir-Medium-FD";
-}
-.oraq-table-cell-red {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: red;
-  font-weight: 400;
-  font-family: "Vazir-Medium-FD";
-}
-.oraq-table-cell-bold {
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 700;
-  font-family: "Vazir-Medium-FD";
-}
-.oraq-table-row {
-  direction: ltr;
-  vertical-align: middle !important;
-}
 </style>

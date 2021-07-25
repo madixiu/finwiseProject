@@ -3,8 +3,10 @@
   <!-- <div class="card card-custom"> -->
   <div>
     <v-card>
-      <v-toolbar dense>
-        <v-toolbar-title>شاخص کل</v-toolbar-title>
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >شاخص کل</v-toolbar-title
+        >
       </v-toolbar>
       <!-- <v-card-title>شاخص کل</v-card-title> -->
       <!-- <v-divider class="mt-0 mb-0"></v-divider> -->

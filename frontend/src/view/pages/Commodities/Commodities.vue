@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet elevation="6">
+    <v-sheet rounded="lg" elevation="6">
       <v-tabs background-color="#f0efeb" color="deep-purple accent-4" centered>
         <v-tab>نگاه کلی</v-tab>
         <v-tab :disabled="premiumAccountLock">
@@ -56,9 +56,11 @@
         <v-tab-item>
           <v-row no-gutters class="pb-2 mt-1">
             <v-col class="ml-1 mr-2">
-              <v-card>
-                <v-toolbar dense color="#f2cc8f">
-                  <v-toolbar-title>دلار و طلا</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#f2cc8f" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >دلار و طلا</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>دلار و طلا</v-card-title>
                 <v-divider></v-divider> -->
@@ -100,9 +102,11 @@
             </v-col>
 
             <v-col class="mr-1 ml-2">
-              <v-card>
-                <v-toolbar dense color="#3d405b">
-                  <v-toolbar-title>فلزات</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#3d405b" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >فلزات</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>فلزات</v-card-title>
                 <v-divider></v-divider> -->
@@ -152,9 +156,11 @@
           </v-row>
           <v-row no-gutters class="pb-2">
             <v-col class="mr-2 ml-1"
-              ><v-card>
-                <v-toolbar dense color="#81b29a">
-                  <v-toolbar-title>انرژی</v-toolbar-title>
+              ><v-card rounded="lg">
+                <v-toolbar dense color="#81b29a" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >انرژی</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>انرژی</v-card-title>
                 <v-divider></v-divider> -->
@@ -202,9 +208,11 @@
               </v-card></v-col
             >
             <v-col class="ml-2 mr-1">
-              <v-card>
-                <v-toolbar dense color="#e07a5f">
-                  <v-toolbar-title>فارکس</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#e07a5f" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >فارکس</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>فارکس</v-card-title>
                 <v-divider></v-divider> -->
@@ -256,9 +264,11 @@
         <v-tab-item>
           <v-row no-gutters class="pb-2 mt-1">
             <v-col class="mr-2 ml-1">
-              <v-card>
-                <v-toolbar dense color="#f2cc8f">
-                  <v-toolbar-title>طلا</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#f2cc8f" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >طلا</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>طلا</v-card-title> -->
                 <!-- <v-divider></v-divider> -->
@@ -298,9 +308,11 @@
               </v-card>
             </v-col>
             <v-col class="ml-2 mr-1">
-              <v-card>
-                <v-toolbar dense color="#118ab2">
-                  <v-toolbar-title>ارز</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#118ab2" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >ارز</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>ارز</v-card-title>
                 <v-divider></v-divider> -->
@@ -344,9 +356,11 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="ml-2 mr-2">
-              <v-card>
-                <v-toolbar dense color="#00afb9">
-                  <v-toolbar-title>شاخص جهانی</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#00afb9" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >شاخص جهانی</v-toolbar-title
+                  >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
@@ -368,13 +382,15 @@
         <v-tab-item>
           <v-row no-gutters class="pb-2 pt-1 ">
             <v-col class="mr-2 ml-1">
-              <v-card>
-                <v-toolbar dense color="#3d405b">
-                  <v-toolbar-title>فلزات</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#3d405b" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >فلزات</v-toolbar-title
+                  >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    style="width: 100%; height:400px; font-family: 'Vazir-Medium-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -388,9 +404,11 @@
               </v-card>
             </v-col>
             <v-col class="mr-1 ml-2">
-              <v-card>
-                <v-toolbar dense color="#5D2A42">
-                  <v-toolbar-title>متال بولتن</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#5D2A42" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >متال بولتن</v-toolbar-title
+                  >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
@@ -412,9 +430,11 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="mr-2 ml-2"
-              ><v-card>
-                <v-toolbar dense color="#023e8a">
-                  <v-toolbar-title>پتروشیمی</v-toolbar-title>
+              ><v-card rounded="lg">
+                <v-toolbar dense color="#023e8a" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >پتروشیمی</v-toolbar-title
+                  >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
@@ -435,9 +455,11 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="mr-2 ml-2"
-              ><v-card>
-                <v-toolbar dense color="#81b29a">
-                  <v-toolbar-title>انرژی</v-toolbar-title>
+              ><v-card rounded="lg">
+                <v-toolbar dense color="#81b29a" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >انرژی</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>انرژی</v-card-title>
                 <v-divider></v-divider> -->
@@ -460,9 +482,11 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="ml-2 mr-2">
-              <v-card>
-                <v-toolbar dense color="#e07a5f">
-                  <v-toolbar-title>فارکس</v-toolbar-title>
+              <v-card rounded="lg">
+                <v-toolbar dense color="#e07a5f" style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                    >فارکس</v-toolbar-title
+                  >
                 </v-toolbar>
                 <!-- <v-card-title>فارکس</v-card-title>
                 <v-divider></v-divider> -->

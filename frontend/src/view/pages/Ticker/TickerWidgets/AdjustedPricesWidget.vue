@@ -1,9 +1,9 @@
 <template>
-  <div class="mt-2">
-    <v-card width="100%">
+  <div>
+    <v-card rounded="lg" width="100%">
       <ag-grid-vue
         :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
-        class="ag-theme-balham"
+        class="adjustedPriceTable ag-theme-balham"
         :columnDefs="AdjustedHeader"
         :defaultColDef="defaultColDef"
         rowSelection="multiple"
@@ -331,9 +331,12 @@ export default {
 };
 </script>
 <style scoped>
-.ag-theme-balham .ag-header {
-  background-color: #f5f7f7;
-  background-color: var(--ag-header-background-color, #f5f7f7);
+.adjustedPriceTable /deep/ .ag-root-wrapper {
+  border-radius: 10px 10px 0px 0px;
+}
+.adjustedPriceTable /deep/ .ag-header {
+  background-color: #f7f6f5;
+  /* background-color: var(--ag-header-background-color, #05ffff); */
   border-top: solid 1px;
   border-top-width: 1px;
   border-top-style: solid;
@@ -343,13 +346,13 @@ export default {
   border-radius: 10px 10px 0px 0px;
 }
 
-.ag-theme-balham .ag-rtl .ag-cell {
+.adjustedPriceTable /deep/ .ag-rtl .ag-cell {
   font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
   overflow: hidden;
 }
 /* header */
-.ag-header-cell-label {
+.adjustedPriceTable /deep/ .ag-header-cell-label {
   color: black;
   font-size: 1em;
   font-weight: 300;
@@ -366,59 +369,4 @@ export default {
   align-items: center !important;
 }
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-
-.Funds-table-head {
-  /* background-color: #e01313; */
-  vertical-align: middle !important;
-  font-size: 1.1em !important;
-  font-weight: 600 !important ;
-}
-.Funds-table {
-  vertical-align: middle !important;
-  text-align: center !important;
-  font-size: 0.8em !important;
-  line-height: 1 !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-row:hover {
-  background-color: #999999 !important;
-}
-.Funds-table-cell {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 400;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-cell-green {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: green;
-  font-weight: 400;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-cell-red {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  color: red;
-  font-weight: 400;
-  font-family: "Vazir-Medium-FD";
-  vertical-align: middle !important;
-}
-.Funds-table-cell-bold {
-  text-align: center;
-  font-size: 1em;
-  line-height: 1;
-  font-weight: 600;
-  vertical-align: middle !important;
-  font-family: "Vazir-Medium-FD";
-}
-.Funds-table-row {
-  direction: ltr;
-  vertical-align: middle !important;
-}
 </style>

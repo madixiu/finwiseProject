@@ -19,8 +19,10 @@
     >
       <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card shaped class="mt-2">
-          <v-toolbar dense>
-            <v-toolbar-title>روند آیتم های ترازنامه</v-toolbar-title>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em"
+              >روند آیتم های ترازنامه</v-toolbar-title
+            >
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-row>
@@ -96,8 +98,8 @@
       </div>
       <!-- <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card shaped class="mt-2">
-          <v-toolbar dense>
-            <v-toolbar-title>تفکیک گروه های ترازنامه</v-toolbar-title>
+          <v-toolbar dense class="elevation-2" style="height:36px;">
+            <v-toolbar-title style="height:20px;font-size:0.95em">تفکیک گروه های ترازنامه</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-row>

@@ -166,7 +166,7 @@
                   <ApexChart
                     type="area"
                     width="100%"
-                    height="140%"
+                    height="200%"
                     :key="NavChartKey"
                     :series="NavChart.series"
                     :chartOptions="NavChartOptions"
@@ -176,7 +176,7 @@
                   <ApexChart
                     type="area"
                     width="100%"
-                    height="140%"
+                    height="200%"
                     :key="NavChartKey2"
                     :series="NavChart2.series"
                     :chartOptions="NavChartOptions2"
@@ -1213,9 +1213,9 @@ export default {
   color: #000 !important;
 }
 /************* Radio Button classes ************/
-.apexcharts-yaxis-title {
+/* .apexcharts-yaxis-title {
   direction: rtl !important;
-}
+} */
 .subheaderTitles {
   font-size: 1.1em;
   font-weight: 900;

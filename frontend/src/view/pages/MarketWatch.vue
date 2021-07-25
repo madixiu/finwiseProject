@@ -2,7 +2,7 @@
   <div>
     <!-- table -->
     <div class="row mr-1 ml-1">
-      <v-card width="100%">
+      <v-card rounded="lg" width="100%">
         <div id="marketwatchFilterRow2" class="row pb-1 pt-1">
           <div class="col-xxl-2 col-lg-2 col-md-6 col-sm-12 mr-1">
             <b-input-group size="sm">
@@ -23,7 +23,7 @@
         </div>
         <ag-grid-vue
           :style="`width: 100%; height:${height}; font-family: Vazir-Medium-FD`"
-          class="ag-theme-balham"
+          class="ag-theme-balham MarketWatchTable"
           :columnDefs="MarketWatchHeader"
           :defaultColDef="defaultColDef"
           rowSelection="multiple"
@@ -70,13 +70,11 @@ export default {
       height: "370px",
       isBusy: true,
       tableMarketSelected: "همه",
-      tableMarketFilters: ["همه", "بورس", "فرابورس"],
       tableMarketTypeSelected: [],
       tableMarketTypeFilters: [],
       tableMarketIndustrySelected: [],
       tableMarketIndustryFilters: [],
       WebsocketRequest: false,
-      selectedHeaderOptions: [],
       Tablefilter: "",
       // tableData: [],
       TypeSearch: "",
@@ -169,6 +167,7 @@ export default {
 
         {
           id: "filters",
+
           labelDefault: "Filters",
           labelKey: "filters",
           iconKey: "filter",
@@ -550,7 +549,6 @@ export default {
     },
     onReady(params) {
       let allColumnIds = [];
-      // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
       this.gridApi = params.api;
 
@@ -558,8 +556,8 @@ export default {
         allColumnIds.push(column.colId);
       });
       // this.gridColumnApi.autoSizeColumns(allColumnIds, true);
-      this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-      // params.api.sizeColumnsToFit();
+      // this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      params.api.sizeColumnsToFit();
       this.allColumnIds = allColumnIds;
       this.gridApi = params.api;
       if (this.tableData != null) params.api.setRowData(this.tableData);
@@ -618,17 +616,6 @@ export default {
           console.error(error);
         });
     },
-
-    TypeonOptionClick({ option, addTag }) {
-      addTag(option);
-      this.TypeSearch = "";
-      this.MarketWatchFilterPost();
-    },
-    IndustryonOptionClick({ option, addTag }) {
-      addTag(option);
-      this.IndustrySearch = "";
-      this.MarketWatchFilterPost();
-    },
     getHeight() {
       return (window.innerHeight - 100).toString() + "px";
     },
@@ -680,12 +667,15 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* 
 TODO:Clean the CSS & add scoped based class
 */
 /* ag Grid */
-.ag-theme-balham .ag-header {
+.MarketWatchTable /deep/ .ag-root-wrapper {
+  border-radius: 10px 10px 0px 0px;
+}
+.MarketWatchTable /deep/ .ag-header {
   background-color: #f5f7f7;
   background-color: var(--ag-header-background-color, #f5f7f7);
   border-top: solid 1px;
@@ -697,13 +687,18 @@ TODO:Clean the CSS & add scoped based class
   border-radius: 10px 10px 0px 0px;
 }
 
-.ag-theme-balham .ag-rtl .ag-cell {
+.MarketWatchTable /deep/ .ag-rtl .ag-cell {
   font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
   overflow: hidden;
 }
+/* .MarketWatchTable /deep/ .ag-rtl {
+  font-family: "Vazir-Medium-FD";
+  font-size: 0.9em;
+  overflow: hidden;
+} */
 /* header */
-.ag-header-cell-label {
+.MarketWatchTable /deep/ .ag-header-cell-label {
   color: black;
   font-size: 1em;
   font-weight: 300;
@@ -714,17 +709,10 @@ TODO:Clean the CSS & add scoped based class
   justify-content: center;
   align-content: center;
 }
-.ag-grid-row-class {
+.MarketWatchTable /deep/ .ag-grid-row-class {
   /* background-color: red !important; */
   display: flex;
   align-items: center !important;
 }
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-
-.form-input-class {
-  direction: rtl;
-}
-.form-tag-class {
-  direction: rtl !important;
-}
 </style>

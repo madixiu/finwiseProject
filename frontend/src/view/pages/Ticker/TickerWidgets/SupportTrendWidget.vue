@@ -9,8 +9,8 @@
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
       <v-card>
-        <v-toolbar dense>
-          <v-toolbar-title
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
             >وضعیت ترند-سطوح مقاومت و حمایت با قیمت های تعدیلی محاسبه شده
             است</v-toolbar-title
           >
@@ -41,8 +41,10 @@
             class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
           > -->
       <v-card>
-        <v-toolbar dense>
-          <v-toolbar-title>وضعیت ترند</v-toolbar-title>
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >وضعیت ترند</v-toolbar-title
+          >
         </v-toolbar>
       </v-card>
       <!-- </div> -->

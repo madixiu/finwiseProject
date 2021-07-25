@@ -1,10 +1,14 @@
 <template>
   <div>
     <!-- User Interface controls -->
-    <v-card :loading="!dataFetch && !cardKey">
-      <v-toolbar dense>
-        <v-toolbar-title v-if="cardKey">لیست مجامع</v-toolbar-title>
-        <v-toolbar-title v-if="!cardKey">{{ AssemblyName }}</v-toolbar-title>
+    <v-card rounded="lg" :loading="!dataFetch && !cardKey">
+      <v-toolbar dense class="elevation-2" style="height:36px;">
+        <v-toolbar-title style="height:20px;font-size:0.95em" v-if="cardKey"
+          >لیست مجامع</v-toolbar-title
+        >
+        <v-toolbar-title style="height:20px;font-size:0.95em" v-if="!cardKey">{{
+          AssemblyName
+        }}</v-toolbar-title>
         <v-card-subtitle style="textalign:right" v-if="!cardKey">
           <span> {{ subTitle }}</span>
         </v-card-subtitle>
@@ -18,7 +22,7 @@
         <div v-show="cardKey" key="1">
           <ag-grid-vue
             :style="
-              `width: 100%; height:  ${height}px; font-family: Vazir-Medium-FD`
+              `width: 100%; height:${height}px; font-family: Vazir-Medium-FD`
             "
             class="ag-theme-balham AssemblyListTable"
             :localeText="localeText"
@@ -270,7 +274,7 @@ export default {
       // this.gridOptions.api.closeToolPanel();
       this.gridColumnApi = this.gridOptions.columnApi;
       this.gridApi = params.api;
-      // show 'loading' overlay
+      //? show 'loading' overlay
       this.gridOptions.api.showLoadingOverlay();
       this.gridColumnApi.getAllColumns().forEach(function(column) {
         allColumnIds.push(column.colId);
@@ -291,7 +295,6 @@ export default {
 
     async loadData() {
       this.isBusy = true;
-
       await this.axios
         .get("/api/MainAssemblyDataList")
         .then(response => {
@@ -303,7 +306,6 @@ export default {
         })
         .catch(error => {
           this.isBusy = false;
-
           console.error(error);
         });
     },
@@ -361,7 +363,6 @@ export default {
     titleClick(item) {
       this.dataFetch = false;
       this.TablesReq(item.ID, item.Type);
-      // console.log(item.item);
       this.subTitle = item.title;
       this.AssemblyName = item.Ticker;
       this.cardKey = false;
@@ -379,44 +380,37 @@ export default {
 </script>
 <style scoped>
 /* ag Grid */
-.AssemblyListTable /deep/ .ag-theme-balham .ag-header {
-  background-color: var(--ag-header-background-color, #fff) !important;
-
-  /* border-top: solid 1px;
+.AssemblyListTable /deep/ .ag-root-wrapper {
+  border-radius: 10px 10px 0px 0px;
+}
+.AssemblyListTable /deep/ .ag-header {
+  background-color: #f7f6f5;
+  /* background-color: var(--ag-header-background-color, #05ffff); */
+  border-top: solid 1px;
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: var(--ag-border-color, #bdc3c7);
   border-top-color: #bdc3c7;
   border-top-color: var(--ag-border-color, #bdc3c7);
-  border-radius: 10px 10px 0px 0px !important; */
+  border-radius: 10px 10px 0px 0px;
 }
-.AssemblyListTable /deep/ .ag-header-cell {
-  /* background-color: rgb(153, 153, 153); */
+
+/* .AssemblyListTable /deep/ .ag-header-cell {
   background-color: var(--ag-foreground-color, #f5f5f5);
-  /* color: #fff; */
   color: var(--ag-background-color, #000);
   outline-color: #000 !important;
-  /* %%%%%%%%%%%%%%%%%%%% */
-  /* border-top: solid 1px;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: var(--ag-border-color, #bdc3c7);
-  border-top-color: #bdc3c7;
-  border-top-color: var(--ag-border-color, #bdc3c7);
-  border-radius: 10px 10px 0px 0px !important; */
-}
-.AssemblyListTable /deep/ .ag-header-row-column {
+} */
+/* .AssemblyListTable /deep/ .ag-header-row-column {
   border-top: solid 1px;
   outline-color: #000 !important;
-  /* background-color: #4682b4; */
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: var(--ag-border-color, #4a525a);
   border-top-color: #4a525a;
   border-top-color: var(--ag-border-color, #4a525a);
   border-radius: 30px 30px 0px 0px !important;
-}
-.AssemblyListTable /deep/ .ag-theme-balham .ag-rtl .ag-cell {
+} */
+.AssemblyListTable /deep/ .ag-rtl .ag-cell {
   font-family: "Vazir-Medium-FD";
   font-size: 0.9em;
   overflow: hidden;
