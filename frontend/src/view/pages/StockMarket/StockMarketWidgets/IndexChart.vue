@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card :loading="!indexData.length" rounded="lg">
+    <v-card :loading="!inputDataIndex.length" rounded="lg">
       <v-toolbar
         dense
         class="IndexChartToolbars elevation-2"
@@ -11,14 +11,14 @@
         >
       </v-toolbar>
       <v-skeleton-loader
-        v-if="indexData.length == 0"
+        v-if="inputDataIndex.length == 0"
         v-bind="attrs"
         type="card"
       ></v-skeleton-loader>
       <!-- // ! fix cols in small devices optimize all childs with flex -->
       <div class="d-flex">
         <div
-          v-if="indexData.length != 0"
+          v-if="inputDataIndex.length != 0"
           class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 d-flex"
           style="padding-left:0px;flex-direction:column;justify-content:center"
         >
@@ -450,6 +450,7 @@ export default {
         !(this.inputDataIndex === undefined || this.inputDataIndex.length == 0)
       ) {
         let data = [...this.inputDataIndex];
+        console.log(this.inputDataIndex)
         var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
         data.forEach(
           function(d) {
@@ -484,6 +485,8 @@ export default {
         });
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
+        // console.log(lastItem);
+        // console.log(lastItem2);
         this.latestIndex = lastItem["Index"];
         this.lastestIndexChange = lastItem["IndexChange"];
         this.lastestSWChange = lastItem["SW_Index_Change"];
@@ -495,6 +498,7 @@ export default {
         this.latestTradeValueIFB = lastItem2["TradeValue"];
         this.IFBMarketCapTotal = lastItem2["MarketCapTotal"];
         this.indexData = [...data];
+        // console.log(this.indexData)
       }
     },
     renderChart() {

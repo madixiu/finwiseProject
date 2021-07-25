@@ -265,7 +265,6 @@
               </a>
             </li>
           </router-link>
-
           <router-link
             :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
