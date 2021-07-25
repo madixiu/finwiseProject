@@ -101,9 +101,7 @@ def getFilteredData(marketName,marketType,marketIndustry):
                 else:
                     dataTemp=[x for x in parsed_data if x["Type"] in marketType and (x["marketParent"]==2 or x["marketParent"]==20) and x['industry'] in marketIndustry]
 
-    print(marketName)
-    print(marketType)
-    print(dataTemp)
+  
     return dataTemp
     # dataTemp = []
     # temp =[]

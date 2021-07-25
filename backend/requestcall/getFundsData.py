@@ -30,7 +30,6 @@ def getFundsAssetComposition(identifier):
             DX.replace('BondTodayPercent','اوراق با درآمد ثابت',inplace=True)
             DX.replace('CashTodayPercent','وجه نقد',inplace=True)
             DX.replace('TopFiveStockTodayPercent','پنج سهم اصلی',inplace=True)                        
-            print(DX.head())
             return (json.loads(DX.to_json(orient='records')))
         # return(json.loads(resp.text))
         else:

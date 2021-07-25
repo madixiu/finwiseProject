@@ -290,7 +290,6 @@ export default {
   },
   watch: {
     adjusted() {
-      // console.log("🚀 ~ file: AdjustedPricesWidget.vue ~ line 306 ~ adjusted ~ this.adjusted", this.adjusted)
       this.gridApi.setRowData(this.adjusted);
       this.dataFetch = true;
     }

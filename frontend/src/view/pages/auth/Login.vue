@@ -173,7 +173,6 @@ export default {
   name: "login",
   // eslint-disable-next-line no-unused-vars
   beforeRouteEnter: (to, from, next) => {
-    console.log(to, from);
     next(vm => {
       vm.NextRoutePath = from.path;
     });

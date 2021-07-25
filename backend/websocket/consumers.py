@@ -63,7 +63,6 @@ from requestcall.getOragh_HaghTaghadom_FundsData import *
 class random(AsyncWebsocketConsumer):
     channel_layer = get_channel_layer()
     is_connected = False
-    print("channel layer:" + str(channel_layer))
     async def connect(self):
         await self.accept()
         
@@ -357,7 +356,6 @@ class getCrypto(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
-        print(data)
         if data.get("request") == "get":
             text_data = json.dumps(getCryptoMarketData());
             
@@ -375,7 +373,6 @@ class getIRCommodities(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
-        print(data)
         if data.get("request") == "get":
             text_data = json.dumps(getbasicCommodityIR());
             
@@ -392,7 +389,6 @@ class getInvestingCommodities(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
-        print(data)
         if data.get("request") == "get":
             text_data = json.dumps(getbasicInvesting());
             

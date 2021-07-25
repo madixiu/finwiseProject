@@ -22,12 +22,10 @@ export default {
     HHmax: Number
   },
   beforeMount() {
-    console.log(this.HHmax);
     this.HHoptions.labels = this.HHLabels;
     this.HHoptions.xaxis.categories = this.HHLabels;
     this.HHoptions.yaxis.max = this.HHmax;
     this.HHoptions.yaxis.min = this.HHmin;
-
   },
   data() {
     return {

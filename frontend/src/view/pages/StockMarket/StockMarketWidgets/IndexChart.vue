@@ -450,7 +450,6 @@ export default {
         !(this.inputDataIndex === undefined || this.inputDataIndex.length == 0)
       ) {
         let data = [...this.inputDataIndex];
-        console.log(this.inputDataIndex)
         var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
         data.forEach(
           function(d) {
@@ -485,8 +484,7 @@ export default {
         });
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
-        // console.log(lastItem);
-        // console.log(lastItem2);
+   
         this.latestIndex = lastItem["Index"];
         this.lastestIndexChange = lastItem["IndexChange"];
         this.lastestSWChange = lastItem["SW_Index_Change"];
@@ -498,7 +496,6 @@ export default {
         this.latestTradeValueIFB = lastItem2["TradeValue"];
         this.IFBMarketCapTotal = lastItem2["MarketCapTotal"];
         this.indexData = [...data];
-        // console.log(this.indexData)
       }
     },
     renderChart() {
