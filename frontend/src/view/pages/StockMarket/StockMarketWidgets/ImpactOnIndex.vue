@@ -108,8 +108,8 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketImpactOnIndex.send(JSON.stringify(barier));
+        // let barier = { request: "get" };
+        // this.$socketImpactOnIndex.send(JSON.stringify(barier));
       }, 300000);
     },
     liveChecker() {
@@ -131,7 +131,7 @@ export default {
     }
   },
   mounted() {
-    this.$socketImpactOnIndex.send(JSON.stringify({ request: "get" }));
+    // this.$socketImpactOnIndex.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
     // this.$socketImpactOnIndex.onmessage = data => {
     //   // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
@@ -141,8 +141,8 @@ export default {
     // };
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketImpactOnIndex.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketImpactOnIndex.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

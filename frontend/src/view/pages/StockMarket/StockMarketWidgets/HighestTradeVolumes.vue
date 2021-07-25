@@ -154,14 +154,14 @@ export default {
     }
   },
   mounted() {
-    this.$socketMarketHighestTVolumes.send(JSON.stringify({ request: "get" }));
+    // this.$socketMarketHighestTVolumes.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
-    this.$socketMarketHighestTVolumes.onmessage = data => {
-      // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
-      this.DataItems = JSON.parse(data.data);
-      if (JSON.parse(data.data) != "noData" && !!this.DataItems.length)
-        this.loading = false;
-    };
+    // this.$socketMarketHighestTVolumes.onmessage = data => {
+    //   // store.dispatch ('setMarketWatchItems',JSON.parse(data.data))
+    //   this.DataItems = JSON.parse(data.data);
+    //   if (JSON.parse(data.data) != "noData" && !!this.DataItems.length)
+    //     this.loading = false;
+    // };
     // watch: {
     //   mostviewed() {
     //     this.populateData();
@@ -169,8 +169,8 @@ export default {
     // }
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketMarketHighestTVolumes.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketMarketHighestTVolumes.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

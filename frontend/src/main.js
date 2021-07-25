@@ -16,9 +16,10 @@ import "core-js/stable";
 // only needed if you use ag-grid enterprise features
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
-LicenseManager.setLicenseKey(
-  "MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4"
-);
+// LicenseManager.setLicenseKey(
+//   "MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4"
+// );
+LicenseManager.setLicenseKey(process.env.VUE_APP_AG_GRID_LICENSE);
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 // import "ag-grid-community/dist/styles/ag-theme-alpine.css";

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet rounded="lg" elevation="6">
+    <v-sheet rounded="lg" elevation="6" height="100%">
       <v-tabs background-color="#f0efeb" color="deep-purple accent-4" centered>
         <v-tab>نگاه کلی</v-tab>
         <v-tab :disabled="premiumAccountLock">
@@ -58,7 +58,8 @@
             <v-col class="ml-1 mr-2">
               <v-card rounded="lg">
                 <v-toolbar dense color="#f2cc8f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >دلار و طلا</v-toolbar-title
                   >
                 </v-toolbar>
@@ -104,7 +105,8 @@
             <v-col class="mr-1 ml-2">
               <v-card rounded="lg">
                 <v-toolbar dense color="#3d405b" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >فلزات</v-toolbar-title
                   >
                 </v-toolbar>
@@ -158,7 +160,8 @@
             <v-col class="mr-2 ml-1"
               ><v-card rounded="lg">
                 <v-toolbar dense color="#81b29a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >انرژی</v-toolbar-title
                   >
                 </v-toolbar>
@@ -176,46 +179,16 @@
                     @grid-ready="onEnergyGridReady"
                     :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in energy1"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>
-                      <span class="comItems">{{ item.persianName }}</span>
-                    </v-col>
-                    <v-col>
-                      {{ numberWithCommas(item.lastPrice) }}
-                      <v-chip small class="chips"
-                        >{{ item.changeperc }}
-                      </v-chip>
-                    </v-col>
-                    <v-col>
-                      <span class="comDates">{{ item.persianDate }}</span>
-                    </v-col>
-                  </v-row> -->
-                </v-card-text>
-              </v-card></v-col
-            >
+                </v-card-text> </v-card
+            ></v-col>
             <v-col class="ml-2 mr-1">
               <v-card rounded="lg">
                 <v-toolbar dense color="#e07a5f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >فارکس</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>فارکس</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height:  150px; font-family: 'Vazir-Light-FD'"
@@ -228,37 +201,8 @@
                     @grid-ready="onForexGridReady"
                     :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      <span style="text-align:center;">قیمت</span>
-                    </v-col>
-                    <v-col>
-                      <span style="text-align:center">تاریخ</span>
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in forex1"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>
-                      <span class="comItems">{{ item.persianName }}</span>
-                    </v-col>
-                    <v-col>
-                      {{ numberWithCommas(item.lastPrice) }}
-                      <v-chip small class="chips"
-                        >{{ item.changeperc }}
-                      </v-chip>
-                    </v-col>
-                    <v-col>
-                      <span class="comDates">{{ item.persianDate }}</span>
-                    </v-col>
-                  </v-row> -->
-                </v-card-text>
-              </v-card></v-col
-            >
+                </v-card-text> </v-card
+            ></v-col>
           </v-row>
         </v-tab-item>
         <v-tab-item>
@@ -266,15 +210,14 @@
             <v-col class="mr-2 ml-1">
               <v-card rounded="lg">
                 <v-toolbar dense color="#f2cc8f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >طلا</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>طلا</v-card-title> -->
-                <!-- <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    style="width: 100%; height:  430px; font-family: 'Vazir-Medium-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -283,42 +226,21 @@
                     :gridOptions="GoldGridOptions"
                     @grid-ready="onGoldGridReady"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in gold"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>{{ item.persianName }} </v-col>
-                    <v-col> {{ numberWithCommas(item.price) }} ریال </v-col>
-                    <v-col>
-                      {{ item.Date }}
-                    </v-col>
-                  </v-row> -->
                 </v-card-text>
               </v-card>
             </v-col>
             <v-col class="ml-2 mr-1">
               <v-card rounded="lg">
                 <v-toolbar dense color="#118ab2" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >ارز</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>ارز</v-card-title>
-                <v-divider></v-divider> -->
+
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    style="width: 100%; height:  430px; font-family: 'Vazir-Medium-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -327,27 +249,6 @@
                     :gridOptions="CurrenciesGridOptions"
                     @grid-ready="onCurrenciesGridReady"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in currencies"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>{{ item.persianName }} </v-col>
-                    <v-col> {{ numberWithCommas(item.price) }} ریال </v-col>
-                    <v-col>
-                      {{ item.Date }}
-                    </v-col>
-                  </v-row> -->
                 </v-card-text>
               </v-card>
             </v-col>
@@ -358,7 +259,8 @@
             <v-col class="ml-2 mr-2">
               <v-card rounded="lg">
                 <v-toolbar dense color="#00afb9" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >شاخص جهانی</v-toolbar-title
                   >
                 </v-toolbar>
@@ -384,7 +286,8 @@
             <v-col class="mr-2 ml-1">
               <v-card rounded="lg">
                 <v-toolbar dense color="#3d405b" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >فلزات</v-toolbar-title
                   >
                 </v-toolbar>
@@ -406,7 +309,8 @@
             <v-col class="mr-1 ml-2">
               <v-card rounded="lg">
                 <v-toolbar dense color="#5D2A42" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >متال بولتن</v-toolbar-title
                   >
                 </v-toolbar>
@@ -432,13 +336,14 @@
             <v-col class="mr-2 ml-2"
               ><v-card rounded="lg">
                 <v-toolbar dense color="#023e8a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >پتروشیمی</v-toolbar-title
                   >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height: 250px; font-family: 'Vazir-Light-FD'"
+                    style="width: 100%; height: 430px; font-family: 'Vazir-Light-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -457,12 +362,11 @@
             <v-col class="mr-2 ml-2"
               ><v-card rounded="lg">
                 <v-toolbar dense color="#81b29a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >انرژی</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>انرژی</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height: 150px; font-family: 'Vazir-Light-FD'"
@@ -484,12 +388,12 @@
             <v-col class="ml-2 mr-2">
               <v-card rounded="lg">
                 <v-toolbar dense color="#e07a5f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                  <v-toolbar-title
+                    style="height:20px;font-size:0.95em;color:#fff"
                     >فارکس</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>فارکس</v-card-title>
-                <v-divider></v-divider> -->
+
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height:  150px; font-family: 'Vazir-Light-FD'"

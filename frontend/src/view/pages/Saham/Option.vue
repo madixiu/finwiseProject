@@ -580,8 +580,8 @@ export default {
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$$socketOptions.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$$socketOptions.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

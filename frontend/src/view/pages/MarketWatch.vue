@@ -581,7 +581,6 @@ export default {
         .get("/api/marketwatch")
         .then(response => {
           this.isBusy = false;
-          this.$store.dispatch("setMarketWatchItems", response.data);
           this.tableData = response.data;
         })
         .catch(error => {

@@ -168,7 +168,7 @@ export default {
     }
   },
   mounted() {
-    this.$socketMarketHighestDemands.send(JSON.stringify({ request: "get" }));
+    // this.$socketMarketHighestDemands.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
     // this.$socketMarketHighestDemands.onmessage = data => {
     //   this.DataItems = JSON.parse(data.data);
@@ -177,8 +177,8 @@ export default {
     // };
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketMarketHighestDemands.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketMarketHighestDemands.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

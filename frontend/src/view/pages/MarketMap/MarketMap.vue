@@ -127,8 +127,8 @@ export default {
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketMarketMap.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketMarketMap.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

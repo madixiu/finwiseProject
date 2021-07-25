@@ -72,7 +72,10 @@
       </v-row>
     </div>
     <!--//? *************  TOOLTIP PLACEMENT ************************* -->
-    <v-toolbar class="TreeMapToolbar" style="height:30px">
+    <v-toolbar
+      class="TreeMapToolbar"
+      style="height:30px;border-top: 1px solid #e9ecee;"
+    >
       <v-toolbar-title style="height:30px"
         ><span style="font-size:0.8em">
           {{ selectedNode.data.name }}
@@ -81,7 +84,7 @@
       <v-spacer></v-spacer>
       <!-- <v-btn x-small @click="BackButton"   outlined
       color="indigo">بازگشت</v-btn> -->
-      <v-icon v-if="selectedNode.depth != 0" @click="BackButton" color="indigo"
+      <v-icon v-if="selectedNode.depth != 0" @click="BackButton" color="#4682b4"
         >mdi-arrow-left-circle</v-icon
       >
     </v-toolbar>
