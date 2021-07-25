@@ -14,7 +14,7 @@
         </h5>
         <ul
           class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2"
-        >
+      >
           <li class="breadcrumb-item">
             <router-link :to="'/'" class="subheader-breadcrumbs-home">
               <i class="flaticon2-shelter text-light icon-1x"></i>

@@ -15,7 +15,7 @@
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <TechnicalWidget :Indicators="techdata"></TechnicalWidget>
       </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      <div class="col-xxl-3 col-lg-3 col-md-3">
         <FundamentalRobotWidget></FundamentalRobotWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
