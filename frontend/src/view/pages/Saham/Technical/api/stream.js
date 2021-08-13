@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // api/stream.js
 import historyProvider from "./historyProvider.js";
-import pairs from "./pairs";
+// import pairs from "./pairs";
 // we use Socket.io client to connect to cryptocompare's socket.io stream
 // var io = require('socket.io-client')
 // var socket_url = 'wss://streamer.cryptocompare.com'
@@ -130,13 +130,13 @@ function updateBar(data, sub) {
 }
 
 // takes symbolInfo object as input and creates the subscription string to send to CryptoCompare
-function createChannelString(symbolInfo) {
-  var channel = symbolInfo.name.split(/[:/]/);
-  // const exchange = channel[0]
-  const to = channel[1];
-  const from = channel[0];
+// function createChannelString(symbolInfo) {
+//   var channel = symbolInfo.name.split(/[:/]/);
+//   // const exchange = channel[0]
+//   const to = channel[1];
+//   const from = channel[0];
 
-  // console.log(pairs[channel[0] + "/" + channel[1]])
-  // subscribe to the CryptoCompare trade channel for the pair and exchange
-  return `0~${pairs[from + "/" + to]}~${from}~${to}`;
-}
+//   // console.log(pairs[channel[0] + "/" + channel[1]])
+//   // subscribe to the CryptoCompare trade channel for the pair and exchange
+//   return `0~${pairs[from + "/" + to]}~${from}~${to}`;
+// }

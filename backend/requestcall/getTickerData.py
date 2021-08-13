@@ -236,7 +236,18 @@ def getDataTable(tickerName ,tableName):
     parsed_dataTable = json.loads(resp.text) 
     return parsed_dataTable
 
-
+def getCalculatedValuationRatios(identifier):
+    ct=0
+    while ct<3:
+        head = {'Accept-Profile':'statement'}
+        resp = requests.get('http://130.185.74.40:3000/View_ValuationRatios?firm=eq.'+str(identifier),headers=head)
+        if resp.status_code == 200 and resp.text!='[]' :
+            return (json.loads(resp.text))
+        else:
+            time.sleep(2)
+            ct=ct+1
+        
+    return []
 # def getCEOchange(tickerName):
 #     baseUrl = 'http://130.185.74.40:3000/BoardChange_CEOChanges'
 #     # if id != 0:

@@ -32,3 +32,9 @@ def unixConvertor(month,day,unixTime):
         else:
             unixTime += daylightTime1
     return unixTime
+
+def engDateToUnix(year,month,day,hour,minute):
+
+    unix = int(datetime.datetime(year,month,day, hour,minute,0).strftime('%s'))*1000
+    unix = unixConvertor(month,day,unix)
+    return unix

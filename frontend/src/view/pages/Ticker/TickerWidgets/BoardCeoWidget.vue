@@ -1,6 +1,6 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
+  <div>
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         اطلاعات هیئت مدیره
         <b-spinner
@@ -10,7 +10,7 @@
           v-if="loading"
         ></b-spinner>
       </h3>
-    </div>
+    </div> -->
     <!--end::Header-->
     <!--begin::Body-->
     <div class="row">
@@ -20,7 +20,7 @@
           <v-data-table
             v-if="deposits.length != 0"
             :headers="ceoheaders"
-            :items="DataItems3"
+            :items="deposits"
             class="elevation-1 FinancialStrength"
             :header-props="{ sortIcon: null }"
             :disable-sort="true"
@@ -36,7 +36,7 @@
           <v-data-table
             v-if="notices.length != 0"
             :headers="boardheaders"
-            :items="DataItems2"
+            :items="notices"
             class="elevation-1 FinancialStrength "
             :header-props="{ sortIcon: null }"
             :disable-sort="true"
@@ -55,11 +55,9 @@
       <span class="rtl_centerd">دیتا برای نمایش وجود ندارد</span>
     </div>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "BoardWidget",
   props: ["notices", "deposits"],
@@ -67,8 +65,6 @@ export default {
     return {
       search: "",
       loading: true,
-      DataItems2: [],
-      DataItems3: [],
       ceoheaders: [
         { text: "نام مدیر عامل", value: "CEOName" },
         { text: "مدرک", value: "CEODegree" }
@@ -84,25 +80,14 @@ export default {
       ]
     };
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-  },
-  methods: {
-    populateData() {
-      this.DataItems2 = this.notices;
-      this.DataItems3 = this.deposits;
-    }
-  },
-  mounted() {
-    this.populateData();
-  },
+
+
+
   watch: {
     notices() {
-      this.populateData();
       this.loading = false;
     },
     deposits() {
-      this.populateData();
       this.loading = false;
     }
   }

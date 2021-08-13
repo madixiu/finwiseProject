@@ -3,10 +3,20 @@
 var rp = require("request-promise").defaults({ json: true });
 // const api_root = 'https://min-api.cryptocompare.com'
 const history = {};
+var typeOf = 0;
+import { EventBus } from "@/main.js";
+EventBus.$on("TradingViewAdjust", data => {
+  // this.header = data;
+  if (data == "noAdjust") typeOf = 0;
+  else if (data == "AdjustDPS") typeOf = 1;
+  else if (data == "AdjustIC") typeOf = 2;
+  else if (data == "AdjustICDPS") typeOf = 3;
+  console.log(data);
+});
 
 export default {
   history: history,
-
+  typeOf: typeOf,
   getMarks: function(symbolInfo, from, to, onDataCallback, resolution) {
     // if (localStorage.bnApiStatus.toString() == "true") {
     // let symbol = symbolInfo.name;
@@ -25,6 +35,8 @@ export default {
     // return result;
   },
   getBars: function(symbolInfo, resolution, from, to, first, limit) {
+    console.log(symbolInfo);
+    EventBus.$emit("TradingViewSymbol",symbolInfo.name)
     // var split_symbol = symbolInfo.name.split(/[:/]/)
     // const url = resolution === 'D' ? '/data/histoday' : resolution >= 60 ? '/data/histohour' : '/data/histominute'
     var url = "";
@@ -37,7 +49,8 @@ export default {
       // 		// aggregate: 1//resolution
       limits: 2000,
       url: symbolInfo.urlparam,
-      todate: to ? "" + to : ""
+      todate: to ? "" + to : "",
+      typeof: typeOf
       // order:'utc.desc'
     };
 
@@ -68,7 +81,7 @@ export default {
     //     }
     //   });
     return rp({
-      url: `https://finwise.ir/api/TVData/${qs.limits}/${qs.url}/${qs.todate}`
+      url: `http://localhost:8000/api/TVData/${qs.limits}/${qs.url}/${qs.todate}/${qs.typeof}`
     }).then(data => {
       if (data.Response && data.Response === "Error") {
         return [];

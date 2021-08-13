@@ -30,6 +30,7 @@
             :columnDefs="DecisionTableHeader"
             :enableRtl="true"
             :gridOptions="gridOptions"
+            @filterChanged="filterEvent"
             :allowContextMenuWithControlKey="false"
             @grid-ready="onReady"
           ></ag-grid-vue>
@@ -262,6 +263,11 @@ export default {
     this.loadData();
   },
   methods: {
+    filterEvent(){
+      this.tablePaginationLength = this.gridApi.paginationGetTotalPages();
+
+      console.log("filter changed fucker");
+    },
     getHeight() {
       return (
         window.innerHeight -

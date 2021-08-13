@@ -1,21 +1,12 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <!-- <div class="card card-custom card-stretch gutter-b"> -->
-  <v-card>
-    <!--begin::Header-->
-    <!-- <div class="card-header border-0 pt-2">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
+  <v-card rounded="lg">
+    <v-toolbar dense class="elevation-2" style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em">
         نسبت های سود نقدی
-      </h3>
-    </div> -->
-    <v-card-title>
-      نسبت های سود نقدی
-    </v-card-title>
-    <v-divider class="mt-0"></v-divider>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column">
-      <div class="row FinancialStrength valign">
+      </v-toolbar-title>
+    </v-toolbar>
+    <div class="d-flex flex-column pt-2">
+      <v-row no-gutters>
         <div class="col-sm-4">
           <v-tooltip left>
             <template v-slot:activator="{ on }">
@@ -41,7 +32,7 @@
           >
           </v-progress-linear>
         </div>
-      </div>
+      </v-row>
       <v-data-table
         :headers="headers"
         :items="ValuatedItems"

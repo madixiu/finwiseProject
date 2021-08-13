@@ -1,17 +1,17 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
+  <v-card rounded="lg">
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder">
         تغییر وضعیت
       </h3>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-xxl-12">
         <template>
           <v-timeline>
             <v-timeline-item
               dense
-              color="#212529"
+              color="#4682B4"
               small
               v-for="(value, key) in DataItems2"
               :key="key"
@@ -32,12 +32,11 @@
       </div>
     </div>
     <!--end::Header-->
-  </div>
+  </v-card>
   <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   name: "StatusChanges",
@@ -49,7 +48,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     populateData() {

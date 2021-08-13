@@ -29,7 +29,7 @@ from requestcall.getSearchData import SearchData
 from requestcall.treeMapData import getMapData
 from requestcall.getMainAssemblyData import AssemblyListData,getCalendarData
 from requestcall.getOragh_HaghTaghadom_FundsData import *
-from requestcall.getTVData import TVtickerData
+from requestcall.getTVData import ListOfStocks, TVtickerData
 
 
 
@@ -68,6 +68,10 @@ def getStatsTicker(self,identifier):
     return JsonResponse(getStatisticsTicker(identifier),safe=False)
 def getLiveTicker(self,identifier):
     return JsonResponse(getLive_ticker(identifier),safe=False)
+
+def getValuationRatios(request,identifier):
+    return JsonResponse(getCalculatedValuationRatios(identifier),safe=False)
+   
 def getLiveHHTicker(self,identifier):
     return JsonResponse(getLiveHHtickerData(identifier),safe=False)
 def getAllDPS(self,identifier):
@@ -555,8 +559,11 @@ def getCrypto(self):
 
 ###############TRADING VIEW#########################
 
-def getTradingViewData(self,limits,url,todate):
-    return JsonResponse(TVtickerData(limits,url,todate),safe=False)
+def getTradingViewData(self,limits,url,todate,typeOf):
+    return JsonResponse(TVtickerData(limits,url,todate,typeOf),safe=False)
+
+def getTradingViewList(self):
+    return JsonResponse(ListOfStocks(),safe=False)
 ####################################################
 
 

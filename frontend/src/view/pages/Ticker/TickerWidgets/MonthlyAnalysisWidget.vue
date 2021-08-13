@@ -1,6 +1,6 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
+  <div>
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         تحلیل
         <b-spinner
@@ -10,21 +10,31 @@
           v-if="loading == false"
         ></b-spinner>
       </h3>
-    </div>
+    </div> -->
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body d-flex flex-column" v-if="type == 'bank'"></div>
     <div class="card-body d-flex flex-column" v-if="type == 'insurance'"></div>
-    <div class="row" style="padding-top:5px" v-if="type == 'production'">
-      <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
-        <v-card shaped class="mt-2">
-          <v-toolbar dense class="elevation-2" style="height:36px;">
-            <v-toolbar-title style="height:20px;font-size:0.95em"
-              >روند تولید و فروش کل</v-toolbar-title
-            >
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <v-row
+    <v-row no-gutters v-if="type == 'production'">
+      <v-card rounded="lg" class="mt-2" width="100%">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >روند تولید و فروش کل</v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+          <v-col class="d-flex justify-content-end" cols="3">
+            <v-select
+              class="vuetifySelectCustom flex-grow-1"
+              :items="Chart1"
+              v-model="Chart1Selected"
+              solo-inverted
+              dense
+              @input="GetFiltered"
+            ></v-select>
+          </v-col>
+        </v-toolbar>
+
+        <!-- <v-row
             ><v-col></v-col>
             <v-col></v-col>
             <v-col></v-col>
@@ -37,33 +47,32 @@
                 dense
                 @input="GetFiltered"
               ></v-select></v-col
-          ></v-row>
+          ></v-row> -->
 
-          <ApexChart
-            :key="ApexChartcomponentKey"
-            height="300%"
-            width="100%"
-            :series="Chart1options.series"
-            :chartOptions="Chart1options"
-          />
-        </v-card>
-        <v-card shaped class="mt-2">
-          <v-toolbar dense class="elevation-2" style="height:36px;">
-            <v-toolbar-title style="height:20px;font-size:0.95em"
-              >روند تولید و فروش به تفکیک صادراتی و داخلی</v-toolbar-title
-            >
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <ApexChart
-            :key="ApexChartcomponentKey2"
-            height="300%"
-            width="100%"
-            :series="Chart2options.series"
-            :chartOptions="Chart2options"
-          />
-        </v-card>
-      </div>
-    </div>
+        <ApexChart
+          :key="ApexChartcomponentKey"
+          height="200%"
+          width="100%"
+          :series="Chart1options.series"
+          :chartOptions="Chart1options"
+        />
+      </v-card>
+      <v-card rounded="lg" class="mt-2" width="100%">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >روند تولید و فروش به تفکیک صادراتی و داخلی</v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <ApexChart
+          :key="ApexChartcomponentKey2"
+          height="200%"
+          width="100%"
+          :series="Chart2options.series"
+          :chartOptions="Chart2options"
+        />
+      </v-card>
+    </v-row>
 
     <div class="card-body d-flex flex-column" v-if="type == 'leasing'"></div>
     <div class="card-body d-flex flex-column" v-if="type == 'service'"></div>
@@ -83,7 +92,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
 export default {
   name: "MonthlyAnalysisWidget",
@@ -99,7 +107,6 @@ export default {
         series: [],
         chart: {
           type: "bar",
-          // background: '../../../../media/logos/fadedfinwise.png',
           stacked: true,
           toolbar: {
             show: true
@@ -142,7 +149,6 @@ export default {
         series: [],
         chart: {
           type: "bar",
-          // background: '../../../../media/logos/fadedfinwise.png',
           stacked: true,
           toolbar: {
             show: true
@@ -210,12 +216,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     AllProductionItems() {
       let x = [];
       let y = [];
       let counter = 0;
-      this.DataItems2.filter(item => {
+      this.notices.filter(item => {
         counter = counter + 1;
         let temp = {};
         if (!y.includes(item.name)) {
@@ -229,37 +234,6 @@ export default {
     }
   },
   methods: {
-    numberWithCommas(x) {
-      if (x === null) {
-        return "-";
-      }
-      if (x == 0) {
-        return "-";
-      }
-      if (x == "") {
-        return "-";
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
     categoryProduct(x) {
       if (x === null) {
         return "";
@@ -284,17 +258,10 @@ export default {
       }
       return "";
     },
-    populateData() {
-      this.DataItems2 = this.notices;
-      this.DataItems3 = this.deposits;
-      this.DataItems4 = this.portfos;
-      this.DataItems5 = this.summaries;
-      // console.log(this.DataItems2);
-    },
     gettabs() {
       var lookup = {};
       var lookup2 = {};
-      var items = this.DataItems2;
+      var items = this.notices;
       var result = [];
       var result2 = [];
       var counter = 0;
@@ -321,17 +288,12 @@ export default {
       this.todatesyears = result2;
     },
     GetFiltered() {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
       this.ProductionDataToRender();
     },
     setType() {
       this.type = this.typeOf;
       let uniqeItems = [];
-      this.DataItems2.filter(item => {
+      this.notices.filter(item => {
         if (!uniqeItems.includes(item.name)) {
           uniqeItems.push(item.name);
         }
@@ -344,19 +306,19 @@ export default {
       let AcceptedDates2 = [];
       if (this.Chart1Selected == "۶ ماه گذشته") {
         let A = this.todates.slice(0, 6).map(({ value }) => value);
-        AcceptedDates = this.DataItems2.filter(item => {
+        AcceptedDates = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
         });
-        AcceptedDates2 = this.DataItems3.filter(item => {
+        AcceptedDates2 = this.deposits.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
         });
       }
       if (this.Chart1Selected == "از ابتدای سال") {
-        for (var item, i = 0; (item = this.DataItems2[i++]); ) {
+        for (var item, i = 0; (item = this.notices[i++]); ) {
           let name = item.toDate;
           let x = this.todatesyears[0].value;
           if (name.includes(x)) {
@@ -369,12 +331,12 @@ export default {
       }
       if (this.Chart1Selected == "یک سال گذشته") {
         let A = this.todates.slice(0, 12).map(({ value }) => value);
-        AcceptedDates = this.DataItems2.filter(item => {
+        AcceptedDates = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
         });
-        AcceptedDates2 = this.DataItems2.filter(item => {
+        AcceptedDates2 = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
@@ -382,12 +344,12 @@ export default {
       }
       if (this.Chart1Selected == "۳ سال گذشته") {
         let A = this.todates.slice(0, 36).map(({ value }) => value);
-        AcceptedDates = this.DataItems2.filter(item => {
+        AcceptedDates = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
         });
-        AcceptedDates2 = this.DataItems2.filter(item => {
+        AcceptedDates2 = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
@@ -395,12 +357,12 @@ export default {
       }
       if (this.Chart1Selected == "۵ سال گذشته ") {
         let A = this.todates.slice(0, 60).map(({ value }) => value);
-        AcceptedDates = this.DataItems2.filter(item => {
+        AcceptedDates = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
         });
-        AcceptedDates2 = this.DataItems2.filter(item => {
+        AcceptedDates2 = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
@@ -408,13 +370,13 @@ export default {
       }
       if (this.Chart1Selected == "از ابتدا") {
         let A = this.todates.map(({ value }) => value);
-        AcceptedDates = this.DataItems2.filter(item => {
+        AcceptedDates = this.notices.filter(item => {
           // console.log(item.category)
           if (A.includes(item.toDate)) {
             return item;
           }
         });
-        AcceptedDates2 = this.DataItems2.filter(item => {
+        AcceptedDates2 = this.notices.filter(item => {
           if (A.includes(item.toDate)) {
             return item;
           }
@@ -458,10 +420,8 @@ export default {
         k["Sale"] = item.Sale;
         ShowData2.push(k);
       });
-      // console.log(ShowData);
       let FinalData = [];
       let FinalData2 = [];
-      // let DoneDates=[]
       let c = 0;
       for (let j in uniqeItems) {
         c = c + 1;
@@ -498,7 +458,6 @@ export default {
   mounted() {},
   watch: {
     notices() {
-      this.populateData();
       this.gettabs();
       this.setType();
       // this.gettabs();
@@ -506,28 +465,24 @@ export default {
       this.loading = false;
     },
     deposits() {
-      this.populateData();
       this.setType();
       // this.gettabs();
       // this.getOnesfromthisyear();
       this.loading = false;
     },
     portfos() {
-      this.populateData();
       this.setType();
       // this.gettabs();
       // this.getOnesfromthisyear();
       this.loading = false;
     },
     summaries() {
-      this.populateData();
       this.setType();
       // this.gettabs();
       // this.getOnesfromthisyear();
       this.loading = false;
     },
-    selectedYear: function() {
-      this.populateData();
+    selectedYear() {
       this.setType();
       // this.gettabs();
       // this.getOnesfromthisyear();
@@ -537,46 +492,29 @@ export default {
 };
 </script>
 <style scoped>
-.cellItem {
-  font-family: "Vazir-Light-FD";
+.vuetifySelectCustom /deep/ .v-input__control {
+  min-height: 25px !important;
+  height: 25px !important;
 }
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
+.vuetifySelectCustom /deep/ .v-input__control {
+  font-size: 0.7em !important;
+}
+.vuetifySelectCustom /deep/ .v-chip.v-size--small {
+  border-radius: 3px;
+  font-size: 10px;
+  height: 17px;
+}
+.vuetifySelectCustom /deep/ .v-chip .v-chip__close.v-icon {
+  font-size: 12px !important;
 }
 .rtl_centerd {
   direction: rtl;
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
+
 .itemFilters {
   font-family: "Vazir-Light-FD";
   font-weight: 700;
   font-size: 1em;
-}
-table.v-table tbody td {
-  font-family: "Vazir-Light-FD" !important;
 }
 </style>

@@ -12,7 +12,11 @@ export default {
     TradingView
   },
   watch: {
-    searchItems() {
+    searchItems(newValue, oldValue) {
+      console.log(oldValue.length);
+      if (oldValue.length == 0 && newValue.length != 0) {
+        this.ticker = this.Ticker(this.$route.params.id);
+      }
       // this.ticker = "شتران"
       // if(this.searchItems.length)
     }
@@ -34,8 +38,6 @@ export default {
     ...mapGetters({ searchItems: "getSearchListData" })
   },
   mounted() {
-    this.ticker = this.Ticker(this.$route.params.id);
-
     // if (this.searchItems.length)
   },
 

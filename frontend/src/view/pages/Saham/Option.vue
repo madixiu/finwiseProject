@@ -559,8 +559,8 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketOptions.send(JSON.stringify(barier));
+        // let barier = { request: "get" };
+        // this.$socketOptions.send(JSON.stringify(barier));
       }, 3000);
     },
     liveChecker() {

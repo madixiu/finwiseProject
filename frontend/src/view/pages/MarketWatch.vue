@@ -669,6 +669,7 @@ export default {
 <style scoped>
 /* 
 TODO:Clean the CSS & add scoped based class
+?? DONE !
 */
 /* ag Grid */
 .MarketWatchTable /deep/ .ag-root-wrapper {

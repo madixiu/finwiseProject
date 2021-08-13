@@ -18,7 +18,7 @@ urlpatterns = [
    path("marketwatch",getMarketWatch),
    path("marketwatchfilterlists",getMarketWatchFilters),
 
-   ## DASHBOARD ##
+   ##? DASHBOARD ##
    path("ImpactOnIndex",getImpactOnIndex),
    path("getHighestValue",getHighestValue),
    path("getAllTradesValue",getAllTradesValue),
@@ -53,6 +53,7 @@ urlpatterns = [
    path("StatsTicker/<identifier>/",getStatsTicker),
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
    path("LiveTicker/<identifier>/",getLiveTicker),
+   path("Fundamental/ValuationRatio/<identifier>/",getValuationRatios),
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
    path("Ticker/TechnicalIndicatorSingle/<identifier>/",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
@@ -114,7 +115,8 @@ urlpatterns = [
 
 
    ### TRADING VIEW
-   path("TVData/<limits>/<url>/<todate>",getTradingViewData),
+   path("TVData/<limits>/<url>/<todate>/<typeOf>",getTradingViewData),
+   path("TVData/listOfStocks",getTradingViewList),
 
    ###
    path("HaghTaghadom",getHaghTaghadom),
@@ -123,7 +125,7 @@ urlpatterns = [
    path("FundsAll",getNewFunds),
    path("CryptoMarket",getCrypto),
 
-   ####Commodity
+   ##? Commodity
    path("Commodities/IR",getCommoditiesBasic),
    path("Commodities/Investing",getCommoditiesBasicInvesting),
    path("Commodities/Petro",getCommoditiesPetro),
@@ -132,7 +134,7 @@ urlpatterns = [
    path("CommoditiesDetail/IN/<identifier>",getCommoditiesDetailInvesting),
    path("CommoditiesDetail/PL/<identifier>",getCommoditiesDetailPlats),
    
-   ####funds
+   ##? funds
    path("Funds/FundsMeta/<identifier>/",getFundsMeta),
    path("Funds/FundsIndustry/<identifier>/",getFundsIndustryComp),
    path("Funds/FundsAsset/<identifier>/",getFundsAssetComp),

@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import historyProvider from "./historyProvider";
 import stream from "./stream";
-import { data } from "./pairs";
+// import { data } from "./pairs";
+const axios = require("axios");
 
 // const supportedResolutions = ["1", "3", "5", "15", "30", "60", "120", "240", "D", "W","M","3M","12M"]
 const supportedResolutions = ["D", "W", "M", "3M", "12M"];
@@ -10,10 +11,24 @@ const config = {
   supported_resolutions: supportedResolutions,
   supports_marks: true
 };
-
+var data = [];
 export default {
+  data: data,
   onReady: cb => {
-    setTimeout(() => cb(config), 0);
+    // console.log(data);
+    if (data.length == 0) {
+      axios
+        .get("http://localhost:8000/api/TVData/listOfStocks")
+        .then(resp => {
+          data = resp.data[1];
+          setTimeout(() => cb(config), 0);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } else {
+      setTimeout(() => cb(config), 0);
+    }
   },
   searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
     if (userInput.length >= 1) {

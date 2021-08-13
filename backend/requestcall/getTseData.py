@@ -59,10 +59,7 @@ def getLive_ticker(identifier):
     head = {'Accept-Profile':'public'}
     resp = requests.get('http://185.231.115.223:3000/rpc/liveticker?a='+str(identifier),headers=head )
     if resp.status_code == 200:
-
-        # return(resp.text)
         return (json.loads(resp.text))
-        # return(json.loads(resp.text))
     else:
         return("noData")           
 def highestTvolumes():

@@ -141,6 +141,7 @@
                 :width="x(children.x1 - children.x0 + children.parent.x0)"
                 :height="y(children.y1 - children.y0 + children.parent.y0)"
                 :style="getColor(children.data.change)"
+                @click="ChildClick(children)"
               ></rect>
               <text
                 class="parentChildsText"
@@ -557,6 +558,10 @@ export default {
     }
   },
   methods: {
+    ChildClick(item){
+      console.log(item);
+      this.$router.push({ path: `/ticker/Overview/Overall/${item.data.id}` });
+    },
     //? Called once, to create the hierarchical data representation
     initialize() {
       let that = this;

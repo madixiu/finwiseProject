@@ -1,168 +1,211 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
+  <v-card rounded="lg" height="100%">
     <!--begin::Header-->
-    <div class="card-header border-0">
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         اطلاعیه های کدال
       </h3>
-    </div>
+    </div> -->
     <!--end::Header-->
     <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="loading">
-      <v-skeleton-loader
-        type=" table-heading, table-thead, table-tbody"
-      ></v-skeleton-loader>
-    </div>
-    <div class="card-body d-flex flex-column">
-      <v-data-table
-        v-if="loading == false"
-        :headers="headers"
-        :items="DataItems2"
-        class="elevation-1 FinancialStrength"
-      >
-        <template v-slot:[`item.HtmlUrl`]="{ item }">
-          <v-chip label small :disabled="item.HtmlUrl == '' ? true : false">
-            <a v-bind:href="`http://codal.ir${item.HtmlUrl}`" target="_blank"
-              >گزارش
-            </a>
-          </v-chip>
-        </template>
-        <template v-slot:[`item.AttachmentUrl`]="{ item }">
-          <v-chip
-            label
-            small
-            :disabled="item.AttachmentUrl == '' ? true : false"
-          >
-            <a
-              v-bind:href="`http://codal.ir${item.AttachmentUrl}`"
-              target="_blank"
-              >فایل
-            </a>
-          </v-chip>
-        </template>
-        <template v-slot:[`item.ExcelUrl`]="{ item }">
-          <v-chip
-            label
-            small
-            :disabled="item.ExcelUrl == '' ? true : false"
-            target="_blank"
-          >
-            <a v-bind:href="`${item.ExcelUrl}`">اکسل </a>
-          </v-chip>
-        </template>
-        <template v-slot:[`item.PdfUrl`]="{ item }">
-          <v-chip
-            label
-            small
-            :disabled="item.PdfUrl == '' ? true : false"
-            target="_blank"
-          >
-            <a v-bind:href="`http://codal.ir/${item.PdfUrl}`">پی دی اف </a>
-          </v-chip>
-        </template>
-      </v-data-table>
-    </div>
-    <!--end::Body-->
-  </div>
-  <!--end::Mixed Widget 14-->
-</template>
+    <v-skeleton-loader
+      v-if="loading && !noData"
+      type=" table-heading, table-thead, table-tbody"
+    ></v-skeleton-loader>
+    <b-table
+      v-if="!loading && !noData"
+      class="NotificationWidget-table"
+      thClass="NotificationWidget-tableHeader"
+      tbody-tr-class="NotificationWidget-table-row"
+      small
+      hover
+      :responsive="true"
+      :per-page="tablePaginationVisible"
+      :current-page="tablePaginationNumber"
+      :items="notices"
+      :fields="headers"
+    >
+      <template #cell(Submited)="data">
+        <span v-if="data.value == null || data.value == ''">- </span>
+        <span v-else>{{ data.value }}</span>
+      </template>
 
+      <template #cell(HtmlUrl)="data">
+        <v-chip label small :disabled="data.value == '' ? true : false">
+          <a v-bind:href="`http://codal.ir${data.value}`" target="_blank"
+            >گزارش
+          </a>
+        </v-chip>
+      </template>
+      <template #cell(AttachmentUrl)="data">
+        <v-chip label small :disabled="data.value == '' ? true : false">
+          <a v-bind:href="`http://codal.ir${data.value}`" target="_blank"
+            >فایل
+          </a>
+        </v-chip>
+      </template>
+      <template #cell(ExcelUrl)="data">
+        <v-chip label small :disabled="data.value == '' ? true : false">
+          <a v-bind:href="`${data.value}`" target="_blank">اکسل </a>
+        </v-chip>
+      </template>
+      <template #cell(PdfUrl)="data">
+        <v-chip label small :disabled="data.value == '' ? true : false">
+          <a v-bind:href="`http://codal.ir/${data.value}`" target="_blank"
+            >پی دی اف
+          </a>
+        </v-chip>
+      </template>
+    </b-table>
+
+    <!-- //? no Data  -->
+    <div v-if="noData && !loading" class="d-flex justify-content-center py-5">
+      <span style="font-size:0.9em">اطلاعات موجود نیست</span>
+    </div>
+
+    <!--//? pagination -->
+    <div
+      v-if="!loading && !noData"
+      style="
+              display: flex;
+              justify-content: center;width:100%"
+    >
+      <div class="col-6">
+        <v-pagination
+          color="#4682B4"
+          v-model="tablePaginationNumber"
+          :length="tablePaginationLength"
+          :total-visible="tablePaginationVisible"
+        ></v-pagination>
+      </div>
+    </div>
+  </v-card>
+</template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "NotificationWidget",
-  props: ["notices"],
+  // props: ["notices"],
+  props: {
+    notices: {
+      type: Array,
+      default: null
+    }
+  },
   data() {
     return {
-      search: "",
+      tablePaginationNumber: 1,
+      tablePaginationLength: 10,
+      //// tablePaginationVisible: 15,
       loading: true,
+      noData: false,
       headers: [
         {
-          text: "شرکت گزارش دهنده",
-          value: "reported_firm"
+          label: "شرکت گزارش دهنده",
+          key: "reported_firm",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "متن اطلاعیه",
-          value: "title"
+          label: "متن اطلاعیه",
+          key: "title",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "زمان ارسال",
-          value: "SentTime"
+          label: "زمان ارسال",
+          key: "SentTime",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "زمان انتشار",
-          value: "PublishTime"
+          label: "زمان انتشار",
+          key: "PublishTime",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "لینک گزارش",
-          value: "HtmlUrl"
+          label: "لینک گزارش",
+          key: "HtmlUrl",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "لینک فایلها",
-          value: "AttachmentUrl"
+          label: "لینک فایلها",
+          key: "AttachmentUrl",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "لینک پی دی اف",
-          value: "PdfUrl"
+          label: "لینک پی دی اف",
+          key: "PdfUrl",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         },
         {
-          text: "لینک اکسل",
-          value: "ExcelUrl"
+          label: "لینک اکسل",
+          key: "ExcelUrl",
+          thClass: "NotificationWidget-tableHeader",
+          tdClass: "NotificationWidget-tableTD"
         }
-      ],
-      DataItems2: []
+      ]
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"])
-  },
-  methods: {
-    populateData() {
-      this.DataItems2 = this.notices;
+    tablePaginationVisible() {
+      let screenHeight = window.innerHeight;
+      let tableHeightWithoutHeader = screenHeight - 303;
+      //? every row has 33 pixel
+      let rowCount = parseInt(tableHeightWithoutHeader / 33);
+      return rowCount;
     }
   },
-  mounted() {
-    this.populateData();
-  },
+
   watch: {
-    notices() {
-      this.populateData();
-      this.loading = false;
+    notices(newValue, oldValue) {
+      if (
+        newValue != oldValue &&
+        newValue.length == 0 &&
+        oldValue.length == 0
+      ) {
+        this.noData = true;
+        this.loading = false;
+      } else {
+        this.tablePaginationLength = this.pagination(this.notices.length);
+        this.loading = false;
+      }
+    }
+  },
+  methods: {
+    pagination(number) {
+      if (number % this.tablePaginationVisible == 0)
+        return number / this.tablePaginationVisible;
+      else {
+        return parseInt(number / this.tablePaginationVisible) + 1;
+      }
     }
   }
 };
 </script>
 <style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
+.NotificationWidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
 }
-.rtl_centerd {
-  direction: rtl;
+.NotificationWidget-table /deep/ .NotificationWidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
+  text-align: center;
+  /* min-width: 200px; */
+}
+.NotificationWidget-table /deep/ .NotificationWidget-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
+.NotificationWidget-table /deep/ .NotificationWidget-tableTD {
   vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
 }
 </style>

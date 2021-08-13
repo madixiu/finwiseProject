@@ -1,20 +1,22 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
+  <div>
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         گزارش ماهیانه
         <b-spinner class="titleHeaders" type="grow" small></b-spinner>
       </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="type == 'bank'">
+    </div> -->
+
+    <!--//? گزارش تسهیلات -->
+    <v-sheet rounded="lg" elevation="6" height="100%" v-if="type == 'bank'">
       <v-tabs
-        background-color="#1e1e2d"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -26,7 +28,35 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                گزارش تسهیلات
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <b-table
+              class="MonthlyWidget-table"
+              thClass="MonthlyWidget-tableHeader"
+              tbody-tr-class="MonthlyWidget-table-row"
+              small
+              hover
+              :responsive="true"
+              :items="filteredItems"
+              :fields="headersfacility"
+            ></b-table>
+          </v-card>
+
+          <!-- <v-tabs
             vertical
             background-color="#212529 "
             color="#FFF"
@@ -299,17 +329,27 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div class="card-body d-flex flex-column" v-if="type == 'insurance'">
+    </v-sheet>
+
+    <!--//? گزارش فعالیت بیمه -->
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'insurance'"> -->
+    <v-sheet
+      rounded="lg"
+      elevation="6"
+      height="100%"
+      v-if="type == 'insurance'"
+    >
       <v-tabs
-        background-color="#1e1e2d"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -321,7 +361,137 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                گزارش فعالیت بیمه
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <b-table
+              class="MonthlyWidget-table"
+              thClass="MonthlyWidget-tableHeader"
+              tbody-tr-class="MonthlyWidget-table-row"
+              small
+              hover
+              :responsive="true"
+              :items="filteredItems"
+              :fields="heaadersInsurance"
+            >
+              <template #cell(PreviousPeriods_IssuedInsurance_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousPeriods_IssuedInusrance_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousPeriods_DamageRepaid_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Modification_IssuedInsurance_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Modification_DamageRepaid_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousModified_IssuedInsurance_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousModified_IssuedInusrance_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousModified_DamageRepaid_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PreviousModified_DamageRepaid_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(ThisPeriod_IssuedInsurance_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(ThisPeriod_IssuedInusrance_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(ThisPeriod_DamageRepaid_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(ThisPeriod_DamageRepaid_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Total_IssuedInsurance_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Total_IssuedInusrance_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Total_DamageRepaid_Amount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(Total_DamageRepaid_Share)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+            </b-table>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#212529"
             color="#FFF"
@@ -535,17 +705,27 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div class="card-body d-flex flex-column" v-if="type == 'production'">
+    </v-sheet>
+
+    <!--//? گزارش تولید و فروش -->
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'production'"> -->
+    <v-sheet
+      rounded="lg"
+      elevation="6"
+      height="100%"
+      v-if="type == 'production'"
+    >
       <v-tabs
-        background-color="#1e1e2d"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -557,7 +737,170 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                گزارش تولید و فروش
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <b-table
+              class="MonthlyWidget-table"
+              thClass="MonthlyWidget-tableHeader"
+              tbody-tr-class="MonthlyWidget-table-row"
+              small
+              hover
+              :responsive="true"
+              :items="filteredItems"
+              :fields="headersProduction"
+            >
+              <template #cell(category)="data">
+                <span>{{ categoryProduct(data.value) }} </span>
+              </template>
+              <template #cell(totalProductionPeriod)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(totalSalePeriod)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(saleAmountPeriod)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(totalProductionYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(totalSaleYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(saleRateYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(saleAmountYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prevTotalProductionYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prevTotalSalesYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prevTotalSalesRateYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prevTotalSalesAmountYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(modification_Production)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(modification_Sales)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(modification_SalesAmount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prev_modified_TotalProduction)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prev_modified_TotalSales)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prev_modified_TotalSalesRate)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(prev_modified_TotalSalesAmount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(lastyear_Production)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(lastyear_saleCount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(lastyear_saleRate)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(lastyear_saleAmount)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+            </b-table>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#212529"
             color="#FFF"
@@ -597,7 +940,7 @@
                   </template>
                   <template v-slot:[`item.status`]="{ item }">
                     <span class="cellItem"
-                      >{{ numberWithCommas(item.status) }}
+                      >{{ numberWithCommas(item.statusdata.value.toLocaleString()}}
                     </span>
                   </template>
                   <template v-slot:[`item.unit`]="{ item }">
@@ -733,18 +1076,22 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
+    </v-sheet>
 
-    <div class="card-body d-flex flex-column" v-if="type == 'leasing'">
+    <!--//? هزینه ها -->
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'leasing'"> -->
+    <v-sheet rounded="lg" elevation="6" height="100%" v-if="type == 'leasing'">
       <v-tabs
-        background-color="#1e1e2d"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -756,7 +1103,56 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                هزینه و درآمد
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  هزینه ها
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems"
+                :fields="headersLeasingCost"
+              ></b-table>
+            </v-card>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  درآمدها
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems2"
+                :fields="headersLeasingRevenue"
+              ></b-table>
+            </v-card>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#212529"
             color="#FFF"
@@ -851,60 +1247,26 @@
                     </span>
                   </template>
                 </v-data-table>
-                <!-- <div class="card-header border-0">
-                  <h4 class="card-title font-weight-bolder FinancialStrength">
-                    گزارش تولید و فروش
-                  </h4>
-                </div>
-               
-                <v-data-table
-                  :headers="headersLeasingDelegated"
-                  :items="filteredItems3"
-                  class="elevation-1 FinancialStrength itemFilters"
-                  :header-props="{ sortIcon: null }"
-                  :disable-sort="true"
-                  hide-default-footer
-                  disable-pagination
-                  loading
-                  loading-text="در حال بارگزاری"
-                >
-                  <template v-slot:[`item.toDate`]="{ item }">
-                    <span class="cellItem">{{ item.toDate }} </span>
-                  </template>
-                  <template v-slot:[`item.status`]="{ item }">
-                    <span class="cellItem"
-                      >{{ numberWithCommas(item.status) }}
-                    </span>
-                  </template>
-                  <template v-slot:[`item.unit`]="{ item }">
-                    <span class="cellItem"
-                      >{{ numberWithCommas(item.unit) }}
-                    </span>
-                  </template>
-                  <template v-slot:[`item.category`]="{ item }">
-                    <span class="FinancialStrength"
-                      >{{ categoryProduct(item.category) }}
-                    </span>
-                  </template>
-                  <template v-slot:[`item.totalProductionPeriod`]="{ item }">
-                    <span class="cellItem"
-                      >{{ numberWithCommas(item.totalProductionPeriod) }}
-                    </span>
-                  </template>
-                </v-data-table> -->
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div class="card-body d-flex flex-column" v-if="type == 'service'">
+    </v-sheet>
+
+    <!--//? گزارش درآمد خدمات -->
+
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'service'"> -->
+
+    <v-sheet rounded="lg" elevation="6" height="100%" v-if="type == 'service'">
       <v-tabs
-        background-color="#1e1e2d"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -916,7 +1278,77 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                گزارش درآمد خدمات
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <b-table
+              class="MonthlyWidget-table"
+              thClass="MonthlyWidget-tableHeader"
+              tbody-tr-class="MonthlyWidget-table-row"
+              small
+              hover
+              :responsive="true"
+              :items="filteredItems"
+              :fields="headersService"
+            >
+              <template #cell(RevenueUntilStartOfPeriod)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(ModificationToStart)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(TotalYearToStartOfPeriodModified)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(TotalYearIncludingThisPeriod)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(TotalRevLastYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PredictionRevenueYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+              <template #cell(PredictionCostYear)="data">
+                <span v-if="data.value != null || data.value != ''"
+                  >{{ data.value.toLocaleString() }}
+                </span>
+                <span v-else>-</span>
+              </template>
+            </b-table>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#212529"
             color="#FFF"
@@ -983,13 +1415,6 @@
                       }}
                     </span>
                   </template>
-                  <!-- <template
-                    v-slot:[`item.RevenueUntilStartOfPeriod`]="{ item }"
-                  >
-                    <span class="cellItem"
-                      >{{ numberWithCommas(item.RevenueUntilStartOfPeriod) }}
-                    </span>
-                  </template> -->
                   <template
                     v-slot:[`item.TotalYearIncludingThisPeriod`]="{ item }"
                   >
@@ -1018,17 +1443,28 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div class="card-body d-flex flex-column" v-if="type == 'investment'">
+    </v-sheet>
+
+    <!--//? سهام تحصیل شده -->
+
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'investment'"> -->
+    <v-sheet
+      rounded="lg"
+      elevation="6"
+      height="100%"
+      v-if="type == 'investment'"
+    >
       <v-tabs
-        background-color="#212529"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -1039,7 +1475,156 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                پورتفوی
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+
+            <!--//! here -->
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  سهام تحصیل شده
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems"
+                :fields="headesInvestTransIn"
+              >
+                <template #cell(in_TotalOtcCost)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(in_shareCount)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(in_shareCost)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(in_TotalpublicCost)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+              </b-table>
+            </v-card>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  سهام واگذار شده
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems2"
+                :fields="headesInvestTransOut"
+              >
+                <template #cell(out_shareCount)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(out_shareCost)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(out_TotalCost)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(out_shareSellValue)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(out_TotalSellValue)="data">
+                  <span v-if="data.value != null || data.value != ''"
+                    >{{ data.value.toLocaleString() }}
+                  </span>
+                  <span v-else>-</span>
+                </template>
+                <template #cell(Out_net)="data">
+                  <span v-if="data.value == null || data.value == ''">- </span>
+                  <span
+                    v-else-if="data.value < 0"
+                    style="color:red"
+                    dir="ltr"
+                    >{{ data.value.toLocaleString() }}</span
+                  >
+                  <span v-else>{{ data.value.toLocaleString() }}</span>
+                </template>
+              </b-table>
+            </v-card>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  خلاصه
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems3"
+                :fields="headesInvestPortfo"
+              ></b-table>
+            </v-card>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  پورتفوی سرمایه گذاری
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems4"
+                :fields="headesInvestSummary"
+              ></b-table>
+            </v-card>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#1A237E"
             color="#FFF"
@@ -1119,18 +1704,28 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
+    </v-sheet>
 
-    <div class="card-body d-flex flex-column" v-if="type == 'construction'">
+    <!--//? گزارش پروژه های فروخته -->
+    <!-- <div class="card-body d-flex flex-column" v-if="type == 'construction'"> -->
+
+    <v-sheet
+      rounded="lg"
+      elevation="6"
+      height="100%"
+      v-if="type == 'construction'"
+    >
       <v-tabs
-        background-color="#212529"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -1142,7 +1737,56 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                گزارش های پروژه
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  گزارش پروژه های فروخته
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems"
+                :fields="headersconstructionSold"
+              ></b-table>
+            </v-card>
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  گزارش پروژه های جاری
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="MonthlyWidget-table"
+                thClass="MonthlyWidget-tableHeader"
+                tbody-tr-class="MonthlyWidget-table-row"
+                small
+                hover
+                :items="filteredItems2"
+                :fields="headersconstructionOngoing"
+              ></b-table>
+            </v-card>
+          </v-card>
+          <!-- <v-tabs
             vertical
             background-color="#212529"
             color="#FFF"
@@ -1406,28 +2050,25 @@
                 </v-data-table>
               </div>
             </v-tab-item>
-          </v-tabs>
+          </v-tabs> -->
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div
+    </v-sheet>
+    <!-- <div
       class="card-body d-flex flex-column"
       v-if="type == '' && loading == false"
     >
       <span class="rtl_centerd">دیتا برای نمایش وجود ندارد</span>
-    </div>
+    </div> -->
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "MonthlyWidget",
   props: ["notices", "deposits", "portfos", "summaries", "typeOf"],
   data() {
     return {
-      search: "",
       loading: true,
       type: "",
       todates: [],
@@ -1436,104 +2077,126 @@ export default {
       selectedYear: "",
       headersLeasingCost: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "عنوان",
-          value: "itemTitle"
+          label: "عنوان",
+          key: "itemTitle",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "هزینه های دوره",
-          value: "thisPeriod_Achievedcost"
+          label: "هزینه های دوره",
+          key: "thisPeriod_Achievedcost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "هزینه ها از شروع سال مالی",
-          value: "Total_Achievedcost"
+          label: "هزینه ها از شروع سال مالی",
+          key: "Total_Achievedcost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تسهیلات اخذ شده دوره",
-          value: "thisPeriod_TakenFacilityRemaind"
+          label: "تسهیلات اخذ شده دوره",
+          key: "thisPeriod_TakenFacilityRemaind",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تهسیلات اخذ شده سال مالی",
-          value: "Total_TakenFacilityRemained"
+          label: "تهسیلات اخذ شده سال مالی",
+          key: "Total_TakenFacilityRemained",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headersLeasingRevenue: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "عنوان",
-          value: "itemTitle"
+          label: "عنوان",
+          key: "itemTitle",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درآمد دوره",
-          value: "thisPeriodAmount"
+          label: "درآمد دوره",
+          key: "thisPeriodAmount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درآمد کل سال مالی",
-          value: "TotalAmount"
+          label: "درآمد کل سال مالی",
+          key: "TotalAmount",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headersfacility: [
         {
-          text: "منتهی به",
-          value: "toDate"
-        },
-        // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
-        // },
-        {
-          text: "عنوان",
-          value: "title"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مانده اول دوره تسهیلات",
-          value: "StartPeriod_RemainingFacility"
+          label: "عنوان",
+          key: "title",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "اصلاحات",
-          value: "StartPeriod_RemainingFacility_modifications"
+          label: "مانده اول دوره تسهیلات",
+          key: "StartPeriod_RemainingFacility",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مانده اول دوره تسهیلات- اصلاح شده",
-          value: "StartPeriod_RemainingFacility_modified"
+          label: "اصلاحات",
+          key: "StartPeriod_RemainingFacility_modifications",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تسهیلات اعطایی طی دوره",
-          value: "thisPeriod_IssuedFacilitiy"
+          label: "مانده اول دوره تسهیلات- اصلاح شده",
+          key: "StartPeriod_RemainingFacility_modified",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تسهیلات وصولی طی دوره",
-          value: "thisPeriod_SetteledFacility"
+          label: "تسهیلات اعطایی طی دوره",
+          key: "thisPeriod_IssuedFacilitiy",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مانده تسهیلات اعطایی پایان دوره",
-          value: "EnePeriod_RemainingFacility"
+          label: "تسهیلات وصولی طی دوره",
+          key: "thisPeriod_SetteledFacility",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درآمد تسهیلات از ابتدای سال مالی تا ابتدای دوره",
-          value: "PreviousPeriods_RevenueFromFacility"
+          label: "مانده تسهیلات اعطایی پایان دوره",
+          key: "EnePeriod_RemainingFacility",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "اصلاحات",
-          value: "PreviousPeriods_RevenueFromFacility_modification"
+          label: "درآمد تسهیلات از ابتدای سال مالی تا ابتدای دوره",
+          key: "PreviousPeriods_RevenueFromFacility",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درآمد تسهیلات از ابتدای سال مالی تا ابتدای دوره -اصلاح شده",
-          value: "PreviousPeriods_RevenueFromFacility_modified"
+          label: "اصلاحات",
+          key: "PreviousPeriods_RevenueFromFacility_modification",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: " درآمد تسهیلات اعطایی در طی دوره گزارش",
-          value: "thisPeriod_RevenueFromFacility"
+          label: "درآمد تسهیلات از ابتدای سال مالی تا ابتدای دوره -اصلاح شده",
+          key: "PreviousPeriods_RevenueFromFacility_modified",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "جمع درآمد تسهیلات از ابتدای سال مالی تا پایان دوره گزارش",
-          value: "thisYear_RevenueFromFacility"
+          label: " درآمد تسهیلات اعطایی در طی دوره گزارش",
+          key: "thisPeriod_RevenueFromFacility",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "جمع درآمد تسهیلات از ابتدای سال مالی تا پایان دوره گزارش",
+          key: "thisYear_RevenueFromFacility",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
       headersdeposit: [
@@ -1598,637 +2261,821 @@ export default {
       ],
       heaadersInsurance: [
         {
-          text: "منتهی به",
-          value: "toDate"
-        },
-        // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
-        // },
-        // {
-        //   text: "عنوان",
-        //   value: "title"
-        // },
-        {
-          text: "رشته بیمه ای",
-          value: "InsuranceField"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "حق بیمه صادره از ابتدای سال تا ابتدای دوره - مبلغ",
-          value: "PreviousPeriods_IssuedInsurance_Amount"
+          label: "رشته بیمه ای",
+          key: "InsuranceField",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "حق بیمه صادره از ابتدای سال تا ابتدای دوره- سهم (درصد)",
-          value: "PreviousPeriods_IssuedInusrance_Share"
+          label: "حق بیمه صادره از ابتدای سال تا ابتدای دوره - مبلغ",
+          key: "PreviousPeriods_IssuedInsurance_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "خسارت پرداختی از ابتدای سال تا ابتدای دوره - مبلغ",
-          value: "PreviousPeriods_DamageRepaid_Amount"
+          label: "حق بیمه صادره از ابتدای سال تا ابتدای دوره- سهم (درصد)",
+          key: "PreviousPeriods_IssuedInusrance_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "خسارت پرداختی از ابتدای سال تا ابتدای دوره-سهم (درصد)",
-          value: "PreviousPeriods_DamageRepaid_Amount"
+          label: "خسارت پرداختی از ابتدای سال تا ابتدای دوره - مبلغ",
+          key: "PreviousPeriods_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "اصلاحات حق بیمه صادره - تا ابتدای دوره - مبلغ",
-          value: "Modification_IssuedInsurance_Amount"
+          label: "خسارت پرداختی از ابتدای سال تا ابتدای دوره-سهم (درصد)",
+          key: "PreviousPeriods_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "اصلاحات خسارت پرداختی تا ابتدای دوره -مبلغ",
-          value: "Modification_DamageRepaid_Amount"
+          label: "اصلاحات حق بیمه صادره - تا ابتدای دوره - مبلغ",
+          key: "Modification_IssuedInsurance_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "حق بیمه صادره اصلاح شده -تا ابتدای دوره-مبلغ",
-          value: "PreviousModified_IssuedInsurance_Amount"
+          label: "اصلاحات خسارت پرداختی تا ابتدای دوره -مبلغ",
+          key: "Modification_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "حق بیمه صادره اصلاح شده تا ابتدای دوره-درصد",
-          value: "PreviousModified_IssuedInusrance_Share"
+          label: "حق بیمه صادره اصلاح شده -تا ابتدای دوره-مبلغ",
+          key: "PreviousModified_IssuedInsurance_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "خسارت پرداختی اصلاح شده تا ابتدای دوره -مبلغ",
-          value: "PreviousModified_DamageRepaid_Amount"
+          label: "حق بیمه صادره اصلاح شده تا ابتدای دوره-درصد",
+          key: "PreviousModified_IssuedInusrance_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "خسارت پرداختی اصلاح شده تا ابتدای دوره - سهم",
-          value: "PreviousModified_DamageRepaid_Share"
+          label: "خسارت پرداختی اصلاح شده تا ابتدای دوره -مبلغ",
+          key: "PreviousModified_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "حق بیمه صادره دوره - مبلغ",
-          value: "ThisPeriod_IssuedInsurance_Amount"
+          label: "خسارت پرداختی اصلاح شده تا ابتدای دوره - سهم",
+          key: "PreviousModified_DamageRepaid_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "200px" }
         },
         {
-          text: "حق بیمه صادره دوره - سهم",
-          value: "ThisPeriod_IssuedInusrance_Share"
+          label: "حق بیمه صادره دوره - مبلغ",
+          key: "ThisPeriod_IssuedInsurance_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "خسارت پرداختی دوره -مبلغ",
-          value: "ThisPeriod_DamageRepaid_Amount"
+          label: "حق بیمه صادره دوره - سهم",
+          key: "ThisPeriod_IssuedInusrance_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "خسارت پرداختی دوره -درصد",
-          value: "ThisPeriod_DamageRepaid_Share"
+          label: "خسارت پرداختی دوره -مبلغ",
+          key: "ThisPeriod_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "حق بیمه صادره کل سال - مبلغ",
-          value: "Total_IssuedInsurance_Amount"
+          label: "خسارت پرداختی دوره -درصد",
+          key: "ThisPeriod_DamageRepaid_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "حق بیمه صادره کل سال -سهم",
-          value: "Total_IssuedInusrance_Share"
+          label: "حق بیمه صادره کل سال - مبلغ",
+          key: "Total_IssuedInsurance_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "خسارت پرداختی کل سال -مبلغ",
-          value: "Total_DamageRepaid_Amount"
+          label: "حق بیمه صادره کل سال -سهم",
+          key: "Total_IssuedInusrance_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         },
         {
-          text: "خسارت پرداختی کل سال -درصد",
-          value: "Total_DamageRepaid_Share"
+          label: "خسارت پرداختی کل سال -مبلغ",
+          key: "Total_DamageRepaid_Amount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
+        },
+        {
+          label: "خسارت پرداختی کل سال -درصد",
+          key: "Total_DamageRepaid_Share",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
         }
       ],
+
       headersconstructionSold: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm"
         // },
         {
-          text: "عنوان پروژه",
-          value: "projectName"
+          label: "عنوان پروژه",
+          key: "projectName",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "موقعیت پروژه",
-          value: "Location"
+          label: "موقعیت پروژه",
+          key: "Location",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "نوع پروژه",
-          value: "typeOfProject"
+          label: "نوع پروژه",
+          key: "typeOfProject",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "واحد",
-          value: "projectUnit"
+          label: "واحد",
+          key: "projectUnit",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده فروش در ماه جاری",
-          value: "thisMonth_Cost"
+          label: "بهای تمام شده فروش در ماه جاری",
+          key: "thisMonth_Cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "متراژ فروش ماه جاری",
-          value: "thisMonth_MeterSold"
+          label: "متراژ فروش ماه جاری",
+          key: "thisMonth_MeterSold",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "نرخ فروش در ماه جاری",
-          value: "thisMonth_SaleRate"
+          label: "نرخ فروش در ماه جاری",
+          key: "thisMonth_SaleRate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مبلغ فروش ماه جاری",
-          value: "thisMonth_SaleAmount"
+          label: "مبلغ فروش ماه جاری",
+          key: "thisMonth_SaleAmount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده شناسایی شده ",
-          value: "FromBefore_Cost"
+          label: "بهای تمام شده شناسایی شده ",
+          key: "FromBefore_Cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درآمد شناسایی شده",
-          value: "FromBefore_Revenue"
+          label: "درآمد شناسایی شده",
+          key: "FromBefore_Revenue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده از ابتدای سال مالی تا پایان دوره",
-          value: "TotalYear_Cost"
+          label: "بهای تمام شده از ابتدای سال مالی تا پایان دوره",
+          key: "TotalYear_Cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "متراژ فروش کل سال",
-          value: "TotalYear_MeterSold"
+          label: "متراژ فروش کل سال",
+          key: "TotalYear_MeterSold",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "نرخ فروش کل سال",
-          value: "TotalYear_SaleRate"
+          label: "نرخ فروش کل سال",
+          key: "TotalYear_SaleRate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مبلغ فروش",
-          value: "TotalYear_SaleAmount"
+          label: "مبلغ فروش",
+          key: "TotalYear_SaleAmount",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headersconstructionOngoing: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm"
         // },
         {
-          text: "عنوان پروژه",
-          value: "projectName"
+          label: "عنوان پروژه",
+          key: "projectName",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "موقعیت پروژه",
-          value: "Location"
+          label: "موقعیت پروژه",
+          key: "Location",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "نوع پروژه",
-          value: "typeOfProject"
+          label: "نوع پروژه",
+          key: "typeOfProject",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درصد مالکیت",
-          value: "Ownership"
+          label: "درصد مالکیت",
+          key: "Ownership",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "واحد",
-          value: "projectUnit"
+          label: "واحد",
+          key: "projectUnit",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "زیر بنای مفید",
-          value: "NetMeter"
+          label: "زیر بنای مفید",
+          key: "NetMeter",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درصد پیشرفت فیزیکی در انتهای ماه قبل",
-          value: "lastMonth_physicalProgress"
+          label: "درصد پیشرفت فیزیکی در انتهای ماه قبل",
+          key: "lastMonth_physicalProgress",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مبلغ بهای تمام شده در انتهای ماه قبل",
-          value: "lastMonth_Cost"
+          label: "مبلغ بهای تمام شده در انتهای ماه قبل",
+          key: "lastMonth_Cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "برآورد هزینه های مانده در انتهای ماه قبل",
-          value: "lastMonth_EstimationOfRemainingCost"
+          label: "برآورد هزینه های مانده در انتهای ماه قبل",
+          key: "lastMonth_EstimationOfRemainingCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مبلغ بهای تمام شده برآوردی در انتهای ماه قبل",
-          value: "lastMonth_EstmiatedTotalCost"
+          label: "مبلغ بهای تمام شده برآوردی در انتهای ماه قبل",
+          key: "lastMonth_EstmiatedTotalCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "متراژ پروژه های فروش رفته در طی ماه",
-          value: "SoldProjectsDuringMonth_meter"
+          label: "متراژ پروژه های فروش رفته در طی ماه",
+          key: "SoldProjectsDuringMonth_meter",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده پروژه های فروش رفته طی ماه",
-          value: "SoldProjectsDuringMonth_cost"
+          label: "بهای تمام شده پروژه های فروش رفته طی ماه",
+          key: "SoldProjectsDuringMonth_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درصد پیشرفت فیزیکی در پایان ماه",
-          value: "thisMonth_physicalProgress"
+          label: "درصد پیشرفت فیزیکی در پایان ماه",
+          key: "thisMonth_physicalProgress",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده در پایان ماه",
-          value: "thisMonth_cost"
+          label: "بهای تمام شده در پایان ماه",
+          key: "thisMonth_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "برآورد هزینه های تکمیل در پایان ماه",
-          value: "thisMonth_EstimationRemainingCost"
+          label: "برآورد هزینه های تکمیل در پایان ماه",
+          key: "thisMonth_EstimationRemainingCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مبلغ بهای تمام شده برآوردی در پایان ماه",
-          value: "thisMonth_EsitmatedTotalCost"
+          label: "مبلغ بهای تمام شده برآوردی در پایان ماه",
+          key: "thisMonth_EsitmatedTotalCost",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headesInvestTransIn: [
         {
-          text: "منتهی به",
-          value: "toDate"
-        },
-        // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
-        // },
-        {
-          text: "خریداری شده",
-          value: "in_firm"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد سهم خریداری شده",
-          value: "in_shareCount"
+          label: "خریداری شده",
+          key: "in_firm",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده هر سهم ",
-          value: "in_shareCost"
+          label: "تعداد سهم خریداری شده",
+          key: "in_shareCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "کل مبلغ تمام شده پذیرفته شده در بورس",
-          value: "in_TotalpublicCost"
+          label: "بهای تمام شده هر سهم ",
+          key: "in_shareCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "کل مبلغ بهای تمام شده خارج از بورس",
-          value: "in_TotalOtcCost"
+          label: "کل مبلغ تمام شده پذیرفته شده در بورس",
+          key: "in_TotalpublicCost",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "کل مبلغ بهای تمام شده خارج از بورس",
+          key: "in_TotalOtcCost",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headesInvestTransOut: [
         {
-          text: "منتهی به",
-          value: "toDate"
-        },
-        // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
-        // },
-        {
-          text: "واگذار شده",
-          value: "out_firm"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد سهم واگذار شده",
-          value: "out_shareCount"
+          label: "واگذار شده",
+          key: "out_firm",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده هر سهم ",
-          value: "out_shareCost"
+          label: "تعداد سهم واگذار شده",
+          key: "out_shareCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "کل مبلغ تمام شده",
-          value: "out_TotalCost"
+          label: "بهای تمام شده هر سهم ",
+          key: "out_shareCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: " قیمت واگذاری هر سهم",
-          value: "out_shareSellValue"
+          label: "کل مبلغ تمام شده",
+          key: "out_TotalCost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "کل مبلغ واگذاری",
-          value: "out_TotalSellValue"
+          label: " قیمت واگذاری هر سهم",
+          key: "out_shareSellValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "سود (زیان ) واگذاری",
-          value: "Out_net"
+          label: "کل مبلغ واگذاری",
+          key: "out_TotalSellValue",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "سود (زیان ) واگذاری",
+          key: "Out_net",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headesInvestPortfo: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm"
         // },
         {
-          text: "نوع شرکت",
-          value: "typeOfCompany"
+          label: "نوع شرکت",
+          key: "typeOfCompany",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "شرکت",
-          value: "company"
+          label: "شرکت",
+          key: "company",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "سرمایه ",
-          value: "companyCapital"
+          label: "سرمایه ",
+          key: "companyCapital",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش اسمی هر سهم",
-          value: "companyshare_NominalValue"
+          label: "ارزش اسمی هر سهم",
+          key: "companyshare_NominalValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: " تعداد سهم ابتدای دوره",
-          value: "start_companyShare"
+          label: " تعداد سهم ابتدای دوره",
+          key: "start_companyShare",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده ابتدای دوره",
-          value: "start_cost"
+          label: "بهای تمام شده ابتدای دوره",
+          key: "start_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش بازار ابتدای دوره",
-          value: "start_sharesMarketValue"
+          label: "ارزش بازار ابتدای دوره",
+          key: "start_sharesMarketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تغییرات تعداد سهام طی دوره",
-          value: "changes_companyShare"
+          label: "تغییرات تعداد سهام طی دوره",
+          key: "changes_companyShare",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تغییرات بهای تمام شده طی دوره",
-          value: "changes_cost"
+          label: "تغییرات بهای تمام شده طی دوره",
+          key: "changes_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تغییرات ارزش بازار طی دوره",
-          value: "changes_sharesMarketValue"
+          label: "تغییرات ارزش بازار طی دوره",
+          key: "changes_sharesMarketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "درصد مالکیت انتهای دوره",
-          value: "end_ownPercentage"
+          label: "درصد مالکیت انتهای دوره",
+          key: "end_ownPercentage",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده انتهای دوره",
-          value: "end_costperShare"
+          label: "بهای تمام شده انتهای دوره",
+          key: "end_costperShare",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "کل مبلغ واگذاری",
-          value: "end_costTotal"
+          label: "کل مبلغ واگذاری",
+          key: "end_costTotal",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش بازار انتهای دوره",
-          value: "end_MarketValue"
+          label: "ارزش بازار انتهای دوره",
+          key: "end_MarketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش هر سهم انتهای دوره",
-          value: "end_valueperShare"
+          label: "ارزش هر سهم انتهای دوره",
+          key: "end_valueperShare",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "افزایش (کاهش) انتهای دوره",
-          value: "end_TotalChange"
+          label: "افزایش (کاهش) انتهای دوره",
+          key: "end_TotalChange",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
+
       headesInvestSummary: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm"
         // },
         {
-          text: "صنعت",
-          value: "industry"
+          label: "صنعت",
+          key: "industry",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد شرکت های بورسی",
-          value: "public_start_companyCount"
+          label: "تعداد شرکت های بورسی",
+          key: "public_start_companyCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده شرکت های بورسی ابتدای دوره ",
-          value: "public_start_cost"
+          label: "بهای تمام شده شرکت های بورسی ابتدای دوره ",
+          key: "public_start_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش بازار شرکت های بورسی در ابتدای دوره",
-          value: "public_start_marketValue"
+          label: "ارزش بازار شرکت های بورسی در ابتدای دوره",
+          key: "public_start_marketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: " تغییرات ارزش بازار شرکت های بورسی",
-          value: "public_changes_marketValue"
+          label: " تغییرات ارزش بازار شرکت های بورسی",
+          key: "public_changes_marketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد شرکت های بورسی در انتهای دوره",
-          value: "public_end_companyCount"
+          label: "تعداد شرکت های بورسی در انتهای دوره",
+          key: "public_end_companyCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده شرکتهای بورسی در انتهای دوره",
-          value: "public_end_cost"
+          label: "بهای تمام شده شرکتهای بورسی در انتهای دوره",
+          key: "public_end_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "ارزش بازار شرکت های بورسی در انتهای دوره",
-          value: "public_end_marketValue"
+          label: "ارزش بازار شرکت های بورسی در انتهای دوره",
+          key: "public_end_marketValue",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد شرکتهای غیر بورسی در ابتدای دوره",
-          value: "private_start_companyCount"
+          label: "تعداد شرکتهای غیر بورسی در ابتدای دوره",
+          key: "private_start_companyCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده شرکتهای غیر بورسی در ابتدای دوره",
-          value: "private_start_cost"
+          label: "بهای تمام شده شرکتهای غیر بورسی در ابتدای دوره",
+          key: "private_start_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تغییرات بهای تمام شده شرکتهای غیر بورسی ",
-          value: "private_changes_cost"
+          label: "تغییرات بهای تمام شده شرکتهای غیر بورسی ",
+          key: "private_changes_cost",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "تعداد شرکتهای غیر بورسی در انتهای دوره",
-          value: "private_end_companyCount"
+          label: "تعداد شرکتهای غیر بورسی در انتهای دوره",
+          key: "private_end_companyCount",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "بهای تمام شده شرکتهای غیر بورسی در انتهای دوره",
-          value: "private_end_cost"
+          label: "بهای تمام شده شرکتهای غیر بورسی در انتهای دوره",
+          key: "private_end_cost",
+          thClass: "MonthlyWidget-tableHeader"
         }
       ],
 
       headersProduction: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "20px" }
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm",
+        // thClass:"MonthlyWidget-tableHeader"
         // },
         {
-          text: "عنوان",
-          value: "name"
+          label: "عنوان",
+          key: "name",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "واحد",
-          value: "unit"
+          label: "واحد",
+          key: "unit",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "50px" }
         },
         {
-          text: "وضعیت",
-          value: "status"
+          label: "وضعیت",
+          key: "status",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "دسته بندی",
-          value: "category"
+          label: "دسته بندی",
+          key: "category",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "90px" }
         },
         {
-          text: "مجموع تولیدات دوره",
-          value: "totalProductionPeriod"
+          label: "مجموع تولیدات دوره",
+          key: "totalProductionPeriod",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "مجموع فروش دوره",
-          value: "totalSalePeriod"
+          label: "مجموع فروش دوره",
+          key: "totalSalePeriod",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "مبلغ فروش دوره",
-          value: "saleAmountPeriod"
-        },
-        { text: "تولید کل دوره", value: "totalProductionYear" },
-        { text: "فروش کل دوره", value: "totalSaleYear" },
-        { text: "نرخ فروش کل دوره", value: "saleRateYear" },
-        { text: "مبلغ فروش کل دوره", value: "saleAmountYear" },
-        {
-          text: "مجموع تولید تا ابتدای دوره",
-          value: "prevTotalProductionYear"
-        },
-        { text: "مجموع فروش تا ابتدای دوره", value: "prevTotalSalesYear" },
-        { text: "نرخ فروش تا ابتدای دوره", value: "prevTotalSalesRateYear" },
-        {
-          text: "مجموع مبلغ فروش تا ابتدای دوره",
-          value: "prevTotalSalesAmountYear"
-        },
-        { text: "اصلاحات تولید", value: "modification_Production" },
-        { text: "اصلاحات فروش", value: "modification_Sales" },
-        { text: "اصلاحات مبلغ", value: "modification_SalesAmount" },
-        {
-          text: "مجموع تولید تا ابتدای دوره-اصلاح شده",
-          value: "prev_modified_TotalProduction"
+          label: "مبلغ فروش دوره",
+          key: "saleAmountPeriod",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "مجموع فروش تا ابتدای دوره- اصلاح شده",
-          value: "prev_modified_TotalSales"
+          label: "تولید کل دوره",
+          key: "totalProductionYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "نرخ فروش تا ابتدای دوره- اصلاح شده",
-          value: "prev_modified_TotalSalesRate"
+          label: "فروش کل دوره",
+          key: "totalSaleYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "مبلغ فروش تا ابتدای دوره- اصلاح شده",
-          value: "prev_modified_TotalSalesAmount"
+          label: "نرخ فروش کل دوره",
+          key: "saleRateYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
+        },
+        {
+          label: "مبلغ فروش کل دوره",
+          key: "saleAmountYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
+        },
+        {
+          label: "مجموع تولید تا ابتدای دوره",
+          key: "prevTotalProductionYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
+        },
+        {
+          label: "مجموع فروش تا ابتدای دوره",
+          key: "prevTotalSalesYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "120px" }
+        },
+        {
+          label: "نرخ فروش تا ابتدای دوره",
+          key: "prevTotalSalesRateYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
+        },
+        {
+          label: "مجموع مبلغ فروش تا ابتدای دوره",
+          key: "prevTotalSalesAmountYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
+        },
+        {
+          label: "اصلاحات تولید",
+          key: "modification_Production",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "اصلاحات فروش",
+          key: "modification_Sales",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "اصلاحات مبلغ",
+          key: "modification_SalesAmount",
+          thClass: "MonthlyWidget-tableHeader"
+        },
+        {
+          label: "مجموع تولید تا ابتدای دوره-اصلاح شده",
+          key: "prev_modified_TotalProduction",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "مجموع فروش تا ابتدای دوره- اصلاح شده",
+          key: "prev_modified_TotalSales",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "نرخ فروش تا ابتدای دوره- اصلاح شده",
+          key: "prev_modified_TotalSalesRate",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "مبلغ فروش تا ابتدای دوره- اصلاح شده",
+          key: "prev_modified_TotalSalesAmount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
 
         {
-          text: "تولید سال مالی فبل",
-          value: "lastyear_Production"
+          label: "تولید سال مالی فبل",
+          key: "lastyear_Production",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "تعداد فروش سال مالی قبل",
-          value: "lastyear_saleCount"
+          label: "تعداد فروش سال مالی قبل",
+          key: "lastyear_saleCount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
 
         {
-          text: "نرخ فروش سال مالی قبل",
-          value: "lastyear_saleRate"
+          label: "نرخ فروش سال مالی قبل",
+          key: "lastyear_saleRate",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         {
-          text: "مبلغ فروش سال مالی قبل",
-          value: "lastyear_saleAmount"
+          label: "مبلغ فروش سال مالی قبل",
+          key: "lastyear_saleAmount",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         }
       ],
+
       headersService: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "100px" }
         },
         // {
-        //   text: "شرکت گزارش دهنده",
-        //   value: "reported_firm"
+        //   label: "شرکت گزارش دهنده",
+        //   key: "reported_firm"
         // },
         {
-          text: "عنوان",
-          value: "name"
+          label: "عنوان",
+          key: "name",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "350px" }
         },
         {
-          text: "تاریخ عقد قرارداد",
-          value: "contractDate"
+          label: "تاریخ عقد قرارداد",
+          key: "contractDate",
+          thClass: "MonthlyWidget-tableHeader"
         },
         {
-          text: "مدت قرارداد",
-          value: "contract_Duration"
+          label: "مدت قرارداد",
+          key: "contract_Duration",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
         {
-          text: "درآمد تا ابتدای دوره",
-          value: "RevenueUntilStartOfPeriod"
+          label: "درآمد تا ابتدای دوره",
+          key: "RevenueUntilStartOfPeriod",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
         {
-          text: "اصلاحات تا ابتدای دوره",
-          value: "ModificationToStart"
+          label: "اصلاحات تا ابتدای دوره",
+          key: "ModificationToStart",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
         {
-          text: "درآمد از ابتدای سال - اصلاح شده",
-          value: "TotalYearToStartOfPeriodModified"
+          label: "درآمد از ابتدای سال - اصلاح شده",
+          key: "TotalYearToStartOfPeriodModified",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
         {
-          text: "درآمد کل سال",
-          value: "TotalYearIncludingThisPeriod"
+          label: "درآمد کل سال",
+          key: "TotalYearIncludingThisPeriod",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
         },
-        { text: "درآمد کل سال مالی قبل", value: "TotalRevLastYear" },
-        { text: "پیش بینی درآمد سال", value: "PredictionRevenueYear" },
-        { text: "پیش بینی هزینه های سال", value: "PredictionCostYear" },
         {
-          text: "توضیحات",
-          value: "ItemDesc"
+          label: "درآمد کل سال مالی قبل",
+          key: "TotalRevLastYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "پیش بینی درآمد سال",
+          key: "PredictionRevenueYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "پیش بینی هزینه های سال",
+          key: "PredictionCostYear",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "150px" }
+        },
+        {
+          label: "توضیحات",
+          key: "ItemDesc",
+          thClass: "MonthlyWidget-tableHeader",
+          thStyle: { "min-width": "350px" }
         }
-      ],
-      DataItems2: [],
-      DataItems3: [],
-      DataItems4: [],
-      DataItems5: []
+      ]
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
+    selectedDatesList() {
+      let items = [];
+      for (let item of this.todates) items.push(item.value);
+
+      return items;
+    },
     filteredItems() {
-      return this.DataItems2.filter(item => {
+      return this.notices.filter(item => {
         return item.toDate == this.selectedMonth;
       });
     },
     filteredItems2() {
-      return this.DataItems3.filter(item => {
+      return this.deposits.filter(item => {
         return item.toDate == this.selectedMonth;
       });
     },
     filteredItems3() {
-      return this.DataItems4.filter(item => {
+      return this.portfos.filter(item => {
         return item.toDate == this.selectedMonth;
       });
     },
     filteredItems4() {
-      return this.DataItems5.filter(item => {
+      return this.summaries.filter(item => {
         return item.toDate == this.selectedMonth;
       });
     }
   },
   methods: {
-    numberWithCommas(x) {
-      if (x === null) {
-        return "-";
-      }
-      if (x == 0) {
-        return "-";
-      }
-      if (x == "") {
-        return "-";
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
     categoryProduct(x) {
       if (x === null) {
         return "";
@@ -2253,17 +3100,10 @@ export default {
       }
       return "";
     },
-
-    populateData() {
-      this.DataItems2 = this.notices;
-      this.DataItems3 = this.deposits;
-      this.DataItems4 = this.portfos;
-      this.DataItems5 = this.summaries;
-    },
     gettabs() {
       var lookup = {};
       var lookup2 = {};
-      var items = this.DataItems2;
+      var items = this.notices;
       var result = [];
       var result2 = [];
       var counter = 0;
@@ -2292,7 +3132,7 @@ export default {
     },
     getOnesfromthisyear() {
       var lookup = {};
-      var items = this.DataItems2;
+      var items = this.notices;
       var result = [];
       var counter = 0;
       for (var item, i = 0; (item = items[i++]); ) {
@@ -2309,20 +3149,9 @@ export default {
       this.todates = result;
     },
     GetFiltered(selectedItem) {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
       this.selectedMonth = selectedItem;
     },
     GetFilteredYearly(selectedItem) {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
-
       this.selectedYear = selectedItem;
     },
     fillNewestMonth() {
@@ -2338,28 +3167,28 @@ export default {
     }
   },
   mounted() {
-    this.populateData();
+    // this.populateData();
     this.setType();
   },
   watch: {
     notices() {
-      this.populateData();
+      // this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
     },
     deposits() {
-      this.populateData();
+      // this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
     },
     portfos() {
-      this.populateData();
+      // this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
     },
     summaries() {
-      this.populateData();
+      // this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
     },
@@ -2374,30 +3203,51 @@ export default {
 };
 </script>
 <style scoped>
+.MonthlyWidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
+}
+.MonthlyWidget-table /deep/ .MonthlyWidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
+  text-align: center;
+  /* min-width: 200px; */
+}
+.MonthlyWidget-table /deep/ .ticker-assembly-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
+  text-align: center;
+}
+.vuetifySelectCustom /deep/ .v-input__control {
+  min-height: 25px !important;
+  height: 25px !important;
+}
+.vuetifySelectCustom /deep/ .v-input__control {
+  font-size: 0.7em !important;
+}
+.vuetifySelectCustom /deep/ .v-chip.v-size--small {
+  border-radius: 3px;
+  font-size: 10px;
+  height: 17px;
+}
+.vuetifySelectCustom /deep/ .v-chip .v-chip__close.v-icon {
+  font-size: 12px !important;
+}
+
 .cellItem {
   font-family: "Vazir-Light-FD";
 }
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
+
 .valign * {
   vertical-align: middle;
 }
 .redItem {
   color: #ef5350 !important;
 }
-.greenItem {
-  color: #088a2f93 !important;
-}
+
 .titleHeaders {
   padding: 5px;
   font-size: 1em;

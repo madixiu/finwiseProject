@@ -16,7 +16,8 @@ import {
   SET_BREADCRUMB_TITLE,
   ADD_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import Wizard from "@/view/pages/Ticker/AssemblyWidget/content/Wizard.vue";
 export default {
   name: "TickerAssemblyReport",

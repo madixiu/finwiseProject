@@ -129,7 +129,7 @@ export default {
 
     this.AdjustedHeader = [
       {
-        headerName: "تاریخ شمسی",
+        headerName: "تاریخ",
         field: "persiandate",
         sortable: true,
         maxWidth: 130,
@@ -159,6 +159,33 @@ export default {
         field: "engdate",
         sortable: true,
         hide: true
+      },
+      {
+        headerName: "تعداد معاملات",
+        field: "count",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "حجم معاملات",
+        field: "volume",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
+      },
+      {
+        headerName: "ارزش معاملات",
+        field: "value",
+        filter: "agNumberColumnFilter",
+        sortable: true,
+        cellRenderer: function(params) {
+          return params.value.toLocaleString();
+        }
       },
       {
         headerName: "پایین ترین قیمت",
@@ -210,6 +237,7 @@ export default {
         field: "yesterday",
         filter: "agNumberColumnFilter",
         sortable: true,
+        hide: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
@@ -219,6 +247,7 @@ export default {
         field: "adjustedhigh",
         filter: "agNumberColumnFilter",
         sortable: true,
+        hide: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
@@ -228,6 +257,7 @@ export default {
         field: "adjustedlow",
         filter: "agNumberColumnFilter",
         sortable: true,
+        hide: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
@@ -246,6 +276,7 @@ export default {
         field: "adjustedlast",
         filter: "agNumberColumnFilter",
         sortable: true,
+        hide: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }
@@ -255,33 +286,7 @@ export default {
         field: "adjustedfirst",
         filter: "agNumberColumnFilter",
         sortable: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "حجم معاملات",
-        field: "volume",
-        filter: "agNumberColumnFilter",
-        sortable: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "ارزش معاملات",
-        field: "value",
-        filter: "agNumberColumnFilter",
-        sortable: true,
-        cellRenderer: function(params) {
-          return params.value.toLocaleString();
-        }
-      },
-      {
-        headerName: "تعداد معاملات",
-        field: "count",
-        filter: "agNumberColumnFilter",
-        sortable: true,
+        hide: true,
         cellRenderer: function(params) {
           return params.value.toLocaleString();
         }

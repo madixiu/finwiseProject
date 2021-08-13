@@ -15,6 +15,10 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
+          <!--//! ATTENTION -->
+          <!--//? router path here -->
+
+          <!-- :to="`/ticker/Overview/Overall/${$route.params.id}/`" -->
           <router-link
             :to="`/ticker/Overview/Overall/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -29,7 +33,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">خلاصه سهم</span>
               </a>
             </li>
@@ -48,7 +52,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">پیام ناظر</span>
               </a>
             </li>
@@ -67,7 +71,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">اطلاعیه</span>
               </a>
             </li>
@@ -86,7 +90,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">تغییر وضعیت</span>
               </a>
             </li>
@@ -105,13 +109,16 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">حقیقی - حقوقی</span>
               </a>
             </li>
           </router-link> -->
+
+          <!--//! route here -->
+          <!-- :to="`/ticker/Overview/Board/${$route.params.id}/`" -->
           <router-link
-            :to="`/ticker/Overview/Board/${$route.params.id}/`"
+            :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -124,13 +131,16 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">هیئت مدیره</span>
+                <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
               </a>
             </li>
           </router-link>
+
+          <!-- :to="`/ticker/Overview/shareholders/${$route.params.id}/`" -->
           <router-link
-            :to="`/ticker/Overview/shareholders/${$route.params.id}/`"
+            :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -143,8 +153,9 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">سهامداران</span>
+                <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
               </a>
             </li>
           </router-link>
@@ -241,7 +252,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">نمودار پیشرفته</span>
               </a>
             </li>
@@ -260,13 +271,17 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">بررسی اندیکاتور ها</span>
               </a>
             </li>
           </router-link>
+          <!--//! ATTENTION -->
+          <!--//? router path here -->
+          <!-- :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`" -->
+
           <router-link
-            :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`"
+            :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li
@@ -279,8 +294,9 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">بررسی حمایت و مقاومت</span>
+                <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
               </a>
             </li>
           </router-link>
@@ -317,7 +333,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">تحلیل ماهیانه</span>
               </a>
             </li>
@@ -336,7 +352,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">گزارشات خام ماهیانه</span>
               </a>
             </li> </router-link
@@ -373,7 +389,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">تحلیل ترازنامه </span>
               </a>
             </li>
@@ -392,7 +408,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">ترازنامه</span>
               </a>
             </li>
@@ -411,7 +427,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">تحلیل صورت سود و زیان </span>
               </a>
             </li>
@@ -430,7 +446,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">صورت سود و زیان</span>
               </a>
             </li>
@@ -450,7 +466,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">صورت جریان نقدی</span>
               </a>
             </li>
@@ -546,7 +562,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">تقویم مجامع</span>
               </a>
             </li>
@@ -565,7 +581,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">گزارش جلسات</span>
               </a>
             </li>
@@ -584,7 +600,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">سود نقدی و افزایش سرمایه</span>
               </a>
             </li>
@@ -603,7 +619,7 @@
               ]"
             >
               <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <i class="menu-bullet menu-bullet-dot"></i>
                 <span class="menu-text">افزایش سرمایه</span>
               </a>
             </li>
