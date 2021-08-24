@@ -1,109 +1,76 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
+  <v-card rounded="lg">
+    <v-toolbar elevation="1" dense style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em">
         سود نقدی
-      </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="loading">
-      <v-skeleton-loader
-        type=" table-heading, table-thead, table-tbody"
-      ></v-skeleton-loader>
-    </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="this.DataItems2.length != 0 && loading == false"
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-col class="d-flex justify-content-end" cols="3">
+        <v-select
+          class="vuetifySelectCustom flex-grow-1"
+          :items="years"
+          v-model="year"
+          solo-inverted
+          dense
+        ></v-select>
+      </v-col>
+    </v-toolbar>
+    <v-skeleton-loader
+      v-if="loading"
+      height="100px"
+      type=" table-heading, table-thead, table-tbody"
+    ></v-skeleton-loader>
+    <b-table
+      v-if="!loading"
+      class="AssemblyDPSwidget-table"
+      thClass="AssemblyDPSwidget-tableHeader"
+      tbody-tr-class="AssemblyDPSwidget-table-row"
+      small
+      hover
+      :items="filteredItems(year)"
+      :fields="headers"
     >
-      <div v-for="year in years" :key="year.key">
-        <v-subheader>
-          {{ year }}
-        </v-subheader>
-        <v-data-table
-          v-if="loading == false"
-          :headers="headers"
-          :items="filteredItems(year)"
-          class="elevation-1 FinancialStrength"
-          :header-props="{ sortIcon: null }"
-          :disable-sort="true"
-          hide-default-footer
-          disable-pagination
-        >
-        </v-data-table>
-      </div>
-    </div>
-    <!--end::Body-->
-  </div>
-  <!--end::Mixed Widget 14-->
+    </b-table>
+  </v-card>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
-  name: "AssemblyDPS",
   props: ["notices"],
   data() {
     return {
-      search: "",
+      year: "",
       loading: true,
-      inset: true,
-      items: [
-        {
-          action: "mdi-label",
-          title: "List item 1"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 2"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 3"
-        }
-      ],
       headers: [
         {
-          text: "منتهی به",
-          value: "ToDate"
+          label: "منتهی به",
+          key: "ToDate",
+          thClass: "AssemblyDPSwidget-tableHeader"
         },
         {
-          text: "عنوان",
-          value: "Title"
+          label: "عنوان",
+          key: "Title",
+          thClass: "AssemblyDPSwidget-tableHeader"
         },
         {
-          text: "مقدار ریالی",
-          value: "Value"
+          label: "مقدار ریالی",
+          key: "Value",
+          thClass: "AssemblyDPSwidget-tableHeader"
         }
-      ],
-      DataItems2: [],
-      years: [],
-      filtered: []
+      ]
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     filteredItems(value) {
-      return this.DataItems2.filter(item => {
+      return this.notices.filter(item => {
         return item.ToDate.normalize("NFC") == value.normalize("NFC");
       });
-    },
-    populateData() {
-      this.DataItems2 = this.notices;
-    },
-    setYears() {
+    }
+  },
+  computed: {
+    years() {
       let lookup = {};
-      let items = this.DataItems2;
+      let items = this.notices;
       let result = [];
       for (let item, i = 0; (item = items[i++]); ) {
         let name = item.ToDate;
@@ -115,59 +82,61 @@ export default {
       }
       result.sort();
       result.reverse();
-      let result2 = {};
-      let items2 = result;
-      let counter = 0;
-      for (let item, i = 0; (item = items2[i++]); ) {
-        let name = item;
-        result2[counter] = name;
-        counter += 1;
-      }
-      this.years = result2;
+      return result;
+      // let result2 = {};
+      // // let items2 = result;
+      // let counter = 0;
+      // for (let item, i = 0; (item = result[i++]); ) {
+      //   // let name = item;
+      //   result2[counter] = item;
+      //   counter += 1;
+      // }
+      // return result2;
     }
-  },
-  mounted() {
-    this.populateData();
+    // this.populateData();
   },
   watch: {
     notices() {
-      this.populateData();
+      // this.populateData();
       this.loading = false;
-      this.setYears();
+      // this.setYears();
+      this.year = this.years[0];
     }
   }
 };
 </script>
 <style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
+.AssemblyDPSwidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
 }
-.rtl_centerd {
-  direction: rtl;
+.AssemblyDPSwidget-table /deep/ .AssemblyDPSwidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
+.AssemblyDPSwidget-table /deep/ .AssemblyDPSwidget-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
+  text-align: center;
 }
-.valign * {
-  vertical-align: middle;
+
+.vuetifySelectCustom /deep/ .v-input__control {
+  min-height: 25px !important;
+  height: 25px !important;
 }
-.redItem {
-  color: #ef5350 !important;
+.vuetifySelectCustom /deep/ .v-input__control {
+  font-size: 0.7em !important;
 }
-.greenItem {
-  color: #088a2f93 !important;
+.vuetifySelectCustom /deep/ .v-chip.v-size--small {
+  border-radius: 3px;
+  font-size: 10px;
+  height: 17px;
 }
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
+.vuetifySelectCustom /deep/ .v-chip .v-chip__close.v-icon {
+  font-size: 12px !important;
 }
 </style>

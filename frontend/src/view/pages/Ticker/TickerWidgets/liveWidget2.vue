@@ -2,110 +2,10 @@
   <div>
     <v-row no-gutters class="d-flex flex-row justify-content-between">
       <!--//? 1ST -->
-      <!-- <v-col cols="3" class="flex-grow-1 flex-shrink-0 pl-1"
-        ><v-card rounded="lg">
-          <v-toolbar
-            dense
-            class="IndexChartToolbars elevation-2"
-            style="height:36px;"
-          >
-            <v-toolbar-title style="height:20px;font-size:0.95em"
-              >اطلاعات</v-toolbar-title
-            >
-          </v-toolbar>
-          <v-row>
-            <v-col cols="6">
-              <v-col
-                class="d-flex flex-column align-center align-content-center p-0 mt-1 mb-1 mr-1"
-                style="border:1px solid black;border-radius:8px"
-              >
-                <span class="titleInfoSpan">نام شرکت:</span>
-                <span class="titleInfoSpan">{{ liveData[0].name }}</span>
-              </v-col>
-              <v-col
-                class="d-flex flex-column  align-center align-content-center pt-0"
-              >
-                <span class="titleInfoSpan">بازار:</span>
-                <span class="titleInfoSpan">{{ liveData[0].market }}</span>
-              </v-col>
-              <v-row
-                no-gutters
-                class="d-flex flex-row  align-center align-content-center pt-0"
-              >
-                <span class="titleInfoSpan">صنعت:</span>
-                <span class="titleInfoSpan">{{ liveData[0].name }}</span>
-              </v-row>
-              <v-row
-                no-gutters
-                class="d-flex flex-row  align-center align-content-center pt-0"
-              >
-                <span class="titleInfoSpan">ارزش بازار:</span>
-                <span class="titleInfoSpan">{{ marketCap }}</span>
-              </v-row>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">میانگین حجم ماه:</span>
-                <span class="titleInfoSpan">NO DATA</span>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">تعداد سهام:</span>
-                <span class="titleInfoSpan">{{ ShareCount }}</span>
-                <span class="titleInfoSpan">میلیارد</span>
-              </v-col>
-            </v-col>
-            <v-col cols="6">
-              <v-col class="d-flex flex-column">
-                <v-card elevation="4" rounded="md">
-                  <v-row
-                    no-gutters
-                    class="pt-1 pb-1 d-flex justify-content-center"
-                  >
-                    <span class="titleInfoSpan">حجم مبنا:</span>
-                    <span class="titleInfoSpan">{{ Mabna }}</span>
-                  </v-row>
-                </v-card>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">شناور:</span>
-                <span class="titleInfoSpan">{{ liveData[0].Shenavari }}</span>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">EPS:</span>
-                <span class="titleInfoSpan">{{ liveData[0].EPS }}</span>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">EV:</span>
-                <span class="titleInfoSpan">NO DATA</span>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">P/E(TTM):</span>
-                <span class="titleInfoSpan">NO DATA</span>
-              </v-col>
-              <v-col class="d-flex pt-0">
-                <span class="titleInfoSpan">P/B:</span>
-                <span class="titleInfoSpan">NO DATA</span>
-              </v-col>
-            </v-col>
-          </v-row>
-        </v-card></v-col
-      > -->
+      <v-col cols="6" class="flex-grow-1 flex-shrink-0 pl-1">
+        <PriceHistoryWidget :priceHistory="priceHistory"></PriceHistoryWidget>
+      </v-col>
       <!--//? 2ND -->
-      <v-col cols="6" class="flex-grow-1 flex-shrink-0 pl-1"
-        ><v-card rounded="lg" height="358">
-          <v-toolbar
-            dense
-            class="IndexChartToolbars elevation-2"
-            style="height:36px;"
-          >
-            <v-toolbar-title style="height:20px;font-size:0.95em"
-              >سابقه قیمت</v-toolbar-title
-            >
-          </v-toolbar>
-          <PriceHistoryWidget
-            class="py-1"
-            :priceHistory="priceHistory"
-          ></PriceHistoryWidget> </v-card
-      ></v-col>
-      <!--//? 3RD -->
       <v-col cols="3" class="flex-grow-1 flex-shrink-0 pl-1"
         ><v-card rounded="lg" height="358">
           <v-toolbar
@@ -117,12 +17,23 @@
               >ربات تحلیلگر بنیادی</v-toolbar-title
             >
           </v-toolbar>
+          <div
+            class="d-flex flex-column justify-content-center my-auto"
+            style="height:70%"
+            v-if="FundamentalRobot.length == 0"
+          >
+            <v-icon size="30px" color="#e09f3e">mdi-alert-box</v-icon>
+            <div class="d-flex justify-content-center my-2">
+              <span style="font-size:0.8em">داده موجود نیست</span>
+            </div>
+          </div>
           <FundamentalRobotWidget
+            v-show="FundamentalRobot.length"
             :liveData="liveData"
             :FundamentalRobot="FundamentalRobot"
           ></FundamentalRobotWidget> </v-card
       ></v-col>
-      <!--//? 4TH -->
+      <!--//? 3RD -->
       <v-col cols="3" class="flex-grow-1 flex-shrink-0 pl-1"
         ><v-card rounded="lg" height="358">
           <v-toolbar
@@ -134,6 +45,16 @@
               >وضعیت تکنیکال سهم</v-toolbar-title
             >
           </v-toolbar>
+          <div
+            class="d-flex flex-column justify-content-center my-auto"
+            style="height:70%"
+            v-if="Indicators.length == 0"
+          >
+            <v-icon size="30px" color="#e09f3e">mdi-alert-box</v-icon>
+            <div class="d-flex justify-content-center my-2">
+              <span style="font-size:0.8em">داده موجود نیست</span>
+            </div>
+          </div>
           <TechnicalWidget
             v-show="Indicators.length != 0"
             :Indicators="Indicators"
@@ -143,13 +64,11 @@
   </div>
 </template>
 <script>
-// import ApexChart from "@/view/content/charts/ApexChart";
 import PriceHistoryWidget from "@/view/pages/Ticker/TickerWidgets/TickerPriceHistory.vue";
 import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
 import FundamentalRobotWidget from "@/view/pages/Ticker/TickerWidgets/FundamentalRobotWidget.vue";
 export default {
   components: {
-    // ApexChart,
     PriceHistoryWidget,
     FundamentalRobotWidget,
     TechnicalWidget
@@ -187,6 +106,11 @@ export default {
     FundamentalRobot: Array,
     priceHistory: Array
   },
+  // watch: {
+  //   FundamentalRobotWidget(newValue, oldValue) {
+  //     console.log(newValue, oldValue);
+  //   }
+  // },
   computed: {
     marketCap() {
       let marketcap = this.liveData[0].close * this.liveData[0].ShareCount;

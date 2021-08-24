@@ -29,26 +29,101 @@
         ></v-radio>
       </v-radio-group>
     </v-toolbar>
-    <!-- <v-card-title
-      >نمودار وضعیت بازار -
-      <b-form-group class="pt-3">
-        <b-form-radio-group
-          :click="this.renderChart1()"
-          v-model="SortBy1"
-          value="HH"
-          :options="options1"
-          name="radio-inline_q"
-        ></b-form-radio-group> </b-form-group
-        
+    <!-- // ? TOOLTIP PLACEMENT ************************** -->
+    <div
+      :style="tooltipPosition"
+      v-if="LeaveHHTooltip || EnterHHTooltip"
+      class="D3TestTooltip"
     >
-  
-    
-    </v-card-title>
-    <v-divider class="mt-0"></v-divider> -->
+      <div class="D3TestTopDivTooltip">
+        <span>
+          {{ tooltipData.ticker }}
+        </span>
+      </div>
+      <div class="D3TestMiddleDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1"
+          >میلیارد ریال</span
+        >
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          numberWithCommas(roundTo(tooltipData.TradeValue / 1000000000, 0))
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">ارزش معاملات:</span>
+      </div>
+      <div class="D3TestMiddleDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1">میلیون</span>
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          numberWithCommas(roundTo(tooltipData.TradeVolume / 1000000, 0))
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">حجم معاملات:</span>
+      </div>
+      <div class="D3TestMiddleDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1"
+          >میلیارد ریال</span
+        >
+        <span
+          v-if="EnterHHTooltip"
+          style="color:#000;font-size:0.8em"
+          class="mr-1"
+          >{{
+            numberWithCommas(roundTo(tooltipData.netHaghighi / 1000000000, 0))
+          }}</span
+        >
+        <span v-else style="color:#000;font-size:0.8em" class="mr-1">{{
+          numberWithCommas(
+            roundTo((tooltipData.netHaghighi * -1) / 1000000000, 0)
+          )
+        }}</span>
+        <span v-if="EnterHHTooltip" style="color:#000;font-size:0.8em" dir="rtl"
+          >ورود حقیقی:</span
+        >
+
+        <span v-else style="color:#000;font-size:0.8em" dir="rtl"
+          >خروج حقیقی:</span
+        >
+      </div>
+      <div class="D3TestBottomDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          tooltipData.industry
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">صنعت:</span>
+      </div>
+    </div>
+    <div
+      :style="tooltipPosition"
+      v-if="HighestImpactTooltip || LowestImpactTooltip"
+      class="D3TestTooltip"
+    >
+      <div class="D3TestTopDivTooltip">
+        <span>
+          {{ tooltipData.ticker }}
+        </span>
+      </div>
+      <div class="D3TestMiddleDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1"
+          >میلیارد ریال</span
+        >
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          numberWithCommas(roundTo(tooltipData.Value / 1000000000, 0))
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">ارزش معاملات:</span>
+      </div>
+      <div class="D3TestMiddleDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1">میلیون</span>
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          numberWithCommas(roundTo(tooltipData.Vol / 1000000, 0))
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">حجم معاملات:</span>
+      </div>
+
+      <div class="D3TestBottomDivTooltip">
+        <span style="color:#000;font-size:0.8em" class="mr-1">{{
+          tooltipData.Price.toLocaleString()
+        }}</span>
+        <span style="color:#000;font-size:0.8em" dir="rtl">قیمت:</span>
+      </div>
+    </div>
     <div id="ChartContainer_HH"></div>
-    <!--end::Header-->
   </v-card>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -58,6 +133,15 @@ export default {
   props: { inputDataHH: Array, inputDataQ: Array },
   data() {
     return {
+      //? tooltip
+      tooltipData: {},
+      LeaveHHTooltip: false,
+      EnterHHTooltip: false,
+      HighestImpactTooltip: false,
+      LowestImpactTooltip: false,
+      pageX: null,
+      pageY: null,
+      //********* */
       jsonData: [],
       jsonData2: [],
       loading: true,
@@ -95,13 +179,40 @@ export default {
       }
     }
   },
+  computed: {
+    tooltipPosition() {
+      let res = {};
+      if (this.LeaveHHTooltip)
+        res = {
+          right: this.width - this.pageX + 100 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      else if (this.LowestImpactTooltip)
+        res = {
+          right: this.width - this.pageX + 100 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      else if (this.HighestImpactTooltip) {
+        res = {
+          right: this.width - this.pageX - 150 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      } else {
+        res = {
+          right: this.width - this.pageX - 150 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      }
+      return res;
+    }
+  },
   mounted() {
     this.initrender();
-    this.renderData1();
-    // this.initrender();
-    if (this.isRealValue(this.highestValues)) {
-      this.renderChart1();
-    }
+    ////this.renderData1();
+    ////this.initrender();
+    ////if (this.isRealValue(this.highestValues)) {
+    ////  this.renderChart1();
+    ////}
   },
   methods: {
     numberWithCommas(x) {
@@ -143,21 +254,15 @@ export default {
         this.highestValues = this.jsonData.slice(0, this.datasizeOf);
         this.jsonData.sort((a, b) => a.netHaghighi - b.netHaghighi);
         this.highestVolumes = this.jsonData.slice(0, this.datasizeOf);
-        // console.log("HH");
-        // console.log(this.highestValues);
-        // console.log(this.highestVolumes);
       }
       if (!(this.inputDataQ === undefined || this.inputDataQ.length == 0)) {
         this.jsonData2 = [...this.inputDataQ[1]];
         this.jsonData2.sort((a, b) => b.Value - a.Value);
         this.highestImpcats = this.jsonData2.slice(0, this.datasizeOf);
-        // console.log("Demands");
-        // console.log(this.highestImpcats);
+
         this.jsonData3 = [...this.inputDataQ[0]];
         this.jsonData3.sort((a, b) => b.Value - a.Value);
         this.lowestImpcats = this.jsonData3.slice(0, this.datasizeOf);
-        // console.log("Supplies");
-        // console.log(this.lowestImpcats);
       }
     },
     initrender() {
@@ -176,6 +281,7 @@ export default {
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) * 0.075;
       this.offsetY = this.margin.top;
       var parent = document.getElementById("ChartContainer_HH");
+
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
@@ -198,7 +304,7 @@ export default {
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 800 &&
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 1000
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.datasizeOf = 8;
         this.shortenNames = true;
       }
@@ -206,7 +312,7 @@ export default {
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 600 &&
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 800
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.datasizeOf = 5;
         this.shortenNames = true;
       }
@@ -214,7 +320,7 @@ export default {
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) > 400 &&
         parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 600
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.width =
           0.7 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
         this.height = (this.width * 16) / 16;
@@ -228,7 +334,6 @@ export default {
         this.shortenNames = true;
       }
       if (parseInt(d3.select("#ChartContainer_HH").style("width"), 10) < 400) {
-        // console.log("3");
         this.fontsizeOf = 0.8;
         this.width =
           0.7 * parseInt(d3.select("#ChartContainer_HH").style("width"), 10);
@@ -265,25 +370,14 @@ export default {
           "background",
           "url(../../media/logos/fadedfinwise.png) no-repeat center "
         );
-      // eslint-disable-next-line no-unused-vars
+
       const chart = svg
         .append("g")
         .attr(
           "transform",
           `translate(${this.margin.left}, ${this.margin.top})`
         );
-      // eslint-disable-next-line no-unused-vars
-      // svg
-      //   .append("text")
-      //   .attr("class", "source")
-      //   .attr("x", this.width / 2 + this.margin.right)
-      //   .attr("y", this.height * 0.1)
-      //   .attr("text-anchor", "start")
-      //   .text("Source: FinWise")
-      //   .style("font-weight", "700")
-      //   .style("font-family", "'Tlwg Mono', sans-serif")
-      //   .style("font-size", "10px")
-      //   .style("opacity", "0.3");
+
       if (this.SortBy1 == "HH") {
         const xLeft = d3
           .scaleBand()
@@ -318,20 +412,19 @@ export default {
               ) * 1.2
             )
           ])
-          // .domain([
-          //   0,
-          //   Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
-          // ])
+          ////.domain([
+          ////  0,
+          ////  Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
+          ////])
           .range([this.height - this.margin.bottom, 0])
           .nice();
-        // eslint-disable-next-line no-unused-vars
+
         const xRight = d3
           .scaleBand()
           .domain(this.highestVolumes.map(x => x.ticker))
           .range([this.width, this.width / 2])
           .padding(0.15);
 
-        // eslint-disable-next-line no-unused-vars
         const yRight = d3
           .scaleLinear()
           .domain([
@@ -363,20 +456,20 @@ export default {
           .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
-        var mycolor = d3
+        var EnterHHColor = d3
           .scaleLinear()
           .domain([
             0,
             Math.max(...this.highestValues.map(x => x.netHaghighi)) * 1.2
           ])
-          .range(["#66BB6A", "#1B5E20"]);
-        var mycolor2 = d3
+          .range(["#00CC18", "#00ad13"]);
+        var LeaveHHColor = d3
           .scaleLinear()
           .domain([
             0,
             Math.min(...this.highestVolumes.map(x => x.netHaghighi)) * 1.2
           ])
-          .range(["#4DD0E1", "#006064"]);
+          .range(["#F50800", "#DC0600"]);
         //////////////
         let aXisY2 = d3
           .axisLeft(yLeft)
@@ -405,8 +498,8 @@ export default {
           .selectAll("text")
           .style("text-anchor", "start")
           .attr("transform", `translate(0,0)`)
-          // .attr("dx", "-8em")
-          // .style("font-size", `${this.width / 1000}em`)
+          ////.attr("dx", "-8em")
+          ////.style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
@@ -452,7 +545,7 @@ export default {
         aXisY1Axe
           .selectAll("text")
           .style("text-anchor", "end")
-          // .style("font-size", `${this.width / 1000}em`)
+          ////.style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
@@ -472,11 +565,12 @@ export default {
           .data(this.highestValues)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "HH_Q_Chart-yAxis-label")
           .attr("text-anchor", "middle")
+          .attr("dy", "-3px")
           .attr("fill", "#000")
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           .attr("x", d => xLeft(d.ticker) + xLeft.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft(d["netHaghighi"]) - 0.05 * this.height;
@@ -506,11 +600,12 @@ export default {
           .data(this.highestVolumes)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "HH_Q_Chart-yAxis-label")
           .attr("text-anchor", "middle")
+          .attr("dy", "-3px")
           .attr("fill", "#000")
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           .attr("x", d => xRight(d.ticker) + xRight.bandwidth() * 0.5)
           .attr("y", d => {
             return yRight(d["netHaghighi"]) - 0.05 * this.height;
@@ -540,41 +635,40 @@ export default {
           .append("line")
           .style("stroke", "black")
           .attr("x1", xRight(0))
-          // eslint-disable-next-line no-unused-vars
+
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight(0))
           .attr("y2", `0`)
-          // eslint-disable-next-line no-unused-vars
+
           .attr("transform", `translate(${this.width / 2},0)`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(${this.width / 2},${0})`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0);
-        // eslint-disable-next-line no-unused-vars
-        // .attr("transform", `translate(0,${this.margin.top})`);
+        ////chart
+        ////  .append("line")
+        ////  .style("stroke", "steelblue")
+        ////  .attr("x1", 0)
+
+        ////  .attr("y1", 0)
+        ////  .attr("x2", `${this.width / 2}`)
+        ////  .attr("y1", 0)
+
+        ////  .attr("transform", `translate(${this.width / 2},${0})`);
+        ////chart
+        ////  .append("line")
+        ////  .style("stroke", "steelblue")
+        ////  .attr("x1", 0)
+
+        ////  .attr("y1", 0)
+        ////  .attr("x2", `${this.width / 2}`)
+        ////  .attr("y1", 0);
+
+        ////.attr("transform", `translate(0,${this.margin.top})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
           .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          // .style("font-size", "1em")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
-
           .text("بیشترین ورود حقیقی");
 
         chart
@@ -583,28 +677,27 @@ export default {
           .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          // .style("font-size", "1em")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین خروج حقیقی");
 
-        // eslint-disable-next-line no-unused-vars
-        const tooltip = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", this.width / 3 + "px")
-          .style("top", this.height / 3 + "px");
-        const tooltip2 = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", (this.width * 7) / 12 + "px")
-          .style("top", this.height / 3 + "px");
-        // eslint-disable-next-line no-unused-vars
+        ////const tooltip = d3
+        ////// .select(parent)
+        ////  .append("div")
+        ////  .attr("class", "d3-tip")
+        ////  .style("position", "absolute")
+        ////  .style("visibility", "hidden")
+        ////  .style("left", this.width / 3 + "px")
+        ////  .style("top", this.height / 3 + "px");
+        ////const tooltip2 = d3
+        ////  .select(parent)
+        ////  .append("div")
+        ////  .attr("class", "d3-tip")
+        ////  .style("position", "absolute")
+        ////  .style("visibility", "hidden")
+        ////  .style("left", (this.width * 7) / 12 + "px")
+        ////  .style("top", this.height / 3 + "px");
+
         let that = this;
         chart
           .selectAll()
@@ -613,48 +706,55 @@ export default {
           .append("rect")
           .attr("x", d => xRight(d.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip2
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.TradeValue / 1000000000, 0)
-                  ) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.TradeVolume / 1000000, 0)
-                  ) +
-                  "میلیون " +
-                  "<br>" +
-                  "خروج حقیقی: " +
-                  that.numberWithCommas(
-                    that.roundTo((d.netHaghighi * -1) / 1000000000, 0)
-                  ) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  "صنعت:" +
-                  d.industry
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.LeaveHHTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            ////tooltip2
+            ////  .html(
+            ////    "نماد: " +
+            ////      d.ticker +
+            ////      "<hr/>" +
+            ////      " ارزش معاملات: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo(d.TradeValue / 1000000000, 0)
+            ////      ) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      " حجم معاملات: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo(d.TradeVolume / 1000000, 0)
+            ////      ) +
+            ////      "میلیون " +
+            ////      "<br>" +
+            ////      "خروج حقیقی: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo((d.netHaghighi * -1) / 1000000000, 0)
+            ////      ) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      "صنعت:" +
+            ////      d.industry
+            ////  )
+            ////  .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.LeaveHHTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip2.style("visibility", "hidden");
+            ////tooltip2.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yRight(d.netHaghighi);
@@ -667,8 +767,9 @@ export default {
           )
           .attr("width", xRight.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2(d.netHaghighi);
-          });
+            return LeaveHHColor(d.netHaghighi);
+          })
+          .attr("stroke", "#3e3e4e");
         chart
           .selectAll()
           .data(this.highestValues)
@@ -676,48 +777,55 @@ export default {
           .append("rect")
           .attr("x", s => xLeft(s.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.TradeValue / 1000000000, 0)
-                  ) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.TradeVolume / 1000000, 0)
-                  ) +
-                  "میلیون " +
-                  "<br>" +
-                  "ورود حقیقی: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.netHaghighi / 1000000000, 0)
-                  ) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  "صنعت:" +
-                  d.industry
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.EnterHHTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            ////tooltip
+            ////  .html(
+            ////    "نماد: " +
+            ////      d.ticker +
+            ////      "<hr/>" +
+            ////      " ارزش معاملات: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo(d.TradeValue / 1000000000, 0)
+            ////      ) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      " حجم معاملات: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo(d.TradeVolume / 1000000, 0)
+            ////      ) +
+            ////      "میلیون " +
+            ////      "<br>" +
+            ////      "ورود حقیقی: " +
+            ////      that.numberWithCommas(
+            ////        that.roundTo(d.netHaghighi / 1000000000, 0)
+            ////      ) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      "صنعت:" +
+            ////      d.industry
+            ////  )
+            ////  .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.EnterHHTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip.style("visibility", "hidden");
+            ////tooltip.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yLeft(d.netHaghighi);
@@ -730,12 +838,12 @@ export default {
           )
           .attr("width", xLeft.bandwidth())
           .attr("fill", function(d) {
-            return mycolor(d.netHaghighi);
+            return EnterHHColor(d.netHaghighi);
           })
-          .style("opacity", "80%");
+          .attr("stroke", "#3e3e4e");
+        ////.style("opacity", "80%");
       }
       if (this.SortBy1 == "DS") {
-        // console.log(this.highestImpcats);
         const xLeft_2 = d3
           .scaleBand()
           .domain(this.highestImpcats.map(x => x.ticker))
@@ -771,14 +879,13 @@ export default {
           ])
           .range([this.height - this.margin.bottom, 0])
           .nice();
-        // eslint-disable-next-line no-unused-vars
+
         const xRight_2 = d3
           .scaleBand()
           .domain(this.lowestImpcats.map(x => x.ticker))
           .range([this.width, this.width / 2])
           .padding(0.15);
 
-        // eslint-disable-next-line no-unused-vars
         const yRight_2 = d3
           .scaleLinear()
           .domain([
@@ -809,14 +916,14 @@ export default {
           .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
-        var mycolor_2 = d3
+        var HighestImpactColor = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestImpcats.map(x => x.Value)) * 1.2])
-          .range(["#66BB6A", "#1B5E20"]);
-        var mycolor2_2 = d3
+          .range(["#00CC18", "#00ad13"]);
+        var LowestImpactColor = d3
           .scaleLinear()
           .domain([0, Math.max(...this.lowestImpcats.map(x => x.Value)) * 1.2])
-          .range(["#a01a58", "#b7094c"]);
+          .range(["#F50800", "#DC0600"]);
         //////////////
         let aXisY2_2 = d3
           .axisLeft(yLeft_2)
@@ -844,7 +951,7 @@ export default {
         aXisY2Axe_2
           .selectAll("text")
           .style("text-anchor", "start")
-          // .style("font-size", `${this.width / 1000}em`)
+          ////.style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
@@ -892,7 +999,7 @@ export default {
         aXisY1Axe_2
           .selectAll("text")
           .style("text-anchor", "end")
-          // .style("font-size", `${this.width / 1000}em`)
+          ////.style("font-size", `${this.width / 1000}em`)
           .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
@@ -913,11 +1020,12 @@ export default {
           .data(this.highestImpcats)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "HH_Q_Chart-yAxis-label")
           .attr("text-anchor", "middle")
+          .attr("dy", "-3px")
           .attr("fill", "#000")
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           .attr("x", d => xLeft_2(d.ticker) + xLeft_2.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft_2(d["Value"]) - 0.05 * this.height;
@@ -947,11 +1055,13 @@ export default {
           .data(this.lowestImpcats)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "HH_Q_Chart-yAxis-label")
           .attr("text-anchor", "middle")
+          .attr("dy", "-3px")
+
           .attr("fill", "#000")
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           .attr("x", d => xRight_2(d.ticker) + xRight_2.bandwidth() * 0.5)
           .attr("y", d => {
             return yRight_2(d["Value"]) - 0.05 * this.height;
@@ -981,32 +1091,32 @@ export default {
           .append("line")
           .style("stroke", "black")
           .attr("x1", xRight_2(0))
-          // eslint-disable-next-line no-unused-vars
+
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight_2(0))
           .attr("y2", `${0}`)
-          // eslint-disable-next-line no-unused-vars
+
           .attr("transform", `translate(${this.width / 2},0)`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(${this.width / 2},${0})`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(0,${0})`);
+        ////chart
+        ////  .append("line")
+        ////  .style("stroke", "steelblue")
+        ////  .attr("x1", 0)
+
+        ////  .attr("y1", 0)
+        ////  .attr("x2", `${this.width / 2}`)
+        ////  .attr("y1", 0)
+
+        ////  .attr("transform", `translate(${this.width / 2},${0})`);
+        ////chart
+        ////  .append("line")
+        ////  .style("stroke", "steelblue")
+        ////  .attr("x1", 0)
+
+        ////  .attr("y1", 0)
+        ////  .attr("x2", `${this.width / 2}`)
+        ////  .attr("y1", 0)
+
+        ////  .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
@@ -1025,24 +1135,23 @@ export default {
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین عرضه ");
 
-        // eslint-disable-next-line no-unused-vars
-        const tooltip = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", this.width / 3 + "px")
-          .style("top", this.height / 3 + "px");
-        const tooltip2 = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", (this.width * 7) / 12 + "px")
-          .style("top", this.height / 3 + "px");
-        // eslint-disable-next-line no-unused-vars
+        ////const tooltip = d3
+        ////  .select(parent)
+        ////  .append("div")
+        ////  .attr("class", "d3-tip")
+        ////  .style("position", "absolute")
+        ////  .style("visibility", "hidden")
+        ////  .style("left", this.width / 3 + "px")
+        ////  .style("top", this.height / 3 + "px");
+        ////const tooltip2 = d3
+        ////  .select(parent)
+        ////  .append("div")
+        ////  .attr("class", "d3-tip")
+        ////  .style("position", "absolute")
+        ////  .style("visibility", "hidden")
+        ////  .style("left", (this.width * 7) / 12 + "px")
+        ////  .style("top", this.height / 3 + "px");
+
         let that = this;
         chart
           .selectAll()
@@ -1051,39 +1160,46 @@ export default {
           .append("rect")
           .attr("x", d => xRight_2(d.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip2
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
-                  "میلیون " +
-                  "<br>" +
-                  "قیمت: " +
-                  that.numberWithCommas(that.roundTo(d.Price, 0)) +
-                  "<br>"
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.LowestImpactTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            ////tooltip2
+            ////  .html(
+            ////    "نماد: " +
+            ////      d.ticker +
+            ////      "<hr/>" +
+            ////      " ارزش معاملات: " +
+            ////      that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      " حجم معاملات: " +
+            ////      that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+            ////      "میلیون " +
+            ////      "<br>" +
+            ////      "قیمت: " +
+            ////      that.numberWithCommas(that.roundTo(d.Price, 0)) +
+            ////      "<br>"
+            ////  )
+            ////  .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.LowestImpactTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip2.style("visibility", "hidden");
+            ////tooltip2.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yRight_2(d.Value);
@@ -1096,8 +1212,9 @@ export default {
           )
           .attr("width", xRight_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2_2(d.Value);
-          });
+            return LowestImpactColor(d.Value);
+          })
+          .attr("stroke", "#3e3e4e");
         chart
           .selectAll()
           .data(this.highestImpcats)
@@ -1105,39 +1222,46 @@ export default {
           .append("rect")
           .attr("x", s => xLeft_2(s.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
-                  "میلیون " +
-                  "<br>" +
-                  "قیمت: " +
-                  that.numberWithCommas(that.roundTo(d.Price, 0)) +
-                  "<br>"
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.HighestImpactTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            ////tooltip
+            ////  .html(
+            ////    "نماد: " +
+            ////      d.ticker +
+            ////      "<hr/>" +
+            ////      " ارزش معاملات: " +
+            ////      that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+            ////      "میلیارد ریال " +
+            ////      "<br>" +
+            ////      " حجم معاملات: " +
+            ////      that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+            ////      "میلیون " +
+            ////      "<br>" +
+            ////      "قیمت: " +
+            ////      that.numberWithCommas(that.roundTo(d.Price, 0)) +
+            ////      "<br>"
+            ////  )
+            ////  .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.HighestImpactTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip.style("visibility", "hidden");
+            ////tooltip.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yLeft_2(d.Value);
@@ -1150,9 +1274,10 @@ export default {
           )
           .attr("width", xLeft_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor_2(d.Value);
+            return HighestImpactColor(d.Value);
           })
-          .style("opacity", "80%");
+          .attr("stroke", "#3e3e4e");
+        ////.style("opacity", "80%");
       }
       window.addEventListener("resize", this.initrender);
       window.addEventListener("resize", this.renderData1);
@@ -1190,6 +1315,72 @@ export default {
   color: #000 !important;
   font-size: 0.7em !important;
   font-family: "Vazir-Light-FD";
+}
+.redItem {
+  color: red;
+  font-size: 0.8em;
+}
+.greenItem {
+  color: green;
+  font-size: 0.8em;
+}
+.D3TestTooltip {
+  position: absolute;
+  /* top: 20px; */
+  /* right: 0px; */
+  width: auto;
+  height: auto;
+  /* padding: 15px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-left: 20px;
+  margin-top: 20px; */
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 8px;
+  display: flex;
+  /* cursor: pointer; */
+  /* flex-wrap: nowrap; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  z-index: 95;
+}
+.D3TestTopDivTooltip {
+  border-radius: 8px 8px 0px 0px;
+  background-color: #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.D3TestBottomDivTooltip {
+  border-radius: 0px 0px 8px 8px;
+
+  background-color: #eaeaea;
+  direction: ltr;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.D3TestMiddleDivTooltip {
+  border-radius: 0px 0px 0px 0px;
+  background-color: #eaeaea;
+  direction: ltr;
+  display: flex;
+  border-bottom: 1px solid #bdbdbd;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
 }
 
 .axis path,

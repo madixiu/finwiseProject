@@ -66,6 +66,8 @@ def getAdminNotice(self,firm):
     return JsonResponse(getAdminsNotices(firm),safe=False)    
 def getStatsTicker(self,identifier):
     return JsonResponse(getStatisticsTicker(identifier),safe=False)
+    
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getLiveTicker(self,identifier):
     return JsonResponse(getLive_ticker(identifier),safe=False)
 
@@ -399,8 +401,12 @@ def getCryptoCorr(self):
     return JsonResponse(getCryptoCorrelation(),safe=False)
 def getIndicatorsCrypto(self,identifier):
     return JsonResponse(getSingleCryptoTechnical(identifier),safe=False)
+
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCyptoMWIntro(self):
     return JsonResponse(getBCMarketWatch(),safe=False)
+    
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCyptoMWAll(self):
     return JsonResponse(getBCMarketWatchAll(),safe=False)
 def getBasicCrypto(self,identifier):
@@ -534,6 +540,7 @@ def getSearchBarData(self):
 ############### SEARCH BAR DATA ###############
 
 ############### MARKET MAP ###############
+@cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getMarketMap(self):
     return JsonResponse(getMapData(),safe=False)
 ############### MARKET MAP ###############

@@ -190,7 +190,7 @@
                 <div class="d-flex mr-1">
                   <span class="tickerItem">{{ LiveDataItems.TradeCount }}</span>
                 </div>
-                  <!-- <div class="d-flex align-center">
+                <!-- <div class="d-flex align-center">
                     <span class="tickerSubInfo">میلیون سهم</span>
                   </div> -->
               </v-col>
@@ -219,7 +219,9 @@
                   <span class="tickerItem">EPS:</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">{{ LiveDataItems.EPS }}</span>
+                  <span class="tickerItem" dir="ltr">{{
+                    LiveDataItems.EPS
+                  }}</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                   <span class="tickerSubInfo">میلیارد ریال</span>

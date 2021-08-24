@@ -1,84 +1,213 @@
 <template>
   <div>
-    <v-card>
+    <v-card rounded="lg">
       <v-toolbar dense class="elevation-2" style="height:36px;">
         <v-toolbar-title style="height:20px;font-size:0.95em"
-          >دیده بان رمزارز های اصلی</v-toolbar-title
+          >دیده بان رمز ارز های اصلی</v-toolbar-title
         >
       </v-toolbar>
-      <div class="right_aligned">
-        <v-row class="mt-1 pr-2">
-          <v-col>
-            <v-row no-gutters class="pb-2">
-              <v-col>
-                نماد
-              </v-col>
-              <v-col>
-                نام
-              </v-col>
-              <v-col>
-                قیمت ریالی(میلیون تومان)
-              </v-col>
-              <v-col>
-                قیمت (دلار)
-              </v-col>
-              <v-col>
-                حجم(میلیون)
-              </v-col>
-              <v-col>
-                ارزش بازار (میلیون دلار)
-              </v-col>
-            </v-row>
-            <v-row
-              v-for="item in InputIntroMW"
-              :key="item.fullName"
-              no-gutters
-              class="pb-2"
-            >
-              <v-col>{{ item.name }} </v-col>
-              <v-col>{{ item.fullName }} </v-col>
-              <v-col>
-                {{ numberWithCommas(roundTo(item.RialPrice / 10000000, 4)) }}
-              </v-col>
-              <v-col>
-                {{ numberWithCommas(roundTo(item.price, 3)) }}
-              </v-col>
-              <v-col>
-                {{ numberWithCommas(roundTo(item.volume / 1000000, 3)) }}
-              </v-col>
-              <v-col>
-                {{ numberWithCommas(roundTo(item.marketCap / 1000000, 3)) }}
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </div>
+      <ag-grid-vue
+        :style="
+          `width: 100%; height:  ${height}px; font-family: Vazir-Medium-FD`
+        "
+        class="ag-theme-material CryptoMarketIntroTable mt-1 pb-1"
+        :localeText="localeText"
+        :defaultColDef="defaultColDef"
+        :columnDefs="Header"
+        :enableRtl="true"
+        :gridOptions="gridOptions"
+        @grid-ready="onGridReady"
+        :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
+      ></ag-grid-vue>
     </v-card>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
+import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
+import { AG_GRID_LOCALE_FA } from "@/view/content/ag-grid/local.fa.js";
+import { AgGridVue } from "ag-grid-vue";
 export default {
   name: "IntroCryptoMW",
   props: { InputIntroMW: Array },
+  components: {
+    AgGridVue
+  },
   data() {
     return {
-      loading: true,
-      jsonData: {}
+      gridApi: null,
+      defaultColDef: null,
+      gridOptions: null,
+      Header: [],
+      tableData: null,
+      localeText: null,
+      dataFetch: false,
+      asyncTransactionWaitMillis: 4000,
+      interval: null,
+      modules: AllModules,
+
+      loading: true
     };
   },
   watch: {
-    InputIntroMW() {
-      // this.renderData();
+    InputIntroMW(newValue, oldValue) {
+      if (oldValue.length == 0 && newValue.length != 0) {
+        this.gridApi.setRowData(newValue);
+        this.dataFetch = true;
+      }
+      if (oldValue != undefined)
+        if (this.dataFetch == true && oldValue.length != 0) {
+          for (let i = 0; i < this.InputIntroMW.length; i++) {
+            let newItem = JSON.parse(JSON.stringify(oldValue[i]));
+            if (newItem.price != newValue[i].price) {
+              let itemUpdate = JSON.parse(JSON.stringify(newValue[i]));
+              newItem.price = itemUpdate.price;
+              newItem.volume = itemUpdate.volume;
+              // let rowNode = that.MetalGridApi.getRowNode(itemUpdate.id);
+              this.gridApi.applyTransactionAsync({ update: [newItem] });
+            }
+          }
+        }
     }
   },
   // In the beginning...
-  mounted() {
-    // this.renderData();
+  created() {
+    let that = this;
+    this.localeText = AG_GRID_LOCALE_FA;
+    this.defaultColDef = {
+      flex: 1,
+      // minWidth: 100,
+      sortable: true,
+      // headerHeight: 12,
+      suppressMenu: true,
+      enablePivot: false,
+      cellStyle: {
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        direction: "ltr"
+      }
+    };
+    this.gridOptions = {
+      asyncTransactionWaitMillis: 4000,
+      headerHeight: 20,
+      rowHeight: 25,
+      getRowNodeId: data => data.id
+    };
+    this.Header = [
+      {
+        headerName: "نماد",
+        field: "mapperName",
+        cellStyle: {
+          display: "flex",
+          "justify-content": "flex-end",
+          "align-items": "center"
+          // direction: "ltr"
+        },
+        cellRenderer: function(params) {
+          return `
+          <span>
+          ${params.value} </span>
+          
+             <img
+            src="media/svg/crypto/${params.value.toLowerCase()}.svg"
+          width=17px height=17px />`;
+        }
+      },
+      {
+        headerName: "نام",
+        field: "fullName"
+      },
+      // {
+      //   headerName: "قیمت ریالی(میلیون تومان)",
+      //   field: "RialPrice",
+      //   valueFormatter: function(params) {
+      //     return that.roundTo(params.value / 10000000, 4).toLocaleString();
+      //   }
+      // },
+      {
+        headerName: "قیمت (دلار)",
+        field: "price",
+        valueFormatter: function(params) {
+          return that.roundTo(params.value, 3).toLocaleString();
+        },
+        cellRenderer: "agAnimateSlideCellRenderer"
+      },
+      {
+        headerName: "تغییر قیمت",
+        field: "dayChange",
+        filter: "agNumberColumnFilter",
+        cellRenderer: "agAnimateShowChangeCellRenderer",
+        valueFormatter: function(params) {
+          if (params.value != "NaN") {
+            let percent = Math.trunc(params.value * 100) / 100;
+            if (params.value != 0) {
+              if (percent < 0) percent = "(" + Math.abs(percent) + ")";
+              return "%" + percent;
+            } else return 0;
+          } else return "-";
+        },
+        cellStyle: params => {
+          if (params.value > 0) {
+            return {
+              display: "flex",
+              color: "green",
+              "justify-content": "center",
+              "align-items": "center",
+              direction: "ltr"
+            };
+          } else if (params.value < 0) {
+            return {
+              display: "flex",
+              color: "red",
+              "justify-content": "center",
+              "align-items": "center",
+              direction: "ltr"
+            };
+          } else
+            return {
+              display: "flex",
+              color: "black",
+              "justify-content": "center",
+              "align-items": "center",
+              direction: "ltr"
+            };
+        }
+      },
+      {
+        headerName: "حجم(میلیون)",
+        field: "volume",
+        valueFormatter: function(params) {
+          return that.roundTo(params.value / 1000000, 3).toLocaleString();
+        }
+      },
+      {
+        headerName: "ارزش بازار (میلیون دلار)",
+        field: "marketCap",
+        valueFormatter: function(params) {
+          return that.roundTo(params.value / 1000000, 3).toLocaleString();
+        }
+      }
+    ];
+    //// this.renderData();
   },
-  computed: {},
+  computed: {
+    height() {
+      if (this.InputIntroMW.lenghth)
+        return (
+          this.gridOptions.headerHeight +
+          this.gridOptions.rowHeight * this.InputIntroMW.length +
+          5
+        );
+      else return 400;
+    }
+  },
   methods: {
+    onGridReady(params) {
+      this.gridApi = params.api;
+      params.api.setRowData(this.InputIntroMW);
+    },
     numberWithCommas(x) {
       if (x == "-") {
         return x;
@@ -106,7 +235,7 @@ export default {
       if (negative) {
         n = (n * -1).toFixed(digits);
       }
-      return n;
+      return parseFloat(n);
     },
     isRealValue(obj) {
       return obj && obj !== "null" && obj !== "undefined";
@@ -136,7 +265,35 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.CryptoMarketIntroTable /deep/ .ag-header-cell-label {
+  color: black;
+  font-size: 0.8em;
+  font-weight: 300;
+  align-items: center;
+  text-align: center;
+  margin-right: 2px !important;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.CryptoMarketIntroTable /deep/ .ag-rtl .ag-cell {
+  font-family: "Vazir-Medium-FD";
+  font-size: 0.8em;
+  overflow: hidden;
+}
+.CryptoMarketIntroTable /deep/ .ag-header-cell-text {
+  color: black;
+  padding-right: 2px;
+  padding-left: 2px;
+  /* Force the width corresponding at how much width
+    we need once the text is laid out vertically */
+  /* width: 30px; */
+  /* transform: rotate(90deg); */
+  /* margin-top: 50px; */
+  /* Since we are rotating a span */
+  display: inline-block;
+}
 .right_aligned {
   text-align: right;
   font-size: 0.9em;

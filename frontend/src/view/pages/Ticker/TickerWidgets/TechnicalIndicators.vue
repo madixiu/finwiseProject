@@ -3,8 +3,23 @@
     <!-- <v-card rounded="lg"> -->
     <!-- <v-card-title>وضعیت تکنیکال سهم</v-card-title>
       <v-divider class="mt-0"></v-divider> -->
-
-    <div v-show="this.$store.getters.isAuthenticated">
+    <div class="d-flex flex-column" v-if="!this.$store.getters.isAuthenticated">
+      <div class="d-flex justify-content-center my-2">
+        <v-icon size="30px">mdi-lock</v-icon>
+      </div>
+      <div
+        class="d-flex justify-content-center"
+        v-show="!this.$store.getters.isAuthenticated"
+      >
+        <v-btn small color="#ebebeb" dark @click="onClick">
+          <v-icon small class="pl-1 pr-0" color="#4177a5"
+            >mdi-account-circle</v-icon
+          >
+          <span style="color:#4177a5">ورود</span>
+        </v-btn>
+      </div>
+    </div>
+    <div :class="[this.$store.getters.isAuthenticated == true ? '' : 'blured']">
       <!-- <div class="row"> -->
       <!-- <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"> -->
       <!-- <div> -->
@@ -12,48 +27,43 @@
       <div id="TechnicalGauge"></div>
       <!-- </div> -->
       <!-- </div> -->
-      <v-row no-gutters class="d-flex flex-row px-3">
-        <v-col class="d-flex flex-column align-center">
-          <v-col class="d-flex justify-content-center"><span>خرید</span></v-col>
-          <v-col class="d-flex justify-content-center py-0"
-            ><span style="color:#30cc5a">{{ positive }}</span></v-col
-          >
-        </v-col>
-        <v-col class="d-flex flex-column align-center">
-          <v-col class="d-flex justify-content-center"><span>خنثی</span></v-col>
-          <v-col class="d-flex justify-content-center py-0"
-            ><span style="color:#414554">{{ neutral }}</span></v-col
-          >
-        </v-col>
-        <v-col class="d-flex flex-column">
-          <v-col class="d-flex justify-content-center"><span>فروش</span></v-col>
-          <v-col class="d-flex justify-content-center py-0"
-            ><span style="color:#f63538">{{ negative }}</span></v-col
-          >
-        </v-col>
-      </v-row>
-    </div>
 
-    <div class="lockedTechnical" v-show="!this.$store.getters.isAuthenticated">
-      <div class="row lockedTechnical">
-        <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
-      </div>
-      <div class="row lockedTechnical">
-        <v-btn
-          color="#607d8b"
-          class="ma-2 mt-1"
-          elevation="5"
-          style="margin: auto;"
-          @click="onClick"
-          >ورود</v-btn
-        >
-      </div>
+      <v-card
+        rounded="lg"
+        outlined
+        elevation="2"
+        class="mx-2"
+        v-show="this.$store.getters.isAuthenticated"
+      >
+        <v-row no-gutters class="d-flex flex-row px-3">
+          <v-col class="d-flex flex-column align-center">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">خرید</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#30cc5a">{{ positive }}</span></v-col
+            >
+          </v-col>
+          <v-col class="d-flex flex-column align-center">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">خنثی</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#414554">{{ neutral }}</span></v-col
+            >
+          </v-col>
+          <v-col class="d-flex flex-column">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">فروش</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#f63538">{{ negative }}</span></v-col
+            >
+          </v-col>
+        </v-row>
+      </v-card>
     </div>
-
-    <!--end::Header-->
-    <!-- </v-card> -->
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
@@ -64,7 +74,6 @@ export default {
   props: ["Indicators"],
   data() {
     return {
-      search: "",
       margin: {
         top: 0,
         right: 0,
@@ -125,6 +134,7 @@ export default {
       }
     },
     initrender() {
+      // console.log("initrender");
       // if (document.getElementsByTagName("svg")) {
       //   d3.selectAll("svg").remove();
       // }
@@ -136,7 +146,7 @@ export default {
         10
       );
       this.height = (this.width * 9) / 16;
-      this.margin.top = this.height * 0.5;
+      this.margin.top = this.height * 0.7;
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
@@ -184,13 +194,14 @@ export default {
       }
     },
     renderChart() {
+      // console.log("renderChart");
       var parent = document.getElementById("chartContainer");
       var svg = d3.select(parent);
       const chart = svg
         .append("g")
         .attr(
           "transform",
-          `translate(${this.margin.left}, ${this.margin.top})`
+          `translate(${this.margin.left / 2}, ${this.margin.top})`
         );
 
       var n = 5,
@@ -263,7 +274,8 @@ export default {
             this.margin.top) /
             3})`
         )
-        .style("font-size", "0.8em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -273,7 +285,8 @@ export default {
           "transform",
           `translate(${this.width / 4},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "0.8em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -283,7 +296,8 @@ export default {
           "transform",
           `translate(${(7 * this.width) / 8},${this.margin.top / 5})`
         )
-        .style("font-size", "0.8em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -293,7 +307,8 @@ export default {
           "transform",
           `translate(${(1 * this.width) / 7},${this.margin.top / 5})`
         )
-        .style("font-size", "0.8em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -303,7 +318,10 @@ export default {
           "transform",
           `translate(${0.72 * this.width},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "0.8em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
+
+      //? final statement
       chart
         .append("g")
         .append("text")
@@ -314,7 +332,8 @@ export default {
           "transform",
           `translate(${this.width / 2},${0.7 * this.margin.top})`
         )
-        .style("font-size", "1em");
+        .style("font-size", "0.9em")
+        .style("font-family", "Vazir-Light-FD");
 
       var slice = innerD
         .append("g")
@@ -329,7 +348,6 @@ export default {
         .attr("fill", function(d) {
           return colorScale(d);
         });
-
       var needle = innerD
         .append("g")
         .append("path")
@@ -397,64 +415,11 @@ export default {
 };
 </script>
 <style scoped>
-.lockIcon {
-  margin-top: 90px;
-  margin-left: auto;
-  margin-right: auto;
+.blured {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
-.lockedTechnical {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  height: 50%;
-  text-align: center;
-}
-/* .monospace {
-  font-family: monospace, "Lucida Console", "Courier New", sans-serif;
-  font-size: 16px;
-  font-weight: bolder;
-} */
-.chiptext {
-  font-family: "Vazir-Medium-FD";
-  font-size: 2.4em;
-  text-align: center;
-}
-.rtl_centerd {
-  font-size: 1em;
-  direction: rtl;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
-.v-timeline {
-  direction: ltr !important;
-
-  text-align: left;
-}
-.v-timeline:before {
-  margin-left: 50%;
-}
-/* .customAlert {
-  font-family: "Vazir-Medium-FD" !important;
-} */
 </style>

@@ -77,8 +77,6 @@ export default {
       WebsocketRequest: false,
       Tablefilter: "",
       // tableData: [],
-      TypeSearch: "",
-      IndustrySearch: "",
       value: []
     };
   },
@@ -522,7 +520,7 @@ export default {
         }
       }
     ];
-    this.loadData();
+    this.MarketWatchTableReq();
   },
   mounted() {
     this.height = this.getHeight();

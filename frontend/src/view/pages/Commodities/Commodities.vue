@@ -413,23 +413,22 @@ export default {
   },
   data() {
     return {
-      //***TEMPORARY */
-      rowData: [],
-
-      //***TEMPORARY */
+      // *Specified Data ****
+      //? dollargold ****
       gridApi: null,
       defaultColDef: null,
       gridOptions: null,
       dollargoldHeader: [],
-      // Specified Data ****
-      // METAL ****
+      //******
+
+      //? METAL ****
       MetalGridApi: null,
       MetalDefaultColDef: null,
       MetalGridOptions: null,
       MetalHeader: [],
       MetalDataFetch: false,
       //******
-      // METAL ****
+      //? METALB ****
       MBGridApi: null,
       MBDefaultColDef: null,
       MBGridOptions: null,
@@ -437,42 +436,42 @@ export default {
       MBDataFetch: false,
       //******
 
-      // ENERGY ****
+      //? ENERGY ****
       EnergyGridApi: null,
       EnergyDefaultColDef: null,
       EnergyGridOptions: null,
       EnergyHeader: [],
       EnergyDataFetch: false,
       //******
-      // FOREX ****
+      //? FOREX ****
       ForexGridApi: null,
       ForexDefaultColDef: null,
       ForexGridOptions: null,
       ForexHeader: [],
       ForexDataFetch: false,
       //******
-      // GOLD ****
+      //? GOLD ****
       GoldGridApi: null,
       GoldDefaultColDef: null,
       GoldGridOptions: null,
       GoldHeader: [],
       GoldDataFetch: false,
       //******
-      // CURRENCIES ****
+      //? CURRENCIES ****
       CurrenciesGridApi: null,
       CurrenciesDefaultColDef: null,
       CurrenciesGridOptions: null,
       CurrenciesHeader: [],
       CurrenciesDataFetch: false,
       //******
-      // INDICES ****
+      //? INDICES ****
       IndicesGridApi: null,
       IndicesDefaultColDef: null,
       IndicesGridOptions: null,
       IndicesHeader: [],
       IndicesDataFetch: false,
       //******
-      // PETRO ****
+      //? PETRO ****
       PetroGridApi: null,
       PetroDefaultColDef: null,
       PetroGridOptions: null,
@@ -724,6 +723,47 @@ export default {
         }
       },
       {
+        headerName: "تغییر قیمت",
+        sortable: true,
+        field: "dp",
+        // cellRenderer: "agAnimateShowChangeCellRenderer",
+        valueFormatter: function(params) {
+          // let Color = "black";
+          let perc = parseFloat(params.value);
+          // if (perc > 0) Color = "green";
+          // else if (perc < 0) Color = "red";
+          return "%" + perc.toLocaleString();
+          // return `<span style=color:${Color}>${perc.toString()}</span>`;
+        },
+        cellStyle: params => {
+          if (params.value > 0) {
+            //mark police cells as red
+            return {
+              color: "green",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+          } else if (params.value < 0) {
+            return {
+              color: "red",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+          } else
+            return {
+              color: "black",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+        }
+      },
+      {
         headerName: "تاریخ",
         sortable: true,
         field: "Date"
@@ -801,14 +841,6 @@ export default {
               "align-items": "center"
             };
         }
-        // cellRenderer: "agAnimateShowChangeCellRenderer"
-        // cellRenderer: function(params) {
-        //   let Color = "black";
-        //   let perc = parseFloat(params.value);
-        //   if (perc > 0) Color = "green";
-        //   else if (perc < 0) Color = "red";
-        //   return `<div><span style=color:${Color}>${perc.toString()}</span>`;
-        // }
       },
       {
         headerName: "تاریخ",
@@ -1225,8 +1257,6 @@ export default {
     this.loadData();
   },
   mounted() {
-    // this.loadIRData();
-    // this.loadInvestingData();
 
     this.apiLiveData();
 
@@ -1413,27 +1443,6 @@ export default {
 };
 </script>
 <style>
-.cardColor {
-  background-color: rgba(226, 194, 194, 0.61) !important;
-  border-color: black !important;
-  max-height: 100vh;
-  min-width: 312px;
-}
-.chips {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 0.6em;
-  text-align: right;
-}
-.comItems {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 1em;
-  text-align: right;
-}
-.comDates {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 0.7em;
-  text-align: right;
-}
 .ag-header-cell-label .ag-header-cell-text {
   color: black;
   padding-right: 2px;

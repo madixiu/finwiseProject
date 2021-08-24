@@ -82,7 +82,7 @@
         </span></v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <!-- <v-btn x-small @click="BackButton"   outlined
+      <!-- <v-btn x-small @click="BackButton"
       color="indigo">بازگشت</v-btn> -->
       <v-icon v-if="selectedNode.depth != 0" @click="BackButton" color="#4682b4"
         >mdi-arrow-left-circle</v-icon
@@ -186,39 +186,41 @@
                 :style="getColor(child.data.change)"
               ></rect>
               <!-- ticker TEXT ********************************* -->
-              <text
-                class="childTickerName"
-                :key="'name_t_' + child.id"
-                :x="XText(child.x0, child.x1)"
-                :y="YText2(child.y0, child.y1)"
-                :style="
-                  tickerTextFontSizeAdjust(
-                    child.x0,
-                    child.x1,
-                    child.y0,
-                    child.y1
-                  )
-                "
-              >
-                {{ child.data.name }}
-              </text>
-              <text
-                class="childTickerValue"
-                dy="0.3em"
-                :key="'percent_t_' + child.id"
-                :x="XText(child.x0, child.x1)"
-                :y="YText(child.y0, child.y1)"
-                :style="
-                  tickerTextFontSizeAdjust(
-                    child.x0,
-                    child.x1,
-                    child.y0,
-                    child.y1
-                  )
-                "
-              >
-                {{ child.data.change + "%" }}
-              </text>
+              <g>
+                <text
+                  class="childTickerName"
+                  :key="'name_t_' + child.id"
+                  :x="XText(child.x0, child.x1)"
+                  :y="YText2(child.y0, child.y1)"
+                  :style="
+                    tickerTextFontSizeAdjust(
+                      child.x0,
+                      child.x1,
+                      child.y0,
+                      child.y1
+                    )
+                  "
+                >
+                  {{ child.data.name }}
+                </text>
+                <text
+                  class="childTickerValue"
+                  dy="0.3em"
+                  :key="'percent_t_' + child.id"
+                  :x="XText(child.x0, child.x1)"
+                  :y="YText(child.y0, child.y1)"
+                  :style="
+                    tickerTextFontSizeAdjust(
+                      child.x0,
+                      child.x1,
+                      child.y0,
+                      child.y1
+                    )
+                  "
+                >
+                  {{ child.data.change + "%" }}
+                </text>
+              </g>
               <!-- ticker TEXT ********************************* -->
             </g>
 
@@ -282,7 +284,12 @@ let d3 = {
 //// import mapData from "./data/map2.json";
 export default {
   name: "treemap",
-  props: { inputData: Object, inputWidth: Number, inputHeight: Number },
+  props: {
+    inputData: { type: Object, default: null },
+
+    inputWidth: Number,
+    inputHeight: Number
+  },
   data() {
     return {
       jsonData: {
@@ -358,10 +365,40 @@ export default {
   },
   //? You can do whatever when the selected node changes
   watch: {
+    // inputData: {
+    //   // eslint-disable-next-line no-unused-vars
+    //   handler(newValue, oldValue) {
+    //     // let that = this;
+    //     this.jsonData = null;
+    //     console.log("here");
+    //     console.log(this.inputData);
+    //     this.jsonData = this.inputData;
+    //     // this.initialize();
+    //     // this.accumulate(this.rootNode, this);
+    //     // this.treemap(this.rootNode);
+    //   },
+    //   immediate: true,
+
+    //   deep: true
+    // },
+    inputData() {
+      // console.log("inputData", this.inputData);
+      this.jsonData = this.inputData;
+      this.initialize();
+      this.accumulate(this.rootNode, this);
+      this.treemap(this.rootNode);
+    },
     selectedNode(newData, oldData) {
       //// console.log("The selected node changed...");
       //// console.log(newData.data);
       //// console.log(oldData.depth);
+      // console.log(newData.depth, oldData.depth);
+      // if (newData.depth == 0 && oldData == 0){
+      //   this.jsonData = this.inputData;
+      //   this.initialize();
+      //   this.accumulate(this.rootNode, this);
+      //   this.treemap(this.rootNode);
+      // }
       if (newData.depth == 1) {
         // this.initialize()
         this.accumulate(this.rootNode, this);
@@ -558,7 +595,7 @@ export default {
     }
   },
   methods: {
-    ChildClick(item){
+    ChildClick(item) {
       console.log(item);
       this.$router.push({ path: `/ticker/Overview/Overall/${item.data.id}` });
     },

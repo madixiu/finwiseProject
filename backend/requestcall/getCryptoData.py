@@ -66,10 +66,10 @@ def getBCMarketWatch():
     while ct<3:
         resp = requests.get('http://162.55.15.105:3000/View_Crypto_MarketWatch')
         if resp.status_code == 200:
-    
-            # return(resp.text)
-            return (json.loads(resp.text))
-            # return(json.loads(resp.text))
+            js = json.loads(resp.text)
+            for index,item in enumerate(js):
+                item["id"] = index
+            return (js)
         else:
             time.sleep(2)
             ct=ct+1
@@ -79,10 +79,10 @@ def getBCMarketWatchAll():
     while ct<3:
         resp = requests.get('http://162.55.15.105:3000/View_Crypto_MarketWatch_All')
         if resp.status_code == 200:
-    
-            # return(resp.text)
-            return (json.loads(resp.text))
-            # return(json.loads(resp.text))
+            js = json.loads(resp.text)
+            for index,item in enumerate(js):
+               item["id"] = index
+            return (js)
         else:
             time.sleep(2)
             ct=ct+1

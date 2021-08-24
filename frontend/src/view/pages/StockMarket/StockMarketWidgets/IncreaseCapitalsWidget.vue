@@ -164,7 +164,7 @@ export default {
   computed: {
     tablePaginationVisible() {
       let screenHeight = window.innerHeight;
-      let tableHeightWithoutHeader = screenHeight - 303;
+      let tableHeightWithoutHeader = screenHeight - 203;
       //? every row has 55 pixel
       let rowCount = parseInt(tableHeightWithoutHeader / 33);
       return rowCount;

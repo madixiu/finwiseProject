@@ -118,15 +118,14 @@ export default {
   },
   data() {
     return {
-      search: "",
       subheaders: {},
-      // allowed: [],
       stats: [],
       hhdata: [],
       livedata: [],
       techdata: [],
       FundamentalRobot: [],
-      priceHistory: []
+      priceHistory: [],
+      interval: null
     };
   },
   created() {
@@ -149,6 +148,12 @@ export default {
     // };
   },
   watch: {
+    $route() {
+      if (this.$route.name != "TickerOverall") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    },
     "$route.params": {
       handler(newValue, oldValue) {
         if (newValue != oldValue && oldValue != undefined) {
@@ -162,16 +167,16 @@ export default {
   },
   methods: {
     loadData() {
-      this.getOne().then(responx => {
-        this.getTwo().then(responx1 => {
-          this.getHH().then(responx2 => {
-            this.getTechnical().then(getTechnicalresponse => {
-              this.getBonyadi().then(getBonyadiResp => {
-                this.getPriceHistory();
-              });
-            });
+      this.getLiveTickerData().then(getLiveTickerDataresponse => {
+        // this.getTickerStats().then(responx1 => {
+        // this.getHH().then(responx2 => {
+        this.getPriceHistory().then(getPriceHistoryresponse => {
+          this.getTechnical().then(getTechnicalresponse => {
+            this.getBonyadi();
           });
         });
+        // });
+        // });
       });
     },
     async getPriceHistory() {
@@ -204,7 +209,7 @@ export default {
           console.error(error);
         });
     },
-    async getTwo() {
+    async getTickerStats() {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
         .then(response2 => {
@@ -224,7 +229,7 @@ export default {
           console.error(error);
         });
     },
-    async getOne() {
+    async getLiveTickerData() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(LiveTickerResponse => {
@@ -247,28 +252,34 @@ export default {
         }
         // let barier = { request: "get", id: this.$route.params.id };
         // this.$socketLiveTickerData.send(JSON.stringify(barier));
-      }, 3000);
+        this.getLiveTickerData();
+      }, 6000);
     },
     liveChecker() {
       let date = new Date();
       if (
         date.getHours() > 8 &&
-        date.getHours() < 14 &&
+        date.getHours() < 13 &&
         date.getDay() != 5 &&
         date.getDay() != 4
       ) {
         this.WebsocketRequest = true;
-        // this.liveData();
+        this.liveData();
       } else {
         this.WebsocketRequest = false;
       }
     }
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
+  beforeDestroy() {
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+  },
   destroyed() {
     // let barier = { request: "halt" };
-    // this.$socketLiveTickerData.send(JSON.stringify(barier));
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
+    clearInterval(this.interval);
   }
 };
 </script>

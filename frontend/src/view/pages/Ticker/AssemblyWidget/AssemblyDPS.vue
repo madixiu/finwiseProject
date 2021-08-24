@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
       <div class="col-xxl-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
@@ -34,7 +33,6 @@ export default {
   },
   data() {
     return {
-      //// allowed: [],
       subheaders: [],
       deposits: [],
       notice: []

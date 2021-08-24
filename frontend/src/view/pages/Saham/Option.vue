@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <div class="row mr-1 ml-1">

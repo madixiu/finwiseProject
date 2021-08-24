@@ -11,7 +11,7 @@ EventBus.$on("TradingViewAdjust", data => {
   else if (data == "AdjustDPS") typeOf = 1;
   else if (data == "AdjustIC") typeOf = 2;
   else if (data == "AdjustICDPS") typeOf = 3;
-  console.log(data);
+  // console.log(data);
 });
 
 export default {
@@ -35,8 +35,8 @@ export default {
     // return result;
   },
   getBars: function(symbolInfo, resolution, from, to, first, limit) {
-    console.log(symbolInfo);
-    EventBus.$emit("TradingViewSymbol",symbolInfo.name)
+    // console.log(symbolInfo);
+    EventBus.$emit("TradingViewSymbol", symbolInfo.name);
     // var split_symbol = symbolInfo.name.split(/[:/]/)
     // const url = resolution === 'D' ? '/data/histoday' : resolution >= 60 ? '/data/histohour' : '/data/histominute'
     var url = "";

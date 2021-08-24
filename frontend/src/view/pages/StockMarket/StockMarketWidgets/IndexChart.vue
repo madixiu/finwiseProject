@@ -484,7 +484,7 @@ export default {
         });
         var lastItem = data.pop();
         var lastItem2 = data2.pop();
-   
+
         this.latestIndex = lastItem["Index"];
         this.lastestIndexChange = lastItem["IndexChange"];
         this.lastestSWChange = lastItem["SW_Index_Change"];

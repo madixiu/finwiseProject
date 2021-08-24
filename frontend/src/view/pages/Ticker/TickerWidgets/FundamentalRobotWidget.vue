@@ -175,7 +175,6 @@ export default {
           if (d.RatioValue != "NaN") max.push(d.RatioValue);
 
           this.lastUpdate = d.CalculatedOn;
-          console.log(d.RatioValue);
           // this.chartOptions.xaxis.categories.push(d.Ratio);
           this.chartOptions.xaxis.categories.push(d.displayTitle);
           if (d.Ratio == "PeterLynch") {
@@ -190,10 +189,8 @@ export default {
             if (d.close != "NaN") max.push(d.close);
           });
         }
-        console.log("max:", max);
         let Max = Math.max(...max);
-        console.log("max:", Max);
-        Max = Max + (Max / 10);
+        Max = Max + Max / 10;
 
         this.chartOptions.yaxis.max = Max;
 

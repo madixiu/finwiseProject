@@ -11,14 +11,8 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "IRANSansXFaNum-Bold";
-  src: url("IRANSansXFaNum-Bold.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "IRANSansXFaNum-Regular";
-  src: url("IRANSansXFaNum-Regular.woff") format("woff");
+  font-family: "IBMPlexSans";
+  src: url("IBMPlexSans.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

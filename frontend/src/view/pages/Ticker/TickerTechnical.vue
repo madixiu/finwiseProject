@@ -13,12 +13,9 @@ export default {
   },
   watch: {
     searchItems(newValue, oldValue) {
-      console.log(oldValue.length);
       if (oldValue.length == 0 && newValue.length != 0) {
         this.ticker = this.Ticker(this.$route.params.id);
       }
-      // this.ticker = "شتران"
-      // if(this.searchItems.length)
     }
   },
   data() {

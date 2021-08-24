@@ -42,15 +42,6 @@ export default {
     HHChart,
     EffectOnIndexChart
   },
-  // computed: {
-  //   // cardHeight() {
-  //   //   if (this.HHseries.length != 0) {
-  //   //     let height = document.getElementById("HHChartID").clientHeight + 36;
-  //   //     console.log(document.getElementById("HHChartID"));
-  //   //     return height;
-  //   //   } else return 315;
-  //   // }
-  // },
   props: { inpuDataIndustryHH: Array, inputDataIndustryImpact: Array },
   data() {
     return {

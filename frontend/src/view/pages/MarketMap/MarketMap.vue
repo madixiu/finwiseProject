@@ -9,11 +9,11 @@
       <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
 
       <treemap
+        v-if="dataFetched && width != null"
         :key="mapKey"
         :inputData="map"
         :inputWidth="width"
         :inputHeight="height"
-        v-if="dataFetched && width != null"
       ></treemap>
       <!-- </div> -->
     </div>
@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       mapKey: 0,
+      interval: null,
       dataFetched: false,
       map: null,
       width: null,
@@ -38,7 +39,14 @@ export default {
       WebsocketRequest: false
     };
   },
-
+  watch: {
+    $route() {
+      if (this.$route.name != "marketmap") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    }
+  },
   created() {
     document.title = "Finwise - نقشه بازار";
 
@@ -62,10 +70,10 @@ export default {
     this.width = headerWidth;
     this.width = window.innerWidth - 10;
     // console.log(this.width);
+    this.loadData();
 
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
-    this.loadData();
 
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -106,30 +114,43 @@ export default {
     },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         if (!this.WebsocketRequest) {
-          clearInterval(interval);
+          clearInterval(this.interval_id);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketMarketMap.send(JSON.stringify(barier));
-      }, 30000);
+        // let barier = { request: "get" };
+        // this.$socketMarketMap.send(JSON.stringify(barier));
+        this.loadData();
+      }, 3000);
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 13 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
-        // this.liveData();
+        this.liveData();
       } else {
         this.WebsocketRequest = false;
       }
     }
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
+  beforeDestroy() {
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
+  },
   destroyed() {
     // let barier = { request: "halt" };
-    // this.$socketMarketMap.send(JSON.stringify(barier));
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
   }
 };
 </script>

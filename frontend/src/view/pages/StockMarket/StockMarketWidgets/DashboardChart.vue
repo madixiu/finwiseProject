@@ -29,9 +29,69 @@
           ></v-radio>
         </v-radio-group>
       </v-toolbar>
-      <!-- <v-divider class="mt-0"></v-divider> -->
+      <!-- // ? TOOLTIP PLACEMENT ************************** -->
+      <div
+        :style="tooltipPosition"
+        v-if="VolumeTooltip || ValueTooltip"
+        class="D3TestTooltip"
+      >
+        <div class="D3TestTopDivTooltip">
+          <span>
+            {{ tooltipData.ticker }}
+          </span>
+        </div>
+        <div class="D3TestMiddleDivTooltip">
+          <span style="color:#000;font-size:0.8em" class="mr-1"
+            >میلیارد ریال</span
+          >
+          <span style="color:#000;font-size:0.8em" class="mr-1">{{
+            numberWithCommas(roundTo(tooltipData.Value / 1000000000, 0))
+          }}</span>
+          <span style="color:#000;font-size:0.8em" dir="rtl"
+            >ارزش معاملات:</span
+          >
+        </div>
+        <div class="D3TestMiddleDivTooltip">
+          <span style="color:#000;font-size:0.8em" class="mr-1">میلیون</span>
+          <span style="color:#000;font-size:0.8em" class="mr-1">{{
+            numberWithCommas(roundTo(tooltipData.Vol / 1000000, 0))
+          }}</span>
+          <span style="color:#000;font-size:0.8em" dir="rtl">حجم معاملات:</span>
+        </div>
+        <div class="D3TestMiddleDivTooltip">
+          <span style="color:#000;font-size:0.8em" class="mr-1"
+            >هزار میلیارد ریال</span
+          >
+          <span style="color:#000;font-size:0.8em" class="mr-1">{{
+            numberWithCommas(roundTo(tooltipData.MarketCap / 1000000000000, 0))
+          }}</span>
+          <span style="color:#000;font-size:0.8em" dir="rtl">ارزش بازار:</span>
+        </div>
+        <div class="D3TestBottomDivTooltip">
+          <span style="color:#000;font-size:0.8em" class="mr-1">{{
+            tooltipData.persianName
+          }}</span>
+          <span style="color:#000;font-size:0.8em" dir="rtl">بازار:</span>
+        </div>
+      </div>
+
+      <div
+        :style="tooltipPosition"
+        v-if="BestTooltip || WorstTooltip"
+        class="D3TestTooltip"
+      >
+        <div class="D3TestTopDivTooltip">
+          <span>
+            {{ tooltipData.ticker }}
+          </span>
+        </div>
+        <div class="D3TestBottomDivTooltip" style="justify-content:center">
+          <span :class="[tooltipData.Impact < 0 ? 'redItem' : 'greenItem']">{{
+            numberWithCommas(roundTo(tooltipData.Impact, 0))
+          }}</span>
+        </div>
+      </div>
       <div id="ChartContainer_Status"></div>
-      <!--end::Header-->
     </v-card>
   </div>
 </template>
@@ -43,6 +103,15 @@ export default {
   props: { inputDataStatus: Array, inputDataImpact: Array },
   data() {
     return {
+      //? tooltip
+      tooltipData: {},
+      VolumeTooltip: false,
+      ValueTooltip: false,
+      BestTooltip: false,
+      WorstTooltip: false,
+      pageX: null,
+      pageY: null,
+      //********* */
       jsonData: [],
       jsonData2: [],
       loading: true,
@@ -80,12 +149,39 @@ export default {
       }
     }
   },
+  computed: {
+    tooltipPosition() {
+      let res = {};
+      if (this.VolumeTooltip)
+        res = {
+          right: this.width - this.pageX + 100 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      else if (this.WorstTooltip)
+        res = {
+          right: this.width - this.pageX + 100 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      else if (this.BestTooltip) {
+        res = {
+          right: this.width - this.pageX + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      } else {
+        res = {
+          right: this.width - this.pageX + -150 + "px",
+          bottom: this.height - this.pageY + 40 + "px"
+        };
+      }
+      return res;
+    }
+  },
   mounted() {
     this.initrender();
-    this.renderData();
-    if (this.isRealValue(this.highestValues)) {
-      this.renderChart();
-    }
+    // this.renderData();
+    // if (this.isRealValue(this.highestValues)) {
+    //   this.renderChart();
+    // }
   },
   methods: {
     numberWithCommas(x) {
@@ -151,6 +247,7 @@ export default {
         0.075;
       this.offsetY = this.margin.top;
       var parent = document.getElementById("ChartContainer_Status");
+
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
@@ -176,7 +273,7 @@ export default {
           800 &&
         parseInt(d3.select("#ChartContainer_Status").style("width"), 10) < 1000
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.datasizeOf = 8;
         this.shortenNames = true;
       }
@@ -185,7 +282,7 @@ export default {
           600 &&
         parseInt(d3.select("#ChartContainer_Status").style("width"), 10) < 800
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.datasizeOf = 5;
         this.shortenNames = true;
       }
@@ -194,7 +291,7 @@ export default {
           400 &&
         parseInt(d3.select("#ChartContainer_Status").style("width"), 10) < 600
       ) {
-        this.fontsizeOf = 1;
+        this.fontsizeOf = 0.9;
         this.width =
           0.7 *
           parseInt(d3.select("#ChartContainer_Status").style("width"), 10);
@@ -253,14 +350,14 @@ export default {
           "background",
           "url(../../media/logos/fadedfinwise.png) no-repeat center "
         );
-      // eslint-disable-next-line no-unused-vars
+
       const chart = svg
         .append("g")
         .attr(
           "transform",
           `translate(${this.margin.left}, ${this.margin.top})`
         );
-      // // eslint-disable-next-line no-unused-vars
+      //
       // svg
       //   .append("text")
       //   .attr("class", "source")
@@ -284,25 +381,24 @@ export default {
           .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
           .range([this.height - this.margin.bottom, 0])
           .nice();
-        // eslint-disable-next-line no-unused-vars
+
         const xRight = d3
           .scaleBand()
           .domain(this.highestVolumes.map(x => x.ticker))
           .range([this.width, this.width / 2])
           .padding(0.15);
 
-        // eslint-disable-next-line no-unused-vars
         const yRight = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestVolumes.map(x => x.Vol)) * 1.2])
           .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
-        var mycolor = d3
+        var ValueColor = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestValues.map(x => x.Value)) * 1.2])
-          .range(["#66BB6A", "#1B5E20"]);
-        var mycolor2 = d3
+          .range(["#00CC18", "#00ad13"]);
+        var VolumeColor = d3
           .scaleLinear()
           .domain([0, Math.max(...this.highestVolumes.map(x => x.Vol)) * 1.2])
           .range(["#4DD0E1", "#006064"]);
@@ -334,15 +430,16 @@ export default {
           .selectAll("text")
           .style("text-anchor", "start")
           .attr("transform", `translate(0,0)`)
-          // .attr("dx", "-8em")
-          // .style("font-size", `${this.width / 1000}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .attr("dx", "-4px")
+          .style("font-size", `1em`)
+          // .style("font-size", `${this.fontsizeOf}em`)
           .style("font-family", "Vazir-Light-FD")
           .style("font-weight", "800");
         aXisY2Axe
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
           .style("opacity", "0.2");
+
         chart
           .append("g")
           .call(d3.axisBottom(xLeft))
@@ -393,14 +490,13 @@ export default {
           .data(this.highestValues)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "DashboardChart-yAxis-label")
           .attr("text-anchor", "middle")
-          //! GRAY text
-          // .attr("fill", "#70747a")
+          .attr("dy", "-3px")
           .attr("fill", "#000")
 
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           .attr("x", d => xLeft(d.ticker) + xLeft.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft(d["Value"]) - 0.05 * this.height;
@@ -415,14 +511,12 @@ export default {
                 "</a>"
               );
             } else {
-              return d.ticker;
+              return `<a>${d.ticker}</a>`;
             }
           })
           .attr("transform", function() {
-            var me = this;
-            var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
-            var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
-
+            let x1 = this.getBBox().x + this.getBBox().width / 2; //the center x about which you want to rotate
+            let y1 = this.getBBox().y + this.getBBox().height / 2; //the center y about which you want to rotate
             return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
           });
         chart
@@ -430,35 +524,27 @@ export default {
           .data(this.highestVolumes)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "DashboardChart-yAxis-label")
+          .attr("dy", "-3px")
           .attr("text-anchor", "middle")
-          //! GRAY TEXT
-          // .attr("fill", "#70747a")
           .attr("fill", "#000")
-
-          // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          .style("font-size", `0.85em`)
+          .style("font-weight", `500`)
+          .style("font-family", "Vazir-Light-FD")
           .attr("x", d => xRight(d.ticker) + xRight.bandwidth() * 0.5)
           .attr("y", d => {
             return yRight(d["Vol"]) - 0.05 * this.height;
           })
           .html(d => {
             if (d.Type == "stock") {
-              return (
-                '<a href="/ticker/Overview/Overall/' +
-                d.ID +
-                '">' +
-                d.ticker +
-                "</a>"
-              );
+              return `<a href="/ticker/Overview/Overall/${d.ID}">${d.ticker}</a>`;
             } else {
-              return d.ticker;
+              return `<a>${d.ticker}</a>`;
             }
           })
           .attr("transform", function() {
-            var me = this;
-            var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
-            var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
+            let x1 = this.getBBox().x + this.getBBox().width / 2; //the center x about which you want to rotate
+            let y1 = this.getBBox().y + this.getBBox().height / 2; //the center y about which you want to rotate
 
             return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
           });
@@ -467,39 +553,39 @@ export default {
           .append("line")
           .style("stroke", "black")
           .attr("x1", xRight(0))
-          // eslint-disable-next-line no-unused-vars
+
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight(0))
           .attr("y2", `${0}`)
-          // eslint-disable-next-line no-unused-vars
+
           .attr("transform", `translate(${this.width / 2},0)`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(${this.width / 2},${0})`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(0,${0})`);
+        // chart
+        //   .append("line")
+        //   .style("stroke", "steelblue")
+        //   .attr("x1", 0)
+
+        //   .attr("y1", 0)
+        //   .attr("x2", `${this.width / 2}`)
+        //   .attr("y1", 0)
+
+        //   .attr("transform", `translate(${this.width / 2},${0})`);
+        // chart
+        //   .append("line")
+        //   .style("stroke", "steelblue")
+        //   .attr("x1", 0)
+
+        //   .attr("y1", 0)
+        //   .attr("x2", `${this.width / 2}`)
+        //   .attr("y1", 0)
+
+        //   .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
           .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          // .style("font-size", "1em")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین ارزش معاملات");
 
@@ -509,28 +595,28 @@ export default {
           .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
+          .style("font-family", "Vazir-Light-FD")
           // .style("font-size", "1em")
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بیشترین حجم معاملات");
 
-        // eslint-disable-next-line no-unused-vars
-        const tooltip = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", this.width / 3 + "px")
-          .style("top", this.height / 3 + "px");
-        const tooltip2 = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", (this.width * 7) / 12 + "px")
-          .style("top", this.height / 3 + "px");
-        // eslint-disable-next-line no-unused-vars
+        // const tooltip = d3
+        //   .select(parent)
+        //   .append("div")
+        //   .attr("class", "d3-tip")
+        //   .style("position", "absolute")
+        //   .style("visibility", "hidden")
+        //   .style("left", this.width / 3 + "px")
+        //   .style("top", this.height / 3 + "px");
+        // const tooltip2 = d3
+        //   .select(parent)
+        //   .append("div")
+        //   .attr("class", "d3-tip")
+        //   .style("position", "absolute")
+        //   .style("visibility", "hidden")
+        //   .style("left", (this.width * 7) / 12 + "px")
+        //   .style("top", this.height / 3 + "px");
+
         let that = this;
         chart
           .selectAll()
@@ -539,44 +625,50 @@ export default {
           .append("rect")
           .attr("x", d => xRight(d.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip2
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
-                  "میلیون " +
-                  "<br>" +
-                  "ارزش بازار: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.MarketCap / 1000000000000, 0)
-                  ) +
-                  "هزار میلیارد ریال " +
-                  "<br>" +
-                  "بازار:" +
-                  d.persianName
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.VolumeTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            // tooltip2
+            //   .html(
+            //     "نماد: " +
+            //       d.ticker +
+            //       "<hr/>" +
+            //       " ارزش معاملات: " +
+            //       that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+            //       "میلیارد ریال " +
+            //       "<br>" +
+            //       " حجم معاملات: " +
+            //       that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+            //       "میلیون " +
+            //       "<br>" +
+            //       "ارزش بازار: " +
+            //       that.numberWithCommas(
+            //         that.roundTo(d.MarketCap / 1000000000000, 0)
+            //       ) +
+            //       "هزار میلیارد ریال " +
+            //       "<br>" +
+            //       "بازار:" +
+            //       d.persianName
+            //   )
+            //   .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.VolumeTooltip = false;
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip2.style("visibility", "hidden");
+            // tooltip2.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yRight(d.Vol);
@@ -586,8 +678,9 @@ export default {
           )
           .attr("width", xRight.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2(d.Vol);
-          });
+            return VolumeColor(d.Vol);
+          })
+          .attr("stroke", "#3e3e4e");
         chart
           .selectAll()
           .data(this.highestValues)
@@ -595,44 +688,52 @@ export default {
           .append("rect")
           .attr("x", s => xLeft(s.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " ارزش معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
-                  "میلیارد ریال " +
-                  "<br>" +
-                  " حجم معاملات: " +
-                  that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
-                  "میلیون " +
-                  "<br>" +
-                  "ارزش بازار: " +
-                  that.numberWithCommas(
-                    that.roundTo(d.MarketCap / 1000000000000, 0)
-                  ) +
-                  "هزار میلیارد ریال " +
-                  "<br>" +
-                  "بازار:" +
-                  d.persianName
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.ValueTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+
+            // tooltip
+            //   .html(
+            //     "نماد: " +
+            //       d.ticker +
+            //       "<hr/>" +
+            //       " ارزش معاملات: " +
+            //       that.numberWithCommas(that.roundTo(d.Value / 1000000000, 0)) +
+            //       "میلیارد ریال " +
+            //       "<br>" +
+            //       " حجم معاملات: " +
+            //       that.numberWithCommas(that.roundTo(d.Vol / 1000000, 0)) +
+            //       "میلیون " +
+            //       "<br>" +
+            //       "ارزش بازار: " +
+            //       that.numberWithCommas(
+            //         that.roundTo(d.MarketCap / 1000000000000, 0)
+            //       ) +
+            //       "هزار میلیارد ریال " +
+            //       "<br>" +
+            //       "بازار:" +
+            //       d.persianName
+            //   )
+            //   .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.ValueTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip.style("visibility", "hidden");
+            // tooltip.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yLeft(d.Value);
@@ -642,9 +743,10 @@ export default {
           )
           .attr("width", xLeft.bandwidth())
           .attr("fill", function(d) {
-            return mycolor(d.Value);
+            return ValueColor(d.Value);
           })
-          .style("opacity", "80%");
+          .attr("stroke", "#3e3e4e");
+        // .style("opacity", "80%");
       }
       if (this.SortBy == "Impact") {
         const xLeft_2 = d3
@@ -682,14 +784,13 @@ export default {
           ])
           .range([this.height - this.margin.bottom, 0])
           .nice();
-        // eslint-disable-next-line no-unused-vars
+
         const xRight_2 = d3
           .scaleBand()
           .domain(this.lowestImpcats.map(x => x.ticker))
           .range([this.width, this.width / 2])
           .padding(0.15);
 
-        // eslint-disable-next-line no-unused-vars
         const yRight_2 = d3
           .scaleLinear()
           .domain([
@@ -721,7 +822,7 @@ export default {
           .range([this.height - this.margin.bottom, 0])
           .nice();
         ///////////////
-        var mycolor_2 = d3
+        var PositiveImpactColor = d3
           .scaleLinear()
           .domain([
             0,
@@ -746,11 +847,11 @@ export default {
               )
             ) * 1.2
           ])
-          .range(["#66BB6A", "#1B5E20"]);
-        var mycolor2_2 = d3
+          .range(["#00CC18", "#00ad13"]);
+        var NegativeImpactColor = d3
           .scaleLinear()
           .domain([0, Math.max(...this.lowestImpcats.map(x => x.Impact)) * 1.2])
-          .range(["#a01a58", "#b7094c"]);
+          .range(["#F50800", "#DC0600"]);
         //////////////
         let aXisY2_2 = d3
           .axisLeft(yLeft_2)
@@ -768,10 +869,10 @@ export default {
           .style("text-anchor", "start")
           .attr("transform", `translate(0,0)`)
           // .attr("dx", "-8em")
-          // .style("font-size", `${this.width / 1000}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
-          .style("font-family", "Vazir-Light-FD")
-          .style("font-weight", "800");
+          .style("font-size", `1em`);
+        // .style("font-size", `${this.fontsizeOf}em`)
+        // .style("font-family", "Vazir-Light-FD")
+        // .style("font-weight", "800");
         aXisY2Axe_2
           .selectAll(".tick line")
           .attr("stroke", "#b0a8b9")
@@ -823,11 +924,14 @@ export default {
           .data(this.highestImpcats)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "DashboardChart-yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#000")
+          .attr("dy", "-3px")
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
           // .style("font-size", `${this.width / 950}em`)
-          .style("font-size", `${this.fontsizeOf}em`)
+          // .style("font-size", `${this.fontsizeOf}em`)
           .attr("x", d => xLeft_2(d.ticker) + xLeft_2.bandwidth() * 0.5)
           .attr("y", d => {
             return yLeft_2(d["Impact"]) - 0.05 * this.height;
@@ -841,9 +945,8 @@ export default {
               "</a>"
           )
           .attr("transform", function() {
-            var me = this;
-            var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
-            var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
+            var x1 = this.getBBox().x + this.getBBox().width / 2; //the center x about which you want to rotate
+            var y1 = this.getBBox().y + this.getBBox().height / 2; //the center y about which you want to rotate
 
             return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
           });
@@ -852,10 +955,13 @@ export default {
           .data(this.lowestImpcats)
           .enter()
           .append("text")
-          .attr("class", "yAxis-label")
+          .attr("class", "DashboardChart-yAxis-label")
           .attr("text-anchor", "middle")
           .attr("fill", "#000")
-          .style("font-size", `${this.fontsizeOf}em`)
+          .attr("dy", "-3px")
+          .style("font-weight", `500`)
+          .style("font-size", `0.85em`)
+          // .style("font-size", `${this.fontsizeOf}em`)
           // .style("font-size", `${this.width / 950}em`)
           .attr("x", d => xRight_2(d.ticker) + xRight_2.bandwidth() * 0.5)
           .attr("y", d => {
@@ -870,9 +976,8 @@ export default {
               "</a>"
           )
           .attr("transform", function() {
-            var me = this;
-            var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
-            var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
+            var x1 = this.getBBox().x + this.getBBox().width / 2; //the center x about which you want to rotate
+            var y1 = this.getBBox().y + this.getBBox().height / 2; //the center y about which you want to rotate
 
             return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
           });
@@ -881,39 +986,39 @@ export default {
           .append("line")
           .style("stroke", "black")
           .attr("x1", xRight_2(0))
-          // eslint-disable-next-line no-unused-vars
+
           .attr("y1", `${this.height - this.margin.bottom}`)
           .attr("x2", xRight_2(0))
           .attr("y2", `${0}`)
-          // eslint-disable-next-line no-unused-vars
+
           .attr("transform", `translate(${this.width / 2},0)`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(${this.width / 2},${0})`);
-        chart
-          .append("line")
-          .style("stroke", "steelblue")
-          .attr("x1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("y1", 0)
-          .attr("x2", `${this.width / 2}`)
-          .attr("y1", 0)
-          // eslint-disable-next-line no-unused-vars
-          .attr("transform", `translate(0,${0})`);
+        // chart
+        //   .append("line")
+        //   .style("stroke", "steelblue")
+        //   .attr("x1", 0)
+
+        //   .attr("y1", 0)
+        //   .attr("x2", `${this.width / 2}`)
+        //   .attr("y1", 0)
+
+        //   .attr("transform", `translate(${this.width / 2},${0})`);
+        // chart
+        //   .append("line")
+        //   .style("stroke", "steelblue")
+        //   .attr("x1", 0)
+
+        //   .attr("y1", 0)
+        //   .attr("x2", `${this.width / 2}`)
+        //   .attr("y1", 0)
+
+        //   .attr("transform", `translate(0,${0})`);
         chart
           .append("text")
           .attr("class", "Chart1title")
           .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          // .style("font-size", "1em")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بهترین ");
 
@@ -923,28 +1028,29 @@ export default {
           .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
-          // .style("font-size", "1em")
+          .style("font-family", "Vazir-Light-FD")
+
           .style("font-size", `${this.fontsizeOf}em`)
           .text("بدترین ");
 
-        // eslint-disable-next-line no-unused-vars
-        const tooltip = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", this.width / 3 + "px")
-          .style("top", this.height / 3 + "px");
-        const tooltip2 = d3
-          .select(parent)
-          .append("div")
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("visibility", "hidden")
-          .style("left", (this.width * 7) / 12 + "px")
-          .style("top", this.height / 3 + "px");
-        // eslint-disable-next-line no-unused-vars
+        // const tooltip = d3
+        //   .select(parent)
+        //   .append("div")
+        //   .attr("class", "d3-tip")
+        //   .style("position", "absolute")
+        //   .style("visibility", "hidden")
+        //   .style("left", this.width / 3 + "px")
+        //   .style("top", this.height / 3 + "px");
+
+        // const tooltip2 = d3
+        //   .select(parent)
+        //   .append("div")
+        //   .attr("class", "d3-tip")
+        //   .style("position", "absolute")
+        //   .style("visibility", "hidden")
+        //   .style("left", (this.width * 7) / 12 + "px")
+        //   .style("top", this.height / 3 + "px");
+
         let that = this;
         chart
           .selectAll()
@@ -953,32 +1059,39 @@ export default {
           .append("rect")
           .attr("x", d => xRight_2(d.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip2
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " تاثیر روی شاخص: " +
-                  that.numberWithCommas(that.roundTo(d.Impact, 0)) +
-                  "واحد " +
-                  "<br>"
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.WorstTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            // tooltip2
+            //   .html(
+            //     "نماد: " +
+            //       d.ticker +
+            //       "<hr/>" +
+            //       " تاثیر روی شاخص: " +
+            //       that.numberWithCommas(that.roundTo(d.Impact, 0)) +
+            //       "واحد " +
+            //       "<br>"
+            //   )
+            //   .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.WorstTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip2.style("visibility", "hidden");
+            // tooltip2.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yRight_2(d.Impact);
@@ -991,8 +1104,9 @@ export default {
           )
           .attr("width", xRight_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor2_2(d.Impact);
-          });
+            return NegativeImpactColor(d.Impact);
+          })
+          .attr("stroke", "#3e3e4e");
         chart
           .selectAll()
           .data(this.highestImpcats)
@@ -1000,32 +1114,39 @@ export default {
           .append("rect")
           .attr("x", s => xLeft_2(s.ticker))
           .attr("y", this.height - this.margin.bottom)
-          .on("mouseenter touchstart", function(event, d) {
-            tooltip
-              .html(
-                "نماد: " +
-                  d.ticker +
-                  "<hr/>" +
-                  " تاثیر روی شاخص: " +
-                  that.numberWithCommas(that.roundTo(d.Impact, 0)) +
-                  "واحد " +
-                  "<br>"
-              )
-              .style("visibility", "visible");
+          .on("mousemove touchstart", function(event, d) {
+            that.tooltipData = d;
+            that.BestTooltip = true;
+            let coordinates = d3.pointer(event);
+            that.pageX = coordinates[0];
+            that.pageY = coordinates[1];
+            // tooltip
+            //   .html(
+            //     "نماد: " +
+            //       d.ticker +
+            //       "<hr/>" +
+            //       " تاثیر روی شاخص: " +
+            //       that.numberWithCommas(that.roundTo(d.Impact, 0)) +
+            //       "واحد " +
+            //       "<br>"
+            //   )
+            //   .style("visibility", "visible");
             d3.select(this)
               .transition()
-              .duration(200)
-              .style("opacity", 0.5);
+              .duration(20)
+              .style("opacity", 0.7);
           })
           .on("mouseleave touchend", function() {
+            that.BestTooltip = false;
+
             d3.select(this)
               .transition()
               .duration(200)
               .style("opacity", 1);
-            tooltip.style("visibility", "hidden");
+            // tooltip.style("visibility", "hidden");
           })
           .transition()
-          .duration(2000)
+          .duration(700)
           .ease(d3.easePolyOut)
           .attr("y", function(d) {
             return yLeft_2(d.Impact);
@@ -1038,9 +1159,10 @@ export default {
           )
           .attr("width", xLeft_2.bandwidth())
           .attr("fill", function(d) {
-            return mycolor_2(d.Impact);
+            return PositiveImpactColor(d.Impact);
           })
-          .style("opacity", "80%");
+          .attr("stroke", "#3e3e4e");
+        // .style("opacity", "80%");
       }
       window.addEventListener("resize", this.initrender);
       window.addEventListener("resize", this.renderData);
@@ -1083,6 +1205,73 @@ export default {
     min-height: 0px !;
     min-width: 0px;
 } */
+.redItem {
+  color: red;
+  font-size: 0.8em;
+}
+.greenItem {
+  color: green;
+  font-size: 0.8em;
+}
+.D3TestTooltip {
+  position: absolute;
+  /* top: 20px; */
+  /* right: 0px; */
+  width: auto;
+  height: auto;
+  /* padding: 15px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-left: 20px;
+  margin-top: 20px; */
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 8px;
+  display: flex;
+  /* cursor: pointer; */
+  /* flex-wrap: nowrap; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  z-index: 95;
+}
+.D3TestTopDivTooltip {
+  border-radius: 8px 8px 0px 0px;
+  background-color: #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.D3TestBottomDivTooltip {
+  border-radius: 0px 0px 8px 8px;
+
+  background-color: #eaeaea;
+  direction: ltr;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+.D3TestMiddleDivTooltip {
+  border-radius: 0px 0px 0px 0px;
+  background-color: #eaeaea;
+  direction: ltr;
+  display: flex;
+  border-bottom: 1px solid #bdbdbd;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -1095,16 +1284,6 @@ export default {
 .Chart1title * {
   font-size: 1.2em;
   font-family: "Vazir-Light-FD";
-}
-.cellItem {
-  font-family: "Vazir-Medium-FD";
-}
-.dot {
-  height: 25px;
-  width: 25px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
 }
 .d3-tip {
   font-family: "Vazir-Light-FD";

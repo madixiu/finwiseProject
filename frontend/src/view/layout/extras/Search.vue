@@ -4,14 +4,20 @@
     placeholder="جستجو"
     :get-result-value="getResultValue"
     @submit="handleSubmit"
+    @keypress="searchA"
     :debounceTime="500"
   >
     <template #result="{ result, props }">
-      <li v-bind="props">
-        <div class="search-title">
-          {{ result.ticker }}
+      <li v-bind="props" style="width:200px !important">
+        <div style="width:100%">
+          <span class="search-title">
+            {{ result.ticker }}
+          </span>
           <span class="mr-1 search-title_sub">{{ result.name }}</span>
+          <div>
+
           <span class="search-snippet">({{ result.Type }})</span>
+          </div>
         </div>
         <!-- <div class="search-snippet">{{ result.Type }}</div> -->
       </li>
@@ -95,23 +101,46 @@ export default {
       return process.env.BASE_URL + "media/svg/icons/General/Search.svg";
     }
   },
-  mounted() {
-    // this.loadData();
-  },
+  // mounted() {
+  //   // this.loadData();
+  // },
   methods: {
+    //? OLD method
     //----------------------------------
     searchA(input) {
       if (input.length < 1) {
         return [];
+      } else {
+        let res = this.searchData.filter(e => {
+          if (e.name == null) return e.ticker.includes(input.toUpperCase());
+          else {
+            return (
+              e.ticker.startsWith(input.toUpperCase()) ||
+              e.ticker.includes(input.toUpperCase()) ||
+              (!e.ticker.includes(input.toUpperCase()) &&
+                e.name.includes(input.toLowerCase()))
+            );
+          }
+        });
+
+        let localInput = input;
+        localInput = localInput.slice(0, localInput.length - 1);
+        var rslt = [];
+        var firstBatch = [];
+        var secondBatch = [];
+        for (let item of res) {
+          if (item.ticker.startsWith(localInput)) {
+            firstBatch.push(item);
+          } else if (item.ticker.includes(localInput)) {
+            secondBatch.push(item);
+          } else {
+            rslt.push(item);
+          }
+        }
+        rslt = firstBatch.concat(secondBatch).concat(rslt);
+
+        return rslt;
       }
-      return this.searchData.filter(e => {
-        if (e.name == null) return e.ticker.includes(input.toUpperCase());
-        else
-          return (
-            e.ticker.includes(input.toUpperCase()) ||
-            e.name.includes(input.toLowerCase())
-          );
-      });
     },
     // shows selected searched item (set to nothing)
     // eslint-disable-next-line no-unused-vars
@@ -119,6 +148,22 @@ export default {
       return "";
     },
     //----------------------------------
+
+    // searchA(input) {
+    //   // var result = [];
+    //   if (input.length < 1) {
+    //     return [];
+    //   } else {
+    //     // let searchData = this.searchData;
+    //     this.searchData.filter(e => {
+    //       return (
+    //         e.ticker.includes(input.toUpperCase()) ||
+    //         (!e.ticker.includes(input.toUpperCase()) &&
+    //           e.name.includes(input.toUpperCase()))
+    //       );
+    //     });
+    //   }
+    // },
     handleSubmit(result) {
       if (result.TypeID == 1 || result.TypeID == 25) {
         // this.$router.push({ name: "TickerOverall", params: { id: result.ID } });
@@ -174,12 +219,12 @@ export default {
 </script>
 <style>
 .search-title {
-  font-size: 0.9rem;
+  font-size: 0.9em;
   font-weight: 600;
   direction: rtl;
 }
 .search-title_sub {
-  font-size: 0.8rem;
+  font-size: 0.7em;
   font-weight: 500;
   direction: rtl;
 }
@@ -194,15 +239,12 @@ export default {
   border: 1px solid #eee;
   border-radius: 7px;
   width: 100%;
-  margin: 10px 10px 10px 10px;
-  padding: 4px 30px 4px 40px;
-  -webkit-box-sizing: border-box;
+  margin: 10px 0px 10px 0px;
+  padding: 4px 30px 4px 30px;
   box-sizing: border-box;
   position: relative;
   font-size: 0.9rem;
   line-height: 1.7;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
   flex: 1;
   background-color: #eee;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+);
@@ -251,7 +293,7 @@ export default {
 }
 [data-position="below"] .autocomplete-result-list {
   margin-top: -10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   border-top-color: #0000002e;
   border-radius: 0 0 8px 8px;
   padding-bottom: 3px;
@@ -264,7 +306,7 @@ export default {
   padding-top: 8px;
 }
 .autocomplete-result {
-  cursor: default;
+  cursor: pointer;
   padding: 10px 10px 12px 0px;
   /* background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
   background-repeat: no-repeat;

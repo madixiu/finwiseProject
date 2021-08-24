@@ -1,12 +1,24 @@
 <template>
-  <div>
-    <highcharts
-      :constructorType="'stockChart'"
-      class="hc"
-      :options="chartOptions"
-      ref="chart"
-    ></highcharts>
-  </div>
+  <v-card rounded="lg" height="358">
+    <v-toolbar
+      dense
+      class="IndexChartToolbars elevation-2 mb-1"
+      style="height:36px;"
+    >
+      <v-toolbar-title style="height:20px;font-size:0.95em"
+        >سابقه قیمت</v-toolbar-title
+      >
+    </v-toolbar>
+    <div id="tickerPriceDiv" class="d-flex">
+      <highcharts
+        :constructorType="'stockChart'"
+        class="hc"
+        width="100%"
+        :options="chartOptions"
+        ref="chart"
+      ></highcharts>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -26,6 +38,11 @@ export default {
       fullData: [],
       chartOptions: {}
     };
+  },
+  mounted() {
+    let div = document.getElementById("tickerPriceDiv").clientWidth;
+    this.chartOptions.chart.width = div;
+    this.chartOptions.chart.height = ((300 / div) * 100).toString() + "%";
   },
   watch: {
     priceHistory() {
@@ -54,11 +71,13 @@ export default {
       },
 
       chart: {
-        // height: (9 / 16 * 100) + '%' // 16:9 ratio
-        height: "50%",
-        lang: {
-          rangeSelectorZoom: "بازه"
-        }
+        // height: (9 / 16 * 100)-5 + '%', // 16:9 ratio
+        width: "900",
+        // height: "40%"
+        height: "35%"
+        // lang: {
+        //   rangeSelectorZoom: "بازه"
+        // }
       },
       rangeSelector: {
         inputEnabled: false,
@@ -110,6 +129,7 @@ export default {
         // selected: 1
       },
       navigator: {
+        enabled: false,
         maskFill: "rgba(115, 113, 115, 0.2)",
         outlineColor: "rgba(190, 179, 9, 0.2)",
         outlineWidth: 2,
@@ -238,7 +258,7 @@ export default {
             let year = dateEX.getFullYear().toString();
             let month = (dateEX.getMonth() + 1).toString();
             let day = dateEX.getDate().toString();
-            console.log(year + "/" + month + "/" + day);
+            // console.log(year + "/" + month + "/" + day);
 
             return that
               .$moment(year + "/" + month + "/" + day, "YYYY/MM/DD")

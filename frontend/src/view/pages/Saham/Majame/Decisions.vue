@@ -263,10 +263,8 @@ export default {
     this.loadData();
   },
   methods: {
-    filterEvent(){
+    filterEvent() {
       this.tablePaginationLength = this.gridApi.paginationGetTotalPages();
-
-      console.log("filter changed fucker");
     },
     getHeight() {
       return (
