@@ -24,6 +24,10 @@ urlpatterns = [
    path("getAllTradesValue",getAllTradesValue),
    path("LatestNews",getLatestNews),
    path("getTodayTepix",getTodayTepix),
+   path("getTodayNetHaghighi",getTodayNetHH),
+   path("getTodayAdvancingDescending",getAdvancingDescending),
+   path("getTodayAdvancingDescendingIndustries",getAdvancingDescendingIndustries),
+   path("getTodayWinnersLosers",getWinnersLosers),
    path("HHMarketDetails",getHHMarket),
    path("HighestDemands",getHighestDemands),
    path("HighestSupplies",getHighestSupplies),
@@ -54,10 +58,13 @@ urlpatterns = [
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
    path("LiveTicker/<identifier>/",getLiveTicker),
    path("Fundamental/ValuationRatio/<identifier>/",getValuationRatios),
+   path("Fundamental/Ratios/RatioToDisplay/<identifier>/",getRatiosAll),
+   path("Fundamental/Ratios/LatestComponents/<identifier>/",getComponentsAll),
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
    path("Ticker/TechnicalIndicatorSingle/<identifier>/",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
    path("Ticker/TechnicalTrends/<identifier>/",getTechnicalTrends),
+   path("Ticker/HH/<identifier>/",getHHHistory),
    path("IndexDetails/<identifier>",getIndexDetails),
    path("Alldps/<identifier>/",getAllDPS),
    path("AdminNotice/<identifier>/",getAdminNotices),
@@ -84,6 +91,9 @@ urlpatterns = [
    path("Statement/IncomeStatement/<identifier>/",getIncomeStatementAll),
    path("Statement/IncomeStatementAggregated/<identifier>/",getIncomeStatementAllAggregated),
    path("Statement/CashFlow/<identifier>/",getCFAll),
+   ###
+   path("AI/OneWeekStockPrediction/<identifier>/",get1weekStockPrediction),
+   
 ############
    ###Crypto
    path("CryptoTechincalAll/",getAllCryptoTechnical),

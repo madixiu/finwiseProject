@@ -8,7 +8,7 @@
       >
     </v-toolbar>
     <div class="d-flex flex-column pt-2">
-      <v-row no-gutters>
+      <!-- <v-row no-gutters>
         <div class="col-sm-4">
           <v-tooltip left>
             <template v-slot:activator="{ on }">
@@ -20,21 +20,20 @@
             <span class="small">Profitability</span>
           </v-tooltip>
         </div>
-        <div class="col-sm-2 strong blured">
+        <div class="col-sm-2 strong ">
           {{ this.FinancialStrength }}/10
         </div>
         <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
-            class="blured"
             background-color="#E9ECEF"
             rounded
             height="25"
           >
           </v-progress-linear>
         </div>
-      </v-row>
+      </v-row> -->
       <v-data-table
         :headers="headers"
         :items="ValuatedItems"
@@ -51,16 +50,15 @@
           </v-tooltip>
         </template>
         <template v-slot:[`item.now`]="{ item }">
-          <span class="small blured ">{{ item.now }}</span>
+          <span>{{ item.now }} % </span>
         </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
             :width="150"
-            class="blured"
             :rounded="true"
-            :color="getColor(item.FinancialStrength * 100)"
+            :color="getColor(item.industry * 100)"
             :value="item.industry * 100"
           >
           </v-progress-linear>
@@ -71,8 +69,7 @@
             :height="15"
             :width="150"
             :rounded="true"
-            class="blured"
-            :color="getColor(item.FinancialStrength * 100)"
+            :color="getColor(item.historic * 100)"
             :value="item.historic * 100"
           >
           </v-progress-linear>
@@ -90,10 +87,12 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "PWidget",
+  props: ["RatioData"],
   data() {
     return {
       search: "",
-      FinancialStrength: 5,
+      RatioItems: [],
+      ValuatedItems: [],
       headers: [
         {
           text: "نسبت مالی",
@@ -107,32 +106,6 @@ export default {
           value: "historic",
           sortabale: false
         }
-      ],
-      ValuatedItems: [
-        {
-          name: "Operating Margin",
-          persianname: "حاشیه سود عملیاتی",
-          historic: 0.6,
-          now: "30%",
-          industry: 0.2,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Net Margin",
-          persianname: "حاشیه سود خالص ",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "ROE",
-          persianname: "بازگشت سرمایه",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        }
       ]
     };
   },
@@ -140,19 +113,6 @@ export default {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
-    // set FinancialStrength percent
-    setFinancialStrengthPercent: function() {
-      this.FinancialStrengthPercent = this.FinancialStrength * 10;
-    },
-    getWaccPercent: function(item) {
-      let all = item.WACC + item.ROIC;
-      return (100 * item.WACC) / all;
-    },
-    // get ROIC percent
-    getRoicPercent: function(item) {
-      let all = item.WACC + item.ROIC;
-      return (100 * item.ROIC) / all;
-    },
     getColor: function(value) {
       if (value >= 80) {
         return "#0DCD0A";
@@ -167,27 +127,48 @@ export default {
         return "#FF0000";
       }
       return "";
+    },
+    FillRatios() {
+      this.RatioItems = this.RatioData;
+      if (this.RatioItems === undefined || this.RatioItems.length == 0) {
+        this.RatioItems = [];
+      } else {
+        this.RatioItems.filter(d => {
+          if (d.Ratio == "ROE") {
+            this.ValuatedItems.push({
+              name: "ROE",
+              persianname: "بازگشت سرمایه",
+              historic: d.toHistoricAverage,
+              now: Math.round(d.RatioValue * 100),
+              industry: d.toIndustryAverage
+            });
+          }
+          if (d.Ratio == "NetMargin") {
+            this.ValuatedItems.push({
+              name: "NetMargin",
+              persianname: "حاشیه سود خالص",
+              historic: d.toHistoricAverage,
+              now: Math.round(d.RatioValue * 100),
+              industry: d.toIndustryAverage
+            });
+          }
+          if (d.Ratio == "OperatingMargin") {
+            this.ValuatedItems.push({
+              name: "OperatingMargin",
+              persianname: "حاشیه سود عملیاتی",
+              historic: d.toHistoricAverage,
+              now: Math.round(d.RatioValue * 100),
+              industry: d.toIndustryAverage
+            });
+          }
+        });
+      }
     }
   },
-  mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
+  watch: {
+    RatioData() {
+      this.FillRatios();
+    }
   }
 };
 </script>
-<style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.valign * {
-  vertical-align: middle;
-}
-.blured {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(10px);
-}
-</style>

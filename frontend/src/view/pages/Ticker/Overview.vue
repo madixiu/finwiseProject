@@ -2,7 +2,10 @@
   <div>
     <div class="row">
       <div class="col-xxl-12 col-lg-12 col-md-12 pt-3 pb-1">
-        <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
+        <SubHeaderWidget
+          :tickerdata="subheaders"
+          :ComponentData="componentdata"
+        ></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <liveWidget2
@@ -31,37 +34,33 @@
       <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <v-row no-gutters class="d-flex flex-row justify-content-between">
           <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
-            <FSWidget></FSWidget>
-          </v-col>
-          <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
-            <VWidget></VWidget>
+            <FSWidget :RatioData="ratiodata"></FSWidget>
             <v-col class="px-0">
-              <ReturnWidget></ReturnWidget>
+              <DivWidget :RatioData="ratiodata"></DivWidget>
+            </v-col>
+            <v-col class="px-0">
+              <ReturnWidget :RatioData="FundamentalRobot" :liveData="livedata"></ReturnWidget>
             </v-col>
           </v-col>
           <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
-            <PWidget></PWidget>
+            <VWidget
+              :LiveData="livedata"
+              :RatioData="ratiodata"
+              :ComponentData="componentdata"
+            ></VWidget>
+
             <v-col class="px-0">
-              <DivWidget></DivWidget>
+              <PWidget :RatioData="ratiodata"></PWidget>
             </v-col>
+          </v-col>
+          <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
+            <AIWidget
+              :PredictionData="predictiondata"
+              :priceHistory="priceHistory"
+            ></AIWidget>
           </v-col>
         </v-row>
       </div>
-      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
-        <FSWidget></FSWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
-        <VWidget></VWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
-        <PWidget></PWidget>
-      </div> -->
-      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
-        <ReturnWidget></ReturnWidget>
-      </div> -->
-      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
-        <DivWidget></DivWidget>
-      </div> -->
 
       <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
@@ -90,6 +89,7 @@ import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
 import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
 import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
 import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
+import AIWidget from "@/view/pages/Ticker/TickerWidgets/OneWeekPredictionWidget.vue";
 // import FundamentalRobotWidget from "@/view/pages/Ticker/TickerWidgets/FundamentalRobotWidget.vue";
 
 // import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
@@ -108,6 +108,7 @@ export default {
     PWidget,
     ReturnWidget,
     DivWidget,
+    AIWidget,
     // FundamentalRobotWidget,
 
     // AnalystWidget,
@@ -123,7 +124,10 @@ export default {
       hhdata: [],
       livedata: [],
       techdata: [],
+      ratiodata: [],
+      componentdata: [],
       FundamentalRobot: [],
+      predictiondata: [],
       priceHistory: [],
       interval: null
     };
@@ -159,6 +163,16 @@ export default {
         if (newValue != oldValue && oldValue != undefined) {
           this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات سهم" }]);
           this.$store.dispatch(ADD_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+          this.subheaders = {};
+          this.stats = [];
+          this.hhdata = [];
+          this.livedata = [];
+          this.techdata = [];
+          this.ratiodata = [];
+          this.componentdata = [];
+          this.FundamentalRobot = [];
+          this.predictiondata = [];
+          this.priceHistory = [];
           this.loadData();
         }
       },
@@ -172,7 +186,13 @@ export default {
         // this.getHH().then(responx2 => {
         this.getPriceHistory().then(getPriceHistoryresponse => {
           this.getTechnical().then(getTechnicalresponse => {
-            this.getBonyadi();
+            this.getBonyadi().then(getBonyadiRespose => {
+              this.getRatios().then(getRatioRespnse => {
+                this.getPredictionData().then(getRatioRespnse => {
+                  this.getComponentData();
+                });
+              });
+            });
           });
         });
         // });
@@ -209,6 +229,7 @@ export default {
           console.error(error);
         });
     },
+
     async getTickerStats() {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
@@ -229,6 +250,20 @@ export default {
           console.error(error);
         });
     },
+    async getRatios() {
+      await this.axios
+        .get(
+          "/api/Fundamental/Ratios/RatioToDisplay/" +
+            this.$route.params.id +
+            "/"
+        )
+        .then(responseratio => {
+          this.ratiodata = responseratio.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     async getLiveTickerData() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
@@ -238,6 +273,31 @@ export default {
           this.$store.dispatch("SetLiveTickerData", this.subheaders);
           this.$store.dispatch("SetLiveTickerID", this.subheaders.ID);
           this.$store.dispatch(SET_BREADCRUMB_TITLE, this.subheaders.ticker);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
+    async getComponentData() {
+      await this.axios
+        .get(
+          "/api/Fundamental/Ratios/LatestComponents/" +
+            this.$route.params.id +
+            "/"
+        )
+        .then(responsec => {
+          this.componentdata = responsec.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getPredictionData() {
+      await this.axios
+        .get("/api/AI/OneWeekStockPrediction/" + this.$route.params.id + "/")
+        .then(responsep => {
+          this.predictiondata = responsep.data;
         })
         .catch(error => {
           console.error(error);

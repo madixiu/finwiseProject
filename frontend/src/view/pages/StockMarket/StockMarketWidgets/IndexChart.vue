@@ -255,6 +255,26 @@
                 </v-col>
               </div>
             </v-card>
+            <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
+              <div
+                class="d-flex flex-row justify-content-around align-items-baseline"
+                style="
+                  padding-bottom: 10px;
+                  padding-top: 10px;"
+              >
+                <v-col class="flex-item">
+                  <span class="cellHeader">خالص ورود حقیقی:</span>
+                </v-col>
+                <v-col class="flex-item">
+                  <span class="cellItem2 pl-2"
+                    >{{
+                      roundTo(NetHHStockMarket / 1000000000, 0).toLocaleString()
+                    }}
+                  </span>
+                  <span class="cellItem2">میلیارد ریال</span>
+                </v-col>
+              </div>
+            </v-card>
           </div>
         </div>
         <div
@@ -273,7 +293,7 @@ import * as d3 from "d3";
 // //import  roundTo  from "@/assets/js/utils.js";
 export default {
   name: "IndexChart",
-  props: { inputDataIndex: Array },
+  props: { inputDataIndex: Array, inputDataNetHH: Array },
   data() {
     return {
       //// loading: true,
@@ -293,6 +313,7 @@ export default {
       IFBLatestChange: 0,
       IFBMarketCapTotal: 0,
       latestTradeValueIFB: 0,
+      NetHHStockMarket: 0,
       indexData: [],
       fontsizeOf: 1,
       min: 0,
@@ -312,6 +333,12 @@ export default {
       this.renderData();
       if (this.isRealValue(this.indexData)) {
         this.renderChart();
+      }
+    },
+    inputDataNetHH() {
+      // console.log(this.inputDataNetHH);
+      if (this.isRealValue(this.inputDataNetHH)) {
+        this.NetHHStockMarket = this.inputDataNetHH[0].NetInHaghighi;
       }
     }
     // indexData(newValue, oldValue) {
