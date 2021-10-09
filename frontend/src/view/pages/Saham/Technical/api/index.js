@@ -15,10 +15,9 @@ var data = [];
 export default {
   data: data,
   onReady: cb => {
-    // console.log(data);
     if (data.length == 0) {
       axios
-        .get("http://localhost:8000/api/TVData/listOfStocks")
+        .get("http://finwise.ir/api/TVData/listOfStocks")
         .then(resp => {
           data = resp.data[1];
           setTimeout(() => cb(config), 0);

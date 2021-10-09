@@ -1,28 +1,24 @@
 <template>
-  <div>
-    <div
-      class="row"
-      id="MapRoot"
-      style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
-    >
-      <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
-      <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
+  <div
+    class="row"
+    id="MapRoot"
+    style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
+  >
+    <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
+    <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
 
-      <treemap
-        v-if="dataFetched && width != null"
-        :key="mapKey"
-        :inputData="map"
-        :inputWidth="width"
-        :inputHeight="height"
-      ></treemap>
-      <!-- </div> -->
-    </div>
+    <treemap
+      v-if="dataFetched && width != null"
+      :key="mapKey"
+      :inputData="map"
+      :inputWidth="width"
+      :inputHeight="height"
+    ></treemap>
+    <!-- </div> -->
   </div>
 </template>
 <script>
 import treemap from "@/view/content/d3/treemap.vue";
-
-// import ErrorMine from "@/view/pages/error/Error-6.vue";
 export default {
   name: "marketmap",
   components: {
@@ -63,7 +59,7 @@ export default {
     // console.log(headerHeight);
     // let chartDiv = document.getElementsByClassName("container-fluid");
     this.height = (window.screen.height * 73) / 100;
-    this.height = window.innerHeight - 50;
+    this.height = window.innerHeight - 65;
 
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
@@ -79,6 +75,7 @@ export default {
 
     // this.$socketMarketMap.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
+    // this.liveData()
     // this.$socketMarketMap.onmessage = data => {
     //   // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
     //   if (

@@ -317,9 +317,14 @@ def getLastActiveDayTepix():
     head = {'Accept-Profile':'marketwatch'}
     resp = requests.get('http://185.231.115.223:3000/View_today_Tepix',headers=head )
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        js = json.loads(resp.text)
+        # js = json.dumps(js, separators=(',', ':'))
+        # js = json.loads(js)
+        res = []
+        for item in js:
+            if item["Market"] != "3":
+                res.append(item)
+        
+        return (res)
     else:
         return("noData")          

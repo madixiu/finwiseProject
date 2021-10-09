@@ -59,7 +59,6 @@
               <v-col class="d-flex" cols="5">
                 <v-select
                   class="vuetifySelectCustom flex-grow-1"
-        
                   clearable
                   dense
                   solo-inverted
@@ -211,8 +210,7 @@ export default {
             horizontal: false,
             borderRadius: 10,
             barWidth: "70%",
-            barHeight: "70%",
-
+            barHeight: "70%"
           }
         },
         noData: {

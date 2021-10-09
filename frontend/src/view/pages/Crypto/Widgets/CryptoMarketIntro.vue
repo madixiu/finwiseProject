@@ -52,7 +52,7 @@ export default {
   },
   watch: {
     InputIntroMW(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         this.gridApi.setRowData(newValue);
         this.dataFetch = true;
       }

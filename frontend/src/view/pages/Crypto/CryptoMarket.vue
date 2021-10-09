@@ -128,7 +128,7 @@ export default {
       flex: 1,
       minWidth: 100,
       filter: true,
-      // sortable: true,
+      sortable: true,
       // headerHeight: 12,
       enablePivot: false,
       suppressMenu: true,

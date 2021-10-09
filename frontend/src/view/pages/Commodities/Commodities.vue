@@ -501,16 +501,16 @@ export default {
   watch: {
     //%%%%%%%%%%%%%%%%%%%% Main %%%%%%%%%%%%%%%%%%%%%%%%
     dollargold(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0);
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null);
       this.gridApi.setRowData(newValue);
     },
     energy1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         this.EnergyGridApi.setRowData(newValue);
         this.EnergyDataFetch = true;
       }
 
-      if (oldValue != undefined)
+      if (oldValue != undefined && oldValue != null)
         if (this.EnergyDataFetch == true && oldValue.length != 0) {
           for (let i = 0; i < this.energy1.length; i++) {
             let newItem = JSON.parse(JSON.stringify(oldValue[i]));
@@ -525,7 +525,7 @@ export default {
         }
     },
     forex1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         this.ForexGridApi.setRowData(newValue);
         this.ForexDataFetch = true;
       }
@@ -545,7 +545,7 @@ export default {
         }
     },
     metal1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.MetalGridApi.setRowData(newValue);
         this.MetalDataFetch = true;
@@ -567,14 +567,14 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Gold & Currency %%%%%%%%%%%%%
     gold(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.GoldGridApi.setRowData(newValue);
         this.GoldDataFetch = true;
       }
     },
     currencies(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.CurrenciesGridApi.setRowData(newValue);
         this.CurrenciesDataFetch = true;
@@ -583,7 +583,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Indices %%%%%%%%%%%%%%%%%%%%%
     indices(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.IndicesGridApi.setRowData(newValue);
         this.IndicesDataFetch = true;
@@ -592,7 +592,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     petro(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.PetroGridApi.setRowData(newValue);
         this.PetroDataFetch = true;
@@ -601,7 +601,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     MB(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.MBGridApi.setRowData(newValue);
         this.MBDataFetch = true;
@@ -1257,7 +1257,6 @@ export default {
     this.loadData();
   },
   mounted() {
-
     this.apiLiveData();
 
     // this.liveData();

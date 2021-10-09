@@ -49,7 +49,7 @@ export default {
     this.loadData();
   },
   mounted() {
-    this.liveData();
+    // this.liveData();
   },
   methods: {
     loadData() {
@@ -57,7 +57,10 @@ export default {
       this.getIntroMW().then(resp0 => {
         // eslint-disable-next-line no-unused-vars
         this.getTechnical().then(resp1 => {
-          this.getCorrelationM();
+          // eslint-disable-next-line no-unused-vars
+          this.getCorrelationM().then(resp2 => {
+            this.liveData();
+          });
         });
       });
     },
@@ -101,7 +104,7 @@ export default {
         // let barier = { request: "get" };
         // this.$socketMarketMap.send(JSON.stringify(barier));
         this.getIntroMW();
-      }, 3000);
+      }, 5000);
     }
     // liveChecker() {
     //   let date = new Date();

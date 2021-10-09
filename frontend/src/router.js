@@ -19,24 +19,16 @@ const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
 const CommoditiesDetail = () =>
   import("@/view/pages/Commodities/CommoditiesDetail");
-const Qarbal = () => import("@/view/pages/Saham/Qarbal.vue");
 // const Bonyad = () => import("@/view/pages/Saham/Bonyad.vue");
-const GoldPrice = () => import("@/view/pages/Saham/Technical/GoldPrice.vue");
-const Tools = () => import("@/view/pages/Saham/Technical/Tools.vue");
 const Data = () => import("@/view/pages/Saham/Technical/TradingView.vue");
-const Calendar = () => import("@/view/pages/Saham/Majame/Calendar.vue");
 const Decisions = () => import("@/view/pages/Saham/Majame/Decisions.vue");
 const Increase = () => import("@/view/pages/Saham/Majame/Increase.vue");
 const Taqadom = () => import("@/view/pages/Saham/Taqadom.vue");
 const Option = () => import("@/view/pages/Saham/Option.vue");
 const Sandoq = () => import("@/view/pages/Fund/Sandoq.vue");
-const Kala = () => import("@/view/pages/Kala/Kala.vue");
-const Bourse = () => import("@/view/pages/Kala/Bourse.vue");
-const Global = () => import("@/view/pages/Kala/Global.vue");
 const MarketMap = () => import("@/view/pages/MarketMap/MarketMap.vue");
 const MarketWatch = () => import("@/view/pages/MarketWatch.vue");
 const Oraq = () => import("@/view/pages/Oraq/Oraq.vue");
-const Shakhes = () => import("@/view/pages/Shakhes/Shakhes.vue");
 const Ticker = () => import("@/view/pages/Ticker/Ticker.vue");
 const Overview = () => import("@/view/pages/Ticker/Overview.vue");
 const AdminNotice = () => import("@/view/pages/Ticker/Administration.vue");
@@ -47,7 +39,6 @@ const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
 const Board = () => import("@/view/pages/Ticker/Board.vue");
 const ShareHolders = () => import("@/view/pages/Ticker/ShareHolders.vue");
 const AdjustedPrices = () => import("@/view/pages/Ticker/AdjustedPrices.vue");
-const Bonyadi = () => import("@/view/pages/Ticker/Bonyadi.vue");
 const TickerTechnical = () => import("@/view/pages/Ticker/TickerTechnical.vue");
 const BalanceSheet = () =>
   import("@/view/pages/Ticker/Sheets/BalanceSheet.vue");
@@ -64,8 +55,6 @@ const StatementAnalysis = () =>
   import("@/view/pages/Ticker/StatementAnalysis.vue");
 const IncomeStatementAnalysis = () =>
   import("@/view/pages/Ticker/IncomeStatementAnalysis.vue");
-const AssemblyCalendar = () =>
-  import("@/view/pages/Ticker/AssemblyWidget/AssemblyCalendar.vue");
 const AssemblyAll = () =>
   import("@/view/pages/Ticker/AssemblyWidget/AssemblyAll.vue");
 const AssemblyDPS = () =>
@@ -103,11 +92,6 @@ export default new Router({
               name: "Dashboard",
               component: Dashboard
             },
-            // {
-            //   path: "Market/MarketWatch",
-            //   name: "marketwatch",
-            //   component: () => import("@/view/pages/MarketWatch.vue")
-            // },
             {
               path: "Industries",
               name: "Industries",
@@ -118,36 +102,17 @@ export default new Router({
               name: "IndustriesDetail",
               component: IndustriesDetail
             },
-            {
-              path: "Screener",
-              name: "Screener",
-              component: Qarbal
-            },
             // {
             //   path: "Fundamental",
             //   name: "Fundamental",
             //   component: Bonyad
             // },
             {
-              path: "Technical/Dashboard",
-              name: "TechnicalDashboard",
-              component: GoldPrice
-            },
-            {
-              path: "Techincal/Tools",
-              name: "TechnicalTools",
-              component: Tools
-            },
-            {
               path: "Technical/Data",
               name: "TechnicalData",
               component: Data
             },
-            {
-              path: "Assembly/Calendar",
-              name: "AssemblyCalendar",
-              component: Calendar
-            },
+
             {
               path: "Assembly/Decisions",
               name: "AssemblyDecisions",
@@ -171,24 +136,6 @@ export default new Router({
           ]
         },
         {
-          path: "/kala",
-          name: "kala",
-          redirect: "/kala/bourse",
-          component: Kala,
-          children: [
-            {
-              path: "bourse",
-              name: "bourse",
-              component: Bourse
-            },
-            {
-              path: "global",
-              name: "global",
-              component: Global
-            }
-          ]
-        },
-        {
           path: "Funds",
           name: "Funds",
           component: Sandoq
@@ -207,11 +154,6 @@ export default new Router({
           path: "/oraq",
           name: "oraq",
           component: Oraq
-        },
-        {
-          path: "/shakhes",
-          name: "shakhes",
-          component: Shakhes
         },
 
         //added route for ticker!
@@ -247,11 +189,6 @@ export default new Router({
               name: "TechnicalMoreInfo",
               component: TechnicalMoreInfo
             },
-            // {
-            //   path: "Overview/HH/:id",
-            //   name: "HH",
-            //   component: HH
-            // },
             {
               path: "Overview/Board/:id",
               name: "Board",
@@ -268,14 +205,10 @@ export default new Router({
               component: AdjustedPrices
             },
             {
-              path: "TickerFundamental/:id",
-              name: "TickerFundamental",
-              component: Bonyadi
-            },
-            {
               path: "TickerTechnical/:id",
               name: "TickerTechnical",
-              component: TickerTechnical
+              component: TickerTechnical,
+              props: true
             },
             {
               path: "TickerTechnicalTrend/:id",
@@ -289,13 +222,11 @@ export default new Router({
             },
             {
               path: "Sheets/IncomeStatement/:id",
-              // name: "Sheets",
               name: "IncomeStatement",
               component: IncomeStatement
             },
             {
               path: "Sheets/CashFlow/:id",
-              // name: "Sheets",
               name: "CashFlow",
               component: CashFlow
             },
@@ -319,22 +250,6 @@ export default new Router({
               name: "IncomeStatementAnalysis",
               component: IncomeStatementAnalysis
             },
-            // {
-            //   path: "TickerIndustry/:id",
-            //   name: "TickerIndustry",
-            //   component: Industry
-            // },
-            // {
-            //   path: "TickerAssembly/TickerAssemblyCalendar:id",
-            //   name: "TickerAssembly",
-            //   // redirect: "/ticker/TickerAssembly/TickerAssemblyCalendar",
-            //   component: SahmMajame () => import("@/view/pages/Ticker/SahmMajame.vue")
-            // },
-            {
-              path: "TickerAssembly/Calendar/:id",
-              name: "TickerAssemblyCalendar",
-              component: AssemblyCalendar
-            },
             {
               path: "TickerAssembly/Report/:id",
               name: "TickerAssemblyReport",
@@ -345,11 +260,6 @@ export default new Router({
               name: "TickerAssemblyDPSAndIC",
               component: AssemblyDPS
             }
-            // {
-            //   path: "TickerAssembly/IC/:id",
-            //   name: "TickerAssemblyIC",
-            //   component: AssemblyIncreaseCapital
-            // },
           ]
         },
         {
@@ -368,7 +278,6 @@ export default new Router({
           component: CommoditiesDetail,
           props: true
         },
-        // added route for robot!
         {
           path: "/Crypto",
           name: "CryptoDashboard",

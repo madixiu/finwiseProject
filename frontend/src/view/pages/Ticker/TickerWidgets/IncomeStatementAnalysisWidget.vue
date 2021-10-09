@@ -481,14 +481,13 @@ export default {
       }
     },
     GetFiltered() {
-      
       let tempData = [];
       if (this.ISCHART_Aggregated_Selected == "تلفیقی") {
         tempData = this.IncomeAgg;
       } else {
         tempData = this.Income;
       }
-      
+
       let x = [];
       x = tempData.filter(d => {
         if (this.ISCHART_Period_Selected == "۱۲ ماهه") {

@@ -583,11 +583,11 @@ def getTradingViewList(self):
 ###################################################
 ############### DASHBOARD #########################
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getImpactOnIndex(self):
     return JsonResponse(ImpactOnIndex(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHighestValue(self):
         return JsonResponse(highestTvalues(),safe=False)
 
@@ -607,27 +607,27 @@ def getIFBTEPIX(self):
 def getLatestNews(self):
         return JsonResponse(getNews(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHHMarket(self):
     return JsonResponse(getMarketHH(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHighestSupplies(self):
     return JsonResponse(highestSupplies(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHighestDemands(self):
     return JsonResponse(highestDemands(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHighestQ(self):
     return JsonResponse([highestSupplies(),highestDemands()],safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getTodayTepix(self):
     return JsonResponse(getLastActiveDayTepix(),safe=False)
 
-@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getAllTradesValue(self):
     return JsonResponse([TradeValueHH(),TradeValueHHBasedOnAsset(),TradeValueAsset(),getLatestTwoIndex()],safe=False)
 

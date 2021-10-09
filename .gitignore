@@ -2,3 +2,5 @@ venv/
 documentation/
 .vscode/
 .vscode/settings.json
+.VSCodeCounter
+

@@ -14,7 +14,7 @@
         }}</span>
       </div>
     </v-toolbar>
-    <div id="Chartcontainer_index"></div>
+    <div id="Chartcontainer_CryptoTechnical"></div>
   </v-card>
 </template>
 
@@ -60,26 +60,32 @@ export default {
       return obj && obj !== "null" && obj !== "undefined";
     },
     initrender() {
-      if (document.getElementById("Chartcontainer_index_svg")) {
-        d3.selectAll("#Chartcontainer_index_svg").remove();
+      if (document.getElementById("Chartcontainer_CryptoTechnical_svg")) {
+        d3.selectAll("#Chartcontainer_CryptoTechnical_svg").remove();
       }
       this.width = parseInt(
-        d3.select("#Chartcontainer_index").style("width"),
+        d3.select("#Chartcontainer_CryptoTechnical").style("width"),
         10
       );
       this.height = (this.width * 9) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
+        parseInt(
+          d3.select("#Chartcontainer_CryptoTechnical").style("width"),
+          10
+        ) * 0.05;
       this.margin.left =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
-      var parent = document.getElementById("Chartcontainer_index");
+        parseInt(
+          d3.select("#Chartcontainer_CryptoTechnical").style("width"),
+          10
+        ) * 0.05;
+      var parent = document.getElementById("Chartcontainer_CryptoTechnical");
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "Chartcontainer_index_svg")
+        .attr("id", "Chartcontainer_CryptoTechnical_svg")
         .attr(
           "viewBox",
           `0 0 ${this.width + this.margin.right + this.margin.left},${this
@@ -111,15 +117,15 @@ export default {
       }
     },
     renderChart() {
-      if (document.getElementById("Chartcontainer_index_svg")) {
-        d3.selectAll("#Chartcontainer_index_svg").remove();
+      if (document.getElementById("Chartcontainer_CryptoTechnical_svg")) {
+        d3.selectAll("#Chartcontainer_CryptoTechnical_svg").remove();
       }
 
-      var parent = document.getElementById("Chartcontainer_index");
+      var parent = document.getElementById("Chartcontainer_CryptoTechnical");
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "Chartcontainer_index_svg")
+        .attr("id", "Chartcontainer_CryptoTechnical_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
         .style(

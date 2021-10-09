@@ -146,7 +146,7 @@ GRAPHQL_AUTH = {
     "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
     
     # email stuff
-    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL", "mr.robotc7@gmail.com"),
+    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL",'finwiseIran@gmail.com'),
     "SEND_ACTIVATION_EMAIL": False,
     "EMAIL_SUBJECT_ACTIVATION": "email/activation_subject.txt",
     "EMAIL_SUBJECT_ACTIVATION_RESEND": "email/activation_subject.txt",
@@ -167,12 +167,15 @@ GRAPHQL_AUTH = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'finwiseIran@gmail.com'
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.office365.com'
+
+EMAIL_HOST_USER = 'finwise.service@outlook.com'
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 
 #Must generate specific password for your app in [gmail settings][1]
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = 'uvQRH-2{@V2`H5[V'
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # graphQL end

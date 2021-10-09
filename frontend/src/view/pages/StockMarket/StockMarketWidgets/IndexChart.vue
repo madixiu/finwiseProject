@@ -10,17 +10,17 @@
           >شاخص کل</v-toolbar-title
         >
       </v-toolbar>
-      <v-skeleton-loader
+      <!-- <v-skeleton-loader
         v-if="inputDataIndex.length == 0"
         v-bind="attrs"
         type="card"
-      ></v-skeleton-loader>
+      ></v-skeleton-loader> -->
       <!-- // ! fix cols in small devices optimize all childs with flex -->
-      <div class="d-flex">
+      <div class="d-flex"  v-show="inputDataIndex.length != 0">
         <div
-          v-if="inputDataIndex.length != 0"
           class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 d-flex"
           style="padding-left:0px;flex-direction:column;justify-content:center"
+          v-if="inputDataIndex.length != 0"
         >
           <div class="d-flex flex-column" style="width:100%">
             <v-card rounded="lg" elevation="5" style="margin-bottom:3px">
@@ -96,7 +96,7 @@
                         dir="ltr"
                         v-bind:class="[
                           lastestSWChange > 0
-                            ? 'greenItem cellItem '
+                            ? 'greenItem cellItem'
                             : 'redItem cellItem'
                         ]"
                       >
@@ -325,11 +325,11 @@ export default {
   },
   // In the beginning...
   mounted() {
-    this.renderData();
+    // this.renderData();
     this.initrender();
-    if (!(this.indexData === undefined || this.indexData.length == 0)) {
-      this.renderChart();
-    }
+    // if (!(this.indexData === undefined || this.indexData.length == 0)) {
+    //   this.renderChart();
+    // }
   },
   computed: {},
   methods: {

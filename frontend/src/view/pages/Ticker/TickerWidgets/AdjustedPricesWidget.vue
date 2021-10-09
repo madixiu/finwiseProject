@@ -295,6 +295,7 @@ export default {
   },
   watch: {
     adjusted() {
+      this.adjusted.reverse();
       this.gridApi.setRowData(this.adjusted);
       this.dataFetch = true;
     }

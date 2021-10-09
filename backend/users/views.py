@@ -2,8 +2,6 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, resolve_url
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
-import json
-import jwt
 from rest_framework.parsers import JSONParser 
 from graphql_auth.models import UserStatus
 from django.http import HttpResponse

@@ -1123,8 +1123,9 @@ export default {
           .attr("x", this.width * 0.25)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("بیشترین تقاضا ");
+          .text("بیشترین تقاضا");
 
         chart
           .append("text")
@@ -1132,8 +1133,9 @@ export default {
           .attr("x", this.width * 0.75)
           .attr("y", (this.margin.top * 3) / 4)
           .attr("text-anchor", "middle")
+          .style("font-family", "Vazir-Light-FD")
           .style("font-size", `${this.fontsizeOf}em`)
-          .text("بیشترین عرضه ");
+          .text("بیشترین عرضه");
 
         ////const tooltip = d3
         ////  .select(parent)

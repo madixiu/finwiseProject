@@ -128,11 +128,11 @@ export default {
         right: 0,
         bottom: 0,
         left: 0
-      },
-      options: [
-        { text: "ارزش و حجم معاملات", value: "VolumeVal" },
-        { text: "تاثیر بر شاخص", value: "Impact" }
-      ]
+      }
+      // options: [
+      //   { text: "ارزش و حجم معاملات", value: "VolumeVal" },
+      //   { text: "تاثیر بر شاخص", value: "Impact" }
+      // ]
     };
   },
   watch: {

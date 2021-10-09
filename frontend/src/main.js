@@ -65,16 +65,22 @@ Vue.use(HighchartsVue);
 // Vue.use(HighchartsVue, {
 //   highcharts: Highcharts
 // });
+// import vue-panzoom
+import panZoom from "vue-panzoom";
 
+// install plugin
+Vue.use(panZoom);
 
 import moment from "vue-jalali-moment";
-import PersianCalendar from "vue-persian-calendar";
+
+// !Removed Calendar
+// import PersianCalendar from "vue-persian-calendar";
 import VuePersianDatetimePicker from "vue-persian-datetime-picker";
 Vue.component("date-picker", VuePersianDatetimePicker);
 
 // imported persian calendar
 Vue.use(moment);
-Vue.use(PersianCalendar);
+// Vue.use(PersianCalendar);
 
 // -------------------------
 // import ApolloService from "@/core/services/apollo.service";

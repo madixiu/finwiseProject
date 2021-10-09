@@ -188,7 +188,7 @@
                   <span class="tickerItem"> تعداد معاملات:</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">{{ LiveDataItems.TradeCount }}</span>
+                  <span class="tickerItem">{{ (LiveDataItems.TradeCount).toLocaleString() }}</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                     <span class="tickerSubInfo">میلیون سهم</span>

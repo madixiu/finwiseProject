@@ -1,6 +1,5 @@
 <template>
   <v-card rounded="lg">
-
     <v-toolbar dense class="elevation-2" style="height:36px;">
       <v-toolbar-title style="height:20px;font-size:0.95em">
         نسبت های بازگشت سرمایه</v-toolbar-title

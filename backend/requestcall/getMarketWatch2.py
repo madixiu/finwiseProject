@@ -34,7 +34,8 @@ def getMarketWatchFilterLists():
 
 def additionalDataMarketWatch(input):
     for item in input:
-        item["number"] = numberGen()
+        
+        # item["number"] = numberGen()
         if item['yesterday'] !=None and item['close'] !=None:
             item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
         else:

@@ -81,8 +81,6 @@ export default {
     };
   },
 
-
-
   watch: {
     notices() {
       this.loading = false;

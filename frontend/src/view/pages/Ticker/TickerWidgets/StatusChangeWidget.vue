@@ -13,7 +13,7 @@
               dense
               color="#4682B4"
               small
-              v-for="(value, key) in DataItems2"
+              v-for="(value, key) in notices"
               :key="key"
               v-bind:class="[key % 2 != 0 ? 'text-right' : '']"
             >
@@ -37,22 +37,10 @@
 </template>
 
 <script>
-
 export default {
   name: "StatusChanges",
   props: ["notices"],
-  data() {
-    return {
-      search: "",
-      DataItems2: []
-    };
-  },
-  computed: {
-  },
   methods: {
-    populateData() {
-      this.DataItems2 = this.notices;
-    },
     getColor(x) {
       if (x == "مجاز") {
         return "#1B5E20";
@@ -76,45 +64,10 @@ export default {
         return "#4CAF50";
       }
     }
-  },
-  mounted() {
-    this.populateData();
-  },
-  watch: {
-    notices() {
-      this.populateData();
-    }
   }
 };
 </script>
 <style scoped>
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
 .v-timeline {
   direction: ltr !important;
 

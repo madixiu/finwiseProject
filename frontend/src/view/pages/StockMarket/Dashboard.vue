@@ -86,8 +86,8 @@ export default {
   },
   created() {
     document.title = "FinWise - سهام";
-    // this.loadDataNew();
-    this.loadData();
+    this.loadDataNew();
+    // this.loadData();
   },
   mounted() {
     this.liveChecker();
@@ -164,8 +164,8 @@ export default {
         });
       });
     },
-    async getImpacts() {
-      await this.axios
+    getImpacts() {
+      this.axios
         .get("/api/ImpactOnIndex")
         .then(getImpactsResp => {
           this.ImpactsData = getImpactsResp.data;
@@ -176,8 +176,8 @@ export default {
         });
     },
 
-    async getIndustryImpacts() {
-      await this.axios
+    getIndustryImpacts() {
+      this.axios
         .get("/api/Indices/Impact")
         .then(getIndustryImpact => {
           this.IndustryImpact = getIndustryImpact.data;
@@ -187,9 +187,9 @@ export default {
           console.error(error);
         });
     },
-    async getIndustryHH() {
+    getIndustryHH() {
       // console.log('Req')
-      await this.axios
+      this.axios
         .get("/api/Indices/HH")
         .then(getIndustryHHData => {
           this.IndustryHHData = getIndustryHHData.data;
@@ -199,8 +199,8 @@ export default {
           console.error(error);
         });
     },
-    async getTradesValue() {
-      await this.axios
+    getTradesValue() {
+      this.axios
         .get("/api/getHighestValue")
         .then(getTradesValueResp => {
           this.highestTvalueData = getTradesValueResp.data;
@@ -209,8 +209,8 @@ export default {
           console.error(error);
         });
     },
-    async getTradesAll() {
-      await this.axios
+    getTradesAll() {
+      this.axios
         .get("/api/getAllTradesValue")
         .then(getTradesAllResp => {
           this.AssetTradeValue = getTradesAllResp.data;
@@ -219,8 +219,8 @@ export default {
           console.error(error);
         });
     },
-    async getNews() {
-      await this.axios
+    getNews() {
+      this.axios
         .get("/api/LatestNews")
         .then(getNewsResp => {
           this.News = getNewsResp.data;
@@ -229,8 +229,8 @@ export default {
           console.error(error);
         });
     },
-    async getTepixToday() {
-      await this.axios
+    getTepixToday() {
+      this.axios
         .get("/api/getTodayTepix")
         .then(getTepixTodayResp => {
           this.TodayTepix = getTepixTodayResp.data;
@@ -241,8 +241,8 @@ export default {
           // or because the device is offline
         });
     },
-    async getHHData() {
-      await this.axios
+    getHHData() {
+      this.axios
         .get("/api/HHMarketDetails")
         .then(getHHDataResp => {
           this.HHData = getHHDataResp.data;
@@ -251,8 +251,8 @@ export default {
           console.error(error);
         });
     },
-    async getHighestQ() {
-      await this.axios
+    getHighestQ() {
+      this.axios
         .get("/api/HighestQ")
         .then(getHighestQResp => {
           this.QData = getHighestQResp.data;
@@ -261,8 +261,8 @@ export default {
           console.error(error);
         });
     },
-    async getTechnicalData() {
-      await this.axios
+    getTechnicalData() {
+      this.axios
         .get("/api/Ticker/TechnicalIndicatorsAll")
         .then(getTechnicalDataResp => {
           this.TechnicalData = getTechnicalDataResp.data;

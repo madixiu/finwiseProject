@@ -21,7 +21,6 @@
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1 d-flex"
       style="padding-left:0px;padding-right:5px"
     >
-      
       <v-card rounded="lg" :height="cardheight" style="width:100%">
         <v-toolbar dense class="elevation-2" style="height:36px;">
           <v-toolbar-title style="height:20px;font-size:0.95em"
@@ -36,7 +35,6 @@
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
       style="padding-left:0px;padding-right:5px"
     >
-
       <v-card rounded="lg" :height="cardheight">
         <v-toolbar dense class="elevation-2" style="height:36px;">
           <v-toolbar-title style="height:20px;font-size:0.95em"

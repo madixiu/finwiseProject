@@ -15,8 +15,7 @@
           </span>
           <span class="mr-1 search-title_sub">{{ result.name }}</span>
           <div>
-
-          <span class="search-snippet">({{ result.Type }})</span>
+            <span class="search-snippet">({{ result.Type }})</span>
           </div>
         </div>
         <!-- <div class="search-snippet">{{ result.Type }}</div> -->

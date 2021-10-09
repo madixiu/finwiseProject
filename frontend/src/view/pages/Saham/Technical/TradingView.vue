@@ -173,6 +173,7 @@ export default {
           "mainSeriesProperties.showCountdown": false
         }
       };
+      //// const widget = process.env.BASE_URL + "charting_library/charting_library.min";
       const tvWidget = new widget(widgetOptions);
       this.tvWidget = tvWidget;
       tvWidget.onChartReady(() => {
