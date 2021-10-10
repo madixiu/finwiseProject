@@ -144,11 +144,11 @@
         </span></v-toolbar-title
       >
       <v-spacer></v-spacer>
-        <v-radio-group class="mt-5" row v-model="typeOf" mandatory>
-          <v-radio class="radioBTN" label="ارزش" value="value"></v-radio>
-          <v-radio class="radioBTN" label="هم وزن" value="equalizer"></v-radio>
-        </v-radio-group>
-        <!-- <v-spacer></v-spacer> -->
+      <v-radio-group class="mt-5" row v-model="typeOf" mandatory>
+        <v-radio class="radioBTN" label="ارزش" value="value"></v-radio>
+        <v-radio class="radioBTN" label="هم وزن" value="equalizer"></v-radio>
+      </v-radio-group>
+      <!-- <v-spacer></v-spacer> -->
       <v-row no-gutters class="d-flex flex-row justify-content-center">
         <v-col class="d-flex pl-1" cols="5">
           <v-select
@@ -399,7 +399,7 @@ export default {
       originalSize: null,
       fullscreenSize: null,
 
-      typeOf:"value",
+      typeOf: "value",
       RadioBTNoptions: [
         { text: "ارزش و حجم معاملات", value: "VolumeVal" },
         { text: "تاثیر بر شاخص", value: "Impact" }
@@ -517,7 +517,7 @@ export default {
       this.accumulate(this.rootNode, this);
       this.treemap(this.rootNode);
     },
-    typeOf(){
+    typeOf() {
       this.initialize();
       this.accumulate(this.rootNode, this);
       this.treemap(this.rootNode);
@@ -757,7 +757,7 @@ export default {
     },
     //? Called once, to create the hierarchical data representation
     initialize() {
-      let type = this.typeOf
+      let type = this.typeOf;
       if (this.jsonData) {
         this.rootNode = d3
           .hierarchy(this.jsonData)
@@ -765,7 +765,7 @@ export default {
             d.id = (d.parent ? d.parent.id + "." : "") + d.data.name;
           })
           .sum(d => {
-            if (type== "value") return d.value;
+            if (type == "value") return d.value;
             else return 1;
           })
           // .sum(function(){return 1})
@@ -998,7 +998,7 @@ export default {
       }
     },
     zoomIn() {
-      let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
+      // let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
       // console.log(zoomData);
       this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
         this.width / 2,
