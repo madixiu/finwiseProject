@@ -741,14 +741,14 @@ export default {
       ! SUPRISINGLY it works the way we want by this LOG line!!!
       ! have to figure out a way to get rid  of this!!!!!
       */
-      console.log(this.MainScaleNode);
+      console.clear(this.MainScaleNode);
       // this.MainScaleNode
       return node;
     }
   },
   methods: {
     escKey() {
-      console.log("esc pressed");
+      // console.log("esc pressed");
     },
     ChildClick(item) {
       if (this.panned == false) {
@@ -811,7 +811,7 @@ export default {
     selectNode(event) {
       if (this.panned == false) {
         this.selected = event.target.id;
-        console.log(this.$refs.mapPanZoom);
+        // console.log(this.$refs.mapPanZoom);
         this.$refs.mapPanZoom.$panZoomInstance.zoomTo(0, 0, 0);
       } else return;
     },
@@ -967,13 +967,13 @@ export default {
       }, 1000);
     },
     zoomEndFunc() {
-      console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
+      // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
       let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
       if (zoomData.scale < 1.005 && zoomData.scale != 1) {
         this.$refs.mapPanZoom.$panZoomInstance.zoomTo(0, 0, 0);
         this.$refs.mapPanZoom.$panZoomInstance.moveTo(0, 0);
 
-        console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
+        // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
       }
     },
     fullScreenMode() {
@@ -999,7 +999,7 @@ export default {
     },
     zoomIn() {
       let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
-      console.log(zoomData);
+      // console.log(zoomData);
       this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
         this.width / 2,
         this.height / 2,
@@ -1008,7 +1008,7 @@ export default {
     },
     zoomOut() {
       let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
-      console.log(zoomData);
+      // console.log(zoomData);
       if (zoomData.scale > 1.004)
         this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
           this.width / 2,
