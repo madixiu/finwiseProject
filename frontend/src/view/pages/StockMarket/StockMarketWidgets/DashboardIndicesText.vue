@@ -18,7 +18,6 @@
           <div class="mb-1 mr-2">
             <v-chip class="bigchip">مقدار شاخص</v-chip>
             <span class="bigchip"> ۱۲۲۲۲۲۲ </span>
-            
           </div>
           <br />
           <div class="mb-1 mr-2">

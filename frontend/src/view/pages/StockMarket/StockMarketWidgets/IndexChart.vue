@@ -16,7 +16,7 @@
         type="card"
       ></v-skeleton-loader> -->
       <!-- // ! fix cols in small devices optimize all childs with flex -->
-      <div class="d-flex"  v-show="inputDataIndex.length != 0">
+      <div class="d-flex" v-show="inputDataIndex.length != 0">
         <div
           class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 d-flex"
           style="padding-left:0px;flex-direction:column;justify-content:center"

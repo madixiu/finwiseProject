@@ -113,7 +113,7 @@ export default {
       ]
     };
   },
-    watch: {
+  watch: {
     notices(newValue, oldValue) {
       if (
         newValue != oldValue &&
@@ -147,7 +147,6 @@ export default {
       }
     }
   }
-
 };
 </script>
 <style scoped>

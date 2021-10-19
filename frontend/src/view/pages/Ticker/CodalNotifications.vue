@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row no-gutters >
+    <v-row no-gutters>
       <div class="col-xxl-12" style="padding-bottom:0px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
