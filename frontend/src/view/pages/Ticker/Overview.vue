@@ -5,19 +5,49 @@
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
+        <liveWidget2
+          :liveData="livedata"
+          :Indicators="techdata"
+          :FundamentalRobot="FundamentalRobot"
+          :priceHistory="priceHistory"
+        ></liveWidget2>
+      </div>
+      <!-- <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <liveWidget
           :statistics="stats"
           :hh="hhdata"
           :liveData="livedata"
         ></liveWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
-        <TechnicalWidget :Indicators="techdata"></TechnicalWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      </div> -->
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
+        <FundamentalRobotWidget
+          :liveData="livedata"
+          :FundamentalRobot="FundamentalRobot"
+        ></FundamentalRobotWidget>
+      </div> -->
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <FundamentalRobotWidget></FundamentalRobotWidget>
+      </div> -->
+      <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
+        <v-row no-gutters class="d-flex flex-row justify-content-between">
+          <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
+            <FSWidget></FSWidget>
+          </v-col>
+          <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
+            <VWidget></VWidget>
+            <v-col class="px-0">
+              <ReturnWidget></ReturnWidget>
+            </v-col>
+          </v-col>
+          <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">
+            <PWidget></PWidget>
+            <v-col class="px-0">
+              <DivWidget></DivWidget>
+            </v-col>
+          </v-col>
+        </v-row>
       </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <FSWidget></FSWidget>
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
@@ -25,13 +55,13 @@
       </div>
       <div class="col-xxl-4 col-lg-4 col-md-4">
         <PWidget></PWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      </div> -->
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <ReturnWidget></ReturnWidget>
-      </div>
-      <div class="col-xxl-4 col-lg-4 col-md-4">
+      </div> -->
+      <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <DivWidget></DivWidget>
-      </div>
+      </div> -->
 
       <!-- <div class="col-xxl-4 col-lg-4 col-md-4">
         <MoreStatisticsWidget></MoreStatisticsWidget>
@@ -45,57 +75,66 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
 import {
   SET_BREADCRUMB,
   ADD_BREADCRUMB,
   SET_BREADCRUMB_TITLE
 } from "@/core/services/store/breadcrumbs.module";
 // import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
-import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
+// import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
+import liveWidget2 from "@/view/pages/Ticker/TickerWidgets/liveWidget2.vue";
+// import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
 import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
 import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
 import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
 import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
 import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
-import FundamentalRobotWidget from "@/view/pages/Ticker/Rankers/FundamentalRobotWidget.vue";
+// import FundamentalRobotWidget from "@/view/pages/Ticker/TickerWidgets/FundamentalRobotWidget.vue";
+
 // import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
 // import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+// import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
 
 export default {
-  name: "dashboard",
+  name: "TickerOverall",
   components: {
-    liveWidget,
+    // liveWidget,
+    liveWidget2,
     FSWidget,
     VWidget,
     PWidget,
     ReturnWidget,
     DivWidget,
-    FundamentalRobotWidget,
+    // FundamentalRobotWidget,
+
     // AnalystWidget,
     // MoreSMtatisticsWidget,
-    TechnicalWidget,
+    // TechnicalWidget,
+    // SubHeaderWidget,
     SubHeaderWidget
   },
   data() {
     return {
-      search: "",
       subheaders: {},
-      // allowed: [],
       stats: [],
       hhdata: [],
       livedata: [],
-      techdata: []
+      techdata: [],
+      FundamentalRobot: [],
+      priceHistory: [],
+      interval: null
     };
   },
   created() {
     document.title = "Finwise - سهم";
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "اطلاعات سهم" }]);
     this.$store.dispatch(ADD_BREADCRUMB, [{ title: "خلاصه سهم" }]);
+    this.loadData();
   },
   mounted() {
-    this.loadData();
     this.liveChecker();
     // this.$socketLiveTickerData.onmessage = data => {
 
@@ -109,6 +148,12 @@ export default {
     // };
   },
   watch: {
+    $route() {
+      if (this.$route.name != "TickerOverall") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    },
     "$route.params": {
       handler(newValue, oldValue) {
         if (newValue != oldValue && oldValue != undefined) {
@@ -122,17 +167,37 @@ export default {
   },
   methods: {
     loadData() {
-      // eslint-disable-next-line no-unused-vars
-      this.getOne().then(responx => {
-        // eslint-disable-next-line no-unused-vars
-        this.getTwo().then(responx1 => {
-          // eslint-disable-next-line no-unused-vars
-          this.getHH().then(responx2 => {
-            // eslint-disable-next-line no-unused-vars
-            this.getTechnical();
+      this.getLiveTickerData().then(getLiveTickerDataresponse => {
+        // this.getTickerStats().then(responx1 => {
+        // this.getHH().then(responx2 => {
+        this.getPriceHistory().then(getPriceHistoryresponse => {
+          this.getTechnical().then(getTechnicalresponse => {
+            this.getBonyadi();
           });
         });
+        // });
+        // });
       });
+    },
+    async getPriceHistory() {
+      await this.axios
+        .get("/api/AdjustedPricesCodal/" + this.$route.params.id + "/")
+        .then(responsePrice => {
+          this.priceHistory = responsePrice.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getBonyadi() {
+      await this.axios
+        .get("/api/Fundamental/ValuationRatio/" + this.$route.params.id + "/")
+        .then(getBonyadiResp => {
+          this.FundamentalRobot = getBonyadiResp.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     async getHH() {
       await this.axios
@@ -144,7 +209,7 @@ export default {
           console.error(error);
         });
     },
-    async getTwo() {
+    async getTickerStats() {
       await this.axios
         .get("/api/StatsTicker/" + this.$route.params.id + "/")
         .then(response2 => {
@@ -164,7 +229,7 @@ export default {
           console.error(error);
         });
     },
-    async getOne() {
+    async getLiveTickerData() {
       await this.axios
         .get("/api/LiveTicker/" + this.$route.params.id + "/")
         .then(LiveTickerResponse => {
@@ -187,23 +252,34 @@ export default {
         }
         // let barier = { request: "get", id: this.$route.params.id };
         // this.$socketLiveTickerData.send(JSON.stringify(barier));
-      }, 3000);
+        this.getLiveTickerData();
+      }, 6000);
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 14) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 13 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
-        // this.liveData();
+        this.liveData();
       } else {
         this.WebsocketRequest = false;
       }
     }
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
+  beforeDestroy() {
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+  },
   destroyed() {
     // let barier = { request: "halt" };
-    // this.$socketLiveTickerData.send(JSON.stringify(barier));
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
+    clearInterval(this.interval);
   }
 };
 </script>

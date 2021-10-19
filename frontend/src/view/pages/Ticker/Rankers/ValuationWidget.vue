@@ -1,21 +1,15 @@
 <template>
   <!--begin::Mixed Widget 14-->
   <!-- <div class="card card-custom card-stretch gutter-b"> -->
-  <v-card>
-    <!--begin::Header-->
-    <!-- <div class="card-header border-0 pt-2">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        نسبت های ارزش گذاری
-      </h3>
-    </div> -->
-    <v-card-title>
-      نسبت های ارزش گذاری
-    </v-card-title>
-    <v-divider class="mt-0"></v-divider>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column">
-      <div class="row FinancialStrength valign">
+  <v-card rounded="lg">
+    <v-toolbar dense class="elevation-2" style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em">
+        نسبت های ارزش گذاری</v-toolbar-title
+      >
+    </v-toolbar>
+    <div class="d-flex flex-column pt-2">
+      <!-- <div class="row FinancialStrength valign"> -->
+      <v-row no-gutters>
         <div class="col-sm-4">
           <v-tooltip left>
             <template v-slot:activator="{ on }">
@@ -41,50 +35,51 @@
           >
           </v-progress-linear>
         </div>
-        <v-data-table
-          :headers="headers"
-          :items="ValuatedItems"
-          :hide-default-footer="true"
-          class="elevation-1 FinancialStrength"
-          :header-props="{ sortIcon: null }"
-        >
-          <template v-slot:[`item.persianname`]="{ item }">
-            <v-tooltip left>
-              <template v-slot:activator="{ on }">
-                <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
-              </template>
-              <span class="small">{{ item.name }}</span>
-            </v-tooltip>
-          </template>
-          <template v-slot:[`item.now`]="{ item }">
-            <span class="small blured">{{ item.now }}</span>
-          </template>
-          <template v-slot:[`item.industry`]="{ item }">
-            <v-progress-linear
-              background-color="#E9ECEF"
-              :height="15"
-              :width="150"
-              :rounded="true"
-              class="blured"
-              :color="getColor(item.FinancialStrength * 100)"
-              :value="item.industry * 100"
-            >
-            </v-progress-linear>
-          </template>
-          <template v-slot:[`item.historic`]="{ item }">
-            <v-progress-linear
-              background-color="#E9ECEF"
-              :height="15"
-              :width="150"
-              :rounded="true"
-              class="blured"
-              :color="getColor(item.FinancialStrength * 100)"
-              :value="item.historic * 100"
-            >
-            </v-progress-linear>
-          </template>
-        </v-data-table>
-      </div>
+      </v-row>
+      <v-data-table
+        :headers="headers"
+        :items="ValuatedItems"
+        :hide-default-footer="true"
+        class="elevation-1 FinancialStrength"
+        :header-props="{ sortIcon: null }"
+      >
+        <template v-slot:[`item.persianname`]="{ item }">
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
+            </template>
+            <span class="small">{{ item.name }}</span>
+          </v-tooltip>
+        </template>
+        <template v-slot:[`item.now`]="{ item }">
+          <span class="small blured">{{ item.now }}</span>
+        </template>
+        <template v-slot:[`item.industry`]="{ item }">
+          <v-progress-linear
+            background-color="#E9ECEF"
+            :height="15"
+            :width="150"
+            :rounded="true"
+            class="blured"
+            :color="getColor(item.FinancialStrength * 100)"
+            :value="item.industry * 100"
+          >
+          </v-progress-linear>
+        </template>
+        <template v-slot:[`item.historic`]="{ item }">
+          <v-progress-linear
+            background-color="#E9ECEF"
+            :height="15"
+            :width="150"
+            :rounded="true"
+            class="blured"
+            :color="getColor(item.FinancialStrength * 100)"
+            :value="item.historic * 100"
+          >
+          </v-progress-linear>
+        </template>
+      </v-data-table>
+      <!-- </div> -->
     </div>
     <!--end::Body-->
     <!-- </div> -->

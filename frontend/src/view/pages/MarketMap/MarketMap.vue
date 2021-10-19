@@ -1,28 +1,29 @@
 <template>
-  <div>
-    <div
-      class="row"
-      id="MapRoot"
-      style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
-    >
-      <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
-      <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
+  <!-- <div
+    class="row"
+    id="MapRoot"
+    style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
+  > -->
+  <v-row
+    id="MapRoot"
+    style="background-color:black;padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
+  >
+    <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
+    <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
 
-      <treemap
-        :key="mapKey"
-        :inputData="map"
-        :inputWidth="width"
-        :inputHeight="height"
-        v-if="dataFetched && width != null"
-      ></treemap>
-      <!-- </div> -->
-    </div>
-  </div>
+    <treemap
+      v-if="dataFetched && width != null"
+      :key="mapKey"
+      :inputData="map"
+      :inputWidth="width"
+      :inputHeight="height"
+    ></treemap>
+  </v-row>
+  <!-- </div> -->
+  <!-- </div> -->
 </template>
 <script>
 import treemap from "@/view/content/d3/treemap.vue";
-
-// import ErrorMine from "@/view/pages/error/Error-6.vue";
 export default {
   name: "marketmap",
   components: {
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       mapKey: 0,
+      interval: null,
       dataFetched: false,
       map: null,
       width: null,
@@ -38,7 +40,14 @@ export default {
       WebsocketRequest: false
     };
   },
-
+  watch: {
+    $route() {
+      if (this.$route.name != "marketmap") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    }
+  },
   created() {
     document.title = "Finwise - نقشه بازار";
 
@@ -52,25 +61,26 @@ export default {
 
   mounted() {
     let headerWidth = document.getElementById("MapRoot").clientWidth;
-    // console.log(headerHeight);
+    // console.log(headerWidth);
     // let chartDiv = document.getElementsByClassName("container-fluid");
-    this.height = (window.screen.height * 73) / 100;
-    this.height = window.innerHeight - 50;
+    this.height = (window.screen.height * 73) / 100 - 35;
+    this.height = window.innerHeight - 65;
 
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
-    this.width = headerWidth;
+    this.width = headerWidth + 50;
     this.width = window.innerWidth - 10;
     // console.log(this.width);
+    this.loadData();
 
     // this.height = chartDiv[0].clientHeight;
     // this.width = chartDiv.width;
-    this.loadData();
 
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     // this.$socketMarketMap.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
+    // this.liveData()
     // this.$socketMarketMap.onmessage = data => {
     //   // this.$store.dispatch("setMarketWatchItems", JSON.parse(data.data));
     //   if (
@@ -106,30 +116,43 @@ export default {
     },
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     liveData() {
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         if (!this.WebsocketRequest) {
-          clearInterval(interval);
+          clearInterval(this.interval_id);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketMarketMap.send(JSON.stringify(barier));
-      }, 30000);
+        // let barier = { request: "get" };
+        // this.$socketMarketMap.send(JSON.stringify(barier));
+        this.loadData();
+      }, 3000);
     },
     liveChecker() {
       let date = new Date();
-      if (date.getHours() > 8 && date.getHours() < 15) {
+      if (
+        date.getHours() > 8 &&
+        date.getHours() < 13 &&
+        date.getDay() != 5 &&
+        date.getDay() != 4
+      ) {
         this.WebsocketRequest = true;
-        // this.liveData();
+        this.liveData();
       } else {
         this.WebsocketRequest = false;
       }
     }
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
-  destroyed() {
-    let barier = { request: "halt" };
-    this.$socketMarketMap.send(JSON.stringify(barier));
+  beforeDestroy() {
     this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
+  },
+  destroyed() {
+    // let barier = { request: "halt" };
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
   }
 };
 </script>

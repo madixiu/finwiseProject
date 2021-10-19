@@ -14,7 +14,8 @@
 <script>
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import SupportTrendWidget from "@/view/pages/Ticker/TickerWidgets/SupportTrendWidget.vue";
 
 // import axios from "axios";

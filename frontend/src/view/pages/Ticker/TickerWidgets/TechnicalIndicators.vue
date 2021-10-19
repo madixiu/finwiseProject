@@ -1,66 +1,69 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b" id="parentDiv">
-    <v-card>
-      <v-card-title>وضعیت تکنیکال سهم</v-card-title>
-      <v-divider class="mt-0"></v-divider>
-      <div v-show="this.$store.getters.isAuthenticated">
-        <div class="row">
-          <div
-            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
-            style="direction: rtl;text-align:center"
-          >
-            <span>خرید </span>
-
-            <br />
-            <span class="chiptext" style="color:#30cc5a">{{ positive }}</span>
-          </div>
-          <div
-            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
-            style="direction: rtl;text-align:center"
-          >
-            <span>خنثی </span>
-            <br />
-
-            <span class="chiptext" style="color:#414554">{{ neutral }} </span>
-          </div>
-          <div
-            class="col-xxl-4 col-lg-4 col-md-4 col-sm-12"
-            style="direction: rtl;text-align:center"
-          >
-            <span>فروش </span>
-            <br />
-            <span class="chiptext" style="color:#f63538">{{ negative }}</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <div id="TechnicalGauge"></div>
-          </div>
-        </div>
+  <div id="TechnicalindicatorChartparentDiv">
+    <!-- <v-card rounded="lg"> -->
+    <!-- <v-card-title>وضعیت تکنیکال سهم</v-card-title>
+      <v-divider class="mt-0"></v-divider> -->
+    <div class="d-flex flex-column" v-if="!this.$store.getters.isAuthenticated">
+      <div class="d-flex justify-content-center my-2">
+        <v-icon size="30px">mdi-lock</v-icon>
       </div>
       <div
-        class="lockedTechnical"
+        class="d-flex justify-content-center"
         v-show="!this.$store.getters.isAuthenticated"
       >
-        <div class="row lockedTechnical">
-          <v-icon class="lockIcon" size="30px">mdi-lock</v-icon>
-        </div>
-        <div class="row lockedTechnical">
-          <v-btn
-            color="#607d8b"
-            class="ma-2 mt-1"
-            elevation="5"
-            style="margin: auto;"
-            @click="onClick"
-            >ورود</v-btn
+        <v-btn small color="#ebebeb" dark @click="onClick">
+          <v-icon small class="pl-1 pr-0" color="#4177a5"
+            >mdi-account-circle</v-icon
           >
-        </div>
+          <span style="color:#4177a5">ورود</span>
+        </v-btn>
       </div>
+    </div>
+    <div :class="[this.$store.getters.isAuthenticated == true ? '' : 'blured']">
+      <!-- <div class="row"> -->
+      <!-- <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"> -->
+      <!-- <div> -->
+      <!--//? d3 Gauge -->
+      <div id="TechnicalGauge"></div>
+      <!-- </div> -->
+      <!-- </div> -->
 
-      <!--end::Header-->
-    </v-card>
+      <v-card
+        rounded="lg"
+        outlined
+        elevation="2"
+        class="mx-2"
+        v-show="this.$store.getters.isAuthenticated"
+      >
+        <v-row no-gutters class="d-flex flex-row px-3">
+          <v-col class="d-flex flex-column align-center">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">خرید</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#30cc5a">{{ positive }}</span></v-col
+            >
+          </v-col>
+          <v-col class="d-flex flex-column align-center">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">خنثی</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#414554">{{ neutral }}</span></v-col
+            >
+          </v-col>
+          <v-col class="d-flex flex-column">
+            <v-col class="d-flex justify-content-center"
+              ><span style="font-size:0.9em">فروش</span></v-col
+            >
+            <v-col class="d-flex justify-content-center py-0"
+              ><span style="color:#f63538">{{ negative }}</span></v-col
+            >
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
@@ -71,7 +74,6 @@ export default {
   props: ["Indicators"],
   data() {
     return {
-      search: "",
       margin: {
         top: 0,
         right: 0,
@@ -132,25 +134,30 @@ export default {
       }
     },
     initrender() {
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("svg").remove();
+      // console.log("initrender");
+      // if (document.getElementsByTagName("svg")) {
+      //   d3.selectAll("svg").remove();
+      // }
+      if (document.getElementById("chartContainer")) {
+        document.getElementById("chartContainer").remove();
       }
-      this.width = parseInt(d3.select("#parentDiv").style("width"), 10);
+      this.width = parseInt(
+        d3.select("#TechnicalindicatorChartparentDiv").style("width"),
+        10
+      );
       this.height = (this.width * 9) / 16;
-      this.margin.top = this.height * 0.5;
+      this.margin.top = this.height * 0.7;
       this.margin.bottom = 0;
       this.margin.right = this.width * 0.1;
       this.margin.left = this.width * 0.1;
-      // eslint-disable-next-line no-unused-vars
+
       var parent = document.getElementById("TechnicalGauge");
-      // eslint-disable-next-line no-unused-vars
-      var svg = d3
-        .select(parent)
+
+      d3.select(parent)
         .append("svg")
         .attr("id", "chartContainer")
         .attr("viewBox", `0 0 ${this.width} ${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
-      // eslint-disable-next-line no-unused-vars
     },
     getFull() {
       if (this.sum > 10.2) {
@@ -187,40 +194,30 @@ export default {
       }
     },
     renderChart() {
+      // console.log("renderChart");
       var parent = document.getElementById("chartContainer");
       var svg = d3.select(parent);
-      if (document.getElementsByTagName("svg")) {
-        d3.selectAll("g").remove();
-      }
       const chart = svg
         .append("g")
         .attr(
           "transform",
-          `translate(${this.margin.left}, ${this.margin.top})`
+          `translate(${this.margin.left / 2}, ${this.margin.top})`
         );
-      // eslint-disable-next-line no-unused-vars
+
       var n = 5,
-        // eslint-disable-next-line no-unused-vars
         radius = this.width / 2 - this.margin.right * 2,
-        // eslint-disable-next-line no-unused-vars
         needleRad = this.width / 200,
         pi = Math.PI,
-        // eslint-disable-next-line no-unused-vars
         halfPi = pi / 2,
         endAngle = pi / 2,
         startAngle = -endAngle,
         data = d3.range(startAngle, endAngle, pi / n),
-        // eslint-disable-next-line no-unused-vars
         _data = data.slice(0),
-        // eslint-disable-next-line no-unused-vars
         tt = 3000,
-        // eslint-disable-next-line no-unused-vars
         scale = d3
           .scaleLinear()
           .range([startAngle, endAngle])
           .domain([-17, 17]),
-        // eslint-disable-next-line no-unused-vars
-
         // colorScale = d3
         //   .scaleSequential(d3.interpolateRdYlGn)
         //   .domain([data[0], data[data.length - 1]]);
@@ -277,7 +274,8 @@ export default {
             this.margin.top) /
             3})`
         )
-        .style("font-size", "1.3em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -287,7 +285,8 @@ export default {
           "transform",
           `translate(${this.width / 4},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "1.1em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -297,7 +296,8 @@ export default {
           "transform",
           `translate(${(7 * this.width) / 8},${this.margin.top / 5})`
         )
-        .style("font-size", "1.1em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -307,7 +307,8 @@ export default {
           "transform",
           `translate(${(1 * this.width) / 7},${this.margin.top / 5})`
         )
-        .style("font-size", "1.1em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
       chart
         .append("g")
         .append("text")
@@ -317,7 +318,10 @@ export default {
           "transform",
           `translate(${0.72 * this.width},${-0.4 * this.margin.top})`
         )
-        .style("font-size", "1.1em");
+        .style("font-size", "0.8em")
+        .style("font-family", "Vazir-Light-FD");
+
+      //? final statement
       chart
         .append("g")
         .append("text")
@@ -328,14 +332,14 @@ export default {
           "transform",
           `translate(${this.width / 2},${0.7 * this.margin.top})`
         )
-        .style("font-size", "2.3em");
+        .style("font-size", "0.9em")
+        .style("font-family", "Vazir-Light-FD");
 
       var slice = innerD
         .append("g")
         .selectAll("path.slice")
         .data(data);
 
-      // eslint-disable-next-line no-unused-vars
       slice
         .enter()
         .append("path")
@@ -344,8 +348,6 @@ export default {
         .attr("fill", function(d) {
           return colorScale(d);
         });
-
-      // eslint-disable-next-line no-unused-vars
       var needle = innerD
         .append("g")
         .append("path")
@@ -395,13 +397,14 @@ export default {
     }
   },
   mounted() {
-    if (!this.$store.getters.isAuthenticated) {
-      this.populateData();
-      this.initrender();
-    }
+    // if (!this.$store.getters.isAuthenticated) {
+    //   this.populateData();
+    //   this.initrender();
+    // }
   },
   watch: {
     Indicators() {
+      // this.chartKey += 1;
       this.initrender();
       this.populateData();
       if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
@@ -412,64 +415,11 @@ export default {
 };
 </script>
 <style scoped>
-.lockIcon {
-  margin-top: 90px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.lockedTechnical {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  height: 50%;
-  text-align: center;
-}
-.monospace {
-  font-family: monospace, "Lucida Console", "Courier New", sans-serif;
-  font-size: 16px;
-  font-weight: bolder;
-}
-.chiptext {
-  font-family: "Vazir-Medium-FD";
-  font-size: 2.4em;
-  text-align: center;
-}
-.rtl_centerd {
-  font-size: 1em;
-  direction: rtl;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
-.v-timeline {
-  direction: ltr !important;
-
-  text-align: left;
-}
-.v-timeline:before {
-  margin-left: 50%;
-}
-.customAlert {
-  font-family: "Vazir-Medium-FD" !important;
+.blured {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(10px);
 }
 </style>

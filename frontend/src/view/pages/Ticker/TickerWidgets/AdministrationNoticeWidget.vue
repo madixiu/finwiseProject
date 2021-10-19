@@ -1,113 +1,175 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        پیام ناظر
-      </h3>
+  <v-card rounded="lg" height="100%">
+    <v-skeleton-loader
+      v-if="loading && !noData"
+      type=" table-heading, table-thead, table-tbody"
+    ></v-skeleton-loader>
+
+    <!-- <v-data-table
+      v-if="loading == false"
+      :headers="headers"
+      :items="notices"
+      class="elevation-1 FinancialStrength"
+    >
+    </v-data-table> -->
+    <b-table
+      id="AdministrationWidgetTable"
+      class="AdministrationWidget-table"
+      thClass="AdministrationWidget-tableHeader"
+      tbody-tr-class="AdministrationWidget-table-row"
+      v-if="!loading && !noData"
+      small
+      hover
+      :per-page="tablePaginationVisible"
+      :current-page="tablePaginationNumber"
+      :responsive="true"
+      :items="notices"
+      :fields="headers"
+    >
+      <template #cell(Submited)="data">
+        <span v-if="data.value == null || data.value == ''">- </span>
+        <span v-else>{{ data.value }}</span>
+      </template>
+      <template #cell(persianDate)="data">
+        <span v-if="data.value == null || data.value == ''">- </span>
+        <span v-else>{{ data.value }}</span>
+      </template>
+      <template #cell(Title)="data">
+        <span v-if="data.value == null || data.value == ''">- </span>
+        <span v-else>{{ data.value }}</span>
+      </template>
+      <template #cell(Text)="data">
+        <span v-if="data.value == null || data.value == ''">- </span>
+        <span v-else>{{ data.value }}</span>
+      </template>
+    </b-table>
+
+    <!-- //? no Data  -->
+    <div v-if="noData && !loading" class="d-flex justify-content-center py-5">
+      <span style="font-size:0.9em">اطلاعات موجود نیست</span>
     </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="loading">
-      <v-skeleton-loader
-        type=" table-heading, table-thead, table-tbody"
-      ></v-skeleton-loader>
+
+    <!--//? pagination -->
+    <div
+      v-if="!loading && !noData"
+      style="
+              display: flex;
+              justify-content: center;width:100%"
+    >
+      <div class="col-6">
+        <v-pagination
+          color="#4682B4"
+          v-model="tablePaginationNumber"
+          :length="tablePaginationLength"
+          :total-visible="tablePaginationVisible"
+        ></v-pagination>
+      </div>
     </div>
-    <div class="card-body d-flex flex-column">
-      <v-data-table
-        v-if="loading == false"
-        :headers="headers"
-        :items="DataItems2"
-        class="elevation-1 FinancialStrength"
-      >
-      </v-data-table>
-    </div>
-    <!--end::Body-->
-  </div>
-  <!--end::Mixed Widget 14-->
+  </v-card>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "AdminNoticeWidget",
-  props: ["notices"],
+  // props: ["notices"],
+  props: {
+    notices: {
+      type: Array,
+      default: null
+    }
+  },
   data() {
     return {
-      search: "",
+      tablePaginationNumber: 1,
+      tablePaginationLength: 10,
       loading: true,
+      noData: false,
       headers: [
         {
-          text: "تاریخ ارسال",
-          value: "Submited"
+          label: "تاریخ ارسال",
+          key: "Submited",
+          tdClass: "AdministrationWidget-tableTD",
+          thStyle: { "min-width": "200px" },
+          thClass: "AdministrationWidget-tableHeader"
         },
         {
-          text: "تاریخ انتشار",
-          value: "persianDate"
+          label: "تاریخ انتشار",
+          key: "persianDate",
+          tdClass: "AdministrationWidget-tableTD",
+          thClass: "AdministrationWidget-tableHeader"
         },
 
         {
-          text: "عنوان",
-          value: "Title"
+          label: "عنوان",
+          key: "Title",
+          tdClass: "AdministrationWidget-tableTD",
+          thClass: "AdministrationWidget-tableHeader"
         },
         {
-          text: "توضیحات",
-          value: "Text"
+          label: "توضیحات",
+          key: "Text",
+          thClass: "AdministrationWidget-tableHeader"
         }
-      ],
-      DataItems2: []
+      ]
     };
   },
+    watch: {
+    notices(newValue, oldValue) {
+      if (
+        newValue != oldValue &&
+        newValue.length == 0 &&
+        oldValue.length == 0
+      ) {
+        this.noData = true;
+        this.loading = false;
+      } else {
+        this.tablePaginationLength = this.pagination(this.notices.length);
+        this.loading = false;
+      }
+    }
+  },
+
   computed: {
-    ...mapGetters(["layoutConfig"])
+    tablePaginationVisible() {
+      let screenHeight = window.innerHeight;
+      let tableHeightWithoutHeader = screenHeight - 303;
+      //? every row has 55 pixel
+      let rowCount = parseInt(tableHeightWithoutHeader / 55);
+      return rowCount;
+    }
   },
   methods: {
-    populateData() {
-      this.DataItems2 = this.notices;
-    }
-  },
-  mounted() {
-    this.populateData();
-  },
-  watch: {
-    notices() {
-      this.populateData();
-      this.loading = false;
+    pagination(number) {
+      if (number % this.tablePaginationVisible == 0)
+        return number / this.tablePaginationVisible;
+      else {
+        return parseInt(number / this.tablePaginationVisible) + 1;
+      }
     }
   }
+
 };
 </script>
 <style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
+.AdministrationWidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
 }
-.rtl_centerd {
-  direction: rtl;
+.AdministrationWidget-table /deep/ .AdministrationWidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
+  text-align: center;
+  /* min-width: 200px; */
+}
+.AdministrationWidget-table /deep/ .AdministrationWidget-row {
+  direction: ltr;
+  vertical-align: middle !important;
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
+.AdministrationWidget-table /deep/ .AdministrationWidget-tableTD {
   vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
 }
 </style>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <div class="row">
@@ -15,12 +14,14 @@
   </div>
 </template>
 <script>
+/* eslint-disable no-unused-vars */
 import {
   SET_BREADCRUMB,
   SET_BREADCRUMB_TITLE,
   ADD_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import IncomeStatementAnalysisWidget from "@/view/pages/Ticker/TickerWidgets/IncomeStatementAnalysisWidget.vue";
 export default {
   name: "IncomeStatementAnalysis",
@@ -43,7 +44,6 @@ export default {
       this.subheaders = this.$store.getters.getLiveTickerData;
       this.loadData();
     } else {
-      // eslint-disable-next-line no-unused-vars
       this.getLiveTickerData().then(Response => {
         this.loadData();
       });
@@ -51,13 +51,8 @@ export default {
   },
   methods: {
     loadData() {
-      // eslint-disable-next-line no-unused-vars
-      this.getOne().then(response => {
-        // eslint-disable-next-line no-unused-vars
-        this.getTwo().then(responsey => {
-          // eslint-disable-next-line no-unused-vars
-          this.getThree();
-        });
+      this.getTwo().then(responsey => {
+        this.getThree();
       });
     },
     async getTwo() {

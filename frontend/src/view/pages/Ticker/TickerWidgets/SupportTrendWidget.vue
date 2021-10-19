@@ -382,7 +382,7 @@ export default {
           this.Chart1options.chart.stroke.dashArray.push(1);
           rcounter = rcounter + 1;
         });
-        console.log(this.Chart1options.chart.stroke);
+        //// console.log(this.Chart1options.chart.stroke);
         this.ChartTopKey = this.ChartTopKey + 1;
       }
     }

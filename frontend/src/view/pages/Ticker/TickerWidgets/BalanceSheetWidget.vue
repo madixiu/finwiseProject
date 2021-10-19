@@ -1,28 +1,14 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        ترازنامه
-        <b-spinner
-          class="titleHeaders"
-          type="grow"
-          small
-          v-if="loading"
-        ></b-spinner>
-      </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div
-      class="card-body d-flex flex-column"
-      v-if="this.notices != '' && loading == false"
-    >
+  <div>
+    <v-sheet rounded="lg" elevation="6" height="100%">
       <v-tabs
-        background-color="#212529"
-        color="#FFF"
-        dark
-        prev-icon="mdi-arrow-right-bold-box-outline"
-        next-icon="mdi-arrow-left-bold-box-outline"
+        background-color="#f0efeb"
+        color="#4682B4"
+        centered
+        slider-size="3"
+        height="30"
+        prev-icon="mdi-arrow-left-bold-box-outline"
+        next-icon="mdi-arrow-right-bold-box-outline"
         show-arrows
       >
         <v-tab
@@ -34,202 +20,156 @@
           {{ item.value }}
         </v-tab>
         <v-tab-item v-for="item in this.todatesyears" :key="item.key">
-          <v-tabs
-            vertical
-            background-color="#212529"
-            color="#FFF"
-            dark
-            class="itemFilters"
-            next-icon="mdi-arrow-right-bold-box-outline"
-            prev-icon="mdi-arrow-left-bold-box-outline"
-            show-arrows
-          >
-            <v-tab
-              v-for="item in todates"
-              :key="item.key"
-              class="itemFilters"
-              @click="GetFiltered(item.value)"
-            >
-              {{ item.value }}
-            </v-tab>
-            <v-tab-item v-for="itemR in todates" :key="itemR.key">
-              <div class="card-header border-0">
-                <h3 class="card-title font-weight-bolder FinancialStrength">
-                  ترازنامه دوره {{ itemR.period }} ماه منتهی به
-                  {{ itemR.value }} - سال مالی {{ itemR.fiscalYear }} -
-                  {{ itemR.reportStatus }}
-                </h3>
-              </div>
-              <div class="row">
-                <div class="col-xxl-6">
-                  <div class="card-body d-flex flex-column">
-                    <div class="card-header border-0">
-                      <h4
-                        class="card-title font-weight-bolder FinancialStrength"
-                      >
-                        دارایی
-                      </h4>
-                    </div>
-                    <v-data-table
-                      :headers="headersfacility"
-                      :items="filteredItems"
-                      class="elevation-1 FinancialStrength"
-                      :header-props="{ sortIcon: null }"
-                      :disable-sort="true"
-                      hide-default-footer
-                      disable-pagination
-                    >
-                      <template v-slot:[`item.toDate`]="{ item }">
-                        <span class="cellItem">{{ item.toDate }} </span>
-                      </template>
-                      <template v-slot:[`item.Translated`]="{ item }">
-                        <span class="cellItem">{{ item.Translated }} </span>
-                      </template>
-                      <template v-slot:[`item.lastYear`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.lastYear > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.lastYear) }}
-                        </span>
-                      </template>
-                      <template v-slot:[`item.thisPeriod`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.thisPeriod > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.thisPeriod) }}
-                        </span>
-                      </template>
-                    </v-data-table>
-                  </div>
-                </div>
-                <div class="col-xxl-6">
-                  <div class="card-body d-flex flex-column">
-                    <div class="card-header border-0">
-                      <h4
-                        class="card-title font-weight-bolder FinancialStrength"
-                      >
-                        حقوق صاحبان سهام
-                      </h4>
-                    </div>
-                    <v-data-table
-                      :headers="headersfacility"
-                      :items="filteredItems3"
-                      class="elevation-1 FinancialStrength"
-                      :header-props="{ sortIcon: null }"
-                      :disable-sort="true"
-                      hide-default-footer
-                      disable-pagination
-                    >
-                      <template v-slot:[`item.toDate`]="{ item }">
-                        <span class="cellItem">{{ item.toDate }} </span>
-                      </template>
-                      <template v-slot:[`item.Translated`]="{ item }">
-                        <span class="cellItem">{{ item.Translated }} </span>
-                      </template>
-                      <template v-slot:[`item.lastYear`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.lastYear > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.lastYear) }}
-                        </span>
-                      </template>
-                      <template v-slot:[`item.thisPeriod`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.thisPeriod > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.thisPeriod) }}
-                        </span>
-                      </template>
-                    </v-data-table>
-                  </div>
-                  <div class="card-body d-flex flex-column">
-                    <div class="card-header border-0">
-                      <h4
-                        class="card-title font-weight-bolder FinancialStrength"
-                      >
-                        بدهی
-                      </h4>
-                    </div>
-                    <v-data-table
-                      :headers="headersfacility"
-                      :items="filteredItems2"
-                      class="elevation-1 FinancialStrength"
-                      :header-props="{ sortIcon: null }"
-                      :disable-sort="true"
-                      hide-default-footer
-                      disable-pagination
-                    >
-                      <template v-slot:[`item.toDate`]="{ item }">
-                        <span class="cellItem">{{ item.toDate }} </span>
-                      </template>
-                      <template v-slot:[`item.Translated`]="{ item }">
-                        <span class="cellItem">{{ item.Translated }} </span>
-                      </template>
-                      <template v-slot:[`item.lastYear`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.lastYear > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.lastYear) }}
-                        </span>
-                      </template>
-                      <template v-slot:[`item.thisPeriod`]="{ item }">
-                        <span
-                          class="cellItem"
-                          v-bind:class="[
-                            item.thisPeriod > 0
-                              ? 'ltr_aligned'
-                              : 'redItem ltr_aligned'
-                          ]"
-                          >{{ numberWithCommas(item.thisPeriod) }}
-                        </span>
-                      </template>
-                    </v-data-table>
-                  </div>
-                </div>
-              </div>
-            </v-tab-item>
-          </v-tabs>
+          <v-card rounded="lg" color="#f0efeb" elevation="7">
+            <v-toolbar dense style="height:36px;">
+              <v-toolbar-title style="height:20px;font-size:0.95em">
+                ترازنامه دوره {{ itemPeriod }} ماه منتهی به
+                {{ selectedMonth }} - سال مالی {{ itemfiscalYear }} -
+                {{ itemReportStatus }}
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex justify-content-end" cols="3">
+                <v-select
+                  class="vuetifySelectCustom flex-grow-1"
+                  :items="selectedDatesList"
+                  v-model="selectedMonth"
+                  solo-inverted
+                  dense
+                ></v-select>
+              </v-col>
+            </v-toolbar>
+
+            <!--//? Asset -->
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  دارایی
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="BalanceSheetWidget-table"
+                thClass="BalanceSheetWidget-tableHeader"
+                tbody-tr-class="BalanceSheetWidget-table-row"
+                small
+                hover
+                :items="filteredItems"
+                :fields="headersfacility"
+              >
+                <template #cell(thisPeriod)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+                <template #cell(lastYear)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+              </b-table>
+            </v-card>
+            <!--//? Liability -->
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="1" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  حقوق صاحبان سهام
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="BalanceSheetWidget-table"
+                thClass="BalanceSheetWidget-tableHeader"
+                tbody-tr-class="BalanceSheetWidget-table-row"
+                small
+                hover
+                :items="filteredItems2"
+                :fields="headersfacility"
+              >
+                <template #cell(thisPeriod)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+                <template #cell(lastYear)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+              </b-table>
+            </v-card>
+            <!--//? Equity -->
+            <v-card rounded="lg" class="mt-2" color="#f0efeb" elevation="0">
+              <v-toolbar elevation="2" width="15%" dense style="height:36px;">
+                <v-toolbar-title style="height:20px;font-size:0.95em">
+                  بدهی
+                </v-toolbar-title>
+              </v-toolbar>
+              <b-table
+                class="BalanceSheetWidget-table"
+                thClass="BalanceSheetWidget-tableHeader"
+                tbody-tr-class="BalanceSheetWidget-table-row"
+                small
+                hover
+                :items="filteredItems3"
+                :fields="headersfacility"
+              >
+                <template #cell(thisPeriod)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+                <template #cell(lastYear)="data">
+                  <span v-if="data.value < 0" style="color:red" dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                  <span v-else-if="data.value === null || data.value == ''"
+                    >-</span
+                  >
+                  <span v-else dir="ltr">{{
+                    data.value.toLocaleString()
+                  }}</span>
+                </template>
+              </b-table>
+            </v-card>
+          </v-card>
         </v-tab-item>
       </v-tabs>
-    </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="this.notices == '' && loading == false"
-    >
-      <span class="rtl_centerd">دیتا برای نمایش وجود ندارد</span>
-    </div>
+    </v-sheet>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
-
 <script>
-import { mapGetters } from "vuex";
 export default {
-  name: "BalanceSheetWidget",
   props: ["notices"],
   data() {
     return {
-      search: "",
       loading: true,
       type: "",
       todates: [],
@@ -238,86 +178,77 @@ export default {
       selectedYear: "",
       headersfacility: [
         {
-          text: "منتهی به",
-          value: "toDate"
+          label: "منتهی به",
+          key: "toDate",
+          thClass: "BalanceSheetWidget-tableHeader"
         },
         {
-          text: "عنوان",
-          value: "Translated"
+          label: "عنوان",
+          key: "Translated",
+          thClass: "BalanceSheetWidget-tableHeader"
         },
         {
-          text: "دوره (میلیون ریال) ",
-          value: "thisPeriod"
+          label: "دوره (میلیون ریال) ",
+          key: "thisPeriod",
+          thClass: "BalanceSheetWidget-tableHeader"
         },
         {
-          text: "دوره مشابه سال مالی گذشته(میلیون ریال) ",
-          value: "lastYear"
+          label: "دوره مشابه سال مالی گذشته(میلیون ریال) ",
+          key: "lastYear",
+          thClass: "BalanceSheetWidget-tableHeader"
         }
-      ],
-      DataItems2: []
+      ]
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
+    itemPeriod() {
+      let period = null;
+      this.todates.filter(d => {
+        if (d.value == this.selectedMonth) period = d.period;
+      });
+      return period;
+    },
+    itemfiscalYear() {
+      let fiscalYear = null;
+      this.todates.filter(d => {
+        if (d.value == this.selectedMonth) fiscalYear = d.fiscalYear;
+      });
+      return fiscalYear;
+    },
+    itemReportStatus() {
+      let reportStatus = null;
+      this.todates.filter(d => {
+        if (d.value == this.selectedMonth) reportStatus = d.reportStatus;
+      });
+      return reportStatus;
+    },
+    selectedDatesList() {
+      let items = [];
+      for (let item of this.todates) items.push(item.value);
+
+      return items;
+    },
     filteredItems() {
-      return this.DataItems2.filter(item => {
+      return this.notices.filter(item => {
         return (item.toDate == this.selectedMonth) & (item.type == "Asset");
       });
     },
     filteredItems2() {
-      return this.DataItems2.filter(item => {
+      return this.notices.filter(item => {
         return (item.toDate == this.selectedMonth) & (item.type == "Liability");
       });
     },
     filteredItems3() {
-      return this.DataItems2.filter(item => {
+      return this.notices.filter(item => {
         return (item.toDate == this.selectedMonth) & (item.type == "Equity");
       });
     }
   },
   methods: {
-    numberWithCommas(x) {
-      if (x === null) {
-        return "-";
-      }
-      if (x == 0) {
-        return "-";
-      }
-      if (x == "") {
-        return "-";
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    // populateData() {
-    //   this.DataItems = this.mostviewed;
-    // },
-    roundTo(n, digits) {
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
-    populateData() {
-      this.DataItems2 = this.notices;
-      this.loading = false;
-    },
     gettabs() {
       var lookup = {};
       var lookup2 = {};
-      var items = this.DataItems2;
+      var items = this.notices;
       var result = [];
       var result2 = [];
       var counter = 0;
@@ -353,7 +284,7 @@ export default {
     },
     getOnesfromthisyear() {
       var lookup = {};
-      var items = this.DataItems2;
+      var items = this.notices;
       var result = [];
       var counter = 0;
       for (var item, i = 0; (item = items[i++]); ) {
@@ -373,20 +304,9 @@ export default {
       this.todates = result;
     },
     GetFiltered(selectedItem) {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
       this.selectedMonth = selectedItem;
     },
     GetFilteredYearly(selectedItem) {
-      //   return this.DataItems2.filter(d => {
-      //     return Object.keys(this.filters).every(f => {
-      //       return this.filters[f].length < 1 || this.filters[f].includes(d[f]);
-      //     });
-      //   });
-
       this.selectedYear = selectedItem;
     },
     fillNewestMonth() {
@@ -400,7 +320,6 @@ export default {
   },
   watch: {
     notices() {
-      this.populateData();
       this.gettabs();
       this.getOnesfromthisyear();
       this.loading = false;
@@ -413,47 +332,36 @@ export default {
 };
 </script>
 <style scoped>
-.cellItem {
-  font-family: "Vazir-Light-FD";
-  font-weight: 700;
+.BalanceSheetWidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
 }
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.rtl_centerd {
-  direction: rtl;
+.BalanceSheetWidget-table /deep/ .BalanceSheetWidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
+.BalanceSheetWidget-table /deep/ .ticker-assembly-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
+  text-align: center;
 }
-.valign * {
-  vertical-align: middle;
+.vuetifySelectCustom /deep/ .v-input__control {
+  min-height: 25px !important;
+  height: 25px !important;
 }
-.redItem {
-  color: #ef5350 !important;
+.vuetifySelectCustom /deep/ .v-input__control {
+  font-size: 0.7em !important;
 }
-.greenItem {
-  color: #088a2f93 !important;
+.vuetifySelectCustom /deep/ .v-chip.v-size--small {
+  border-radius: 3px;
+  font-size: 10px;
+  height: 17px;
 }
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
-.itemFilters {
-  font-family: "Vazir-Light-FD";
-  font-weight: 700;
-  font-size: 1em;
-}
-table.v-table tbody td {
-  font-family: "Vazir-Light-FD" !important;
+.vuetifySelectCustom /deep/ .v-chip .v-chip__close.v-icon {
+  font-size: 12px !important;
 }
 </style>

@@ -30,6 +30,7 @@
             :columnDefs="DecisionTableHeader"
             :enableRtl="true"
             :gridOptions="gridOptions"
+            @filterChanged="filterEvent"
             :allowContextMenuWithControlKey="false"
             @grid-ready="onReady"
           ></ag-grid-vue>
@@ -41,6 +42,7 @@
           >
             <div class="col-6">
               <v-pagination
+                color="#4682B4"
                 v-model="tablePaginationNumber"
                 :length="tablePaginationLength"
                 :total-visible="10"
@@ -262,6 +264,9 @@ export default {
     this.loadData();
   },
   methods: {
+    filterEvent() {
+      this.tablePaginationLength = this.gridApi.paginationGetTotalPages();
+    },
     getHeight() {
       return (
         window.innerHeight -

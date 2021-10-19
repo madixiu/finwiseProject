@@ -14,10 +14,10 @@ def SendPasswordResetNumber (email):
     return number
 
 def sendMail(subject,message,email):
-
+    print("MAKING SURE ITS IN")
     return send_mail(
     subject=subject,
-    from_email=django_settings.GRAPHQL_AUTH['EMAIL_FROM'],
+    from_email=django_settings.EMAIL_HOST_USER,
     message=message,
     # html_message=html_message,
     recipient_list=(

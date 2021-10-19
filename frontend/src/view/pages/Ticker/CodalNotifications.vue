@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-xxl-12 pt-3" style="padding-bottom:0px">
+    <v-row no-gutters >
+      <div class="col-xxl-12" style="padding-bottom:0px">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
       </div>
       <div class="col-xxl-12" style="padding-top:5px">
         <NotificationsWidget :notices="notice"></NotificationsWidget>
       </div>
-    </div>
+    </v-row>
   </div>
 </template>
 <script>
@@ -16,7 +16,8 @@ import {
   SET_BREADCRUMB_TITLE,
   ADD_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import NotificationsWidget from "@/view/pages/Ticker/TickerWidgets/NotificationsWidget.vue";
 export default {
   name: "Notifications",

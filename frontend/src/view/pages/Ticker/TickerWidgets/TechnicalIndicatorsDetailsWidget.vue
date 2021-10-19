@@ -4,9 +4,6 @@
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
       style="padding-left:0px;padding-right:20px"
     >
-      <!-- <div
-            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
       <v-card rounded="lg" id="ParentCard" :height="cardheight">
         <v-toolbar dense class="elevation-2" style="height:36px;">
           <v-toolbar-title
@@ -15,9 +12,6 @@
             >مجموع</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title id="ParentCardTitle">
-          <span>  </span><br />
-        </v-card-title> -->
         <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
         <div id="ChartGeneral"></div>
       </v-card>
@@ -27,47 +21,34 @@
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1 d-flex"
       style="padding-left:0px;padding-right:5px"
     >
-      <!-- <div
-            class="card card-custom  col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
       <v-card rounded="lg" :height="cardheight" style="width:100%">
         <v-toolbar dense class="elevation-2" style="height:36px;">
           <v-toolbar-title style="height:20px;font-size:0.95em"
             >Moving Average</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title> <span>  </span><br /> </v-card-title> -->
         <v-divider class="mt-0 mb-0"></v-divider>
         <div class="" id="ChartGeneral2"></div>
       </v-card>
-      <!-- </div> -->
     </div>
     <div
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
       style="padding-left:0px;padding-right:5px"
     >
-      <!-- <div
-            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
       <v-card rounded="lg" :height="cardheight">
         <v-toolbar dense class="elevation-2" style="height:36px;">
           <v-toolbar-title style="height:20px;font-size:0.95em"
             >Indicators</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title> <span> Indicators </span><br /> </v-card-title> -->
         <v-divider class="mt-0 mb-0"></v-divider>
         <div id="ChartGeneral3"></div>
       </v-card>
-      <!-- </div> -->
     </div>
     <div
       class="col-xxl-3 col-xl-3 col-md-6 col-lg-6 col-xs-12 mt-1"
       style="padding-left:20px;padding-right:5px"
     >
-      <!-- <div
-            class="card card-custom col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-          > -->
       <v-card rounded="lg" :height="cardheight" width="100%">
         <v-card-title>
           <h6>تایم فریم <v-chip small>روزانه</v-chip></h6>
@@ -193,9 +174,9 @@ export default {
     };
   },
   computed: {
-    mainCardHeight() {
-      return (window.innerHeight - 100).toString() + "px";
-    },
+    //// mainCardHeight() {
+    ////   return (window.innerHeight - 100).toString() + "px";
+    //// },
     cardheight() {
       if (screen.height * 2 > screen.width) {
         // console.log(screen.height * 0.5)
@@ -1278,19 +1259,6 @@ export default {
       },
       deep: true
     }
-    // notices() {
-    //   this.populateData();
-    //   console.log(this.errorinData);
-    //   if (!(this.DataItems2 === undefined || this.DataItems2.length == 0)) {
-    //     if (!this.errorinData) {
-    //       this.renderChart();
-    //     this.loading = false;
-    //     }
-    //   } else {
-    //     this.loading = false;
-    //     this.errorinData = true;
-    //   }
-    // }
   }
 };
 </script>

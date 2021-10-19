@@ -16,7 +16,8 @@ import {
   SET_BREADCRUMB_TITLE,
   ADD_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import BalanceSheetWidget from "@/view/pages/Ticker/TickerWidgets/BalanceSheetWidget.vue";
 export default {
   name: "BalanceSheet",

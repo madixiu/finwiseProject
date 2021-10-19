@@ -18,6 +18,8 @@
       <v-tabs
         v-model="selectedAttribute"
         fixed-tabs
+        height="30"
+        background-color="#f0efeb" 
         color="#4682B4"
         class="mt-1"
       >

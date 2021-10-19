@@ -215,7 +215,7 @@ export default {
         filter: "agNumberColumnFilter",
         sortable: true,
         cellRenderer: function(params) {
-          return params.value.toString().toLocaleString();
+          return params.value.toLocaleString();
         }
       },
       {

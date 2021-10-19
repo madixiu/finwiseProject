@@ -379,6 +379,9 @@ export default {
         markers: {
           size: 0
         },
+        stroke: {
+          width: 2
+        },
         fill: {
           type: "gradient",
           gradient: {

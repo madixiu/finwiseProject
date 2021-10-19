@@ -15,7 +15,7 @@ import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import ICWidget from "@/view/pages/StockMarket/StockMarketWidgets/IncreaseCapitalsWidget.vue";
 // import axios from "axios";
 export default {
-  name: "Notifications",
+  name: "AssemblyIC",
   components: {
     ICWidget
   },

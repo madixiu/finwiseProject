@@ -174,7 +174,7 @@ export default {
         }
       },
       {
-        headerName: "بازار",
+        headerName: "نوع",
         field: "market",
         sortable: true,
         minWidth: 160

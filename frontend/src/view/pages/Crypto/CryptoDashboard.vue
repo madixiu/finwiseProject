@@ -1,18 +1,20 @@
 <template>
-  <div class="row" style="padding-top:5px">
-    <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
+  <v-row>
+    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-left:4px">
       <CryptoIntroMW :InputIntroMW="IntroMW"></CryptoIntroMW>
-    </div>
-    <div class="col-xxl-6 col-lg-6 col-md-12 col-sm-12">
+    </v-col>
+    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-right:4px">
       <div>
         <TechnicalCharts :inpuDataTechnical="TechnicalData"></TechnicalCharts>
+      </div>
+      <div class="pt-2">
         <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
       </div>
-    </div>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+//// import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import TechnicalCharts from "@/view/pages/Crypto/Widgets/TechnicalChart.vue";
 import CorrMatrix from "@/view/pages/Crypto/Widgets/CorrMatrix.vue";
 import CryptoIntroMW from "@/view/pages/Crypto/Widgets/CryptoMarketIntro.vue";
@@ -25,92 +27,102 @@ export default {
   },
   data() {
     return {
+      interval: null,
       dataFetched: false,
       TechnicalData: [],
       CorrData: [],
       IntroMW: [],
-      ResponeseTimeout: {
-        getTechnicalData: true,
-        getCorrData: true,
-        getIntroData: true
-      }
+      WebsocketRequest: true
     };
+  },
+  watch: {
+    $route() {
+      if (this.$route.name != "CryptoDashboard") {
+        clearInterval(this.interval);
+        this.WebsocketRequest = false;
+      }
+    }
   },
   created() {
     document.title = "FinWise - رمز ارز";
+    //// this.$store.dispatch(SET_BREADCRUMB, [{ title: "داشبورد رمز ارز" }]);
+    this.loadData();
   },
   mounted() {
-    // this.test();
-    this.ResponeseTimeout = {
-      getTechnicalData: true,
-      getCorrData: true,
-      getIntroData: true
-    };
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "داشبورد رمز ارز" }]);
-    this.loadData();
-    // eslint-disable-next-line no-unused-vars
-    // let interval = setInterval(() => {
-    //   this.getIntroMW();
-    // }, 10000);
-    // this.make_requests_handler();
+    // this.liveData();
   },
   methods: {
     loadData() {
       // eslint-disable-next-line no-unused-vars
-      this.getTechnical().then(resp0 => {
+      this.getIntroMW().then(resp0 => {
         // eslint-disable-next-line no-unused-vars
-        this.getCorrelationM().then(resp1 => {
+        this.getTechnical().then(resp1 => {
           // eslint-disable-next-line no-unused-vars
-          this.getIntroMW().then(resp2 => {});
+          this.getCorrelationM().then(resp2 => {
+            this.liveData();
+          });
         });
-        // eslint-disable-next-line no-unused-vars
-        // this.getTradesAll().then(resp1 => {
-        // eslint-disable-next-line no-unused-vars
-        // });
       });
     },
     async getTechnical() {
       await this.axios
         .get("/api/CryptoTechincalAll")
         .then(getHighestQResp => {
-          this.ResponeseTimeout.getTechnicalData = false;
           this.TechnicalData = getHighestQResp.data;
         })
         .catch(error => {
-          if (error.code == "ECONNABORTED")
-            this.ResponeseTimeout.getTechnicalData = true;
-          // setTimeout(this.getHighestQ(), 1000);
-          else console.error(error);
+          console.error(error);
         });
     },
     async getCorrelationM() {
       await this.axios
         .get("/api/CryptoHistoricCorr")
         .then(getHighestQResp => {
-          this.ResponeseTimeout.getCorrData = false;
           this.CorrData = getHighestQResp.data;
         })
         .catch(error => {
-          if (error.code == "ECONNABORTED")
-            this.ResponeseTimeout.getCorrData = true;
-          // setTimeout(this.getHighestQ(), 1000);
-          else console.error(error);
+          console.error(error);
         });
     },
     async getIntroMW() {
       await this.axios
         .get("/api/Crypto/Marketwatch/")
         .then(getIntro => {
-          this.ResponeseTimeout.getIntroData = false;
           this.IntroMW = getIntro.data;
         })
         .catch(error => {
-          if (error.code == "ECONNABORTED")
-            this.ResponeseTimeout.getIntroData = true;
-          // setTimeout(this.getHighestQ(), 1000);
-          else console.error(error);
+          console.error(error);
         });
+    },
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    liveData() {
+      this.interval = setInterval(() => {
+        if (!this.WebsocketRequest) {
+          clearInterval(this.interval._id);
+          return;
+        }
+        // let barier = { request: "get" };
+        // this.$socketMarketMap.send(JSON.stringify(barier));
+        this.getIntroMW();
+      }, 5000);
     }
+    // liveChecker() {
+    //   let date = new Date();
+    //   if (date.getDay() != 5 && date.getDay() != 4) {
+    //     this.WebsocketRequest = true;
+    //     this.liveData();
+    //   } else {
+    //     this.WebsocketRequest = false;
+    //   }
+    // }
+    // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  },
+  destroyed() {
+    // let barier = { request: "halt" };
+    // this.$socketMarketWatch.send(JSON.stringify(barier));
+    this.WebsocketRequest = false;
+    clearInterval(this.interval);
+    // console.log("destroy");
   }
 };
 </script>

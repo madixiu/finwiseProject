@@ -74,7 +74,6 @@ export default {
         "AssemblyIC",
         "Taghadom",
         "Option"
-        // "Funds"
       ],
       kala: ["bourse", "global"],
       ticker: [

@@ -1,46 +1,83 @@
 <template>
-  <div>
-    <v-card id="ParentCard" :height="cardheight">
-      <!-- <v-card-title id="ParentCardTitle">
+  <v-card rounded="lg" id="ParentCard" :height="cardheight">
+    <!-- <v-card-title id="ParentCardTitle">
         <span>صنایع</span>
       </v-card-title> -->
-      <v-toolbar dense id="ParentCardTitle" style="height:36px;">
-        <v-toolbar-title style="height:20px;font-size:0.95em"
-          >تاثیر صنایع در شاخص</v-toolbar-title
-        >
-      </v-toolbar>
-      <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
-      <div class="row">
-        <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-11">
-          <div id="IndustriesChart"></div>
-        </div>
-        <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 rtl_aligned">
-          <v-card>
-            <v-card-title>تنظیمات</v-card-title>
-            <!-- <v-divider class="mt-0"></v-divider> -->
-            <b-form-group label="مرتب سازی بر اساس :" class="px-5">
-              <b-form-radio-group
-                @input="renderChart()"
-                v-model="SortBy"
-                :options="options"
-                name="radio-inline"
-              ></b-form-radio-group>
-            </b-form-group>
-            <v-divider class="mt-0"></v-divider>
-            <b-form-group label="بازه محاسبه بازده:" class="px-5">
-              <b-form-radio-group
-                @input="renderChart()"
-                v-model="freq"
-                :options="options2"
-                name="radio-inline2"
-              ></b-form-radio-group>
-            </b-form-group>
-            <v-divider class="mt-0"></v-divider>
-          </v-card>
-        </div>
+    <v-toolbar dense id="ParentCardTitle" style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em"
+        >تاثیر صنایع در شاخص</v-toolbar-title
+      >
+    </v-toolbar>
+    <v-divider id="ParentDivider" class="mt-0 mb-0"></v-divider>
+    <div class="row">
+      <div class="col-xxl-10 col-lg-10 col-md-12 col-sm-11 pr-0 pl-1">
+        <div id="IndustriesChart"></div>
       </div>
-    </v-card>
-  </div>
+      <div
+        class="col-xxl-2 col-lg-2 col-md-12 col-sm-12 rtl_aligned pl-5 pt-5 pr-0"
+      >
+        <v-card rounded="lg" elevation="7">
+          <!-- <v-card-title>تنظیمات</v-card-title> -->
+          <!-- <v-divider class="mt-0"></v-divider> -->
+
+          <v-card-title>
+            <span style="font-size:0.8em">مرتب سازی بر اساس:</span>
+          </v-card-title>
+          <v-radio-group
+            class="px-5"
+            column
+            v-model="SortBy"
+            mandatory
+            @change="renderChart()"
+          >
+            <v-radio
+              v-for="item in options"
+              :key="item.value"
+              class="radioBTN"
+              :label="item.text"
+              :value="item.value"
+            ></v-radio>
+          </v-radio-group>
+
+          <!-- <b-form-group label="مرتب سازی بر اساس :" class="px-5">
+            <b-form-radio-group
+              @input="renderChart()"
+              v-model="SortBy"
+              :options="options"
+              name="radio-inline"
+            ></b-form-radio-group>
+          </b-form-group> -->
+          <v-divider class="mt-0"></v-divider>
+          <v-card-title dense>
+            <span style="font-size:0.8em">بازه محاسبه بازده:</span>
+          </v-card-title>
+          <v-radio-group
+            class="px-5"
+            column
+            v-model="freq"
+            mandatory
+            @change="renderChart()"
+          >
+            <v-radio
+              v-for="item in options2"
+              :key="item.value"
+              class="radioBTN"
+              :label="item.text"
+              :value="item.value"
+            ></v-radio>
+          </v-radio-group>
+          <!-- <b-form-group label="بازه محاسبه بازده:" class="px-5">
+            <b-form-radio-group
+              @input="renderChart()"
+              v-model="freq"
+              :options="options2"
+              name="radio-inline2"
+            ></b-form-radio-group>
+          </b-form-group> -->
+        </v-card>
+      </div>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -484,6 +521,34 @@ export default {
 </script>
 
 <style scoped>
+.radioBTN /deep/ .v-input--selection-controls__ripple {
+  height: 16px !important;
+  width: 16px !important;
+  left: -3px !important;
+  top: calc(50% - 15px) !important;
+}
+.radioBTN /deep/ .v-icon.v-icon {
+  font-size: 18px !important;
+}
+/* .radioBTN /deep/ .v-application--is-rtl /deep/ .v-input--selection-controls__input {
+  margin-left: 0px !important;
+} */
+.radioBTN /deep/ .v-input--selection-controls__input {
+  margin-left: 0px !important;
+}
+
+.radioBTN /deep/ label {
+  display: inline-block;
+  margin-bottom: 0rem;
+}
+.radioBTN /deep/ .v-label {
+  font-size: 0.8em !important;
+}
+.radioBTN /deep/ .theme--light.v-label {
+  color: #000 !important;
+  font-size: 0.7em !important;
+  font-family: "Vazir-Light-FD";
+}
 .axis1 line {
   stroke: "red" !important;
   opacity: 0.5;

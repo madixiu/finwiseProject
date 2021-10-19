@@ -16,7 +16,8 @@ import {
   SET_BREADCRUMB_TITLE,
   ADD_BREADCRUMB
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import AdminNoticeWidget from "@/view/pages/Ticker/TickerWidgets/AdministrationNoticeWidget.vue";
 export default {
   name: "Administration",
@@ -66,7 +67,9 @@ export default {
       await this.axios
         .get("/api/AdminNotice/" + this.$route.params.id + "/")
         .then(response2 => {
-          this.notice = response2.data;
+          if (response2.data != "noData") {
+            this.notice = response2.data;
+          }
         })
         .catch(error => {
           console.error(error);

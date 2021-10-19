@@ -77,8 +77,6 @@ export default {
       WebsocketRequest: false,
       Tablefilter: "",
       // tableData: [],
-      TypeSearch: "",
-      IndustrySearch: "",
       value: []
     };
   },
@@ -522,7 +520,7 @@ export default {
         }
       }
     ];
-    this.loadData();
+    this.MarketWatchTableReq();
   },
   mounted() {
     this.height = this.getHeight();
@@ -581,7 +579,6 @@ export default {
         .get("/api/marketwatch")
         .then(response => {
           this.isBusy = false;
-          this.$store.dispatch("setMarketWatchItems", response.data);
           this.tableData = response.data;
         })
         .catch(error => {
@@ -670,6 +667,7 @@ export default {
 <style scoped>
 /* 
 TODO:Clean the CSS & add scoped based class
+?? DONE !
 */
 /* ag Grid */
 .MarketWatchTable /deep/ .ag-root-wrapper {

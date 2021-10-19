@@ -12,12 +12,12 @@ def ListOfStocks():
         # print(js)
         return (result)
     else:
-        return ("NoData")
+        return ("noData")
 
 
-def TVtickerData(limits,url,todate):
-    payload = {'limits': limits, 'url': url,'todate': todate}
-    resp = requests.get("http://185.231.115.223:3000/rpc/ViewTVDaily",payload)
+def TVtickerData(limits,url,todate,typeof):
+    payload = {'limits': limits, 'url': url,'todate': todate,"typeof": typeof}
+    resp = requests.get("http://185.231.115.223:3000/rpc/ViewTVDailyv2",payload)
     if resp.status_code == 200:
         return json.loads(resp.text)
 
@@ -37,9 +37,9 @@ def restructData(input):
         item["type"] = "سهام"
         item.pop("ExchangeType",None)
         item["urlparam"] = item.pop("urlParameter")
-    # print(input)
 
-        
+
+# def TVdata(limits,url,todate,)
+
     
-# ListOfStocks()
 

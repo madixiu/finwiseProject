@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--begin::Dashboard-->
     <div class="row">
       <div class="col-xxl-12 pt-3 pb-1">
         <SubHeaderWidget :tickerdata="subheaders"></SubHeaderWidget>
@@ -21,7 +20,8 @@ import {
   ADD_BREADCRUMB,
   SET_BREADCRUMB_TITLE
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import DPSWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyDPSWidget.vue";
 import ICWidget from "@/view/pages/Ticker/AssemblyWidget/AssemblyICwidget.vue";
 export default {
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      //// allowed: [],
       subheaders: [],
       deposits: [],
       notice: []
@@ -47,6 +46,7 @@ export default {
     ]);
     if (this.$store.getters.getLiveTickerData != null) {
       this.subheaders = this.$store.getters.getLiveTickerData;
+      this.loadData();
     } else {
       // eslint-disable-next-line no-unused-vars
       this.getLiveTickerData().then(Response => {

@@ -128,7 +128,7 @@ export default {
     }
   },
   mounted() {
-    this.$socketMostViewed.send(JSON.stringify({ request: "get" }));
+    // this.$socketMostViewed.send(JSON.stringify({ request: "get" }));
     this.liveChecker();
     // this.$socketMostViewed.onmessage = data => {
     //   this.DataItems = JSON.parse(data.data);
@@ -137,8 +137,8 @@ export default {
     // };
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$socketMostViewed.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$socketMostViewed.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

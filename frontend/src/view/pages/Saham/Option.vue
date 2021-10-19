@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div>
     <div class="row mr-1 ml-1">
@@ -559,8 +558,8 @@ export default {
           clearInterval(interval);
           return;
         }
-        let barier = { request: "get" };
-        this.$socketOptions.send(JSON.stringify(barier));
+        // let barier = { request: "get" };
+        // this.$socketOptions.send(JSON.stringify(barier));
       }, 3000);
     },
     liveChecker() {
@@ -580,8 +579,8 @@ export default {
     // %%%%%%%%%%%%%%%%%%%%%%% WEBSOCKET METHODS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   },
   destroyed() {
-    let barier = { request: "halt" };
-    this.$$socketOptions.send(JSON.stringify(barier));
+    // let barier = { request: "halt" };
+    // this.$$socketOptions.send(JSON.stringify(barier));
     this.WebsocketRequest = false;
   }
 };

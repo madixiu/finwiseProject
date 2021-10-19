@@ -1,6 +1,8 @@
 <template>
-  <div class="d-flex flex-lg-column NewsFooter">
-    <News v-if="News.length" :News="News"></News>
+  <div>
+    <div v-if="News.length != 0" class="d-flex flex-lg-column NewsFooter">
+      <News v-if="News.length" :News="News"></News>
+    </div>
   </div>
 </template>
 
@@ -24,7 +26,7 @@ export default {
       await this.axios
         .get("/api/LatestNews")
         .then(getNewsResp => {
-          this.News = getNewsResp.data;
+          if (getNewsResp.data != "noData") this.News = getNewsResp.data;
         })
         .catch(error => {
           console.error(error);

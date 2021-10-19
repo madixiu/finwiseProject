@@ -103,9 +103,7 @@
           ></EffectOnIndexChart>
         </v-card>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
+      <div class="col-12 pt-0">
         <IndustryChart :inputData="this.IndustryData"></IndustryChart>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-sheet rounded="lg" elevation="6">
-      <v-tabs background-color="#f0efeb" color="deep-purple accent-4" centered>
+  <v-row class="mx-1">
+    <v-sheet rounded="lg" elevation="6" height="100%" width="100%">
+      <v-tabs background-color="#f0efeb" color="#4682B4" centered height="30">
         <v-tab>نگاه کلی</v-tab>
         <v-tab :disabled="premiumAccountLock">
           <span
@@ -56,9 +56,9 @@
         <v-tab-item>
           <v-row no-gutters class="pb-2 mt-1">
             <v-col class="ml-1 mr-2">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#f2cc8f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >دلار و طلا</v-toolbar-title
                   >
                 </v-toolbar>
@@ -102,9 +102,9 @@
             </v-col>
 
             <v-col class="mr-1 ml-2">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#3d405b" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >فلزات</v-toolbar-title
                   >
                 </v-toolbar>
@@ -157,8 +157,8 @@
           <v-row no-gutters class="pb-2">
             <v-col class="mr-2 ml-1"
               ><v-card rounded="lg">
-                <v-toolbar dense color="#81b29a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >انرژی</v-toolbar-title
                   >
                 </v-toolbar>
@@ -176,46 +176,15 @@
                     @grid-ready="onEnergyGridReady"
                     :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in energy1"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>
-                      <span class="comItems">{{ item.persianName }}</span>
-                    </v-col>
-                    <v-col>
-                      {{ numberWithCommas(item.lastPrice) }}
-                      <v-chip small class="chips"
-                        >{{ item.changeperc }}
-                      </v-chip>
-                    </v-col>
-                    <v-col>
-                      <span class="comDates">{{ item.persianDate }}</span>
-                    </v-col>
-                  </v-row> -->
-                </v-card-text>
-              </v-card></v-col
-            >
+                </v-card-text> </v-card
+            ></v-col>
             <v-col class="ml-2 mr-1">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#e07a5f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >فارکس</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>فارکس</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height:  150px; font-family: 'Vazir-Light-FD'"
@@ -228,53 +197,22 @@
                     @grid-ready="onForexGridReady"
                     :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      <span style="text-align:center;">قیمت</span>
-                    </v-col>
-                    <v-col>
-                      <span style="text-align:center">تاریخ</span>
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in forex1"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>
-                      <span class="comItems">{{ item.persianName }}</span>
-                    </v-col>
-                    <v-col>
-                      {{ numberWithCommas(item.lastPrice) }}
-                      <v-chip small class="chips"
-                        >{{ item.changeperc }}
-                      </v-chip>
-                    </v-col>
-                    <v-col>
-                      <span class="comDates">{{ item.persianDate }}</span>
-                    </v-col>
-                  </v-row> -->
-                </v-card-text>
-              </v-card></v-col
-            >
+                </v-card-text> </v-card
+            ></v-col>
           </v-row>
         </v-tab-item>
         <v-tab-item>
           <v-row no-gutters class="pb-2 mt-1">
             <v-col class="mr-2 ml-1">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#f2cc8f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >طلا</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>طلا</v-card-title> -->
-                <!-- <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    style="width: 100%; height:  430px; font-family: 'Vazir-Medium-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -283,42 +221,20 @@
                     :gridOptions="GoldGridOptions"
                     @grid-ready="onGoldGridReady"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in gold"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>{{ item.persianName }} </v-col>
-                    <v-col> {{ numberWithCommas(item.price) }} ریال </v-col>
-                    <v-col>
-                      {{ item.Date }}
-                    </v-col>
-                  </v-row> -->
                 </v-card-text>
               </v-card>
             </v-col>
             <v-col class="ml-2 mr-1">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#118ab2" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >ارز</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>ارز</v-card-title>
-                <v-divider></v-divider> -->
+
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
+                    style="width: 100%; height:  430px; font-family: 'Vazir-Medium-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -327,27 +243,6 @@
                     :gridOptions="CurrenciesGridOptions"
                     @grid-ready="onCurrenciesGridReady"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in currencies"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>{{ item.persianName }} </v-col>
-                    <v-col> {{ numberWithCommas(item.price) }} ریال </v-col>
-                    <v-col>
-                      {{ item.Date }}
-                    </v-col>
-                  </v-row> -->
                 </v-card-text>
               </v-card>
             </v-col>
@@ -356,9 +251,9 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="ml-2 mr-2">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#00afb9" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >شاخص جهانی</v-toolbar-title
                   >
                 </v-toolbar>
@@ -382,9 +277,9 @@
         <v-tab-item>
           <v-row no-gutters class="pb-2 pt-1 ">
             <v-col class="mr-2 ml-1">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#3d405b" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >فلزات</v-toolbar-title
                   >
                 </v-toolbar>
@@ -404,9 +299,9 @@
               </v-card>
             </v-col>
             <v-col class="mr-1 ml-2">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#5D2A42" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >متال بولتن</v-toolbar-title
                   >
                 </v-toolbar>
@@ -431,14 +326,14 @@
           <v-row class="pb-2 pt-1">
             <v-col class="mr-2 ml-2"
               ><v-card rounded="lg">
-                <v-toolbar dense color="#023e8a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >پتروشیمی</v-toolbar-title
                   >
                 </v-toolbar>
                 <v-card-text>
                   <ag-grid-vue
-                    style="width: 100%; height: 250px; font-family: 'Vazir-Light-FD'"
+                    style="width: 100%; height: 430px; font-family: 'Vazir-Light-FD'"
                     class="ag-theme-material"
                     :localeText="localeText"
                     :defaultColDef="defaultColDef"
@@ -456,13 +351,11 @@
           <v-row class="pb-2 pt-1">
             <v-col class="mr-2 ml-2"
               ><v-card rounded="lg">
-                <v-toolbar dense color="#81b29a" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >انرژی</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>انرژی</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height: 150px; font-family: 'Vazir-Light-FD'"
@@ -482,14 +375,13 @@
         <v-tab-item>
           <v-row class="pb-2 pt-1">
             <v-col class="ml-2 mr-2">
-              <v-card rounded="lg">
-                <v-toolbar dense color="#e07a5f" style="height:36px;">
-                  <v-toolbar-title style="height:20px;font-size:0.95em"
+              <v-card rounded="lg" elevation="10">
+                <v-toolbar dense style="height:36px;">
+                  <v-toolbar-title style="height:20px;font-size:0.95em;"
                     >فارکس</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>فارکس</v-card-title>
-                <v-divider></v-divider> -->
+
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height:  150px; font-family: 'Vazir-Light-FD'"
@@ -508,7 +400,7 @@
         </v-tab-item>
       </v-tabs>
     </v-sheet>
-  </div>
+  </v-row>
 </template>
 <script>
 import { AllModules } from "@ag-grid-enterprise/all-modules/dist/ag-grid-enterprise.js";
@@ -521,23 +413,22 @@ export default {
   },
   data() {
     return {
-      //***TEMPORARY */
-      rowData: [],
-
-      //***TEMPORARY */
+      // *Specified Data ****
+      //? dollargold ****
       gridApi: null,
       defaultColDef: null,
       gridOptions: null,
       dollargoldHeader: [],
-      // Specified Data ****
-      // METAL ****
+      //******
+
+      //? METAL ****
       MetalGridApi: null,
       MetalDefaultColDef: null,
       MetalGridOptions: null,
       MetalHeader: [],
       MetalDataFetch: false,
       //******
-      // METAL ****
+      //? METALB ****
       MBGridApi: null,
       MBDefaultColDef: null,
       MBGridOptions: null,
@@ -545,42 +436,42 @@ export default {
       MBDataFetch: false,
       //******
 
-      // ENERGY ****
+      //? ENERGY ****
       EnergyGridApi: null,
       EnergyDefaultColDef: null,
       EnergyGridOptions: null,
       EnergyHeader: [],
       EnergyDataFetch: false,
       //******
-      // FOREX ****
+      //? FOREX ****
       ForexGridApi: null,
       ForexDefaultColDef: null,
       ForexGridOptions: null,
       ForexHeader: [],
       ForexDataFetch: false,
       //******
-      // GOLD ****
+      //? GOLD ****
       GoldGridApi: null,
       GoldDefaultColDef: null,
       GoldGridOptions: null,
       GoldHeader: [],
       GoldDataFetch: false,
       //******
-      // CURRENCIES ****
+      //? CURRENCIES ****
       CurrenciesGridApi: null,
       CurrenciesDefaultColDef: null,
       CurrenciesGridOptions: null,
       CurrenciesHeader: [],
       CurrenciesDataFetch: false,
       //******
-      // INDICES ****
+      //? INDICES ****
       IndicesGridApi: null,
       IndicesDefaultColDef: null,
       IndicesGridOptions: null,
       IndicesHeader: [],
       IndicesDataFetch: false,
       //******
-      // PETRO ****
+      //? PETRO ****
       PetroGridApi: null,
       PetroDefaultColDef: null,
       PetroGridOptions: null,
@@ -610,16 +501,16 @@ export default {
   watch: {
     //%%%%%%%%%%%%%%%%%%%% Main %%%%%%%%%%%%%%%%%%%%%%%%
     dollargold(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0);
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null);
       this.gridApi.setRowData(newValue);
     },
     energy1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         this.EnergyGridApi.setRowData(newValue);
         this.EnergyDataFetch = true;
       }
 
-      if (oldValue != undefined)
+      if (oldValue != undefined && oldValue != null)
         if (this.EnergyDataFetch == true && oldValue.length != 0) {
           for (let i = 0; i < this.energy1.length; i++) {
             let newItem = JSON.parse(JSON.stringify(oldValue[i]));
@@ -634,7 +525,7 @@ export default {
         }
     },
     forex1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         this.ForexGridApi.setRowData(newValue);
         this.ForexDataFetch = true;
       }
@@ -654,7 +545,7 @@ export default {
         }
     },
     metal1(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.MetalGridApi.setRowData(newValue);
         this.MetalDataFetch = true;
@@ -676,14 +567,14 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Gold & Currency %%%%%%%%%%%%%
     gold(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.GoldGridApi.setRowData(newValue);
         this.GoldDataFetch = true;
       }
     },
     currencies(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.CurrenciesGridApi.setRowData(newValue);
         this.CurrenciesDataFetch = true;
@@ -692,7 +583,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Indices %%%%%%%%%%%%%%%%%%%%%
     indices(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.IndicesGridApi.setRowData(newValue);
         this.IndicesDataFetch = true;
@@ -701,7 +592,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     petro(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.PetroGridApi.setRowData(newValue);
         this.PetroDataFetch = true;
@@ -710,7 +601,7 @@ export default {
     // * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%% Petro %%%%%%%%%%%%%%%%%%%%%
     MB(newValue, oldValue) {
-      if (oldValue.length == 0 && newValue.length != 0) {
+      if (oldValue.length == 0 && newValue.length != 0 && newValue != null) {
         // this.MetalGridApi = this.MetalGridOptions.api;
         this.MBGridApi.setRowData(newValue);
         this.MBDataFetch = true;
@@ -832,6 +723,47 @@ export default {
         }
       },
       {
+        headerName: "تغییر قیمت",
+        sortable: true,
+        field: "dp",
+        // cellRenderer: "agAnimateShowChangeCellRenderer",
+        valueFormatter: function(params) {
+          // let Color = "black";
+          let perc = parseFloat(params.value);
+          // if (perc > 0) Color = "green";
+          // else if (perc < 0) Color = "red";
+          return "%" + perc.toLocaleString();
+          // return `<span style=color:${Color}>${perc.toString()}</span>`;
+        },
+        cellStyle: params => {
+          if (params.value > 0) {
+            //mark police cells as red
+            return {
+              color: "green",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+          } else if (params.value < 0) {
+            return {
+              color: "red",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+          } else
+            return {
+              color: "black",
+              display: "flex",
+              "justify-content": "center",
+              direction: "ltr",
+              "align-items": "center"
+            };
+        }
+      },
+      {
         headerName: "تاریخ",
         sortable: true,
         field: "Date"
@@ -909,14 +841,6 @@ export default {
               "align-items": "center"
             };
         }
-        // cellRenderer: "agAnimateShowChangeCellRenderer"
-        // cellRenderer: function(params) {
-        //   let Color = "black";
-        //   let perc = parseFloat(params.value);
-        //   if (perc > 0) Color = "green";
-        //   else if (perc < 0) Color = "red";
-        //   return `<div><span style=color:${Color}>${perc.toString()}</span>`;
-        // }
       },
       {
         headerName: "تاریخ",
@@ -1333,9 +1257,6 @@ export default {
     this.loadData();
   },
   mounted() {
-    // this.loadIRData();
-    // this.loadInvestingData();
-
     this.apiLiveData();
 
     // this.liveData();
@@ -1392,14 +1313,6 @@ export default {
       // console.log(params.api);
       // console.log(this.dollargold);
       params.api.setRowData(this.dollargold);
-    },
-    numberWithCommas(x) {
-      if (x == "-") {
-        return x;
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
     },
 
     async loadIRData() {
@@ -1529,27 +1442,6 @@ export default {
 };
 </script>
 <style>
-.cardColor {
-  background-color: rgba(226, 194, 194, 0.61) !important;
-  border-color: black !important;
-  max-height: 100vh;
-  min-width: 312px;
-}
-.chips {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 0.6em;
-  text-align: right;
-}
-.comItems {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 1em;
-  text-align: right;
-}
-.comDates {
-  font-family: "Vazir-Medium-FD" !important;
-  font: size 0.7em;
-  text-align: right;
-}
 .ag-header-cell-label .ag-header-cell-text {
   color: black;
   padding-right: 2px;

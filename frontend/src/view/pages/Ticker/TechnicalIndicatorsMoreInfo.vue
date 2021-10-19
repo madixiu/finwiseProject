@@ -16,7 +16,8 @@ import {
   ADD_BREADCRUMB,
   SET_BREADCRUMB_TITLE
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicatorsDetailsWidget.vue";
 export default {
   name: "TechnicalMoreInfo",

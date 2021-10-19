@@ -23,7 +23,8 @@ import {
   ADD_BREADCRUMB,
   SET_BREADCRUMB_TITLE
 } from "@/core/services/store/breadcrumbs.module";
-import SubHeaderWidget from "@/view/pages/Ticker/Rankers/subHeaderWidget.vue";
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+
 import MonthlyWidget from "@/view/pages/Ticker/TickerWidgets/MonthlyWidget.vue";
 export default {
   name: "Monthly",
@@ -42,7 +43,7 @@ export default {
     };
   },
   created() {
-    document.title = "Finwise - گزارش ماهیانه";
+    document.title = "Finwise - تحلیل ماهیانه";
     this.$store.dispatch(SET_BREADCRUMB, [{ title: "ماهیانه" }]);
     this.$store.dispatch(ADD_BREADCRUMB, [{ title: "گزارش های خام ماهیانه" }]);
     if (this.$store.getters.getLiveTickerData != null) {
@@ -279,7 +280,12 @@ export default {
         .get(
           "/api/Monthly/Investment/InTransactions/" +
             this.$route.params.id +
-            "/"
+            "/",
+          {
+            headers: {
+              Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+            }
+          }
         )
         .then(response3 => {
           this.notice = response3.data;
@@ -293,7 +299,12 @@ export default {
         .get(
           "/api/Monthly/Investment/OutTransactions/" +
             this.$route.params.id +
-            "/"
+            "/",
+          {
+            headers: {
+              Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
+            }
+          }
         )
         .then(response3 => {
           this.deposits = response3.data;

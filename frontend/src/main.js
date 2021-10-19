@@ -11,14 +11,19 @@ import "core-js/stable";
 // import MockService from "@/core/mock/mock.service";
 // import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 // import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+//? apollo imports for graphql
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { setContext } from "apollo-link-context";
+import VueApollo from "vue-apollo";
 
 // ag grid
 // only needed if you use ag-grid enterprise features
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
-LicenseManager.setLicenseKey(
-  "MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4"
-);
+
+LicenseManager.setLicenseKey(process.env.VUE_APP_AG_GRID_LICENSE);
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 // import "ag-grid-community/dist/styles/ag-theme-alpine.css";
@@ -33,21 +38,49 @@ import "ag-grid-community/dist/styles/ag-theme-material.css";
 import LoadScript from "vue-plugin-load-script";
 
 Vue.use(LoadScript);
-// apollo imports for graphql
-import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { setContext } from "apollo-link-context";
-import VueApollo from "vue-apollo";
+
+//? importing HighChart
+import Highcharts from "highcharts";
+// Highcharts.setOptions({
+//   lang: {
+//       months: [
+//           'Janvier', 'Février', 'Mars', 'Avril',
+//           'Mai', 'Juin', 'Juillet', 'Août',
+//           'Septembre', 'Octobre', 'Novembre', 'Décembre'
+//       ],
+//       weekdays: [
+//           'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
+//           'Jeudi', 'Vendredi', 'Samedi'
+//       ]
+//   }
+// });
+import Stock from "highcharts/modules/stock";
+import HighchartsVue from "highcharts-vue";
+
+Stock(Highcharts);
+Vue.use(HighchartsVue);
+
+// import HighchartsVue from "highcharts-vue";
+// import Highcharts from "highcharts";
+// Vue.use(HighchartsVue, {
+//   highcharts: Highcharts
+// });
+// import vue-panzoom
+import panZoom from "vue-panzoom";
+
+// install plugin
+Vue.use(panZoom);
 
 import moment from "vue-jalali-moment";
-import PersianCalendar from "vue-persian-calendar";
+
+// !Removed Calendar
+// import PersianCalendar from "vue-persian-calendar";
 import VuePersianDatetimePicker from "vue-persian-datetime-picker";
 Vue.component("date-picker", VuePersianDatetimePicker);
 
 // imported persian calendar
 Vue.use(moment);
-Vue.use(PersianCalendar);
+// Vue.use(PersianCalendar);
 
 // -------------------------
 // import ApolloService from "@/core/services/apollo.service";
@@ -131,7 +164,7 @@ Vue.use(VueCryptojs);
 
 // ticker tape component
 Vue.component("marquee-text", MarqueeText);
-
+export const EventBus = new Vue();
 // //? SENTRY SDK
 // import * as Sentry from "@sentry/vue";
 // import { Integrations } from "@sentry/tracing";

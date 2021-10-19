@@ -1,7 +1,6 @@
 <template>
-  <div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
+  <div>
+    <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
         بررسی صورت سود و زیان
         <b-spinner
           class="titleHeaders"
@@ -10,22 +9,70 @@
           v-if="loading == true"
         ></b-spinner
         ><v-chip small v-if="loading == true">در حال بارگزاری</v-chip>
-      </h3>
-    </div>
-    <div
-      class="row"
-      style="padding-top:5px"
-      v-if="empty == false && loading == false"
-    >
-      <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
-        <v-card shaped class="mt-2">
-          <v-toolbar dense class="elevation-2" style="height:36px;">
-            <v-toolbar-title style="height:20px;font-size:0.95em"
-              >روند آیتم های ترازنامه</v-toolbar-title
-            >
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <v-row>
+      </h3> -->
+    <div v-if="empty == false && loading == false">
+      <v-card rounded="lg" :loading="loading">
+        <v-toolbar dense class="elevation-2" style="height:36px;">
+          <v-toolbar-title style="height:20px;font-size:0.95em"
+            >روند آیتم های ترازنامه</v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+          <!-- <v-col sm="6" md="4" lg="1"> -->
+          <v-row no-gutters class="d-flex flex-row">
+            <v-col class="d-flex pl-1" cols="2">
+              <v-select
+                class="vuetifySelectCustom flex-grow-1"
+                label="دوره ترازنامه"
+                :items="ISCHART_Period"
+                v-model="ISCHART_Period_Selected"
+                dense
+                solo-inverted
+                @input="GetFiltered"
+              ></v-select>
+            </v-col>
+            <v-col class="d-flex pl-1" cols="2">
+              <v-select
+                class="vuetifySelectCustom"
+                :items="ISCHART_Aggregated"
+                v-model="ISCHART_Aggregated_Selected"
+                label="تلفیقی"
+                dense
+                solo-inverted
+                @input="GetFiltered"
+              ></v-select>
+            </v-col>
+            <v-col class="d-flex pl-1" cols="2">
+              <v-select
+                class="vuetifySelectCustom"
+                :items="ISCHART_Length"
+                solo-inverted
+                v-model="ISCHART_Length_Selected"
+                label="بازه نمودار "
+                dense
+                @input="GetFiltered"
+              ></v-select>
+            </v-col>
+            <v-col class="d-flex" cols="6">
+              <v-select
+                class="vuetifySelectCustom"
+                chips
+                clearable
+                deletable-chips
+                dense
+                solo-inverted
+                multiple
+                single-line
+                small-chips
+                :allow-overflow="false"
+                :items="ISCHART_Items"
+                v-model="ISCHART_Items_Selected"
+                @input="GetFiltered"
+              ></v-select>
+            </v-col>
+          </v-row>
+          <!-- </v-col> -->
+        </v-toolbar>
+        <!-- <v-row>
             <v-col sm="6" md="4" lg="1">
               <v-select
                 label="دوره ترازنامه"
@@ -73,29 +120,17 @@
                 persistent-hint
                 @input="GetFiltered"
               ></v-autocomplete>
-
-              <!-- <v-select
-                :items="ISCHART_Items"
-                v-model="ISCHART_Items_Selected"
-                label="آیتم"
-                multiple
-                chips
-                hint="آیتم های مورد نظر برای نمایش در چارت را انتخاب کنید"
-                persistent-hint
-                @input="GetFiltered"
-              ></v-select -->
             </v-col>
-          </v-row>
+          </v-row> -->
 
-          <ApexChart
-            :key="ApexChartcomponentKey"
-            height="300%"
-            width="100%"
-            :series="Chart1options.series"
-            :chartOptions="Chart1options"
-          />
-        </v-card>
-      </div>
+        <ApexChart
+          :key="ApexChartcomponentKey"
+          height="250%"
+          width="100%"
+          :series="Chart1options.series"
+          :chartOptions="Chart1options"
+        />
+      </v-card>
       <!-- <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card shaped class="mt-2">
           <v-toolbar dense class="elevation-2" style="height:36px;">
@@ -158,18 +193,13 @@
         </v-card>
       </div> -->
     </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="empty == true && loading == false"
-    >
+    <div class="d-flex flex-column" v-if="empty == true && loading == false">
       <span class="rtl_centerd">دیتا برای نمایش وجود ندارد</span>
     </div>
   </div>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ApexChart from "@/view/content/charts/ApexChart";
 export default {
   name: "IncomeStatementAnalysisWidget",
@@ -218,14 +248,14 @@ export default {
         yaxis: [
           {
             title: {
-              text: "مبلغ (میلیون ریال)"
+              text: "مبلغ - میلیون ریال"
             }
           },
           {
             seriesName: "هر سهم",
             opposite: true,
             title: {
-              text: "هر سهم (ریال)"
+              text: "هر سهم - ریال"
             }
           }
         ]
@@ -242,7 +272,6 @@ export default {
         chart: {
           type: "bar",
           fontFamily: "Vazir-Medium-FD",
-          // background: '../../../../media/logos/fadedfinwise.png',
           stacked: true,
           toolbar: {
             show: false
@@ -362,9 +391,6 @@ export default {
       ISCHART2_Items_Selected: "دارایی"
     };
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-  },
   methods: {
     numberWithCommas(x) {
       if (x === null) {
@@ -455,15 +481,13 @@ export default {
       }
     },
     GetFiltered() {
-      // console.log(this.ISCHART_Items_Selected);
-      // eslint-disable-next-line no-unused-vars
       let tempData = [];
       if (this.ISCHART_Aggregated_Selected == "تلفیقی") {
         tempData = this.IncomeAgg;
       } else {
         tempData = this.Income;
       }
-      // eslint-disable-next-line no-unused-vars
+
       let x = [];
       x = tempData.filter(d => {
         if (this.ISCHART_Period_Selected == "۱۲ ماهه") {
@@ -507,14 +531,12 @@ export default {
       if (this.ISCHART_Length_Selected == "از ابتدا") {
         A = uq.slice(0, 1000);
       }
-      // eslint-disable-next-line no-unused-vars
       let filtered = [];
       x.filter(d => {
         if (
           this.ISCHART_Items_Selected.includes(d.Translated) &&
           A.includes(d.toDate)
         ) {
-          // console.log(d.Translated);
           filtered.push(d);
         }
       });
@@ -540,16 +562,11 @@ export default {
         k["Value"] = item.thisPeriod;
         ShowData.push(k);
       });
-      // console.log(uniqeItems);
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
-      // console.log(ShowData);
       let FinalData = [];
-      // let c = 0;
       for (let j in uniqeItems) {
-        // c = c + 1;
-        // this.Chart1AllItems.push({ key: c, value: "j" });
         let IT2 = uniqeItems[j];
         let temp = {};
         temp["name"] = IT2;
@@ -565,15 +582,12 @@ export default {
       this.ApexChartcomponentKey = this.ApexChartcomponentKey + 1;
     },
     GetFiltered2() {
-      // console.log(this.ISCHART_Items_Selected);
-      // eslint-disable-next-line no-unused-vars
       let tempData = [];
       if (this.ISCHART2_Aggregated_Selected == "تلفیقی") {
         tempData = this.IncomeAgg;
       } else {
         tempData = this.IncomeAgg;
       }
-      // eslint-disable-next-line no-unused-vars
       let x = [];
       x = tempData.filter(d => {
         if (this.ISCHART2_Period_Selected == "۱۲ ماهه") {
@@ -604,7 +618,6 @@ export default {
           uq.push(d.toDate);
         }
       });
-      // eslint-disable-next-line no-unused-vars
       let A = [];
       if (this.ISCHART2_Length_Selected == "۳ دوره اخیر") {
         A = uq.slice(0, 3);
@@ -628,9 +641,7 @@ export default {
       if (this.ISCHART2_Items_Selected == "دارایی") {
         tempkey = "Asset";
       }
-      // eslint-disable-next-line no-unused-vars
       let filtered = [];
-      // console.log(x)
       x.filter(d => {
         if (d.type == tempkey && A.includes(d.toDate)) {
           filtered.push(d);
@@ -661,7 +672,6 @@ export default {
       ShowData.sort(function(first, second) {
         return ("" + first.toDate).localeCompare(second.toDate);
       });
-      // console.log(ShowData);
       let FinalData = [];
       // let c = 0;
       for (let j in uniqeItems) {
@@ -684,7 +694,6 @@ export default {
       this.ApexChartcomponentKey2 = this.ApexChartcomponentKey2 + 1;
     }
   },
-  mounted() {},
   watch: {
     ISAGG() {
       this.populateData();
@@ -701,4 +710,20 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.vuetifySelectCustom /deep/ .v-input__control {
+  min-height: 25px !important;
+  height: 25px !important;
+}
+.vuetifySelectCustom /deep/ .v-input__control {
+  font-size: 0.7em !important;
+}
+.vuetifySelectCustom /deep/ .v-chip.v-size--small {
+  border-radius: 3px;
+  font-size: 10px;
+  height: 17px;
+}
+.vuetifySelectCustom /deep/ .v-chip .v-chip__close.v-icon {
+  font-size: 12px !important;
+}
+</style>

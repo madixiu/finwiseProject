@@ -36,7 +36,6 @@ import { VERIFY_ACCESS_TOKEN, REFRESH_ACCESS_TOKEN } from "@/graphql/mutations";
 import { GET_USER } from "@/graphql/queries";
 import JwtService from "@/core/services/jwt.service";
 export default {
-  name: "Finwise",
   watch: {
     $route: {
       handler(newValue, oldValue) {

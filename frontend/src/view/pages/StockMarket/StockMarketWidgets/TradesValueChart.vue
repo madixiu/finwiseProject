@@ -657,6 +657,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", BoxWidth)
         .attr("fill", "#003049")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip1 = true;
           let coordinates = d3.pointer(event);
@@ -679,6 +680,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#0081a7")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip2 = true;
           let coordinates = d3.pointer(event);
@@ -704,6 +706,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#00afb9")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", function() {
           that.tooltip2 = true;
           let coordinates = d3.pointer(event);
@@ -742,7 +745,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#b56576")
-
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip3 = true;
           let coordinates = d3.pointer(event);
@@ -763,6 +766,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#6d597a")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip3 = true;
           let coordinates = d3.pointer(event);
@@ -796,6 +800,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#e09f3e")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip4 = true;
           let coordinates = d3.pointer(event);
@@ -820,6 +825,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#577590")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip4 = true;
           let coordinates = d3.pointer(event);
@@ -858,6 +864,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#02c39a")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip5 = true;
           let coordinates = d3.pointer(event);
@@ -890,6 +897,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#05668d")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip5 = true;
           let coordinates = d3.pointer(event);
@@ -925,6 +933,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .attr("fill", "#028090")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip5 = true;
           let coordinates = d3.pointer(event);
@@ -974,6 +983,7 @@ export default {
         .attr("height", BoxHeight)
         .attr("width", 0)
         .style("fill", "#7EC5AA")
+        .attr("stroke", "#3e3e4e")
         .on("mousemove touchstart", event => {
           that.tooltip5 = true;
           let coordinates = d3.pointer(event);

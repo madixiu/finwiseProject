@@ -1,15 +1,21 @@
 <template>
-  <div>
-    <v-card>
-      <v-toolbar dense class="elevation-2" style="height:36px;">
-        <v-toolbar-title style="height:20px;font-size:0.95em"
-          >بررسی تکنیکال رمز ارزها</v-toolbar-title
+  <v-card rounded="lg">
+    <v-toolbar dense class="elevation-2" style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em"
+        >بررسی تکنیکال رمز ارزها</v-toolbar-title
+      >
+      <v-spacer></v-spacer>
+      <div class="d-flex justify-content-center" v-if="updatedAt.length">
+        <span class="pl-1" :style="`font-size:${this.width / 900}em`"
+          >بهترین و بدترین های تکنیکال بازار در تحلیل</span
         >
-      </v-toolbar>
-      <div id="Chartcontainer_index"></div>
-    </v-card>
-  </div>
-  <!-- </div> -->
+        <span dir="ltr" :style="`font-size:${this.width / 900}em`">{{
+          updatedAt
+        }}</span>
+      </div>
+    </v-toolbar>
+    <div id="Chartcontainer_CryptoTechnical"></div>
+  </v-card>
 </template>
 
 <script>
@@ -20,12 +26,10 @@ export default {
   data() {
     return {
       loading: true,
-      jsonData: {},
       ChartData: [],
       height: 0,
       width: 0,
       updatedAt: "",
-      number: 3,
       margin: {
         top: 0,
         right: 0,
@@ -44,67 +48,44 @@ export default {
   },
   // In the beginning...
   mounted() {
-    this.renderData();
+    //// this.renderData();
     this.initrender();
-    if (!(this.ChartData === undefined || this.ChartData.length == 0)) {
-      this.renderChart();
-    }
+    //// if (!(this.ChartData === undefined || this.ChartData.length == 0)) {
+    ////   this.renderChart();
+    //// }
   },
   computed: {},
   methods: {
-    numberWithCommas(x) {
-      if (x == "-") {
-        return x;
-      }
-      let parts = x.toString().split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
-    },
-    roundTo(n, digits) {
-      if (n == "-") {
-        return n;
-      }
-
-      let negative = false;
-      if (digits === undefined) {
-        digits = 0;
-      }
-      if (n < 0) {
-        negative = true;
-        n = n * -1;
-      }
-      let multiplicator = Math.pow(10, digits);
-      n = parseFloat((n * multiplicator).toFixed(11));
-      n = (Math.round(n) / multiplicator).toFixed(digits);
-      if (negative) {
-        n = (n * -1).toFixed(digits);
-      }
-      return n;
-    },
     isRealValue(obj) {
       return obj && obj !== "null" && obj !== "undefined";
     },
     initrender() {
-      if (document.getElementById("Chartcontainer_index_svg")) {
-        d3.selectAll("#Chartcontainer_index_svg").remove();
+      if (document.getElementById("Chartcontainer_CryptoTechnical_svg")) {
+        d3.selectAll("#Chartcontainer_CryptoTechnical_svg").remove();
       }
       this.width = parseInt(
-        d3.select("#Chartcontainer_index").style("width"),
+        d3.select("#Chartcontainer_CryptoTechnical").style("width"),
         10
       );
       this.height = (this.width * 9) / 16;
       this.margin.top = this.height * 0.05;
       this.margin.bottom = this.height * 0.05;
       this.margin.right =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
+        parseInt(
+          d3.select("#Chartcontainer_CryptoTechnical").style("width"),
+          10
+        ) * 0.05;
       this.margin.left =
-        parseInt(d3.select("#Chartcontainer_index").style("width"), 10) * 0.05;
-      var parent = document.getElementById("Chartcontainer_index");
+        parseInt(
+          d3.select("#Chartcontainer_CryptoTechnical").style("width"),
+          10
+        ) * 0.05;
+      var parent = document.getElementById("Chartcontainer_CryptoTechnical");
       // eslint-disable-next-line no-unused-vars
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "Chartcontainer_index_svg")
+        .attr("id", "Chartcontainer_CryptoTechnical_svg")
         .attr(
           "viewBox",
           `0 0 ${this.width + this.margin.right + this.margin.left},${this
@@ -113,7 +94,6 @@ export default {
             this.margin.bottom}`
         )
         .attr("preserveAspectRatio", "xMidYMid meet");
-      // eslint-disable-next-line no-unused-vars
     },
     renderData() {
       if (
@@ -123,18 +103,8 @@ export default {
         )
       ) {
         let data = [...this.inpuDataTechnical];
-        this.updatedAt = data[0].engdate;
-        // var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
-        // data.forEach(
-        //   function(d) {
-        //     d.date = parseTime(d.englishDate.split(".")[0]);
-        //     d.value = d.Index;
-        //   },
-        //   // eslint-disable-next-line no-unused-vars
-        //   function(error, data) {
-        //     if (error) throw error;
-        //   }
-        // );
+        this.updatedAt = data[0].engdate.replace(/-/g, "/");
+
         data.sort(function(a, b) {
           return a.sum_signal - b.sum_signal;
         });
@@ -144,39 +114,35 @@ export default {
             return b.sum_signal - a.sum_signal;
           })
           .concat(data.slice(0, 10));
-        // console.log(this.ChartData);
       }
     },
     renderChart() {
-      if (document.getElementById("Chartcontainer_index_svg")) {
-        d3.selectAll("#Chartcontainer_index_svg").remove();
+      if (document.getElementById("Chartcontainer_CryptoTechnical_svg")) {
+        d3.selectAll("#Chartcontainer_CryptoTechnical_svg").remove();
       }
 
-      var parent = document.getElementById("Chartcontainer_index");
+      var parent = document.getElementById("Chartcontainer_CryptoTechnical");
       var svg = d3
         .select(parent)
         .append("svg")
-        .attr("id", "Chartcontainer_index_svg")
+        .attr("id", "Chartcontainer_CryptoTechnical_svg")
         .attr("viewBox", `0 0 ${this.width},${this.height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
         .style(
           "background",
           "url(../media/logos/fadedfinwise.png) no-repeat center "
         );
-      // eslint-disable-next-line no-unused-vars
       const chart = svg
         .append("g")
         .attr(
           "transform",
           `translate(${this.margin.left}, ${this.margin.top})`
         );
-      // eslint-disable-next-line no-unused-vars
       var xScale = d3
         .scaleLinear()
         .domain([
           -1 *
             d3.max(this.ChartData, function(d) {
-              // console.log(d)
               return Math.abs(d.sum_signal);
             }),
 
@@ -188,7 +154,6 @@ export default {
           this.margin.left,
           this.width - this.margin.right - this.margin.left
         ]);
-      // eslint-disable-next-line no-unused-vars
       var yScale = d3
         .scaleBand()
         .domain(this.ChartData.map(x => x.original_symbol))
@@ -196,7 +161,6 @@ export default {
           this.margin.top,
           this.height - this.margin.bottom - this.margin.top
         ]);
-      // eslint-disable-next-line no-unused-vars
       var xAxis = g =>
         g
           .attr("class", "xAxis")
@@ -218,12 +182,10 @@ export default {
       let xAxisAxe = chart.append("g").call(xAxis);
       xAxisAxe
         .selectAll("text")
-        .style("font-size", `${this.width / 1000}em`)
-        .style("font-family", "Vazir-Medium-FD")
-        .style("font-size", `1.4em`)
-        .style("font-weight", "800")
-        .style("text-anchor", "end")
-        .style("font-family", "Vazir-Medium-FD");
+        .style("font-family", "Vazir-Light-FD")
+        .style("font-size", `1.15em`)
+        .style("text-anchor", "middle")
+        .style("direction", "ltr");
       var yAxis = g =>
         g
           .attr("class", "yAxis")
@@ -231,27 +193,25 @@ export default {
           .transition()
           .duration(1000)
           .call(d3.axisLeft(yScale))
-          .style("stroke-opacity", ".1")
-          .style("font-family", "Vazir-Medium-FD");
+          .style("stroke-opacity", ".1");
       let yAxisAxe = chart.append("g").call(yAxis);
       yAxisAxe
         .selectAll("text")
         .style("text-anchor", "start")
-        .attr("transform", `translate(${0},${4})`)
-        .style("font-size", `1.3em`)
-        .style("font-weight", "800")
-        .style("font-family", "Vazir-Medium-FD");
+        .attr("transform", `translate(${0},${1})`)
+        .style("font-size", `1.1em`)
+        .style("font-weight", "600")
+        .style("font-family", "Vazir-Light-FD");
 
-      var mycolor = d3
+      var greenColor = d3
         .scaleLinear()
         .domain([0, Math.max(...this.ChartData.map(x => x.sum_signal)) * 1.2])
         .range(["#66BB6A", "#1B5E20"]);
-      var mycolor2 = d3
+      var redColor = d3
         .scaleLinear()
         .domain([0, Math.min(...this.ChartData.map(x => x.sum_signal)) * 1.2])
         .range(["#ff7096", "#ff0a54"]);
-      // eslint-disable-next-line no-unused-vars
-      let that = this;
+      // let that = this;
       chart
         .selectAll()
         .data(this.ChartData)
@@ -286,9 +246,9 @@ export default {
         .attr("height", yScale.bandwidth() * 0.7)
         .attr("fill", function(d) {
           if (d.sum_signal < 0) {
-            return mycolor2(d.sum_signal);
+            return redColor(d.sum_signal);
           } else {
-            return mycolor(d.sum_signal);
+            return greenColor(d.sum_signal);
           }
         })
         .style("opacity", 0.5);
@@ -492,17 +452,17 @@ export default {
       //   });
 
       //   svg.on("touchend mouseleave", () => tooltip.call(callout2, null));
-      svg
-        .append("text")
-        // .attr("class", "title")
-        .attr("x", this.width / 2)
+      // svg
+      //   .append("text")
+      //   // .attr("class", "title")
+      //   .attr("x", this.width / 2)
 
-        .attr("y", this.margin.top)
-        .attr("text-anchor", "middle")
-        .text(
-          "بهترین و بدترین های تکنیکال بازار در تحلیل " + `${this.updatedAt}`
-        )
-        .style("font-size", `${this.width / 900}em`);
+      //   .attr("y", this.margin.top)
+      //   .attr("text-anchor", "middle")
+      //   .text(
+      //     "بهترین و بدترین های تکنیکال بازار در تحلیل " + `${this.updatedAt}`
+      //   )
+      //   .style("font-size", `${this.width / 900}em`);
       svg
         .append("text")
 
@@ -516,10 +476,8 @@ export default {
         .style("font-size", `${this.width / 900}em`)
 
         .attr("transform", function() {
-          var me = this;
-          var x1 = me.getBBox().x + me.getBBox().width / 2; //the center x about which you want to rotate
-          var y1 = me.getBBox().y + me.getBBox().height / 2; //the center y about which you want to rotate
-
+          var x1 = this.getBBox().x + this.getBBox().width / 2; //the center x about which you want to rotate
+          var y1 = this.getBBox().y + this.getBBox().height / 2; //the center y about which you want to rotate
           return `rotate(-90, ${x1}, ${y1})`; //rotate 180 degrees about x and y
         });
       // svg
@@ -537,107 +495,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.cellHeader {
-  /* direction: ltr; */
-  text-align: right;
-  font-family: "Vazir-Medium-FD";
-  font-size: 0.9em;
-}
-.cellItem {
-  direction: ltr;
-  text-align: right;
-  font-family: "Vazir-Medium-FD";
-  /* font-weight: 700; */
-  font-size: 0.9em;
-}
-.cellItem2 {
-  font-family: "Vazir-Medium-FD";
-  font-weight: 600;
-  font-size: 0.7em;
-}
-.redItem {
-  color: red !important;
-  font-size: 0.9em;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.greenItem {
-  color: green !important;
-  font-size: 0.9em;
-  font-family: "Vazir-Medium-FD" !important;
-}
-.Chart1title * {
-  font-size: 1.2em;
-  font-family: "Vazir-Medium-FD";
-}
-
-.dot {
-  height: 25px;
-  width: 25px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-}
-.d3-tip {
-  font-family: "Vazir-Medium-FD";
-  line-height: 1.4;
-  z-index: 300;
-  padding: 20px;
-  pointer-events: none !important;
-  color: #203d5d;
-  box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1),
-    0 4px 80px -8px rgba(0, 20, 60, 0.2);
-  background-color: #fff;
-  border-radius: 4px;
-  opacity: 80%;
-}
-.inlineIcon {
-  display: inline;
-}
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgb(139, 129, 129);
-  position: absolute;
-  pointer-events: none;
-}
-
-/* Northward tooltips */
-.d3-tip.n:after {
-  content: "▼";
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-  text-align: center;
-}
-
-/* Eastward tooltips */
-.d3-tip.e:after {
-  content: "◀";
-  margin: -4px 0 0 0;
-  top: 50%;
-  left: -8px;
-}
-
-/* Southward tooltips */
-.d3-tip.s:after {
-  content: "▲";
-  margin: 0 0 1px 0;
-  top: -8px;
-  left: 0;
-  text-align: center;
-}
-
-/* Westward tooltips */
-.d3-tip.w:after {
-  content: "▶";
-  margin: -4px 0 0 -1px;
-  top: 50%;
-  left: 100%;
-}
-</style>

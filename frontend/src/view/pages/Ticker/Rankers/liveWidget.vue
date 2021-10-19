@@ -579,7 +579,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 // import ApexChart from "@/view/content/charts/ApexChart";
 
 export default {
@@ -687,7 +686,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     setclosingperc: function() {
       return Math.round((this.close / this.open - 1) * 100 * 100) / 100;
     },
@@ -838,26 +836,26 @@ export default {
     populateData3() {
       this.DataItems3 = this.liveData;
       if (this.DataItems3.length != 0) {
-        this.tickerfull = this.DataItems3[0]["name"];
-        this.tradeVolume = this.DataItems3[0]["TradeVolume"];
-        this.tradevalue = this.DataItems3[0]["TradeValue"];
-        this.tradecount = this.DataItems3[0]["TradeCount"];
-        this.marketcap =
+          this.tickerfull = this.DataItems3[0]["name"];
+          this.tradeVolume = this.DataItems3[0]["TradeVolume"];
+          this.tradevalue = this.DataItems3[0]["TradeValue"];
+          this.tradecount = this.DataItems3[0]["TradeCount"];
+          this.marketcap =
           this.DataItems3[0]["close"] * this.DataItems3[0]["ShareCount"];
 
-        this.low = this.DataItems3[0]["low"];
-        this.first = this.DataItems3[0]["first"];
-        this.last = this.DataItems3[0]["last"];
-        this.close = this.DataItems3[0]["close"];
-        this.market = this.DataItems3[0]["market"];
-        this.high = this.DataItems3[0]["high"];
-        this.open = this.DataItems3[0]["yesterday"];
-        this.Nemad = this.DataItems3[0]["ticker"];
-        this.eps = this.DataItems3[0]["EPS"];
-        this.sharecount = this.DataItems3[0]["ShareCount"];
-        this.shenavar = this.DataItems3[0]["Shenavari"];
-        this.mabna = this.DataItems3[0]["Mabna"];
-        this.status = this.DataItems3[0]["Status"];
+          this.low = this.DataItems3[0]["low"];
+          this.first = this.DataItems3[0]["first"];
+          this.last = this.DataItems3[0]["last"];
+          this.close = this.DataItems3[0]["close"];
+          this.market = this.DataItems3[0]["market"];
+          this.high = this.DataItems3[0]["high"];
+          this.open = this.DataItems3[0]["yesterday"];
+          this.Nemad = this.DataItems3[0]["ticker"];
+          this.eps = this.DataItems3[0]["EPS"];
+          this.sharecount = this.DataItems3[0]["ShareCount"];
+          this.shenavar = this.DataItems3[0]["Shenavari"];
+          this.mabna = this.DataItems3[0]["Mabna"];
+          this.status = this.DataItems3[0]["Status"];
       } else {
         this.tickerfull = "-";
         this.tradeVolume = "-";

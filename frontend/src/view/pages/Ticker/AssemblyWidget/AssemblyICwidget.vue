@@ -1,28 +1,45 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <div class="card card-custom card-stretch gutter-b">
-    <!--begin::Header-->
-    <div class="card-header border-0">
+  <v-card rounded="lg" height="100%">
+    <!-- <div class="card-header border-0">
       <h3 class="card-title font-weight-bolder FinancialStrength">
         افزایش سرمایه
       </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body d-flex flex-column" v-if="loading">
-      <v-skeleton-loader
-        type=" table-heading, table-thead, table-tbody"
-      ></v-skeleton-loader>
-    </div>
-    <div
-      class="card-body d-flex flex-column"
-      v-if="this.DataItems2.length != 0 && loading == false"
+    </div> -->
+    <v-toolbar elevation="1" dense style="height:36px;">
+      <v-toolbar-title style="height:20px;font-size:0.95em;"
+        >افزایش سرمایه</v-toolbar-title
+      >
+    </v-toolbar>
+    <v-skeleton-loader
+      v-if="loading"
+      height="200px"
+      type=" table-heading, table-thead, table-tbody"
+    ></v-skeleton-loader>
+    <b-table
+      v-if="!loading"
+      class="AssemblyICwidget-table"
+      thClass="AssemblyICwidget-tableHeader"
+      tbody-tr-class="AssemblyICwidget-table-row"
+      small
+      hover
+      :items="notices"
+      :fields="headers"
     >
+      <template #cell(PublishTime)="data">
+        <span v-if="data.value === null || data.value == ''">-</span>
+        <span v-else dir="ltr">{{ data.value.split(" ")[0] }}</span>
+      </template>
+      <template #cell(IncreasePercent)="data">
+        <span v-if="data.value === null || data.value == ''">-</span>
+        <span v-else dir="ltr">{{ roundTo(data.value, 2) }}%</span>
+      </template>
+    </b-table>
+    <!-- <div v-if="this.notices.length != 0 && loading == false">
       <div>
         <v-data-table
           v-if="loading == false"
           :headers="headers"
-          :items="DataItems2"
+          :items="notices"
           class="elevation-1 FinancialStrength"
           :header-props="{ sortIcon: null }"
           :disable-sort="true"
@@ -39,64 +56,39 @@
           </template>
         </v-data-table>
       </div>
-    </div>
+    </div> -->
     <!--end::Body-->
-  </div>
+  </v-card>
   <!--end::Mixed Widget 14-->
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "AssemblyIC",
   props: ["notices"],
   data() {
     return {
-      search: "",
       loading: true,
-      inset: true,
-      items: [
-        {
-          action: "mdi-label",
-          title: "List item 1"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 2"
-        },
-        {
-          divider: true
-        },
-        {
-          action: "mdi-label",
-          title: "List item 3"
-        }
-      ],
       headers: [
         {
-          text: "تاریخ",
-          value: "PublishTime"
+          label: "تاریخ",
+          key: "PublishTime",
+          thClass: "AssemblyICwidget-tableHeader"
         },
         {
-          text: "درصد افزایش",
-          value: "IncreasePercent"
+          label: "درصد افزایش",
+          key: "IncreasePercent",
+          thClass: "AssemblyICwidget-tableHeader"
         },
         {
-          text: "محل افزایش سرمایه",
-          value: "CapitalChangeType"
+          label: "محل افزایش سرمایه",
+          key: "CapitalChangeType",
+          thClass: "AssemblyICwidget-tableHeader"
         }
-      ],
-      DataItems2: [],
-      years: [],
-      filtered: []
+      ]
     };
   },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-  },
+  computed: {},
   methods: {
     roundTo(n, digits) {
       let negative = false;
@@ -114,56 +106,33 @@ export default {
         n = (n * -1).toFixed(digits);
       }
       return n;
-    },
-    populateData() {
-      this.DataItems2 = this.notices;
     }
   },
-  mounted() {
-    this.populateData();
-  },
+  mounted() {},
   watch: {
-    notices() {
-      this.populateData();
-      this.loading = false;
+    // eslint-disable-next-line no-unused-vars
+    notices(newValue, oldValue) {
+      if (newValue.length || oldValue.length) this.loading = false;
     }
   }
 };
 </script>
 <style scoped>
-.cellItem {
-  font-family: "Vazir-Light-FD";
-  font-weight: 600;
+.AssemblyICwidget-table {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  background-color: white;
+  font-family: "Vazir-Medium-FD";
 }
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.rtl_centerd {
-  direction: rtl;
+.AssemblyICwidget-table /deep/ .AssemblyICwidget-tableHeader {
+  font-size: 1em !important;
+  /* font-weight: 300; */
   text-align: center;
 }
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
+.AssemblyICwidget-table /deep/ .AssemblyICwidget-table-row {
+  direction: ltr;
+  vertical-align: middle !important;
+  text-align: center;
 }
 </style>

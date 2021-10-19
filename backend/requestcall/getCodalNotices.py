@@ -1,7 +1,7 @@
 
 import requests
 import json
-# from .util.Convereter_trunc import truncater, converter
+from .util.unixToUTCunix import engDateToUnix
 import uuid
 import time
 import pandas as pd
@@ -13,9 +13,9 @@ def CodalNoticesRequest(identifier):
         resp = requests.get('http://130.185.74.40:3000/View_CodalNotices?StockID=eq.'+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-            # return(json.loads(resp.text))
+            
         else:
             time.sleep(2)
             ct=ct+1
@@ -27,9 +27,9 @@ def SubHeader(identifier):
         resp = requests.get('http://130.185.74.40:3000/View_SubHeaderWidget?ID=eq.'+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -42,9 +42,9 @@ def getTypeOffirm(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/monthlyreporttype?a='+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -57,9 +57,9 @@ def getAdminsNotices(firm):
         resp = requests.get('http://185.231.115.223:3000/rpc/adminsnotice?a='+str(firm),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -72,9 +72,9 @@ def StatusChanges(identifier):
         resp = requests.get('http://185.231.115.223:3000/View_StatusChange?ID=eq.'+str(identifier)+'&limit=7',headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -87,9 +87,9 @@ def monthlyBankDeposits(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/bankdeposits_monthly?a='+identifier,headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -102,9 +102,9 @@ def monthlyInsurance(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/insurancemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -117,9 +117,9 @@ def monthlyConstOngoing(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/construction_ongoing_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -132,9 +132,9 @@ def monthlyConstSold(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/construction_sold_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -145,9 +145,9 @@ def monthlyService(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/servicemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -160,9 +160,9 @@ def monthlyBankFacility(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/bankfacilities_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -175,9 +175,9 @@ def monthlyProduction(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -220,7 +220,7 @@ def monthlyPAnalysis1(identifier):
             DY4.replace('Domestic_Sale','فروش داخلی',inplace=True)
             DY4.replace('Service_revenue','درآمد خدمات',inplace=True)
             return {'1':json.loads(DX4.to_json(orient='records')),'2':json.loads(DY4.to_json(orient='records'))}
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -233,9 +233,9 @@ def monthly_leasing_cost(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/leasingcost_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -248,9 +248,9 @@ def monthly_leasing_delegated(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/leasingdelegated_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -263,9 +263,9 @@ def monthly_leasing_revenue(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/leasingrevenue_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -280,9 +280,9 @@ def monthlyInvestInTransactions(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_in_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -295,9 +295,9 @@ def monthlyInvestOutTransactions(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_out_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -310,9 +310,9 @@ def monthlyInvestPortf(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -325,9 +325,9 @@ def monthlyInvestSummary(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -342,9 +342,9 @@ def getBalanceSheetFirm(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/bsall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -356,9 +356,9 @@ def getBalanceSheetAggregatedFirm(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/bsallaggregated?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -370,9 +370,9 @@ def getIncomeStatementFirm(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/isall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -385,9 +385,9 @@ def getIncomeStatementFirmAggrregated(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/isallaggregated?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -400,9 +400,9 @@ def getCFFirm(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/cfall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -416,9 +416,9 @@ def getBoard(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/currentboard?a='+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -430,9 +430,9 @@ def getceo(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/currentceo?a='+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -444,9 +444,9 @@ def getAllDps(identifier):
         resp = requests.get('http://130.185.74.40:3000/rpc/alldps?a='+str(identifier))
         if resp.status_code == 200:
     
-            # return(resp.text)
+            
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
@@ -459,9 +459,7 @@ def AdjustedPrices(identifier):
         resp = requests.get('http://185.231.115.223:3000/View_AdjustedPrices?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200:
     
-            # return(resp.text)
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
         else:
             time.sleep(2)
             ct=ct+1
@@ -473,10 +471,16 @@ def AdjustedPricesBasedOnCodal(identifier):
         head = {'Accept-Profile':'public'}
         resp = requests.get('http://185.231.115.223:3000/rpc/adjustedpricestyp3?a='+str(identifier),headers=head)
         if resp.status_code == 200:
-    
-            # return(resp.text)
-            return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+            js = json.loads(resp.text)
+            for item in js:
+                date = item["engdate"].split('-')
+                year = int(date[0])
+                month = int(date[1])
+                day = int(date[2])
+                item["unix"] = engDateToUnix(year,month,day,8,0)
+            js = sorted(js, key=lambda x : x['unix'], reverse=False)
+
+            return (js)
         else:
             time.sleep(2)
             ct=ct+1
@@ -490,7 +494,7 @@ def HHhistory(identifier):
         if resp.status_code == 200:
             DF2=pd.json_normalize(json.loads(resp.text))
             labels=[DF2.head(11).englishDate.tolist()]
-            # return(resp.text)
+            
             # return (json.loads(resp.text))
             return([labels,json.loads(resp.text)])
         else:
@@ -507,9 +511,9 @@ def getNews():
             js = json.loads(resp.text)
             for item in js:
                 item['id'] = uuid.uuid4()
-            # return(resp.text)
+            
             return (js)
-        # return(json.loads(resp.text))
+        
         else:
             time.sleep(2)
             ct=ct+1
