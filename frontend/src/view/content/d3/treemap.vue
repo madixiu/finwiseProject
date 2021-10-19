@@ -157,7 +157,6 @@
             v-model="Industry_Selected"
             dense
             solo-inverted
-            @input="GetFiltered"
           ></v-select>
         </v-col>
       </v-row>
@@ -741,7 +740,7 @@ export default {
       ! SUPRISINGLY it works the way we want by this LOG line!!!
       ! have to figure out a way to get rid  of this!!!!!
       */
-      console.clear(this.MainScaleNode);
+      console.log(this.MainScaleNode);
       // this.MainScaleNode
       return node;
     }

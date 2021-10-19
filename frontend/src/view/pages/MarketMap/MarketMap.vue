@@ -1,8 +1,12 @@
 <template>
-  <div
+  <!-- <div
     class="row"
     id="MapRoot"
     style="padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
+  > -->
+  <v-row
+    id="MapRoot"
+    style="background-color:black;padding-top:0px;padding-left:0px;padding-right:0px;margin-top:-20px"
   >
     <!-- <v-btn @click="forceUpdate()">change</v-btn> -->
     <!-- <div id="MarketMapID" class="MarketMapContainer" width="100%" height="100%"> -->
@@ -14,8 +18,9 @@
       :inputWidth="width"
       :inputHeight="height"
     ></treemap>
-    <!-- </div> -->
-  </div>
+  </v-row>
+  <!-- </div> -->
+  <!-- </div> -->
 </template>
 <script>
 import treemap from "@/view/content/d3/treemap.vue";
@@ -56,14 +61,14 @@ export default {
 
   mounted() {
     let headerWidth = document.getElementById("MapRoot").clientWidth;
-    // console.log(headerHeight);
+    // console.log(headerWidth);
     // let chartDiv = document.getElementsByClassName("container-fluid");
-    this.height = (window.screen.height * 73) / 100;
+    this.height = (window.screen.height * 73) / 100 - 35;
     this.height = window.innerHeight - 65;
 
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
-    this.width = headerWidth;
+    this.width = headerWidth + 50;
     this.width = window.innerWidth - 10;
     // console.log(this.width);
     this.loadData();
