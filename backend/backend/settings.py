@@ -211,25 +211,25 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase.db',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#       # 'HOST': 'db',                   # noqa
-#         'HOST': 'localhost',
-#         'PORT': 5432,
-
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase.db',
 #     }
-
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'finwiseDB',
+        'USER': 'finwise',
+        'PASSWORD':env('DATABASE_PASSWORD'),
+      # 'HOST': 'db',                   # noqa
+        'HOST': '171.22.25.73',
+        'PORT': 5432,
+
+    }
+
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
