@@ -11,7 +11,8 @@
         <!--begin::Form-->
         <!-- username -->
         <b-form autocomplete="off" class="form" @submit.stop.prevent="onSubmit">
-          <b-form-group
+          <!--//? username -->
+          <!-- <b-form-group
             id="register-input-group-0"
             label=""
             label-for="register-input-0"
@@ -32,9 +33,9 @@
             <p class="errorMsg" v-if="ErrorMsgText.phoneNumber.username">
               {{ ErrorMsgText.username }}
             </p>
-          </b-form-group>
+          </b-form-group> -->
 
-          <!-- email -->
+          <!--//? email -->
           <b-form-group
             id="register-input-group-1"
             label=""
@@ -58,7 +59,7 @@
             </p>
           </b-form-group>
 
-          <!-- phoneNumber -->
+          <!--//? phoneNumber -->
           <b-form-group
             id="register-input-group-2"
             label=""
@@ -82,7 +83,7 @@
             </p>
           </b-form-group>
 
-          <!-- password -->
+          <!--//? password -->
           <b-form-group
             id="register-input-group-3"
             label=""
@@ -107,7 +108,7 @@
             </p>
           </b-form-group>
 
-          <!-- repeatPassword -->
+          <!--//? repeatPassword -->
           <b-form-group
             id="register-input-group-4"
             label=""
@@ -130,8 +131,8 @@
               {{ ErrorMsgText.password2[0] }}
             </p>
           </b-form-group>
-          <!-- firstname -->
-          <b-form-group
+          <!--//? firstname -->
+          <!-- <b-form-group
             id="register-input-group-5"
             label=""
             label-for="register-input-5"
@@ -149,10 +150,10 @@
             <b-form-invalid-feedback id="input-5-live-feedback">
               نام خود را وارد کنید
             </b-form-invalid-feedback>
-          </b-form-group>
+          </b-form-group> -->
 
-          <!-- lastname -->
-          <b-form-group
+          <!--//? lastname -->
+          <!-- <b-form-group
             id="register-input-group-6"
             label=""
             label-for="register-input-6"
@@ -170,9 +171,61 @@
             <b-form-invalid-feedback id="input-6-live-feedback">
               نام خانوادگی خود را وارد کنید
             </b-form-invalid-feedback>
-          </b-form-group>
+          </b-form-group> -->
 
-          <!--begin::Action-->
+          <!-- //? captcha section  -->
+          <v-row no-gutters>
+            <v-col class="d-flex align-center" cols="6">
+              <b-form-group
+                style="margin-bottom:0px !important"
+                id="login-input-group-3"
+                label=""
+                label-for="login-input-3"
+              >
+                <b-form-input
+                  id="register-input-5"
+                  name="register-input-5"
+                  placeholder="عبارت امنیتی"
+                  v-model="form.captcha"
+                  aria-describedby="captcha-live-feedbackRegister"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="captcha-live-feedbackRegister">
+                  عبارت امنیتی
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </v-col>
+            <!-- <v-col class="">
+                <v-icon @click="refresh" small color="#4d4444"
+                  >mdi-refresh</v-icon
+                >
+              </v-col> -->
+            <v-col class="d-flex justify-end">
+              <i
+                id="RegisterRefreshIcon"
+                @click="refresh"
+                aria-hidden="true"
+                class="v-icon notranslate mdi mdi-refresh theme--light"
+              ></i>
+              <!-- <v-icon class=""  color="#4d4444">mdi-refresh</v-icon> -->
+              <vue-captcha
+                ref="captcha"
+                :captcha.sync="code"
+                :fontSize="19"
+                textFillColor="#ff0000"
+                :width="120"
+              >
+              </vue-captcha>
+            </v-col>
+          </v-row>
+          <div
+            class="form-group d-flex flex-wrap justify-content-between align-items-center"
+          >
+            <p class="WrongCredMsg" v-if="CaptchaErrorMsgflag">
+              عبارت امنیتی به درستی وارد نشده است
+            </p>
+          </div>
+          <!--//* begin::Action-->
           <div
             class="form-group d-flex flex-wrap justify-content-between align-items-center"
           >
@@ -191,7 +244,6 @@
             >
           </div>
           <v-divider></v-divider>
-          <!-- <div class=" justify-content-center row"> -->
           <div class="flexTest">
             <div>
               <v-btn fab x-small color="#ff0000" @click="resetForm">
@@ -209,45 +261,23 @@
               </router-link>
             </div>
           </div>
-          <!--end::Action-->
+          <!--//* end::Action-->
         </b-form>
         <!--end::Form-->
       </v-container>
     </v-card>
-    <!--begin::Content header-->
-    <!-- <div
-      class="position-absolute top-0 left-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
-    >
-      <span class="font-weight-bold font-size-3 text-dark-60">
-        قبلا ثبت نام کرده اید؟
-      </span>
-      <router-link
-        class="font-weight-bold font-size-3 ml-2"
-        :to="{ name: 'login' }"
-      >
-        ورود از اینجا
-      </router-link>
-    </div> -->
-    <!--end::Content header-->
-
-    <!--begin::Signup-->
-    <div class="">
-      <!-- <div class="text-center mb-10 mb-lg-20">
-        <h3 class="font-size-h1">ثبت نام</h3>
-        <p class="text-muted font-weight-semi-bold">
-          مشخصات خود را وارد کنید
-        </p>
-      </div> -->
-    </div>
     <!--end::Signup-->
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import VueCaptcha from "vue-captcha-code";
+
 // import { REGISTER } from "@/core/services/store/auth.module";
 // import { SET_ERROR, SET_AUTH } from "@/core/services/store/auth.module";
 import { REGISTER_USER } from "@/graphql/mutations";
 import { validationMixin } from "vuelidate";
+import JwtService from "@/core/services/jwt.service";
 import {
   email,
   required,
@@ -257,30 +287,38 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
+  components: { VueCaptcha },
   mixins: [validationMixin],
   name: "register",
   data() {
     return {
+      code: "",
+      CaptchaErrorMsgflag: false,
       buttonLoading: false,
       ErrorMsgText: { phoneNumber: "", email: "", username: "", password2: [] },
       ErrorMsgflag: false,
-      form: {
+      user: {
         username: "",
-        email: "",
-        password: "",
-        password2: "",
-        firstname: "",
-        lastname: "",
-        phonenumber: ""
+        email: ""
+      },
+      form: {
+        // username: "",
+        email: "mahdi.moradi72@gmail.com",
+        password: "finwisefinwise",
+        password2: "finwisefinwise",
+        // firstname: "",
+        // lastname: "",
+        phonenumber: "09386886616",
+        captcha: ""
       }
     };
   },
   validations: {
     form: {
-      username: {
-        required,
-        minLength: minLength(3)
-      },
+      // username: {
+      //   required,
+      //   minLength: minLength(3)
+      // },
       email: {
         required,
         email
@@ -293,14 +331,14 @@ export default {
         required,
         minLength: minLength(8)
       },
-      firstname: {
-        required,
-        minLength: minLength(3)
-      },
-      lastname: {
-        required,
-        minLength: minLength(3)
-      },
+      // firstname: {
+      //   required,
+      //   minLength: minLength(3)
+      // },
+      // lastname: {
+      //   required,
+      //   minLength: minLength(3)
+      // },
       phonenumber: {
         integer,
         required,
@@ -309,7 +347,18 @@ export default {
       }
     }
   },
+  watch: {
+    "form.captcha"(newValue, oldValue) {
+      if (oldValue != "" && newValue == "") this.CaptchaErrorMsgflag = false;
+    }
+  },
   methods: {
+    //* Captcha code handler NOT using it for now
+    // handleChange(code) {
+    // },
+    refresh() {
+      this.$refs.captcha.refreshCaptcha();
+    },
     checkError(errorsIn) {
       let listOfErrors = [];
       // console.log(this.$store.getters.errors);
@@ -360,12 +409,12 @@ export default {
     },
     resetForm() {
       this.form = {
-        username: null,
+        // username: null,
         email: null,
         password: null,
         password2: null,
-        firstname: null,
-        lastname: null,
+        // firstname: null,
+        // lastname: null,
         phoneNumber: null
       };
 
@@ -378,18 +427,22 @@ export default {
       if (this.$v.form.$anyError) {
         return;
       }
-
-      // // clear existing errors
+      //! here you write the captcha check function
+      if (this.form.captcha != this.code) {
+        this.CaptchaErrorMsgflag = true;
+        this.refresh();
+        return;
+      }
       // this.$store.dispatch("LOGOUT");
-
-      const username = this.$v.form.username.$model;
+      // const username = this.$v.form.username.$model;
       const email = this.$v.form.email.$model;
+      const username = email.split("@")[0];
       const password = this.$v.form.password.$model;
       const password2 = this.$v.form.password2.$model;
-      const firstname = this.$v.form.firstname.$model;
-      const lastname = this.$v.form.lastname.$model;
+      // const firstname = this.$v.form.firstname.$model;
+      // const lastname = this.$v.form.lastname.$model;
       const phonenumber = this.$v.form.phonenumber.$model;
-
+      this.user = { username: username, email: email };
       this.$apollo
         .mutate({
           mutation: REGISTER_USER,
@@ -398,9 +451,9 @@ export default {
             password1: password,
             password2: password2,
             username: username,
-            phoneNumber: phonenumber,
-            firstName: firstname,
-            lastName: lastname
+            phoneNumber: phonenumber
+            // firstName: firstname,
+            // lastName: lastname
           }
         })
         .then(data => {
@@ -410,7 +463,16 @@ export default {
             this.$store.dispatch("LOGOUT");
             // HAVE TO write code for saving encrypted refresh token to storage
             // LATER
-            this.$store.dispatch("REGISTER", data.data.register.user);
+            let encryptedRefreshToken = this.encryption(
+              data.data.register.refreshToken,
+              "key"
+            );
+
+            JwtService.destroyToken();
+            JwtService.saveToken(encryptedRefreshToken);
+            this.$store.dispatch("RenewAccessToken", data.data.register.token);
+
+            this.$store.dispatch("REGISTER", this.user);
             this.$router.push({ name: "verify" });
           } else if (data.data.register.success == false) {
             // console.log(data.data.register.errors.password2);
@@ -464,6 +526,14 @@ export default {
 .errorMsg {
   color: red;
 }
+#RegisterRefreshIcon {
+  color: rgb(77, 68, 68);
+  caret-color: rgb(77, 68, 68);
+}
+#RegisterRefreshIcon:hover {
+  cursor: pointer;
+  color: black;
+}
 .v-btn--fab.v-size--x-small {
   height: 25px !important;
   width: 25px !important;
@@ -475,6 +545,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   align-content: space-around;
+}
+.form-control {
+  background-color: rgba(82, 70, 70, 0.281) !important;
+  color: white;
+  border-radius: 0.75rem;
 }
 .chip-top {
   background-color: rgba(0, 0, 0, 0.212) !important;
@@ -493,7 +568,7 @@ export default {
   color: white;
 }
 .cardColor {
-  background-color: rgba(226, 194, 194, 0.61) !important;
+  background-color: rgba(209, 209, 209, 0.938) !important;
   border-color: black !important;
   max-height: 100vh;
   min-width: 312px;

@@ -7,9 +7,7 @@
         >
       </v-toolbar>
       <ag-grid-vue
-        :style="
-          `width: 100%; height:  ${height}px; font-family: Vazir-Medium-FD`
-        "
+        :style="`width: 100%; height:${height}px; font-family: Vazir-Medium-FD`"
         class="ag-theme-material CryptoMarketIntroTable mt-1 pb-1"
         :localeText="localeText"
         :defaultColDef="defaultColDef"

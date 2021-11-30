@@ -46,8 +46,13 @@
               class="flex-column-fluid d-flex flex-column justify-content-center mt-2"
             >
               <div class="finwiseCo">
-                © 2021 Finwise
+                © 2021 FinWise
               </div>
+            </div>
+            <div class="mt-5">
+               <i @click="instagramLink"
+              class="v-icon notranslate pl-1 v-icon--dense mdi mdi-instagram theme--light instagram-icon"
+            ></i>
             </div>
             <!--end: Aside footer for desktop -->
           </div>
@@ -117,6 +122,23 @@
     background-position: 0% 50%;
   }
 }
+.instagram-icon {
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  -webkit-background-clip: text;
+  /* Also define standard property for compatibility */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.instagram-icon:hover {
+  cursor: pointer;
+} 
 </style>
 
 <script>
@@ -124,6 +146,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "auth",
+  methods:{
+    instagramLink(){
+      window.open("https://www.instagram.com/finwise.ir", "_blank");
+
+    }
+  },
   computed: {
     ...mapState({
       errors: state => state.auth.errors
@@ -132,9 +160,6 @@ export default {
       return process.env.BASE_URL + "media/bg/bg-2.jpg";
     },
     ratio() {
-      // console.log(window.screen.width);
-      // console.log(window.screen.height);
-
       if (window.screen.height > window.screen.width) return true;
       else return false;
     }

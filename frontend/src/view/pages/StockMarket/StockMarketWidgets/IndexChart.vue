@@ -282,7 +282,6 @@ export default {
         boilerplate: true,
         elevation: 2
       },
-      jsonData: {},
       latestIndex: 0,
       lastestIndexChange: 0,
       latestSW: 0,
@@ -331,7 +330,6 @@ export default {
     //   this.renderChart();
     // }
   },
-  computed: {},
   methods: {
     roundTo(n, digits) {
       if (n == "-") {

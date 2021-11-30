@@ -25,6 +25,7 @@
 
         <!--begin::Signin-->
         <!-- MAY REMOVE THIS DIV (REDUNDANT) -->
+        <!-- //? title -->
         <div class="">
           <div class="text-center">
             <v-chip class="chip-top">
@@ -33,8 +34,7 @@
           </div>
           <v-divider></v-divider>
 
-          <!--begin::Form-->
-
+          <!-- //? begin::Form-->
           <b-form
             class="form"
             autocomplete="off"
@@ -56,6 +56,7 @@
                 {{ error }}
               </div>
             </div>
+            <!--//? email input -->
             <b-form-group
               id="login-input-group-1"
               label=""
@@ -75,7 +76,7 @@
                 شماره موبایل خود را وارد کنید
               </b-form-invalid-feedback>
             </b-form-group>
-
+            <!--//? password input -->
             <b-form-group
               id="login-input-group-2"
               label=""
@@ -104,8 +105,62 @@
                 شماره موبایل و رمز عبور صحیح نمی باشد
               </p>
             </div>
+            <!-- //? captcha section  -->
+            <v-row no-gutters>
+              <v-col class="d-flex align-center" cols="6">
+                <b-form-group
+                  style="margin-bottom:0px !important"
+                  id="login-input-group-3"
+                  label=""
+                  label-for="login-input-3"
+                >
+                  <b-form-input
+                    id="login-input-3"
+                    name="login-input-3"
+                    placeholder="عبارت امنیتی"
+                    v-model="form.captcha"
+                    aria-describedby="captcha-live-feedbackLogin"
+                  ></b-form-input>
+
+                  <b-form-invalid-feedback id="captcha-live-feedbackLogin">
+                    عبارت امنیتی
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </v-col>
+              <!-- <v-col class="">
+                <v-icon @click="refresh" small color="#4d4444"
+                  >mdi-refresh</v-icon
+                >
+              </v-col> -->
+              <v-col class="d-flex justify-end">
+                <i
+                  id="LoginRefreshIcon"
+                  @click="refresh"
+                  aria-hidden="true"
+                  class="v-icon notranslate mdi mdi-refresh theme--light"
+                ></i>
+                <!-- <v-icon class=""  color="#4d4444">mdi-refresh</v-icon> -->
+                <vue-captcha
+                  ref="captcha"
+                  :captcha.sync="code"
+                  :fontSize="19"
+                  textFillColor="#ff0000"
+                  :width="120"
+                >
+                </vue-captcha>
+              </v-col>
+            </v-row>
             <div
-              class="form-group d-flex flex-wrap justify-content-center align-items-center"
+              class="form-group d-flex flex-wrap justify-content-between align-items-center"
+            >
+              <p class="WrongCredMsg" v-if="CaptchaErrorMsgflag">
+                عبارت امنیتی به درستی وارد نشده است
+              </p>
+            </div>
+
+            <!--//? submit button -->
+            <div
+              class="form-group d-flex flex-wrap justify-content-center align-items-center mt-2"
             >
               <v-btn
                 block
@@ -130,7 +185,7 @@
               </router-link>
             </div>
             <v-divider></v-divider>
-            <div class=" justify-content-center ">
+            <div class="justify-content-center">
               <!-- <span class="font-weight-bold font-size-3 text-dark-60">
             ثبت نام نکرده اید؟
           </span> -->
@@ -153,6 +208,7 @@
 </template>
 <script>
 // import { mapState } from "vuex";
+import VueCaptcha from "vue-captcha-code";
 import { mapGetters } from "vuex";
 // import gql from "graphql-tag";
 // import { LOGIN, LOGOUT } from "@/core/services/store/auth2.module";
@@ -169,6 +225,7 @@ import { LOGIN_USER } from "@/graphql/mutations";
 import JwtService from "@/core/services/jwt.service";
 
 export default {
+  components: { VueCaptcha },
   mixins: [validationMixin],
   name: "login",
   // eslint-disable-next-line no-unused-vars
@@ -180,10 +237,12 @@ export default {
   },
   data() {
     return {
+      code: "",
       NextRoutePath: "",
       buttonLoading: false,
       verified: true,
       ErrorMsgflag: false,
+      CaptchaErrorMsgflag: false,
       ErrorMsgText: "",
       ErrorMsg: [
         "خطایی رخ داده است",
@@ -193,7 +252,8 @@ export default {
       form: {
         // email: "",
         phonenumber: "",
-        password: ""
+        password: "",
+        captcha: ""
       }
     };
   },
@@ -215,17 +275,24 @@ export default {
       }
     }
   },
+  watch: {
+    "form.captcha"(newValue, oldValue) {
+      if (oldValue != "" && newValue == "") this.CaptchaErrorMsgflag = false;
+    }
+  },
   methods: {
+    //* Captcha code handler NOT using it for now
+    // handleChange(code) {
+    // },
+    refresh() {
+      this.$refs.captcha.refreshCaptcha();
+    },
     LockCheck() {
-      // console.log(this.$store.getters.currentUser.role);
       let user = this.$store.getters.currentUser;
-      // console.log(user.role);
-
       if (user.role == 2) this.$store.dispatch("setOptionStatus", false);
     },
     checkError() {
       let errors = this.$store.getters.errors;
-      // console.log(errors);
       if (errors.code == "invalid_credentials") {
         this.ErrorMsgflag = true;
         this.ErrorMsgText = this.ErrorMsg[1];
@@ -265,7 +332,13 @@ export default {
     },
     onSubmit() {
       this.$v.form.$touch();
-      if (this.$v.form.$anyError) {
+      //! here you write the captcha check function
+      if (this.$v.form.$anyError || this.form.captcha == "") {
+        return;
+      }
+      if (this.form.captcha != this.code) {
+        this.CaptchaErrorMsgflag = true;
+        this.refresh();
         return;
       }
       const phonenumber = this.$v.form.phonenumber.$model;
@@ -297,13 +370,6 @@ export default {
             user.token = LoginData.token;
             this.$store.dispatch("LOGIN", user);
             this.$store.dispatch("RenewAccessToken", LoginData.token);
-
-            // this.LockCheck();
-
-            // if (user.verified == true) {
-            //   console.log("verified");
-            //   this.$store.dispatch("LOGIN", user);
-            // }
           } else if (LoginData.success == false) {
             this.$store.dispatch(
               "SET_ERROR",
@@ -314,29 +380,16 @@ export default {
             // console.log(LoginData.errors.nonFieldErrors[0]);
             this.checkError();
           }
-
-          // console.log(LoginData);
-
-          // JwtService.destroyToken();
-          // JwtService.saveToken(LoginData.token)
-          // this.$store.dispatch(SET_AUTH, data);
         })
 
         .catch(error => {
           console.error(error);
-          // console.log(LOGIN_USER);
-          // console.log(email + " " + password);
-          // this.$store.dispatch(SET_ERROR, error.data.errors);
         });
 
       // clear existing errors
-      // this.$store.dispatch(LOGOUT);
 
-      // set spinner to submit button
-      // const submitButton = this.$refs["kt_login_signin_submit"];
-      // submitButton.classList.add("spinner", "spinner-light", "spinner-right");
       this.buttonLoading = true;
-      // dummy delay
+      //* dummy delay
       setTimeout(() => {
         // send login request
         // this.$store
@@ -377,6 +430,14 @@ export default {
 };
 </script>
 <style scoped>
+#LoginRefreshIcon {
+  color: rgb(77, 68, 68);
+  caret-color: rgb(77, 68, 68);
+}
+#LoginRefreshIcon:hover {
+  cursor: pointer;
+  color: black;
+}
 .WrongCredMsg {
   color: red;
 }
@@ -438,7 +499,7 @@ input:-webkit-autofill:active {
   color: white;
 }
 .cardColor {
-  background-color: rgba(226, 194, 194, 0.61) !important;
+  background-color: rgba(209, 209, 209, 0.938) !important;
   border-color: black !important;
   max-height: 100vh;
   min-width: 312px;

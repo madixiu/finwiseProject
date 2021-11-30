@@ -315,16 +315,14 @@ def getLatestTwoIndex():
 
 def getLastActiveDayTepix():
     head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://185.231.115.223:3000/View_today_Tepix',headers=head )
+    resp = requests.get('http://185.231.115.223:3000/View_today_Tepix_reduced',headers=head )
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        # js = json.dumps(js, separators=(',', ':'))
-        # js = json.loads(js)
         res = []
         for item in js:
             if item["Market"] != "3":
                 res.append(item)
-        
-        return (res)
+                # res.append({'Index':item['Index'],'IndexChange':item['IndexChange'],'SW_Index_Change':item['SW_Index_Change'],'SW_Index':item['SW_Index'],'TradeValue':item['TradeValue'],'MarketCapTotal':item['MarketCapTotal'],'Market':item['Market']})
+        return (js)
     else:
         return("noData")          

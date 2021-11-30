@@ -639,10 +639,13 @@ def getAllTradesValue(self):
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasic(request):
     tokenA = request.META.get('HTTP_AUTHORIZATION')[7:]
+    # print(request.META.get('HTTP_AUTHORIZATION'))
+    # print(tokenA)
     try:
         payload = jwt_decode(tokenA)
         username = payload["username"]
         user = CustomUser.objects.get(username = username)
+        # print(user)
         # print(user)
         # role = user.role
         if user.role >= 2:

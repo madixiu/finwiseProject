@@ -1,15 +1,13 @@
 <template>
   <v-row>
-    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-left:4px">
+    <v-col xl="12" lg="12" md="12" sm="12" class="pt-0">
       <CryptoIntroMW :InputIntroMW="IntroMW"></CryptoIntroMW>
     </v-col>
-    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-right:4px">
-      <div>
-        <TechnicalCharts :inpuDataTechnical="TechnicalData"></TechnicalCharts>
-      </div>
-      <div class="pt-2">
-        <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
-      </div>
+    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-left:5px">
+      <TechnicalCharts :inpuDataTechnical="TechnicalData"></TechnicalCharts>
+    </v-col>
+    <v-col xl="6" lg="6" md="12" sm="12" class="pt-0" style="padding-right:5px">
+      <CorrMatrix :inpuDataCorr="CorrData"></CorrMatrix>
     </v-col>
   </v-row>
 </template>

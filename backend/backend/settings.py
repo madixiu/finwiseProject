@@ -137,8 +137,8 @@ GRAPHQL_JWT = {
 # graphql options
 GRAPHQL_AUTH = {
     "LOGIN_ALLOWED_FIELDS": ['email', 'phone_number'],
-    "REGISTER_MUTATION_FIELDS" : ["email", "username" ,"first_name" , "last_name" , "phone_number"],
-    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["age","gender","degree"],
+    "REGISTER_MUTATION_FIELDS" : ["email", "phone_number","username" ],
+    "REGISTER_MUTATION_FIELDS_OPTIONAL": ["first_name" , "last_name" ,"age","gender","degree"],
     "UPDATE_MUTATION_FIELDS": ["email","age","gender","password","username","degree","first_name","last_name"],
     "ALLOW_LOGIN_NOT_VERIFIED": True,
     "ALLOW_LOGIN_WITH_SECONDARY_EMAIL": False,
@@ -146,7 +146,7 @@ GRAPHQL_AUTH = {
     "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(hours=1),
     
     # email stuff
-    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL",'finwiseIran@gmail.com'),
+    "EMAIL_FROM": getattr(django_settings, "DEFAULT_FROM_EMAIL",'finwise@mailo.com'),
     "SEND_ACTIVATION_EMAIL": False,
     "EMAIL_SUBJECT_ACTIVATION": "email/activation_subject.txt",
     "EMAIL_SUBJECT_ACTIVATION_RESEND": "email/activation_subject.txt",
@@ -168,13 +168,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST = 'smtp.office365.com'
+# EMAIL_HOST = 'smtp.outlook.office365.com'
+EMAIL_HOST = 'mail.mailo.com'
 
-EMAIL_HOST_USER = 'finwise.service@outlook.com'
+
+EMAIL_HOST_USER = 'finwise@mailo.com'
+
 # EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 
 #Must generate specific password for your app in [gmail settings][1]
-EMAIL_HOST_PASSWORD = 'uvQRH-2{@V2`H5[V'
+EMAIL_HOST_PASSWORD = 'wr2pmKTvEzQCk9v'
 # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -210,26 +213,26 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase.db',
-#     }
-# }
+# ! change the database on production
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'finwiseDB',
-        'USER': 'finwise',
-        'PASSWORD':env('DATABASE_PASSWORD'),
-      # 'HOST': 'db',                   # noqa
-        'HOST': '171.22.25.73',
-        'PORT': 5432,
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase.db',
     }
-
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'finwiseDB',
+#         'USER': 'finwise',
+#         'PASSWORD':env('DATABASE_PASSWORD'),
+#       # 'HOST': 'db',                   # noqa
+#         'HOST': '171.22.25.73',
+#         'PORT': 5432,
+
+#     }
+
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

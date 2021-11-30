@@ -87,9 +87,12 @@ export default {
   created() {
     document.title = "FinWise - سهام";
     this.loadDataNew();
-    // this.loadData();
+    // this.getTepixToday().then(resp0 => {
+
+    // });
   },
   mounted() {
+    // this.loadData();
     this.liveChecker();
   },
   methods: {

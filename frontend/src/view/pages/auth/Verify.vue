@@ -98,8 +98,10 @@ import {
   maxLength
 } from "vuelidate/lib/validators";
 import { validationMixin } from "vuelidate";
-import { VERIFY_USER } from "@/graphql/mutations";
+import { VERIFY_USER, REFRESH_ACCESS_TOKEN } from "@/graphql/mutations";
+import { GET_USER } from "@/graphql/queries";
 import { mapState } from "vuex";
+import JwtService from "@/core/services/jwt.service";
 export default {
   mixins: [validationMixin],
   name: "verify",
@@ -129,7 +131,7 @@ export default {
   },
   mounted() {
     // TEMORARY COMMENT
-    // this.EmailpostRequest();
+    this.EmailpostRequest();
     this.ResetCounter();
     // setInterval(() => {
     //   while (this.counter > 0) this.counter = this.counter - 1;
@@ -172,16 +174,14 @@ export default {
       return $dirty ? !$error : null;
     },
     VerifypostRequest() {
-      this.$axios({
+      this.axios({
         method: "post",
         url: "/user/verify",
         data: {
           request: "verification",
-          // email: this.$store.getters.currentUser.email,
           email: this.$store.getters.currentUser.email,
           number: this.form.number
         },
-        // data: 'hello world',
         xsrfHeaderName: "X-CSRFToken"
         // responseType: 'json'
       })
@@ -200,7 +200,13 @@ export default {
               .then(data => {
                 let response = data.data.verifyAccount;
                 if (response.success) {
-                  this.$router.push({ name: "Dashboard" });
+                  if (JwtService.getToken()) {
+                    let refreshToken = this.CryptoJS.AES.decrypt(
+                      JwtService.getToken(),
+                      "key"
+                    ).toString(this.CryptoJS.enc.Utf8);
+                    this.getAccessTokenAndUser(refreshToken);
+                  } else this.$router.push({ name: "login" });
                 } else {
                   this.ErrorMsgflag = true;
                 }
@@ -223,15 +229,14 @@ export default {
         this.counter = 60;
         this.ResetCounter();
       }
-      this.$axios({
+      this.axios({
         method: "post",
         url: "/user/verify",
         data: {
           request: "activation",
-          // email: this.$store.getters.currentUser.email
-          email: "mahdi.moradi72@gmail.com"
+          email: this.$store.getters.currentUser.email
+          //// email: "mahdi.moradi72@gmail.com"
         },
-        // data: 'hello world',
         xsrfHeaderName: "X-CSRFToken"
         // responseType: 'json'
       })
@@ -245,6 +250,56 @@ export default {
         .catch(error => {
           console.error(error);
           this.ErrorMsgflag = true;
+        });
+    },
+    getAccessTokenAndUser(RefreshToken) {
+      this.$apollo
+        .mutate({
+          mutation: REFRESH_ACCESS_TOKEN,
+          variables: {
+            refreshToken: RefreshToken
+          }
+        })
+        .then(data => {
+          // console.log(data);
+          let LoginData = data.data.refreshToken;
+          // console.log(LoginData);
+          if (!data.data.errors) {
+            // console.log(LoginData.success);
+            if (LoginData.success) {
+              // store new acc token to vuex
+
+              this.$store.dispatch("RenewAccessToken", LoginData.token);
+              this.getQueryUser(LoginData.payload.username);
+              // this.$router.push({ name: "Dashboard" });
+            } else {
+              // console.log(LoginData.errors.nonFieldErrors[0].message);
+              this.$store.dispatch("LOGOUT");
+              // this.$router.push({ name: "login" });
+              // this.$router.push({ name: "verify" });
+            }
+          } else {
+            // console.log(LoginData.errors.nonFieldErrors[0].message);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    getQueryUser(UserName) {
+      this.$apollo
+        .query({
+          query: GET_USER,
+          // headers: {
+          // authorization: token ? `JWT ${token}` : ""
+          // }
+          variables: {
+            username: UserName
+          }
+        })
+        .then(data => {
+          this.$store.dispatch("LOGIN", data.data.users.edges[0].node);
+          this.$router.push({ name: "Dashboard" });
         });
     }
   },
@@ -263,7 +318,6 @@ export default {
         else return min + ":0" + sec;
       }
     }
-    // ...mapGetters("currentUser")
   }
 };
 </script>
@@ -271,9 +325,6 @@ export default {
 .errorMsg {
   color: red;
 }
-.submit-button {
-}
-
 .chip-top {
   background-color: rgba(0, 0, 0, 0.212) !important;
   color: white;

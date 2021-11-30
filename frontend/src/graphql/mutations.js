@@ -9,6 +9,33 @@ export const VERIFY_USER = gql`
   }
 `;
 
+//! OLD Register script
+// export const REGISTER_USER = gql`
+//   mutation register(
+//     $username: String!
+//     $email: String!
+//     $password1: String!
+//     $password2: String!
+//     $phoneNumber: String!
+//     $firstName: String!
+//     $lastName: String!
+//   ) {
+//     register(
+//       username: $username
+//       email: $email
+//       password1: $password1
+//       password2: $password2
+//       phoneNumber: $phoneNumber
+//       firstName: $firstName
+//       lastName: $lastName
+//     ) {
+//       success
+//       errors
+//     }
+//   }
+// `;
+
+//? New Register Script
 export const REGISTER_USER = gql`
   mutation register(
     $username: String!
@@ -16,8 +43,6 @@ export const REGISTER_USER = gql`
     $password1: String!
     $password2: String!
     $phoneNumber: String!
-    $firstName: String!
-    $lastName: String!
   ) {
     register(
       username: $username
@@ -25,31 +50,14 @@ export const REGISTER_USER = gql`
       password1: $password1
       password2: $password2
       phoneNumber: $phoneNumber
-      firstName: $firstName
-      lastName: $lastName
     ) {
       success
       errors
+      refreshToken
+      token
     }
   }
 `;
-
-// export const LOGIN_USER = gql`
-//   mutation tokenAuth($phoneNumber: String!, $password: String!) {
-//     tokenAuth(phoneNumber: $phoneNumber, password: $password) {
-//       success
-//       errors
-//       unarchiving
-//       token
-//       refreshToken
-
-//       user {
-//         id
-//         username
-//       }
-//     }
-//   }
-// `;
 
 export const LOGIN_USER = gql`
   mutation tokenAuth($phoneNumber: String!, $password: String!) {
