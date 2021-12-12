@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" height="358">
+  <v-card rounded="lg" height="150" class="mt-3">
     <v-toolbar
       dense
       class="IndexChartToolbars elevation-2 mb-1"
@@ -38,7 +38,7 @@ export default {
   mounted() {
     let div = document.getElementById("AdvancingDivTotal").clientWidth;
     this.chartOptions.chart.width = div;
-    this.chartOptions.chart.height = ((300 / div) * 100).toString() + "%";
+    this.chartOptions.chart.height = ((100 / div) * 100).toString() + "%";
   },
   watch: {
     inputData() {
@@ -68,7 +68,7 @@ export default {
       chart: {
         type: "bar",
         width: "450",
-        height: "100%"
+        height: "20%"
       },
       xAxis: [
         {

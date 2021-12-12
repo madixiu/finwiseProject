@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- <div class="card-header border-0"> -->
-    <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
-        بررسی ترازنامه
-        <b-spinner
-          class="titleHeaders"
-          type="grow"
-          small
-          v-if="loading == true"
-        ></b-spinner
-        ><v-chip small v-if="loading == true">در حال بارگزاری</v-chip>
-      </h3> -->
-    <!-- </div> -->
     <div class="row" v-if="empty == false && loading == false">
       <div class="col-xxl-12 col-md-12 col-sm-12 col-xs-12">
         <v-card rounded="lg">
@@ -188,7 +176,37 @@ export default {
           // background: '../../../../media/logos/fadedfinwise.png',
           stacked: false,
           toolbar: {
-            show: false
+             show: true,
+        offsetX: 0,
+        offsetY: 0,
+        tools: {
+          download: true,
+          selection: true,
+          zoom: true,
+          zoomin: true,
+          zoomout: true,
+          pan: true,
+          reset: true | '<img src="/static/icons/reset.png" width="20">',
+          customIcons: []
+        },
+        export: {
+          csv: {
+            filename: undefined,
+            columnDelimiter: ',',
+            headerCategory: 'category',
+            headerValue: 'value',
+            dateFormatter(timestamp) {
+              return new Date(timestamp).toDateString()
+            }
+          },
+          svg: {
+            filename: undefined,
+          },
+          png: {
+            filename: undefined,
+          }
+        },
+        autoSelected: 'zoom' 
           },
           zoom: {
             enabled: true

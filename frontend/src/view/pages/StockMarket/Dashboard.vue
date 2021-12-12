@@ -20,11 +20,11 @@
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div class="row">
-        <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
-        <Technical :inputDataTechnical="TechnicalData"></Technical>
         <AdvancingWidgetTotal
           :inputData="advancing"
         ></AdvancingWidgetTotal>
+        <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
+        <Technical :inputDataTechnical="TechnicalData"></Technical>
         <WinnerLosers :inputWinLose="WinLose"></WinnerLosers>
         <AdvancingWidget
           :inputDataInd="advancingInd"

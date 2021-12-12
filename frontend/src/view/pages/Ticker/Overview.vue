@@ -39,7 +39,10 @@
               <DivWidget :RatioData="ratiodata"></DivWidget>
             </v-col>
             <v-col class="px-0">
-              <ReturnWidget :RatioData="FundamentalRobot" :liveData="livedata"></ReturnWidget>
+              <ReturnWidget
+                :RatioData="FundamentalRobot"
+                :liveData="livedata"
+              ></ReturnWidget>
             </v-col>
           </v-col>
           <v-col cols="4" class="flex-grow-1 flex-shrink-0 pl-1">

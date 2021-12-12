@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" height="358">
+  <v-card rounded="lg" height="400">
     <v-toolbar
       dense
       class="IndexChartToolbars elevation-2 mb-1"
@@ -38,14 +38,14 @@ export default {
   mounted() {
     let div = document.getElementById("AdvancingDiv").clientWidth;
     this.chartOptions.chart.width = div;
-    this.chartOptions.chart.height = ((1200 / div) * 100).toString() + "%";
+    this.chartOptions.chart.height = ((400 / div) * 100).toString() + "%";
   },
   watch: {
     inputDataInd() {
       let that = this;
       this.chartOptions.series[1].data = [];
       this.chartOptions.series[0].data = [];
-      this.categories = [];
+      // this.categories = [];
       this.inputDataInd.filter(d => {
         that.categories.push(d.CorrectName);
         that.chartOptions.series[1].data.push(d.ascending);
@@ -63,7 +63,7 @@ export default {
       chart: {
         type: "bar",
         width: "450",
-        height: "100%"
+        height: "10%"
       },
       title: {
         text: ""
@@ -103,7 +103,7 @@ export default {
 
       tooltip: {
         formatter: function() {
-          return `<b>${this.series.name} ${this.point.category}:${Math.abs(
+          return `<b>${this.series.name}  ${this.point.category}:  ${Math.abs(
             this.point.y
           )}</b>`;
         }
