@@ -54,9 +54,10 @@ import Highcharts from "highcharts";
 //       ]
 //   }
 // });
+import hcMore from "highcharts/highcharts-more";
 import Stock from "highcharts/modules/stock";
 import HighchartsVue from "highcharts-vue";
-
+hcMore(Highcharts);
 Stock(Highcharts);
 Vue.use(HighchartsVue);
 

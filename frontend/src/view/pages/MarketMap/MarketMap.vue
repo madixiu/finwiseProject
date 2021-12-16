@@ -60,15 +60,15 @@ export default {
   },
 
   mounted() {
-    let headerWidth = document.getElementById("MapRoot").clientWidth;
+    // let headerWidth = document.getElementById("MapRoot").clientWidth;
     // console.log(headerWidth);
     // let chartDiv = document.getElementsByClassName("container-fluid");
-    this.height = (window.screen.height * 73) / 100 - 35;
+    // this.height = (window.screen.height * 73) / 100 - 35;
     this.height = window.innerHeight - 65;
 
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
     // this.width = (chartDiv[0].clientWidth * 98) / 100;
-    this.width = headerWidth + 50;
+    // this.width = headerWidth + 50;
     this.width = window.innerWidth - 10;
     // console.log(this.width);
     this.loadData();

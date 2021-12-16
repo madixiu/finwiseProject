@@ -55,7 +55,7 @@ urlpatterns = [
    path("LiveTicker/<identifier>/",getLiveTicker),
    path("Fundamental/ValuationRatio/<identifier>/",getValuationRatios),
    path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
-   path("Ticker/TechnicalIndicatorSingle/<identifier>/",getIndicators2),
+   path("Ticker/TechnicalIndicatorSingle/<identifier>",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
    path("Ticker/TechnicalTrends/<identifier>/",getTechnicalTrends),
    path("IndexDetails/<identifier>",getIndexDetails),
