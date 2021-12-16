@@ -41,19 +41,7 @@ Vue.use(LoadScript);
 
 //? importing HighChart
 import Highcharts from "highcharts";
-// Highcharts.setOptions({
-//   lang: {
-//       months: [
-//           'Janvier', 'Février', 'Mars', 'Avril',
-//           'Mai', 'Juin', 'Juillet', 'Août',
-//           'Septembre', 'Octobre', 'Novembre', 'Décembre'
-//       ],
-//       weekdays: [
-//           'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
-//           'Jeudi', 'Vendredi', 'Samedi'
-//       ]
-//   }
-// });
+
 import hcMore from "highcharts/highcharts-more";
 import Stock from "highcharts/modules/stock";
 import HighchartsVue from "highcharts-vue";
@@ -66,7 +54,6 @@ Vue.use(HighchartsVue);
 // Vue.use(HighchartsVue, {
 //   highcharts: Highcharts
 // });
-// import vue-panzoom
 import panZoom from "vue-panzoom";
 
 // install plugin
@@ -130,7 +117,6 @@ const apolloProvider = new VueApollo({
 Vue.config.productionTip = false;
 
 // Global 3rd party plugins
-// import "popper.js";
 import "tooltip.js";
 import PerfectScrollbar from "perfect-scrollbar";
 window.PerfectScrollbar = PerfectScrollbar;
