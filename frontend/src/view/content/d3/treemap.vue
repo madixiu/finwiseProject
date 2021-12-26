@@ -479,12 +479,6 @@ export default {
   //? You can do whatever when the selected node changes
   watch: {
     inputData() {
-      console.log('====================================');
-      console.log("fiuckkckckckck");
-      console.log('====================================');
-      console.log('====================================');
-      console.log(this.inputData);
-      console.log('====================================');
       if (this.Industry_Selected != "همه صنایع" && this.inputData != null) {
         let children = this.inputData.children.filter(d => {
           if (d.name == this.Industry_Selected) return d;
@@ -539,7 +533,6 @@ export default {
   },
   // In the beginning...
   mounted() {
-    console.log(this.inputData);
     this.originalSize = { height: this.height, width: this.width };
     this.fullscreenSize = {
       height: window.screen.height,
