@@ -50,9 +50,10 @@
               </div>
             </div>
             <div class="mt-5">
-               <i @click="instagramLink"
-              class="v-icon notranslate pl-1 v-icon--dense mdi mdi-instagram theme--light instagram-icon"
-            ></i>
+              <i
+                @click="instagramLink"
+                class="v-icon notranslate pl-1 v-icon--dense mdi mdi-instagram theme--light instagram-icon"
+              ></i>
             </div>
             <!--end: Aside footer for desktop -->
           </div>
@@ -138,7 +139,7 @@
 }
 .instagram-icon:hover {
   cursor: pointer;
-} 
+}
 </style>
 
 <script>
@@ -146,10 +147,9 @@ import { mapState } from "vuex";
 
 export default {
   name: "auth",
-  methods:{
-    instagramLink(){
+  methods: {
+    instagramLink() {
       window.open("https://www.instagram.com/finwise.ir", "_blank");
-
     }
   },
   computed: {

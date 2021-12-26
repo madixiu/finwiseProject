@@ -1,23 +1,25 @@
 <template>
-  <v-card rounded="lg" height="400">
-    <v-toolbar
-      dense
-      class="IndexChartToolbars elevation-2 mb-1"
-      style="height:36px;"
-    >
-      <v-toolbar-title style="height:20px;font-size:0.95em"
-        >وضعیت صعود و نزول در صنایع</v-toolbar-title
+  <div class="col-12" style="padding-right:0px;padding-top:0px">
+    <v-card rounded="lg" height="400">
+      <v-toolbar
+        dense
+        class="IndexChartToolbars elevation-2 mb-1"
+        style="height:36px;"
       >
-    </v-toolbar>
-    <div id="AdvancingDiv" class="d-flex">
-      <highcharts
-        class="hc"
-        width="100%"
-        :options="chartOptions"
-        ref="chart"
-      ></highcharts>
-    </div>
-  </v-card>
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >وضعیت صعود و نزول در صنایع</v-toolbar-title
+        >
+      </v-toolbar>
+      <div id="AdvancingDiv" class="d-flex">
+        <highcharts
+          class="hc"
+          width="100%"
+          :options="chartOptions"
+          ref="chart"
+        ></highcharts>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>

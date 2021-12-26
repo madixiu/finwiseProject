@@ -1,7 +1,7 @@
 <template>
   <!--begin::Mixed Widget 14-->
   <!-- <div class="card card-custom card-stretch gutter-b"> -->
-  <div class="col-12" style="padding-right:0px;padding-top:0px;margin-top:10px">
+  <div class="col-12" style="padding-right:0px;padding-top:0px;padding-top:0px">
     <v-card width="100%" shaped>
       <!--begin::Header-->
       <!-- <div class="card-header border-0 pt-2"> -->
@@ -132,8 +132,6 @@ export default {
         this.lowestValues.sort(function(a, b) {
           return b.returnDaily - a.returnDaily;
         });
-
-
       }
     }
   },

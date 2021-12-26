@@ -345,7 +345,7 @@ export default {
     renderRatioData() {
       let l1 = ["CashToDebt", "DebtToEquity", "DebtToEBIT", "InterestCoverage"];
       // eslint-disable-next-line no-unused-vars
-      let that=this
+      let that = this;
       // console.log(that.ValuatedItems5)
       // console.log(that.ValuatedItems5[0])
       this.RatioData.filter(d => {

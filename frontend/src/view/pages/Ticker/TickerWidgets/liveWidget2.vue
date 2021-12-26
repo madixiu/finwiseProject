@@ -104,8 +104,7 @@ export default {
     liveData: Array,
     Indicators: Array,
     FundamentalRobot: Array,
-    priceHistory: Array,
-    
+    priceHistory: Array
   },
   // watch: {
   //   FundamentalRobotWidget(newValue, oldValue) {

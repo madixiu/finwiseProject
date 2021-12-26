@@ -20,14 +20,13 @@
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div class="row">
-        <AdvancingWidgetTotal
-          :inputData="advancing"
-        ></AdvancingWidgetTotal>
+        <AdvancingWidgetTotal :inputData="advancing"></AdvancingWidgetTotal>
         <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
         <Technical :inputDataTechnical="TechnicalData"></Technical>
         <WinnerLosers :inputWinLose="WinLose"></WinnerLosers>
         <AdvancingWidget
           :inputDataInd="advancingInd"
+          class="pb-7"
         ></AdvancingWidget>
       </div>
     </div>
@@ -93,13 +92,15 @@ export default {
   },
   created() {
     document.title = "FinWise - سهام";
-    this.loadDataNew();
+    // this.loadDataNew();
+    this.loadData();
+
     // this.getTepixToday().then(resp0 => {
 
     // });
   },
   mounted() {
-    // this.loadData();
+    this.loadData();
     this.liveChecker();
   },
   methods: {
@@ -153,10 +154,12 @@ export default {
     loadData() {
       // this.getDashboard();
       this.getTepixToday().then(resp0 => {
-        this.getTradesAll().then(resp1 => {
-          this.getTechnicalData().then(resp2 => {
+        this.getTodayAdvancingDescending().then(resp1 => {
+          this.getTradesAll().then(resp2 => {
+            this.getTechnicalData().then(respX => {
+              this.loadData2();
+            });
             // this.getNews();
-            this.loadData2();
 
             // this.getNews().then(resp3 => {
             // });
@@ -184,9 +187,7 @@ export default {
 
     loadData3() {
       this.getWinnersLosers().then(resp10 => {
-        this.getTodayAdvancingDescending(resp11 => {}).then(
-          this.getTodayAdvancingDescendingIndustries()
-        );
+        this.getTodayAdvancingDescendingIndustries();
       });
     },
     async getImpacts() {
@@ -246,7 +247,7 @@ export default {
         });
     },
 
-    getIndustryImpacts() {
+    async getIndustryImpacts() {
       this.axios
         .get("/api/Indices/Impact")
         .then(getIndustryImpact => {
@@ -257,7 +258,7 @@ export default {
           console.error(error);
         });
     },
-    getIndustryHH() {
+    async getIndustryHH() {
       // console.log('Req')
       this.axios
         .get("/api/Indices/HH")
@@ -269,7 +270,7 @@ export default {
           console.error(error);
         });
     },
-    getTradesValue() {
+    async getTradesValue() {
       this.axios
         .get("/api/getHighestValue")
         .then(getTradesValueResp => {
@@ -279,7 +280,7 @@ export default {
           console.error(error);
         });
     },
-    getTradesAll() {
+    async getTradesAll() {
       this.axios
         .get("/api/getAllTradesValue")
         .then(getTradesAllResp => {
@@ -289,7 +290,7 @@ export default {
           console.error(error);
         });
     },
-    getNews() {
+    async getNews() {
       this.axios
         .get("/api/LatestNews")
         .then(getNewsResp => {
@@ -299,7 +300,7 @@ export default {
           console.error(error);
         });
     },
-    getTepixToday() {
+    async getTepixToday() {
       this.axios
         .get("/api/getTodayTepix")
         .then(getTepixTodayResp => {
@@ -311,7 +312,7 @@ export default {
           // or because the device is offline
         });
     },
-    getHHData() {
+    async getHHData() {
       this.axios
         .get("/api/HHMarketDetails")
         .then(getHHDataResp => {
@@ -321,7 +322,7 @@ export default {
           console.error(error);
         });
     },
-    getHighestQ() {
+    async getHighestQ() {
       this.axios
         .get("/api/HighestQ")
         .then(getHighestQResp => {
@@ -331,7 +332,7 @@ export default {
           console.error(error);
         });
     },
-    getTechnicalData() {
+    async getTechnicalData() {
       this.axios
         .get("/api/Ticker/TechnicalIndicatorsAll")
         .then(getTechnicalDataResp => {

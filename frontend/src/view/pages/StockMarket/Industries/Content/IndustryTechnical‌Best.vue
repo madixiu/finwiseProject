@@ -51,7 +51,7 @@
 export default {
   data() {
     return {
-      filteredItems:[],
+      filteredItems: [],
       loading: false,
       mvheaders: [
         { text: "رتبه", value: "Rank", sortabale: false },
@@ -86,7 +86,7 @@ export default {
         n = (n * -1).toFixed(digits);
       }
       return n;
-    },
+    }
   }
 };
 </script>
@@ -95,7 +95,7 @@ export default {
   direction: ltr !important;
   text-align: left !important;
 }
-.FinancialStrength td{
+.FinancialStrength td {
   direction: rtl;
   text-align: right;
   font-family: "Vazir-Medium-FD";

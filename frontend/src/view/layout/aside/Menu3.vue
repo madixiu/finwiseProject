@@ -117,7 +117,7 @@
 
           <!--//! route here -->
           <!-- :to="`/ticker/Overview/Board/${$route.params.id}/`" -->
-          <router-link
+          <!-- <router-link
             :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -136,10 +136,10 @@
                 <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
 
           <!-- :to="`/ticker/Overview/shareholders/${$route.params.id}/`" -->
-          <router-link
+          <!-- <router-link
             :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -158,7 +158,7 @@
                 <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
               </a>
             </li>
-          </router-link>
+          </router-link> -->
         </ul>
       </div>
     </li>

@@ -14,7 +14,7 @@
     <div
       class="d-flex flex-column justify-content-center my-auto"
       style="height:70%"
-      v-if="PredictionData.length == 0&& !loading"
+      v-if="PredictionData.length == 0 && !loading"
     >
       <v-icon size="30px" color="#e09f3e">mdi-alert-box</v-icon>
       <div class="d-flex justify-content-center my-2">
@@ -67,7 +67,7 @@ export default {
       realdata: [],
       predictedData: [],
       realData: [],
-      loading:true,
+      loading: true
     };
   },
   computed: {
@@ -142,7 +142,7 @@ export default {
           name: "پیش بینی",
           data: this.predictedData
         });
-        this.loading=false
+        this.loading = false;
         // console.log(this.predictedData);
         // console.log(this.realData)
       }
@@ -187,7 +187,6 @@ export default {
         this.predictedData = [];
         this.realData = [];
       } else {
-        
         this.renderRatioComponentData();
       }
     }

@@ -628,7 +628,7 @@ def getHighestDemands(self):
 def getHighestQ(self):
     return JsonResponse([highestSupplies(),highestDemands()],safe=False)
 
-@cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
+@cache_control(max_age=360, no_cache=False, no_store=False, must_revalidate=True)
 def getTodayTepix(self):
     return JsonResponse(getLastActiveDayTepix(),safe=False)
 @cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)

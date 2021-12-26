@@ -17,9 +17,9 @@
               <span style="font-size:0.8em">داده موجود نیست</span>
             </div>
           </div>
-          <div id="tickerHHdiv"  class="d-flex">
+          <div id="tickerHHdiv" class="d-flex">
             <highcharts
-                 v-show="notices.length"
+              v-show="notices.length"
               :constructorType="'stockChart'"
               class="hc"
               width="100%"
@@ -47,7 +47,7 @@
           </div>
           <div id="tickerHHdiv2" v-show="notices.length" class="d-flex">
             <highcharts
-            v-show="notices.length"
+              v-show="notices.length"
               :constructorType="'stockChart'"
               class="hc"
               width="100%"
@@ -84,7 +84,7 @@ export default {
           [1] // allowed multiples
         ],
         ["month", [1, 2, 3, 4, 6]]
-      ],
+      ]
     };
   },
   mounted() {
@@ -166,7 +166,7 @@ export default {
           let toolTip4 = `<div><span style=font-size:0.9em;margin-left:2px>ارزش فروش حقوقی:</span><span style=font-size:0.9em>${Sellhoghughi.toLocaleString()}</span></div>`;
 
           let unix = this.points[0].point.x;
-          let dateEX = new Date(unix );
+          let dateEX = new Date(unix);
           let year = dateEX.getFullYear().toString();
           let month = (dateEX.getMonth() + 1).toString();
           let day = dateEX.getDate().toString();
@@ -202,7 +202,7 @@ export default {
           formatter: function() {
             // console.log(this.value);
             let unix = this.value;
-            let dateEX = new Date(unix );
+            let dateEX = new Date(unix);
             let year = dateEX.getFullYear().toString();
             let month = (dateEX.getMonth() + 1).toString();
             let day = dateEX.getDate().toString();
@@ -335,7 +335,7 @@ export default {
           let toolTip4 = `<div><span style=font-size:0.9em;margin-left:2px>سرانه فروش حقوقی:</span><span style=font-size:0.9em>${Sellhoghughi.toLocaleString()}</span></div>`;
 
           let unix = this.points[0].point.x;
-          let dateEX = new Date(unix );
+          let dateEX = new Date(unix);
           let year = dateEX.getFullYear().toString();
           let month = (dateEX.getMonth() + 1).toString();
           let day = dateEX.getDate().toString();
@@ -371,7 +371,7 @@ export default {
           formatter: function() {
             // console.log(this.value);
             let unix = this.value;
-            let dateEX = new Date(unix );
+            let dateEX = new Date(unix);
             let year = dateEX.getFullYear().toString();
             let month = (dateEX.getMonth() + 1).toString();
             let day = dateEX.getDate().toString();
@@ -432,7 +432,7 @@ export default {
           //     d.engDate.substring(4, 6) - 1,
           //     d.engDate.substring(6, 8)
           //   ).getTime();
-          let D = that.$moment(d.engDate, "YYYYMMDD").unix()*1000;
+          let D = that.$moment(d.engDate, "YYYYMMDD").unix() * 1000;
           if (unique.includes(d.engDate)) {
             // console.log(d.engDate);
           } else {
@@ -477,8 +477,7 @@ export default {
           name: "ارزش خرید حقیقی",
           data: Filtered1,
           color: "#050A30",
-          upColor: "#30cc5a",
-         
+          upColor: "#30cc5a"
         });
         this.chartOptions.series.push({
           type: "line",
@@ -508,7 +507,7 @@ export default {
           data: Filtered5,
           color: "#050A30",
           upColor: "#30cc5a",
-           dataGrouping: {
+          dataGrouping: {
             units: that.groupingUnits
           }
         });
@@ -518,7 +517,7 @@ export default {
           data: Filtered6,
           color: "#0000FF",
           upColor: "#30cc5a",
-           dataGrouping: {
+          dataGrouping: {
             units: that.groupingUnits
           }
         });
@@ -528,7 +527,7 @@ export default {
           data: Filtered7,
           color: "#000C66",
           upColor: "#30cc5a",
-           dataGrouping: {
+          dataGrouping: {
             units: that.groupingUnits
           }
         });
@@ -538,7 +537,7 @@ export default {
           data: Filtered8,
           color: "#7EC8E3",
           upColor: "#30cc5a",
-           dataGrouping: {
+          dataGrouping: {
             units: that.groupingUnits
           }
         });

@@ -1,7 +1,7 @@
 <template>
   <div
     class="col-xxl-12 col-lg-12 col-md-12 col-sm-12"
-    style="padding-right:0px"
+    style="padding-right:0px;padding-top:0px"
   >
     <v-card :loading="loading" shaped>
       <v-toolbar dense class="elevation-2" style="height:36px;">

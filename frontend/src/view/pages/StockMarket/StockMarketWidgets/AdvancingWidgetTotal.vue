@@ -1,30 +1,32 @@
 <template>
-  <v-card rounded="lg" height="150" class="mt-3">
-    <v-toolbar
-      dense
-      class="IndexChartToolbars elevation-2 mb-1"
-      style="height:36px;"
-    >
-      <v-toolbar-title style="height:20px;font-size:0.95em"
-        >وضعیت صعود و نزول در بازار</v-toolbar-title
+  <div class="col-12" style="padding-right:0px;padding-top:0px">
+    <v-card rounded="lg" height="150" class="mt-3">
+      <v-toolbar
+        dense
+        class="IndexChartToolbars elevation-2 mb-1"
+        style="height:36px;"
       >
-    </v-toolbar>
-    <div id="AdvancingDivTotal" class="d-flex">
-      <highcharts
-        class="hc"
-        width="100%"
-        :options="chartOptions"
-        ref="chart"
-      ></highcharts>
-    </div>
-  </v-card>
+        <v-toolbar-title style="height:20px;font-size:0.95em"
+          >وضعیت صعود و نزول در بازار</v-toolbar-title
+        >
+      </v-toolbar>
+      <div id="AdvancingDivTotal" class="d-flex">
+        <highcharts
+          class="hc"
+          width="100%"
+          :options="chartOptions"
+          ref="chart"
+        ></highcharts>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>
 export default {
   name: "AdvancingWidgetTotal",
   props: {
-    inputData: Array,
+    inputData: Array
   },
   data() {
     return {
@@ -59,12 +61,12 @@ export default {
     // eslint-disable-next-line no-unused-vars
     const that = this;
     this.chartOptions = {
-        credits: {
+      credits: {
         enabled: false
       },
       title: {
-    text: ''
-},
+        text: ""
+      },
       chart: {
         type: "bar",
         width: "450",
@@ -73,7 +75,7 @@ export default {
       xAxis: [
         {
           categories: that.categories,
-          reversed: false,
+          reversed: false
         },
         {
           // mirror axis on right side
@@ -105,7 +107,9 @@ export default {
 
       tooltip: {
         formatter: function() {
-          return `<b>${this            .series.name} ${this.point.category}:${Math.abs(this.point.y)}`;
+          return `<b>${this.series.name} ${this.point.category}:${Math.abs(
+            this.point.y
+          )}`;
         }
       },
 
