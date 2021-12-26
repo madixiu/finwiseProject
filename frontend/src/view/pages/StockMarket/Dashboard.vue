@@ -1,7 +1,11 @@
 <template>
   <div class="row pt-1">
     <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-12">
-      <IndexChart :inputDataIndex="TodayTepix" class="pb-1"></IndexChart>
+      <IndexChart
+        :inputDataIndex="TodayTepix"
+        :inputDataNetHH="TodayNetHaghighi"
+        class="pb-1"
+      ></IndexChart>
       <ChartVol
         :inputDataStatus="highestTvalueData"
         :inputDataImpact="ImpactsData"
@@ -16,24 +20,17 @@
     </div>
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12">
       <div class="row">
+        <AdvancingWidgetTotal
+          :inputData="advancing"
+        ></AdvancingWidgetTotal>
         <ChartTradeValue :inputDataTV="AssetTradeValue"></ChartTradeValue>
         <Technical :inputDataTechnical="TechnicalData"></Technical>
+        <WinnerLosers :inputWinLose="WinLose"></WinnerLosers>
+        <AdvancingWidget
+          :inputDataInd="advancingInd"
+        ></AdvancingWidget>
       </div>
     </div>
-    <!-- <div class="col-xxl-3 col-lg-3"> -->
-    <!-- <IndicesText :inputData="AssetTradeValue"></IndicesText> -->
-    <!-- </div> -->
-    <!-- <div class="col-xxl-3 col-lg-3"> -->
-    <!-- 
-     </div> -->
-
-    <!-- <div class="col-xxl-2 col-lg-4">
-        <Impacts></Impacts>
-      </div> -->
-    <!-- <div class="col-xxl-4 col-lg-5">
-      <HighestTradeValue></HighestTradeValue>
-    </div> -->
-    <!-- <div class="col-xxl-4"></div> -->
   </div>
 </template>
 
@@ -45,8 +42,11 @@ import ChartVol from "@/view/pages/StockMarket/StockMarketWidgets/DashboardChart
 import ChartHH from "@/view/pages/StockMarket/StockMarketWidgets/HH_Q_Chart.vue";
 import ChartTradeValue from "@/view/pages/StockMarket/StockMarketWidgets/TradesValueChart.vue";
 import ChartIndustires from "@/view/pages/StockMarket/StockMarketWidgets/IndustryChartsForDashboard.vue";
+import WinnerLosers from "@/view/pages/StockMarket/StockMarketWidgets/WinnerLosersWidget.vue";
 // import IndicesText from "@/view/pages/StockMarket/StockMarketWidgets/DashboardIndicesText.vue";
 import IndexChart from "@/view/pages/StockMarket/StockMarketWidgets/IndexChart.vue";
+import AdvancingWidget from "@/view/pages/StockMarket/StockMarketWidgets/AdvancingWidget.vue";
+import AdvancingWidgetTotal from "@/view/pages/StockMarket/StockMarketWidgets/AdvancingWidgetTotal.vue";
 export default {
   name: "Dashboard",
   components: {
@@ -54,9 +54,12 @@ export default {
     ChartHH,
     ChartTradeValue,
     ChartIndustires,
+    WinnerLosers,
     // // IndicesText,
     IndexChart,
-    Technical
+    Technical,
+    AdvancingWidget,
+    AdvancingWidgetTotal
     // HighestSupply
   },
   data() {
@@ -64,6 +67,7 @@ export default {
       highestTvalueData: [],
       AssetTradeValue: [],
       TodayTepix: [],
+      TodayNetHaghighi: [],
       News: [],
       ImpactsData: [],
       IndustryHHData: [],
@@ -73,7 +77,10 @@ export default {
       mostviewed: [],
       TechnicalData: [],
       WebsocketRequest: false,
-      interval: null
+      interval: null,
+      WinLose: [],
+      advancingInd: [],
+      advancing: []
     };
   },
   watch: {
@@ -98,6 +105,7 @@ export default {
   methods: {
     loadDataNew() {
       const getTepixToday = this.axios.get("/api/getTodayTepix");
+      const getNetHaghighiToday = this.axios.get("/api/getTodayNetHaghighi");
       const getTradesAll = this.axios.get("/api/getAllTradesValue");
       const getTechnicalData = this.axios.get(
         "/api/Ticker/TechnicalIndicatorsAll"
@@ -111,6 +119,7 @@ export default {
       this.axios
         .all([
           getTepixToday,
+          getNetHaghighiToday,
           getTradesAll,
           getTechnicalData,
           getImpacts,
@@ -123,14 +132,15 @@ export default {
         .then(
           this.axios.spread((...responses) => {
             this.TodayTepix = responses[0].data;
-            this.AssetTradeValue = responses[1].data;
-            this.TechnicalData = responses[2].data;
-            this.ImpactsData = responses[3].data;
-            this.HHData = responses[4].data;
-            this.QData = responses[5].data;
-            this.highestTvalueData = responses[6].data;
-            this.IndustryImpact = responses[7].data;
-            this.IndustryHHData = responses[8].data;
+            this.TodayNetHaghighi = responses[1].data;
+            this.AssetTradeValue = responses[3].data;
+            this.TechnicalData = responses[4].data;
+            this.ImpactsData = responses[4].data;
+            this.HHData = responses[5].data;
+            this.QData = responses[6].data;
+            this.highestTvalueData = responses[7].data;
+            this.IndustryImpact = responses[8].data;
+            this.IndustryHHData = responses[9].data;
             // this.loadData2();
             // use/access the results
           })
@@ -160,18 +170,75 @@ export default {
           this.getHighestQ().then(resp6 => {
             this.getTradesValue().then(resp7 => {
               this.getIndustryImpacts().then(resp8 => {
-                this.getIndustryHH();
+                this.getIndustryHH().then(resp9 => {
+                  this.getNetHH().then(resp9 => {
+                    this.loadData3();
+                  });
+                });
               });
             });
           });
         });
       });
     },
-    getImpacts() {
-      this.axios
+
+    loadData3() {
+      this.getWinnersLosers().then(resp10 => {
+        this.getTodayAdvancingDescending(resp11 => {}).then(
+          this.getTodayAdvancingDescendingIndustries()
+        );
+      });
+    },
+    async getImpacts() {
+      await this.axios
         .get("/api/ImpactOnIndex")
         .then(getImpactsResp => {
           this.ImpactsData = getImpactsResp.data;
+          return true;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getWinnersLosers() {
+      await this.axios
+        .get("/api/getTodayWinnersLosers")
+        .then(getWLData => {
+          this.WinLose = getWLData.data;
+          return true;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getNetHH() {
+      await this.axios
+        .get("/api/getTodayNetHaghighi")
+        .then(getNetHD => {
+          this.TodayNetHaghighi = getNetHD.data;
+          return true;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    async getTodayAdvancingDescending() {
+      await this.axios
+        .get("/api/getTodayAdvancingDescending")
+        .then(getAd => {
+          this.advancing = getAd.data;
+          return true;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
+    async getTodayAdvancingDescendingIndustries() {
+      await this.axios
+        .get("/api/getTodayAdvancingDescendingIndustries")
+        .then(getAdInd => {
+          this.advancingInd = getAdInd.data;
           return true;
         })
         .catch(error => {

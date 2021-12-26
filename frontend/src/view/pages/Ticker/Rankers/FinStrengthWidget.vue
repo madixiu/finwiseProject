@@ -7,8 +7,8 @@
     </v-toolbar>
 
     <div class="d-flex flex-column pt-2">
-      <v-row no-gutters>
-        <div class="col-sm-4">
+      <!-- <v-row no-gutters> -->
+      <!-- <div class="col-sm-4">
           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-chip color="danger" label text-color="white" v-on="on">
@@ -18,22 +18,20 @@
             </template>
             <span class="small">Financial Strength</span>
           </v-tooltip>
-        </div>
-        <div class="col-sm-2 strong blured">
-          {{ this.FinancialStrength }}/10
-        </div>
-        <div class="col-sm-6">
+        </div> -->
+      <!-- <div class="col-sm-2 strong ">{{ this.FinancialStrength }}/10</div> -->
+      <!-- <div class="col-sm-6">
           <v-progress-linear
             :value="this.FinancialStrength * 10"
             :color="getColor(this.FinancialStrength * 10)"
             background-color="#E9ECEF"
             rounded
-            class="blured"
+            class=""
             height="25"
           >
           </v-progress-linear>
         </div>
-      </v-row>
+      </v-row> -->
       <v-data-table
         :headers="headers"
         :items="ValuatedItems"
@@ -50,7 +48,7 @@
           </v-tooltip>
         </template>
         <template v-slot:[`item.now`]="{ item }">
-          <span class="small blured">{{ item.now }}</span>
+          <span class="small ">{{ item.now }}</span>
         </template>
         <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
@@ -58,9 +56,9 @@
             :height="15"
             :width="150"
             :rounded="true"
-            class="blured"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.industry * 100"
+            class=""
+            :color="getColor(item.industry)"
+            :value="item.industry"
           >
           </v-progress-linear>
         </template>
@@ -70,9 +68,9 @@
             :height="15"
             :width="150"
             :rounded="true"
-            class="blured"
-            :color="getColor(item.FinancialStrength * 100)"
-            :value="item.historic * 100"
+            class=""
+            :color="getColor(item.historic)"
+            :value="item.historic"
           >
           </v-progress-linear>
         </template>
@@ -90,7 +88,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4 blured">
+          <div class="valign pt-4 ">
             <b-progress show-value class="align-center">
               <b-progress-bar value="10" variant="piotroski-color-0">
                 0</b-progress-bar
@@ -143,7 +141,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4 blured  ">
+          <div class="valign pt-4   ">
             <b-progress show-value>
               <b-progress-bar value="40" variant="altman-color-0">
                 DISTRESS</b-progress-bar
@@ -175,7 +173,7 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="valign pt-4 blured">
+          <div class="valign pt-4 ">
             <b-progress show-value>
               <b-progress-bar value="50" variant="success">
                 Not Manipulator</b-progress-bar
@@ -204,12 +202,18 @@
           </v-chip>
         </template>
         <template v-slot:[`item.Value`]="{ item }">
-          <div class="blured">
+          <div class="">
             <b-progress>
-              <b-progress-bar :value="getRoicPercent(item)" variant="success">
+              <b-progress-bar
+                :value="item.ROIC / (item.ROIC + item.WACC)"
+                variant="success"
+              >
                 ROIC {{ item.ROIC }}</b-progress-bar
               >
-              <b-progress-bar :value="getWaccPercent(item)" variant="danger">
+              <b-progress-bar
+                :value="item.WACC / (item.ROIC + item.WACC)"
+                variant="danger"
+              >
                 WACC {{ item.WACC }}</b-progress-bar
               >
             </b-progress>
@@ -228,6 +232,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "financialStrength",
+  props: ["RatioData"],
   data() {
     return {
       search: "",
@@ -247,55 +252,8 @@ export default {
           sortabale: false
         }
       ],
-      ValuatedItems: [
-        {
-          name: "Cash-To-Debt",
-          persianname: "نسبت نقد به بدهی",
-          historic: 0.6,
-          now: "30%",
-          industry: 0.2,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Equity-to-Asset",
-          persianname: "نسبت سرمایه به دارایی",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Debt-to-Equity	",
-          persianname: "نسبت بدهی به سرمایه",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Debt-to-EBITDA",
-          persianname: "نسبت بدهی به سود قبل از مالیات",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Interest Coverage",
-          persianname: "پوشش بهره",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        }
-      ],
-      ValuatedItems2: [
-        {
-          name: "Piotroski F-Score",
-          Value: 0.6,
-          percentage: 50
-        }
-      ],
+      ValuatedItems: [],
+      ValuatedItems2: [],
       headers2: [
         {
           text: "نسبت مالی",
@@ -305,14 +263,7 @@ export default {
         },
         { text: "مقدار فعلی", value: "Value", width: "30%" }
       ],
-      ValuatedItems3: [
-        {
-          name: "Altman Z-Score",
-          Value: 0.6,
-          Content: 0.6,
-          percentage: 30
-        }
-      ],
+      ValuatedItems3: [],
       headers3: [
         {
           text: "نسبت مالی",
@@ -322,13 +273,7 @@ export default {
         },
         { text: "مقدار فعلی", value: "Value", width: "70%" }
       ],
-      ValuatedItems4: [
-        {
-          name: "Beneish M-Score",
-          Value: 0.6,
-          percentage: 25
-        }
-      ],
+      ValuatedItems4: [],
       headers4: [
         {
           text: "نسبت مالی",
@@ -341,9 +286,9 @@ export default {
       ValuatedItems5: [
         {
           name: "WACC vs ROIC",
-          Value: 0.6,
-          WACC: 10,
-          ROIC: 15
+          Value: 0.5,
+          WACC: 0,
+          ROIC: 0
         }
       ],
       headers5: [
@@ -396,22 +341,87 @@ export default {
     },
     setStyle: function() {
       return `border:1 px `;
+    },
+    renderRatioData() {
+      let l1 = ["CashToDebt", "DebtToEquity", "DebtToEBIT", "InterestCoverage"];
+      // eslint-disable-next-line no-unused-vars
+      let that=this
+      // console.log(that.ValuatedItems5)
+      // console.log(that.ValuatedItems5[0])
+      this.RatioData.filter(d => {
+        // console.log(d)
+        if (l1.includes(d.Ratio)) {
+          // console.log(d);
+          this.ValuatedItems.push({
+            name: d.Ratio,
+            persianname: d.displayTitle,
+            historic: d.toHistoricAverage,
+            now: Math.round(d.RatioValue * 100) / 100,
+            industry: d.toIndustryAverage
+          });
+        }
+        if (d.Ratio == "Piotrowski") {
+          this.ValuatedItems2.push({
+            name: d.Ratio,
+            Value: d.RatioValue,
+            percentage: d.RatioValue * 10
+          });
+        }
+        if (d.Ratio == "WACC") {
+          that.ValuatedItems5[0].WACC = Math.round(d.RatioValue * 100) / 100;
+        }
+        if (d.Ratio == "ROIC") {
+          that.ValuatedItems5[0].ROIC = Math.round(d.RatioValue * 100) / 100;
+        }
+        if (d.Ratio == "Altman_Z") {
+          that.ValuatedItems3.push({
+            name: d.Ratio,
+            Value: d.RatioValue,
+            percentage: d.RatioValue * 10
+          });
+        }
+        if (d.Ratio == "Benish") {
+          that.ValuatedItems4.push({
+            name: d.Ratio,
+            Value: d.RatioValue,
+            percentage: d.RatioValue * 10
+          });
+        }
+        // console.log(d.RatioValue);
+        // console.log(d.displayTitle);
+      });
+      // console.log(that.ValuatedItems5)
+      // console.log(
+      //   that.ValuatedItems5[0].WACC /
+      //     (that.ValuatedItems5[0].ROIC + that.ValuatedItems5[0].WACC)
+      // );
     }
   },
-  mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
+  watch: {
+    RatioData() {
+      this.ValuatedItems = [];
+      this.ValuatedItems2 = [];
+      this.ValuatedItems3 = [];
+      this.ValuatedItems4 = [];
+      // console.log(this.RatioData);
+      if (
+        this.RatioData === null ||
+        this.RatioData === undefined ||
+        this.RatioData == []
+      ) {
+        this.ValuatedItems = [];
+        this.ValuatedItems2 = [];
+        this.ValuatedItems3 = [];
+        this.ValuatedItems4 = [];
+        this.ValuatedItems5 = [];
+      } else {
+        this.renderRatioData();
+      }
+    }
   }
 };
 </script>
 <style scoped>
-.blured {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(10px);
-}
 .FinancialStrength {
   direction: rtl;
   text-align: right;

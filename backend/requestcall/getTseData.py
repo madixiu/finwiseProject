@@ -332,3 +332,48 @@ def getLastActiveDayTepix():
         return (js)
     else:
         return("noData")          
+
+def getTodayNetHHValue():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://185.231.115.223:3000/View_NetInHaghighi_Stock',headers=head )
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("noData")                  
+
+def getTodayAdvDescStocks():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://185.231.115.223:3000/View_Ascending_Descending_Stock',headers=head )
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("noData")             
+def getTodayAdvDescIndustries():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://185.231.115.223:3000/View_Ascending_Descending_Industry',headers=head )
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("noData")        
+
+def getTodayWinnersLosers():
+    head = {'Accept-Profile':'marketwatch'}
+    resp = requests.get('http://185.231.115.223:3000/View_WinnersLosers',headers=head )
+    if resp.status_code == 200:
+
+        # return(resp.text)
+        return (json.loads(resp.text))
+        # return(json.loads(resp.text))
+    else:
+        return("noData")      
+
+        

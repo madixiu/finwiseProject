@@ -21,6 +21,7 @@ from requestcall.getCommodities import *
 from requestcall.getFundsData import *
 from requestcall.getCryptoData import *
 from requestcall.getMisc import *
+from requestcall.getAIData import *
 from requestcall.getIndexMarketCap import IndexMarketCapRequest
 from requestcall.getViewOptionAssetVolatility import OptionAssetVolatility
 from requestcall.getTickerTapeData import TickerTapeData,IndustryTapeData
@@ -393,6 +394,10 @@ def getHistoricCap(self):
     return JsonResponse(getIndicesHistoric(),safe=False)
 def getTechnicalTrends(self,identifier):
     return JsonResponse(TrendSuppData(identifier),safe=False)
+def getHHHistory(self,identifier):
+    return JsonResponse(getStockHH(identifier),safe=False)
+
+
 
 ######### crypto
 def getAllCryptoTechnical(self):
@@ -626,6 +631,20 @@ def getHighestQ(self):
 @cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getTodayTepix(self):
     return JsonResponse(getLastActiveDayTepix(),safe=False)
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+def getTodayNetHH(self):
+    return JsonResponse(getTodayNetHHValue(),safe=False)
+
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+def getAdvancingDescending(self):
+    return JsonResponse(getTodayAdvDescStocks(),safe=False)
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+def getAdvancingDescendingIndustries(self):
+    return JsonResponse(getTodayAdvDescIndustries(),safe=False)
+@cache_control(max_age=50, no_cache=True, no_store=True, must_revalidate=True)
+def getWinnersLosers(self):
+    return JsonResponse(getTodayWinnersLosers(),safe=False)
+
 
 @cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getAllTradesValue(self):
@@ -799,4 +818,40 @@ def getFundsLiveNAV(request,identifier):
     # except:
     #     return JsonResponse("notAuthorized",safe=False)
 
-    
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
+def getRatiosAll(request,identifier):
+    # try:
+        # payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+        # username=payload['username']
+        # user=CustomUser.objects.get(username=username)
+        # if user.role>=4:
+        return JsonResponse(getFundamentalRatiosToDisplay(identifier),safe=False)
+        # else:
+            # return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)    
+# @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
+def getComponentsAll(request,identifier):
+    # try:
+        # payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+        # username=payload['username']
+        # user=CustomUser.objects.get(username=username)
+        # if user.role>=4:
+        return JsonResponse(getFundamentalLatestComponents(identifier),safe=False)
+        # else:
+            # return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)            
+def get1weekStockPrediction(request,identifier):
+    # try:
+        # payload=jwt_decode(request.META.get('HTTP_AUTHORIZATION')[7:])
+        # username=payload['username']
+        # user=CustomUser.objects.get(username=username)
+        # if user.role>=4:
+        return JsonResponse(getOneWeekLSTM(identifier),safe=False)
+        # else:
+            # return JsonResponse("AccessDenied",safe=False)
+    # except:
+    #     return JsonResponse("notAuthorized",safe=False)            
+
+        

@@ -35,7 +35,7 @@ const AdminNotice = () => import("@/view/pages/Ticker/Administration.vue");
 const CodalNotifications = () =>
   import("@/view/pages/Ticker/CodalNotifications.vue");
 const StatusChange = () => import("@/view/pages/Ticker/StatusChange.vue");
-// const HH = () => import("@/view/pages/Ticker/HH.vue");
+const HH = () => import("@/view/pages/Ticker/HH.vue");
 const Board = () => import("@/view/pages/Ticker/Board.vue");
 const ShareHolders = () => import("@/view/pages/Ticker/ShareHolders.vue");
 const AdjustedPrices = () => import("@/view/pages/Ticker/AdjustedPrices.vue");
@@ -188,6 +188,11 @@ export default new Router({
               path: "TechnicalDetailed/:id",
               name: "TechnicalMoreInfo",
               component: TechnicalMoreInfo
+            },
+            {
+              path: "Overview/HH/:id",
+              name: "HH",
+              component: HH
             },
             {
               path: "Overview/Board/:id",

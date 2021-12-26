@@ -287,10 +287,10 @@
             <v-row no-gutters class="px-3 pt-1">
               <v-col class="d-flex justify-start">
                 <div>
-                  <span class="tickerItem">EV:</span>
+                  <span class="tickerItem">Live - EV:</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">-</span>
+                  <span class="tickerItem">{{ EV }} میلیارد ریال</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                   <span class="tickerSubInfo">میلیون</span>
@@ -300,10 +300,10 @@
             <v-row no-gutters class="px-3">
               <v-col class="d-flex justify-start">
                 <div>
-                  <span class="tickerItem">P/E(TTM):</span>
+                  <span class="tickerItem">Live - P/E(TTM):</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">-</span>
+                  <span class="tickerItem">{{ PtoE }}</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                   <span class="tickerSubInfo">میلیارد ریال</span>
@@ -313,10 +313,10 @@
             <v-row no-gutters class="px-3 pb-1">
               <v-col class="d-flex justify-start">
                 <div>
-                  <span class="tickerItem">P/B:</span>
+                  <span class="tickerItem">Live - P/B:</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">-</span>
+                  <span class="tickerItem">{{ PtoB }}</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                   <span class="tickerSubInfo">میلیارد</span>
@@ -346,12 +346,16 @@
 <script>
 export default {
   name: "SubHeaderWidget",
-  props: ["tickerdata"],
+  props: ["tickerdata", "ComponentData"],
   data() {
     return {
       loading: true,
       search: "",
-      LiveDataItems: []
+      LiveDataItems: [],
+      RatioItems: [],
+      EarningNRI: 0,
+      Equity: 0,
+      DebtAndCash: 0
     };
   },
   computed: {
@@ -443,6 +447,34 @@ export default {
       if (this.LiveDataItems.TradeCount != undefined)
         return this.LiveDataItems.TradeCount.toLocaleString();
       else return "-";
+    },
+    EV() {
+      if (this.LiveDataItems.last != undefined && this.DebtAndCash != 0) {
+        return this.roundTo(
+          (this.LiveDataItems.last * this.LiveDataItems.ShareCount -
+            this.DebtAndCash) /
+            1000000000,
+          2
+        ).toLocaleString();
+      } else return "-";
+    },
+    PtoE() {
+      if (this.LiveDataItems.last != undefined && this.EarningNRI != 0) {
+        return this.roundTo(
+          (this.LiveDataItems.last * this.LiveDataItems.ShareCount) /
+            (this.EarningNRI * 1000000),
+          2
+        ).toLocaleString();
+      } else return "-";
+    },
+    PtoB() {
+      if (this.LiveDataItems.last != undefined && this.Equity != 0) {
+        return this.roundTo(
+          (this.LiveDataItems.last * this.LiveDataItems.ShareCount) /
+            (this.Equity * 1000000),
+          2
+        ).toLocaleString();
+      } else return "-";
     }
   },
   methods: {
@@ -497,13 +529,37 @@ export default {
         n = (n * -1).toFixed(digits);
       }
       return parseFloat(n);
+    },
+    PopulateSubHeaderRatios() {
+      this.RatioItems = this.ComponentData;
+      if (this.RatioItems === undefined || this.RatioItems.length == 0) {
+        this.RatioItems = [];
+        this.EarningNRI = 0;
+        this.Equity = 0;
+        this.DebtAndCash = 0;
+      } else {
+        this.RatioItems.filter(d => {
+          if (d.Component == "AllEarningsWithNRI(TTM)") {
+            this.EarningNRI = d.ComponentValue;
+          }
+          if (d.Component == "AllEquity") {
+            this.Equity = d.ComponentValue;
+          }
+          if (d.Component == "DebtAndCash") {
+            this.DebtAndCash = d.ComponentValue;
+          }
+          // console.log(d);
+        });
+      }
     }
-  },
-  mounted() {
-    this.LivepopulateData();
   },
   watch: {
     tickerdata() {
+      this.LivepopulateData();
+      this.PopulateSubHeaderRatios();
+    },
+    ComponentData() {
+      this.PopulateSubHeaderRatios();
       this.LivepopulateData();
     }
   }

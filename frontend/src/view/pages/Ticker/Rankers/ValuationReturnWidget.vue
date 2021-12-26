@@ -7,7 +7,7 @@
     </v-toolbar>
 
     <div class="d-flex flex-column pt-2">
-      <v-row no-gutters>
+      <!-- <v-row no-gutters>
         <div class="col-sm-4">
           <v-tooltip left>
             <template v-slot:activator="{ on }">
@@ -33,7 +33,7 @@
           >
           </v-progress-linear>
         </div>
-      </v-row>
+      </v-row> -->
       <v-data-table
         :headers="headers"
         :items="ValuatedItems"
@@ -46,19 +46,18 @@
             <template v-slot:activator="{ on }">
               <v-chip label small v-on="on">{{ item.persianname }}</v-chip>
             </template>
-            <span class="blured">{{ item.name }}</span>
+            <span>{{ item.name }}</span>
           </v-tooltip>
         </template>
         <template v-slot:[`item.now`]="{ item }">
-          <span class="blured">{{ item.now }}</span>
+          <span>{{ item.now }}</span>
         </template>
-        <template v-slot:[`item.industry`]="{ item }">
+        <!-- <template v-slot:[`item.industry`]="{ item }">
           <v-progress-linear
             background-color="#E9ECEF"
             :height="15"
             :width="150"
             :rounded="true"
-            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.industry * 100"
           >
@@ -70,12 +69,11 @@
             :height="15"
             :width="150"
             :rounded="true"
-            class="blured"
             :color="getColor(item.FinancialStrength * 100)"
             :value="item.historic * 100"
           >
           </v-progress-linear>
-        </template>
+        </template> -->
       </v-data-table>
     </div>
     <!--end::Body-->
@@ -89,61 +87,32 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "PWidget",
+  props: ["RatioData", "liveData"],
   data() {
     return {
       search: "",
-      FinancialStrength: 5,
+      lastPrice: 0,
       headers: [
         {
           text: "نسبت مالی",
           value: "persianname",
           sortabale: false
         },
-        { text: "مقدار فعلی", value: "now", sortabale: false },
-        { text: "در مقایسه با صنعت", value: "industry", sortabale: false },
-        {
-          text: "در مقایسه با تاریخ سهم",
-          value: "historic",
-          sortabale: false
-        }
+        { text: "مقدار فعلی", value: "now", sortabale: false }
+        // { text: "در مقایسه با صنعت", value: "industry", sortabale: false },
+        // {
+        //   text: "در مقایسه با تاریخ سهم",
+        //   value: "historic",
+        //   sortabale: false
+        // }
       ],
-      ValuatedItems: [
-        {
-          name: "Price To Tanglible Book",
-          persianname: "قیمت به ارزش دفتری",
-          historic: 0.6,
-          now: "30%",
-          industry: 0.2,
-          FinancialStrength: 0.8
-        },
-        {
-          name: "Price To Intrinsic Value Projected FCF",
-          persianname: "قیمت به ارزش ذاتی",
-          historic: 5,
-          now: "70%",
-          industry: 0.6,
-          FinancialStrength: 0.8
-        }
-      ]
+      ValuatedItems: []
     };
   },
   computed: {
     ...mapGetters(["layoutConfig"])
   },
   methods: {
-    // set FinancialStrength percent
-    setFinancialStrengthPercent: function() {
-      this.FinancialStrengthPercent = this.FinancialStrength * 10;
-    },
-    getWaccPercent: function(item) {
-      let all = item.WACC + item.ROIC;
-      return (100 * item.WACC) / all;
-    },
-    // get ROIC percent
-    getRoicPercent: function(item) {
-      let all = item.WACC + item.ROIC;
-      return (100 * item.ROIC) / all;
-    },
     getColor: function(value) {
       if (value >= 80) {
         return "#0DCD0A";
@@ -158,27 +127,47 @@ export default {
         return "#FF0000";
       }
       return "";
+    },
+    FillRatios() {
+      let that = this;
+      this.RatioItems = this.RatioData;
+      if (
+        this.RatioItems === undefined ||
+        this.RatioItems.length == 0 ||
+        this.liveData === undefined ||
+        this.liveData.length == 0
+      ) {
+        this.RatioItems = [];
+        this.lastPrice = 0;
+      } else {
+        this.lastPrice = this.liveData[0].last;
+        this.RatioItems.filter(d => {
+          if (d.RatioValue > 0 && d.RatioValue != undefined) {
+            this.ValuatedItems.push({
+              name: d.Ratio,
+              persianname: "قیمت به " + d.displayTitle,
+              now: Math.round((that.lastPrice / d.RatioValue) * 100)
+            });
+          }
+        });
+      }
     }
   },
-  mounted() {
-    // this.setFinancialStrengthPercent();
-    // reference; kt_stats_widget_7_chart
+  watch: {
+    RatioData() {
+      if (this.ValuatedItems.length != 0) {
+        this.ValuatedItems = [];
+      }
+      this.FillRatios();
+      // console.log(this.RatioData);
+    },
+    liveData() {
+      if (this.ValuatedItems.length != 0) {
+        this.ValuatedItems = [];
+      }
+      // console.log(this.liveData)
+      this.FillRatios();
+    }
   }
 };
 </script>
-<style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.valign * {
-  vertical-align: middle;
-}
-.blured {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(10px);
-}
-</style>
