@@ -2,7 +2,6 @@
   <highcharts
     class="hc"
     width="100%"
-    :height="100"
     :options="chartOptions"
     ref="Gaugechart"
   ></highcharts>
@@ -28,7 +27,9 @@ export default {
         plotBorderWidth: 0,
         plotShadow: false
       },
-
+      tooltip: {
+        enabled: false
+      },
       title: {
         text: null
       },
@@ -113,9 +114,6 @@ export default {
   },
   mounted() {
     this.alignLabel(this.$refs.Gaugechart.chart);
-    console.log("====================================");
-    console.log(this.$refs.Gaugechart.chart);
-    console.log("====================================");
     this.chartOptions.series = { name: "", data: [this.degree] };
   },
   methods: {
@@ -139,11 +137,21 @@ export default {
           })
           .add();
       };
-      addText("خنثی", 0, -90);
+      addText("خنثی", 0, chart.plotTop - chart.plotHeight / 2);
       // addText("خرید قوی", 128, -10);
       // addText("فروش قوی", -117, -30);
-      addText("فروش", -80, -55);
-      addText("خرید", 80, -55);
+      addText(
+        "فروش",
+        (chart.plotWidth / 2 -
+          chart.plotLeft * ((4.5 / 200) * chart.plotWidth)) *
+          -1,
+        chart.plotTop - chart.plotHeight / 3
+      );
+      addText(
+        "خرید",
+        chart.plotWidth / 2 - chart.plotLeft * ((4.5 / 200) * chart.plotWidth),
+        chart.plotTop - chart.plotHeight / 3
+      );
     }
   }
 };

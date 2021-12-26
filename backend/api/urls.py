@@ -49,7 +49,7 @@ urlpatterns = [
    path("SubHeaderW/<identifier>/",getSubHeader),
    path("HHhistoryGraph/<identifier>/",getHHhistory),
    path("AdjustedPrices/<identifier>/",getAdjustedPriceHistory),
-   path("AdjustedPricesCodal/<identifier>/",getAdjustedPriceHistoryCodal),
+   path("AdjustedPricesCodal/<identifier>/<type>",getAdjustedPriceHistoryCodal),
    path("StatsTicker/<identifier>/",getStatsTicker),
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
    path("LiveTicker/<identifier>/",getLiveTicker),

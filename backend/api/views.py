@@ -53,8 +53,8 @@ def getHHhistory(self,identifier):
     return JsonResponse(HHhistory(identifier),safe=False)
 def getAdjustedPriceHistory(self,identifier):
     return JsonResponse(AdjustedPrices(identifier),safe=False)
-def getAdjustedPriceHistoryCodal(self,identifier):
-    return JsonResponse(AdjustedPricesBasedOnCodal(identifier),safe=False)
+def getAdjustedPriceHistoryCodal(self,identifier,type):
+    return JsonResponse(AdjustedPricesBasedOnCodal(identifier,type),safe=False)
         
 def getCurrentBoard(self,identifier):
     return JsonResponse(getBoard(identifier),safe=False)

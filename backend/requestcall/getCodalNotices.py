@@ -465,7 +465,7 @@ def AdjustedPrices(identifier):
             ct=ct+1
         
     return ("noData")    
-def AdjustedPricesBasedOnCodal(identifier):
+def AdjustedPricesBasedOnCodal(identifier,type):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'public'}
@@ -478,7 +478,12 @@ def AdjustedPricesBasedOnCodal(identifier):
                 month = int(date[1])
                 day = int(date[2])
                 item["unix"] = engDateToUnix(year,month,day,8,0)
-            js = sorted(js, key=lambda x : x['unix'], reverse=False)
+            
+            if type == 'chart':
+                js = sorted(js, key=lambda x : x['unix'], reverse=False)
+            elif type == 'table':
+                js = sorted(js, key=lambda x : x['unix'], reverse=True)
+
 
             return (js)
         else:

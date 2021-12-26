@@ -181,7 +181,7 @@ export default {
     },
     async getPriceHistory() {
       await this.axios
-        .get("/api/AdjustedPricesCodal/" + this.$route.params.id + "/")
+        .get("/api/AdjustedPricesCodal/" + this.$route.params.id + "/chart")
         .then(responsePrice => {
           this.priceHistory = responsePrice.data;
         })
@@ -231,7 +231,7 @@ export default {
     },
     async getLiveTickerData() {
       await this.axios
-        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id)
         .then(LiveTickerResponse => {
           this.subheaders = LiveTickerResponse.data[0];
           this.livedata = LiveTickerResponse.data;

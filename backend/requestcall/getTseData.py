@@ -59,7 +59,13 @@ def getLive_ticker(identifier):
     head = {'Accept-Profile':'public'}
     resp = requests.get('http://185.231.115.223:3000/rpc/liveticker?a='+str(identifier),headers=head )
     if resp.status_code == 200:
-        return (json.loads(resp.text))
+        js = json.loads(resp.text)
+        if js[0]['ShareCount'] != '-' or js[0]['ShareCount'] != '':
+            js[0]['ShareCount'] = float(js[0]['ShareCount'])
+        if js[0]['Mabna'] != '-' or js[0]['Mabna'] != '':
+            js[0]['Mabna'] = float(js[0]['Mabna'])
+        
+        return (js)
     else:
         return("noData")           
 def highestTvolumes():

@@ -188,9 +188,7 @@
                   <span class="tickerItem"> تعداد معاملات:</span>
                 </div>
                 <div class="d-flex mr-1">
-                  <span class="tickerItem">{{
-                    LiveDataItems.TradeCount.toLocaleString()
-                  }}</span>
+                  <span class="tickerItem">{{ TradeCount }}</span>
                 </div>
                 <!-- <div class="d-flex align-center">
                     <span class="tickerSubInfo">میلیون سهم</span>
@@ -358,29 +356,44 @@ export default {
   },
   computed: {
     marketCap() {
-      let marketcap = this.LiveDataItems.close * this.LiveDataItems.ShareCount;
-      return this.roundTo(marketcap / 1000000000, 2).toLocaleString();
+      if (
+        this.LiveDataItems.close != undefined &&
+        this.LiveDataItems.ShareCount != undefined
+      ) {
+        let marketcap =
+          this.LiveDataItems.close * this.LiveDataItems.ShareCount;
+        return this.roundTo(marketcap / 1000000000, 2).toLocaleString();
+      } else return "-";
     },
     Mabna() {
-      return this.roundTo(
-        this.LiveDataItems.Mabna / 1000000,
-        2
-      ).toLocaleString();
+      if (this.LiveDataItems.Mabna != undefined)
+        return this.roundTo(
+          this.LiveDataItems.Mabna / 1000000,
+          2
+        ).toLocaleString();
+      else return "-";
     },
     ShareCount() {
-      return this.roundTo(
-        this.LiveDataItems.ShareCount / 1000000000,
-        2
-      ).toLocaleString();
+      if (this.LiveDataItems.ShareCount != undefined)
+        return this.roundTo(
+          this.LiveDataItems.ShareCount / 1000000000,
+          2
+        ).toLocaleString();
+      else return "-";
     },
     closePercent() {
-      return (
-        Math.round(
-          (this.LiveDataItems.last / this.LiveDataItems.yesterday - 1) *
-            100 *
-            100
-        ) / 100
-      );
+      if (
+        this.LiveDataItems.last != undefined &&
+        this.LiveDataItems.yesterday != undefined
+      )
+        return (
+          Math.round(
+            (this.LiveDataItems.last / this.LiveDataItems.yesterday - 1) *
+              100 *
+              100
+          ) / 100
+        );
+      else return "-";
     },
     closePrice() {
       if (this.LiveDataItems.last != undefined)
@@ -393,13 +406,18 @@ export default {
       else return "-";
     },
     finalPercent() {
-      return (
-        Math.round(
-          (this.LiveDataItems.close / this.LiveDataItems.yesterday - 1) *
-            100 *
-            100
-        ) / 100
-      );
+      if (
+        this.LiveDataItems.close != undefined &&
+        this.LiveDataItems.yesterday != undefined
+      )
+        return (
+          Math.round(
+            (this.LiveDataItems.close / this.LiveDataItems.yesterday - 1) *
+              100 *
+              100
+          ) / 100
+        );
+      else return "-";
     },
     Volume() {
       if (this.LiveDataItems.TradeVolume != undefined)
@@ -420,6 +438,11 @@ export default {
     StatusColor() {
       if (this.LiveDataItems.Status == "مجاز") return "#014f86";
       else return "black";
+    },
+    TradeCount() {
+      if (this.LiveDataItems.TradeCount != undefined)
+        return this.LiveDataItems.TradeCount.toLocaleString();
+      else return "-";
     }
   },
   methods: {

@@ -295,7 +295,10 @@ export default {
   },
   watch: {
     adjusted() {
-      this.adjusted.reverse();
+      // console.log('====================================');
+      // console.log("wathc");
+      // console.log('====================================');
+      // let data = this.adjusted.reverse();
       this.gridApi.setRowData(this.adjusted);
       this.dataFetch = true;
     }

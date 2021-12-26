@@ -48,7 +48,7 @@ export default {
   methods: {
     async getLiveTickerData() {
       await this.axios
-        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id)
         .then(LiveTickerResponse => {
           this.subheaders = LiveTickerResponse.data[0];
           this.$store.dispatch("SetLiveTickerData", this.subheaders);
