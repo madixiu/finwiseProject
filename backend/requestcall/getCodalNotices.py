@@ -10,7 +10,7 @@ def get_true_value(x):
 def CodalNoticesRequest(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/View_CodalNotices?StockID=eq.'+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/View_CodalNotices?StockID=eq.'+str(identifier))
         if resp.status_code == 200:
     
             
@@ -24,7 +24,7 @@ def CodalNoticesRequest(identifier):
 def SubHeader(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/View_SubHeaderWidget?ID=eq.'+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/View_SubHeaderWidget?ID=eq.'+str(identifier))
         if resp.status_code == 200:
     
             
@@ -39,7 +39,7 @@ def SubHeader(identifier):
 def getTypeOffirm(identifier):
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/rpc/monthlyreporttype?a='+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/rpc/monthlyreporttype?a='+str(identifier))
         if resp.status_code == 200:
     
             
@@ -84,7 +84,7 @@ def monthlyBankDeposits(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/bankdeposits_monthly?a='+identifier,headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/bankdeposits_monthly?a='+identifier,headers=head)
         if resp.status_code == 200:
     
             
@@ -99,7 +99,7 @@ def monthlyInsurance(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/insurancemonthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/insurancemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -114,7 +114,7 @@ def monthlyConstOngoing(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/construction_ongoing_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/construction_ongoing_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -129,7 +129,7 @@ def monthlyConstSold(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/construction_sold_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/construction_sold_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -142,7 +142,7 @@ def monthlyService(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/servicemonthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/servicemonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -157,7 +157,7 @@ def monthlyBankFacility(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/bankfacilities_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/bankfacilities_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -172,7 +172,7 @@ def monthlyProduction(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/productionmonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -187,7 +187,7 @@ def monthlyPAnalysis1(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/productionmonthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
             DF= pd.DataFrame(json.loads(resp.text))
             DF.loc[DF['category'].isnull(),'category']='Domestic_Sale'
@@ -230,7 +230,7 @@ def monthly_leasing_cost(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/leasingcost_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/leasingcost_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -245,7 +245,7 @@ def monthly_leasing_delegated(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/leasingdelegated_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/leasingdelegated_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -260,7 +260,7 @@ def monthly_leasing_revenue(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/leasingrevenue_monthly?a='+(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/leasingrevenue_monthly?a='+(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -277,7 +277,7 @@ def monthlyInvestInTransactions(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_in_transactions?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/investment_monthly_in_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -292,7 +292,7 @@ def monthlyInvestOutTransactions(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_out_transactions?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/investment_monthly_out_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -307,7 +307,7 @@ def monthlyInvestPortf(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -322,7 +322,7 @@ def monthlyInvestSummary(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'monthly'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -339,7 +339,7 @@ def getBalanceSheetFirm(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/bsall?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/bsall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -353,7 +353,7 @@ def getBalanceSheetAggregatedFirm(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/bsallaggregated?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/bsallaggregated?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -367,7 +367,7 @@ def getIncomeStatementFirm(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/isall?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/isall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -382,7 +382,7 @@ def getIncomeStatementFirmAggrregated(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/isallaggregated?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/isallaggregated?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -397,7 +397,7 @@ def getCFFirm(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/rpc/cfall?a='+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/rpc/cfall?a='+str(identifier),headers=head)
         if resp.status_code == 200:
     
             
@@ -413,7 +413,7 @@ def getCFFirm(identifier):
 def getBoard(identifier): 
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/rpc/currentboard?a='+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/rpc/currentboard?a='+str(identifier))
         if resp.status_code == 200:
     
             
@@ -427,7 +427,7 @@ def getBoard(identifier):
 def getceo(identifier): 
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/rpc/currentceo?a='+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/rpc/currentceo?a='+str(identifier))
         if resp.status_code == 200:
     
             
@@ -441,7 +441,7 @@ def getceo(identifier):
 def getAllDps(identifier): 
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/rpc/alldps?a='+str(identifier))
+        resp = requests.get('http://185.8.172.68:3000/rpc/alldps?a='+str(identifier))
         if resp.status_code == 200:
     
             
@@ -506,7 +506,7 @@ def getNews():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'news'}
-        resp = requests.get('http://130.185.74.40:3000/LatestNews',headers=head)
+        resp = requests.get('http://185.8.172.68:3000/LatestNews',headers=head)
         if resp.status_code == 200:
             js = json.loads(resp.text)
             for item in js:
@@ -525,7 +525,7 @@ def getICNew1():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_Proposal',headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_Proposal',headers=head)
         if resp.status_code == 200:
     
             DF2=pd.read_json(resp.text)
@@ -546,7 +546,7 @@ def getICNew2():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_Assembly',headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_Assembly',headers=head)
         if resp.status_code == 200:
             DF2=pd.read_json(resp.text)
             DF2['CapitalChangeType']=''
@@ -568,7 +568,7 @@ def getICNew3():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_N70',headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_N70',headers=head)
         if resp.status_code == 200:
     
             DF2=pd.read_json(resp.text)
@@ -589,7 +589,7 @@ def getICNew4():
     ct=0
     while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_N73',headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_N73',headers=head)
         if resp.status_code == 200:
             DF2=pd.read_json(resp.text)
             DF2['CapitalChangeType']=''
@@ -625,7 +625,7 @@ def get_IC_Assembly_Stock(firm):
      ct=0
      while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_N73?StockID=eq.'+str(firm),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_N73?StockID=eq.'+str(firm),headers=head)
         if resp.status_code == 200:
             DF2=pd.read_json(resp.text)
             if not DF2.empty:
@@ -646,7 +646,7 @@ def get_IC_N73_Stock(firm):
      ct=0
      while ct<3:
         head = {'Accept-Profile':'codalreports'}
-        resp = requests.get('http://130.185.74.40:3000/View_IC_Assembly?StockID=eq.'+str(firm),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_IC_Assembly?StockID=eq.'+str(firm),headers=head)
         if resp.status_code == 200:
             DF4=pd.read_json(resp.text)
             if not DF4.empty:

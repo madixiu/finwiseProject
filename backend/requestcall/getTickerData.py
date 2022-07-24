@@ -16,7 +16,7 @@ parsed_tableList = []
 
 def getParsedData():
     head = {'Accept-Profile':'public'}
-    baseUrl = 'http://130.185.74.40:3000/'
+    baseUrl = 'http://185.8.172.68:3000/'
     try:
         resp = requests.get(baseUrl + 'FirmsAll',headers = head)
         if resp.status_code == 200:
@@ -153,7 +153,7 @@ def getIndicesHistoric():
 def tickerNameRequest(): 
     ct=0
     while ct<3:
-        resp = requests.get('http://130.185.74.40:3000/View_tickerOnly')
+        resp = requests.get('http://185.8.172.68:3000/View_tickerOnly')
         if resp.status_code == 200:
     
             # return(resp.text)
@@ -185,14 +185,14 @@ def tableNameRequest():
 def getDataTableHeaders(tickerName,tableName):
     
     # if id != 0:
-    #     resp = requests.get('http://130.185.74.40:3000/firm', {"ID":'eq.'+})
+    #     resp = requests.get('http://185.8.172.68:3000/firm', {"ID":'eq.'+})
     #     if resp.status_code == 200:
     #         return (return.text)
     # else:
     #     return ("noData")
     
     if len(parsed_json) !=0 and dataAvailablity:
-        baseUrl = 'http://130.185.74.40:3000/'
+        baseUrl = 'http://185.8.172.68:3000/'
         url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
         print("here is URL:" + url)
         data = requests.get(url)
@@ -230,7 +230,7 @@ def getDataTableHeaders(tickerName,tableName):
 
 
 def getDataTable(tickerName ,tableName):
-    baseUrl = 'http://130.185.74.40:3000/'
+    baseUrl = 'http://185.8.172.68:3000/'
     url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
     resp = requests.get(url)
     parsed_dataTable = json.loads(resp.text) 
@@ -240,7 +240,7 @@ def getCalculatedValuationRatios(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/View_ValuationRatios?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_ValuationRatios?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
         else:
@@ -249,9 +249,9 @@ def getCalculatedValuationRatios(identifier):
         
     return []
 # def getCEOchange(tickerName):
-#     baseUrl = 'http://130.185.74.40:3000/BoardChange_CEOChanges'
+#     baseUrl = 'http://185.8.172.68:3000/BoardChange_CEOChanges'
 #     # if id != 0:
-#     #     resp = requests.get('http://130.185.74.40:3000/firm', {"ID":'eq.'+})
+#     #     resp = requests.get('http://185.8.172.68:3000/firm', {"ID":'eq.'+})
 #     #     if resp.status_code == 200:
 #     #         return (return.text)
 #     # else:
@@ -279,7 +279,7 @@ def getFundamentalRatiosToDisplay(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/RatiosToDisplay?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/RatiosToDisplay?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
         else:
@@ -291,7 +291,7 @@ def getFundamentalLatestComponents(identifier):
     ct=0
     while ct<3:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://130.185.74.40:3000/View_LatestValuationComponent?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_LatestValuationComponent?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
         else:
