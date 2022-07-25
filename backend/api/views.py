@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from requestcall.getOptions import optionRequest
 from requestcall.getTickerData import *
 # from requestcall.getMarketWatch import  getMarketWatchRequest,getMarketWatchFilterLists, getFilteredData
-from requestcall.getMarketWatch2 import  getMarketWatchRequest,getMarketWatchFilterLists,getFilteredData
+from requestcall.getMarketWatch import  getMarketWatchRequest
 from requestcall.getCodalNotices import *
 from requestcall.getTseData import *
 from requestcall.getCommodities import *
@@ -46,6 +46,8 @@ def CheckRole(token,role):
             return "AccessDenied"
     except:
         return "notAuthorized"
+
+
 def getCodalNoticesAll(self,identifier):
     return JsonResponse(CodalNoticesRequest(identifier),safe=False)
 def getSubHeader(self,identifier):
@@ -74,7 +76,6 @@ def getLiveTicker(self,identifier):
 
 def getValuationRatios(request,identifier):
     return JsonResponse(getCalculatedValuationRatios(identifier),safe=False)
-   
 def getLiveHHTicker(self,identifier):
     return JsonResponse(getLiveHHtickerData(identifier),safe=False)
 def getAllDPS(self,identifier):
@@ -421,7 +422,7 @@ def getCryptoLive(self,identifier):
 def getIndexMarketCap(self):
     return JsonResponse(IndexMarketCapRequest(),safe=False)  
 
-############### OPTOIN ###############
+###############? OPTOIN ###############
 # @permission_classes([IsAuthenticated,])
 # @login_required
 # @permission_classes([IsAuthenticated])
@@ -452,74 +453,36 @@ def getOptions(request):
     # return JsonResponse(optionRequest(),safe=False)
 def getOptionAssets(self):
     return JsonResponse(OptionAssetVolatility(),safe=False)
-############### OPTOIN ###############
+###############? OPTOIN ###############
 
 
 def getTickersNames(self):
     return JsonResponse(tickerNameRequest(),safe=False)
 
-def getTableNames(self):
-    return JsonResponse(tableNameRequest(),safe=False)
-
-@csrf_exempt
-def findTickerID(request):
-    if request.method == 'POST':
-        response=[]
-        data = JSONParser().parse(request)
-        # getCEOchange(data.get('title'))
-        # print('this is the data django recieved' +data.get('tickerName') + 'and this table : ' + data.get('selectedTable'))
-        response.append(getDataTableHeaders(data.get('tickerName'),data.get('selectedTable')))
-        response.append(getDataTable(data.get('tickerName'),data.get('selectedTable')))
-        # return HttpResponse("OK")
-        return JsonResponse(response,safe=False)
-
-def getMarketWatchFilterOptions(request):
-    pass
-    # if request.method == 'POST':
-    #     data = JSONParser().parse(request)
-        # response = 
-## OLD MARKETWATCH VIEW ************************************************************************************************
-# @csrf_exempt
-# def getMarketWatch(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         if data.get('marketName') != "همه" or data.get('marketType') != [] or data.get('marketIndustry') != []:
-#             respond = getFilteredData(data.get('marketName'),data.get('marketType'),data.get('marketIndustry'))
-#         else: 
-#             respond = getMarketWatchRequest()
-#         return HttpResponse(json.dumps(respond))
-#     if request.method == 'GET':
-#         return HttpResponse(json.dumps(getMarketWatchRequest()))
-## OLD MARKETWATCH VIEW *************************************************************************************************
 
 
-############### MARKET WATCH ###############
+###############? MARKET WATCH ###############
 
 @csrf_exempt
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getMarketWatch(request):
-    if request.method == 'POST':
-        data = JSONParser().parse(request)
-        # print(len(getFilteredData(data.get("marketName"),data.get('marketIndustry'))))
-        return JsonResponse(getFilteredData(data.get("marketName"),data.get('marketIndustry')),safe=False)
+    # if request.method == 'POST':
+    #     data = JSONParser().parse(request)
+    #     # print(len(getFilteredData(data.get("marketName"),data.get('marketIndustry'))))
+    #     return JsonResponse(getFilteredData(data.get("marketName"),data.get('marketIndustry')),safe=False)
     if request.method == 'GET':
         return JsonResponse(getMarketWatchRequest(),safe=False)
 
-def getMarketWatchFilters(self):
-    return JsonResponse(getMarketWatchFilterLists(),safe=False)
-############### MARKET WATCH ###############
+
+###############? MARKET WATCH ###############
 
 
 
-############### TICKER TAPE ###############
+###############? TICKER TAPE ###############
 
 def getTape(self):
     return JsonResponse([TickerTapeData(),IndustryTapeData()],safe=False)
-############### TICKER TAPE ###############
-
-# def get_csrf_token(request):
-#     token = django.middleware.csrf.get_token(request)
-#     return JsonResponse({'token': token})
+###############? TICKER TAPE ###############
 
 
 @csrf_exempt
@@ -582,7 +545,7 @@ def getTradingViewList(self):
 
 
 
-                      
+
 
 
 ###################################################
@@ -594,18 +557,17 @@ def getImpactOnIndex(self):
 
 @cache_control(max_age=120, no_cache=False, no_store=False, must_revalidate=True)
 def getHighestValue(self):
-        return JsonResponse(highestTvalues(),safe=False)
+    return JsonResponse(highestTvalues(),safe=False)
 
 ## ASSET TRADE VALUE ##
 def getTVHHTotal(self):
-        return JsonResponse(TradeValueHH(),safe=False)
+    return JsonResponse(TradeValueHH(),safe=False)
 def getTVHHAsset(self):
-        return JsonResponse(TradeValueHHBasedOnAsset(),safe=False)
-        
+    return JsonResponse(TradeValueHHBasedOnAsset(),safe=False)
 def getTVAssets(self):
-        return JsonResponse(TradeValueAsset(),safe=False)
+    return JsonResponse(TradeValueAsset(),safe=False)
 def getIFBTEPIX(self):
-        return JsonResponse(getLatestTwoIndex(),safe=False)  
+    return JsonResponse(getLatestTwoIndex(),safe=False)  
 ## ASSET TRADE VALUE ##
 
 ## NEWS
@@ -658,15 +620,10 @@ def getAllTradesValue(self):
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasic(request):
     tokenA = request.META.get('HTTP_AUTHORIZATION')[7:]
-    # print(request.META.get('HTTP_AUTHORIZATION'))
-    # print(tokenA)
     try:
         payload = jwt_decode(tokenA)
         username = payload["username"]
         user = CustomUser.objects.get(username = username)
-        # print(user)
-        # print(user)
-        # role = user.role
         if user.role >= 2:
             return JsonResponse(getbasicCommodityIR(),safe=False) 
         else:
@@ -675,7 +632,6 @@ def getCommoditiesBasic(request):
     except:
         return JsonResponse("notAuthorized",safe=False)
 
-    # return JsonResponse(getbasicCommodityIR(),safe=False) 
 
 @cache_control(max_age=0, no_cache=True, no_store=True, must_revalidate=True)
 def getCommoditiesBasicInvesting(request):

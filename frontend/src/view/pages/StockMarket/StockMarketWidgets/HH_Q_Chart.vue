@@ -182,26 +182,28 @@ export default {
   computed: {
     tooltipPosition() {
       let res = {};
-      if (this.LeaveHHTooltip)
-        res = {
-          right: this.width - this.pageX + 100 + "px",
-          bottom: this.height - this.pageY + 40 + "px"
-        };
-      else if (this.LowestImpactTooltip)
-        res = {
-          right: this.width - this.pageX + 100 + "px",
-          bottom: this.height - this.pageY + 40 + "px"
-        };
-      else if (this.HighestImpactTooltip) {
-        res = {
-          right: this.width - this.pageX - 150 + "px",
-          bottom: this.height - this.pageY + 40 + "px"
-        };
-      } else {
-        res = {
-          right: this.width - this.pageX - 150 + "px",
-          bottom: this.height - this.pageY + 40 + "px"
-        };
+      if (this.width != null) {
+        if (this.LeaveHHTooltip)
+          res = {
+            right: this.width - this.pageX + 100 + "px",
+            bottom: this.height - this.pageY + 40 + "px"
+          };
+        else if (this.LowestImpactTooltip)
+          res = {
+            right: this.width - this.pageX + 100 + "px",
+            bottom: this.height - this.pageY + 40 + "px"
+          };
+        else if (this.HighestImpactTooltip) {
+          res = {
+            right: this.width - this.pageX - 150 + "px",
+            bottom: this.height - this.pageY + 40 + "px"
+          };
+        } else {
+          res = {
+            right: this.width - this.pageX - 150 + "px",
+            bottom: this.height - this.pageY + 40 + "px"
+          };
+        }
       }
       return res;
     }

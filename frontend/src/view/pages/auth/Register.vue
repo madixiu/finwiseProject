@@ -302,23 +302,16 @@ export default {
         email: ""
       },
       form: {
-        // username: "",
-        email: "mahdi.moradi72@gmail.com",
-        password: "finwisefinwise",
-        password2: "finwisefinwise",
-        // firstname: "",
-        // lastname: "",
-        phonenumber: "09386886616",
+        email: "",
+        password: "",
+        password2: "",
+        phonenumber: "",
         captcha: ""
       }
     };
   },
   validations: {
     form: {
-      // username: {
-      //   required,
-      //   minLength: minLength(3)
-      // },
       email: {
         required,
         email
@@ -331,14 +324,7 @@ export default {
         required,
         minLength: minLength(8)
       },
-      // firstname: {
-      //   required,
-      //   minLength: minLength(3)
-      // },
-      // lastname: {
-      //   required,
-      //   minLength: minLength(3)
-      // },
+
       phonenumber: {
         integer,
         required,
@@ -421,6 +407,10 @@ export default {
       this.$nextTick(() => {
         this.$v.$reset();
       });
+    },
+    encryption(input, key) {
+      let encrypted = this.CryptoJS.AES.encrypt(input, key).toString();
+      return encrypted;
     },
     onSubmit() {
       this.$v.form.$touch();

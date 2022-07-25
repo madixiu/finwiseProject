@@ -6,11 +6,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.layers import get_channel_layer
 from channels.exceptions import StopConsumer
 # from channels.db import database_sync_to_async
-# from .models import Thread, ChatMessage
-# from .ApiGet import publicApi, realTimePublicApi
+
 from .randomGen import get_number
 from requestcall.getOptions import optionRequest
-from requestcall.getMarketWatch2 import getMarketWatchRequest,getFilteredData
+# from requestcall.getMarketWatch import getMarketWatchRequest
 from requestcall.treeMapData import getMapData
 from requestcall.getTseData import *
 from requestcall.getCommodities import *
@@ -104,32 +103,32 @@ class random(AsyncWebsocketConsumer):
         raise StopConsumer()
 
 
-class MarketWatch(AsyncWebsocketConsumer):
-    channel_layer = get_channel_layer()
-    async def connect(self):
-        await self.accept()
-        print("connected to Ws MarketWatch")
+# class MarketWatch(AsyncWebsocketConsumer):
+#     channel_layer = get_channel_layer()
+#     async def connect(self):
+#         await self.accept()
+#         print("connected to Ws MarketWatch")
     
-    async def receive(self, text_data):
-        data = json.loads(text_data)
-        if data[0].get("request") == "get":
-            # print('req')
-            # print(data)
-            # dic = {}
-            # dic['data'] = getMarketWatchHeaderReq()
-            text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
-            # text_data = json.dumps(getMarketWatchRequest())
-            await self.send(text_data)
-            # await asyncio.sleep(2)
-            return
-        if data[0].get("request") == "halt":
-            return
+#     async def receive(self, text_data):
+#         data = json.loads(text_data)
+#         if data[0].get("request") == "get":
+#             # print('req')
+#             # print(data)
+#             # dic = {}
+#             # dic['data'] = getMarketWatchHeaderReq()
+#             text_data = json.dumps(getFilteredData(data[1].get("marketName"),data[1].get("marketType"),data[1].get("marketIndustry")))
+#             # text_data = json.dumps(getMarketWatchRequest())
+#             await self.send(text_data)
+#             # await asyncio.sleep(2)
+#             return
+#         if data[0].get("request") == "halt":
+#             return
             
 
-    async def disconnect(self, code):
-        # print("MarketWatchWS", code)
-        self.close()
-        raise StopConsumer()
+#     async def disconnect(self, code):
+#         # print("MarketWatchWS", code)
+#         self.close()
+#         raise StopConsumer()
 
 class Top5Viewed(AsyncWebsocketConsumer):
     async def connect(self):
@@ -350,22 +349,7 @@ class getTaqadom(AsyncWebsocketConsumer):
         self.close()
         raise StopConsumer() 
 ##############################################################
-class getCrypto(AsyncWebsocketConsumer):
-    async def connect(self):
-        await self.accept()
-
-    async def receive(self, text_data):
-        data = json.loads(text_data)
-        if data.get("request") == "get":
-            text_data = json.dumps(getCryptoMarketData());
-            
-            await self.send(text_data)
-            return
-        if data.get("request") == "halt":
-            return
-    async def disconnect(self, code):
-        self.close()
-        raise StopConsumer()         
+  
 
 class getIRCommodities(AsyncWebsocketConsumer):
     async def connect(self):

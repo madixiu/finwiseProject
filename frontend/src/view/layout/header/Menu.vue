@@ -94,24 +94,6 @@
       </li>
     </router-link>
     <router-link
-      to="/Crypto"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">رمز ارز</span>
-        </a>
-      </li>
-    </router-link>
-    <router-link
       to="/Commodities"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >
@@ -129,95 +111,6 @@
         </a>
       </li>
     </router-link>
-    <!-- <router-link
-      to="/SocialMedia"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">شبکه اجتماعی</span>
-        </a>
-      </li>
-    </router-link> -->
-    <!-- <router-link to="/AI" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">AI</span>
-        </a>
-      </li>
-    </router-link> -->
-    <!-- <router-link
-      to="/kala"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">کالا</span>
-        </a>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link
-      to="/shakhes"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">شاخص های کلان</span>
-        </a>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link
-      to="/robot"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <span class="menu-text">ربات</span>
-        </a>
-      </li>
-    </router-link> -->
   </ul>
 </template>
 

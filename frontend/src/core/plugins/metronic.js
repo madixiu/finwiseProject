@@ -2,9 +2,6 @@
 import KTUtil from "@/assets/js/components/util.js";
 window.KTUtil = KTUtil;
 
-import KTCard from "@/assets/js/components/card.js";
-window.KTCard = KTCard;
-
 import KTCookie from "@/assets/js/components/cookie.js";
 window.KTCookie = KTCookie;
 
@@ -13,9 +10,6 @@ window.KTDialog = KTDialog;
 
 import KTHeader from "@/assets/js/components/header.js";
 window.KTHeader = KTHeader;
-
-import KTImageInput from "@/assets/js/components/image-input.js";
-window.KTImageInput = KTImageInput;
 
 import KTMenu from "@/assets/js/components/menu.js";
 window.KTMenu = KTMenu;
@@ -60,42 +54,10 @@ window.KTLayoutHeaderMenu = KTLayoutHeaderMenu;
 import KTLayoutHeaderTopbar from "@/assets/js/layout/base/header-topbar.js";
 window.KTLayoutHeaderTopbar = KTLayoutHeaderTopbar;
 
-import KTLayoutStickyCard from "@/assets/js/layout/base/sticky-card.js";
-window.KTLayoutStickyCard = KTLayoutStickyCard;
-
-import KTLayoutStretchedCard from "@/assets/js/layout/base/stretched-card.js";
-window.KTLayoutStretchedCard = KTLayoutStretchedCard;
-
 import KTLayoutSubheader from "@/assets/js/layout/base/subheader.js";
 window.KTLayoutSubheader = KTLayoutSubheader;
 
 // Metronic layout extended js
-import KTLayoutChat from "@/assets/js/layout/extended/chat.js";
-window.KTLayoutChat = KTLayoutChat;
-
-import KTLayoutExamples from "@/assets/js/layout/extended/examples.js";
-window.KTLayoutExamples = KTLayoutExamples;
-
-import KTLayoutQuickActions from "@/assets/js/layout/extended/quick-actions.js";
-window.KTLayoutQuickActions = KTLayoutQuickActions;
-
-import KTLayoutQuickCartPanel from "@/assets/js/layout/extended/quick-cart.js";
-window.KTLayoutQuickCartPanel = KTLayoutQuickCartPanel;
-
-import KTLayoutQuickNotifications from "@/assets/js/layout/extended/quick-notifications.js";
-window.KTLayoutQuickNotifications = KTLayoutQuickNotifications;
-
-import KTLayoutQuickPanel from "@/assets/js/layout/extended/quick-panel.js";
-window.KTLayoutQuickPanel = KTLayoutQuickPanel;
-
-import KTLayoutQuickSearch from "@/assets/js/layout/extended/quick-search.js";
-window.KTLayoutQuickSearch = KTLayoutQuickSearch;
-
-import KTLayoutQuickUser from "@/assets/js/layout/extended/quick-user.js";
-window.KTLayoutQuickUser = KTLayoutQuickUser;
 
 import KTLayoutScrolltop from "@/assets/js/layout/extended/scrolltop.js";
 window.KTLayoutScrolltop = KTLayoutScrolltop;
-
-import KTLayoutSearch from "@/assets/js/layout/extended/search.js";
-window.KTLayoutSearch = KTLayoutSearch;

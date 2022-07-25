@@ -100,69 +100,64 @@ export default {
     // });
   },
   mounted() {
-    this.loadData();
+    // this.loadData();
     this.liveChecker();
   },
   methods: {
-    loadDataNew() {
-      const getTepixToday = this.axios.get("/api/getTodayTepix");
-      const getNetHaghighiToday = this.axios.get("/api/getTodayNetHaghighi");
-      const getTradesAll = this.axios.get("/api/getAllTradesValue");
-      const getTechnicalData = this.axios.get(
-        "/api/Ticker/TechnicalIndicatorsAll"
-      );
-      const getImpacts = this.axios.get("/api/ImpactOnIndex");
-      const getHHData = this.axios.get("/api/HHMarketDetails");
-      const getHighestQ = this.axios.get("/api/HighestQ");
-      const getTradesValue = this.axios.get("/api/getHighestValue");
-      const getIndustryImpacts = this.axios.get("/api/Indices/Impact");
-      const getIndustryHH = this.axios.get("/api/Indices/HH");
-      this.axios
-        .all([
-          getTepixToday,
-          getNetHaghighiToday,
-          getTradesAll,
-          getTechnicalData,
-          getImpacts,
-          getHHData,
-          getHighestQ,
-          getTradesValue,
-          getIndustryImpacts,
-          getIndustryHH
-        ])
-        .then(
-          this.axios.spread((...responses) => {
-            this.TodayTepix = responses[0].data;
-            this.TodayNetHaghighi = responses[1].data;
-            this.AssetTradeValue = responses[3].data;
-            this.TechnicalData = responses[4].data;
-            this.ImpactsData = responses[4].data;
-            this.HHData = responses[5].data;
-            this.QData = responses[6].data;
-            this.highestTvalueData = responses[7].data;
-            this.IndustryImpact = responses[8].data;
-            this.IndustryHHData = responses[9].data;
-            // this.loadData2();
-            // use/access the results
-          })
-        )
-        .catch(errors => {
-          console.error(errors);
-          // react on errors.
-        });
-    },
+    // loadDataNew() {
+    //   const getTepixToday = this.axios.get("/api/getTodayTepix");
+    //   const getNetHaghighiToday = this.axios.get("/api/getTodayNetHaghighi");
+    //   const getTradesAll = this.axios.get("/api/getAllTradesValue");
+    //   const getTechnicalData = this.axios.get(
+    //     "/api/Ticker/TechnicalIndicatorsAll"
+    //   );
+    //   const getImpacts = this.axios.get("/api/ImpactOnIndex");
+    //   const getHHData = this.axios.get("/api/HHMarketDetails");
+    //   const getHighestQ = this.axios.get("/api/HighestQ");
+    //   const getTradesValue = this.axios.get("/api/getHighestValue");
+    //   const getIndustryImpacts = this.axios.get("/api/Indices/Impact");
+    //   const getIndustryHH = this.axios.get("/api/Indices/HH");
+    //   // this.axios
+    //   //   .all([
+    //   //     getTepixToday,
+    //   //     getNetHaghighiToday,
+    //   //     // getTradesAll,
+    //   //     // getTechnicalData,
+    //   //     // getImpacts,
+    //   //     // getHHData,
+    //   //     // getHighestQ,
+    //   //     // getTradesValue,
+    //   //     // getIndustryImpacts,
+    //   //     // getIndustryHH
+    //   //   ])
+    //   //   .then(
+    //   //     this.axios.spread((...responses) => {
+    //   //       this.TodayTepix = responses[0].data;
+    //   //       this.TodayNetHaghighi = responses[1].data;
+    //   //       // this.AssetTradeValue = responses[3].data;
+    //   //       // this.TechnicalData = responses[4].data;
+    //   //       // this.ImpactsData = responses[4].data;
+    //   //       // this.HHData = responses[5].data;
+    //   //       // this.QData = responses[6].data;
+    //   //       // this.highestTvalueData = responses[7].data;
+    //   //       // this.IndustryImpact = responses[8].data;
+    //   //       // this.IndustryHHData = responses[9].data;
+    //   //       // this.loadData2();
+    //   //       // use/access the results
+    //   //     })
+    //   //   )
+    //   //   .catch(errors => {
+    //   //     console.error(errors);
+    //   //     // react on errors.
+    //   //   });
+    // },
     loadData() {
-      // this.getDashboard();
       this.getTepixToday().then(resp0 => {
         this.getTodayAdvancingDescending().then(resp1 => {
           this.getTradesAll().then(resp2 => {
             this.getTechnicalData().then(respX => {
               this.loadData2();
             });
-            // this.getNews();
-
-            // this.getNews().then(resp3 => {
-            // });
           });
         });
       });

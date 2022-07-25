@@ -5,25 +5,6 @@
         <span>{{ currentUser.username }}</span>
       </div>
     </div>
-    <!-- <v-btn depressed block class="mb-1 mt-1 customBTN">
-      <v-icon dense class="mr-1">mdi-account</v-icon>
-      <span>پروفایل</span>
-    </v-btn>
-    <v-btn depressed block class="mb-1 mt-1">
-      <v-icon dense class="mr-1">mdi-logout</v-icon>
-      <span>خروج</span>
-    </v-btn> -->
-
-    <!-- <hr />
-    <div class="bigRow" @mouseenter="login = true" @mouseleave="login = false">
-      <div class="py-1 px-2">
-        <div class="rowProfile">
-          <v-icon dense class="mr-1" :color="loginColor">mdi-login</v-icon>
-          <span>ورود</span>
-        </div>
-      </div>
-    </div> -->
-
     <hr />
     <div
       class="bigRow"

@@ -11,12 +11,12 @@ urlpatterns = [
    path("ViewOptionAssetVolatility",getOptionAssets),
 
    path("tickerallnames",getTickersNames),
-   path("tableallnames",getTableNames),
-   path("findTickerid",findTickerID),
+
+
    
-   ## MARKET WATCH
+   ##? MARKET WATCH
    path("marketwatch",getMarketWatch),
-   path("marketwatchfilterlists",getMarketWatchFilters),
+
 
    ##? DASHBOARD ##
    path("ImpactOnIndex",getImpactOnIndex),
@@ -56,7 +56,7 @@ urlpatterns = [
    path("AdjustedPricesCodal/<identifier>/<type>",getAdjustedPriceHistoryCodal),
    path("StatsTicker/<identifier>/",getStatsTicker),
    path("LiveHHTicker/<identifier>/",getLiveHHTicker),
-   path("LiveTicker/<identifier>/",getLiveTicker),
+   path("LiveTicker/<identifier>",getLiveTicker),
    path("Fundamental/ValuationRatio/<identifier>/",getValuationRatios),
    path("Fundamental/Ratios/RatioToDisplay/<identifier>/",getRatiosAll),
    path("Fundamental/Ratios/LatestComponents/<identifier>/",getComponentsAll),

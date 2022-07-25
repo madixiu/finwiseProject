@@ -10,11 +10,7 @@ const Industries = () =>
   import("@/view/pages/StockMarket/Industries/Industries.vue");
 const IndustriesDetail = () =>
   import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
-const Crypto = () => import("@/view/pages/Crypto/CryptoMarket.vue");
-const CryptoTechnicalSingle = () =>
-  import("@/view/pages/Crypto/Widgets/TechnicalCyrptoMoreInfo.vue");
-const CryptoDashboard = () => import("@/view/pages/Crypto/CryptoDashboard.vue");
-const CryptoSinglePage = () => import("@/view/pages/Crypto/CryptoSingle.vue");
+
 const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
 const CommoditiesDetail = () =>
@@ -283,28 +279,13 @@ export default new Router({
           component: CommoditiesDetail,
           props: true
         },
-        {
-          path: "/Crypto",
-          name: "CryptoDashboard",
-          component: CryptoDashboard,
-          children: [
-            {
-              path: "Technical/:id",
-              name: "CryptoTechnicalSingle",
-              component: CryptoTechnicalSingle
-            }
-          ]
-        },
+  
         {
           path: "/CryptoMarketWatch",
           name: "CryptoMarketWatch",
           component: Crypto
         },
-        {
-          path: "/CryptoSingle/:id",
-          name: "CryptoSingle",
-          component: CryptoSinglePage
-        },
+
         {
           path: "/SingleNonETF/:id",
           name: "SingleNonETF",

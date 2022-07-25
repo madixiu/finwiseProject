@@ -567,10 +567,7 @@ export default {
     },
 
     loadData() {
-      // eslint-disable-next-line no-unused-vars
-      this.MarketWatchTableReq().then(response => {
-        this.MarketWatchFilterListReq();
-      });
+      this.MarketWatchTableReq();
     },
     async MarketWatchTableReq() {
       this.isBusy = true;
@@ -587,32 +584,7 @@ export default {
           console.error(error);
         });
     },
-    async MarketWatchFilterListReq() {
-      await this.axios.get("/api/marketwatchfilterlists").then(response => {
-        this.tableMarketIndustryFilters = response.data;
-      });
-    },
-    MarketWatchFilterPost() {
-      this.axios({
-        method: "post",
-        url: "/api/marketwatch",
-        data: {
-          marketName: this.tableMarketSelected,
-          // marketType: this.tableMarketTypeSelected,
-          marketIndustry: this.tableMarketIndustrySelected
-        },
-        headers: { "Content-Type": "application/json" },
-        xsrfHeaderName: "X-CSRFToken"
-      })
-        .then(response2 => {
-          // this.$store.dispatch("setMarketWatchItems", response2.data);
-          this.tableData = response2.data;
-          this.gridApi.setRowData(this.tableData);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
+
     getHeight() {
       return (window.innerHeight - 100).toString() + "px";
     },
@@ -665,10 +637,6 @@ export default {
 };
 </script>
 <style scoped>
-/* 
-TODO:Clean the CSS & add scoped based class
-?? DONE !
-*/
 /* ag Grid */
 .MarketWatchTable /deep/ .ag-root-wrapper {
   border-radius: 10px 10px 0px 0px;
