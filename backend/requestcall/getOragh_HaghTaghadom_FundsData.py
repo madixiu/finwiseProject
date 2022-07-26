@@ -1,28 +1,32 @@
 import requests
-import json 
+import json
 import pandas as pd
 from khayyam import *
 from datetime import datetime
 from .util.Convereter_trunc import truncater
 
+
 def getOraghData():
-    head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://185.231.115.223:3000/View_Watch_Bonds',headers = head)
+    head = {'Accept-Profile': 'marketwatch'}
+    resp = requests.get(
+        'http://185.231.115.223:3000/View_Watch_Bonds', headers=head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
         js = additionalData(js)
         return js
     else:
-        return ("noData")
+        return "noData"
 
-def getHaghTaghadomData(): 
+
+def getHaghTaghadomData():
     resp = requests.get('http://185.231.115.223:3000/View_Watch_HaghTaghadoms')
     if resp.status_code == 200:
         js = json.loads(resp.text)
         TaghadomDataFix(js)
         return js
     else:
-        return ("noData")
+        return "noData"
+
 
 def getFundsData():
     resp = requests.get('http://185.231.115.223:3000/View_Watch_ETF')
@@ -31,65 +35,78 @@ def getFundsData():
         js = additionalData(js)
         return js
     else:
-        return ("noData")
+        return "noData"
+
+
 def clearElem(x):
-    x=str(x)
+    x = str(x)
     if 'Element' not in str(x):
         return x
     else:
         return "-"
+
+
 def getFundsAllData():
-    head = {'Accept-Profile':'funds'}
-    resp = requests.get('http://185.231.115.223:3000/View_FundsMeta',headers=head)
+    head = {'Accept-Profile': 'funds'}
+    resp = requests.get(
+        'http://185.231.115.223:3000/View_FundsMeta', headers=head)
     if resp.status_code == 200:
-        DX=pd.DataFrame(json.loads(resp.text))
+        DX = pd.DataFrame(json.loads(resp.text))
         for i in DX.columns:
-            if i not in ['ID','RedemptionNav','SubscriptionNav','StaticalNav','NetAssetValue','TotalUnit','HaghighShareHolders_Count','HaghighShareHolders_perc','HoghughiShareHolders_Count','HoghughiShareHolders_perc']:
-                DX[i]=DX[i].apply(clearElem)
+            if i not in ['ID', 'RedemptionNav', 'SubscriptionNav', 'StaticalNav', 'NetAssetValue', 'TotalUnit', 'HaghighShareHolders_Count', 'HaghighShareHolders_perc', 'HoghughiShareHolders_Count', 'HoghughiShareHolders_perc']:
+                DX[i] = DX[i].apply(clearElem)
         return (json.loads(DX.to_json(orient='records')))
         # js = json.loads(resp.text)
         # js = additionalData(js)
         return js
     else:
-        return ("noData")        
+        return "noData"
+
 
 def additionalData(data):
     for item in data:
-        if item['yesterday'] !=None and item['close'] !=None:
-            item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
+        if item['yesterday'] != None and item['close'] != None:
+            item['closePercent'] = truncater(
+                ((item['close']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['closePercent'] = None
-        if item['last'] !=None and item['yesterday'] !=None:
-            item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
+        if item['last'] != None and item['yesterday'] != None:
+            item['lastPercent'] = truncater(
+                ((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
-    data = sorted(data, key=lambda x : x["ticker"],reverse=False)
+    data = sorted(data, key=lambda x: x["ticker"], reverse=False)
     return data
+
 
 def TaghadomDataFix(data):
     for item in data:
         item['Coverage'] = truncater(item['Coverage'])
-        if item['yesterday'] !=None and item['close'] !=None:
-            item['closePercent'] = truncater(((item['close']-item['yesterday'])/item['yesterday'])*100)
+        if item['yesterday'] != None and item['close'] != None:
+            item['closePercent'] = truncater(
+                ((item['close']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['closePercent'] = None
-        if item['last'] !=None and item['yesterday'] !=None:
-            item['lastPercent'] = truncater(((item['last']-item['yesterday'])/item['yesterday'])*100)
+        if item['last'] != None and item['yesterday'] != None:
+            item['lastPercent'] = truncater(
+                ((item['last']-item['yesterday'])/item['yesterday'])*100)
         else:
             item['lastPercent'] = None
 
+
 def getCryptoMarketData():
 
-    head = {'Accept-Profile':'crypto'}
-    resp = requests.get('http://162.55.15.105:3000/View_Crypto',headers=head)
+    head = {'Accept-Profile': 'crypto'}
+    resp = requests.get('http://162.55.15.105:3000/View_Crypto', headers=head)
     if resp.status_code == 200:
         js = json.loads(resp.text)
-        DF=pd.DataFrame(js)
+        DF = pd.DataFrame(js)
         # DF=pd.read_json(js)
         # print(DF.head())
-        DF['persianDate']=DF['regularMarketTime'].apply(lambda x:str(JalaliDatetime(datetime.fromtimestamp(x))))
+        DF['persianDate'] = DF['regularMarketTime'].apply(
+            lambda x: str(JalaliDatetime(datetime.fromtimestamp(x))))
         # return(json.loads(pd.DataFrame.to_json(DF,orient="index")))
         return DF.to_dict('records')
 
     else:
-        return ("noData")
+        return "noData"
