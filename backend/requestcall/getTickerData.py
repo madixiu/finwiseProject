@@ -3,35 +3,16 @@ import json
 import time
 from .util.FixGetTechnicalIndicatorsAll import fixData 
 
-
-
-dataAvailablity = False
-TablesAvailability = False
-names=[]
-parsed_json=[]
-parsed_tableList = []
-
-
-
-def getTickerID(tickerName):
-    for ticker in parsed_json:
-        if ticker['ticker'] == tickerName:
-            return ticker['ID']
-
 def getTechnicalIndicators(identifier):
-    ct=0
-    while ct<3:
+    try:
         head = {'Accept-Profile':'technical'}
         resp = requests.get('http://185.231.115.223:3000/View_Technical_Indicators?firm=eq.'+str(identifier),headers=head)
         if resp.status_code == 200 and resp.text!='[]' :
-            # return(resp.text)
             return (json.loads(resp.text))
-        # return(json.loads(resp.text))
-        else:
-            time.sleep(2)
-            ct=ct+1
-        
-    return ([])
+    except:
+        return []      
+    return []
+
 def getTechnicalIndicators2(identifier):
    
     head = {'Accept-Profile':'technical'}
@@ -122,64 +103,37 @@ def getTechnicalIndicators2(identifier):
 
             # result.append(item)
         #?%%%%%%%%%%%%%%%%%%%%%%%%%%% NEW DATA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        return result
+        return result     
+    return "noData"   
 
-        
-    return ("noData")    
 def getTechnicalIndicatorsAll():
-    
-    head = {'Accept-Profile':'technical'}
-    resp = requests.get('http://185.231.115.223:3000/View_Technical_IndicatorsAll',headers=head)
-    if resp.status_code == 200 and resp.text!='[]' :
-        return fixData(json.loads(resp.text))
-       
-        
-    return ("noData")   
+    try:
+        head = {'Accept-Profile':'technical'}
+        resp = requests.get('http://185.231.115.223:3000/View_Technical_IndicatorsAll',headers=head)
+        if resp.status_code == 200 and resp.text!='[]' :
+            return fixData(json.loads(resp.text))
+    except:
+        return "noData"  
+    return "noData"  
 
 def getIndicesHistoric():
-
-    head = {'Accept-Profile':'indices'}
-    resp=requests.get('http://185.231.115.223:3000/View_HistoricIndicesReturn',headers=head)
-    if resp.status_code == 200:
-        return (json.loads(resp.text))
-
-    return ("noData")
-
+    try:
+        head = {'Accept-Profile':'indices'}
+        resp=requests.get('http://185.231.115.223:3000/View_HistoricIndicesReturn',headers=head)
+        if resp.status_code == 200:
+            return (json.loads(resp.text))
+    except:
+        return "noData"
+    return "noData"
 
 def tickerNameRequest(): 
-
-    resp = requests.get('http://130.185.74.40:3000/View_tickerOnly')
-    if resp.status_code == 200:
-        return (json.loads(resp.text))
-    return ("noData")
-
-
-
-def getDataTableHeaders(tickerName,tableName):
-    if len(parsed_json) !=0 and dataAvailablity:
-        baseUrl = 'http://130.185.74.40:3000/'
-        url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
-        print("here is URL:" + url)
-        data = requests.get(url)
-        parsed_data = json.loads(data.text) 
-        if len(parsed_data)!=0:
-                    listOFheaders=[]
-                    for key in parsed_data[0].keys():
-                        dict={}
-                        dict['text']=key
-                        dict['value']=key
-                        listOFheaders.append(dict)
-                    return listOFheaders
-    else: 
-        print ('empty')
-
-
-def getDataTable(tickerName ,tableName):
-    baseUrl = 'http://130.185.74.40:3000/'
-    url = baseUrl + tableName+ '?firm=eq.'+ str(getTickerID(tickerName))
-    resp = requests.get(url)
-    parsed_dataTable = json.loads(resp.text) 
-    return parsed_dataTable
+    try:
+        resp = requests.get('http://130.185.74.40:3000/View_tickerOnly')
+        if resp.status_code == 200:
+            return (json.loads(resp.text))
+    except:
+        return "noData"
+    return "noData"
 
 def getCalculatedValuationRatios(identifier):
     try:
@@ -200,6 +154,7 @@ def getFundamentalRatiosToDisplay(identifier):
     except:
         return []
     return []
+
 def getFundamentalLatestComponents(identifier):
     try:
         head = {'Accept-Profile':'statement'}
@@ -209,11 +164,14 @@ def getFundamentalLatestComponents(identifier):
     except:
    
         return []    
-    return [] 
-def getStockHH(identifier):
+    return []
 
-    head = {'Accept-Profile':'marketwatch'}
-    resp = requests.get('http://185.231.115.223:3000/View_HH_Historic?ID=eq.'+str(identifier),headers=head)
-    if resp.status_code == 200 and resp.text!='[]' :
-        return (json.loads(resp.text))
+def getStockHH(identifier):
+    try:
+        head = {'Accept-Profile':'marketwatch'}
+        resp = requests.get('http://185.231.115.223:3000/View_HH_Historic?ID=eq.'+str(identifier),headers=head)
+        if resp.status_code == 200 and resp.text!='[]' :
+            return (json.loads(resp.text))
+    except:
+        return []
     return []        
