@@ -6,13 +6,13 @@ import json
 def firstStepAssembly(identifier):
     url = ""
     if identifier.get("Type") == "AssemblyGeneral":
-        url = "http://130.185.74.40:3000/rpc/assemblygenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
+        url = "http://185.8.172.68:3000/rpc/assemblygenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
     elif identifier.get("Type") == "AssemblyExtra":
-        url = "http://130.185.74.40:3000/rpc/assemblyextralist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
+        url = "http://185.8.172.68:3000/rpc/assemblyextralist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
     elif identifier.get("Type") == "AssemblyGeneralExtra":
-        url = "http://130.185.74.40:3000/rpc/assemblygenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
+        url = "http://185.8.172.68:3000/rpc/assemblygenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
     elif identifier.get("Type") == "d":
-        url = "http://130.185.74.40:3000/rpc/assemblyinvitationgenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
+        url = "http://185.8.172.68:3000/rpc/assemblyinvitationgenerallist?a="+identifier.get("tickerID")+"&b="+identifier.get("endDate")+"&c="+identifier.get("startDate")
     
 
     if url:
@@ -32,21 +32,21 @@ def secondStepAssembly(identifier, Type):
     #-----------------------------------------------
     if Type == 'AssemblyGeneral':
         links = {
-                "Statement":"http://130.185.74.40:3000/View_AG_Statement?SummaryID=eq." +str(identifier),
+                "Statement":"http://185.8.172.68:3000/View_AG_Statement?SummaryID=eq." +str(identifier),
 
-                "Cheif":"http://130.185.74.40:3000/View_AG_Chief?SummaryID=eq." +str(identifier),
+                "Cheif":"http://185.8.172.68:3000/View_AG_Chief?SummaryID=eq." +str(identifier),
 
-                "Shareholders":"http://130.185.74.40:3000/View_AG_Shareholders?SummaryID=eq." +str(identifier),
+                "Shareholders":"http://185.8.172.68:3000/View_AG_Shareholders?SummaryID=eq." +str(identifier),
 
-                "CEO":"http://130.185.74.40:3000/View_AG_Ceo?SummaryID=eq." +str(identifier),
+                "CEO":"http://185.8.172.68:3000/View_AG_Ceo?SummaryID=eq." +str(identifier),
 
-                "Board":"http://130.185.74.40:3000/View_AG_Board?SummaryID=eq." +str(identifier),
+                "Board":"http://185.8.172.68:3000/View_AG_Board?SummaryID=eq." +str(identifier),
 
-                "NewBoard":"http://130.185.74.40:3000/View_AG_NewBoard?SummaryID=eq." +str(identifier),
+                "NewBoard":"http://185.8.172.68:3000/View_AG_NewBoard?SummaryID=eq." +str(identifier),
 
-                "Wage":"http://130.185.74.40:3000/View_AG_Wage?SummaryID=eq." +str(identifier),
+                "Wage":"http://185.8.172.68:3000/View_AG_Wage?SummaryID=eq." +str(identifier),
 
-                "Summary":"http://130.185.74.40:3000/View_AG_?ID=eq." +str(identifier)
+                "Summary":"http://185.8.172.68:3000/View_AG_?ID=eq." +str(identifier)
         }
         for link in links.values():
             resp = requests.get(link,headers = head)
@@ -59,10 +59,10 @@ def secondStepAssembly(identifier, Type):
     #-----------------------------------------------
     elif Type == 'AssemblyExtra':
         links = {
-            "IC" : "http://130.185.74.40:3000/View_AE_IC?SummaryID=eq." + str(identifier),
-            "Chief": "http://130.185.74.40:3000/View_AE_Chief?SummaryID=eq."+ str(identifier),
-            "Shareholder": "http://130.185.74.40:3000/View_AE_Shareholders?SummaryID=eq." + str(identifier),
-            "Summary": "http://130.185.74.40:3000/View_AE_?ID=eq."+ str(identifier)
+            "IC" : "http://185.8.172.68:3000/View_AE_IC?SummaryID=eq." + str(identifier),
+            "Chief": "http://185.8.172.68:3000/View_AE_Chief?SummaryID=eq."+ str(identifier),
+            "Shareholder": "http://185.8.172.68:3000/View_AE_Shareholders?SummaryID=eq." + str(identifier),
+            "Summary": "http://185.8.172.68:3000/View_AE_?ID=eq."+ str(identifier)
 
         }
         for link in links.values():
@@ -75,21 +75,21 @@ def secondStepAssembly(identifier, Type):
     #-----------------------------------------------
     elif Type == 'AssemblyGeneralExtra':
         links = {
-                "Statement":"http://130.185.74.40:3000/View_AGE_Statement?SummaryID=eq." +str(identifier),
+                "Statement":"http://185.8.172.68:3000/View_AGE_Statement?SummaryID=eq." +str(identifier),
 
-                "Cheif":"http://130.185.74.40:3000/View_AGE_Chief?SummaryID=eq." +str(identifier),
+                "Cheif":"http://185.8.172.68:3000/View_AGE_Chief?SummaryID=eq." +str(identifier),
 
-                "Shareholders":"http://130.185.74.40:3000/View_AGE_Shareholders?SummaryID=eq." +str(identifier),
+                "Shareholders":"http://185.8.172.68:3000/View_AGE_Shareholders?SummaryID=eq." +str(identifier),
 
-                "CEO":"http://130.185.74.40:3000/View_AGE_Ceo?SummaryID=eq." +str(identifier),
+                "CEO":"http://185.8.172.68:3000/View_AGE_Ceo?SummaryID=eq." +str(identifier),
 
-                "Board":"http://130.185.74.40:3000/View_AGE_Board?SummaryID=eq." +str(identifier),
+                "Board":"http://185.8.172.68:3000/View_AGE_Board?SummaryID=eq." +str(identifier),
 
-                "NewBoard":"http://130.185.74.40:3000/View_AGE_NewBoard?SummaryID=eq." +str(identifier),
+                "NewBoard":"http://185.8.172.68:3000/View_AGE_NewBoard?SummaryID=eq." +str(identifier),
 
-                "Wage":"http://130.185.74.40:3000/View_AGE_Wage?SummaryID=eq." +str(identifier),
+                "Wage":"http://185.8.172.68:3000/View_AGE_Wage?SummaryID=eq." +str(identifier),
 
-                "Summary":"http://130.185.74.40:3000/View_AGE_?ID=eq." +str(identifier)
+                "Summary":"http://185.8.172.68:3000/View_AGE_?ID=eq." +str(identifier)
         }
         for link in links.values():
             resp = requests.get(link,headers = head)
@@ -109,7 +109,7 @@ def secondStepAssembly(identifier, Type):
     # Cheif=[]
     # Summary=[]
     # Ic=[]
-    # resp=requests.get('http://130.185.74.40:3000/View_AssemblyExtraDetails?ID=eq.' + str(identifier))
+    # resp=requests.get('http://185.8.172.68:3000/View_AssemblyExtraDetails?ID=eq.' + str(identifier))
 
     # JS=json.loads(resp.text)
     # for item in JS:

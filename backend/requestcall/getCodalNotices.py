@@ -14,7 +14,7 @@ def get_true_value(x):
 def CodalNoticesRequest(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/View_CodalNotices?StockID=eq.'+str(identifier))
+            'http://185.8.172.68:3000/View_CodalNotices?StockID=eq.'+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -25,7 +25,7 @@ def CodalNoticesRequest(identifier):
 def SubHeader(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/View_SubHeaderWidget?ID=eq.'+str(identifier))
+            'http://185.8.172.68:3000/View_SubHeaderWidget?ID=eq.'+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -38,7 +38,7 @@ def SubHeader(identifier):
 def getTypeOffirm(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/monthlyreporttype?a='+str(identifier))
+            'http://185.8.172.68:3000/rpc/monthlyreporttype?a='+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -74,7 +74,7 @@ def monthlyBankDeposits(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/bankdeposits_monthly?a='+identifier, headers=head)
+            'http://185.8.172.68:3000/rpc/bankdeposits_monthly?a='+identifier, headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -86,7 +86,7 @@ def monthlyInsurance(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/insurancemonthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/insurancemonthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -98,7 +98,7 @@ def monthlyConstOngoing(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/construction_ongoing_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/construction_ongoing_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -110,7 +110,7 @@ def monthlyConstSold(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/construction_sold_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/construction_sold_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -121,7 +121,7 @@ def monthlyService(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/servicemonthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/servicemonthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -133,7 +133,7 @@ def monthlyBankFacility(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/bankfacilities_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/bankfacilities_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -145,7 +145,7 @@ def monthlyProduction(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/productionmonthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -157,7 +157,7 @@ def monthlyPAnalysis1(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/productionmonthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/productionmonthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             DF = pd.DataFrame(json.loads(resp.text))
             DF.loc[DF['category'].isnull(), 'category'] = 'Domestic_Sale'
@@ -201,7 +201,7 @@ def monthly_leasing_cost(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/leasingcost_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/leasingcost_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -213,7 +213,7 @@ def monthly_leasing_delegated(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/leasingdelegated_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/leasingdelegated_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -225,7 +225,7 @@ def monthly_leasing_revenue(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/leasingrevenue_monthly?a='+(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/leasingrevenue_monthly?a='+(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -237,7 +237,7 @@ def monthlyInvestInTransactions(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/investment_monthly_in_transactions?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/investment_monthly_in_transactions?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -249,7 +249,7 @@ def monthlyInvestOutTransactions(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/investment_monthly_out_transactions?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/investment_monthly_out_transactions?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -261,7 +261,7 @@ def monthlyInvestPortf(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/investment_monthly_portfo_transactions?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -273,7 +273,7 @@ def monthlyInvestSummary(identifier):
     try:
         head = {'Accept-Profile': 'monthly'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/investment_monthly_summary_transactions?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -287,7 +287,7 @@ def getBalanceSheetFirm(identifier):
     try:
         head = {'Accept-Profile': 'statement'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/bsall?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/bsall?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -299,7 +299,7 @@ def getBalanceSheetAggregatedFirm(identifier):
     try:
         head = {'Accept-Profile': 'statement'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/bsallaggregated?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/bsallaggregated?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -311,7 +311,7 @@ def getIncomeStatementFirm(identifier):
     try:
         head = {'Accept-Profile': 'statement'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/isall?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/isall?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -323,7 +323,7 @@ def getIncomeStatementFirmAggrregated(identifier):
     try:
         head = {'Accept-Profile': 'statement'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/isallaggregated?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/isallaggregated?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -335,7 +335,7 @@ def getCFFirm(identifier):
     try:
         head = {'Accept-Profile': 'statement'}
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/cfall?a='+str(identifier), headers=head)
+            'http://185.8.172.68:3000/rpc/cfall?a='+str(identifier), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -346,7 +346,7 @@ def getCFFirm(identifier):
 def getBoard(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/currentboard?a='+str(identifier))
+            'http://185.8.172.68:3000/rpc/currentboard?a='+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -357,7 +357,7 @@ def getBoard(identifier):
 def getceo(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/currentceo?a='+str(identifier))
+            'http://185.8.172.68:3000/rpc/currentceo?a='+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -368,7 +368,7 @@ def getceo(identifier):
 def getAllDps(identifier):
     try:
         resp = requests.get(
-            'http://130.185.74.40:3000/rpc/alldps?a='+str(identifier))
+            'http://185.8.172.68:3000/rpc/alldps?a='+str(identifier))
         if resp.status_code == 200 and not resp.text == []:
             return (json.loads(resp.text))
     except:
@@ -431,7 +431,7 @@ def getNews():
     try:
         head = {'Accept-Profile': 'news'}
         resp = requests.get(
-            'http://130.185.74.40:3000/LatestNews', headers=head)
+            'http://185.8.172.68:3000/LatestNews', headers=head)
         if resp.status_code == 200 and not resp.text == []:
             js = json.loads(resp.text)
             for item in js:
@@ -447,7 +447,7 @@ def getICNew1():
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_Proposal', headers=head)
+            'http://185.8.172.68:3000/View_IC_Proposal', headers=head)
         if resp.status_code == 200 and not resp.text == []:
 
             DF2 = pd.read_json(resp.text)
@@ -472,7 +472,7 @@ def getICNew2():
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_Assembly', headers=head)
+            'http://185.8.172.68:3000/View_IC_Assembly', headers=head)
         if resp.status_code == 200 and not resp.text == []:
             DF2 = pd.read_json(resp.text)
             DF2['CapitalChangeType'] = ''
@@ -500,7 +500,7 @@ def getICNew3():
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_N70', headers=head)
+            'http://185.8.172.68:3000/View_IC_N70', headers=head)
         if resp.status_code == 200 and not resp.text == []:
 
             DF2 = pd.read_json(resp.text)
@@ -526,7 +526,7 @@ def getICNew4():
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_N73', headers=head)
+            'http://185.8.172.68:3000/View_IC_N73', headers=head)
         if resp.status_code == 200 and not resp.text == []:
             DF2 = pd.read_json(resp.text)
             DF2['CapitalChangeType'] = ''
@@ -574,7 +574,7 @@ def get_IC_Assembly_Stock(firm):
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_N73?StockID=eq.'+str(firm), headers=head)
+            'http://185.8.172.68:3000/View_IC_N73?StockID=eq.'+str(firm), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             DF2 = pd.read_json(resp.text)
             if not DF2.empty:
@@ -603,7 +603,7 @@ def get_IC_N73_Stock(firm):
     try:
         head = {'Accept-Profile': 'codalreports'}
         resp = requests.get(
-            'http://130.185.74.40:3000/View_IC_Assembly?StockID=eq.'+str(firm), headers=head)
+            'http://185.8.172.68:3000/View_IC_Assembly?StockID=eq.'+str(firm), headers=head)
         if resp.status_code == 200 and not resp.text == []:
             DF4 = pd.read_json(resp.text)
             if not DF4.empty:

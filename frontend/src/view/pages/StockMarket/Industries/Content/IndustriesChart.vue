@@ -91,9 +91,9 @@ export default {
       cardheight: 0,
       options: [
         { text: "بازدهی", value: "D1" },
-        { text: "ارزش بازار", value: "marketCap" },
-        { text: "ارزش معاملات", value: "TradeValue" },
-        { text: "بازدهی تاریحی", value: "T" }
+        // { text: "ارزش بازار", value: "marketCap" },
+        // { text: "ارزش معاملات", value: "TradeValue" },
+        // { text: "بازدهی تاریحی", value: "T" }
       ],
       options2: [
         { text: "امروز", value: "D1" },
@@ -237,7 +237,8 @@ export default {
     },
     renderChart() {
       this.loading = true;
-      this.sortByMarketCap(this.SortBy);
+      this.sortByMarketCap(this.freq);
+      // console.log(this.DataItems2)
       // eslint-disable-next-line no-unused-vars
       let Param = this.freq;
       // const tooltip = d3

@@ -181,6 +181,9 @@ export default {
         }
       },
       series: [],
+      legend: {
+        enabled: true
+      },
       yAxis: [
         {
           labels: {
@@ -317,10 +320,13 @@ export default {
           reversed: false
         }
       },
+      legend: {
+        enabled: true
+      },
+
       tooltip: {
         split: true,
         useHTML: true,
-
         formatter: function() {
           let buyHaghighi = this.points[0].point.y;
           let toolTip1 = `<div><span style=font-size:0.9em;margin-left:2px>سرانه خرید حقیقی:</span><span style=font-size:0.9em>${buyHaghighi.toLocaleString()}</span></div>`;
