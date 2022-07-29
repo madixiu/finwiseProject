@@ -11,7 +11,6 @@ const Industries = () =>
 const IndustriesDetail = () =>
   import("@/view/pages/StockMarket/Industries/IndustriesDetail.vue");
 
-const SocialMedia = () => import("@/view/pages/Social/Social.vue");
 const Commodities = () => import("@/view/pages/Commodities/Commodities.vue");
 const CommoditiesDetail = () =>
   import("@/view/pages/Commodities/CommoditiesDetail");
@@ -279,22 +278,11 @@ export default new Router({
           component: CommoditiesDetail,
           props: true
         },
-  
-        {
-          path: "/CryptoMarketWatch",
-          name: "CryptoMarketWatch",
-          component: Crypto
-        },
 
         {
           path: "/SingleNonETF/:id",
           name: "SingleNonETF",
           component: SingleNonETF
-        },
-        {
-          path: "/SocialMedia",
-          name: "SocialMedia",
-          component: SocialMedia
         }
       ]
     },

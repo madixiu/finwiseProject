@@ -90,7 +90,7 @@ export default {
     return {
       cardheight: 0,
       options: [
-        { text: "بازدهی", value: "D1" },
+        { text: "بازدهی", value: "D1" }
         // { text: "ارزش بازار", value: "marketCap" },
         // { text: "ارزش معاملات", value: "TradeValue" },
         // { text: "بازدهی تاریحی", value: "T" }
