@@ -73,35 +73,6 @@ export default {
           console.error(error);
         });
     }
-    // loadData() {
-    //   // eslint-disable-next-line no-unused-vars
-    //   this.getAllowed().then(response => {
-    //     // eslint-disable-next-line no-unused-vars
-
-    //       this.getTwo();
-
-    //   });
-    // },
-    // async getAllowed() {
-    //   await this.axios
-    //     .get("/api/tickerallnames")
-    //     .then(response3 => {
-    //       this.allowed = response3.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
-    // async getTwo() {
-    //   await this.axios
-    //     .get("/api/CodalNotices/" + this.$route.params.id + "/")
-    //     .then(response2 => {
-    //       this.notice = response2.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // }
   }
 };
 </script>

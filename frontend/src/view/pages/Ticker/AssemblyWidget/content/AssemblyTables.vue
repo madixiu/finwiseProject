@@ -30,8 +30,6 @@
 
     <div class="col-4" style="padding-left:5px;padding-right:20px">
       <!-- Chief Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="ChiefItems.length"> -->
       <v-card elevation="14" style="margin-top:5px" v-if="ChiefItems.length">
         <v-toolbar
           dense
@@ -43,7 +41,6 @@
             >هیئت رییسه</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>هیئت رییسه</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           tbody-tr-class="ticker-assembly-table-row"
@@ -76,8 +73,6 @@
       <!-- </div> -->
 
       <!-- CEO Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="CEOItems.length"> -->
       <v-card elevation="14" style="margin-top:5px" v-if="CEOItems.length">
         <v-toolbar
           dense
@@ -89,7 +84,6 @@
             >مدیر عامل</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>مدیر عامل</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           tbody-tr-class="ticker-assembly-table-row"
@@ -106,8 +100,6 @@
       <!-- </div> -->
 
       <!-- NewBoard Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="NewBoardItems.length"> -->
       <v-card elevation="14" style="margin-top:5px" v-if="NewBoardItems.length">
         <v-toolbar
           dense
@@ -119,7 +111,6 @@
             >هیئت مدیره جدید</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>هیئت مدیره جدید</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           tbody-tr-class="ticker-assembly-table-row"
@@ -136,8 +127,6 @@
       <!-- </div> -->
 
       <!-- Wage Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="WageItems.length"> -->
       <v-card elevation="14" style="margin-top:5px" v-if="WageItems.length">
         <v-toolbar
           dense
@@ -149,7 +138,6 @@
             >حقوق و مزایای هیئت مدیره</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>حقوق و مزایای هیئت مدیره</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           tbody-tr-class="ticker-assembly-table-row"
@@ -167,8 +155,6 @@
     </div>
     <div class="col-4" style="padding-right:0px;padding-left:0px;">
       <!-- Shareholders Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="ShareholdersItems.length"> -->
       <v-card
         elevation="14"
         style="margin-top:5px"
@@ -184,7 +170,6 @@
             >حاضرین</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>حاضرین</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           tbody-tr-class="ticker-assembly-table-row"
@@ -210,8 +195,6 @@
       <!-- </div> -->
 
       <!-- Board Table -->
-
-      <!-- <div class="col-xxl-12 col-lg-12 " v-if="BoardItems.length"> -->
       <v-card elevation="14" style="margin-top:5px" v-if="BoardItems.length">
         <v-toolbar
           dense
@@ -241,9 +224,7 @@
     <!-- </div> -->
     <div class="col-4" style="padding-right:5px;padding-left:20px">
       <!-- IC table  -->
-
       <!-- Statement Table -->
-      <!-- <div class="col-xxl-12 col-lg-12" v-if="StatementItems.length"> -->
       <v-card
         elevation="14"
         style="margin-top:5px"
@@ -259,7 +240,6 @@
             >صورت مصوب</v-toolbar-title
           >
         </v-toolbar>
-        <!-- <v-card-title>صورت مصوب</v-card-title> -->
         <b-table
           class="ticker-assembly-table"
           thClass="ticker-assembly-table-head"
@@ -283,7 +263,6 @@
       <!-- </div> -->
     </div>
     <!-- Summary Table -->
-
     <!-- <div class="col-xxl-12 col-lg-12" v-if="SummaryItems.length">
                     <v-card elevation="14" style="margin-top:5px">
                       <v-card-title>خلاصه مجمع</v-card-title>
@@ -532,8 +511,7 @@ export default {
         ]
       }
     };
-  },
-  mounted() {}
+  }
 };
 </script>
 <style>
@@ -542,11 +520,6 @@ export default {
   font-weight: 500;
   text-align: center;
 }
-
-/* .ticker-assembly-table-increaseCapital {
-  font-size: 0.8rem;
-  font-weight: 400;
-} */
 .ticker-assembly-table {
   text-align: center;
   font-size: 0.8rem;
@@ -573,10 +546,6 @@ export default {
   line-height: 1;
   font-weight: 400;
   font-family: "Vazir-Medium-FD";
-}
-.selectionTable {
-  direction: rtl;
-  text-align: right;
 }
 .ICheader {
   font-size: 0.8em !important;

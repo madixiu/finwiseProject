@@ -1,10 +1,5 @@
 <template>
   <v-card rounded="lg" height="100%">
-    <!-- <div class="card-header border-0">
-      <h3 class="card-title font-weight-bolder FinancialStrength">
-        افزایش سرمایه
-      </h3>
-    </div> -->
     <v-toolbar elevation="1" dense style="height:36px;">
       <v-toolbar-title style="height:20px;font-size:0.95em;"
         >افزایش سرمایه</v-toolbar-title
@@ -34,32 +29,8 @@
         <span v-else dir="ltr">{{ roundTo(data.value, 2) }}%</span>
       </template>
     </b-table>
-    <!-- <div v-if="this.notices.length != 0 && loading == false">
-      <div>
-        <v-data-table
-          v-if="loading == false"
-          :headers="headers"
-          :items="notices"
-          class="elevation-1 FinancialStrength"
-          :header-props="{ sortIcon: null }"
-          :disable-sort="true"
-          hide-default-footer
-          disable-pagination
-        >
-          <template v-slot:[`item.PublishTime`]="{ item }">
-            <span class="cellItem">{{ item.PublishTime.split(" ")[0] }} </span>
-          </template>
-          <template v-slot:[`item.IncreasePercent`]="{ item }">
-            <span class="cellItem"
-              >{{ roundTo(item.IncreasePercent, 2) }}%
-            </span>
-          </template>
-        </v-data-table>
-      </div>
-    </div> -->
     <!--end::Body-->
   </v-card>
-  <!--end::Mixed Widget 14-->
 </template>
 
 <script>

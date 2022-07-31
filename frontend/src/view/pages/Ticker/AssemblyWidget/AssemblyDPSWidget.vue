@@ -83,17 +83,7 @@ export default {
       result.sort();
       result.reverse();
       return result;
-      // let result2 = {};
-      // // let items2 = result;
-      // let counter = 0;
-      // for (let item, i = 0; (item = result[i++]); ) {
-      //   // let name = item;
-      //   result2[counter] = item;
-      //   counter += 1;
-      // }
-      // return result2;
     }
-    // this.populateData();
   },
   watch: {
     notices() {

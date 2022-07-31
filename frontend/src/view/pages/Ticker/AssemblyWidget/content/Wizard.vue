@@ -41,18 +41,6 @@
                 <div class="wizard-bar"></div>
               </div>
             </div>
-            <!-- <div class="wizard-step" data-wizard-type="step">
-              <div class="wizard-label">
-                <h3 class="wizard-title"><span>۴</span>مرحله چهارم</h3>
-                <div class="wizard-bar"></div>
-              </div>
-            </div>
-            <div class="wizard-step" data-wizard-type="step">
-              <div class="wizard-label">
-                <h3 class="wizard-title"><span>۵</span>مرحله پنجم</h3>
-                <div class="wizard-bar"></div>
-              </div>
-            </div> -->
           </div>
         </div>
         <!--end: Wizard Nav -->
@@ -109,38 +97,6 @@
 
               <!--begin: Wizard Step 2-->
               <div class="pb-1" data-wizard-type="step-content">
-                <!-- <h4 class="mb-10 font-weight-bold text-dark">
-                  step 2
-                </h4> -->
-                <!-- <div>
-                  <b-table
-                    class="ticker-assembly-table"
-                    ref="selectableTable"
-                    selectable
-                    select-mode="single"
-                    :items="items"
-                    :fields="fields"
-                    @row-selected="onRowSelected"
-                    responsive="sm"
-                  >
-
-                    <template #cell(selected)="{ rowSelected }">
-                      <template v-if="rowSelected">
-                        <span aria-hidden="true">&check;</span>
-                        <span class="sr-only">Selected</span>
-                      </template>
-                      <template v-else>
-                        <span aria-hidden="true">&nbsp;</span>
-                        <span class="sr-only">Not selected</span>
-                      </template>
-                    </template>
-                  </b-table>
-
-                  <p>
-                    Selected Rows:<br />
-                    {{ selectedRow }}
-                  </p>
-                </div> -->
                 <v-data-table
                   v-model="stepTwoSelected"
                   :headers="stepTwoHeaders"
@@ -188,13 +144,6 @@
                   </button>
                 </div>
                 <div>
-                  <!-- <button
-                    v-on:click="submit"
-                    class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
-                    data-wizard-type="action-submit"
-                  >
-                    Submit
-                  </button> -->
                   <button
                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-2"
                     data-wizard-type="action-next"
@@ -568,13 +517,6 @@ export default {
           });
         }
       }
-      // if (wizard)
-      // Swal.fire({
-      //   title: "",
-      //   text: "The application has been successfully submitted!",
-      //   icon: "success",
-      //   confirmButtonClass: "btn btn-secondary"
-      // });
     },
     onRowSelected(items) {
       this.selectedRow = items;
@@ -588,18 +530,6 @@ export default {
 };
 </script>
 <style scoped>
-/* .ticker-assembly-table {
-  text-align: right;
-} */
-.ticker-assembly-table-head {
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.ticker-assembly-table {
-  text-align: center;
-  font-size: 0.8rem;
-  line-height: 1;
-}
 .selectionTable {
   direction: rtl;
   text-align: right;

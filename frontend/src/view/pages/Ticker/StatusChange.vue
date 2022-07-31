@@ -72,32 +72,6 @@ export default {
           console.error(error);
         });
     }
-    // loadData() {
-    //   // eslint-disable-next-line no-unused-vars
-    //   this.getOne().then(response2 => {
-    //     this.getTwo();
-    //   });
-    // },
-    // async getTwo() {
-    //   await this.axios
-    //     .get("/api/StatusChanges/" + this.$route.params.id + "/")
-    //     .then(response2 => {
-    //       this.notice = response2.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
-    // async getOne() {
-    //   await this.axios
-    //     .get("/api/LiveTicker/" + this.$route.params.id)
-    //     .then(response1 => {
-    //       this.subheaders = response1.data[0];
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // }
   }
 };
 </script>
