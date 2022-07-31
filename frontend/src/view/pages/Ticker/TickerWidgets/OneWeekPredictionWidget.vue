@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "oneWeekPredictionWidget",
   props: {
@@ -69,9 +67,6 @@ export default {
       realData: [],
       loading: true
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     // set FinancialStrength percent

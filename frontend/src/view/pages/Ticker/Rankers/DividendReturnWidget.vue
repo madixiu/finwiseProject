@@ -84,8 +84,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "DivWidget",
   props: ["RatioData"],
@@ -111,9 +109,6 @@ export default {
       ],
       ValuatedItems: []
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     // set FinancialStrength percent

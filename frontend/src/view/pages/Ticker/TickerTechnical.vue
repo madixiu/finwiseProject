@@ -36,15 +36,9 @@ export default {
   props: {
     // ticker: String
   },
-  created() {},
+ 
   computed: {
-    // ...mapState({
-    //   searchData: state => state.search.SearchBarListData
-    // }),
     ...mapGetters({ searchItems: "getSearchListData" })
-  },
-  mounted() {
-    // if (this.searchItems.length)
   },
 
   methods: {

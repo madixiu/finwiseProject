@@ -92,7 +92,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters(["layoutConfig"]),
     ...mapState({
       searchData: state => state.search.SearchBarListData
     }),

@@ -228,8 +228,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "financialStrength",
   props: ["RatioData"],
@@ -301,14 +299,6 @@ export default {
         { text: "مقدار فعلی", value: "Value", width: "70%", align: "start" }
       ]
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
-    // style() {
-    //   return {
-    //     margin: `0% 0% 0% ${this.ValuatedItems2.percentage}*100 px`,
-    //   };
-    // }
   },
   methods: {
     // set FinancialStrength percent

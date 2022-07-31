@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "PWidget",
   props: ["RatioData"],
@@ -108,9 +106,6 @@ export default {
         }
       ]
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     getColor: function(value) {

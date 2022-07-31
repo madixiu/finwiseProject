@@ -86,8 +86,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "ValuationWidget",
   props: ["RatioData", "LiveData", "ComponentData"],
@@ -113,9 +111,6 @@ export default {
       closingPrice: 0,
       ValuatedItems: []
     };
-  },
-  computed: {
-    ...mapGetters(["layoutConfig"])
   },
   methods: {
     // set FinancialStrength percent

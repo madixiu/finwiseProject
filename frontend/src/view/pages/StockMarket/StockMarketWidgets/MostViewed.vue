@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-// import axios from "axios";
 export default {
   name: "MostViewed",
   //   props: ["mostviewed"],
@@ -88,7 +86,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     filteredItems() {
       return this.DataItems.filter(item => {
         return item.marketID == this.selectedMarket;

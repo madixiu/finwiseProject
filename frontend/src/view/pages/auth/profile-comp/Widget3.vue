@@ -117,8 +117,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "widget-12",
   data() {
@@ -238,7 +236,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"]),
     dataToShow() {
       if (this.show === "month") return this.month;
       if (this.show === "week") return this.week;
