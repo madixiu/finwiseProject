@@ -73,7 +73,7 @@
     </div>
     <!--//? *************  TOOLTIP PLACEMENT ************************* -->
     <!--//? *************  Zoom Control ************************* -->
-
+    <!-- 
     <div class="TreeMaps__ZoomControls">
       <div class="ZoomIcon" @click="zoomIn()">
         <svg
@@ -131,7 +131,7 @@
           ></path>
         </svg>
       </div>
-    </div>
+    </div> -->
     <!--//? *************  Zoom Control ************************* -->
 
     <v-toolbar
@@ -164,7 +164,7 @@
         >mdi-arrow-left-circle</v-icon
       >
     </v-toolbar>
-    <panZoom
+    <!-- <panZoom
       ref="mapPanZoom"
       :options="{
         minZoom: 1,
@@ -180,22 +180,22 @@
       @zoom="zoomEndFunc"
       :style="`height:${height - 0};width:100%;`"
       selector="#MapSVG"
+    > -->
+    <!--//? The SVG structure is explicitly defined in the template with attributes derived from component data -->
+    <svg
+      id="MapSVG"
+      style="margin-left:0px;margin-top:-32px"
+      :height="height"
+      :width="width"
+      :viewBox="`0 0 ${width} ${height}`"
     >
-      <!--//? The SVG structure is explicitly defined in the template with attributes derived from component data -->
-      <svg
-        id="MapSVG"
-        style="margin-left:0px;margin-top:-32px"
-        :height="height"
-        :width="width"
-        :viewBox="`0 0 ${width} ${height}`"
+      <g
+        id="MapG"
+        style="shape-rendering: crispEdges;"
+        transform="translate(0,20)"
       >
-        <g
-          id="MapG"
-          style="shape-rendering: crispEdges;"
-          transform="translate(0,20)"
-        >
-          <!-- The top most element, representing the previous node -->
-          <!-- <g class="grandparent">
+        <!-- The top most element, representing the previous node -->
+        <!-- <g class="grandparent">
           <rect
             :height="20"
             :width="width - 2"
@@ -204,170 +204,169 @@
             :id="parentId"
           ></rect> -->
 
-          <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
-          <!-- <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
+        <!-- The visible square text element with the id (basically a breadcumb, if you will) -->
+        <!-- <text class="grandparentText" dy=".65em" :x="width / 2" y="0">
             {{ selectedNode.data.name }}
           </text>
         </g> -->
-          <!-- We can use Vue transitions too! -->
-          <transition-group
-            name="fade"
-            mode="out-in"
-            tag="g"
-            class="depth"
-            v-if="selectedNode"
+        <!-- We can use Vue transitions too! -->
+        <transition-group
+          name="fade"
+          mode="out-in"
+          tag="g"
+          class="depth"
+          v-if="selectedNode"
+        >
+          <!--//? Generate each of the visible squares at a given zoom level (the current selected node) -->
+          <g
+            class="children"
+            v-for="children in selectedNode._children"
+            :key="'c_' + children.id"
+            @mousemove="mouse_move_child(children, $event)"
+            @mouseout="tooltip = false"
           >
-            <!--//? Generate each of the visible squares at a given zoom level (the current selected node) -->
-            <g
-              class="children"
-              v-for="children in selectedNode._children"
-              :key="'c_' + children.id"
-              @mousemove="mouse_move_child(children, $event)"
-              @mouseout="tooltip = false"
-            >
-              <!-- 
+            <!-- 
               The visible square rect element.
               You can attribute directly an event, that fires a method that changes the current node,
               restructuring the data tree, that reactivly gets reflected in the template.
             -->
-              <g v-if="selectedNode.depth == 1" direction="ltr">
-                <rect
-                  class="parent"
-                  :id="children.id"
-                  :key="children.data.id"
-                  :x="x(children.x0)"
-                  :y="y(children.y0) + 15"
-                  :width="x(children.x1 - children.x0 + children.parent.x0)"
-                  :height="y(children.y1 - children.y0 + children.parent.y0)"
-                  :style="getColor(children.data.change)"
-                  @click="ChildClick(children)"
-                ></rect>
-                <text
-                  class="parentChildsText"
-                  dy="1em"
-                  :key="'name_' + children.data.id"
-                  :x="x(children.x0) + 6"
-                  :y="y(children.y0) + 15"
-                  :style="InnerTickerTextFontSizeAdjust(children)"
-                >
-                  {{ children.data.name }}
-                </text>
-
-                <text
-                  class="parentChildsValue"
-                  dy="2.3em"
-                  :key="'change_' + children.data.id"
-                  :x="x(children.x0) + 6"
-                  :y="y(children.y0) + 15"
-                  :style="InnerTickerTextFontSizeAdjust(children)"
-                >
-                  {{ children.data.change }}%
-                </text>
-              </g>
-
-              <!-- //?Generate the children squares (only visible on hover of a square) -->
-              <g
-                v-for="child in children._children"
-                :key="'c_' + child.id"
-                class="childG"
-                direction="ltr"
-                @mousemove="mouse_move(child, $event)"
-                @mouseout="tooltip = false"
+            <g v-if="selectedNode.depth == 1" direction="ltr">
+              <rect
+                class="parent"
+                :id="children.id"
+                :key="children.data.id"
+                :x="x(children.x0)"
+                :y="y(children.y0) + 15"
+                :width="x(children.x1 - children.x0 + children.parent.x0)"
+                :height="y(children.y1 - children.y0 + children.parent.y0)"
+                :style="getColor(children.data.change)"
+                @click="ChildClick(children)"
+              ></rect>
+              <text
+                class="parentChildsText"
+                dy="1em"
+                :key="'name_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0) + 15"
+                :style="InnerTickerTextFontSizeAdjust(children)"
               >
-                <rect
-                  v-on:click="selectNode"
-                  class="child"
-                  :id="child.id"
-                  :key="child.data.id"
-                  :height="y(child.y1) - y(child.y0)"
-                  :width="x(child.x1) - x(child.x0)"
-                  :x="x(child.x0)"
-                  :y="y(child.y0)"
-                  :style="getColor(child.data.change)"
-                ></rect>
-                <!-- ticker TEXT ********************************* -->
-                <text
-                  class="childTickerName"
-                  dy="-0.6em"
-                  :key="'name_t_' + child.id"
-                  :x="XText(child.x0, child.x1)"
-                  :y="YText(child.y0, child.y1)"
-                  :style="
-                    tickerTextFontSizeAdjust(
-                      child.x0,
-                      child.x1,
-                      child.y0,
-                      child.y1
-                    )
-                  "
-                >
-                  {{ child.data.name }}
-                </text>
-                <text
-                  class="childTickerValue"
-                  dy="1em"
-                  :key="'percent_t_' + child.id"
-                  :x="XText(child.x0, child.x1)"
-                  :y="YText2(child.y0, child.y1)"
-                  :style="
-                    tickerTextFontSizeAdjust(
-                      child.x0,
-                      child.x1,
-                      child.y0,
-                      child.y1
-                    )
-                  "
-                >
-                  {{ child.data.change + "%" }}
-                </text>
-                <!-- ticker TEXT ********************************* -->
-              </g>
+                {{ children.data.name }}
+              </text>
 
-              <!--//? HEADER SQUARES WITH NAMES ***************************** -->
-              <g v-if="selectedNode.depth == 0">
-                <rect
-                  v-on:click="selectNode"
-                  class="parentSquare"
-                  :x="x(children.x0)"
-                  :y="y(children.y0)"
-                  :width="x(children.x1 - children.x0 + children.parent.x0)"
-                  height="15"
-                ></rect>
-                <rect
-                  class="littleSquare"
-                  :x="x(children.x0) + 5"
-                  :y="y(children.y0) + 8"
-                  width="10"
-                  height="10"
-                  style="fill:#262931;transform-box:fill-box;"
-                  transform="rotate(45)"
-                  transform-origin="50% 50%"
-                ></rect>
-                <text
-                  class="parentSquareText"
-                  v-if="selectedNode.depth == 0"
-                  dy="0.8em"
-                  :key="'name_' + children.data.id"
-                  :x="x(children.x0) + 6"
-                  :y="y(children.y0)"
-                >
-                  {{ children.data.name }}
-                </text>
-              </g>
-              <!--//? HEADER SQUARES WITH NAMES ***************************** -->
-
-              <!--//? The visible square text element with the title and value of the child node -->
+              <text
+                class="parentChildsValue"
+                dy="2.3em"
+                :key="'change_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0) + 15"
+                :style="InnerTickerTextFontSizeAdjust(children)"
+              >
+                {{ children.data.change }}%
+              </text>
             </g>
-          </transition-group>
-        </g>
-      </svg>
-    </panZoom>
+
+            <!-- //?Generate the children squares (only visible on hover of a square) -->
+            <g
+              v-for="child in children._children"
+              :key="'c_' + child.id"
+              class="childG"
+              direction="ltr"
+              @mousemove="mouse_move(child, $event)"
+              @mouseout="tooltip = false"
+            >
+              <rect
+                v-on:click="selectNode"
+                class="child"
+                :id="child.id"
+                :key="child.data.id"
+                :height="y(child.y1) - y(child.y0)"
+                :width="x(child.x1) - x(child.x0)"
+                :x="x(child.x0)"
+                :y="y(child.y0)"
+                :style="getColor(child.data.change)"
+              ></rect>
+              <!-- ticker TEXT ********************************* -->
+              <text
+                class="childTickerName"
+                dy="-0.6em"
+                :key="'name_t_' + child.id"
+                :x="XText(child.x0, child.x1)"
+                :y="YText(child.y0, child.y1)"
+                :style="
+                  tickerTextFontSizeAdjust(
+                    child.x0,
+                    child.x1,
+                    child.y0,
+                    child.y1
+                  )
+                "
+              >
+                {{ child.data.name }}
+              </text>
+              <text
+                class="childTickerValue"
+                dy="1em"
+                :key="'percent_t_' + child.id"
+                :x="XText(child.x0, child.x1)"
+                :y="YText2(child.y0, child.y1)"
+                :style="
+                  tickerTextFontSizeAdjust(
+                    child.x0,
+                    child.x1,
+                    child.y0,
+                    child.y1
+                  )
+                "
+              >
+                {{ child.data.change + "%" }}
+              </text>
+              <!-- ticker TEXT ********************************* -->
+            </g>
+
+            <!--//? HEADER SQUARES WITH NAMES ***************************** -->
+            <g v-if="selectedNode.depth == 0">
+              <rect
+                v-on:click="selectNode"
+                class="parentSquare"
+                :x="x(children.x0)"
+                :y="y(children.y0)"
+                :width="x(children.x1 - children.x0 + children.parent.x0)"
+                height="15"
+              ></rect>
+              <rect
+                class="littleSquare"
+                :x="x(children.x0) + 5"
+                :y="y(children.y0) + 8"
+                width="10"
+                height="10"
+                style="fill:#262931;transform-box:fill-box;"
+                transform="rotate(45)"
+                transform-origin="50% 50%"
+              ></rect>
+              <text
+                class="parentSquareText"
+                v-if="selectedNode.depth == 0"
+                dy="0.8em"
+                :key="'name_' + children.data.id"
+                :x="x(children.x0) + 6"
+                :y="y(children.y0)"
+              >
+                {{ children.data.name }}
+              </text>
+            </g>
+            <!--//? HEADER SQUARES WITH NAMES ***************************** -->
+
+            <!--//? The visible square text element with the title and value of the child node -->
+          </g>
+        </transition-group>
+      </g>
+    </svg>
+    <!-- </panZoom> -->
   </div>
 </template>
 
 <script>
 import { scaleLinear, scaleOrdinal, scaleQuantize } from "d3-scale";
-//// import {json} from 'd3-request'
 import { hierarchy, treemap } from "d3-hierarchy";
 //? To be explicit about which methods are from D3 let's wrap them around an object
 //? Is there a better way to do this?
@@ -380,8 +379,6 @@ let d3 = {
   hierarchy: hierarchy,
   treemap: treemap
 };
-//// import data from "@/components/data/map2.json";
-//// import mapData from "./data/map2.json";
 export default {
   name: "treemap",
   props: {
@@ -917,10 +914,7 @@ export default {
     },
     tickerTextFontSizeAdjust(x0, x1, y0, y1) {
       let c = ((x1 - x0) * (y1 - y0) * 100) / (this.height * this.width);
-      // console.log(c);
       let constant = 0.7335775996;
-      // console.log(name);
-      // console.log(Math.pow(c,0.2)/constant);
       if (c < 0.01) return "font-size:0rem";
       else return `font-size:${Math.pow(c, 0.5) / constant}em`;
 
@@ -947,86 +941,82 @@ export default {
       // let negativeBase = -0.22777777777777775;
       // val = parseFloat(val);
       if (0.05 > val && val > -0.05) {
-        // console.log(val);
-        // console.log("black");
         color = "fill:#414554"; // color 0
       } else if (0.05 <= val && val <= 5) {
-        // console.log("pos");
         color = "fill:" + this.positiveColor(val);
       } else if (-5 <= val && val <= -0.05) {
-        // console.log("neg");
         color = "fill:" + this.negativeColor(val);
       } else if (val > 5) color = "fill:#30cc5a";
       else if (val < -5) color = "fill:#f63538";
 
       return color;
-    },
-    panEndFunc() {
-      setTimeout(() => {
-        this.panned = false;
-      }, 1000);
-    },
-    zoomEndFunc() {
-      // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
-      let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
-      if (zoomData.scale < 1.005 && zoomData.scale != 1) {
-        this.$refs.mapPanZoom.$panZoomInstance.zoomTo(0, 0, 0);
-        this.$refs.mapPanZoom.$panZoomInstance.moveTo(0, 0);
-
-        // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
-      }
-    },
-    fullScreenMode() {
-      let element = document.getElementById("treemapContainer");
-      if (!this.fullscreen) {
-        this.height = this.fullscreenSize.height;
-        this.width = this.fullscreenSize.width;
-
-        this.initialize();
-        this.accumulate(this.rootNode, this);
-        this.treemap(this.rootNode);
-        element.requestFullscreen();
-        this.fullscreen = true;
-      } else {
-        this.height = this.originalSize.height;
-        this.width = this.originalSize.width;
-        this.initialize();
-        this.accumulate(this.rootNode, this);
-        this.treemap(this.rootNode);
-        document.exitFullscreen();
-        this.fullscreen = false;
-      }
-    },
-    zoomIn() {
-      // let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
-      // console.log(zoomData);
-      this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
-        this.width / 2,
-        this.height / 2,
-        1.4
-      );
-    },
-    zoomOut() {
-      let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
-      // console.log(zoomData);
-      if (zoomData.scale > 1.004)
-        this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
-          this.width / 2,
-          this.height / 2,
-          0.7
-        );
-      else if (zoomData.scale <= 1.004)
-        this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(0, 0, 0);
-      // this.$refs.mapPanZoom.$panZoomInstance.moveTo(0.5, 0.5);
     }
+    // panEndFunc() {
+    //   setTimeout(() => {
+    //     this.panned = false;
+    //   }, 1000);
+    // },
+    // zoomEndFunc() {
+    //   // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
+    //   let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
+    //   if (zoomData.scale < 1.005 && zoomData.scale != 1) {
+    //     this.$refs.mapPanZoom.$panZoomInstance.zoomTo(0, 0, 0);
+    //     this.$refs.mapPanZoom.$panZoomInstance.moveTo(0, 0);
+
+    //     // console.log(this.$refs.mapPanZoom.$panZoomInstance.getTransform());
+    //   }
+    // },
+    // fullScreenMode() {
+    //   let element = document.getElementById("treemapContainer");
+    //   if (!this.fullscreen) {
+    //     this.height = this.fullscreenSize.height;
+    //     this.width = this.fullscreenSize.width;
+
+    //     this.initialize();
+    //     this.accumulate(this.rootNode, this);
+    //     this.treemap(this.rootNode);
+    //     element.requestFullscreen();
+    //     this.fullscreen = true;
+    //   } else {
+    //     this.height = this.originalSize.height;
+    //     this.width = this.originalSize.width;
+    //     this.initialize();
+    //     this.accumulate(this.rootNode, this);
+    //     this.treemap(this.rootNode);
+    //     document.exitFullscreen();
+    //     this.fullscreen = false;
+    //   }
+    // },
+    // zoomIn() {
+    //   // let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
+    //   // console.log(zoomData);
+    //   this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
+    //     this.width / 2,
+    //     this.height / 2,
+    //     1.4
+    //   );
+    // },
+    // zoomOut() {
+    //   let zoomData = this.$refs.mapPanZoom.$panZoomInstance.getTransform();
+    //   // console.log(zoomData);
+    //   if (zoomData.scale > 1.004)
+    //     this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(
+    //       this.width / 2,
+    //       this.height / 2,
+    //       0.7
+    //     );
+    //   else if (zoomData.scale <= 1.004)
+    //     this.$refs.mapPanZoom.$panZoomInstance.smoothZoom(0, 0, 0);
+    //   // this.$refs.mapPanZoom.$panZoomInstance.moveTo(0.5, 0.5);
+    // }
   }
 };
 </script>
 
 <style scoped>
-text {
+/* text {
   pointer-events: none;
-}
+} */
 
 .grandparent text {
   /* font-weight: bold; */
@@ -1162,41 +1152,7 @@ rect {
 .children:hover text.parentSquareText {
   fill: black !important;
 }
-/* .tooltipTreeMapHeader {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
-div#tooltipTreeMap {
-  position: absolute;
-  width: 220px;
-  height: auto;
-  padding: 5px;
-  background-color: white;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}
-.flex-container {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  align-items: center;
-}
-.flex-items {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: auto;
-  align-self: auto;
-  order: 0;
-} */
+
 div#tooltipTreeMap {
   position: absolute;
   /* top: 20px; */
@@ -1242,12 +1198,6 @@ div#tooltipTreeMap {
   /* align-self: auto; */
   order: 0;
 }
-.flex-item2 {
-  flex-grow: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .tooltipTreeMapHeader {
   display: flex;
   align-content: center;
@@ -1270,22 +1220,7 @@ div#tooltipTreeMap {
   /* border:1px solid; */
   /* border-color:crimson; */
 }
-.tooltipTreeMapRow2 {
-  width: 100%;
-  /* height: 120px; */
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-right: 0px !important;
-  margin-left: 0px !important;
-  padding-right: 0px;
-  /* margin-bottom:1px; */
 
-  /* border:1px solid; */
-  /* border-color:crimson; */
-}
-/* .TreeMapToolbar /deep/ .v-sheet.theme--light.v-toolbar.v-toolbar--dense {
-  height: 30px !important;
-} */
 .TreeMapToolbar /deep/ .v-toolbar__content {
   height: 30px !important;
 }
