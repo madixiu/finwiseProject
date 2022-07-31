@@ -138,7 +138,7 @@ def tickerNameRequest():
 def getCalculatedValuationRatios(identifier):
     try:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://185.8.172.68:3000/View_ValuationRatios?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_ValuationRatios?firm=eq.'+str(identifier),headers=head,timeout=3.05)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
     except:
@@ -148,7 +148,7 @@ def getCalculatedValuationRatios(identifier):
 def getFundamentalRatiosToDisplay(identifier):
     try:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://185.8.172.68:3000/RatiosToDisplay?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/RatiosToDisplay?firm=eq.'+str(identifier),headers=head,timeout=3.05)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
     except:
@@ -158,7 +158,7 @@ def getFundamentalRatiosToDisplay(identifier):
 def getFundamentalLatestComponents(identifier):
     try:
         head = {'Accept-Profile':'statement'}
-        resp = requests.get('http://185.8.172.68:3000/View_LatestValuationComponent?firm=eq.'+str(identifier),headers=head)
+        resp = requests.get('http://185.8.172.68:3000/View_LatestValuationComponent?firm=eq.'+str(identifier),headers=head,timeout=3.05)
         if resp.status_code == 200 and resp.text!='[]' :
             return (json.loads(resp.text))
     except:

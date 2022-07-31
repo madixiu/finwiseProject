@@ -54,13 +54,13 @@ urlpatterns = [
    path("HHhistoryGraph/<identifier>/",getHHhistory),
    path("AdjustedPrices/<identifier>/",getAdjustedPriceHistory),
    path("AdjustedPricesCodal/<identifier>/<type>",getAdjustedPriceHistoryCodal),
-   path("StatsTicker/<identifier>/",getStatsTicker),
-   path("LiveHHTicker/<identifier>/",getLiveHHTicker),
+   path("StatsTicker/<identifier>",getStatsTicker),
+   path("LiveHHTicker/<identifier>",getLiveHHTicker),
    path("LiveTicker/<identifier>",getLiveTicker),
-   path("Fundamental/ValuationRatio/<identifier>/",getValuationRatios),
-   path("Fundamental/Ratios/RatioToDisplay/<identifier>/",getRatiosAll),
-   path("Fundamental/Ratios/LatestComponents/<identifier>/",getComponentsAll),
-   path("Ticker/TechnicalIndicators/<identifier>/",getIndicators),
+   path("Fundamental/ValuationRatio/<identifier>",getValuationRatios),
+   path("Fundamental/Ratios/RatioToDisplay/<identifier>",getRatiosAll),
+   path("Fundamental/Ratios/LatestComponents/<identifier>",getComponentsAll),
+   path("Ticker/TechnicalIndicators/<identifier>",getIndicators),
    path("Ticker/TechnicalIndicatorSingle/<identifier>",getIndicators2),
    path("Ticker/TechnicalIndicatorsAll",getIndicatorsAll),
    path("Ticker/TechnicalTrends/<identifier>/",getTechnicalTrends),
@@ -92,7 +92,7 @@ urlpatterns = [
    path("Statement/IncomeStatementAggregated/<identifier>/",getIncomeStatementAllAggregated),
    path("Statement/CashFlow/<identifier>/",getCFAll),
    ###
-   path("AI/OneWeekStockPrediction/<identifier>/",get1weekStockPrediction),
+   path("AI/OneWeekStockPrediction/<identifier>",get1weekStockPrediction),
    
 ############
    ###Crypto

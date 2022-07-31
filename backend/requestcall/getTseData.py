@@ -11,7 +11,7 @@ def Top5MostViewed():
     resp = requests.get(
         'http://185.231.115.223:3000/ViewTop5MostViewed', headers=head)
     if resp.status_code == 200:
-        return (json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -22,9 +22,9 @@ def ImpactOnIndex():
         'http://185.231.115.223:3000/ViewImpactOnIndex', headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -35,9 +35,9 @@ def getLiveHHtickerData(identifier):
         'http://185.231.115.223:3000/View_Live_Stock_HH?ID=eq.'+str(identifier), headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -48,9 +48,9 @@ def getShareholdersList(identifier):
         'http://185.231.115.223:3000/View_ShareHolders?ID=eq.'+str(identifier), headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -61,9 +61,9 @@ def getStatisticsTicker(identifier):
         'http://185.231.115.223:3000/rpc/statisticsticker?a='+str(identifier), headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -93,9 +93,9 @@ def highestTvolumes():
         'http://185.231.115.223:3000/ViewHighestTradeVolumes', headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -106,9 +106,9 @@ def getMarketHH():
         'http://185.231.115.223:3000/ViewDashboard_HHDetailsStock', headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -119,9 +119,9 @@ def highestTvalues():
         'http://185.231.115.223:3000/ViewHighestTradeValues', headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -132,9 +132,9 @@ def highestDemands():
         'http://185.231.115.223:3000/View_HighestDemands', headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -144,10 +144,7 @@ def highestSupplies():
     resp = requests.get(
         'http://185.231.115.223:3000/View_HighestSupplies', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -158,9 +155,9 @@ def get_AdminsNotice(identifier):
         'http://185.231.115.223:3000/rpc/adminsnotice?a='+str(identifier), headers=head)
     if resp.status_code == 200:
 
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+      
+        return json.loads(resp.text)
+        
     else:
         return "noData"
 
@@ -217,9 +214,7 @@ def getIndicesDetails(identifier):
         ShakhesJS = ShakhesDataModifier(ShakhesJS)
         # result.append({"Tepix":ShakhesJS})
         result["Tepix"] = ShakhesJS
-
         return result
-        # return(json.loads(resp.text))
     else:
         return "noData"
 
@@ -338,10 +333,7 @@ def TradeValueHH():
     resp = requests.get(
         'http://185.231.115.223:3000/View_TradeValuesHH_Total', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -351,10 +343,7 @@ def TradeValueHHBasedOnAsset():
     resp = requests.get(
         'http://185.231.115.223:3000/View_TradeValuesHH_Assets', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -364,10 +353,7 @@ def TradeValueAsset():
     resp = requests.get(
         'http://185.231.115.223:3000/View_TradeValues_Assets', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -377,10 +363,7 @@ def getLatestTwoIndex():
     resp = requests.get(
         'http://185.231.115.223:3000/View_LiveIndex', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -406,10 +389,7 @@ def getTodayNetHHValue():
     resp = requests.get(
         'http://185.231.115.223:3000/View_NetInHaghighi_Stock', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
@@ -419,35 +399,34 @@ def getTodayAdvDescStocks():
     resp = requests.get(
         'http://185.231.115.223:3000/View_Ascending_Descending_Stock', headers=head)
     if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+        return json.loads(resp.text)
     else:
         return "noData"
 
 
 def getTodayAdvDescIndustries():
-    head = {'Accept-Profile': 'marketwatch'}
-    resp = requests.get(
-        'http://185.231.115.223:3000/View_Ascending_Descending_Industry', headers=head)
-    if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
-    else:
+    try:
+        head = {'Accept-Profile': 'marketwatch'}
+        resp = requests.get(
+            'http://185.231.115.223:3000/View_Ascending_Descending_Industry', headers=head)
+        if resp.status_code == 200:
+            return json.loads(resp.text)
+        else:
+            return "noData"
+    except:
         return "noData"
-
 
 def getTodayWinnersLosers():
     head = {'Accept-Profile': 'marketwatch'}
     resp = requests.get(
         'http://185.231.115.223:3000/View_WinnersLosers', headers=head)
-    if resp.status_code == 200:
-
-        # return(resp.text)
-        return (json.loads(resp.text))
-        # return(json.loads(resp.text))
+    if resp.status_code == 200 and resp.text != []:
+        data =  json.loads(resp.text)
+        winners = data[10:20]
+        losers = data[0:10]
+        winners = sorted(winners, key=lambda x: x['returnDaily'], reverse=True)
+        losers = sorted(losers, key=lambda x: x['returnDaily'], reverse=False)
+        output = {'winners':winners,'losers':losers}
+        return output
     else:
         return "noData"

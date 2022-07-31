@@ -77,7 +77,7 @@ export default {
       TechnicalData: [],
       WebsocketRequest: false,
       interval: null,
-      WinLose: [],
+      WinLose: {},
       advancingInd: [],
       advancing: []
     };

@@ -8,12 +8,12 @@
         ></SubHeaderWidget>
       </div>
       <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
-        <liveWidget2
+        <liveWidget
           :liveData="livedata"
           :Indicators="techdata"
           :FundamentalRobot="FundamentalRobot"
           :priceHistory="priceHistory"
-        ></liveWidget2>
+        ></liveWidget>
       </div>
       <!-- <div class="col-xxl-12 col-lg-12 col-md-12" style="padding-top:0px">
         <liveWidget
@@ -72,7 +72,6 @@
         <AnalystWidget></AnalystWidget>
       </div> -->
     </div>
-    <!--end::Dashboard-->
   </div>
 </template>
 
@@ -83,42 +82,27 @@ import {
   ADD_BREADCRUMB,
   SET_BREADCRUMB_TITLE
 } from "@/core/services/store/breadcrumbs.module";
-// import { ADD_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-// import liveWidget from "@/view/pages/Ticker/Rankers/liveWidget.vue";
-import liveWidget2 from "@/view/pages/Ticker/TickerWidgets/liveWidget2.vue";
-// import TechnicalWidget from "@/view/pages/Ticker/TickerWidgets/TechnicalIndicators.vue";
+
+import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
+import liveWidget from "@/view/pages/Ticker/TickerWidgets/liveWidget.vue";
 import FSWidget from "@/view/pages/Ticker/Rankers/FinStrengthWidget.vue";
 import VWidget from "@/view/pages/Ticker/Rankers/ValuationWidget.vue";
 import PWidget from "@/view/pages/Ticker/Rankers/ProfitabilityWidget.vue";
 import ReturnWidget from "@/view/pages/Ticker/Rankers/ValuationReturnWidget.vue";
 import DivWidget from "@/view/pages/Ticker/Rankers/DividendReturnWidget.vue";
 import AIWidget from "@/view/pages/Ticker/TickerWidgets/OneWeekPredictionWidget.vue";
-// import FundamentalRobotWidget from "@/view/pages/Ticker/TickerWidgets/FundamentalRobotWidget.vue";
-
-// import AnalystWidget from "@/view/pages/Ticker/Rankers/AnalystWidget.vue";
-// import MoreStatisticsWidget from "@/view/pages/Ticker/Rankers/MoreInfoWidget.vue";
-// import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
-
-import SubHeaderWidget from "@/view/pages/Ticker/TickerWidgets/subHeaderWidget.vue";
 
 export default {
   name: "TickerOverall",
   components: {
-    // liveWidget,
-    liveWidget2,
+    SubHeaderWidget,
+    liveWidget,
     FSWidget,
     VWidget,
     PWidget,
     ReturnWidget,
     DivWidget,
-    AIWidget,
-    // FundamentalRobotWidget,
-
-    // AnalystWidget,
-    // MoreSMtatisticsWidget,
-    // TechnicalWidget,
-    // SubHeaderWidget,
-    SubHeaderWidget
+    AIWidget
   },
   data() {
     return {
@@ -214,7 +198,7 @@ export default {
     },
     async getBonyadi() {
       await this.axios
-        .get("/api/Fundamental/ValuationRatio/" + this.$route.params.id + "/")
+        .get("/api/Fundamental/ValuationRatio/" + this.$route.params.id)
         .then(getBonyadiResp => {
           this.FundamentalRobot = getBonyadiResp.data;
         })
@@ -224,7 +208,7 @@ export default {
     },
     async getHH() {
       await this.axios
-        .get("/api/LiveHHTicker/" + this.$route.params.id + "/")
+        .get("/api/LiveHHTicker/" + this.$route.params.id)
         .then(response3 => {
           this.hhdata = response3.data;
         })
@@ -235,7 +219,7 @@ export default {
 
     async getTickerStats() {
       await this.axios
-        .get("/api/StatsTicker/" + this.$route.params.id + "/")
+        .get("/api/StatsTicker/" + this.$route.params.id)
         .then(response2 => {
           this.stats = response2.data;
         })
@@ -245,7 +229,7 @@ export default {
     },
     async getTechnical() {
       await this.axios
-        .get("/api/Ticker/TechnicalIndicators/" + this.$route.params.id + "/")
+        .get("/api/Ticker/TechnicalIndicators/" + this.$route.params.id)
         .then(responsetech => {
           this.techdata = responsetech.data;
         })
@@ -255,11 +239,7 @@ export default {
     },
     async getRatios() {
       await this.axios
-        .get(
-          "/api/Fundamental/Ratios/RatioToDisplay/" +
-            this.$route.params.id +
-            "/"
-        )
+        .get("/api/Fundamental/Ratios/RatioToDisplay/" + this.$route.params.id)
         .then(responseratio => {
           this.ratiodata = responseratio.data;
         })
@@ -285,9 +265,7 @@ export default {
     async getComponentData() {
       await this.axios
         .get(
-          "/api/Fundamental/Ratios/LatestComponents/" +
-            this.$route.params.id +
-            "/"
+          "/api/Fundamental/Ratios/LatestComponents/" + this.$route.params.id
         )
         .then(responsec => {
           this.componentdata = responsec.data;
@@ -298,7 +276,7 @@ export default {
     },
     async getPredictionData() {
       await this.axios
-        .get("/api/AI/OneWeekStockPrediction/" + this.$route.params.id + "/")
+        .get("/api/AI/OneWeekStockPrediction/" + this.$route.params.id)
         .then(responsep => {
           this.predictiondata = responsep.data;
         })

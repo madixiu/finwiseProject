@@ -1,19 +1,11 @@
 <template>
-  <!--begin::Mixed Widget 14-->
-  <!-- <div class="card card-custom card-stretch gutter-b"> -->
   <div class="col-12" style="padding-right:0px;padding-top:0px;padding-top:0px">
     <v-card width="100%" shaped>
       <!--begin::Header-->
-      <!-- <div class="card-header border-0 pt-2"> -->
-      <!-- <h3 class="card-title font-weight-bolder FinancialStrength">
-        بیشترین ارزش معاملات
-      </h3> -->
       <v-toolbar dense class="elevation-2" style="height:36px;">
         <v-toolbar-title style="height:20px;font-size:0.95em">
           برنده ها و بازنده های بازار امروز
         </v-toolbar-title>
-        <!-- <template v-slot:extension>
-        </template> -->
       </v-toolbar>
       <v-tabs
         v-model="selectedAttribute"
@@ -42,7 +34,7 @@
           :key="itemR.key"
           :value="itemR.key"
         >
-          <div class="FinancialStrength" v-if="loading">
+          <div style="text-align: center; direction: rtl" v-if="loading">
             <b-spinner small></b-spinner>
             در حال بارگزاری
           </div>
@@ -55,7 +47,7 @@
             :hide-default-footer="true"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
-            class="elevation-1 FinancialStrength"
+            class="elevation-1"
             :items-per-page="10"
           >
             <template v-slot:[`item.ticker`]="{ item }">
@@ -63,9 +55,9 @@
                 item.ticker
               }}</router-link>
             </template>
-            <template v-slot:[`item.sum`]="{ item }">
+            <template v-slot:[`item.returnDaily`]="{ item }">
               <div style="direction:ltr">
-                <span class="cellItem">{{ item.sum }}</span>
+                <span>{{ item.returnDaily }}</span>
               </div>
             </template>
           </v-data-table>
@@ -77,8 +69,8 @@
 
 <script>
 export default {
-  name: "TradeValues",
-  props: { inputWinLose: Array },
+  name: "WinnerLosersWidget",
+  props: { inputWinLose: Object },
   data() {
     return {
       sortBy: "Value",
@@ -107,7 +99,7 @@ export default {
   },
   computed: {
     filteredItems() {
-      if (this.selectedAttribute == 1) {
+      if (this.selectedAttribute == 0) {
         return this.highestValues;
       } else {
         return this.lowestValues;
@@ -118,20 +110,11 @@ export default {
     linkcreated(item) {
       return { name: "TickerOverall", params: { id: item.ID } };
     },
-    // GetFiltered(selectedItem) {
-    //   this.selectedAttribute = selectedItem;
-    // },
     loadData() {
-      if (!(this.inputWinLose === undefined || this.inputWinLose.length == 0)) {
+      if (this.inputWinLose != "noData") {
         this.loading = false;
-        this.highestValues = this.inputWinLose.slice(0, 10);
-        this.highestValues.sort(function(a, b) {
-          return a.returnDaily - b.returnDaily;
-        });
-        this.lowestValues = this.inputWinLose.slice(10, 20);
-        this.lowestValues.sort(function(a, b) {
-          return b.returnDaily - a.returnDaily;
-        });
+        this.highestValues = this.inputWinLose.winners;
+        this.lowestValues = this.inputWinLose.losers;
       }
     }
   },
@@ -142,40 +125,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left !important;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
-/* .cellItem { */
-/* font-family: "Vazir-Light-FD"; */
-/* font-weight: 700; */
-/* } */
-</style>

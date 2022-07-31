@@ -36,7 +36,7 @@ export default {
       },
       HHoptions: {
         chart: {
-          animations: { enabled: true },
+          animations: { enabled: false },
           type: "bar",
           height: 100,
           fontFamily: "Vazir-Medium-FD",

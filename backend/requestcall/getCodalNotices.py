@@ -431,7 +431,7 @@ def getNews():
     try:
         head = {'Accept-Profile': 'news'}
         resp = requests.get(
-            'http://185.8.172.68:3000/LatestNews', headers=head)
+            'http://185.8.172.68:3000/LatestNews', headers=head, timeout=3)
         if resp.status_code == 200 and not resp.text == []:
             js = json.loads(resp.text)
             for item in js:

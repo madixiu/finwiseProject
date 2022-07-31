@@ -226,40 +226,4 @@ export default {
 .IncreaseCapitalsWidget-table /deep/ .IncreaseCapitalsWidget-tableTD {
   vertical-align: middle;
 }
-
-.cellItem {
-  font-family: "Vazir-Medium-FD";
-  font-weight: 600;
-}
-.FinancialStrength {
-  direction: rtl;
-  text-align: right;
-}
-.rtl_centerd {
-  direction: rtl;
-  text-align: center;
-}
-.ltr_aligned {
-  direction: ltr !important;
-  text-align: left;
-}
-.valign * {
-  vertical-align: middle;
-}
-.redItem {
-  color: #ef5350 !important;
-}
-.greenItem {
-  color: #088a2f93 !important;
-}
-.titleHeaders {
-  padding: 5px;
-  font-size: 1em;
-  text-align: right;
-}
-.titleHeaders-smaller {
-  padding: 1px;
-  font-size: 0.9em;
-  text-align: right;
-}
 </style>
