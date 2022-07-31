@@ -1,30 +1,8 @@
 <template>
   <div>
     <!--begin::Content header-->
-    <!-- 
-    <div class="container">
-      <v-container>
-        <v-row>
-
-        </v-row>
-      </v-container>
-    </div> -->
     <v-card class="cardColor">
       <v-container>
-        <!-- <v-divider></v-divider> -->
-        <!-- <div class=" justify-content-center position-absolute top-0 right-0">
-    
-          <router-link
-            class="font-weight-bold font-size-3 ml-2"
-            :to="{ name: 'register' }"
-          >
-            ثبت نام
-          </router-link>
-        </div> -->
-        <!--end::Content header-->
-
-        <!--begin::Signin-->
-        <!-- MAY REMOVE THIS DIV (REDUNDANT) -->
         <!-- //? title -->
         <div class="">
           <div class="text-center">
@@ -127,11 +105,6 @@
                   </b-form-invalid-feedback>
                 </b-form-group>
               </v-col>
-              <!-- <v-col class="">
-                <v-icon @click="refresh" small color="#4d4444"
-                  >mdi-refresh</v-icon
-                >
-              </v-col> -->
               <v-col class="d-flex justify-end">
                 <i
                   id="LoginRefreshIcon"
@@ -139,7 +112,6 @@
                   aria-hidden="true"
                   class="v-icon notranslate mdi mdi-refresh theme--light"
                 ></i>
-                <!-- <v-icon class=""  color="#4d4444">mdi-refresh</v-icon> -->
                 <vue-captcha
                   ref="captcha"
                   :captcha.sync="code"
@@ -170,12 +142,6 @@
                 @click="onSubmit"
                 >ورود</v-btn
               >
-              <!-- <button
-                ref="kt_login_signin_submit"
-                class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
-              >
-                ورود
-              </button> -->
               <router-link
                 class="text-dark-60 text-hover-primary mt-2"
                 id="kt_login_forgot"
@@ -186,9 +152,6 @@
             </div>
             <v-divider></v-divider>
             <div class="justify-content-center">
-              <!-- <span class="font-weight-bold font-size-3 text-dark-60">
-            ثبت نام نکرده اید؟
-          </span> -->
               <router-link
                 class="font-weight-bold font-size-3 ml-2"
                 :to="{ name: 'register' }"
@@ -231,7 +194,9 @@ export default {
   // eslint-disable-next-line no-unused-vars
   beforeRouteEnter: (to, from, next) => {
     next(vm => {
-      vm.NextRoutePath = from.path;
+      if (from.path != "/passReset" && from.path != "/register")
+        vm.NextRoutePath = from.path;
+      else vm.NextRoutePath = "/StockMarket/Dashboard/";
     });
     // next();
   },
