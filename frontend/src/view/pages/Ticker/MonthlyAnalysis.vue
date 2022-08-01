@@ -118,7 +118,7 @@ export default {
     },
     async getleasingCost() {
       await this.axios
-        .get("/api/Monthly/Leasing/Cost/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Leasing/Cost/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -132,7 +132,7 @@ export default {
     },
     async getleasingrevenue() {
       await this.axios
-        .get("/api/Monthly/Leasing/Revenue/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Leasing/Revenue/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -146,7 +146,7 @@ export default {
     },
     async getleasingdelegated() {
       await this.axios
-        .get("/api/Monthly/Leasing/Delegated/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Leasing/Delegated/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -160,7 +160,7 @@ export default {
     },
     async getConstructionSold() {
       await this.axios
-        .get("/api/Monthly/Construction/Sold/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Construction/Sold/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -174,14 +174,11 @@ export default {
     },
     async getConstructionOngoing() {
       await this.axios
-        .get(
-          "/api/Monthly/Construction/Ongoing/" + this.$route.params.id + "/",
-          {
-            headers: {
-              Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
-            }
+        .get("/api/Monthly/Construction/Ongoing/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
-        )
+        })
         .then(response2 => {
           this.deposits = response2.data;
         })
@@ -191,14 +188,11 @@ export default {
     },
     async getProduction() {
       await this.axios
-        .get(
-          "/api/Monthly/ProductionAnalysis1/" + this.$route.params.id + "/",
-          {
-            headers: {
-              Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
-            }
+        .get("/api/Monthly/ProductionAnalysis1/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
-        )
+        })
         .then(response2 => {
           this.notice = response2.data["1"];
           this.deposits = response2.data["2"];
@@ -209,7 +203,7 @@ export default {
     },
     async getService() {
       await this.axios
-        .get("/api/Monthly/Service/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Service/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -223,7 +217,7 @@ export default {
     },
     async getInsurance() {
       await this.axios
-        .get("/api/Monthly/Insurance/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Insurance/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -237,7 +231,7 @@ export default {
     },
     async getType() {
       await this.axios
-        .get("/api/Monthly/Type/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Type/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -256,7 +250,7 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get("/api/Monthly/Bank/Deposits/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Bank/Deposits/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -270,7 +264,7 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get("/api/Monthly/Bank/Facilities/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Bank/Facilities/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -285,9 +279,7 @@ export default {
     async getTransIn() {
       await this.axios
         .get(
-          "/api/Monthly/Investment/InTransactions/" +
-            this.$route.params.id +
-            "/",
+          "/api/Monthly/Investment/InTransactions/" + this.$route.params.id,
           {
             headers: {
               Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
@@ -304,9 +296,7 @@ export default {
     async getTransOut() {
       await this.axios
         .get(
-          "/api/Monthly/Investment/OutTransactions/" +
-            this.$route.params.id +
-            "/",
+          "/api/Monthly/Investment/OutTransactions/" + this.$route.params.id,
           {
             headers: {
               Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
@@ -322,7 +312,7 @@ export default {
     },
     async getSummary() {
       await this.axios
-        .get("/api/Monthly/Investment/Summary/" + this.$route.params.id + "/", {
+        .get("/api/Monthly/Investment/Summary/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
@@ -336,14 +326,11 @@ export default {
     },
     async getPortfo() {
       await this.axios
-        .get(
-          "/api/Monthly/Investment/Portfolio/" + this.$route.params.id + "/",
-          {
-            headers: {
-              Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
-            }
+        .get("/api/Monthly/Investment/Portfolio/" + this.$route.params.id, {
+          headers: {
+            Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
-        )
+        })
         .then(response3 => {
           this.portfo = response3.data;
         })

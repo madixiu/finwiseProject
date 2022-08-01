@@ -69,7 +69,7 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get("/api/CurrentBoard/" + this.$route.params.id + "/")
+        .get("/api/CurrentBoard/" + this.$route.params.id)
         .then(response2 => {
           this.notice = response2.data;
         })
@@ -79,7 +79,7 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get("/api/CurrentCeo/" + this.$route.params.id + "/")
+        .get("/api/CurrentCeo/" + this.$route.params.id)
         .then(response3 => {
           this.deposit = response3.data;
         })

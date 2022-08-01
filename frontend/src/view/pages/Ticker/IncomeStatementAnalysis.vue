@@ -57,11 +57,7 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get(
-          "api/Statement/IncomeStatementAggregated/" +
-            this.$route.params.id +
-            "/"
-        )
+        .get("api/Statement/IncomeStatementAggregated/" + this.$route.params.id)
         .then(response3 => {
           this.IncAG = response3.data;
         })
@@ -71,7 +67,7 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get("api/Statement/IncomeStatement/" + this.$route.params.id + "/")
+        .get("api/Statement/IncomeStatement/" + this.$route.params.id)
         .then(response4 => {
           this.IncS = response4.data;
         })

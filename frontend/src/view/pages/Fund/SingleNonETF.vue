@@ -207,7 +207,7 @@ export default {
     async getOne() {
       this.metadata = [];
       await this.axios
-        .get("/api/Funds/FundsMeta/" + this.$route.params.id + "/")
+        .get("/api/Funds/FundsMeta/" + this.$route.params.id)
         .then(response1 => {
           this.metadata = response1.data[0];
           // this.$store.dispatch(SET_BREADCRUMB, [{ title: "صندوق غیر بورسی" }]);
@@ -222,7 +222,7 @@ export default {
       this.industrydata = [];
 
       await this.axios
-        .get("/api/Funds/FundsIndustry/" + this.$route.params.id + "/")
+        .get("/api/Funds/FundsIndustry/" + this.$route.params.id)
         .then(response1 => {
           this.industrydata = response1.data;
         })
@@ -234,7 +234,7 @@ export default {
       this.assettypedata = [];
 
       await this.axios
-        .get("/api/Funds/FundsAsset/" + this.$route.params.id + "/")
+        .get("/api/Funds/FundsAsset/" + this.$route.params.id)
         .then(response1 => {
           this.assettypedata = response1.data;
         })
@@ -245,7 +245,7 @@ export default {
     async getFour() {
       this.historicNavData = [];
       await this.axios
-        .get("/api/Funds/FundsHistoricNAV/" + this.$route.params.id + "/")
+        .get("/api/Funds/FundsHistoricNAV/" + this.$route.params.id)
         .then(response1 => {
           this.historicNavData = response1.data;
         })
@@ -256,7 +256,7 @@ export default {
     async getFive() {
       this.LiveNavData = [];
       await this.axios
-        .get("/api/Funds/FundsLive/" + this.$route.params.id + "/")
+        .get("/api/Funds/FundsLive/" + this.$route.params.id)
         .then(response1 => {
           this.LiveNavData = response1.data;
         })

@@ -65,7 +65,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/AdminNotice/" + this.$route.params.id + "/")
+        .get("/api/AdminNotice/" + this.$route.params.id)
         .then(response2 => {
           if (response2.data != "noData") {
             this.notice = response2.data;

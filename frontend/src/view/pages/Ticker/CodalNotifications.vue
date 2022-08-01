@@ -65,7 +65,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/CodalNotices/" + this.$route.params.id + "/")
+        .get("/api/CodalNotices/" + this.$route.params.id)
         .then(response2 => {
           this.notice = response2.data;
         })

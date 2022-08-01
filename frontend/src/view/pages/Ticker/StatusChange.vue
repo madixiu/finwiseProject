@@ -64,7 +64,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/StatusChanges/" + this.$route.params.id + "/")
+        .get("/api/StatusChanges/" + this.$route.params.id)
         .then(response2 => {
           this.notice = response2.data;
         })

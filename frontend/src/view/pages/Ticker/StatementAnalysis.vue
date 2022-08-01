@@ -61,9 +61,7 @@ export default {
     },
     async getTwo() {
       await this.axios
-        .get(
-          "api/Statement/BalanceSheetAggregated/" + this.$route.params.id + "/"
-        )
+        .get("api/Statement/BalanceSheetAggregated/" + this.$route.params.id)
         .then(response3 => {
           this.BalAg = response3.data;
         })
@@ -73,7 +71,7 @@ export default {
     },
     async getThree() {
       await this.axios
-        .get("api/Statement/BalanceSheet/" + this.$route.params.id + "/")
+        .get("api/Statement/BalanceSheet/" + this.$route.params.id)
         .then(response4 => {
           this.Bal = response4.data;
         })

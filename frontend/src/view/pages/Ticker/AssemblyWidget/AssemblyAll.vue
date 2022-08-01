@@ -48,7 +48,7 @@ export default {
   methods: {
     // async loadData() {
     //   await this.axios
-    //     .get("/api/Alldps/" + this.$route.params.id + "/")
+    //     .get("/api/Alldps/" + this.$route.params.id)
     //     .then(response2 => {
     //       this.notice = response2.data;
     //     })

@@ -51,7 +51,7 @@ export default {
   methods: {
     async getLiveTickerData() {
       await this.axios
-        .get("/api/LiveTicker/" + this.$route.params.id + "/")
+        .get("/api/LiveTicker/" + this.$route.params.id)
         .then(LiveTickerResponse => {
           this.subheaders = LiveTickerResponse.data[0];
           this.$store.dispatch("SetLiveTickerData", this.subheaders);
@@ -64,7 +64,7 @@ export default {
     },
     async loadData() {
       await this.axios
-        .get("/api/Ticker/HH/" + this.$route.params.id + "/")
+        .get("/api/Ticker/HH/" + this.$route.params.id)
         .then(response2 => {
           if (response2.data != "noData") {
             this.notice = response2.data;

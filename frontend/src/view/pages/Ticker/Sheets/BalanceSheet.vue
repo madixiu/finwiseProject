@@ -49,7 +49,7 @@ export default {
   methods: {
     async loadData() {
       await this.axios
-        .get("api/Statement/BalanceSheet/" + this.$route.params.id + "/", {
+        .get("api/Statement/BalanceSheet/" + this.$route.params.id, {
           headers: {
             Authorization: `bearer ${this.$store.getters.currentUserAccessToken}`
           }
