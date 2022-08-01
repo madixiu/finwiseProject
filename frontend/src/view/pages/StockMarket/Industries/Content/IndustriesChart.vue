@@ -259,7 +259,7 @@ export default {
         .attr("preserveAspectRatio", "xMidYMid meet")
         .style(
           "background",
-          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+          "url(../../media/logos/fadedfinwise3.png) no-repeat bottom 50px right 50px"
         );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
@@ -367,16 +367,18 @@ export default {
         .scaleQuantize()
         .domain([-100, 100])
         .range([
-          "#f63538",
-          "#eb363a",
-          "#e0373c",
-          "#c9393f",
-          "#b33b43",
-          "#379a58",
-          "#35ab59",
-          "#33bc5a",
-          "#32c45a",
-          "#30cc5a"
+          // "#f63538",
+          // "#eb363a",
+          // "#e0373c",
+          // "#c9393f",
+          // "#b33b43",
+          // "#379a58",
+          // "#35ab59",
+          // "#33bc5a",
+          // "#32c45a",
+          // "#30cc5a"
+          "#dc0600",
+          "#00ad13"
         ]);
       chart
         .selectAll("text.bar")
@@ -462,7 +464,7 @@ export default {
           )
         )
         .attr("width", xLeft.bandwidth())
-        .attr("fill", "#4b4453")
+        .attr("fill", "#011627")
         .style("font-size", function() {
           return 1200 / this.width + "em";
         });

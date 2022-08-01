@@ -1,21 +1,23 @@
 @font-face {
   font-family: "Vazir-Medium-FD";
   src: url("Vazir-Medium-FD.woff") format("woff");
+  font-display: auto;
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Vazir-Light-FD";
   src: url("Vazir-Light-FD.woff") format("woff");
+  font-display: auto;
   font-weight: normal;
   font-style: normal;
 }
-@font-face {
+/* @font-face {
   font-family: "IBMPlexSans";
   src: url("IBMPlexSans.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-}
+} */
 * {
     font-family: "Vazir-Medium-FD";
 }

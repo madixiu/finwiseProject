@@ -172,7 +172,6 @@ export default {
         chart: {
           type: "bar",
           fontFamily: "Vazir-Medium-FD",
-          // background: '../../../../media/logos/fadedfinwise.png',
           stacked: false,
           toolbar: {
             show: true,
@@ -300,7 +299,6 @@ export default {
         chart: {
           type: "bar",
           fontFamily: "Vazir-Medium-FD",
-          // background: '../../../../media/logos/fadedfinwise.png',
           stacked: true,
           toolbar: {
             show: false

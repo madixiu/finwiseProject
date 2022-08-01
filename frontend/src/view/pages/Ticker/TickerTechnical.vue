@@ -20,7 +20,6 @@ export default {
   watch: {
     "$route.params": {
       handler(newValue, oldValue) {
-        // console.log(newValue, oldValue);
         if (newValue != oldValue && newValue != undefined) {
           this.ticker = this.Ticker(newValue.id);
         }
@@ -33,18 +32,12 @@ export default {
       }
     }
   },
-  props: {
-    // ticker: String
-  },
- 
   computed: {
     ...mapGetters({ searchItems: "getSearchListData" })
   },
 
   methods: {
     Ticker(ID) {
-      // console.log(this.searchItems);
-      // console.log(ID);
       let itemA = this.searchItems.filter(function(item) {
         return item.ID == ID && (item.TypeID == 25 || item.TypeID == 1);
       });

@@ -543,7 +543,7 @@ export default {
         .attr("preserveAspectRatio", "xMidYMid meet")
         .style(
           "background",
-          "url(../../media/logos/fadedfinwise.png) no-repeat center "
+          "url(../../media/logos/fadedfinwise3.png) no-repeat bottom 50px right 20px "
         );
       // eslint-disable-next-line no-unused-vars
       const chart = svg
