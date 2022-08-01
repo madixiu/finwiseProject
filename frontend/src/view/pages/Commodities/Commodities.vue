@@ -76,27 +76,6 @@
                     :gridOptions="gridOptions"
                     @grid-ready="onGridReady"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in dollargold"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>{{ item.persianName }} </v-col>
-                    <v-col> {{ numberWithCommas(item.price) }} ریال </v-col>
-                    <v-col>
-                      {{ item.Date }}
-                    </v-col>
-                  </v-row> -->
                 </v-card-text>
               </v-card>
             </v-col>
@@ -108,8 +87,6 @@
                     >فلزات</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>فلزات</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height:  400px; font-family: 'Vazir-Medium-FD'"
@@ -122,37 +99,8 @@
                     @grid-ready="onMetalGridReady"
                     :asyncTransactionWaitMillis="asyncTransactionWaitMillis"
                   ></ag-grid-vue>
-                  <!-- <v-row no-gutters class="pb-2">
-                    <v-col> </v-col>
-                    <v-col>
-                      قیمت
-                    </v-col>
-                    <v-col>
-                      تاریخ
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    v-for="item in metal1"
-                    :key="item.persianName"
-                    no-gutters
-                    class="pb-2"
-                  >
-                    <v-col>
-                      <span class="comItems">{{ item.persianName }}</span>
-                    </v-col>
-                    <v-col>
-                      {{ numberWithCommas(item.lastPrice) }}
-                      <v-chip small class="chips"
-                        >{{ item.changeperc }}
-                      </v-chip>
-                    </v-col>
-                    <v-col>
-                      <span class="comDates">{{ item.persianDate }}</span>
-                    </v-col>
-                  </v-row> -->
-                </v-card-text>
-              </v-card></v-col
-            >
+                </v-card-text> </v-card
+            ></v-col>
           </v-row>
           <v-row no-gutters class="pb-2">
             <v-col class="mr-2 ml-1"
@@ -162,8 +110,6 @@
                     >انرژی</v-toolbar-title
                   >
                 </v-toolbar>
-                <!-- <v-card-title>انرژی</v-card-title>
-                <v-divider></v-divider> -->
                 <v-card-text>
                   <ag-grid-vue
                     style="width: 100%; height: 150px; font-family: 'Vazir-Light-FD'"
