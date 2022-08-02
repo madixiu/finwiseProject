@@ -1330,7 +1330,7 @@ export default {
         .then(PetroResponse => {
           let data = PetroResponse.data;
           if (
-             data != "noData" &&
+            data != "noData" &&
             data != "notAuthorized" &&
             data != "AccessDenied"
           ) {
@@ -1351,7 +1351,7 @@ export default {
         .then(MBResponse => {
           let data = MBResponse.data;
           if (
-             data != "noData" &&
+            data != "noData" &&
             data != "notAuthorized" &&
             data != "AccessDenied"
           ) {

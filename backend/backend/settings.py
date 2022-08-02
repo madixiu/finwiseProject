@@ -55,7 +55,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -214,25 +214,24 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 # ! change the database on production
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase.db',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'finwiseDB',
-#         'USER': 'finwise',
-#         'PASSWORD':env('DATABASE_PASSWORD'),
-#       # 'HOST': 'db',                   # noqa
-#         'HOST': '171.22.25.73',
-#         'PORT': 5432,
-
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase.db',
 #     }
-
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'finwiseDB',
+        'USER': 'finwise',
+        'PASSWORD':env('DATABASE_PASSWORD'),
+      # 'HOST': 'db',                   # noqa
+        'HOST': '171.22.25.73',
+        'PORT': 5432,
+
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

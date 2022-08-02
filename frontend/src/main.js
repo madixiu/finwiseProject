@@ -31,10 +31,10 @@ import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 
 // Adding GOOGLE ANALYTICS
-// import VueGtag from "vue-gtag";
-// Vue.use(VueGtag, {
-//   config: { id: "G-YGH92K65WQ" }
-// });
+import VueGtag from "vue-gtag";
+Vue.use(VueGtag, {
+  config: { id: "G-YGH92K65WQ" }
+});
 import LoadScript from "vue-plugin-load-script";
 
 Vue.use(LoadScript);
@@ -54,10 +54,10 @@ Vue.use(HighchartsVue);
 // Vue.use(HighchartsVue, {
 //   highcharts: Highcharts
 // });
-import panZoom from "vue-panzoom";
+// import panZoom from "vue-panzoom";
 
 // install plugin
-Vue.use(panZoom);
+// Vue.use(panZoom);
 
 import moment from "vue-jalali-moment";
 
@@ -76,8 +76,8 @@ Vue.use(moment);
 // HTTP connection to the API graphql/apollo
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  // uri: "https://finwise.ir/graphql"
-  uri: "http://localhost:8000/graphql"
+  uri: "finwise.ir/graphql"
+  // uri: "http://localhost:8000/graphql"
 });
 const authLink = setContext((_, { headers }) => {
   if (store.getters.currentUserAccessToken) {

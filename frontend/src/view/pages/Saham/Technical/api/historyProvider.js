@@ -81,7 +81,7 @@ export default {
     //     }
     //   });
     return rp({
-      url: `http://localhost:8000/api/TVData/${qs.limits}/${qs.url}/${qs.todate}/${qs.typeof}`
+      url: `finwise.ir/api/TVData/${qs.limits}/${qs.url}/${qs.todate}/${qs.typeof}`
     }).then(data => {
       if (data.Response && data.Response === "Error") {
         return [];

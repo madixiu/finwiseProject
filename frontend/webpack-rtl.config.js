@@ -25,7 +25,7 @@ const entries = {
 
 const mainConfig = function() {
   return {
-    mode: "developing",
+    mode: "production",
     stats: "errors-only",
     performance: {
       hints: false
@@ -72,7 +72,7 @@ const mainConfig = function() {
             {
               loader: "sass-loader",
               options: {
-                sourceMap: true
+                sourceMap: false
               }
             }
           ]
