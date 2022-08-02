@@ -1273,7 +1273,11 @@ export default {
           this.isBusy = false;
 
           let data = responseIR.data;
-          if (data != "noData") {
+          if (
+            data != "noData" &&
+            data != "notAuthorized" &&
+            data != "AccessDenied"
+          ) {
             this.dollargold = data[1];
             this.gold = data[2];
             this.currencies = data[3];
@@ -1298,12 +1302,18 @@ export default {
           this.isBusy = false;
 
           let data = response.data;
-          // this.tableData2 = data;
-          this.metal1 = data[1];
-          this.energy1 = data[2];
-          this.forex1 = data[3];
-          this.indices = data[4];
-          // this.prepareData2();
+          if (
+            data != "noData" &&
+            data != "notAuthorized" &&
+            data != "AccessDenied"
+          ) {
+            this.metal1 = data[1];
+            this.energy1 = data[2];
+            this.forex1 = data[3];
+            this.indices = data[4];
+          } else {
+            this.WebsocketRequest = false;
+          }
         })
         .catch(error => {
           this.isBusy = false;
@@ -1318,7 +1328,14 @@ export default {
           }
         })
         .then(PetroResponse => {
-          this.petro = PetroResponse.data;
+          let data = PetroResponse.data;
+          if (
+             data != "noData" &&
+            data != "notAuthorized" &&
+            data != "AccessDenied"
+          ) {
+            this.petro = data;
+          }
         })
         .catch(error => {
           console.error(error);
@@ -1332,7 +1349,14 @@ export default {
           }
         })
         .then(MBResponse => {
-          this.MB = MBResponse.data;
+          let data = MBResponse.data;
+          if (
+             data != "noData" &&
+            data != "notAuthorized" &&
+            data != "AccessDenied"
+          ) {
+            this.MB = data;
+          }
         })
         .catch(error => {
           console.error(error);
