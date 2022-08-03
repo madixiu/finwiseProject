@@ -16,7 +16,7 @@ services:
       - pg-data:/var/lib/postgresql/data
   
   backend: &backend
-    container_name: backendTest
+    container_name: backendServer
     build:
       context: ./backend
       #dockerfile: scripts/prod/Dockerfile
@@ -31,13 +31,13 @@ services:
       - db
   asgiserver:
     <<: *backend
-    container_name: asgiserver
+    container_name: asgiServer
     entrypoint: /start_asgi.sh
     volumes: 
       - ./backend:/backend
 
   nginx:
-    container_name: nginxTest
+    container_name: nginx
     build:
       context: .
       dockerfile: nginx/prod/Dockerfile
@@ -48,6 +48,7 @@ services:
       - main
     volumes:
       - django-static:/usr/src/app/static
+      - nginxConf/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
     
@@ -67,6 +68,7 @@ volumes:
   portainer-data:
   pg-data:
   redis-data:
+  nginxConf:
 
 networks:
   main:

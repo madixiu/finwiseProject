@@ -66,9 +66,9 @@ class random(AsyncWebsocketConsumer):
         await self.accept()
         
         self.is_connected = True
-        # while (self.is_connected):
-        #     await self.send(text_data=str(get_number()))
-        #     await asyncio.sleep(5)
+        while (self.is_connected):
+            await self.send(text_data=str(get_number()))
+            await asyncio.sleep(5)
             
       
         # await self.close()
@@ -233,22 +233,22 @@ class getHighestSupplies(AsyncWebsocketConsumer):
         self.close()
         raise StopConsumer()
 
-class getMarketWatch(AsyncWebsocketConsumer):
-    async def connect(self):
-        await self.accept()
+# class getMarketWatch(AsyncWebsocketConsumer):
+#     async def connect(self):
+#         await self.accept()
     
-    async def receive(self, text_data):
-        data = json.loads(text_data)
-        if data.get("request") == "get":
-            text_data = json.dumps(getFilteredData(data.get("data").get("marketName"),data.get("data").get('marketIndustry')));
-            await self.send(text_data)
-            return
-        if data.get("request") == "halt":
-            return
-    async def disconnect(self, code):
-        self.close()
-        raise StopConsumer()
-        # return super().disconnect(code)
+#     async def receive(self, text_data):
+#         data = json.loads(text_data)
+#         if data.get("request") == "get":
+#             text_data = json.dumps(getFilteredData(data.get("data").get("marketName"),data.get("data").get('marketIndustry')));
+#             await self.send(text_data)
+#             return
+#         if data.get("request") == "halt":
+#             return
+#     async def disconnect(self, code):
+#         self.close()
+#         raise StopConsumer()
+#         # return super().disconnect(code)
 
 class getMarketMap(AsyncWebsocketConsumer):
     async def connect(self):

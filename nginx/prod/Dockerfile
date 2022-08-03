@@ -9,7 +9,7 @@ COPY frontend /frontend/
 RUN npm run build
 
 # production stage
-FROM nginx:stable-alpine as production-stage
+FROM nginx:stable as production-stage
 COPY nginx/prod/prod.conf /etc/nginx/nginx.conf
 COPY nginx/prod/letsencrypt /etc/letsencrypt/
 COPY nginx/prod/SSL /etc/SSL/
