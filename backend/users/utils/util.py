@@ -4,7 +4,10 @@ import random
 
 # @shared_task
 def get_number(): # noqa
-    return int(random.random() * 1000000)
+    randomNumber = 1
+    while len(str(randomNumber)) < 6:
+        randomNumber = int(random.random() * 1000000)
+    return randomNumber
 
 def VerifyToken(username):
     payload = {"username": username, "action": "activation"}

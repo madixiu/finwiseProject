@@ -304,7 +304,8 @@ export default {
       if (!this.verified) {
         if (!this.numberField) {
           const email = this.$v.form.email.$model;
-          this.EmailpostRequest(email);
+          console.log(email);
+          this.EmailpostRequest();
         } else {
           const inputNumber = this.$v.form.number.$model;
           const email = this.$v.form.email.$model;
@@ -322,7 +323,9 @@ export default {
         this.buttonLoading = false;
       }, 2000);
     },
-    EmailpostRequest(email) {
+    EmailpostRequest() {
+      let email = this.$v.form.email.$model;
+      console.log(email);
       this.axios({
         method: "post",
         url: "/user/passwordReset",
