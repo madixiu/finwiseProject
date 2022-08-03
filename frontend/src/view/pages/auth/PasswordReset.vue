@@ -246,7 +246,6 @@ export default {
     },
     checkError(errorsIn) {
       let listOfErrors = [];
-      // console.log(this.$store.getters.errors);
       let errors = errorsIn;
       if (errors.newPassword2) {
         for (let x of errors.newPassword2) {
@@ -272,7 +271,6 @@ export default {
             listOfErrors.push("رمز وارد شده فقط متشکل از اعداد است");
 
           this.ErrorMsgText.password2 = listOfErrors;
-          // console.log(listOfErrors);
         }
       }
     },
@@ -303,8 +301,7 @@ export default {
       }
       if (!this.verified) {
         if (!this.numberField) {
-          const email = this.$v.form.email.$model;
-          console.log(email);
+          // const email = this.$v.form.email.$model;
           this.EmailpostRequest();
         } else {
           const inputNumber = this.$v.form.number.$model;
@@ -325,7 +322,6 @@ export default {
     },
     EmailpostRequest() {
       let email = this.$v.form.email.$model;
-      console.log(email);
       this.axios({
         method: "post",
         url: "/user/passwordReset",
@@ -358,7 +354,6 @@ export default {
         });
     },
     VerifypostRequest(email, inputNumber) {
-      // console.log(email, inputNumber);
       this.axios({
         method: "post",
         url: "/user/passwordReset",
@@ -398,7 +393,6 @@ export default {
           let response = data.data.passwordReset;
           if (response.success) {
             this.$router.push({ name: "login" });
-            // console.log("PASS CHANGED");
           } else {
             // this.ErrorMsgflag = true;
             // this.$store.dispatch("SET_ERROR", data.data.register.errors);
