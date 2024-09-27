@@ -5,6 +5,15 @@
 </template>
 
 <style lang="scss">
+// Main style scss
+// @import "assets/sass/style.vue";
+
+// Check documentation for RTL css
+// Update HTML with RTL attribute at public/index.html
+// @import "assets/css/style.vue.rtl";
+@import "assets/css/MainCSS.min.css";
+@import "assets/font/MainFont.css";
+
 // 3rd party plugins css
 // @import "assets/sass/custom.scss";
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
@@ -15,16 +24,6 @@
 @import "assets/plugins/flaticon/flaticon.css";
 @import "assets/plugins/flaticon2/flaticon.css";
 @import "assets/plugins/keenthemes-icons/font/ki.css";
-@import "assets/font/MainFont.css";
-
-// Main style scss
-// @import "assets/sass/style.vue";
-
-// Check documentation for RTL css
-// Update HTML with RTL attribute at public/index.html
-// @import "assets/css/style.vue.rtl";
-@import "assets/css/MainCSS.min.css";
-
 .v-toolbar__content {
   height: 36px !important;
 }

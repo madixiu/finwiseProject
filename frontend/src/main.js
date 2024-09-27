@@ -49,15 +49,10 @@ hcMore(Highcharts);
 Stock(Highcharts);
 Vue.use(HighchartsVue);
 
-// import HighchartsVue from "highcharts-vue";
-// import Highcharts from "highcharts";
-// Vue.use(HighchartsVue, {
-//   highcharts: Highcharts
-// });
-import panZoom from "vue-panzoom";
+// import panZoom from "vue-panzoom";
 
 // install plugin
-Vue.use(panZoom);
+// Vue.use(panZoom);
 
 import moment from "vue-jalali-moment";
 
@@ -166,52 +161,6 @@ export const EventBus = new Vue();
 //   // of transactions for performance monitoring.
 //   // We recommend adjusting this value in production
 //   tracesSampleRate: 1.0
-// });
-
-//router Account rules
-// router.beforeEach((to, from, next) => {
-//   let user = store.getters.currentUser;
-//   if (
-//     (to.name == "Industries" ||
-//       to.name == "IndustriesDetail" ||
-//       to.name == "Taghadom" ||
-//       to.name == "TickerAssemblyDPSAndIC") &&
-//     Object.keys(user).length === 0
-//   )
-//     next({ name: "login" });
-//   if (
-//     (to.name == "AssemblyIC" || to.name == "TechnicalMoreInfo") &&
-//     (user.role < 2 || Object.keys(user).length === 0)
-//   )
-//     next({ name: "login" });
-//   if (
-//     (to.name == "Option" ||
-//       to.name == "commodities" ||
-//       to.name == "Monthly" ||
-//       to.name == "BalanceSheet" ||
-//       to.name == "IncomeStatement" ||
-//       to.name == "CashFlow" ||
-//       to.name == "AdjustedPrices") &&
-//     (user.role < 3 || Object.keys(user).length === 0)
-//   )
-//     next({ name: "login" });
-
-//   if (
-//     to.name == "CommoditiesDetail" &&
-//     (user.role < 4 || Object.keys(user).length === 0)
-//   )
-//     next({ name: "login" });
-//   else next();
-// });
-// router.beforeEach((to, from, next) => {
-// reset config to initial state
-// store.dispatch(RESET_LAYOUT_CONFIG);
-//   next();
-//   router.push({ name: "dashboard" });
-//   // Scroll page to top on every route change
-//   setTimeout(() => {
-//     window.scrollTo(0, 0);
-//   }, 100);
 // });
 
 new Vue({

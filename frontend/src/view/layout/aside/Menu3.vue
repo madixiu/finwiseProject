@@ -15,10 +15,6 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <!--//! ATTENTION -->
-          <!--//? router path here -->
-
-          <!-- :to="`/ticker/Overview/Overall/${$route.params.id}/`" -->
           <router-link
             :to="`/ticker/Overview/Overall/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -114,51 +110,6 @@
               </a>
             </li>
           </router-link>
-
-          <!--//! route here -->
-          <!-- :to="`/ticker/Overview/Board/${$route.params.id}/`" -->
-          <!-- <router-link
-            :to="`#`"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"></i>
-                <span class="menu-text">هیئت مدیره</span>
-                <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
-              </a>
-            </li>
-          </router-link> -->
-
-          <!-- :to="`/ticker/Overview/shareholders/${$route.params.id}/`" -->
-          <!-- <router-link
-            :to="`#`"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"></i>
-                <span class="menu-text">سهامداران</span>
-                <v-icon size="15px" color="#4682B4">mdi-lock-outline</v-icon>
-              </a>
-            </li>
-          </router-link> -->
         </ul>
       </div>
     </li>
@@ -182,46 +133,6 @@
         </a>
       </li>
     </router-link>
-
-    <!-- <router-link
-      :to="`/ticker/TickerFundamental/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-line-chart"></i>
-          <span class="menu-text">بنیادی</span>
-        </a>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link
-      :to="`/ticker/TickerTechnical/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon-analytics"></i>
-          <span class="menu-text">تکنیکال</span>
-        </a>
-      </li>
-    </router-link> -->
 
     <li
       aria-haspopup="true"
@@ -276,10 +187,6 @@
               </a>
             </li>
           </router-link>
-          <!--//! ATTENTION -->
-          <!--//? router path here -->
-          <!-- :to="`/ticker/TickerTechnicalTrend/${$route.params.id}/`" -->
-
           <router-link
             :to="`#`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -474,65 +381,6 @@
         </ul>
       </div>
     </li>
-
-    <!-- <router-link
-      :to="`/ticker/sahmrobot/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-user-1"></i>
-          <span class="menu-text">ربات</span>
-        </a>
-      </li> 
-    </router-link 
-    >‍-->
-    <!-- <router-link
-      :to="`/ticker/TickerRatio/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-console"></i>
-          <span class="menu-text">نسبت ها</span>
-        </a>
-      </li> </router-link
-    >‍ -->
-    <!-- <router-link
-      :to="`/ticker/TickerIndustry/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-gear"></i>
-          <span class="menu-text">در صنعت</span>
-        </a>
-      </li> 
-    </router-link>‍ -->
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -548,25 +396,6 @@
       </a>
       <div class="menu-submenu menu-submenu-classic menu-submenu-right">
         <ul class="menu-subnav">
-          <!-- <router-link
-            :to="`/ticker/TickerAssembly/Calendar/${$route.params.id}/`"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"></i>
-                <span class="menu-text">تقویم مجامع</span>
-              </a>
-            </li>
-          </router-link> -->
           <router-link
             :to="`/ticker/TickerAssembly/Report/${$route.params.id}/`"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -605,48 +434,9 @@
               </a>
             </li>
           </router-link>
-          <!-- <router-link
-            :to="`/ticker/TickerAssembly/DPSAndIC/${$route.params.id}/`"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot"></i>
-                <span class="menu-text">افزایش سرمایه</span>
-              </a>
-            </li>
-          </router-link> -->
         </ul>
       </div>
     </li>
-    <!-- <router-link
-      :to="`/ticker/subset/${$route.params.id}/`"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
-      >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-chart"></i>
-          <span class="menu-text">سرمایه پذیر</span>
-        </a>
-      </li> 
-    </router-link 
-    >‍-->
   </ul>
 </template>
 
